@@ -1,0 +1,449 @@
+wsl : Error loading shared library libclang-cpp.so.21.1: No such file or directory (needed by /usr/bin/clang)
+��ġ ��:1 ����:1
++ wsl clang -c '/mnt/host/c/Users/wltjq/OneDrive/CNU_�����ڷ�/2026-1/0.����Ȱ�� ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error loading s.../usr/bin/clang):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Error loading shared library libLLVM.so.21.1: No such file or directory (needed by /usr/bin/clang)
+Error relocating /usr/bin/clang: _ZNK4llvm9StringRef19compare_insensitiveES0_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20createScalarizerPassERKNS_21ScalarizerPassOptionsE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28getTimeTraceProfilerInstanceEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm15MCSubtargetInfo27getEnabledProcessorFeaturesEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm8FunctionC1EPNS_12FunctionTypeENS_11GlobalValue12LinkageTypesEjRKNS_5TwineEPNS
+_6ModuleE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13StringMapImpl4initEj: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm9StringRef17find_first_not_ofES0_m: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm18getAsSignedIntegerENS_9StringRefEjRx: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl16ExpansionContext19expandResponseFilesERNS_15SmallVectorImplIPKcEE: symbol
+ not found
+Error relocating /usr/bin/clang: _ZN4llvm5Timer10startTimerEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm8Function11viewCFGOnlyEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMipsTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createObjCARCContractPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm14TargetRegistry12lookupTargetERKNS_6TripleERNSt7__cxx1112basic_stringIcSt11ch
+ar_traitsIcESaIcEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl22TokenizeGNUCommandLineENS_9StringRefERNS_11StringSaverERNS_15SmallVectorI
+mplIPKcEEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm26createGlobalsAAWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAArch64AsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAMDGPUTargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMSP430Target: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm6TripleC1EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE: symbol not fo
+und
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticsEngineC1EN4llvm18IntrusiveRefCntPtrINS_13DiagnosticIDsEEERNS_17D
+iagnosticOptionsEPNS_18DiagnosticConsumerEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm34createPostDomViewerWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt8OptTable9ParseArgsENS_8ArrayRefIPKcEERjS6_NS0_10VisibilityE: symbol not 
+found
+Error relocating /usr/bin/clang: _ZN4llvm26remove_fatal_error_handlerEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt8OptTable11findNearestENS_9StringRefERNSt7__cxx1112basic_stringIcSt11char
+_traitsIcESaIcEEENS0_10VisibilityEjj: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver20applyOverrideOptionsERN4llvm15SmallVectorImplIPKcEES4_RNS1_9StringSe
+tINS1_15MallocAllocatorEEENS1_9StringRefEPNS1_11raw_ostreamE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeWebAssemblyAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeHexagonTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml12ScalarTraitsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvE5inp
+utENS_9StringRefEPvRS7_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys17RunningOnValgrindEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createExpandMemCmpLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm9Attribute15getKindAsStringEv: symbol not found
+Error relocating /usr/bin/clang: _ZTVN5clang28ObjectFilePCHContainerReaderE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createAtomicExpandLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializePowerPCTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContextD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContext19setGenDwarfRootFileENS_9StringRefES1_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createBreakCriticalEdgesPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm36createStraightLineStrengthReducePassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLanaiTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang25ExecuteCompilerInvocationEPNS_16CompilerInstanceE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeVETarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostream14flush_nonemptyEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm4yaml5Input10outputtingEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSPIRVTarget: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeXCoreTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm22createRegionViewerPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9SourceMgr9SrcBufferD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9AAResultsC1ERKNS_17TargetLibraryInfoE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeBPFTarget: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm9StringRef4findES0_m: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAMDGPUTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm14createSROAPassEb: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeRISCVTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm17createSinkingPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm27install_fatal_error_handlerEPFvPvPKcbES0_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createLoopStrengthReducePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15AliasSetTracker5clearEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm12AttributeSet3endEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver19expandResponseFilesERN4llvm15SmallVectorImplIPKcEEbRNS1_20BumpPtrAll
+ocatorImplINS1_15MallocAllocatorELm4096ELm4096ELm128EEEPNS1_3vfs10FileSystemE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24createStructurizeCFGPassEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm35createDependenceAnalysisWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm30createDomViewerWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm26createConstantHoistingPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm12MemoryBuffer7getFileERKNS_5TwineEbbbSt8optionalINS_5AlignEE: symbol not foun
+d
+Error relocating /usr/bin/clang: _ZN4llvm10TimerGroup8clearAllEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLanaiAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm17deallocate_bufferEPvmm: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24timeTraceProfilerCleanupEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSystemZAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang18CompilerInvocation14CreateFromArgsERS0_N4llvm8ArrayRefIPKcEERNS_17Diagnosti
+csEngineES5_: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstanceC1ESt10shared_ptrINS_18CompilerInvocationEES1_INS_22PCHCont
+ainerOperationsEEPNS_11ModuleCacheE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm26ScalarEvolutionWrapperPassC1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm17raw_pwrite_streamE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeRISCVAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input11endSequenceEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContext14setSymbolValueERNS_10MCStreamerERKNS_5TwineEm: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm10TimerGroup8printAllERNS_11raw_ostreamE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContextC1ERKNS_6TripleEPKNS_9MCAsmInfoEPKNS_14MCRegisterInfoEPKNS_15MCSubta
+rgetInfoEPKNS_9SourceMgrEPKNS_15MCTargetOptionsEbNS_9StringRefE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm21createLowerInvokePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm7AArch6424PrintSupportedExtensionsEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm12MemoryBuffer14getFileOrSTDINERKNS_5TwineEbbSt8optionalINS_5AlignEE: symbol n
+ot found
+Error relocating /usr/bin/clang: _ZN5clang6driver11CompilationD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstance16createOutputFileEN4llvm9StringRefEbbbb: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang31createVFSFromCompilerInvocationERKNS_18CompilerInvocationERNS_17Diagnostics
+EngineE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5InputC1ENS_9StringRefEPvPFvRKNS_12SMDiagnosticES3_ES3_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys17findProgramByNameB5cxx11ENS_9StringRefENS_8ArrayRefIS1_EE: symbol not fo
+und
+Error relocating /usr/bin/clang: _ZN4llvm4UserdlEPv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15CaptureAnalysisD2Ev: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeARMAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15SmallVectorBaseImE8grow_podEPvmm: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeWebAssemblyTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticsEngineD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang13DiagnosticIDsD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang22CompilerInvocationBaseC2Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createTypeBasedAAWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15allocate_bufferEmm: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24createUnifyLoopExitsPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAArch64Target: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm12FunctionPassE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm8InitLLVMC1ERiRPPKcb: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang18getLastArgIntValueERKN4llvm3opt7ArgListENS1_12OptSpecifierEiPNS_17Diagnosti
+csEngineEj: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13PMDataManagerD2Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4UsernwEmNS0_26HungOffOperandsAllocMarkerE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9SourceMgr9SrcBufferC1EOS1_: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3vfs17getRealFileSystemEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticsEngine14EmitDiagnosticERKNS_17DiagnosticBuilderEb: symbol not fo
+und
+Error relocating /usr/bin/clang: _ZN4llvm2cl16ExpansionContextC1ERNS_20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096
+ELm4096ELm128EEEPFvNS_9StringRefERNS_11StringSaverERNS_15SmallVectorImplIPKcEEbE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeNVPTXTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input18setCurrentDocumentEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm22createLoopTermFoldPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm13AttributeList10getFnAttrsEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5InputD1Ev: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMSP430AsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeRISCVAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24createFixIrreduciblePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createCallGraphDOTPrinterPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLoongArchTarget: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeVETargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang22PCHContainerOperationsC1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm30createInstructionCombiningPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSPIRVAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20timeTraceProfilerEndEPNS_22TimeTraceProfilerEntryE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLoongArchTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver17getDriverOptTableEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang13DiagnosticIDsC1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys7Process4ExitEib: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm12RISCVISAInfo22printEnabledExtensionsEbRSt3setINS_9StringRefESt4lessIS2_ESaIS
+2_EERNS_9StringMapIS2_NS_15MallocAllocatorEEE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAArch64TargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSparcTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20CrashRecoveryContext6EnableEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeHexagonAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm35createDomOnlyPrinterWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm5Timer9stopTimerEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAMDGPUAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeNVPTXTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm22timeTraceProfilerBeginENS_9StringRefES0_: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeNVPTXAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm21createPrintModulePassERNS_11raw_ostreamERKNSt7__cxx1112basic_stringIcSt11cha
+r_traitsIcESaIcEEEb: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAMDGPUAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createTailCallEliminationPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeVEAsmParser: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAArch64TargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm14raw_fd_ostreamC1ENS_9StringRefERSt10error_codeNS_3sys2fs9OpenFlagsE: symbol 
+not found
+Error relocating /usr/bin/clang: LLVMInitializeSPIRVTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input21canElideEmptySequenceEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm18createNullStreamerERNS_9MCContextE: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticsEngine9setClientEPNS_18DiagnosticConsumerEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys4path4stemENS_9StringRefENS1_5StyleE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSystemZTargetInfo: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeBPFTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostream5writeEh: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys7Process6GetEnvB5cxx11ENS_9StringRefE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeRISCVTargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeBPFAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15AliasSetTracker3addERKNS_14MemoryLocationE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSystemZTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstance17createFileManagerEN4llvm18IntrusiveRefCntPtrINS1_3vfs10Fi
+leSystemEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createAlwaysInlinerLegacyPassEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13createGVNPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAVRTargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMSP430TargetInfo: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAVRTargetInfo: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSparcAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeBPFAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl23ParseCommandLineOptionsEiPKPKcNS_9StringRefEPNS_11raw_ostreamES2_b: symbo
+l not found
+Error relocating /usr/bin/clang: _ZTVN5clang25ChainedDiagnosticConsumerE: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt7ArgList15getLastArgValueENS0_12OptSpecifierENS_9StringRefE: symbol not f
+ound
+Error relocating /usr/bin/clang: _ZN4llvm34createDomOnlyViewerWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createDeadCodeEliminationPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMipsTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11BuryPointerEPKv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm39createPostDomOnlyPrinterWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20createRegionInfoPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm18raw_string_ostreamE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13StringMapImpl4hashENS_9StringRefE: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang25CreateAndPopulateDiagOptsEN4llvm8ArrayRefIPKcEE: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm6Target17createAsmStreamerERNS_9MCContextESt10unique_ptrINS_21formatted_raw_o
+streamESt14default_deleteIS4_EES3_INS_13MCInstPrinterES5_IS8_EES3_INS_13MCCodeEmitterES5_ISB_EES3_INS_12MCAsmBackendES5
+_ISE_EE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3opt12InputArgList13releaseMemoryEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializePowerPCTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt6Option7matchesENS0_12OptSpecifierE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeARMTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstance17createDiagnosticsERN4llvm3vfs10FileSystemEPNS_18Diagnosti
+cConsumerEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm8InitLLVMD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm8Function14hasFnAttributeENS_9StringRefE: symbol not found
+Error relocating /usr/bin/clang: _ZNK5clang20TextDiagnosticBuffer16FlushDiagnosticsERNS_17DiagnosticsEngineE: symbol no
+t found
+Error relocating /usr/bin/clang: _ZN4llvm13StringMapImpl15LookupBucketForENS_9StringRefEj: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm21createLowerAtomicPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang18CompilerInvocation16GetResourcesPathB5cxx11EPKcPv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLoongArchAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm17createPostDomTreeEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver6Driver16BuildCompilationEN4llvm8ArrayRefIPKcEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys2fs12current_pathERNS_15SmallVectorImplIcEE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSparcTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm3opt12InputArgListE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createGlobalMergeFuncPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24createBasicAAWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeARMTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver6Driver30generateCompilationDiagnosticsERNS0_11CompilationERKNS0_7Comm
+andEN4llvm9StringRefEPNS1_27CompilationDiagnosticReportE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAVRAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticBuilderC1EPNS_17DiagnosticsEngineENS_14SourceLocationEj: symbol n
+ot found
+Error relocating /usr/bin/clang: _ZN4llvm21createLowerSwitchPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm23createPrintFunctionPassERNS_11raw_ostreamERKNSt7__cxx1112basic_stringIcSt11c
+har_traitsIcESaIcEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15getBugReportMsgEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContext22addDebugPrefixMapEntryERKNSt7__cxx1112basic_stringIcSt11char_trait
+sIcESaIcEEES8_: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt7ArgList15getAllArgValuesB5cxx11ENS0_12OptSpecifierE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm21TargetLibraryInfoImplC1ERKNS_6TripleE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm19createSafeStackPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostreamD2Ev: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMipsTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24createSelectOptimizePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4PassD2Ev: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMipsAsmParser: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAArch64AsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZTVN5clang28ObjectFilePCHContainerWriterE: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm13RGPassManagerE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeVEAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createDeadArgEliminationPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createNaryReassociatePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm23createRegionPrinterPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm37createDXILResourceTypeWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4dbgsEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm51createSpeculativeExecutionIfHasBranchDivergencePassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm23createLazyValueInfoPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15SmallVectorBaseIjE13mallocForGrowEPvmmRm: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm21SimpleCaptureAnalysisE: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm19raw_svector_ostreamE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm7AArch6422printEnabledExtensionsERKSt3setINS_9StringRefESt4lessIS2_ESaIS2_EE: 
+symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm27createExpandLargeDivRemPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3ARM24PrintSupportedExtensionsENS_9StringMapINS_9StringRefENS_15MallocAllocato
+rEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm27createCFGSimplificationPassENS_18SimplifyCFGOptionsESt8functionIFbRKNS_8Func
+tionEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang21ProcessWarningOptionsERNS_17DiagnosticsEngineERKNS_17DiagnosticOptionsERN4l
+lvm3vfs10FileSystemEb: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver9ToolChain31getTargetAndModeFromProgramNameEN4llvm9StringRefE: symbol 
+not found
+Error relocating /usr/bin/clang: _ZN4llvm30createSpeculativeExecutionPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeHexagonAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createRegToMemWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createCallGraphViewerPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm12RISCVISAInfo24printSupportedExtensionsERNS_9StringMapINS_9StringRefENS_15Mal
+locAllocatorEEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm22createLoopSimplifyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm21TargetLibraryInfoImpl10getLibFuncENS_9StringRefERNS_7LibFuncE: symbol not f
+ound
+Error relocating /usr/bin/clang: LLVMInitializeLanaiTargetInfo: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeX86AsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys18RemoveFileOnSignalENS_9StringRefEPNSt7__cxx1112basic_stringIcSt11char_tr
+aitsIcESaIcEEE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeHexagonTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm26createRegionOnlyViewerPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16serialized_diags6createEN4llvm9StringRefERNS_17DiagnosticOptionsEb: symbol 
+not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input13postflightKeyEPv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm8toStringB5cxx11ENS_5ErrorE: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang21TextDiagnosticPrinterC1ERN4llvm11raw_ostreamERNS_17DiagnosticOptionsEb: sym
+bol not found
+Error relocating /usr/bin/clang: LLVMInitializeX86AsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm4yaml2IO10getContextEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11MCAsmParser15setTargetParserERNS_17MCTargetAsmParserE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13RGPassManagerC1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm23createSCEVAAWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm10TimerGroup19acquireTimerGlobalsEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLoongArchAsmParser: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeARMTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17noteBottomOfStackEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys20RunInterruptHandlersEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input12beginMappingEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys7Process28FixupStandardFileDescriptorsEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm10TimerGroup18printAllJSONValuesERNS_11raw_ostreamEPKc: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15setBugReportMsgEPKc: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm14MCRegisterInfoE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializePowerPCTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm32createScopedNoAliasAAWrapperPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstance16clearOutputFilesEb: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang17DiagnosticsEngine11setSeverityEjNS_4diag8SeverityENS_14SourceLocationE: sym
+bol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input12preflightKeyEPKcbbRbRPv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20AreStatisticsEnabledEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm25createJMCInstrumenterPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm41createPostInlineEntryExitInstrumenterPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeBPFTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm16MCObjectFileInfo20initMCObjectFileInfoERNS_9MCContextEbb: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSystemZTargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver6Driver18ExecuteCompilationERNS0_11CompilationERN4llvm15SmallVectorImp
+lISt4pairIiPKNS0_7CommandEEEE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeWebAssemblyAsmParser: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAVRTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm33createPromoteMemoryToRegisterPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm17createMCAsmParserERNS_9SourceMgrERNS_9MCContextERNS_10MCStreamerERKNS_9MCAsm
+InfoEj: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostream5writeEPKcm: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm40createScalarizeMaskedMemIntrinLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm22timeTraceProfilerWriteERNS_17raw_pwrite_streamE: symbol not found
+Error relocating /usr/bin/clang: _ZTVN5clang20IgnoringDiagConsumerE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm11raw_ostreamlsEm: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeX86TargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt3Arg11getAsStringB5cxx11ERKNS0_7ArgListE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm30createCodeGenPrepareLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAMDGPUTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createHardwareLoopsLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm12MCAsmBackend21createDwoObjectWriterERNS_17raw_pwrite_streamES2_: symbol not
+ found
+Error relocating /usr/bin/clang: LLVMInitializeMSP430AsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm6Triple11isArch64BitEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeVETargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input16preflightElementEjRPv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt7ArgList8getRangeESt16initializer_listINS0_12OptSpecifierEE: symbol not f
+ound
+Error relocating /usr/bin/clang: _ZN4llvm14createKCFIPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm33createDXILResourceWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm10MCStreamer9emitZerosEm: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializePowerPCAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeXCoreTargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLanaiAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZNK5clang28ObjectFilePCHContainerReader10getFormatsEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm11raw_ostream21preferred_buffer_sizeEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4errsEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeHexagonTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm18createEarlyCSEPassEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input10endMappingEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl19PrintVersionMessageEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeWebAssemblyTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys2fs6accessERKNS_5TwineENS1_10AccessModeE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input17postflightElementEPv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9AAResultsD1Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm13StringMapImpl11RehashTableEj: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm16MCObjectFileInfoE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLoongArchTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm9Attribute17isStringAttributeEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createLoadStoreVectorizerPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeNVPTXTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm31createDomPrinterWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl26TokenizeWindowsCommandLineENS_9StringRefERNS_11StringSaverERNS_15SmallVec
+torImplIPKcEEb: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm3opt8OptTable9printHelpERNS_11raw_ostreamEPKcS5_bbNS0_10VisibilityE: symbol n
+ot found
+Error relocating /usr/bin/clang: _ZN4llvm36createSeparateConstOffsetFromGEPPassEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys2fs17getMainExecutableB5cxx11EPKcPv: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm21formatted_raw_ostreamE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm35createPostDomPrinterWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMSP430TargetMC: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm14createLICMPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml12ScalarTraitsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvE6out
+putERKS7_PvRNS_11raw_ostreamE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializePowerPCAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm26createMergeICmpsLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm27createRegionOnlyPrinterPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSystemZAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm33createPartiallyInlineLibCallsPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm12AttributeSet5beginEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm6Triple9normalizeB5cxx11ENS_9StringRefENS0_13CanonicalFormE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeWebAssemblyTarget: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20createLoopUnrollPassEibbiiiiii: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm23createLoopExtractorPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeAVRAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm28createInstSimplifyLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSparcAsmParser: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeMipsAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZTVN5clang20TextDiagnosticBufferE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSparcTarget: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeX86TargetMC: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeRISCVTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15MCTargetOptionsC1Ev: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeARMAsmParser: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm9MCContext15getMachOSectionENS_9StringRefES1_jjNS_11SectionKindEPKc: symbol no
+t found
+Error relocating /usr/bin/clang: _ZN4llvm4outsEv: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm12MCAsmBackend18createObjectWriterERNS_17raw_pwrite_streamE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm27timeTraceProfilerInitializeEjNS_9StringRefEb: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver6DriverC1EN4llvm9StringRefES3_RNS_17DiagnosticsEngineENSt7__cxx1112bas
+ic_stringIcSt11char_traitsIcESaIcEEENS2_18IntrusiveRefCntPtrINS2_3vfs10FileSystemEEE: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeX86Target: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver9IsClangCLEN4llvm9StringRefE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm12VersionTuple8tryParseENS_9StringRefE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm10MCStreamer20emitVersionForTargetERKNS_6TripleERKNS_12VersionTupleEPS2_S6_: s
+ymbol not found
+Error relocating /usr/bin/clang: LLVMInitializeXCoreTarget: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeSPIRVTargetInfo: symbol not found
+Error relocating /usr/bin/clang: _ZNK4llvm6Target22createMCObjectStreamerERKNS_6TripleERNS_9MCContextESt10unique_ptrINS
+_12MCAsmBackendESt14default_deleteIS7_EES6_INS_14MCObjectWriterES8_ISB_EES6_INS_13MCCodeEmitterES8_ISE_EERKNS_15MCSubta
+rgetInfoE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm4yaml5Input13beginSequenceEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm15createLCSSAPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys22getDefaultTargetTripleB5cxx11Ev: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm32createLowerGlobalDtorsLegacyPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm29createSingleLoopExtractorPassEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm21createReassociatePassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeLanaiTarget: symbol not found
+Error relocating /usr/bin/clang: _ZTVN4llvm14buffer_ostreamE: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang6driver13getDriverModeEN4llvm9StringRefENS1_8ArrayRefIPKcEE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm2cl25ResetAllOptionOccurrencesEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm38createPostDomOnlyViewerWrapperPassPassEv: symbol not found
+Error relocating /usr/bin/clang: LLVMInitializeXCoreAsmPrinter: symbol not found
+Error relocating /usr/bin/clang: _ZN5clang16CompilerInstance19createFrontendTimerEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm3sys2fs6removeERKNS_5TwineEb: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm20CreateInfoOutputFileEv: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24DisableABIBreakingChecksE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24DisableABIBreakingChecksE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24DisableABIBreakingChecksE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24DisableABIBreakingChecksE: symbol not found
+Error relocating /usr/bin/clang: _ZN4llvm24DisableABIBreakingChecksE: symbol not found
