@@ -59,10 +59,11 @@ Thumbs.db
 .LSOverride
 Thumbs.db
 
-# PDF (reference only, not data)
-# Uncomment if you want to ignore PDFs
-# *.pdf
+# PDF (Intel SDM — 저작권 문서, 대용량)
+*.pdf
 
-# Large files
-# data/raw/*.zip
-# data/raw/*.tar.gz
+# 바이너리 오브젝트 파일
+*.o
+
+# 개인 임시 파일
+data/stage4_tests/my_errors.txt

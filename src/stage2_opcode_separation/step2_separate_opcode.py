@@ -1,132 +1,97 @@
+"""
+Stage 2: r/m 오퍼랜드 확장
+
+Stage1에서 완전한 instruction form (예: ADC r/m16, r16) 을 받아,
+r/m 표기를 r 버전과 m 버전으로 각각 분리한다.
+
+예)
+  ADC r/m16, r16  →  ADC r16, r16
+                      ADC m16, r16
+  SHLD r/m16, r16, imm8  →  SHLD r16, r16, imm8
+                              SHLD m16, r16, imm8
+"""
+
 import pandas as pd
 import re
+from pathlib import Path
 
-def load_instructions(input_csv):
-    """
-    Stage 1에서 생성된 명령어 CSV 로드
-    :param input_csv: 입력 CSV 파일 경로
-    :return: 데이터프레임
-    """
-    return pd.read_csv(input_csv)
+RM_PATTERN = re.compile(r'r/m(\w*)')
 
-def separate_operands(operand_str):
-    """
-    피연산자 문자열을 쉼표로 분리
-    예: "r/m16, r16" -> ["r/m16", "r16"]
-    "r/m16" 같은 복합 피연산자는 별도로 처리
-    """
-    if not isinstance(operand_str, str) or not operand_str.strip():
-        return []
-    
-    # 먼저 r/m 패턴을 임시로 대체
-    temp = operand_str.replace('r/m', '__COMBINED__')
-    
-    # 쉼표로 분리
-    parts = [p.strip() for p in temp.split(',')]
-    
-    # 임시 대체 되돌리기
-    parts = [p.replace('__COMBINED__', 'r/m') for p in parts]
-    
-    return parts
 
-def expand_combined_operands(row):
+def expand_rm(instruction: str) -> list[str]:
     """
-    r/m 형태의 복합 피연산자를 분리하여 새 행 생성
-    예: "ADC r/m16, r16" -> ["ADC r16", "ADC m16"]
+    instruction form에서 r/m 표기를 r 버전과 m 버전으로 확장한다.
+    r/m이 없으면 원본 그대로 반환.
+    r/m이 여러 개 있으면 첫 번째만 확장 (Intel 매뉴얼 특성상 보통 1개).
     """
-    instruction = row['instruction']
-    operand_str = str(row.get('operands', ''))
-    
-    if not operand_str or 'r/m' not in operand_str:
-        return [row]
-    
-    operands = separate_operands(operand_str)
-    new_rows = []
-    
-    for operand in operands:
-        # r/m을 r 또는 m으로 확장
-        if 'r/m' in operand:
-            # r/m16 -> r16, m16
-            size = operand.replace('r/m', '')
-            
-            new_row1 = row.copy()
-            new_row1['instruction'] = instruction.replace(operand, f'r{size}')
-            new_rows.append(new_row1)
-            
-            new_row2 = row.copy()
-            new_row2['instruction'] = instruction.replace(operand, f'm{size}')
-            new_rows.append(new_row2)
-        else:
-            new_rows.append(row)
-    
-    return new_rows
+    if 'r/m' not in instruction:
+        return [instruction]
 
-def process_instructions(df):
-    """
-    명령어와 피연산자 분리 처리
-    프로세스:
-    1. Instruction에서 명령어와 피연산자 분리
-    2. r/m 형태의 피연산자를 r/m으로 확장
-    3. 결과 저장
-    """
-    expanded_rows = []
-    
-    for idx, row in df.iterrows():
-        instruction = str(row['instruction'])
-        
-        # 첫 단어는 명령어, 나머지는 피연산자
-        parts = instruction.split(None, 1)
-        
-        if len(parts) == 2:
-            mnemonic = parts[0]
-            operands = parts[1]
-        else:
-            mnemonic = parts[0]
-            operands = ''
-        
-        row['mnemonic'] = mnemonic
-        row['operands'] = operands
-        
-        # r/m 형태 확장
-        new_rows = expand_combined_operands(row)
-        expanded_rows.extend(new_rows)
-    
-    return pd.DataFrame(expanded_rows)
+    r_version = RM_PATTERN.sub(lambda m: 'r' + m.group(1), instruction, count=1)
+    m_version = RM_PATTERN.sub(lambda m: 'm' + m.group(1), instruction, count=1)
 
-def save_results(df, output_csv):
+    if r_version == m_version:
+        return [r_version]
+    return [r_version, m_version]
+
+
+def parse_instruction_form(instruction: str):
     """
-    결과를 CSV로 저장
-    :param df: 처리된 데이터프레임
-    :param output_csv: 출력 CSV 파일 경로
+    'ADC r16, r/m16' → mnemonic='ADC', operands='r16, r/m16'
+    'NOP'            → mnemonic='NOP', operands=''
     """
-    # 필요한 컬럼만 선택
-    cols = ['original', 'opcode', 'instruction', 'mnemonic', 'operands']
-    available_cols = [c for c in cols if c in df.columns]
-    
-    df_out = df[available_cols]
+    parts = instruction.strip().split(None, 1)
+    mnemonic = parts[0] if parts else ''
+    operands = parts[1] if len(parts) > 1 else ''
+    return mnemonic, operands
+
+
+def process(input_csv: str, output_csv: str):
+    df = pd.read_csv(input_csv, encoding='utf-8-sig')
+    print(f"[로드] {len(df)}개 instruction form")
+
+    rows = []
+    for _, row in df.iterrows():
+        original = str(row['original'])
+        opcode   = str(row['opcode']) if pd.notna(row['opcode']) else ''
+        instr    = str(row['instruction'])
+
+        for expanded in expand_rm(instr):
+            mnemonic, operands = parse_instruction_form(expanded)
+            rows.append({
+                'Original':    original,
+                'Opcode':      opcode,
+                'Instruction': expanded,
+                'Mnemonic':    mnemonic,
+                'Operands':    operands,
+            })
+
+    df_out = pd.DataFrame(rows)
     df_out.to_csv(output_csv, index=False, encoding='utf-8-sig')
-    
-    print(f"처리 완료!")
-    print(f"원본 행 수: {len(df)}")
-    print(f"처리 후 행 수: {len(df_out)}")
-    print(f"저장된 파일: {output_csv}")
+
+    print(f"[완료] {len(df_out)}개 행 저장 → {output_csv}")
+    print(f"  r/m 확장으로 늘어난 행: {len(df_out) - len(df)}개")
+
+    # 샘플 확인 - ADC
+    sample = df_out[df_out['Mnemonic'] == 'ADC']
+    print(f"\n=== ADC 샘플 ({len(sample)}개) ===")
+    for _, r in sample.iterrows():
+        print(f"  {r['Instruction']}")
+
+    # SHLD (3-operand 케이스)
+    sample2 = df_out[df_out['Mnemonic'] == 'SHLD']
+    print(f"\n=== SHLD 샘플 ({len(sample2)}개) ===")
+    for _, r in sample2.iterrows():
+        print(f"  {r['Instruction']}")
+
 
 def main():
-    """메인 함수"""
-    input_csv = "data/stage1_extracted/instruction_list_original.csv"
-    output_csv = "data/stage2_opcode_split/step2_final_instruction_opcode_split.csv"
-    
-    # CSV 로드
-    print("Stage 1 결과 로드 중...")
-    df = load_instructions(input_csv)
-    
-    # 명령어 처리
-    print("명령어 처리 중...")
-    df_processed = process_instructions(df)
-    
-    # 결과 저장
-    print("결과 저장 중...")
-    save_results(df_processed, output_csv)
+    base = Path(__file__).parent.parent.parent
+    input_csv  = base / "data/stage1_extracted/instruction_list_original.csv"
+    output_csv = base / "data/stage2_opcode_split/step2_final_instruction_opcode_split.csv"
+    output_csv.parent.mkdir(parents=True, exist_ok=True)
+    process(str(input_csv), str(output_csv))
+
 
 if __name__ == "__main__":
     main()

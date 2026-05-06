@@ -75,8 +75,8 @@ def build_line_to_instr_map(asm_path: Path) -> dict[int, str]:
     current_header = "(unknown)"
     for i, line in enumerate(lines, 1):
         stripped = line.strip()
-        if stripped.startswith("# ===") and stripped.endswith("==="):
-            current_header = stripped[5:-3].strip()
+        if (stripped.startswith("// ===") or stripped.startswith("# ===")) and stripped.endswith("==="):
+            current_header = stripped.lstrip("/#").lstrip(" =").rstrip(" =").strip()
         mapping[i] = current_header
     return mapping
 
@@ -99,7 +99,7 @@ def build_report(df: pd.DataFrame, line_map: dict[int, str]) -> str:
     lines_md.append("")
     lines_md.append(f"**대상 파일**: `test_all_instructions.s`  ")
     lines_md.append(f"**총 에러 수**: {len(df)}개  ")
-    lines_md.append(f"**컴파일러**: GNU as (binutils)")
+    lines_md.append(f"**컴파일러**: GNU as (`-mintel64` 통과), GCC, Clang  ")
     lines_md.append("")
     lines_md.append("---")
     lines_md.append("")
@@ -222,7 +222,7 @@ def main():
     if ASM_FILE.exists():
         line_map = build_line_to_instr_map(ASM_FILE)
         report_md = build_report(df, line_map)
-        report_path = OUT_DIR / "step4_error_report.md"
+        report_path = OUT_DIR / "step4_triage_report.md"
         report_path.write_text(report_md, encoding="utf-8")
         print(f"[저장] 미팅 보고서: {report_path}")
     else:

@@ -1,270 +1,205 @@
-# Step 4 에러 Triage 보고서
+# Step 4 에러 분석 보고서
 
-**대상 파일**: `test_all_instructions.s`  
-**총 에러 수**: 5523개  
-**컴파일러**: GNU as (binutils)
-
----
-
-## 1. 에러 카테고리별 분포
-
-| 카테고리 | 설명 | 건수 | 비율 |
-|----------|------|-----:|-----:|
-| `operand_count_mismatch` | 오퍼랜드 개수 불일치 | 4626 | 83.8% |
-| `unknown_instruction` | 알 수 없는 명령어 | 303 | 5.5% |
-| `not_valid_here` | 해당 위치에서 유효하지 않음 | 238 | 4.3% |
-| `not_supported_64bit` | 64비트 모드 미지원 | 110 | 2.0% |
-| `suffix_error` | 접미어 오류 | 106 | 1.9% |
-| `operand_type_mismatch` | 오퍼랜드 타입 불일치 | 64 | 1.2% |
-| `conflicting_size` | 오퍼랜드 크기 충돌 | 36 | 0.7% |
-| `operand_size_mismatch` | 오퍼랜드 크기 불일치 | 18 | 0.3% |
-| `other` | 기타 에러 | 16 | 0.3% |
-| `unsupported_instruction` | 지원되지 않는 명령어 | 4 | 0.1% |
-| `not_allowed` | 허용되지 않는 조합 | 2 | 0.0% |
+**테스트 파일**: `test_all_instructions.s`  
+**총 테스트 케이스**: 8,631개  
+**어셈블러**: GNU as (GAS), GCC, Clang 
 
 ---
 
-## 2. 카테고리별 대표 예제 (다음 미팅 준비물)
+## 0. 테스트 환경
 
-### 2.1 `operand_count_mismatch` — 오퍼랜드 개수 불일치 (4626건)
-
-**예제 1**: `ADC AL` 블록
-```asm
-adc al  # [ERROR] number of operands mismatch for `adc'
-```
-
-**예제 2**: `ADC AX` 블록
-```asm
-adc ax  # [ERROR] number of operands mismatch for `adc'
-```
-
-**예제 3**: `ADC EAX` 블록
-```asm
-adc eax  # [ERROR] number of operands mismatch for `adc'
-```
-
-
-### 2.2 `unknown_instruction` — 알 수 없는 명령어 (303건)
-
-**예제 1**: `AL AX` 블록
-```asm
-al ax  # [ERROR] no such instruction: `al ax'
-```
-
-**예제 2**: `F2 imm8` 블록
-```asm
-f2 0xff  # [ERROR] no such instruction: `f2 0xff'
-```
-
-**예제 3**: `F2 m512` 블록
-```asm
-f2 ZMMWORD PTR [rax + rbx*2 + 0x100]  # [ERROR] no such instruction: `f2 ZMMWORD PTR [rax+rbx*2+0x100]'
-```
-
-
-### 2.3 `not_valid_here` — 해당 위치에서 유효하지 않음 (238건)
-
-**예제 1**: `CMPS m16` 블록
-```asm
-cmps WORD PTR [rbx]  # [ERROR] `WORD PTR [rbx]' is not valid here (expected `[rsi]')
-```
-
-**예제 2**: `CMPS m16` 블록
-```asm
-cmps WORD PTR [rax + rbx*2 + 0x100]  # [ERROR] `WORD PTR [rax+rbx*2+0x100]' is not valid here (expected `
-```
-
-**예제 3**: `CMPS m16` 블록
-```asm
-cmps WORD PTR [rax + rbx*8 + 0x1000]  # [ERROR] `WORD PTR [rax+rbx*8+0x1000]' is not valid here (expected
-```
-
-
-### 2.4 `not_supported_64bit` — 64비트 모드 미지원 (110건)
-
-**예제 1**: `AAD imm8` 블록
-```asm
-aad 0xff  # [ERROR] `aad' is not supported in 64-bit mode
-```
-
-**예제 2**: `AAM imm8` 블록
-```asm
-aam 0xff  # [ERROR] `aam' is not supported in 64-bit mode
-```
-
-**예제 3**: `ARPL r16` 블록
-```asm
-arpl bp  # [ERROR] `arpl' is not supported in 64-bit mode
-```
-
-
-### 2.5 `suffix_error` — 접미어 오류 (106건)
-
-**예제 1**: `SHLD CL` 블록
-```asm
-shld cl  # [ERROR] mnemonic suffix used with `shl'
-```
-
-**예제 2**: `SHLD r16` 블록
-```asm
-shld bp  # [ERROR] mnemonic suffix used with `shl'
-```
-
-**예제 3**: `SHLD r16` 블록
-```asm
-shld bp  # [ERROR] incorrect register `bp' used with `l' suffix
-```
-
-
-### 2.6 `operand_type_mismatch` — 오퍼랜드 타입 불일치 (64건)
-
-**예제 1**: `CALL r32` 블록
-```asm
-call ecx  # [ERROR] operand type mismatch for `call'
-```
-
-**예제 2**: `CALL r32` 블록
-```asm
-call eax  # [ERROR] operand type mismatch for `call'
-```
-
-**예제 3**: `CALL r32` 블록
-```asm
-call ebp  # [ERROR] operand type mismatch for `call'
-```
-
-
-### 2.7 `conflicting_size` — 오퍼랜드 크기 충돌 (36건)
-
-**예제 1**: `SHLD m16` 블록
-```asm
-shld WORD PTR [rax + rbx*1 + 0x10]  # [ERROR] conflicting operand size modifiers
-```
-
-**예제 2**: `SHLD m16` 블록
-```asm
-shld WORD PTR [rax]  # [ERROR] conflicting operand size modifiers
-```
-
-**예제 3**: `SHLD m16` 블록
-```asm
-shld WORD PTR [rip + 0x10]  # [ERROR] conflicting operand size modifiers
-```
-
-
-### 2.8 `operand_size_mismatch` — 오퍼랜드 크기 불일치 (18건)
-
-**예제 1**: `LGDT m16` 블록
-```asm
-lgdt WORD PTR [rbx]  # [ERROR] operand size mismatch for `lgdt'
-```
-
-**예제 2**: `LGDT m16` 블록
-```asm
-lgdt WORD PTR [rax + rbx*8 + 0x1000]  # [ERROR] operand size mismatch for `lgdt'
-```
-
-**예제 3**: `LGDT m16` 블록
-```asm
-lgdt WORD PTR [rax + rbx*4 + 0x100]  # [ERROR] operand size mismatch for `lgdt'
-```
-
-
-### 2.9 `other` — 기타 에러 (16건)
-
-**예제 1**: `IN DX` 블록
-```asm
-in dx  # [ERROR] ambiguous operand size for `in'
-```
-
-**예제 2**: `IN imm8` 블록
-```asm
-in 0xff  # [ERROR] ambiguous operand size for `in'
-```
-
-**예제 3**: `OUT DX` 블록
-```asm
-out dx  # [ERROR] ambiguous operand size for `out'
-```
-
-
-### 2.10 `unsupported_instruction` — 지원되지 않는 명령어 (4건)
-
-**예제 1**: `CALL ptr16:16` 블록
-```asm
-call 0x0033:0x00001000  # [ERROR] unsupported instruction `call'
-```
-
-**예제 2**: `CALL ptr16:32` 블록
-```asm
-call 0x0033:0x00001000  # [ERROR] unsupported instruction `call'
-```
-
-**예제 3**: `JMP ptr16:16` 블록
-```asm
-jmp 0x0033:0x00001000  # [ERROR] unsupported instruction `jmp'
-```
-
-
-### 2.11 `not_allowed` — 허용되지 않는 조합 (2건)
-
-**예제 1**: `SHLD CL` 블록
-```asm
-shld cl  # [ERROR] `cl' not allowed with `shll'
-```
-
-**예제 2**: `SHRD CL` 블록
-```asm
-shrd cl  # [ERROR] `cl' not allowed with `shrl'
-```
-
+| 항목 | 버전 |
+|------|------|
+| GNU as | **2.42** (GNU Binutils for Ubuntu, 2024) |
+| GCC | **13.3.0** (Ubuntu 13.3.0-6ubuntu2~24.04.1) |
+| Clang | **18.1.3** (Ubuntu clang version 18.1.3) |
+| Target | x86\_64-linux-gnu / x86\_64-pc-linux-gnu |
+| OS | Ubuntu 24.04 (WSL) |
+| GAS 실행 옵션 | `as --64 -mintel64` (Intel64 ISA 모드 — Intel SDM 대응 기준) |
 
 ---
 
-## 3. 주요 니모닉별 에러 발생 빈도 (TOP 20)
+## 1. 전체 진행 통계
 
-| 니모닉 | 에러 수 |
-|--------|--------:|
-| `mov` | 82 |
-| `xor` | 80 |
-| `adc` | 72 |
-| `add` | 72 |
-| `cmp` | 72 |
-| `or` | 72 |
-| `sbb` | 72 |
-| `sub` | 72 |
-| `test` | 72 |
-| `xchg` | 68 |
-| `cmpxchg` | 65 |
-| `xadd` | 65 |
-| `and` | 60 |
-| `bt` | 53 |
-| `btc` | 53 |
-| `btr` | 53 |
-| `bts` | 53 |
-| `bsf` | 52 |
-| `bsr` | 52 |
-| `cmova` | 52 |
+| 항목 | 수치 |
+|------|-----:|
+| 추출된 instruction form (64비트 유효) | 987개 |
+| r/m 확장 후 (Stage 2) | 1,480개 |
+| 테스트 생성된 form | 1,338개 |
+| 스킵된 form (미매핑 operand) | 72개 |
+| 생성된 테스트 케이스 | 8,631개 |
+| GNU as 에러 (`-mintel64`) | **0건** ✅ |
+| GCC 에러 (`-Wa,-mintel64`) | **0건** ✅ |
+| Clang 에러 (툴 특성) | 89건 |
 
 ---
 
-## 4. 64비트 모드 미지원 명령어 목록
+## 2. 테스트 설계 원칙
 
-- `aad`
-- `aam`
-- `arpl`
-- `bound`
-- `jcxz`
-- `lds`
-- `les`
-- `dword`
+- `.intel_syntax noprefix` 사용
+- **매뉴얼의 instruction form 구조(operand 개수/타입) 그대로 유지**
+- 각 operand 자리에 해당 타입의 후보값 랜덤 대입
+- `imm32` 값:
+  - r64/m64 대상 (sign-extend): `0x7fffffff`(양수 경계), `-1`(음수 경계) 모두 테스트
+  - r32/m32 대상 (unsigned): `0xffffffff` (unsigned max)
+  - PUSH imm32: 64비트 모드에서 sign-extend 대상이므로 r64와 동일하게 처리
 
 ---
 
-## 5. GCC vs Clang 비교
+## 3. GNU as / GCC 에러 최종 결과: 0건 ✅
 
+Intel SDM 대응 모드로 실행한 결과, **테스트 케이스 8,631개 전부 통과**.
+
+| 어셈블러 | 옵션 | 결과 |
+|----------|------|------|
+| GNU as | `--64 -mintel64` | **0건** ✅ |
+| GCC | `-c -Wa,--64 -Wa,-mintel64` | **0건** ✅ |
+
+> GCC는 내부적으로 GAS를 호출하므로 `-Wa,-mintel64`로 Intel64 모드를 전달하면 GAS와 동일하게 통과됩니다.
+
+### 3-1. LSS/LFS/LGS r64, m16:64 — GAS AMD64/Intel64 모드 차이 (확정)
+
+| 항목 | 내용 |
+|------|------|
+| **에러 메시지** | `operand size mismatch for 'lss'` 등 |
+| **재현 코드** | `lss rdi, TBYTE PTR [rip + 0x100]` |
+
+**매뉴얼 근거**:
+- `REX.W + 0F B2 /r` = `LSS r64, m16:64`
+- `m16:64` = 10바이트 far pointer, `TBYTE PTR` 표기
+
+**실험으로 확인된 결론**:
+
+| 실행 옵션 | 결과 | 설명 |
+|-----------|------|------|
+| `as --64` | ❌ 거부 | GAS 기본값 = AMD64 모드 |
+| `as --64 -mamd64` | ❌ 거부 | AMD64 모드 명시 |
+| `as --64 -mintel64` | ✅ 통과 | Intel64 모드, 올바른 인코딩 생성 |
+
+```text
+// -mintel64 objdump 결과
+48 0f b2 38   lss (%rax), %rdi   ← Intel SDM과 일치
+48 0f b4 38   lfs (%rax), %rdi
+48 0f b5 38   lgs (%rax), %rdi
 ```
-category  conflicting_size  not_allowed  not_supported_64bit  not_valid_here  operand_count_mismatch  operand_size_mismatch  operand_type_mismatch  other  suffix_error  unknown_instruction  unsupported_instruction
-compiler                                                                                                                                                                                                             
-as                      36            2                  110             238                    4626                     18                     64     16           106                  303                        4
+
+> **결론**: GAS 미지원이 아니라 **AMD64 vs Intel64 ISA 모드 선택**에 따른 동작 차이.  
+> Intel SDM과 비교하는 본 연구의 기준은 `-mintel64` 모드이므로, 이 케이스는 에러가 아님.
+> `-mintel64`로 재실행 결과 30건이 모두 **통과됨** (실험 확인).
+
+---
+
+## 4. imm32 sign-extension: Intel SDM vs GAS 의미론 차이 (교차검증 완료)
+
+### 현상
+
+```asm
+adc rax, 0xffffffff   // Error: operand size mismatch
+adc rax, -1           // OK  (동일한 비트패턴, 올바른 표현)
+push 0xffffffff       // Error: operand size mismatch
+push -1               // OK
 ```
+
+### Intel SDM vs GAS 관점 차이
+
+| 관점 | 해석 |
+|------|------|
+| **Intel SDM** | 기계어 인코딩 기준 — `imm32` 비트패턴 `ff ff ff ff`를 CPU가 sign-extend하여 사용 |
+| **GAS/LLVM** | 소스 리터럴의 수학적 값 기준 — `0xffffffff` = `+4,294,967,295`, signed 32-bit 범위 초과로 거부 |
+
+### Codex 교차검증 결론
+
+> "Intel encoding permits the bit pattern, but GAS/LLVM reject the positive source literal because it is not representable as a sign-extended 32-bit value."
+
+- GAS 버그가 아니라 **assembler expression semantics** 의 의도된 동작
+- GAS는 `Imm32S` operand class에서 `isInt<32>(Value)` 검사 수행
+- LLVM 동일: `isImmSExti64i32Value`에서 `isInt<32>(Value)` 검사
+
+### objdump로 확인된 인코딩
+
+```text
+adc rax, -1  →  48 83 d0 ff   (REX.W + 83 /2 ib: imm8 sign-extended)
+push -1      →  6a ff          (6a: PUSH imm8 sign-extended)
+```
+
+> **결론**: GAS는 `-1`을 의미상 올바르게 수용하지만, `imm32` form(`81`) 대신 더 짧은 `imm8 sign-extended` form(`83`)을 선택한다.  
+> 따라서 `adc rax, -1`은 SDM expression semantics 관점에서 올바른 표현이지만, SDM의 `REX.W + 81 /2 id` opcode 자체를 검증한 것은 아니다.  
+> 특정 `imm32` form을 테스트하려면 `.byte` 또는 `.insn` 등 저수준 인코딩 강제가 필요하다 — 본 연구 범위 밖.
+
+### 영향 범위 (r/m64, imm32 sign-extend 형태를 가진 명령어)
+
+ADC, ADD, SUB, OR, AND, XOR, CMP, SBB, TEST, IMUL, MOV, PUSH 등
+
+---
+
+## 5. Clang 에러 분류 (89건) — 파서 수정 후 재분석
+
+| 건수 | 에러 메시지 | 원인 | 판단 |
+|-----:|------------|------|------|
+| 67건 | `unknown token in expression` | `call .`, `ja .` 등 — `.`(현재 주소 심볼)을 Clang Intel syntax 파서가 거부 | Clang-GAS 동작 차이 |
+| 12건 | `invalid instruction mnemonic 'lkgs'` | LKGS — Clang 18.1.3 미지원 신규 명령어 | 툴 버전 한계 |
+| 6건  | `invalid operand for instruction` | `invlpg QWORD PTR [rax]` — INVLPG는 size 미지정 메모리 오퍼랜드, QWORD PTR을 Clang이 거부 | 추가 확인 필요 |
+| 1건  | `invalid instruction mnemonic 'erets'` | ERETS — FRED extension, Clang 18.1.3 미지원 | 툴 버전 한계 |
+| 1건  | `invalid instruction mnemonic 'eretu'` | ERETU — 동일 | 툴 버전 한계 |
+| 1건  | `invalid instruction mnemonic 'int1'` | INT1 (ICEBP) — Clang 18.1.3 미지원 | 툴 버전 한계 |
+| 1건  | `memory operand is only for determining the size` | `xlat BYTE PTR [rbx]` — Clang의 XLAT 동작 경고 | 정상 동작 |
+
+**`.` 심볼 문제 상세**:
+- GAS에서 `.`은 현재 명령어 주소(program counter)를 의미
+- Clang Intel syntax 파서는 `.`을 expression 심볼로 인식하지 못함
+- `call .`, `ja .`, `jrcxz .` 등 모든 rel8/rel32 테스트 케이스에서 재현
+- Clang에서 대안: `0` 또는 절대 라벨 사용
+
+> 기존 `//` 주석이 Clang에서 에러를 낸다는 결론은 **파서 버그**로 인한 잘못된 분석이었습니다. 실제 원인은 `.` 심볼 처리 차이입니다.
+
+---
+
+## 6. 수정한 테스트 설계 문제 이력
+
+| 문제 | 수정 내용 |
+|------|-----------|
+| `r/m81`, `r81` 등 각주 오염 | Stage 1 cleaning 함수 추가 |
+| `IRET`, `IRETD` ambiguous size | 64비트 모드에서 skip, `IRETQ`만 테스트 |
+| `MOVSXD r16, r16` 거부 | 64비트 모드 r64 형태만 테스트 |
+| `XLAT BYTE PTR [rax+...]` 거부 | 항상 `BYTE PTR [rbx]` 고정 |
+| `SGDT/SIDT QWORD PTR` 거부 | `[rax]` bare memory 형태로 수정 |
+| `MOV Sreg, QWORD PTR` 거부 | Sreg 소스 메모리 → `WORD PTR` 고정 |
+| `imm32 = 0xffffffff` for r64 | `dest_is_64` 감지 → `0x7fffffff`, `-1` 사용 |
+| `push 0xffffffff` 거부 | PUSH를 sign-extend 명령어로 분류, `-1` 포함 |
+| Clang `#` 주석 파싱 오류 | 주석 형식 `#` → `//` 변경 |
+| `S30` garbage instruction | Stage 4 noise filter 추가 |
+| Clang 에러 정규식 오류 | `file:line:column:` 형식 처리 추가 |
+| GAS 모드 미명시 | `as --64 -mintel64` 옵션 추가 (Intel64 ISA 모드 명시) |
+
+---
+
+## 7. 후속 실험 목록
+
+| 항목 | 상태 | 비고 |
+|------|------|------|
+| `-mintel64` 모드로 전체 재실험 | ✅ 완료 | GNU as 에러 0건 확인 |
+| GCC `-Wa,-mintel64` 옵션 실험 | ✅ 완료 | 에러 0건 확인 — GCC도 Intel64 모드에서 완전 통과 |
+| INVLPG `QWORD PTR` Clang 거부 | 미완료 | Clang 전용 이슈, 연구 범위 밖 |
+| Clang `.` 심볼 대안 | 미완료 | rel8/rel32를 라벨로 변경 시 Clang 에러 줄어들 것 |
+
+---
+
+## 8. 결론
+
+**확정된 사실**:
+
+| 발견 | 결론 |
+|------|------|
+| `0xffffffff` 거부 (r64+imm32) | GAS 버그 아님 — expression semantics 차이 (소스 리터럴 수학적 값 기준) |
+| LSS/LFS/LGS r64, TBYTE PTR 거부 | GAS 미지원 아님 — AMD64 기본 모드 한계, `-mintel64` 에서 정상 통과 |
+| `adc rax, -1` → imm8 인코딩 | GAS가 `83` (imm8) form 선택, `81` (imm32) form 아님 |
+| GCC `-Wa,-mintel64` → 에러 0건 | GCC도 Intel64 모드에서 완전 통과 — GCC는 GAS 래퍼임을 재확인 |
+| Clang `unknown token` | `.` 심볼 미지원 (현재 주소 심볼), `//` 주석 문제 아님 |
+
+**핵심 결과**:  
+Intel SDM 대응 모드(`as --64 -mintel64`)에서 **GNU as 에러 0건**.  
+8,631개 테스트 케이스를 GAS가 모두 올바르게 수용함.
+
+**핵심 교훈**:  
+Intel SDM과 비교하는 연구에서 GAS 실험 기준은 **`as --64 -mintel64`** (Intel64 ISA 모드)이어야 한다.  
+기본값인 `-mamd64` 모드는 LSS/LFS/LGS r64 등 일부 Intel64 전용 형태를 거부한다.

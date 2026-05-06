@@ -1,95 +1,225 @@
 """
-Step 4-2: 어셈블리 테스트 코드 생성 (4회 미팅 액션 아이템)
+Step 4-2: 어셈블리 테스트 코드 생성 (5회 미팅 수정사항 반영)
 
-각 명령어(Instruction)에 대해 operand 타입을 실제 레지스터/값으로 치환하여
-랜덤하게 10개씩 어셈블리 코드를 생성합니다.
+핵심 원칙:
+- 매뉴얼의 instruction form 구조(오퍼랜드 개수/타입)는 그대로 유지
+- 각 오퍼랜드 자리에 해당 타입의 후보값을 랜덤하게 대입
+- 알 수 없는 오퍼랜드 타입이 하나라도 있으면 해당 form은 스킵
 
-미팅 규칙:
-- 첫 줄: .intel_syntax noprefix  (Intel 문법, 접두어 없음)
-- 상수(IMM): 최대값 사용 (0xFF, 0xFFFF 등)
-- 메모리: Effective Addressing + RIP-relative 혼합
-- 메모리 크기: BYTE PTR / WORD PTR / DWORD PTR / QWORD PTR 명시
-- 생성 횟수: 약 10회 랜덤 (mitigates combinatorial explosion)
+규칙 (5회 미팅):
+- .intel_syntax noprefix 필수
+- IMM: 최대값 사용
+- Memory: BYTE/WORD/DWORD/QWORD PTR + Effective/RIP-relative 혼합
+- 명령어당 약 10개 랜덤 테스트 케이스 생성
 """
 
-import pandas as pd
+import sys
 import random
+import pandas as pd
 import re
 from pathlib import Path
 
-# 같은 패키지의 그룹 정의 재사용
-import sys
-sys.path.insert(0, str(Path(__file__).parent))
-from step4_operand_grouping import OPERAND_GROUPS, parse_instruction, get_operand_candidates
+sys.path.insert(0, str(Path(__file__).parent.parent / "stage3_operand_grouping"))
+from step3_operand_grouping import get_candidates, parse_operand_tokens
 
-random.seed(42)  # 재현 가능성 위해 seed 고정
+# stage1 필터를 통과한 노이즈 니모닉 2차 방어
+NOISE_MNEMONICS_STAGE4 = {
+    'RVMI', 'RVM', 'MVR', 'RVMR', 'RMV', 'RVR', 'ZO', 'MR', 'RM', 'OI',
+    'RAX', 'RBX', 'RCX', 'RDX', 'RSI', 'RDI',
+    'FISTTPINTEGER64', 'AXCXDXBXSPBPSIDI',
+    'S30',  # Stage 1 파싱 garbage
+}
 
-N_RANDOM = 10   # 명령어당 생성할 랜덤 케이스 수
+random.seed(42)
+N_PER_FORM = 10
+
+# 스트링 명령어: 메모리 오퍼랜드가 RSI/RDI로 하드코딩됨
+# {mnemonic: [operand_idx별 고정값]} — None이면 일반 후보 사용
+STRING_INSTR_MEM = {
+    'CMPS':  {0: 'rsi', 1: 'rdi'},  # CMPS m8, m8 → [rsi], [rdi]
+    'MOVS':  {0: 'rdi', 1: 'rsi'},  # MOVS m8, m8 → [rdi], [rsi]
+    'LODS':  {0: 'rsi'},             # LODS m8     → [rsi]
+    'STOS':  {0: 'rdi'},             # STOS m8     → [rdi]
+    'SCAS':  {0: 'rdi'},             # SCAS m8     → [rdi]
+    'INS':   {0: 'rdi'},             # INS m8, DX  → [rdi]
+    'OUTS':  {1: 'rsi'},             # OUTS DX, m8 → [rsi]
+}
+
+PTR_MAP = {'8': 'BYTE PTR', '16': 'WORD PTR', '32': 'DWORD PTR', '64': 'QWORD PTR'}
+
+# REX.W 오피코드를 사용하는 명령어 중 어셈블러에서 q suffix로 써야 명확한 것들
+REXW_SUFFIX_INSTRS = {'SYSRET': 'sysretq', 'SYSEXIT': 'sysexitq'}
+
+# 64-bit 모드에서 특수 문법이 필요하거나 테스트 불가한 instruction form
+SKIP_INSTR_FORMS = {
+    # far jump/call
+    'JMP m16:16', 'JMP m16:32', 'JMP m16:64',
+    'JMP ptr16:16', 'JMP ptr16:32',
+    'CALL m16:16', 'CALL m16:32', 'CALL m16:64',
+    # IRET/IRETD: 64비트 모드에서 ambiguous — IRETQ 형태로만 테스트
+    'IRET', 'IRETD',
+    # MOVSXD: 64비트 모드에서 REX.W(r64) 형태만 사용, r16/r32 형태는 GAS 거부
+    'MOVSXD r16, r16', 'MOVSXD r16, m16',
+    'MOVSXD r32, r32', 'MOVSXD r32, m32',
+    # SGDT/SIDT: GAS는 메모리 크기 지정 없이 [mem]만 허용 → 별도 처리
+    'SGDT m', 'SIDT m',
+}
+
+# SGDT/SIDT: GAS 요구사항 — size prefix 없이 [reg] 형태만 허용
+BARE_MEM_INSTRS = {'SGDT', 'SIDT', 'LGDT', 'LIDT'}
 
 
-def generate_test_lines(mnemonic: str, operand_tokens: list, n: int = N_RANDOM):
+def get_string_instr_candidate(mnemonic: str, idx: int, token: str) -> list[str] | None:
+    """스트링 명령어의 메모리 오퍼랜드를 RSI/RDI로 고정 반환. 해당 없으면 None."""
+    mapping = STRING_INSTR_MEM.get(mnemonic.upper())
+    if not mapping or idx not in mapping or not token.startswith('m'):
+        return None
+    reg = mapping[idx]
+    size = token[1:]  # 'm8' → '8'
+    ptr = PTR_MAP.get(size, 'BYTE PTR')
+    return [f'{ptr} [{reg}]']
+
+
+def generate_lines(mnemonic: str, operand_tokens: list[str], n: int = N_PER_FORM) -> list[str]:
     """
-    (mnemonic, operand_tokens)를 받아 구체적인 어셈블리 라인 n개 생성.
-    operand 없으면 mnemonic만 반환.
+    매뉴얼 syntax 구조를 유지하면서 각 오퍼랜드 자리에 후보값 대입.
+    - 스트링 명령어: 메모리 오퍼랜드를 RSI/RDI로 고정
+    - imm32 컨텍스트: r64/m64 대상이면 sign-extend 안전값(0x7fffffff) 사용,
+                      r32/m32 대상이면 unsigned max(0xffffffff) 사용
+    - 알 수 없는 타입이 있으면 빈 리스트 반환 (스킵)
     """
     if not operand_tokens:
         return [mnemonic.lower()]
 
-    candidate_lists = [get_operand_candidates(tok) for tok in operand_tokens]
+    mn_upper = mnemonic.upper()
 
-    results = []
-    seen = set()
-    attempts = 0
+    # XLAT: 메모리 오퍼랜드는 반드시 [rbx] 형태 — 임의 주소 사용 불가
+    if mn_upper == 'XLAT':
+        return ['xlat BYTE PTR [rbx]']
 
-    while len(results) < n and attempts < n * 20:
+    # SGDT/SIDT/LGDT/LIDT: GAS는 size prefix 없는 [reg] 형태만 허용
+    if mn_upper in BARE_MEM_INSTRS:
+        return [f'{mnemonic.lower()} [rax]',
+                f'{mnemonic.lower()} [rbx]',
+                f'{mnemonic.lower()} [rip + 0x100]']
+
+    # imm32 컨텍스트 판단: 64-bit 대상이면 sign-extend 양쪽 경계값 사용
+    # r64/m64 타입 + 고정 64-bit 레지스터(RAX 등) 포함
+    # PUSH imm32는 64비트 모드에서 항상 sign-extend → 명시적으로 포함
+    _64BIT_TOKENS = {'r64', 'm64', 'RAX', 'RBX', 'RCX', 'RDX', 'RSI', 'RDI', 'RSP', 'RBP'}
+    _SEXT_IMPLICIT = {'PUSH'}  # 명시적 64비트 operand 없이도 sign-extend인 명령어
+    dest_is_64 = (mn_upper in _SEXT_IMPLICIT or
+                  any(t in _64BIT_TOKENS for t in operand_tokens if t != 'imm32'))
+
+    candidate_lists = []
+    for idx, token in enumerate(operand_tokens):
+        # 스트링 명령어 특수 처리
+        string_cand = get_string_instr_candidate(mnemonic, idx, token)
+        if string_cand is not None:
+            candidate_lists.append(string_cand)
+            continue
+        # imm32 컨텍스트 처리:
+        # r64/m64 대상(sign-extend) → 양수 경계(0x7fffffff)와 음수 경계(-1) 모두 테스트
+        # Codex 검증 결과: GAS는 소스 리터럴의 수학적 값을 검사하므로
+        #   '0xffffffff'(= +4294967295, out of signed range) 는 거부되지만
+        #   '-1'(= -1, within signed range, 비트패턴 동일) 은 허용됨
+        if token == 'imm32' and dest_is_64:
+            candidate_lists.append(['0x7fffffff', '-1'])
+            continue
+        # MOV Sreg, m64: 메모리 소스는 항상 WORD PTR (16비트 세그먼트 선택자)
+        if token == 'm64' and 'Sreg' in operand_tokens:
+            candidate_lists.append(get_candidates('m16'))
+            continue
+        # 일반 후보 조회
+        cand = get_candidates(token)
+        candidate_lists.append(cand)
+
+    # 알 수 없는 타입이 하나라도 있으면 스킵
+    if any(c is None for c in candidate_lists):
+        return []
+
+    results, seen = [], set()
+    for _ in range(n * 20):
         chosen = [random.choice(cl) for cl in candidate_lists]
         line = mnemonic.lower() + " " + ", ".join(chosen)
         if line not in seen:
             seen.add(line)
             results.append(line)
-        attempts += 1
+        if len(results) >= n:
+            break
 
-    return results if results else [mnemonic.lower()]
+    return results
 
 
-def build_asm_file(instructions_df: pd.DataFrame, output_path: Path, n_per_instr: int = N_RANDOM):
-    """
-    파싱된 명령어 DataFrame으로부터 어셈블리 테스트 파일(.s) 생성.
-    각 라인 옆에 원본 Instruction을 주석으로 표시.
-    """
-    lines = []
-    lines.append(".intel_syntax noprefix")
-    lines.append("# Auto-generated Intel assembly test file")
-    lines.append("# Generated by step4_test_generator.py")
-    lines.append("# Rules: IMM=MAX_VALUE, MEM=EFFECTIVE/RIP_RELATIVE, BYTE/WORD/DWORD/QWORD PTR")
-    lines.append("")
+def build_asm_file(df: pd.DataFrame, output_path: Path, n: int = N_PER_FORM):
+    lines = [
+        ".intel_syntax noprefix",
+        "// Auto-generated Intel assembly test",
+        "// Rule: follow manual syntax exactly, randomize concrete values only",
+        "",
+    ]
 
     total_cases = 0
-    unique_instrs = 0
+    skipped_forms = 0
+    seen_forms: set[tuple] = set()
 
-    # 중복 제거: (mnemonic, operand_tokens) 기준
-    seen_forms = set()
+    for _, row in df.iterrows():
+        instr     = str(row['Instruction'])
+        mnemonic  = str(row['Mnemonic'])
+        opcode    = str(row.get('Opcode', ''))
+        operands_str = str(row.get('Operands', ''))
 
-    for _, row in instructions_df.iterrows():
-        instr_str = row["Instruction"]
-        mnemonic, tokens = parse_instruction(str(instr_str))
+        if operands_str == 'nan':
+            operands_str = ''
+
+        # 노이즈 니모닉 2차 필터 (대소문자 구분 없이)
+        if mnemonic.upper() in NOISE_MNEMONICS_STAGE4:
+            skipped_forms += 1
+            continue
+
+        # 니모닉에 ':' 가 포함되면 PDF 파싱 노이즈 (레지스터 쌍 표기 등)
+        # 예: AXDX:AXEDX:EAXRDX:RAX (IDIV 암묵적 레지스터 쌍이 합쳐진 것)
+        if ':' in mnemonic:
+            skipped_forms += 1
+            continue
+
+        # far jump/call 등 특수 문법 필요 form 스킵
+        if instr in SKIP_INSTR_FORMS:
+            skipped_forms += 1
+            continue
+
+        # SYSRET/SYSEXIT non-REX.W form 스킵 (ambiguous) — REX.W form만 sysretq로 테스트
+        if mnemonic in REXW_SUFFIX_INSTRS and 'REX.W' not in opcode:
+            skipped_forms += 1
+            continue
+
+        # REX.W 형태의 SYSRET/SYSEXIT → sysretq/sysexitq 로 니모닉 교체
+        if mnemonic in REXW_SUFFIX_INSTRS and 'REX.W' in opcode:
+            q_mnemonic = REXW_SUFFIX_INSTRS[mnemonic]
+            mnemonic   = q_mnemonic.upper()
+            instr      = q_mnemonic
+
+        tokens = parse_operand_tokens(operands_str) if operands_str else []
         form_key = (mnemonic, tuple(tokens))
 
         if form_key in seen_forms:
             continue
         seen_forms.add(form_key)
 
-        test_lines = generate_test_lines(mnemonic, tokens, n=n_per_instr)
-        unique_instrs += 1
+        test_lines = generate_lines(mnemonic, tokens, n)
 
-        lines.append(f"# === {instr_str} ===")
+        if not test_lines:
+            skipped_forms += 1
+            continue
+
+        lines.append(f"// === {instr} ===")
         for tl in test_lines:
             lines.append(f"    {tl}")
             total_cases += 1
         lines.append("")
 
     output_path.write_text("\n".join(lines), encoding="utf-8")
-    return total_cases, unique_instrs
+    return total_cases, len(seen_forms) - skipped_forms, skipped_forms
 
 
 def main():
@@ -97,34 +227,23 @@ def main():
     stage4_dir = base / "data" / "stage4_tests"
     stage4_dir.mkdir(parents=True, exist_ok=True)
 
-    parsed_csv = stage4_dir / "step4_instructions_parsed.csv"
+    stage2_csv = base / "data/stage2_opcode_split/step2_final_instruction_opcode_split.csv"
+    df = pd.read_csv(stage2_csv, encoding='utf-8-sig')
+    print(f"[로드] Stage2 명령어: {len(df)}개")
 
-    print("=" * 60)
-    print("Step 4-2: 어셈블리 테스트 코드 생성")
-    print("=" * 60)
+    out_asm = stage4_dir / "test_all_instructions.s"
+    total, generated, skipped = build_asm_file(df, out_asm)
 
-    if not parsed_csv.exists():
-        print(f"[오류] {parsed_csv} 없음. step4_operand_grouping.py 먼저 실행하세요.")
-        return
+    print(f"\n[완료] {out_asm}")
+    print(f"  생성된 instruction form: {generated}개")
+    print(f"  스킵된 form (알 수 없는 타입): {skipped}개")
+    print(f"  총 테스트 케이스: {total}개")
 
-    df = pd.read_csv(parsed_csv, encoding="utf-8")
-    print(f"[로드] 파싱된 명령어: {len(df)}개")
-
-    # 전체 통합 테스트 파일
-    all_asm_path = stage4_dir / "test_all_instructions.s"
-    total_cases, unique_instrs = build_asm_file(df, all_asm_path)
-    print(f"\n[완료] 전체 테스트 파일: {all_asm_path}")
-    print(f"  - 고유 명령어 형태: {unique_instrs}개")
-    print(f"  - 생성된 테스트 케이스: {total_cases}개")
-
-    # 미리보기 출력
-    preview_lines = all_asm_path.read_text(encoding="utf-8").split("\n")[:40]
-    print("\n=== 파일 미리보기 (앞 40줄) ===")
-    for i, l in enumerate(preview_lines, 1):
+    # 미리보기
+    preview = out_asm.read_text(encoding='utf-8').split('\n')[:50]
+    print("\n=== 파일 미리보기 (50줄) ===")
+    for i, l in enumerate(preview, 1):
         print(f"{i:3d} | {l}")
-
-    print(f"\n[완료] Step 4-2 테스트 코드 생성 완료")
-    print(f"      → {all_asm_path}")
 
 
 if __name__ == "__main__":

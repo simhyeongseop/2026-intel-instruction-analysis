@@ -1,0 +1,178 @@
+﻿OperandType,ConcreteValue
+r8,al
+r8,cl
+r8,dl
+r8,bl
+r16,ax
+r16,bx
+r16,cx
+r16,dx
+r16,si
+r16,di
+r32,eax
+r32,ebx
+r32,ecx
+r32,edx
+r32,esi
+r32,edi
+r64,rax
+r64,rbx
+r64,rcx
+r64,rdx
+r64,rsi
+r64,rdi
+r64,r8
+r64,r9
+r64,r10
+r64,r11
+r64,r12
+r64,r13
+m8,BYTE PTR [rax]
+m8,BYTE PTR [rbx]
+m8,BYTE PTR [rax + rbx*1 + 0x10]
+m8,BYTE PTR [rax + rbx*4 + 0x100]
+m8,BYTE PTR [rip + 0x100]
+m8,BYTE PTR [rip + 0x1000]
+m16,WORD PTR [rax]
+m16,WORD PTR [rbx]
+m16,WORD PTR [rax + rbx*1 + 0x10]
+m16,WORD PTR [rax + rbx*4 + 0x100]
+m16,WORD PTR [rip + 0x100]
+m16,WORD PTR [rip + 0x1000]
+m32,DWORD PTR [rax]
+m32,DWORD PTR [rbx]
+m32,DWORD PTR [rax + rbx*1 + 0x10]
+m32,DWORD PTR [rax + rbx*4 + 0x100]
+m32,DWORD PTR [rip + 0x100]
+m32,DWORD PTR [rip + 0x1000]
+m64,QWORD PTR [rax]
+m64,QWORD PTR [rbx]
+m64,QWORD PTR [rax + rbx*1 + 0x10]
+m64,QWORD PTR [rax + rbx*4 + 0x100]
+m64,QWORD PTR [rip + 0x100]
+m64,QWORD PTR [rip + 0x1000]
+m80,TBYTE PTR [rax]
+m80,TBYTE PTR [rbx]
+m80,TBYTE PTR [rax + rbx*1 + 0x10]
+m80,TBYTE PTR [rax + rbx*4 + 0x100]
+m80,TBYTE PTR [rip + 0x100]
+m80,TBYTE PTR [rip + 0x1000]
+m128,XMMWORD PTR [rax]
+m128,XMMWORD PTR [rbx]
+m128,XMMWORD PTR [rax + rbx*1 + 0x10]
+m128,XMMWORD PTR [rax + rbx*4 + 0x100]
+m128,XMMWORD PTR [rip + 0x100]
+m128,XMMWORD PTR [rip + 0x1000]
+m256,YMMWORD PTR [rax]
+m256,YMMWORD PTR [rbx]
+m256,YMMWORD PTR [rax + rbx*1 + 0x10]
+m256,YMMWORD PTR [rax + rbx*4 + 0x100]
+m256,YMMWORD PTR [rip + 0x100]
+m256,YMMWORD PTR [rip + 0x1000]
+m512,ZMMWORD PTR [rax]
+m512,ZMMWORD PTR [rbx]
+m512,ZMMWORD PTR [rax + rbx*1 + 0x10]
+m512,ZMMWORD PTR [rax + rbx*4 + 0x100]
+m512,ZMMWORD PTR [rip + 0x100]
+m512,ZMMWORD PTR [rip + 0x1000]
+imm8,0xff
+imm16,0xffff
+imm32,0x7fffffff
+imm64,0x7fffffffffffffff
+imm_1,1
+rel8,.
+rel16,.
+rel32,.
+AL,al
+AX,ax
+EAX,eax
+RAX,rax
+CL,cl
+DX,dx
+CS,cs
+DS,ds
+ES,es
+FS,fs
+GS,gs
+SS,ss
+Sreg,cs
+Sreg,ds
+Sreg,es
+Sreg,fs
+Sreg,gs
+Sreg,ss
+Sreg2,fs
+Sreg2,gs
+ST,st(0)
+ST(0),st(0)
+ST(i),st(0)
+ST(i),st(1)
+ST(i),st(2)
+ST(i),st(3)
+xmm,xmm0
+xmm,xmm1
+xmm,xmm2
+xmm,xmm3
+xmm1,xmm0
+xmm1,xmm1
+xmm1,xmm2
+xmm2,xmm0
+xmm2,xmm1
+xmm2,xmm2
+xmm3,xmm0
+xmm3,xmm1
+xmm3,xmm2
+ymm1,ymm0
+ymm1,ymm1
+ymm1,ymm2
+ymm2,ymm0
+ymm2,ymm1
+ymm2,ymm2
+ymm3,ymm0
+ymm3,ymm1
+ymm3,ymm2
+zmm1,zmm0
+zmm1,zmm1
+zmm1,zmm2
+zmm2,zmm0
+zmm2,zmm1
+zmm2,zmm2
+zmm3,zmm0
+zmm3,zmm1
+zmm3,zmm2
+mm,mm0
+mm,mm1
+mm,mm2
+mm,mm3
+mm1,mm0
+mm1,mm1
+mm2,mm0
+mm2,mm1
+k1,k1
+k2,k2
+k3,k3
+bnd,bnd0
+bnd,bnd1
+bnd1,bnd0
+bnd2,bnd1
+ptr16:16,0x0033:0x1000
+ptr16:32,0x0033:0x1000
+moffset,[0x1000]
+m16:16,DWORD PTR [rax]
+m16:16,DWORD PTR [rbx]
+m16:16,DWORD PTR [rax + rbx*1 + 0x10]
+m16:16,DWORD PTR [rax + rbx*4 + 0x100]
+m16:16,DWORD PTR [rip + 0x100]
+m16:16,DWORD PTR [rip + 0x1000]
+m16:32,FWORD PTR [rax]
+m16:32,FWORD PTR [rbx]
+m16:32,FWORD PTR [rax + rbx*1 + 0x10]
+m16:32,FWORD PTR [rax + rbx*4 + 0x100]
+m16:32,FWORD PTR [rip + 0x100]
+m16:32,FWORD PTR [rip + 0x1000]
+m16:64,TBYTE PTR [rax]
+m16:64,TBYTE PTR [rbx]
+m16:64,TBYTE PTR [rax + rbx*1 + 0x10]
+m16:64,TBYTE PTR [rax + rbx*4 + 0x100]
+m16:64,TBYTE PTR [rip + 0x100]
+m16:64,TBYTE PTR [rip + 0x1000]

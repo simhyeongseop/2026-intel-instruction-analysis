@@ -86,8 +86,10 @@ def run_via_wsl(wsl_cmd: str) -> tuple[str, int]:
 # 에러 파싱
 # ============================================================
 
+# GAS/GCC 형식: file:line: error: msg
+# Clang 형식:   file:line:column: error: msg  (column 부분이 추가됨)
 ERROR_PATTERN = re.compile(
-    r"(?P<file>[^:]+):(?P<line>\d+):\s*(?P<type>Error|Warning|error|warning):\s*(?P<msg>.+)"
+    r"(?P<file>[^:]+):(?P<line>\d+)(?::\d+)?:\s*(?P<type>Error|Warning|error|warning):\s*(?P<msg>.+)"
 )
 
 def parse_errors(raw_output: str, compiler: str) -> list[dict]:
@@ -167,10 +169,10 @@ def main():
             drive = out_wsl[0].lower()
             out_wsl = f"/mnt/host/{drive}{out_wsl[2:]}"
 
-        raw_output, rc = run_via_wsl(f"as '{src_wsl}' -o '{out_wsl}'")
+        raw_output, rc = run_via_wsl(f"as --64 -mintel64 '{src_wsl}' -o '{out_wsl}'")
     else:
         result = subprocess.run(
-            ["as", str(SRC_ASM), "-o", str(as_out_path)],
+            ["as", "--64", "-mintel64", str(SRC_ASM), "-o", str(as_out_path)],
             capture_output=True, text=True
         )
         raw_output = result.stderr
@@ -197,7 +199,10 @@ def main():
         gcc_available = subprocess.run(["which", "gcc"], capture_output=True).returncode == 0
 
     if gcc_available:
-        _, raw_gcc, rc_gcc = run_assembler(["gcc", "-c"], SRC_ASM, gcc_out_path)
+        # -Wa,--64 -Wa,-mintel64: GCC가 내부적으로 호출하는 GAS에 Intel64 모드 전달
+        _, raw_gcc, rc_gcc = run_assembler(
+            ["gcc", "-c", "-Wa,--64", "-Wa,-mintel64"], SRC_ASM, gcc_out_path
+        )
         gcc_errors_path = OUT_DIR / "step4_gcc_errors.txt"
         gcc_errors_path.write_text(raw_gcc, encoding="utf-8")
         errors_gcc = parse_errors(raw_gcc, "gcc")
