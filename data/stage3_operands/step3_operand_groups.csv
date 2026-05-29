@@ -27,6 +27,12 @@ r64,r10
 r64,r11
 r64,r12
 r64,r13
+m,[rax]
+m,[rbx]
+m,[rax + rbx*1 + 0x10]
+m,[rax + rbx*4 + 0x100]
+m,[rip + 0x100]
+m,[rip + 0x1000]
 m8,BYTE PTR [rax]
 m8,BYTE PTR [rbx]
 m8,BYTE PTR [rax + rbx*1 + 0x10]

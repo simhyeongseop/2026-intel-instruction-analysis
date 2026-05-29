@@ -41,8 +41,9 @@ NORMALIZE = {
     'r32/m16':     'm16',
     'r64/m16':     'm16',
     'r16/r32/m16': 'm16',
-    # INVLPG m (크기 미지정 메모리) → 64-bit 주소로 처리
-    'm': 'm64',
+    # Generic memory operand. Keep it size-less; instructions such as INVLPG
+    # and LEA do not mean QWORD memory just because they use token "m".
+    'm': 'm',
     # ENTER 두 번째 operand 0 (nest level, 항상 0)
     '0': 'imm_1',
 }
@@ -61,6 +62,17 @@ def _mem(ptr: str) -> list[str]:
         f"{ptr} [rip + 0x1000]",
     ]
 
+
+def _bare_mem() -> list[str]:
+    return [
+        "[rax]",
+        "[rbx]",
+        "[rax + rbx*1 + 0x10]",
+        "[rax + rbx*4 + 0x100]",
+        "[rip + 0x100]",
+        "[rip + 0x1000]",
+    ]
+
 OPERAND_GROUPS: dict[str, list[str]] = {
     # 일반 레지스터
     'r8':  ['al', 'cl', 'dl', 'bl'],
@@ -70,6 +82,7 @@ OPERAND_GROUPS: dict[str, list[str]] = {
             'r8',  'r9',  'r10', 'r11', 'r12', 'r13'],
 
     # 메모리 접근
+    'm':   _bare_mem(),
     'm8':  _mem('BYTE PTR'),
     'm16': _mem('WORD PTR'),
     'm32': _mem('DWORD PTR'),

@@ -1,5 +1,9 @@
 # Stage 4 발표용 결과 보고서
 
+> 현재화 메모(2026-05-29): 이 문서는 7회 미팅 전 Stage 4 발표용 브리프입니다.
+> 이후 `m -> m64 -> QWORD PTR` 단순 매핑 문제가 확인되어 `INVLPG m`, `LEA r/m` 계열 생성 규칙을 수정했습니다.
+> 최신 중간 보고는 `docs/INTERIM_REPORT_2026-05-29.md`, 최신 Stage 5 분류 기준은 `docs/stage5_equivalence_classification_rules.md`를 기준으로 봅니다.
+
 ## 1. 프로젝트 목적
 
 이 미니프로젝트의 목적은 Intel x86-64 SDM(Software Developer's Manual)에 정의된 instruction form을 실제 assembler 테스트 케이스로 변환하고, assembler가 이를 수용하는지 확인하는 자동 테스트 기반을 만드는 것이다.

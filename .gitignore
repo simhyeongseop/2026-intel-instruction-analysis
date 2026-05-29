@@ -67,3 +67,10 @@ Thumbs.db
 
 # 개인 임시 파일
 data/stage4_tests/my_errors.txt
+
+# Generated experiment outputs
+experiments/out_operand_micro_tests/
+
+# Regenerated Stage 5 raw/intermediate outputs
+data/stage5_disassembly/*.o
+data/stage5_disassembly/*objdump*.txt
