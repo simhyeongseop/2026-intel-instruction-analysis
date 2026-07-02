@@ -1,9 +1,0 @@
-﻿line,instruction,error
-1208,"lsl rax, eax",register type mismatch for `lsl'
-1281,"mov ds, QWORD PTR [rax]",operand type mismatch for `mov'
-2883,senduipi eax,operand size mismatch for `senduipi'
-3138,"ud01 eax, eax","no such instruction: `ud01 eax,eax'"
-3139,"ud01 eax, DWORD PTR [rax]","no such instruction: `ud01 eax,DWORD PTR [rax]'"
-3143,udb,no such instruction: `udb '
-4455,"vscatterdpd [rax+ymm14*1]{k1}, ymm1",invalid VSIB address for `vscatterdpd'
-4456,"vscatterdpd [rax+zmm14*1]{k1}, zmm1",invalid VSIB address for `vscatterdpd'

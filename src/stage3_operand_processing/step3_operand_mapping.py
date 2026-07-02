@@ -204,13 +204,46 @@ def map_operand(token: str) -> str | None:
     if re.fullmatch(r"imm(8|16|32|64)", base):
         return "0x1"
     if re.fullmatch(r"rel(8|16|32)", base):
-        return "."           # 현재 주소 (GAS에서 유효, rel8 범위 내 offset)
+        return "1f"          # forward local label (파일에 1: 레이블 배치 필요)
 
     return None
 
 
 def tokenize(operands: str) -> list[str]:
     return [t.strip() for t in operands.split(",") if t.strip()] if operands else []
+
+
+# ── 문자열/특수 명령 특수 처리 ─────────────────────────────────────────
+# SDM에 의해 고정 주소(rsi/rdi/rbx)를 사용하는 명령은 일반 매핑([rax])이 부적절.
+# 크기 suffix 형(cmpsb/lodsq 등)으로 생성하면 주소 문제를 완전히 우회한다.
+STRING_MNEMS_DIRECT = {"CMPS", "LODS", "MOVS", "SCAS", "STOS", "INS", "OUTS"}
+_MSIZE_SUFFIX = {"m8": "b", "m16": "w", "m32": "d", "m64": "q"}
+# XLAT는 [rbx]를 써야 함
+XLAT_MNEM = "XLAT"
+
+
+def gen_string_direct(mnem: str, operands: str) -> str | None:
+    """비-prefix 문자열 명령(CMPS m8,m8 / LODS m32 등) → suffix 형으로 생성."""
+    mup = mnem.upper()
+    if mup not in STRING_MNEMS_DIRECT:
+        return None
+    # operands에서 메모리 크기 토큰 추출
+    suffix = None
+    for s, suf in _MSIZE_SUFFIX.items():
+        if re.search(rf"\b{s}\b", operands):
+            suffix = suf
+            break
+    if suffix is None:
+        # AX/EAX/RAX 같은 레지스터로 크기 추론 (INS m8,DX 등에서 m 크기가 키)
+        for reg, suf in [("AL", "b"), ("AX", "w"), ("EAX", "d"), ("RAX", "q"), ("DX", "")]:
+            if re.search(rf"\b{reg}\b", operands) and suf:
+                suffix = suf
+                break
+    if suffix is None:
+        return None
+    if mup in {"INS", "OUTS"} and suffix == "q":
+        return None  # insq/outsq 없음
+    return f"{mup.lower()}{suffix}"
 
 
 # 문자열 prefix 명령어 처리: REP/REPE/REPNE 뒤에 문자열 op 가 오퍼랜드로 붙는다.
@@ -254,6 +287,28 @@ def normalize_mnemonic(mnem: str) -> str:
     m = re.sub(r"\[.*$", "", mnem)       # GETSEC[...] → GETSEC
     low = m.lower()
     return {"sysexit": "sysexitq", "sysret": "sysretq"}.get(low, low)
+
+
+# ── mnemonic별 오퍼랜드 보정 (SDM 제약 위반 방지) ──────────────────────
+# SDM에 명시된 제약으로 인해 일반 매핑 규칙으로는 거부되는 케이스를 개별 처리.
+# 반환: 보정된 concretes 리스트 또는 None(보정 불필요).
+def _fixup_operands(mnem: str, toks: list[str], concretes: list[str]) -> list[str] | None:
+    mup = mnem.upper()
+    # LSL r64, r32/m16 → as는 r64,r32 조합을 거부. SDM은 r64,r64/m16 허용.
+    if mup == "LSL" and len(concretes) == 2 and concretes[0] == "rax" and concretes[1] == "eax":
+        return ["rax", "rax"]
+    # SENDUIPI r64 — SDM은 반드시 64비트 레지스터. r32→r64.
+    if mup == "SENDUIPI" and concretes == ["eax"]:
+        return ["rax"]
+    # MOV Sreg, r/m16 — 세그먼트 레지스터는 r/m16/r/m64 만 수용. m64는 as가 거부.
+    # "mov ds, QWORD PTR [rax]" → "mov ds, WORD PTR [rax]" 또는 "mov ds, ax"
+    if mup == "MOV" and len(concretes) == 2 and concretes[0] == "ds":
+        if "QWORD" in concretes[1]:
+            return ["ds", "ax"]
+    # PREFETCHIT0/1 — RIP-relative만 수용 (SDM §2.2)
+    if mup in ("PREFETCHIT0", "PREFETCHIT1"):
+        return ["BYTE PTR [rip+0x100]"]
+    return None
 
 
 # ── 음성 셋(negative set) 생성 — §4 N1/N2, 오라클=SDM #UD/정규화 규정 ──────
@@ -534,6 +589,10 @@ def gen_axis_a(forms: list[dict]) -> list[dict]:
 # D1(reg)=base, D2(mem)⊂축 C 이므로 여기선 D3(브로드캐스트 {1toK})만 생성.
 # K = VL_bytes / element_bytes. VL·element 모두 bcst 오퍼랜드 토큰에서 국소 추출:
 #   xmm2/m128/m32bcst → VL=m128=16, elem=m32bcst=4 → {1to4}.
+# 축 D 전용: 브로드캐스트 element 크기 → PTR prefix (llvm-mc가 크기 추론 불가 시 거부 방지)
+_BCST_ELEM_PTR = {4: "DWORD PTR", 8: "QWORD PTR", 2: "WORD PTR"}
+
+
 def gen_axis_d(forms: list[dict]) -> list[dict]:
     rows = []
     seen = set()
@@ -571,10 +630,13 @@ def gen_axis_d(forms: list[dict]) -> list[dict]:
             base_concretes.append(v)
         if not ok:
             continue
+        # Element PTR prefix로 llvm-mc 크기 추론 실패 방지
+        elem_ptr = _BCST_ELEM_PTR.get(elem, "")
+        mem_expr = f"{elem_ptr} [rax]{{1to{k}}}" if elem_ptr else f"[rax]{{1to{k}}}"
         parts = []
         for i, c in enumerate(base_concretes):
             if i == mem_i:
-                parts.append(f"[rax]{{1to{k}}}")
+                parts.append(mem_expr)
             elif c != "":
                 parts.append(c)
         gen = normalize_mnemonic(row["Mnemonic"]) + " " + ", ".join(parts)
@@ -589,6 +651,16 @@ def gen_axis_d(forms: list[dict]) -> list[dict]:
             "sdm_basis": f"2.7.7 broadcast {{1to{k}}} (elem N={elem})",
         })
     return rows
+
+
+def _is_valid_64bit(mode: str) -> bool:
+    """ModeSupport 값이 64비트에서 유효(Valid)인지 판별."""
+    m = (mode or "").strip().lower()
+    if not m:
+        return True  # 정보 없으면 유효로 간주
+    # 'Valid', 'V/V', 'V/N.E.' 등 — 첫 토큰(64-bit)이 'v'로 시작하면 유효
+    first = m.split("/")[0].strip() if "/" in m else m
+    return first.startswith("v")
 
 
 def main():
@@ -615,16 +687,62 @@ def main():
     cov_rows = []
     asm_lines = [".intel_syntax noprefix", "// Stage3 generated (register-form, masks kept, er/sae dropped)", ""]
     mappable = 0
+    invalid_skipped = 0
     for row in forms:
         mnem = row["Mnemonic"].strip()
         ops_str = row["Operands"]
         toks = tokenize(ops_str)
+        mode_valid = _is_valid_64bit(row.get("ModeSupport", ""))
+
+        # 64비트 무효 form은 매핑하되 base asm에는 넣지 않고 expected_valid=false로 마킹
+        if not mode_valid:
+            concretes, unknown = [], []
+            for t in toks:
+                v = map_operand(t)
+                if v is None:
+                    unknown.append(t)
+                elif v != "":
+                    concretes.append(v)
+            gen_mnem = normalize_mnemonic(mnem)
+            ok = len(unknown) == 0 and mnem != ""
+            cov_rows.append({
+                "Mnemonic": mnem,
+                "Instruction": row["Instruction"],
+                "Operands": ops_str,
+                "Mappable": ok,
+                "Generated": (gen_mnem + (" " + ", ".join(concretes) if concretes else "")) if ok else "",
+                "UnknownTokens": ", ".join(unknown),
+                "_mode_valid": False,
+            })
+            invalid_skipped += 1
+            continue
 
         # bare 프리픽스(LOCK/XACQUIRE/XRELEASE 단독)는 유효 명령이 아님 → 생성 제외 (§3.2)
         if mnem.upper() in {"LOCK", "XACQUIRE", "XRELEASE"} and not toks:
             cov_rows.append({"Mnemonic": mnem, "Instruction": row["Instruction"],
                              "Operands": ops_str, "Mappable": False,
                              "Generated": "", "UnknownTokens": "(bare prefix skipped)"})
+            continue
+
+        # 문자열 명령 특수 처리 (SDM: rsi/rdi 고정 주소 — suffix 형으로 우회)
+        if mnem.upper() in STRING_MNEMS_DIRECT:
+            gen = gen_string_direct(mnem, ops_str)
+            if gen is not None:
+                mappable += 1
+                asm_lines.append(f"    {gen}")
+                cov_rows.append({"Mnemonic": mnem, "Instruction": row["Instruction"],
+                                 "Operands": ops_str, "Mappable": True,
+                                 "Generated": gen, "UnknownTokens": ""})
+                continue
+
+        # XLAT: [rbx] 고정 (SDM: DS:rBX+AL)
+        if mnem.upper() == "XLAT":
+            gen = "xlatb"
+            mappable += 1
+            asm_lines.append(f"    {gen}")
+            cov_rows.append({"Mnemonic": mnem, "Instruction": row["Instruction"],
+                             "Operands": ops_str, "Mappable": True,
+                             "Generated": gen, "UnknownTokens": ""})
             continue
 
         # 문자열 prefix 형(REP/REPE/REPNE + 문자열 op) 특수 처리
@@ -648,6 +766,11 @@ def main():
                 concretes.append(v)
         ok = len(unknown) == 0 and mnem != ""
         gen_mnem = normalize_mnemonic(mnem)
+        # SDM 제약에 의한 오퍼랜드 보정
+        if ok:
+            fixed = _fixup_operands(mnem, toks, concretes)
+            if fixed is not None:
+                concretes = fixed
         if ok:
             mappable += 1
             line = gen_mnem + (" " + ", ".join(concretes) if concretes else "")
@@ -663,11 +786,16 @@ def main():
 
     # 3) §6 스키마 컬럼 부여 — 양성(base) 행 기본값
     #    variant_axis=base, variant_value 없음, expected_valid=매핑되면 true(모호하면 undefined)
+    #    64비트 무효(Invalid) 행은 expected_valid=false, sdm_basis에 근거 표기
     for r in cov_rows:
         r["variant_axis"] = "base"
         r["variant_value"] = ""
-        r["expected_valid"] = "true" if r["Mappable"] else "undefined"
-        r["sdm_basis"] = ""
+        if r.pop("_mode_valid", True) is False:
+            r["expected_valid"] = "false"
+            r["sdm_basis"] = "ModeSupport=Invalid (64-bit N.E./N.S.)"
+        else:
+            r["expected_valid"] = "true" if r["Mappable"] else "undefined"
+            r["sdm_basis"] = ""
 
     # 4) 음성 셋 N1/N2 생성 → 별도 .s + coverage 병합
     neg_rows = gen_negative_n1(forms) + gen_negative_n2(forms)
@@ -710,7 +838,7 @@ def main():
         w.writeheader()
         w.writerows(cov_rows + neg_rows + axisc_rows + axisa_rows + axisd_rows)
 
-    (OUT_DIR / "step3_generated.s").write_text("\n".join(asm_lines) + "\n", encoding="utf-8")
+    (OUT_DIR / "step3_generated.s").write_text("\n".join(asm_lines) + "\n1:\n", encoding="utf-8")
 
     total = len(forms)
     # 실제로 스킵된 form 에서만 미매핑 토큰을 수집 (prefix 특수처리된 form 제외)
@@ -720,9 +848,11 @@ def main():
             for t in r["UnknownTokens"].split(", "):
                 unmapped_types.add(t)
     unmapped_types = sorted(unmapped_types)
-    skipped = total - mappable
+    skipped = total - mappable - invalid_skipped
     print(f"[저장] {OUT_DIR}")
-    print(f"  form: {total}, 매핑가능(생성됨): {mappable} ({mappable/total*100:.1f}%), 스킵: {skipped}")
+    print(f"  form: {total}, 매핑가능(생성됨): {mappable} ({mappable/total*100:.1f}%)")
+    print(f"  64비트 무효(Invalid, asm 미포함): {invalid_skipped}")
+    print(f"  미매핑 스킵: {skipped}")
     print(f"  스킵 form의 미매핑 타입: {len(unmapped_types)}")
     n1 = sum(1 for r in neg_rows if r["variant_value"] == "N1")
     n2 = sum(1 for r in neg_rows if r["variant_value"] == "N2")

@@ -20,9 +20,12 @@ CMPS m64,,UNMAPPED
 CMPS m8,,UNMAPPED
 CR0–CR7,cr0,ok
 CR8,cr8,ok
+CS,,UNMAPPED
 DR0–DR7,dr0,ok
+DS,,UNMAPPED
 DX,dx,ok
 EAX,eax,ok
+ES,,UNMAPPED
 FS,fs,ok
 GS,gs,ok
 INS m16,,UNMAPPED
@@ -42,6 +45,7 @@ SCAS m16,,UNMAPPED
 SCAS m32,,UNMAPPED
 SCAS m64,,UNMAPPED
 SCAS m8,,UNMAPPED
+SS,,UNMAPPED
 ST,st(0),ok
 ST(0),st(0),ok
 ST(i),st(1),ok
@@ -53,8 +57,10 @@ Sreg,ds,ok
 bnd,bnd0,ok
 bnd1,bnd1,ok
 bnd1/m128,bnd1,ok
+bnd1/m64,bnd1,ok
 bnd2,bnd2,ok
 bnd2/m128,bnd2,ok
+bnd2/m64,bnd2,ok
 imm16,0x1,ok
 imm32,0x1,ok
 imm64,0x1,ok
@@ -76,6 +82,8 @@ m128,[rax],ok
 m128{k1},[rax],ok
 m14/28byte,[rax],ok
 m16,WORD PTR [rax],ok
+m16&16,,UNMAPPED
+m16&32,,UNMAPPED
 m16&64,[rax],ok
 m16:16,DWORD PTR [rax],ok
 m16:32,FWORD PTR [rax],ok
@@ -87,6 +95,7 @@ m256{k1},[rax],ok
 m2byte,[rax],ok
 m32,DWORD PTR [rax],ok
 m32 {k1},DWORD PTR [rax],ok
+m32&32,,UNMAPPED
 m32fp,DWORD PTR [rax],ok
 m32int,DWORD PTR [rax],ok
 m32{er},DWORD PTR [rax],ok
@@ -143,9 +152,9 @@ reg,eax,ok
 reg/m16,eax,ok
 reg/m32,eax,ok
 reg/m8,eax,ok
-rel16,.,ok
-rel32,.,ok
-rel8,.,ok
+rel16,1f,ok
+rel32,1f,ok
+rel8,1f,ok
 sibmem,[rax+rbx*1],ok
 tmm1,tmm1,ok
 tmm2,tmm2,ok

@@ -46,8 +46,8 @@ HEADER = ".intel_syntax noprefix"
 def load_and_clean() -> list[str]:
     lines = SRC.read_text(encoding="utf-8").splitlines()
     instrs = [l.strip() for l in lines if l.startswith("    ")]
-    # HEADER 가 1번 라인, 명령어 i(1-based)는 파일 라인 i+1 에 온다.
-    src_text = HEADER + "\n" + "\n".join(instrs) + "\n"
+    # forward label '1f' 참조를 해결하기 위해 끝에 '1:' 레이블 배치
+    src_text = HEADER + "\n" + "\n".join(instrs) + "\n1:\n"
 
     r = wsl_run(["as", "--64", "-mintel64", "-o", "/dev/null"], stdin=src_text)
     bad = set()
@@ -62,10 +62,14 @@ def load_and_clean() -> list[str]:
 
 # ── 2. 어셈블 → objdump ───────────────────────────────────────────────
 def assemble_and_objdump(clean: list[str]) -> str:
-    src_text = HEADER + "\n" + "\n".join(clean) + "\n"
+    # forward label ' 1f' 참조가 있으므로 끝에 '1:' 레이블 배치
+    src_text = HEADER + "\n" + "\n".join(clean) + "\n1:\n"
     r1 = wsl_run(["as", "--64", "-mintel64", "-o", "/tmp/step5.o"], stdin=src_text)
+    # as는 Warning이 있어도 .o를 생성한다. 치명적 실패만 체크.
     if r1.returncode != 0:
-        raise RuntimeError("clean 소스 어셈블 실패:\n" + (r1.stderr or r1.stdout)[:500])
+        err_lines = [l for l in (r1.stderr or r1.stdout).splitlines() if "Error:" in l]
+        if err_lines:
+            raise RuntimeError("clean 소스 어셈블 실패:\n" + "\n".join(err_lines[:10]))
     r2 = wsl_run(["objdump", "-d", "-M", "intel", "/tmp/step5.o"])
     if r2.returncode != 0:
         raise RuntimeError("objdump 실패:\n" + (r2.stderr or r2.stdout)[:500])

@@ -298,7 +298,7 @@
     bzhi eax, DWORD PTR [rax], eax
     bzhi rax, rax, rax
     bzhi rax, QWORD PTR [rax], rax
-    call .
+    call 1f
     call rax
     call QWORD PTR [rax]
     call DWORD PTR [rax]
@@ -577,10 +577,10 @@
     vcmpps k1{k2}, xmm2, xmm3, 0x1
     vcmpps k1{k2}, ymm2, ymm3, 0x1
     vcmpps k1{k2}, zmm2, zmm3, 0x1
-    cmps BYTE PTR [rax], BYTE PTR [rax]
-    cmps WORD PTR [rax], WORD PTR [rax]
-    cmps DWORD PTR [rax], DWORD PTR [rax]
-    cmps QWORD PTR [rax], QWORD PTR [rax]
+    cmpsb
+    cmpsw
+    cmpsd
+    cmpsq
     cmpsb
     cmpsw
     cmpsd
@@ -1013,9 +1013,9 @@
     insertps xmm1, xmm2, 0x1
     vinsertps xmm1, xmm2, xmm3, 0x1
     vinsertps xmm1, xmm2, xmm3, 0x1
-    ins BYTE PTR [rax], dx
-    ins WORD PTR [rax], dx
-    ins DWORD PTR [rax], dx
+    insb
+    insw
+    insd
     insb
     insw
     insd
@@ -1028,70 +1028,70 @@
     iret
     iretd
     iretq
-    ja .
-    jae .
-    jb .
-    jbe .
-    jc .
-    jecxz .
-    jrcxz .
-    je .
-    jg .
-    jge .
-    jl .
-    jle .
-    jna .
-    jnae .
-    jnb .
-    jnbe .
-    jnc .
-    jne .
-    jng .
-    jnge .
-    jnl .
-    jnle .
-    jno .
-    jnp .
-    jns .
-    jnz .
-    jo .
-    jp .
-    jpe .
-    jpo .
-    js .
-    jz .
-    ja .
-    jae .
-    jb .
-    jbe .
-    jc .
-    je .
-    jz .
-    jg .
-    jge .
-    jl .
-    jle .
-    jna .
-    jnae .
-    jnb .
-    jnbe .
-    jnc .
-    jne .
-    jng .
-    jnge .
-    jnl .
-    jnle .
-    jno .
-    jnp .
-    jns .
-    jnz .
-    jo .
-    jp .
-    jpe .
-    jpo .
-    js .
-    jmp .
-    jmp .
+    ja 1f
+    jae 1f
+    jb 1f
+    jbe 1f
+    jc 1f
+    jecxz 1f
+    jrcxz 1f
+    je 1f
+    jg 1f
+    jge 1f
+    jl 1f
+    jle 1f
+    jna 1f
+    jnae 1f
+    jnb 1f
+    jnbe 1f
+    jnc 1f
+    jne 1f
+    jng 1f
+    jnge 1f
+    jnl 1f
+    jnle 1f
+    jno 1f
+    jnp 1f
+    jns 1f
+    jnz 1f
+    jo 1f
+    jp 1f
+    jpe 1f
+    jpo 1f
+    js 1f
+    jz 1f
+    ja 1f
+    jae 1f
+    jb 1f
+    jbe 1f
+    jc 1f
+    je 1f
+    jz 1f
+    jg 1f
+    jge 1f
+    jl 1f
+    jle 1f
+    jna 1f
+    jnae 1f
+    jnb 1f
+    jnbe 1f
+    jnc 1f
+    jne 1f
+    jng 1f
+    jnge 1f
+    jnl 1f
+    jnle 1f
+    jno 1f
+    jnp 1f
+    jns 1f
+    jnz 1f
+    jo 1f
+    jp 1f
+    jpe 1f
+    jpo 1f
+    js 1f
+    jmp 1f
+    jmp 1f
     jmp rax
     jmp QWORD PTR [rax]
     jmp DWORD PTR [rax]
@@ -1160,7 +1160,6 @@
     kxorb k1, k2, k3
     kxorq k1, k2, k3
     kxord k1, k2, k3
-    lahf
     lar ax, ax
     lar eax, eax
     lddqu xmm1, [rax]
@@ -1192,20 +1191,20 @@
     lmsw ax
     lmsw WORD PTR [rax]
     loadiwkey xmm1, xmm2
-    lods BYTE PTR [rax]
-    lods WORD PTR [rax]
-    lods DWORD PTR [rax]
-    lods QWORD PTR [rax]
     lodsb
     lodsw
     lodsd
     lodsq
-    loop .
-    loope .
-    loopne .
+    lodsb
+    lodsw
+    lodsd
+    lodsq
+    loop 1f
+    loope 1f
+    loopne 1f
     lsl ax, ax
     lsl eax, eax
-    lsl rax, eax
+    lsl rax, rax
     ltr ax
     ltr WORD PTR [rax]
     lzcnt ax, ax
@@ -1278,7 +1277,7 @@
     mov ds, ax
     mov ds, WORD PTR [rax]
     mov ds, rax
-    mov ds, QWORD PTR [rax]
+    mov ds, ax
     mov al, [0x1000]
     mov al, [0x1000]
     mov ax, [0x1000]
@@ -1490,10 +1489,10 @@
     vmovq xmm1, xmm2
     vmovq xmm1, xmm2
     movq2dq xmm0, mm0
-    movs BYTE PTR [rax], BYTE PTR [rax]
-    movs WORD PTR [rax], WORD PTR [rax]
-    movs DWORD PTR [rax], DWORD PTR [rax]
-    movs QWORD PTR [rax], QWORD PTR [rax]
+    movsb
+    movsw
+    movsd
+    movsq
     movsb
     movsw
     movsd
@@ -1689,9 +1688,9 @@
     out dx, al
     out dx, ax
     out dx, eax
-    outs dx, BYTE PTR [rax]
-    outs dx, WORD PTR [rax]
-    outs dx, DWORD PTR [rax]
+    outsb
+    outsw
+    outsd
     outsb
     outsw
     outsd
@@ -2242,8 +2241,8 @@
     prefetcht1 BYTE PTR [rax]
     prefetcht2 BYTE PTR [rax]
     prefetchnta BYTE PTR [rax]
-    prefetchit0 BYTE PTR [rax]
-    prefetchit1 BYTE PTR [rax]
+    prefetchit0 BYTE PTR [rip+0x100]
+    prefetchit1 BYTE PTR [rip+0x100]
     prefetchw BYTE PTR [rax]
     psadbw mm1, mm2
     psadbw xmm1, xmm2
@@ -2728,7 +2727,6 @@
     rsqrtss xmm1, xmm2
     vrsqrtss xmm1, xmm2, xmm3
     rstorssp QWORD PTR [rax]
-    sahf
     sal al, 1
     sal BYTE PTR [rax], 1
     sal al, cl
@@ -2872,15 +2870,15 @@
     sbb eax, DWORD PTR [rax]
     sbb rax, rax
     sbb rax, QWORD PTR [rax]
-    scas BYTE PTR [rax]
-    scas WORD PTR [rax]
-    scas DWORD PTR [rax]
-    scas QWORD PTR [rax]
     scasb
     scasw
     scasd
     scasq
-    senduipi eax
+    scasb
+    scasw
+    scasd
+    scasq
+    senduipi rax
     serialize
     seta al
     seta BYTE PTR [rax]
@@ -3019,10 +3017,10 @@
     sti
     stmxcsr DWORD PTR [rax]
     vstmxcsr DWORD PTR [rax]
-    stos BYTE PTR [rax]
-    stos WORD PTR [rax]
-    stos DWORD PTR [rax]
-    stos QWORD PTR [rax]
+    stosb
+    stosw
+    stosd
+    stosq
     stosb
     stosw
     stosd
@@ -4518,8 +4516,8 @@
     xadd DWORD PTR [rax], eax
     xadd rax, rax
     xadd QWORD PTR [rax], rax
-    xbegin .
-    xbegin .
+    xbegin 1f
+    xbegin 1f
     xchg ax, ax
     xchg ax, ax
     xchg eax, eax
@@ -4544,7 +4542,7 @@
     xchg rax, QWORD PTR [rax]
     xend
     xgetbv
-    xlat BYTE PTR [rax]
+    xlatb
     xlatb
     xlatb
     xor al, 0x1
@@ -4648,3 +4646,4 @@
     vscatterpf1qps [rax+zmm14*1]{k1}
     vscatterpf1dpd [rax+ymm14*1]{k1}
     vscatterpf1qpd [rax+zmm14*1]{k1}
+1:
