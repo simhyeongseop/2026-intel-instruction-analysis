@@ -1,0 +1,9 @@
+# 모든 텍스트 파일을 저장소에서 LF로 통일 (Windows/OneDrive에서 생기는 CRLF 노이즈 방지)
+* text=auto eol=lf
+
+# 명시적 바이너리 (정규화 대상 아님)
+*.pdf   binary
+*.xlsx  binary
+*.xls   binary
+*.png   binary
+*.o     binary

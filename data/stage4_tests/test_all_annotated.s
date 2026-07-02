@@ -237,52 +237,52 @@
     adc QWORD PTR [rbx], r13
 
 // === ADC r8, m8 ===
+    adc al, BYTE PTR [rip + 0x1000]
+    adc dl, BYTE PTR [rax + rbx*1 + 0x10]
+    adc bl, BYTE PTR [rax]
+    adc cl, BYTE PTR [rbx]
+    adc al, BYTE PTR [rip + 0x100]
     adc dl, BYTE PTR [rip + 0x100]
     adc cl, BYTE PTR [rax + rbx*4 + 0x100]
-    adc cl, BYTE PTR [rip + 0x100]
+    adc cl, BYTE PTR [rax + rbx*1 + 0x10]
     adc al, BYTE PTR [rbx]
-    adc al, BYTE PTR [rip + 0x1000]
-    adc bl, BYTE PTR [rbx]
-    adc al, BYTE PTR [rax + rbx*4 + 0x100]
-    adc al, BYTE PTR [rax]
-    adc dl, BYTE PTR [rax + rbx*4 + 0x100]
-    adc bl, BYTE PTR [rip + 0x1000]
+    adc bl, BYTE PTR [rax + rbx*4 + 0x100]
 
 // === ADC r16, m16 ===
-    adc bx, WORD PTR [rbx]
+    adc ax, WORD PTR [rax]
     adc bx, WORD PTR [rip + 0x1000]
-    adc cx, WORD PTR [rip + 0x100]
-    adc dx, WORD PTR [rax + rbx*4 + 0x100]
-    adc si, WORD PTR [rip + 0x1000]
-    adc ax, WORD PTR [rip + 0x100]
     adc dx, WORD PTR [rip + 0x100]
-    adc ax, WORD PTR [rip + 0x1000]
-    adc cx, WORD PTR [rax + rbx*1 + 0x10]
-    adc dx, WORD PTR [rax]
+    adc si, WORD PTR [rax + rbx*1 + 0x10]
+    adc dx, WORD PTR [rbx]
+    adc di, WORD PTR [rip + 0x1000]
+    adc cx, WORD PTR [rbx]
+    adc ax, WORD PTR [rax + rbx*1 + 0x10]
+    adc bx, WORD PTR [rax]
+    adc ax, WORD PTR [rax + rbx*4 + 0x100]
 
 // === ADC r32, m32 ===
-    adc esi, DWORD PTR [rbx]
+    adc edi, DWORD PTR [rip + 0x100]
+    adc eax, DWORD PTR [rax + rbx*1 + 0x10]
     adc ebx, DWORD PTR [rax]
-    adc esi, DWORD PTR [rax]
-    adc esi, DWORD PTR [rax + rbx*1 + 0x10]
+    adc edx, DWORD PTR [rax + rbx*4 + 0x100]
+    adc edx, DWORD PTR [rbx]
+    adc ecx, DWORD PTR [rbx]
+    adc ecx, DWORD PTR [rip + 0x100]
+    adc ebx, DWORD PTR [rip + 0x1000]
+    adc esi, DWORD PTR [rbx]
     adc esi, DWORD PTR [rip + 0x100]
-    adc ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    adc edi, DWORD PTR [rip + 0x1000]
-    adc ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    adc eax, DWORD PTR [rbx]
-    adc edi, DWORD PTR [rax + rbx*4 + 0x100]
 
 // === ADC r64, m64 ===
+    adc r11, QWORD PTR [rbx]
+    adc r11, QWORD PTR [rax]
+    adc r8, QWORD PTR [rax]
+    adc rax, QWORD PTR [rax + rbx*4 + 0x100]
+    adc r13, QWORD PTR [rip + 0x100]
+    adc r10, QWORD PTR [rax + rbx*4 + 0x100]
+    adc r9, QWORD PTR [rip + 0x1000]
+    adc rbx, QWORD PTR [rax + rbx*4 + 0x100]
     adc r9, QWORD PTR [rbx]
-    adc rcx, QWORD PTR [rip + 0x1000]
-    adc rax, QWORD PTR [rax]
-    adc r12, QWORD PTR [rax + rbx*1 + 0x10]
-    adc rsi, QWORD PTR [rbx]
-    adc r8, QWORD PTR [rax + rbx*1 + 0x10]
-    adc rdi, QWORD PTR [rip + 0x100]
-    adc r9, QWORD PTR [rax]
-    adc rbx, QWORD PTR [rip + 0x1000]
-    adc rax, QWORD PTR [rip + 0x100]
+    adc rbx, QWORD PTR [rip + 0x100]
 
 // === ADD AL, imm8 ===
     add al, 0xff
@@ -294,274 +294,274 @@
     add eax, 0xffffffff
 
 // === ADD RAX, imm32 ===
-    add rax, 0x7fffffff
     add rax, -1
+    add rax, 0x7fffffff
 
 // === ADD r8, imm8 ===
-    add cl, 0xff
-    add dl, 0xff
     add al, 0xff
     add bl, 0xff
+    add cl, 0xff
+    add dl, 0xff
 
 // === ADD m8, imm8 ===
-    add BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    add BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    add BYTE PTR [rbx], 0xff
-    add BYTE PTR [rip + 0x1000], 0xff
-    add BYTE PTR [rip + 0x100], 0xff
     add BYTE PTR [rax], 0xff
+    add BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    add BYTE PTR [rip + 0x1000], 0xff
+    add BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    add BYTE PTR [rip + 0x100], 0xff
+    add BYTE PTR [rbx], 0xff
 
 // === ADD r16, imm16 ===
-    add cx, 0xffff
-    add si, 0xffff
-    add ax, 0xffff
     add dx, 0xffff
+    add cx, 0xffff
     add di, 0xffff
+    add ax, 0xffff
+    add si, 0xffff
     add bx, 0xffff
 
 // === ADD m16, imm16 ===
-    add WORD PTR [rbx], 0xffff
-    add WORD PTR [rax], 0xffff
-    add WORD PTR [rip + 0x1000], 0xffff
     add WORD PTR [rip + 0x100], 0xffff
+    add WORD PTR [rax], 0xffff
     add WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    add WORD PTR [rbx], 0xffff
+    add WORD PTR [rip + 0x1000], 0xffff
     add WORD PTR [rax + rbx*4 + 0x100], 0xffff
 
 // === ADD r32, imm32 ===
-    add eax, 0xffffffff
-    add ebx, 0xffffffff
-    add esi, 0xffffffff
-    add ecx, 0xffffffff
     add edi, 0xffffffff
     add edx, 0xffffffff
+    add ecx, 0xffffffff
+    add ebx, 0xffffffff
+    add eax, 0xffffffff
+    add esi, 0xffffffff
 
 // === ADD m32, imm32 ===
-    add DWORD PTR [rip + 0x1000], 0xffffffff
     add DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    add DWORD PTR [rax], 0xffffffff
     add DWORD PTR [rbx], 0xffffffff
-    add DWORD PTR [rip + 0x100], 0xffffffff
     add DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    add DWORD PTR [rax], 0xffffffff
+    add DWORD PTR [rip + 0x1000], 0xffffffff
+    add DWORD PTR [rip + 0x100], 0xffffffff
 
 // === ADD r64, imm32 ===
-    add r9, -1
+    add r8, 0x7fffffff
+    add r11, -1
     add rcx, 0x7fffffff
-    add r12, 0x7fffffff
-    add rsi, 0x7fffffff
-    add r10, 0x7fffffff
     add r13, -1
-    add rbx, -1
-    add r11, 0x7fffffff
-    add rbx, 0x7fffffff
+    add r8, -1
+    add rdi, 0x7fffffff
+    add r9, 0x7fffffff
+    add rax, -1
     add rsi, -1
+    add rbx, 0x7fffffff
 
 // === ADD m64, imm32 ===
-    add QWORD PTR [rbx], 0x7fffffff
-    add QWORD PTR [rax], -1
-    add QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    add QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    add QWORD PTR [rbx], -1
-    add QWORD PTR [rax + rbx*4 + 0x100], -1
-    add QWORD PTR [rip + 0x1000], -1
     add QWORD PTR [rax + rbx*1 + 0x10], -1
+    add QWORD PTR [rbx], -1
+    add QWORD PTR [rbx], 0x7fffffff
+    add QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    add QWORD PTR [rax], -1
+    add QWORD PTR [rip + 0x1000], 0x7fffffff
+    add QWORD PTR [rip + 0x1000], -1
+    add QWORD PTR [rip + 0x100], -1
+    add QWORD PTR [rax + rbx*4 + 0x100], -1
     add QWORD PTR [rip + 0x100], 0x7fffffff
-    add QWORD PTR [rax], 0x7fffffff
 
 // === ADD r16, imm8 ===
     add si, 0xff
-    add bx, 0xff
     add ax, 0xff
-    add cx, 0xff
-    add dx, 0xff
     add di, 0xff
+    add cx, 0xff
+    add bx, 0xff
+    add dx, 0xff
 
 // === ADD m16, imm8 ===
+    add WORD PTR [rax + rbx*1 + 0x10], 0xff
     add WORD PTR [rip + 0x1000], 0xff
-    add WORD PTR [rip + 0x100], 0xff
+    add WORD PTR [rax + rbx*4 + 0x100], 0xff
     add WORD PTR [rax], 0xff
     add WORD PTR [rbx], 0xff
-    add WORD PTR [rax + rbx*1 + 0x10], 0xff
-    add WORD PTR [rax + rbx*4 + 0x100], 0xff
+    add WORD PTR [rip + 0x100], 0xff
 
 // === ADD r32, imm8 ===
+    add ecx, 0xff
     add esi, 0xff
     add edx, 0xff
-    add ecx, 0xff
+    add edi, 0xff
     add eax, 0xff
     add ebx, 0xff
-    add edi, 0xff
 
 // === ADD m32, imm8 ===
-    add DWORD PTR [rip + 0x1000], 0xff
+    add DWORD PTR [rax + rbx*4 + 0x100], 0xff
     add DWORD PTR [rax], 0xff
     add DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    add DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    add DWORD PTR [rbx], 0xff
+    add DWORD PTR [rip + 0x1000], 0xff
     add DWORD PTR [rip + 0x100], 0xff
+    add DWORD PTR [rbx], 0xff
 
 // === ADD r64, imm8 ===
-    add r12, 0xff
-    add rcx, 0xff
-    add r8, 0xff
-    add rsi, 0xff
-    add r13, 0xff
-    add r10, 0xff
-    add r11, 0xff
-    add r9, 0xff
-    add rdx, 0xff
+    add rdi, 0xff
     add rax, 0xff
+    add r10, 0xff
+    add r8, 0xff
+    add rdx, 0xff
+    add r13, 0xff
+    add r11, 0xff
+    add rcx, 0xff
+    add r9, 0xff
+    add r12, 0xff
 
 // === ADD m64, imm8 ===
-    add QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    add QWORD PTR [rbx], 0xff
-    add QWORD PTR [rax], 0xff
-    add QWORD PTR [rax + rbx*1 + 0x10], 0xff
     add QWORD PTR [rip + 0x100], 0xff
     add QWORD PTR [rip + 0x1000], 0xff
+    add QWORD PTR [rbx], 0xff
+    add QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    add QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    add QWORD PTR [rax], 0xff
 
 // === ADD r8, r8 ===
-    add dl, dl
+    add cl, dl
+    add dl, bl
     add al, bl
+    add dl, dl
+    add al, al
+    add dl, al
+    add bl, cl
+    add cl, al
     add al, cl
     add cl, bl
-    add cl, al
-    add cl, dl
-    add bl, al
-    add dl, bl
-    add cl, cl
-    add dl, al
 
 // === ADD m8, r8 ===
-    add BYTE PTR [rip + 0x1000], bl
-    add BYTE PTR [rax], cl
-    add BYTE PTR [rax + rbx*1 + 0x10], cl
-    add BYTE PTR [rip + 0x100], bl
-    add BYTE PTR [rax], bl
-    add BYTE PTR [rax + rbx*4 + 0x100], al
-    add BYTE PTR [rax + rbx*1 + 0x10], bl
-    add BYTE PTR [rax + rbx*1 + 0x10], al
-    add BYTE PTR [rip + 0x100], dl
     add BYTE PTR [rax + rbx*4 + 0x100], dl
+    add BYTE PTR [rax + rbx*1 + 0x10], bl
+    add BYTE PTR [rip + 0x1000], cl
+    add BYTE PTR [rip + 0x1000], bl
+    add BYTE PTR [rax], al
+    add BYTE PTR [rax + rbx*1 + 0x10], dl
+    add BYTE PTR [rax], cl
+    add BYTE PTR [rip + 0x100], al
+    add BYTE PTR [rax + rbx*4 + 0x100], al
+    add BYTE PTR [rax + rbx*4 + 0x100], bl
 
 // === ADD r16, r16 ===
-    add si, cx
     add ax, bx
-    add dx, si
-    add dx, di
-    add ax, cx
-    add di, si
-    add cx, bx
-    add si, si
-    add di, dx
+    add di, cx
+    add di, di
+    add di, ax
     add dx, ax
+    add bx, si
+    add cx, cx
+    add si, si
+    add si, bx
+    add cx, si
 
 // === ADD m16, r16 ===
+    add WORD PTR [rax + rbx*4 + 0x100], bx
     add WORD PTR [rax + rbx*4 + 0x100], cx
-    add WORD PTR [rax], ax
-    add WORD PTR [rax + rbx*4 + 0x100], dx
-    add WORD PTR [rax + rbx*1 + 0x10], ax
+    add WORD PTR [rip + 0x1000], di
+    add WORD PTR [rbx], cx
     add WORD PTR [rip + 0x100], di
-    add WORD PTR [rax + rbx*1 + 0x10], cx
-    add WORD PTR [rip + 0x1000], cx
     add WORD PTR [rax], si
-    add WORD PTR [rax + rbx*1 + 0x10], bx
-    add WORD PTR [rax + rbx*4 + 0x100], ax
+    add WORD PTR [rip + 0x1000], cx
+    add WORD PTR [rax + rbx*1 + 0x10], ax
+    add WORD PTR [rax], dx
+    add WORD PTR [rip + 0x1000], bx
 
 // === ADD r32, r32 ===
-    add edx, ecx
-    add ecx, edi
-    add eax, esi
-    add eax, ecx
-    add edi, eax
-    add esi, edi
-    add edx, ebx
+    add ecx, ecx
+    add edx, esi
+    add edi, ecx
+    add eax, ebx
     add ebx, eax
-    add esi, eax
-    add ebx, edi
+    add esi, ecx
+    add edi, edi
+    add esi, edx
+    add edi, esi
+    add ecx, esi
 
 // === ADD m32, r32 ===
-    add DWORD PTR [rbx], edi
     add DWORD PTR [rax + rbx*4 + 0x100], edx
+    add DWORD PTR [rip + 0x100], eax
     add DWORD PTR [rax + rbx*1 + 0x10], ecx
+    add DWORD PTR [rax + rbx*4 + 0x100], ebx
     add DWORD PTR [rax + rbx*4 + 0x100], edi
-    add DWORD PTR [rip + 0x100], ebx
-    add DWORD PTR [rip + 0x1000], esi
-    add DWORD PTR [rip + 0x100], edx
-    add DWORD PTR [rax], eax
-    add DWORD PTR [rax], ebx
     add DWORD PTR [rip + 0x100], edi
+    add DWORD PTR [rbx], edi
+    add DWORD PTR [rax + rbx*4 + 0x100], ecx
+    add DWORD PTR [rax + rbx*4 + 0x100], eax
+    add DWORD PTR [rip + 0x1000], esi
 
 // === ADD r64, r64 ===
-    add r12, rbx
-    add r8, r10
-    add r13, rbx
-    add rdi, r12
-    add r13, rsi
-    add r8, r8
+    add rbx, r12
+    add r9, r10
+    add rdi, rbx
+    add rdx, r13
+    add r10, rdi
+    add rsi, rsi
+    add rdi, r9
+    add r12, r9
     add rax, rcx
-    add r13, r12
-    add r8, rbx
-    add rdx, r11
+    add r11, r11
 
 // === ADD m64, r64 ===
-    add QWORD PTR [rax + rbx*1 + 0x10], rsi
-    add QWORD PTR [rip + 0x100], r10
-    add QWORD PTR [rip + 0x100], rdx
-    add QWORD PTR [rip + 0x1000], rax
+    add QWORD PTR [rbx], r11
     add QWORD PTR [rax + rbx*1 + 0x10], r11
+    add QWORD PTR [rax + rbx*4 + 0x100], r8
+    add QWORD PTR [rax], rsi
+    add QWORD PTR [rip + 0x100], r13
     add QWORD PTR [rax + rbx*4 + 0x100], rdx
-    add QWORD PTR [rax + rbx*4 + 0x100], rsi
-    add QWORD PTR [rip + 0x1000], r13
-    add QWORD PTR [rbx], rsi
-    add QWORD PTR [rip + 0x100], r12
+    add QWORD PTR [rax + rbx*4 + 0x100], r10
+    add QWORD PTR [rbx], r8
+    add QWORD PTR [rip + 0x100], rbx
+    add QWORD PTR [rax], r8
 
 // === ADD r8, m8 ===
-    add al, BYTE PTR [rip + 0x100]
-    add bl, BYTE PTR [rbx]
-    add dl, BYTE PTR [rax + rbx*1 + 0x10]
+    add cl, BYTE PTR [rip + 0x1000]
     add al, BYTE PTR [rax + rbx*4 + 0x100]
-    add cl, BYTE PTR [rax]
-    add bl, BYTE PTR [rip + 0x1000]
-    add cl, BYTE PTR [rax + rbx*1 + 0x10]
-    add dl, BYTE PTR [rax + rbx*4 + 0x100]
-    add dl, BYTE PTR [rax]
+    add bl, BYTE PTR [rax + rbx*4 + 0x100]
+    add bl, BYTE PTR [rbx]
+    add al, BYTE PTR [rip + 0x100]
     add cl, BYTE PTR [rbx]
+    add bl, BYTE PTR [rax]
+    add dl, BYTE PTR [rip + 0x100]
+    add bl, BYTE PTR [rip + 0x1000]
+    add al, BYTE PTR [rax + rbx*1 + 0x10]
 
 // === ADD r16, m16 ===
-    add ax, WORD PTR [rip + 0x1000]
-    add cx, WORD PTR [rbx]
-    add ax, WORD PTR [rip + 0x100]
-    add cx, WORD PTR [rip + 0x1000]
-    add di, WORD PTR [rip + 0x100]
-    add dx, WORD PTR [rip + 0x100]
-    add dx, WORD PTR [rip + 0x1000]
-    add si, WORD PTR [rax + rbx*1 + 0x10]
+    add bx, WORD PTR [rip + 0x100]
+    add dx, WORD PTR [rax + rbx*4 + 0x100]
+    add bx, WORD PTR [rip + 0x1000]
     add si, WORD PTR [rax + rbx*4 + 0x100]
-    add ax, WORD PTR [rax + rbx*1 + 0x10]
+    add bx, WORD PTR [rbx]
+    add dx, WORD PTR [rip + 0x100]
+    add di, WORD PTR [rax]
+    add si, WORD PTR [rax + rbx*1 + 0x10]
+    add dx, WORD PTR [rip + 0x1000]
+    add ax, WORD PTR [rax]
 
 // === ADD r32, m32 ===
-    add ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    add ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    add ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    add edi, DWORD PTR [rax + rbx*4 + 0x100]
-    add ebx, DWORD PTR [rip + 0x100]
-    add edi, DWORD PTR [rbx]
-    add eax, DWORD PTR [rip + 0x1000]
+    add ebx, DWORD PTR [rax + rbx*1 + 0x10]
     add esi, DWORD PTR [rax]
-    add esi, DWORD PTR [rax + rbx*1 + 0x10]
-    add eax, DWORD PTR [rbx]
+    add edi, DWORD PTR [rbx]
+    add ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    add edi, DWORD PTR [rax + rbx*1 + 0x10]
+    add ebx, DWORD PTR [rbx]
+    add edx, DWORD PTR [rbx]
+    add ecx, DWORD PTR [rax]
+    add ecx, DWORD PTR [rip + 0x1000]
+    add edi, DWORD PTR [rax]
 
 // === ADD r64, m64 ===
-    add r13, QWORD PTR [rip + 0x100]
-    add rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    add rsi, QWORD PTR [rax + rbx*1 + 0x10]
-    add r9, QWORD PTR [rip + 0x1000]
-    add r9, QWORD PTR [rax]
-    add rcx, QWORD PTR [rip + 0x100]
-    add r11, QWORD PTR [rbx]
     add r11, QWORD PTR [rax + rbx*1 + 0x10]
-    add r11, QWORD PTR [rax + rbx*4 + 0x100]
-    add r8, QWORD PTR [rax]
+    add r13, QWORD PTR [rax + rbx*1 + 0x10]
+    add rsi, QWORD PTR [rip + 0x1000]
+    add rcx, QWORD PTR [rip + 0x100]
+    add r12, QWORD PTR [rax + rbx*1 + 0x10]
+    add r9, QWORD PTR [rip + 0x1000]
+    add rsi, QWORD PTR [rbx]
+    add r13, QWORD PTR [rip + 0x1000]
+    add rcx, QWORD PTR [rbx]
+    add r8, QWORD PTR [rax + rbx*1 + 0x10]
 
 // === AND AL, imm8 ===
     and al, 0xff
@@ -573,921 +573,922 @@
     and eax, 0xffffffff
 
 // === AND RAX, imm32 ===
-    and rax, -1
     and rax, 0x7fffffff
+    and rax, -1
 
 // === AND r8 , imm8 ===
-    and al, 0xff
-    and bl, 0xff
-    and dl, 0xff
     and cl, 0xff
+    and al, 0xff
+    and dl, 0xff
+    and bl, 0xff
 
 // === AND m8 , imm8 ===
-    and BYTE PTR [rip + 0x100], 0xff
-    and BYTE PTR [rbx], 0xff
     and BYTE PTR [rip + 0x1000], 0xff
     and BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    and BYTE PTR [rip + 0x100], 0xff
     and BYTE PTR [rax], 0xff
+    and BYTE PTR [rbx], 0xff
     and BYTE PTR [rax + rbx*1 + 0x10], 0xff
 
 // === AND r16, imm16 ===
+    and dx, 0xffff
+    and bx, 0xffff
+    and si, 0xffff
     and di, 0xffff
     and ax, 0xffff
     and cx, 0xffff
-    and bx, 0xffff
-    and si, 0xffff
-    and dx, 0xffff
 
 // === AND m16, imm16 ===
+    and WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    and WORD PTR [rip + 0x1000], 0xffff
     and WORD PTR [rax + rbx*4 + 0x100], 0xffff
     and WORD PTR [rax], 0xffff
-    and WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    and WORD PTR [rbx], 0xffff
     and WORD PTR [rip + 0x100], 0xffff
-    and WORD PTR [rip + 0x1000], 0xffff
+    and WORD PTR [rbx], 0xffff
 
 // === AND r32, imm32 ===
+    and eax, 0xffffffff
+    and ebx, 0xffffffff
+    and ecx, 0xffffffff
     and edx, 0xffffffff
     and esi, 0xffffffff
-    and eax, 0xffffffff
-    and ecx, 0xffffffff
     and edi, 0xffffffff
-    and ebx, 0xffffffff
 
 // === AND m32, imm32 ===
-    and DWORD PTR [rax], 0xffffffff
     and DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    and DWORD PTR [rip + 0x1000], 0xffffffff
-    and DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
     and DWORD PTR [rip + 0x100], 0xffffffff
+    and DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    and DWORD PTR [rip + 0x1000], 0xffffffff
     and DWORD PTR [rbx], 0xffffffff
+    and DWORD PTR [rax], 0xffffffff
 
 // === AND r64, imm32 ===
-    and rbx, -1
-    and rax, -1
-    and rcx, -1
-    and r13, 0x7fffffff
-    and rdi, 0x7fffffff
-    and r9, -1
-    and r8, -1
-    and r10, 0x7fffffff
-    and rbx, 0x7fffffff
+    and rdi, -1
+    and r12, 0x7fffffff
+    and rdx, 0x7fffffff
+    and r10, -1
     and r8, 0x7fffffff
+    and rdx, -1
+    and r11, -1
+    and rbx, -1
+    and rax, 0x7fffffff
+    and r9, 0x7fffffff
 
 // === AND m64, imm32 ===
     and QWORD PTR [rax], 0x7fffffff
-    and QWORD PTR [rax + rbx*1 + 0x10], -1
-    and QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    and QWORD PTR [rax], -1
-    and QWORD PTR [rbx], -1
-    and QWORD PTR [rip + 0x1000], 0x7fffffff
-    and QWORD PTR [rip + 0x100], 0x7fffffff
-    and QWORD PTR [rax + rbx*4 + 0x100], -1
+    and QWORD PTR [rip + 0x1000], -1
     and QWORD PTR [rip + 0x100], -1
+    and QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
+    and QWORD PTR [rip + 0x1000], 0x7fffffff
+    and QWORD PTR [rax], -1
+    and QWORD PTR [rip + 0x100], 0x7fffffff
+    and QWORD PTR [rbx], -1
     and QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    and QWORD PTR [rax + rbx*4 + 0x100], -1
 
 // === AND r16, imm8 ===
-    and ax, 0xff
-    and cx, 0xff
-    and si, 0xff
-    and bx, 0xff
     and dx, 0xff
+    and ax, 0xff
+    and bx, 0xff
+    and si, 0xff
+    and cx, 0xff
     and di, 0xff
 
 // === AND m16, imm8 ===
+    and WORD PTR [rax], 0xff
     and WORD PTR [rip + 0x100], 0xff
     and WORD PTR [rbx], 0xff
-    and WORD PTR [rax], 0xff
-    and WORD PTR [rip + 0x1000], 0xff
     and WORD PTR [rax + rbx*1 + 0x10], 0xff
     and WORD PTR [rax + rbx*4 + 0x100], 0xff
+    and WORD PTR [rip + 0x1000], 0xff
 
 // === AND r32, imm8 ===
     and esi, 0xff
-    and edi, 0xff
-    and eax, 0xff
-    and ebx, 0xff
     and edx, 0xff
     and ecx, 0xff
+    and edi, 0xff
+    and ebx, 0xff
+    and eax, 0xff
 
 // === AND m32, imm8 ===
     and DWORD PTR [rbx], 0xff
     and DWORD PTR [rip + 0x1000], 0xff
-    and DWORD PTR [rax], 0xff
     and DWORD PTR [rip + 0x100], 0xff
     and DWORD PTR [rax + rbx*4 + 0x100], 0xff
     and DWORD PTR [rax + rbx*1 + 0x10], 0xff
+    and DWORD PTR [rax], 0xff
 
 // === AND r64, imm8 ===
+    and r12, 0xff
+    and rsi, 0xff
     and rdi, 0xff
-    and r11, 0xff
+    and rdx, 0xff
     and rbx, 0xff
     and r13, 0xff
-    and rax, 0xff
-    and r12, 0xff
-    and rdx, 0xff
+    and r9, 0xff
     and r8, 0xff
-    and rcx, 0xff
+    and rax, 0xff
     and r10, 0xff
 
 // === AND m64, imm8 ===
-    and QWORD PTR [rbx], 0xff
-    and QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    and QWORD PTR [rax + rbx*4 + 0x100], 0xff
     and QWORD PTR [rip + 0x1000], 0xff
     and QWORD PTR [rax], 0xff
+    and QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    and QWORD PTR [rbx], 0xff
     and QWORD PTR [rip + 0x100], 0xff
+    and QWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === AND r16, r16 ===
-    and dx, si
-    and cx, ax
-    and si, cx
-    and si, dx
-    and ax, si
-    and si, ax
-    and cx, si
+    and di, cx
     and bx, dx
-    and bx, cx
-    and si, bx
+    and ax, si
+    and bx, bx
+    and ax, ax
+    and dx, ax
+    and dx, si
+    and cx, di
+    and dx, cx
+    and di, di
 
 // === AND m16, r16 ===
-    and WORD PTR [rax + rbx*4 + 0x100], si
-    and WORD PTR [rip + 0x1000], si
-    and WORD PTR [rip + 0x100], si
-    and WORD PTR [rax + rbx*4 + 0x100], bx
-    and WORD PTR [rax + rbx*4 + 0x100], ax
-    and WORD PTR [rip + 0x100], bx
-    and WORD PTR [rip + 0x100], dx
+    and WORD PTR [rax], si
+    and WORD PTR [rip + 0x100], cx
     and WORD PTR [rip + 0x100], di
-    and WORD PTR [rip + 0x100], ax
-    and WORD PTR [rip + 0x1000], di
+    and WORD PTR [rax + rbx*1 + 0x10], di
+    and WORD PTR [rax + rbx*1 + 0x10], bx
+    and WORD PTR [rip + 0x1000], bx
+    and WORD PTR [rip + 0x100], si
+    and WORD PTR [rax + rbx*4 + 0x100], dx
+    and WORD PTR [rip + 0x100], bx
+    and WORD PTR [rax + rbx*4 + 0x100], cx
 
 // === AND r32, r32 ===
-    and edi, edx
-    and esi, eax
-    and ecx, eax
-    and ecx, esi
-    and edx, ebx
-    and ecx, edx
+    and ebx, esi
+    and ecx, ecx
+    and edx, eax
+    and edx, edi
     and eax, esi
-    and edx, edx
-    and eax, edi
-    and esi, ebx
+    and edi, esi
+    and ebx, edx
+    and ebx, ecx
+    and esi, eax
+    and ebx, edi
 
 // === AND m32, r32 ===
-    and DWORD PTR [rbx], eax
+    and DWORD PTR [rax], eax
+    and DWORD PTR [rax + rbx*1 + 0x10], ecx
     and DWORD PTR [rax], ebx
-    and DWORD PTR [rax + rbx*4 + 0x100], edi
-    and DWORD PTR [rax + rbx*1 + 0x10], edx
+    and DWORD PTR [rax + rbx*1 + 0x10], esi
     and DWORD PTR [rip + 0x1000], esi
-    and DWORD PTR [rip + 0x100], esi
-    and DWORD PTR [rbx], edx
-    and DWORD PTR [rax], ecx
-    and DWORD PTR [rax], esi
+    and DWORD PTR [rax + rbx*4 + 0x100], ebx
+    and DWORD PTR [rip + 0x1000], ebx
+    and DWORD PTR [rax], edx
     and DWORD PTR [rax + rbx*1 + 0x10], ebx
+    and DWORD PTR [rip + 0x1000], ecx
 
 // === AND r64, r64 ===
-    and rbx, r9
-    and rdi, rdi
-    and r10, rdi
-    and r9, r9
-    and rsi, r13
-    and rbx, r12
-    and r13, rcx
     and r9, rsi
-    and r8, r11
-    and rcx, rbx
+    and r10, rdx
+    and rdi, rcx
+    and r8, r10
+    and rax, r8
+    and rsi, r10
+    and r8, rax
+    and r13, r8
+    and r9, rdx
+    and r11, r10
 
 // === AND m64, r64 ===
-    and QWORD PTR [rax], r10
-    and QWORD PTR [rip + 0x1000], r12
-    and QWORD PTR [rip + 0x100], rcx
-    and QWORD PTR [rax + rbx*1 + 0x10], rbx
-    and QWORD PTR [rip + 0x100], r13
-    and QWORD PTR [rip + 0x100], r8
-    and QWORD PTR [rbx], r8
+    and QWORD PTR [rbx], r13
+    and QWORD PTR [rax + rbx*1 + 0x10], rsi
+    and QWORD PTR [rip + 0x100], r10
+    and QWORD PTR [rbx], r10
     and QWORD PTR [rax + rbx*1 + 0x10], rcx
-    and QWORD PTR [rbx], rcx
-    and QWORD PTR [rip + 0x100], r9
+    and QWORD PTR [rax + rbx*1 + 0x10], rdx
+    and QWORD PTR [rax + rbx*4 + 0x100], r12
+    and QWORD PTR [rax + rbx*1 + 0x10], r8
+    and QWORD PTR [rax], rdi
+    and QWORD PTR [rax + rbx*1 + 0x10], rax
 
 // === AND r16, m16 ===
-    and cx, WORD PTR [rip + 0x100]
-    and si, WORD PTR [rax]
-    and dx, WORD PTR [rax]
-    and di, WORD PTR [rax + rbx*1 + 0x10]
-    and di, WORD PTR [rip + 0x1000]
-    and cx, WORD PTR [rax + rbx*1 + 0x10]
-    and bx, WORD PTR [rax]
     and si, WORD PTR [rax + rbx*1 + 0x10]
-    and cx, WORD PTR [rax + rbx*4 + 0x100]
-    and ax, WORD PTR [rax + rbx*1 + 0x10]
+    and cx, WORD PTR [rax]
+    and ax, WORD PTR [rax + rbx*4 + 0x100]
+    and di, WORD PTR [rip + 0x1000]
+    and cx, WORD PTR [rip + 0x1000]
+    and ax, WORD PTR [rip + 0x1000]
+    and si, WORD PTR [rax]
+    and bx, WORD PTR [rax]
+    and ax, WORD PTR [rax]
+    and dx, WORD PTR [rip + 0x100]
 
 // === AND r32, m32 ===
-    and edx, DWORD PTR [rip + 0x100]
-    and ebx, DWORD PTR [rax]
-    and esi, DWORD PTR [rbx]
-    and ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    and edx, DWORD PTR [rax]
-    and edi, DWORD PTR [rip + 0x100]
-    and eax, DWORD PTR [rip + 0x1000]
+    and ecx, DWORD PTR [rbx]
+    and ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    and edi, DWORD PTR [rax]
+    and edi, DWORD PTR [rbx]
     and eax, DWORD PTR [rax]
-    and edi, DWORD PTR [rax + rbx*4 + 0x100]
-    and ebx, DWORD PTR [rip + 0x1000]
+    and ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    and ecx, DWORD PTR [rip + 0x100]
+    and ecx, DWORD PTR [rax]
+    and eax, DWORD PTR [rbx]
+    and edx, DWORD PTR [rip + 0x1000]
 
 // === AND r64, m64 ===
-    and rdi, QWORD PTR [rax + rbx*4 + 0x100]
     and rsi, QWORD PTR [rax]
-    and r9, QWORD PTR [rbx]
+    and r9, QWORD PTR [rax]
+    and r9, QWORD PTR [rip + 0x1000]
     and rdx, QWORD PTR [rbx]
-    and rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    and rcx, QWORD PTR [rip + 0x100]
-    and r11, QWORD PTR [rax + rbx*1 + 0x10]
-    and r13, QWORD PTR [rax + rbx*1 + 0x10]
-    and rax, QWORD PTR [rax]
-    and rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    and r9, QWORD PTR [rip + 0x100]
+    and r10, QWORD PTR [rax]
+    and rdi, QWORD PTR [rip + 0x1000]
+    and r13, QWORD PTR [rip + 0x100]
+    and r12, QWORD PTR [rax + rbx*1 + 0x10]
+    and r12, QWORD PTR [rax]
 
 // === BSF r16, r16 ===
-    bsf si, di
-    bsf si, bx
     bsf bx, di
+    bsf ax, ax
+    bsf ax, dx
     bsf cx, di
-    bsf dx, bx
+    bsf si, bx
     bsf ax, bx
-    bsf dx, ax
-    bsf dx, si
-    bsf cx, ax
-    bsf ax, cx
+    bsf di, si
+    bsf cx, cx
+    bsf bx, ax
+    bsf bx, dx
 
 // === BSF r16, m16 ===
-    bsf si, WORD PTR [rip + 0x1000]
-    bsf di, WORD PTR [rax]
-    bsf ax, WORD PTR [rax]
-    bsf si, WORD PTR [rax + rbx*1 + 0x10]
     bsf ax, WORD PTR [rip + 0x100]
-    bsf bx, WORD PTR [rax + rbx*4 + 0x100]
-    bsf ax, WORD PTR [rip + 0x1000]
-    bsf ax, WORD PTR [rax + rbx*1 + 0x10]
+    bsf si, WORD PTR [rip + 0x1000]
+    bsf cx, WORD PTR [rax]
+    bsf cx, WORD PTR [rip + 0x1000]
+    bsf si, WORD PTR [rax]
+    bsf bx, WORD PTR [rip + 0x1000]
+    bsf cx, WORD PTR [rip + 0x100]
+    bsf si, WORD PTR [rbx]
+    bsf si, WORD PTR [rax + rbx*1 + 0x10]
     bsf cx, WORD PTR [rbx]
-    bsf dx, WORD PTR [rax]
 
 // === BSF r32, r32 ===
-    bsf esi, ebx
-    bsf ebx, eax
-    bsf eax, edx
-    bsf esi, ecx
-    bsf edi, eax
     bsf ecx, edi
-    bsf esi, esi
-    bsf ecx, esi
-    bsf edi, ecx
-    bsf ebx, edi
+    bsf esi, ecx
+    bsf ebx, eax
+    bsf ecx, edx
+    bsf eax, eax
+    bsf eax, edx
+    bsf edx, esi
+    bsf esi, eax
+    bsf edi, eax
+    bsf esi, edx
 
 // === BSF r32, m32 ===
-    bsf ebx, DWORD PTR [rip + 0x100]
-    bsf esi, DWORD PTR [rax + rbx*4 + 0x100]
-    bsf edx, DWORD PTR [rip + 0x100]
-    bsf esi, DWORD PTR [rip + 0x100]
+    bsf edi, DWORD PTR [rax + rbx*4 + 0x100]
+    bsf edx, DWORD PTR [rax + rbx*1 + 0x10]
+    bsf eax, DWORD PTR [rip + 0x1000]
     bsf ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    bsf ecx, DWORD PTR [rbx]
     bsf esi, DWORD PTR [rax + rbx*1 + 0x10]
-    bsf ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    bsf eax, DWORD PTR [rax + rbx*4 + 0x100]
-    bsf edi, DWORD PTR [rax]
+    bsf edi, DWORD PTR [rip + 0x1000]
+    bsf ebx, DWORD PTR [rip + 0x1000]
+    bsf ebx, DWORD PTR [rip + 0x100]
+    bsf ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    bsf esi, DWORD PTR [rip + 0x1000]
 
 // === BSF r64, r64 ===
-    bsf r11, r13
-    bsf r10, rcx
-    bsf r9, rdx
-    bsf rsi, r10
-    bsf rbx, rdx
-    bsf r13, rbx
-    bsf rax, rsi
-    bsf rdi, rax
+    bsf rdi, rdx
+    bsf rax, rax
+    bsf r8, r9
+    bsf r9, r8
     bsf rcx, rdi
-    bsf r10, r12
+    bsf rdi, rax
+    bsf rdx, rcx
+    bsf r12, rdi
+    bsf rax, rbx
+    bsf r9, rdx
 
 // === BSF r64, m64 ===
-    bsf r11, QWORD PTR [rax + rbx*4 + 0x100]
-    bsf rdx, QWORD PTR [rip + 0x1000]
-    bsf rcx, QWORD PTR [rax]
-    bsf r9, QWORD PTR [rax + rbx*1 + 0x10]
-    bsf rdi, QWORD PTR [rax + rbx*4 + 0x100]
-    bsf rsi, QWORD PTR [rip + 0x100]
-    bsf rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    bsf rcx, QWORD PTR [rax + rbx*4 + 0x100]
-    bsf r10, QWORD PTR [rax]
     bsf r8, QWORD PTR [rax + rbx*1 + 0x10]
+    bsf rsi, QWORD PTR [rbx]
+    bsf r8, QWORD PTR [rbx]
+    bsf rsi, QWORD PTR [rax]
+    bsf r9, QWORD PTR [rip + 0x100]
+    bsf r11, QWORD PTR [rax]
+    bsf r12, QWORD PTR [rbx]
+    bsf r12, QWORD PTR [rip + 0x100]
+    bsf r13, QWORD PTR [rbx]
+    bsf rdx, QWORD PTR [rbx]
 
 // === BSR r16, r16 ===
-    bsr si, dx
+    bsr cx, cx
+    bsr ax, ax
     bsr ax, di
-    bsr dx, dx
-    bsr bx, si
-    bsr si, bx
-    bsr di, cx
-    bsr cx, si
+    bsr ax, si
+    bsr dx, di
+    bsr ax, cx
+    bsr bx, ax
+    bsr di, si
+    bsr si, dx
     bsr si, cx
-    bsr bx, cx
-    bsr bx, dx
 
 // === BSR r16, m16 ===
-    bsr di, WORD PTR [rax + rbx*1 + 0x10]
-    bsr dx, WORD PTR [rbx]
-    bsr si, WORD PTR [rax]
-    bsr cx, WORD PTR [rax + rbx*1 + 0x10]
+    bsr bx, WORD PTR [rax]
     bsr ax, WORD PTR [rax + rbx*4 + 0x100]
+    bsr dx, WORD PTR [rax + rbx*4 + 0x100]
+    bsr bx, WORD PTR [rbx]
+    bsr si, WORD PTR [rax]
+    bsr cx, WORD PTR [rip + 0x1000]
+    bsr cx, WORD PTR [rax + rbx*4 + 0x100]
+    bsr cx, WORD PTR [rip + 0x100]
+    bsr si, WORD PTR [rip + 0x100]
     bsr dx, WORD PTR [rax + rbx*1 + 0x10]
-    bsr di, WORD PTR [rax]
-    bsr dx, WORD PTR [rip + 0x100]
-    bsr ax, WORD PTR [rax + rbx*1 + 0x10]
-    bsr bx, WORD PTR [rip + 0x100]
 
 // === BSR r32, r32 ===
-    bsr ebx, edi
-    bsr eax, esi
-    bsr ecx, ecx
-    bsr eax, eax
-    bsr edx, edi
-    bsr edi, ecx
-    bsr edi, eax
-    bsr edi, esi
+    bsr esi, ebx
     bsr eax, ebx
-    bsr eax, edx
+    bsr esi, edi
+    bsr esi, edx
+    bsr ecx, ebx
+    bsr edx, eax
+    bsr ebx, ebx
+    bsr edx, edi
+    bsr ebx, eax
+    bsr edi, ebx
 
 // === BSR r32, m32 ===
-    bsr esi, DWORD PTR [rax + rbx*4 + 0x100]
-    bsr eax, DWORD PTR [rip + 0x100]
-    bsr edi, DWORD PTR [rax]
-    bsr ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    bsr ecx, DWORD PTR [rip + 0x1000]
-    bsr edx, DWORD PTR [rip + 0x1000]
+    bsr edx, DWORD PTR [rax + rbx*1 + 0x10]
+    bsr ecx, DWORD PTR [rip + 0x100]
+    bsr ebx, DWORD PTR [rax]
+    bsr ecx, DWORD PTR [rax + rbx*4 + 0x100]
     bsr edx, DWORD PTR [rax]
-    bsr edi, DWORD PTR [rip + 0x1000]
+    bsr edi, DWORD PTR [rip + 0x100]
+    bsr eax, DWORD PTR [rax + rbx*1 + 0x10]
     bsr ebx, DWORD PTR [rbx]
-    bsr esi, DWORD PTR [rax + rbx*1 + 0x10]
+    bsr eax, DWORD PTR [rbx]
+    bsr ebx, DWORD PTR [rax + rbx*4 + 0x100]
 
 // === BSR r64, r64 ===
-    bsr rdx, rdi
-    bsr rsi, r13
+    bsr r13, rcx
     bsr rbx, r12
-    bsr rcx, rax
-    bsr rcx, rcx
-    bsr r9, rdi
-    bsr r11, rdi
-    bsr rax, rax
-    bsr rcx, r8
-    bsr r13, rax
+    bsr r11, r13
+    bsr r12, rcx
+    bsr rbx, rdi
+    bsr r10, rbx
+    bsr r10, r11
+    bsr r9, r13
+    bsr rax, r12
+    bsr rdi, r11
 
 // === BSR r64, m64 ===
-    bsr rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    bsr rdx, QWORD PTR [rip + 0x1000]
-    bsr rcx, QWORD PTR [rax + rbx*1 + 0x10]
-    bsr r12, QWORD PTR [rip + 0x1000]
-    bsr r12, QWORD PTR [rip + 0x100]
-    bsr rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    bsr rdi, QWORD PTR [rax]
-    bsr r9, QWORD PTR [rax + rbx*1 + 0x10]
-    bsr rax, QWORD PTR [rax + rbx*4 + 0x100]
     bsr rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    bsr rbx, QWORD PTR [rax]
+    bsr r10, QWORD PTR [rax + rbx*4 + 0x100]
+    bsr rdx, QWORD PTR [rip + 0x100]
+    bsr rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    bsr r10, QWORD PTR [rip + 0x100]
+    bsr rbx, QWORD PTR [rip + 0x1000]
+    bsr r11, QWORD PTR [rax + rbx*1 + 0x10]
+    bsr r11, QWORD PTR [rip + 0x1000]
+    bsr r9, QWORD PTR [rip + 0x1000]
 
 // === BSWAP r32 ===
-    bswap edi
-    bswap ebx
     bswap edx
-    bswap esi
+    bswap ebx
+    bswap edi
     bswap eax
+    bswap esi
     bswap ecx
 
 // === BSWAP r64 ===
-    bswap r13
-    bswap r11
-    bswap r8
     bswap rsi
-    bswap rcx
-    bswap rax
-    bswap rdx
+    bswap r11
     bswap r12
+    bswap rax
     bswap r9
+    bswap r8
+    bswap rdx
+    bswap r13
     bswap rdi
+    bswap rcx
 
 // === BT r16, r16 ===
-    bt cx, si
-    bt bx, ax
-    bt cx, dx
-    bt dx, ax
-    bt di, si
-    bt ax, cx
+    bt dx, bx
     bt bx, bx
-    bt ax, bx
+    bt dx, ax
+    bt ax, cx
+    bt bx, cx
     bt bx, dx
     bt di, bx
+    bt di, cx
+    bt di, si
+    bt cx, di
 
 // === BT m16, r16 ===
-    bt WORD PTR [rax], di
+    bt WORD PTR [rbx], ax
+    bt WORD PTR [rip + 0x1000], si
     bt WORD PTR [rip + 0x100], di
-    bt WORD PTR [rip + 0x1000], bx
-    bt WORD PTR [rax], cx
+    bt WORD PTR [rax], si
+    bt WORD PTR [rip + 0x1000], dx
     bt WORD PTR [rip + 0x100], ax
-    bt WORD PTR [rip + 0x100], si
-    bt WORD PTR [rax + rbx*4 + 0x100], di
-    bt WORD PTR [rax + rbx*1 + 0x10], si
-    bt WORD PTR [rax], dx
-    bt WORD PTR [rax], ax
+    bt WORD PTR [rax + rbx*4 + 0x100], bx
+    bt WORD PTR [rip + 0x1000], bx
+    bt WORD PTR [rip + 0x1000], cx
+    bt WORD PTR [rip + 0x1000], ax
 
 // === BT r32, r32 ===
-    bt esi, edx
-    bt ebx, esi
-    bt ecx, ecx
-    bt esi, esi
-    bt eax, edi
-    bt esi, ecx
+    bt edi, esi
     bt esi, edi
-    bt edx, edi
+    bt edx, ecx
+    bt ebx, ebx
+    bt esi, ecx
+    bt edi, ecx
     bt edx, ebx
-    bt edi, edi
+    bt ecx, edi
+    bt eax, ecx
+    bt esi, ebx
 
 // === BT m32, r32 ===
-    bt DWORD PTR [rax], edx
-    bt DWORD PTR [rip + 0x100], esi
+    bt DWORD PTR [rbx], ebx
+    bt DWORD PTR [rax + rbx*1 + 0x10], ebx
     bt DWORD PTR [rax], edi
-    bt DWORD PTR [rax], ecx
-    bt DWORD PTR [rbx], edx
+    bt DWORD PTR [rbx], eax
+    bt DWORD PTR [rax + rbx*1 + 0x10], edi
+    bt DWORD PTR [rip + 0x100], edx
+    bt DWORD PTR [rax + rbx*4 + 0x100], eax
+    bt DWORD PTR [rax + rbx*1 + 0x10], ecx
+    bt DWORD PTR [rax + rbx*4 + 0x100], edi
     bt DWORD PTR [rip + 0x100], edi
-    bt DWORD PTR [rip + 0x100], ebx
-    bt DWORD PTR [rax], esi
-    bt DWORD PTR [rax + rbx*4 + 0x100], esi
-    bt DWORD PTR [rbx], esi
 
 // === BT r64, r64 ===
-    bt r11, r9
-    bt rcx, r10
-    bt rsi, rdi
-    bt rsi, rax
-    bt r12, rbx
-    bt r10, rcx
-    bt rcx, r13
-    bt r9, rcx
-    bt rax, rax
-    bt rdx, r11
+    bt rsi, r9
+    bt rdi, r9
+    bt r8, r11
+    bt r13, r13
+    bt rsi, r13
+    bt r12, rdi
+    bt rdx, rdi
+    bt rdx, r8
+    bt rdi, r11
+    bt r9, rsi
 
 // === BT m64, r64 ===
-    bt QWORD PTR [rax + rbx*1 + 0x10], r10
-    bt QWORD PTR [rbx], r12
-    bt QWORD PTR [rbx], rcx
-    bt QWORD PTR [rip + 0x1000], rcx
-    bt QWORD PTR [rax], rsi
-    bt QWORD PTR [rax + rbx*1 + 0x10], r9
-    bt QWORD PTR [rax + rbx*1 + 0x10], r12
-    bt QWORD PTR [rbx], r13
-    bt QWORD PTR [rip + 0x100], r13
-    bt QWORD PTR [rax], rbx
+    bt QWORD PTR [rax + rbx*4 + 0x100], r8
+    bt QWORD PTR [rip + 0x1000], r11
+    bt QWORD PTR [rip + 0x100], r8
+    bt QWORD PTR [rax], r8
+    bt QWORD PTR [rbx], rsi
+    bt QWORD PTR [rbx], rbx
+    bt QWORD PTR [rbx], rdi
+    bt QWORD PTR [rax + rbx*1 + 0x10], rdi
+    bt QWORD PTR [rax], r10
+    bt QWORD PTR [rip + 0x1000], rax
 
 // === BT r16, imm8 ===
-    bt dx, 0xff
     bt si, 0xff
-    bt di, 0xff
-    bt bx, 0xff
-    bt ax, 0xff
     bt cx, 0xff
+    bt dx, 0xff
+    bt ax, 0xff
+    bt bx, 0xff
+    bt di, 0xff
 
 // === BT m16, imm8 ===
+    bt WORD PTR [rax + rbx*1 + 0x10], 0xff
+    bt WORD PTR [rip + 0x1000], 0xff
     bt WORD PTR [rbx], 0xff
     bt WORD PTR [rip + 0x100], 0xff
-    bt WORD PTR [rip + 0x1000], 0xff
     bt WORD PTR [rax], 0xff
-    bt WORD PTR [rax + rbx*1 + 0x10], 0xff
     bt WORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === BT r32, imm8 ===
-    bt ebx, 0xff
-    bt edi, 0xff
-    bt eax, 0xff
-    bt ecx, 0xff
-    bt esi, 0xff
     bt edx, 0xff
+    bt esi, 0xff
+    bt ecx, 0xff
+    bt edi, 0xff
+    bt ebx, 0xff
+    bt eax, 0xff
 
 // === BT m32, imm8 ===
-    bt DWORD PTR [rip + 0x100], 0xff
-    bt DWORD PTR [rbx], 0xff
+    bt DWORD PTR [rip + 0x1000], 0xff
     bt DWORD PTR [rax], 0xff
     bt DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    bt DWORD PTR [rip + 0x1000], 0xff
     bt DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    bt DWORD PTR [rip + 0x100], 0xff
+    bt DWORD PTR [rbx], 0xff
 
 // === BT r64, imm8 ===
     bt r10, 0xff
-    bt r8, 0xff
-    bt rax, 0xff
+    bt rdi, 0xff
     bt r9, 0xff
-    bt r13, 0xff
+    bt rdx, 0xff
+    bt rsi, 0xff
+    bt rcx, 0xff
     bt r12, 0xff
     bt rbx, 0xff
-    bt r11, 0xff
-    bt rcx, 0xff
-    bt rsi, 0xff
+    bt r13, 0xff
+    bt r8, 0xff
 
 // === BT m64, imm8 ===
-    bt QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    bt QWORD PTR [rbx], 0xff
-    bt QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    bt QWORD PTR [rip + 0x100], 0xff
     bt QWORD PTR [rip + 0x1000], 0xff
+    bt QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    bt QWORD PTR [rax + rbx*4 + 0x100], 0xff
     bt QWORD PTR [rax], 0xff
+    bt QWORD PTR [rbx], 0xff
+    bt QWORD PTR [rip + 0x100], 0xff
 
 // === BTC r16, r16 ===
-    btc ax, cx
-    btc di, si
+    btc bx, ax
+    btc cx, ax
+    btc di, bx
+    btc si, ax
+    btc di, di
+    btc cx, dx
     btc dx, bx
-    btc dx, dx
-    btc bx, dx
-    btc ax, bx
-    btc di, cx
-    btc si, di
-    btc si, dx
-    btc si, bx
+    btc ax, cx
+    btc ax, ax
+    btc dx, di
 
 // === BTC m16, r16 ===
+    btc WORD PTR [rip + 0x100], di
+    btc WORD PTR [rax + rbx*1 + 0x10], ax
+    btc WORD PTR [rip + 0x100], bx
     btc WORD PTR [rbx], cx
-    btc WORD PTR [rbx], si
-    btc WORD PTR [rax], di
-    btc WORD PTR [rax + rbx*1 + 0x10], si
-    btc WORD PTR [rax + rbx*1 + 0x10], dx
-    btc WORD PTR [rax], cx
-    btc WORD PTR [rip + 0x1000], cx
-    btc WORD PTR [rax + rbx*4 + 0x100], di
-    btc WORD PTR [rbx], ax
-    btc WORD PTR [rax + rbx*4 + 0x100], dx
+    btc WORD PTR [rax + rbx*1 + 0x10], bx
+    btc WORD PTR [rax], ax
+    btc WORD PTR [rip + 0x100], dx
+    btc WORD PTR [rip + 0x1000], si
+    btc WORD PTR [rip + 0x1000], bx
+    btc WORD PTR [rax], si
 
 // === BTC r32, r32 ===
-    btc ebx, esi
-    btc edx, esi
+    btc edi, edi
+    btc esi, edx
+    btc ebx, edi
+    btc edx, ecx
+    btc ebx, ebx
     btc ebx, ecx
-    btc ecx, eax
     btc eax, edx
     btc ecx, ebx
-    btc edx, edi
-    btc esi, eax
+    btc eax, ecx
     btc edi, ebx
-    btc esi, ebx
 
 // === BTC m32, r32 ===
-    btc DWORD PTR [rax + rbx*4 + 0x100], edx
     btc DWORD PTR [rbx], edx
-    btc DWORD PTR [rax], ebx
+    btc DWORD PTR [rax], eax
     btc DWORD PTR [rip + 0x100], esi
-    btc DWORD PTR [rax + rbx*4 + 0x100], edi
-    btc DWORD PTR [rax], ecx
     btc DWORD PTR [rbx], ecx
+    btc DWORD PTR [rax + rbx*4 + 0x100], esi
+    btc DWORD PTR [rax + rbx*4 + 0x100], eax
+    btc DWORD PTR [rip + 0x1000], edx
+    btc DWORD PTR [rbx], eax
     btc DWORD PTR [rbx], esi
-    btc DWORD PTR [rax], edx
-    btc DWORD PTR [rax + rbx*1 + 0x10], ecx
+    btc DWORD PTR [rax + rbx*4 + 0x100], edx
 
 // === BTC r64, r64 ===
-    btc rbx, r13
-    btc r12, r8
-    btc rbx, rax
+    btc r13, r12
+    btc rcx, rax
+    btc rax, r11
+    btc rdi, rdx
+    btc r8, r8
+    btc r13, rcx
     btc rbx, r11
-    btc r13, r9
-    btc rdi, r12
-    btc rdx, rdi
-    btc r10, r12
-    btc rsi, r8
-    btc rsi, rax
+    btc r8, r10
+    btc r11, rax
+    btc rax, rdi
 
 // === BTC m64, r64 ===
-    btc QWORD PTR [rax + rbx*1 + 0x10], rbx
+    btc QWORD PTR [rax + rbx*4 + 0x100], r9
+    btc QWORD PTR [rip + 0x100], rdi
+    btc QWORD PTR [rax], rax
+    btc QWORD PTR [rax], r9
+    btc QWORD PTR [rbx], rcx
+    btc QWORD PTR [rax + rbx*1 + 0x10], r11
+    btc QWORD PTR [rax + rbx*4 + 0x100], rdx
+    btc QWORD PTR [rip + 0x100], r9
     btc QWORD PTR [rax], rdx
-    btc QWORD PTR [rip + 0x1000], r10
-    btc QWORD PTR [rip + 0x100], rax
-    btc QWORD PTR [rbx], r9
-    btc QWORD PTR [rbx], rax
-    btc QWORD PTR [rax + rbx*1 + 0x10], rcx
-    btc QWORD PTR [rax + rbx*4 + 0x100], r8
-    btc QWORD PTR [rbx], r8
-    btc QWORD PTR [rbx], r10
+    btc QWORD PTR [rax], r12
 
 // === BTC r16, imm8 ===
-    btc ax, 0xff
-    btc di, 0xff
     btc dx, 0xff
-    btc si, 0xff
     btc bx, 0xff
+    btc ax, 0xff
+    btc si, 0xff
+    btc di, 0xff
     btc cx, 0xff
 
 // === BTC m16, imm8 ===
-    btc WORD PTR [rip + 0x100], 0xff
     btc WORD PTR [rbx], 0xff
-    btc WORD PTR [rip + 0x1000], 0xff
     btc WORD PTR [rax + rbx*4 + 0x100], 0xff
+    btc WORD PTR [rip + 0x1000], 0xff
     btc WORD PTR [rax], 0xff
     btc WORD PTR [rax + rbx*1 + 0x10], 0xff
+    btc WORD PTR [rip + 0x100], 0xff
 
 // === BTC r32, imm8 ===
     btc esi, 0xff
-    btc edi, 0xff
-    btc eax, 0xff
-    btc ebx, 0xff
     btc ecx, 0xff
     btc edx, 0xff
+    btc edi, 0xff
+    btc ebx, 0xff
+    btc eax, 0xff
 
 // === BTC m32, imm8 ===
-    btc DWORD PTR [rbx], 0xff
     btc DWORD PTR [rax], 0xff
+    btc DWORD PTR [rbx], 0xff
+    btc DWORD PTR [rax + rbx*4 + 0x100], 0xff
     btc DWORD PTR [rax + rbx*1 + 0x10], 0xff
     btc DWORD PTR [rip + 0x100], 0xff
-    btc DWORD PTR [rax + rbx*4 + 0x100], 0xff
     btc DWORD PTR [rip + 0x1000], 0xff
 
 // === BTC r64, imm8 ===
-    btc rdx, 0xff
-    btc rcx, 0xff
-    btc rbx, 0xff
-    btc rsi, 0xff
-    btc r11, 0xff
     btc rax, 0xff
-    btc r8, 0xff
-    btc r13, 0xff
-    btc rdi, 0xff
     btc r9, 0xff
+    btc rsi, 0xff
+    btc r13, 0xff
+    btc r8, 0xff
+    btc rbx, 0xff
+    btc r12, 0xff
+    btc rcx, 0xff
+    btc rdx, 0xff
+    btc r10, 0xff
 
 // === BTC m64, imm8 ===
-    btc QWORD PTR [rip + 0x1000], 0xff
-    btc QWORD PTR [rax], 0xff
-    btc QWORD PTR [rip + 0x100], 0xff
-    btc QWORD PTR [rbx], 0xff
     btc QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    btc QWORD PTR [rip + 0x1000], 0xff
+    btc QWORD PTR [rip + 0x100], 0xff
+    btc QWORD PTR [rax], 0xff
     btc QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    btc QWORD PTR [rbx], 0xff
 
 // === BTR r16, r16 ===
-    btr dx, di
-    btr cx, di
-    btr bx, di
-    btr ax, cx
-    btr di, si
-    btr si, ax
+    btr dx, dx
     btr ax, dx
-    btr di, cx
-    btr si, di
+    btr si, si
+    btr dx, bx
+    btr bx, cx
+    btr dx, si
     btr di, bx
+    btr si, di
+    btr si, bx
+    btr dx, di
 
 // === BTR m16, r16 ===
-    btr WORD PTR [rip + 0x1000], si
+    btr WORD PTR [rax + rbx*4 + 0x100], dx
+    btr WORD PTR [rip + 0x100], bx
+    btr WORD PTR [rax + rbx*1 + 0x10], dx
     btr WORD PTR [rax], cx
     btr WORD PTR [rax], bx
-    btr WORD PTR [rax + rbx*4 + 0x100], ax
-    btr WORD PTR [rax], dx
-    btr WORD PTR [rax], si
-    btr WORD PTR [rbx], dx
-    btr WORD PTR [rip + 0x1000], cx
-    btr WORD PTR [rip + 0x1000], ax
-    btr WORD PTR [rax + rbx*4 + 0x100], bx
+    btr WORD PTR [rax + rbx*1 + 0x10], si
+    btr WORD PTR [rbx], ax
+    btr WORD PTR [rip + 0x100], cx
+    btr WORD PTR [rbx], si
+    btr WORD PTR [rip + 0x100], di
 
 // === BTR r32, r32 ===
-    btr edx, ebx
-    btr esi, ebx
-    btr esi, edx
-    btr edi, ecx
-    btr ecx, esi
-    btr ecx, eax
-    btr edi, eax
-    btr esi, esi
-    btr edi, esi
-    btr ebx, edi
+    btr ebx, esi
+    btr eax, ebx
+    btr ebx, edx
+    btr eax, eax
+    btr ecx, ecx
+    btr eax, edi
+    btr edi, edi
+    btr edx, edx
+    btr eax, ecx
+    btr edi, ebx
 
 // === BTR m32, r32 ===
-    btr DWORD PTR [rip + 0x1000], edx
-    btr DWORD PTR [rip + 0x1000], ecx
-    btr DWORD PTR [rax], eax
-    btr DWORD PTR [rax + rbx*4 + 0x100], esi
-    btr DWORD PTR [rax], edx
-    btr DWORD PTR [rip + 0x100], edi
-    btr DWORD PTR [rax], edi
-    btr DWORD PTR [rip + 0x100], edx
+    btr DWORD PTR [rax], ecx
+    btr DWORD PTR [rip + 0x1000], esi
     btr DWORD PTR [rax], ebx
-    btr DWORD PTR [rax + rbx*4 + 0x100], edx
+    btr DWORD PTR [rax + rbx*1 + 0x10], eax
+    btr DWORD PTR [rip + 0x100], esi
+    btr DWORD PTR [rax + rbx*4 + 0x100], ecx
+    btr DWORD PTR [rbx], edi
+    btr DWORD PTR [rip + 0x100], edx
+    btr DWORD PTR [rbx], eax
+    btr DWORD PTR [rip + 0x1000], ecx
 
 // === BTR r64, r64 ===
-    btr r8, rcx
-    btr rax, r10
+    btr r12, r8
+    btr rsi, rcx
+    btr r13, r12
+    btr r13, rcx
+    btr rsi, rax
+    btr rdi, r11
     btr rcx, rax
-    btr rdx, r11
-    btr rbx, r9
-    btr rax, r12
-    btr rcx, r8
-    btr rdx, r12
-    btr rsi, rsi
-    btr rsi, rdx
+    btr r10, rcx
+    btr rdx, rdi
+    btr rdx, rax
 
 // === BTR m64, r64 ===
-    btr QWORD PTR [rax + rbx*1 + 0x10], r11
-    btr QWORD PTR [rax + rbx*4 + 0x100], r12
-    btr QWORD PTR [rip + 0x1000], rcx
-    btr QWORD PTR [rip + 0x1000], rsi
-    btr QWORD PTR [rax + rbx*1 + 0x10], r10
-    btr QWORD PTR [rip + 0x1000], r9
-    btr QWORD PTR [rax], rbx
-    btr QWORD PTR [rbx], rax
-    btr QWORD PTR [rip + 0x1000], r13
-    btr QWORD PTR [rax + rbx*1 + 0x10], r12
+    btr QWORD PTR [rip + 0x100], r9
+    btr QWORD PTR [rax + rbx*4 + 0x100], r8
+    btr QWORD PTR [rip + 0x100], rbx
+    btr QWORD PTR [rip + 0x100], rsi
+    btr QWORD PTR [rip + 0x100], r11
+    btr QWORD PTR [rax + rbx*4 + 0x100], rcx
+    btr QWORD PTR [rip + 0x100], r10
+    btr QWORD PTR [rax], r12
+    btr QWORD PTR [rax + rbx*1 + 0x10], r8
+    btr QWORD PTR [rip + 0x100], rcx
 
 // === BTR r16, imm8 ===
-    btr di, 0xff
-    btr cx, 0xff
+    btr ax, 0xff
+    btr dx, 0xff
     btr bx, 0xff
     btr si, 0xff
-    btr dx, 0xff
-    btr ax, 0xff
+    btr di, 0xff
+    btr cx, 0xff
 
 // === BTR m16, imm8 ===
-    btr WORD PTR [rax + rbx*1 + 0x10], 0xff
     btr WORD PTR [rbx], 0xff
-    btr WORD PTR [rax], 0xff
-    btr WORD PTR [rip + 0x100], 0xff
     btr WORD PTR [rax + rbx*4 + 0x100], 0xff
+    btr WORD PTR [rax], 0xff
     btr WORD PTR [rip + 0x1000], 0xff
+    btr WORD PTR [rip + 0x100], 0xff
+    btr WORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === BTR r32, imm8 ===
-    btr edi, 0xff
-    btr ecx, 0xff
-    btr eax, 0xff
-    btr ebx, 0xff
-    btr esi, 0xff
     btr edx, 0xff
+    btr eax, 0xff
+    btr esi, 0xff
+    btr ebx, 0xff
+    btr ecx, 0xff
+    btr edi, 0xff
 
 // === BTR m32, imm8 ===
+    btr DWORD PTR [rax + rbx*1 + 0x10], 0xff
     btr DWORD PTR [rip + 0x1000], 0xff
-    btr DWORD PTR [rbx], 0xff
     btr DWORD PTR [rip + 0x100], 0xff
     btr DWORD PTR [rax], 0xff
+    btr DWORD PTR [rbx], 0xff
     btr DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    btr DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === BTR r64, imm8 ===
-    btr r12, 0xff
-    btr r13, 0xff
     btr r11, 0xff
-    btr rbx, 0xff
-    btr r8, 0xff
-    btr r9, 0xff
-    btr rax, 0xff
-    btr rdi, 0xff
     btr rdx, 0xff
+    btr rdi, 0xff
     btr rcx, 0xff
+    btr rax, 0xff
+    btr r10, 0xff
+    btr r13, 0xff
+    btr r12, 0xff
+    btr rsi, 0xff
+    btr rbx, 0xff
 
 // === BTR m64, imm8 ===
     btr QWORD PTR [rbx], 0xff
-    btr QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    btr QWORD PTR [rax], 0xff
-    btr QWORD PTR [rip + 0x1000], 0xff
     btr QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    btr QWORD PTR [rax], 0xff
+    btr QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    btr QWORD PTR [rip + 0x1000], 0xff
     btr QWORD PTR [rip + 0x100], 0xff
 
 // === BTS r16, r16 ===
-    bts si, di
-    bts bx, si
-    bts si, si
-    bts di, ax
-    bts dx, ax
+    bts si, dx
+    bts di, cx
     bts cx, bx
-    bts di, si
-    bts ax, ax
+    bts dx, di
+    bts ax, si
+    bts bx, dx
     bts dx, si
-    bts di, bx
+    bts cx, dx
+    bts dx, cx
+    bts dx, bx
 
 // === BTS m16, r16 ===
-    bts WORD PTR [rip + 0x1000], dx
+    bts WORD PTR [rip + 0x100], ax
+    bts WORD PTR [rbx], si
     bts WORD PTR [rax], ax
-    bts WORD PTR [rbx], ax
-    bts WORD PTR [rax + rbx*4 + 0x100], bx
+    bts WORD PTR [rip + 0x1000], dx
+    bts WORD PTR [rax + rbx*1 + 0x10], si
+    bts WORD PTR [rax], di
     bts WORD PTR [rax + rbx*4 + 0x100], ax
-    bts WORD PTR [rax + rbx*4 + 0x100], di
-    bts WORD PTR [rax], cx
-    bts WORD PTR [rip + 0x100], si
-    bts WORD PTR [rax + rbx*4 + 0x100], dx
-    bts WORD PTR [rip + 0x100], di
+    bts WORD PTR [rip + 0x100], cx
+    bts WORD PTR [rbx], bx
+    bts WORD PTR [rip + 0x1000], bx
 
 // === BTS r32, r32 ===
-    bts eax, esi
-    bts ebx, edx
-    bts edi, ecx
-    bts esi, ebx
-    bts eax, ebx
     bts eax, ecx
-    bts edx, ebx
-    bts esi, ecx
-    bts edx, edx
-    bts ebx, ecx
+    bts ecx, eax
+    bts eax, edi
+    bts ebx, eax
+    bts ecx, ebx
+    bts edx, esi
+    bts edi, edx
+    bts edi, ebx
+    bts edx, eax
+    bts ecx, ecx
 
 // === BTS m32, r32 ===
+    bts DWORD PTR [rax + rbx*1 + 0x10], ebx
+    bts DWORD PTR [rip + 0x1000], edx
     bts DWORD PTR [rip + 0x1000], ecx
+    bts DWORD PTR [rax], eax
     bts DWORD PTR [rbx], edi
-    bts DWORD PTR [rip + 0x100], edi
-    bts DWORD PTR [rbx], edx
-    bts DWORD PTR [rax + rbx*1 + 0x10], edx
-    bts DWORD PTR [rbx], ebx
-    bts DWORD PTR [rip + 0x100], eax
-    bts DWORD PTR [rax + rbx*4 + 0x100], ebx
-    bts DWORD PTR [rip + 0x1000], esi
-    bts DWORD PTR [rax + rbx*1 + 0x10], eax
+    bts DWORD PTR [rax + rbx*1 + 0x10], ecx
+    bts DWORD PTR [rax + rbx*4 + 0x100], edi
+    bts DWORD PTR [rax], edi
+    bts DWORD PTR [rax + rbx*4 + 0x100], esi
+    bts DWORD PTR [rip + 0x100], esi
 
 // === BTS r64, r64 ===
-    bts rdx, r8
+    bts r13, r11
+    bts rsi, r10
+    bts r10, rdi
+    bts r8, r8
     bts r11, rsi
-    bts r10, r12
-    bts rbx, r12
-    bts rbx, rcx
-    bts r12, r8
-    bts r13, r8
-    bts r13, rsi
-    bts r11, r9
-    bts rbx, r11
+    bts r10, r11
+    bts r11, rdx
+    bts rax, rax
+    bts rdi, rbx
+    bts r11, r12
 
 // === BTS m64, r64 ===
-    bts QWORD PTR [rax + rbx*4 + 0x100], r9
-    bts QWORD PTR [rip + 0x1000], rax
-    bts QWORD PTR [rax + rbx*4 + 0x100], r12
-    bts QWORD PTR [rip + 0x100], rdx
+    bts QWORD PTR [rip + 0x1000], r13
+    bts QWORD PTR [rax + rbx*1 + 0x10], r8
+    bts QWORD PTR [rax + rbx*4 + 0x100], rdi
+    bts QWORD PTR [rip + 0x1000], r8
     bts QWORD PTR [rbx], rdi
-    bts QWORD PTR [rbx], r11
-    bts QWORD PTR [rax], rax
-    bts QWORD PTR [rax], r8
-    bts QWORD PTR [rax], rcx
-    bts QWORD PTR [rax + rbx*1 + 0x10], r11
+    bts QWORD PTR [rax + rbx*1 + 0x10], r10
+    bts QWORD PTR [rax + rbx*1 + 0x10], rcx
+    bts QWORD PTR [rbx], r9
+    bts QWORD PTR [rax], r9
+    bts QWORD PTR [rbx], r8
 
 // === BTS r16, imm8 ===
-    bts ax, 0xff
     bts dx, 0xff
-    bts si, 0xff
     bts di, 0xff
+    bts ax, 0xff
+    bts si, 0xff
     bts bx, 0xff
     bts cx, 0xff
 
 // === BTS m16, imm8 ===
-    bts WORD PTR [rax], 0xff
-    bts WORD PTR [rax + rbx*4 + 0x100], 0xff
-    bts WORD PTR [rbx], 0xff
-    bts WORD PTR [rax + rbx*1 + 0x10], 0xff
     bts WORD PTR [rip + 0x1000], 0xff
+    bts WORD PTR [rax + rbx*4 + 0x100], 0xff
+    bts WORD PTR [rax + rbx*1 + 0x10], 0xff
+    bts WORD PTR [rbx], 0xff
+    bts WORD PTR [rax], 0xff
     bts WORD PTR [rip + 0x100], 0xff
 
 // === BTS r32, imm8 ===
+    bts edx, 0xff
+    bts eax, 0xff
     bts esi, 0xff
     bts ecx, 0xff
-    bts eax, 0xff
     bts edi, 0xff
-    bts edx, 0xff
     bts ebx, 0xff
 
 // === BTS m32, imm8 ===
     bts DWORD PTR [rip + 0x100], 0xff
+    bts DWORD PTR [rax + rbx*4 + 0x100], 0xff
     bts DWORD PTR [rip + 0x1000], 0xff
     bts DWORD PTR [rbx], 0xff
-    bts DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    bts DWORD PTR [rax + rbx*4 + 0x100], 0xff
     bts DWORD PTR [rax], 0xff
+    bts DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === BTS r64, imm8 ===
-    bts r10, 0xff
-    bts rdx, 0xff
-    bts r12, 0xff
-    bts rsi, 0xff
-    bts rdi, 0xff
     bts r8, 0xff
+    bts rbx, 0xff
+    bts r10, 0xff
     bts rax, 0xff
-    bts r9, 0xff
-    bts r11, 0xff
+    bts rdx, 0xff
     bts r13, 0xff
+    bts rdi, 0xff
+    bts rcx, 0xff
+    bts r9, 0xff
+    bts r12, 0xff
 
 // === BTS m64, imm8 ===
-    bts QWORD PTR [rip + 0x100], 0xff
+    bts QWORD PTR [rbx], 0xff
     bts QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    bts QWORD PTR [rip + 0x100], 0xff
+    bts QWORD PTR [rax], 0xff
     bts QWORD PTR [rip + 0x1000], 0xff
     bts QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    bts QWORD PTR [rbx], 0xff
-    bts QWORD PTR [rax], 0xff
 
 // === CALL rel32 ===
-    call .
+    call 0f
+0:
 
 // === CALL r64 ===
     call r10
-    call r11
-    call r12
     call rbx
+    call r12
+    call rsi
+    call rcx
     call rax
-    call r8
-    call r9
-    call rdx
     call r13
+    call rdx
     call rdi
+    call r11
 
 // === CALL m64 ===
+    call QWORD PTR [rax + rbx*1 + 0x10]
     call QWORD PTR [rax + rbx*4 + 0x100]
-    call QWORD PTR [rbx]
+    call QWORD PTR [rip + 0x1000]
     call QWORD PTR [rax]
     call QWORD PTR [rip + 0x100]
-    call QWORD PTR [rax + rbx*1 + 0x10]
-    call QWORD PTR [rip + 0x1000]
+    call QWORD PTR [rbx]
 
 // === CBW ===
     cbw
@@ -1511,2164 +1512,2164 @@
     clts
 
 // === CMOVA r16, r16 ===
-    cmova ax, bx
-    cmova bx, si
-    cmova dx, bx
-    cmova dx, dx
-    cmova ax, dx
-    cmova di, bx
-    cmova di, cx
-    cmova ax, di
+    cmova si, dx
     cmova bx, cx
-    cmova bx, di
+    cmova cx, di
+    cmova di, si
+    cmova di, dx
+    cmova dx, dx
+    cmova si, si
+    cmova cx, dx
+    cmova ax, dx
+    cmova di, ax
 
 // === CMOVA r16, m16 ===
-    cmova bx, WORD PTR [rip + 0x1000]
-    cmova cx, WORD PTR [rax]
-    cmova di, WORD PTR [rip + 0x100]
-    cmova si, WORD PTR [rip + 0x1000]
-    cmova bx, WORD PTR [rax]
     cmova dx, WORD PTR [rip + 0x1000]
-    cmova bx, WORD PTR [rbx]
-    cmova di, WORD PTR [rbx]
+    cmova di, WORD PTR [rax]
+    cmova dx, WORD PTR [rip + 0x100]
+    cmova ax, WORD PTR [rax]
+    cmova cx, WORD PTR [rip + 0x100]
+    cmova dx, WORD PTR [rax]
+    cmova bx, WORD PTR [rip + 0x100]
+    cmova cx, WORD PTR [rip + 0x1000]
+    cmova cx, WORD PTR [rax + rbx*4 + 0x100]
     cmova dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmova ax, WORD PTR [rip + 0x100]
 
 // === CMOVA r32, r32 ===
-    cmova eax, edi
-    cmova ecx, ecx
-    cmova ecx, ebx
-    cmova ecx, esi
-    cmova edi, edi
-    cmova eax, ebx
-    cmova edi, ecx
-    cmova ebx, ecx
-    cmova esi, ecx
     cmova edx, edx
+    cmova edi, ecx
+    cmova eax, edi
+    cmova ecx, eax
+    cmova esi, edi
+    cmova esi, edx
+    cmova eax, edx
+    cmova edx, edi
+    cmova ecx, ecx
+    cmova edi, ebx
 
 // === CMOVA r32, m32 ===
-    cmova ecx, DWORD PTR [rip + 0x1000]
-    cmova eax, DWORD PTR [rax]
-    cmova edi, DWORD PTR [rip + 0x1000]
-    cmova esi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmova edi, DWORD PTR [rax]
-    cmova ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmova ecx, DWORD PTR [rax]
+    cmova ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmova edi, DWORD PTR [rbx]
+    cmova ecx, DWORD PTR [rip + 0x100]
+    cmova edi, DWORD PTR [rax + rbx*4 + 0x100]
     cmova esi, DWORD PTR [rip + 0x100]
-    cmova ecx, DWORD PTR [rbx]
-    cmova esi, DWORD PTR [rip + 0x1000]
+    cmova ecx, DWORD PTR [rax]
+    cmova ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmova eax, DWORD PTR [rip + 0x1000]
+    cmova ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmova edx, DWORD PTR [rip + 0x1000]
 
 // === CMOVA r64, r64 ===
-    cmova rbx, rdx
-    cmova r9, rax
-    cmova rdi, rsi
-    cmova r12, rcx
-    cmova rsi, rdi
-    cmova rbx, r12
-    cmova r12, r11
-    cmova rax, r10
-    cmova rcx, r8
-    cmova rbx, rax
+    cmova r11, rdx
+    cmova r9, rdi
+    cmova rsi, rax
+    cmova rcx, r13
+    cmova r13, rsi
+    cmova rcx, r10
+    cmova r8, rbx
+    cmova r9, r13
+    cmova r10, r11
+    cmova rcx, rdi
 
 // === CMOVA r64, m64 ===
-    cmova r12, QWORD PTR [rbx]
-    cmova rdi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmova rdi, QWORD PTR [rip + 0x100]
-    cmova rsi, QWORD PTR [rbx]
-    cmova r13, QWORD PTR [rip + 0x100]
-    cmova r11, QWORD PTR [rbx]
+    cmova r9, QWORD PTR [rax]
+    cmova rsi, QWORD PTR [rax]
+    cmova rcx, QWORD PTR [rax + rbx*1 + 0x10]
     cmova rax, QWORD PTR [rip + 0x1000]
-    cmova rcx, QWORD PTR [rbx]
+    cmova rdx, QWORD PTR [rip + 0x100]
+    cmova rdi, QWORD PTR [rip + 0x1000]
     cmova r9, QWORD PTR [rax + rbx*4 + 0x100]
-    cmova r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmova r13, QWORD PTR [rbx]
+    cmova r8, QWORD PTR [rax + rbx*1 + 0x10]
+    cmova r10, QWORD PTR [rax]
 
 // === CMOVAE r16, r16 ===
-    cmovae dx, si
     cmovae di, dx
-    cmovae si, bx
     cmovae bx, si
-    cmovae cx, bx
-    cmovae dx, ax
+    cmovae di, cx
+    cmovae si, bx
+    cmovae si, ax
+    cmovae bx, cx
     cmovae si, cx
-    cmovae ax, ax
-    cmovae di, si
+    cmovae bx, ax
     cmovae di, ax
+    cmovae ax, ax
 
 // === CMOVAE r16, m16 ===
-    cmovae si, WORD PTR [rbx]
-    cmovae cx, WORD PTR [rbx]
-    cmovae cx, WORD PTR [rip + 0x1000]
-    cmovae di, WORD PTR [rbx]
+    cmovae bx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovae si, WORD PTR [rip + 0x100]
+    cmovae dx, WORD PTR [rip + 0x100]
     cmovae cx, WORD PTR [rax]
-    cmovae dx, WORD PTR [rax + rbx*4 + 0x100]
     cmovae si, WORD PTR [rip + 0x1000]
-    cmovae bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovae dx, WORD PTR [rbx]
-    cmovae di, WORD PTR [rip + 0x100]
+    cmovae bx, WORD PTR [rax]
+    cmovae cx, WORD PTR [rip + 0x1000]
+    cmovae si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovae bx, WORD PTR [rip + 0x1000]
+    cmovae dx, WORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVAE r32, r32 ===
-    cmovae esi, esi
-    cmovae ebx, ebx
-    cmovae ecx, ebx
+    cmovae ecx, esi
+    cmovae edx, edx
+    cmovae eax, ebx
     cmovae edx, ecx
-    cmovae eax, edi
-    cmovae esi, edx
-    cmovae edx, esi
+    cmovae edx, ebx
+    cmovae edi, edx
+    cmovae ebx, ecx
     cmovae ecx, edi
-    cmovae eax, esi
+    cmovae ecx, ebx
     cmovae edi, esi
 
 // === CMOVAE r32, m32 ===
-    cmovae ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovae esi, DWORD PTR [rbx]
-    cmovae esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovae ecx, DWORD PTR [rax]
-    cmovae edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovae ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovae eax, DWORD PTR [rip + 0x100]
-    cmovae ecx, DWORD PTR [rbx]
-    cmovae esi, DWORD PTR [rip + 0x1000]
+    cmovae ecx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovae esi, DWORD PTR [rip + 0x100]
+    cmovae edx, DWORD PTR [rip + 0x1000]
+    cmovae edi, DWORD PTR [rip + 0x1000]
+    cmovae ebx, DWORD PTR [rbx]
+    cmovae eax, DWORD PTR [rip + 0x100]
+    cmovae eax, DWORD PTR [rip + 0x1000]
+    cmovae ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovae edx, DWORD PTR [rax]
+    cmovae edi, DWORD PTR [rax]
 
 // === CMOVAE r64, r64 ===
-    cmovae rdi, r11
-    cmovae rsi, r9
-    cmovae r12, rax
-    cmovae rdx, r11
-    cmovae r8, r11
-    cmovae r8, rsi
-    cmovae rdi, rdx
+    cmovae r9, rdx
     cmovae rbx, r9
-    cmovae r8, rdi
-    cmovae rax, rsi
+    cmovae rsi, rsi
+    cmovae rdi, r9
+    cmovae r9, r8
+    cmovae rcx, r12
+    cmovae r8, rcx
+    cmovae r8, rdx
+    cmovae r8, r9
+    cmovae r10, rdi
 
 // === CMOVAE r64, m64 ===
-    cmovae r9, QWORD PTR [rax]
+    cmovae r13, QWORD PTR [rax]
     cmovae r10, QWORD PTR [rip + 0x100]
-    cmovae rdx, QWORD PTR [rax]
-    cmovae rax, QWORD PTR [rip + 0x100]
+    cmovae r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovae rsi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovae rdi, QWORD PTR [rip + 0x100]
+    cmovae rsi, QWORD PTR [rip + 0x1000]
+    cmovae rdx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovae r10, QWORD PTR [rip + 0x1000]
+    cmovae rdi, QWORD PTR [rbx]
     cmovae r11, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovae rsi, QWORD PTR [rbx]
-    cmovae r9, QWORD PTR [rbx]
-    cmovae rsi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovae r13, QWORD PTR [rip + 0x1000]
-    cmovae r11, QWORD PTR [rip + 0x1000]
 
 // === CMOVB r16, r16 ===
-    cmovb dx, di
-    cmovb dx, si
+    cmovb bx, dx
+    cmovb di, dx
+    cmovb cx, ax
     cmovb dx, dx
-    cmovb si, si
-    cmovb si, cx
-    cmovb dx, ax
-    cmovb ax, dx
-    cmovb di, di
-    cmovb si, ax
+    cmovb dx, si
+    cmovb dx, cx
     cmovb ax, cx
+    cmovb bx, ax
+    cmovb si, dx
+    cmovb cx, bx
 
 // === CMOVB r16, m16 ===
-    cmovb si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovb ax, WORD PTR [rax]
-    cmovb ax, WORD PTR [rbx]
-    cmovb si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovb di, WORD PTR [rax + rbx*4 + 0x100]
-    cmovb ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovb dx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovb cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovb dx, WORD PTR [rip + 0x1000]
     cmovb cx, WORD PTR [rax]
+    cmovb ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovb dx, WORD PTR [rbx]
+    cmovb di, WORD PTR [rbx]
+    cmovb ax, WORD PTR [rip + 0x100]
+    cmovb si, WORD PTR [rax]
+    cmovb ax, WORD PTR [rip + 0x1000]
+    cmovb di, WORD PTR [rax]
+    cmovb si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovb dx, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVB r32, r32 ===
-    cmovb edi, ecx
-    cmovb eax, esi
+    cmovb edx, ecx
     cmovb edi, esi
-    cmovb edx, eax
-    cmovb edi, eax
-    cmovb edx, edx
-    cmovb ecx, esi
-    cmovb edi, edi
     cmovb ebx, ebx
-    cmovb ecx, edi
+    cmovb edi, ecx
+    cmovb ecx, ebx
+    cmovb esi, ecx
+    cmovb edi, edi
+    cmovb ebx, ecx
+    cmovb edi, ebx
+    cmovb edx, edx
 
 // === CMOVB r32, m32 ===
-    cmovb ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovb esi, DWORD PTR [rip + 0x1000]
-    cmovb edx, DWORD PTR [rip + 0x100]
-    cmovb esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovb eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovb ecx, DWORD PTR [rax]
+    cmovb eax, DWORD PTR [rip + 0x1000]
+    cmovb edi, DWORD PTR [rip + 0x1000]
+    cmovb eax, DWORD PTR [rax]
+    cmovb ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovb eax, DWORD PTR [rip + 0x100]
+    cmovb edi, DWORD PTR [rax]
+    cmovb edi, DWORD PTR [rbx]
+    cmovb ecx, DWORD PTR [rip + 0x100]
     cmovb edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovb edx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovb edi, DWORD PTR [rip + 0x100]
-    cmovb ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovb edx, DWORD PTR [rax]
 
 // === CMOVB r64, r64 ===
-    cmovb rdi, rsi
-    cmovb rax, rcx
-    cmovb r13, r13
-    cmovb rsi, rcx
-    cmovb r10, r8
-    cmovb rbx, r9
-    cmovb r13, r10
-    cmovb r11, rcx
-    cmovb rdi, r9
-    cmovb rbx, rsi
+    cmovb rbx, r11
+    cmovb r13, r11
+    cmovb r10, r11
+    cmovb r11, r13
+    cmovb r8, rdi
+    cmovb rbx, rbx
+    cmovb r10, rbx
+    cmovb r12, rdi
+    cmovb r10, rdx
+    cmovb r13, r9
 
 // === CMOVB r64, m64 ===
-    cmovb rax, QWORD PTR [rbx]
-    cmovb rdi, QWORD PTR [rax]
-    cmovb r12, QWORD PTR [rbx]
-    cmovb r10, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovb rsi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovb r8, QWORD PTR [rax]
+    cmovb rsi, QWORD PTR [rip + 0x1000]
+    cmovb r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovb rbx, QWORD PTR [rip + 0x100]
+    cmovb r12, QWORD PTR [rip + 0x1000]
+    cmovb r8, QWORD PTR [rip + 0x100]
+    cmovb r9, QWORD PTR [rip + 0x1000]
+    cmovb rax, QWORD PTR [rax + rbx*1 + 0x10]
     cmovb r13, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovb r8, QWORD PTR [rip + 0x1000]
-    cmovb rcx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovb rsi, QWORD PTR [rip + 0x100]
-    cmovb rbx, QWORD PTR [rip + 0x1000]
-    cmovb r8, QWORD PTR [rbx]
 
 // === CMOVBE r16, r16 ===
-    cmovbe si, di
-    cmovbe cx, si
-    cmovbe bx, di
+    cmovbe di, si
+    cmovbe dx, dx
+    cmovbe di, di
     cmovbe dx, si
-    cmovbe ax, di
-    cmovbe dx, bx
-    cmovbe cx, bx
-    cmovbe ax, ax
-    cmovbe ax, bx
-    cmovbe si, dx
+    cmovbe bx, di
+    cmovbe si, ax
+    cmovbe di, cx
+    cmovbe di, bx
+    cmovbe cx, dx
+    cmovbe cx, si
 
 // === CMOVBE r16, m16 ===
     cmovbe si, WORD PTR [rax + rbx*1 + 0x10]
     cmovbe ax, WORD PTR [rip + 0x100]
-    cmovbe di, WORD PTR [rbx]
-    cmovbe ax, WORD PTR [rax + rbx*1 + 0x10]
     cmovbe di, WORD PTR [rip + 0x100]
-    cmovbe cx, WORD PTR [rbx]
-    cmovbe di, WORD PTR [rax + rbx*4 + 0x100]
-    cmovbe dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovbe si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovbe dx, WORD PTR [rax]
+    cmovbe ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovbe di, WORD PTR [rbx]
+    cmovbe ax, WORD PTR [rip + 0x1000]
+    cmovbe bx, WORD PTR [rip + 0x100]
+    cmovbe dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovbe cx, WORD PTR [rax]
+    cmovbe cx, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVBE r32, r32 ===
-    cmovbe ebx, edx
-    cmovbe ecx, edx
-    cmovbe ebx, eax
-    cmovbe ebx, edi
-    cmovbe edx, ebx
-    cmovbe ecx, ecx
-    cmovbe edi, ecx
-    cmovbe esi, ecx
-    cmovbe edx, esi
+    cmovbe edx, edi
+    cmovbe ebx, esi
     cmovbe esi, edx
+    cmovbe ebx, ebx
+    cmovbe eax, ecx
+    cmovbe eax, ebx
+    cmovbe eax, esi
+    cmovbe edx, edx
+    cmovbe edx, ecx
+    cmovbe edx, ebx
 
 // === CMOVBE r32, m32 ===
-    cmovbe edi, DWORD PTR [rip + 0x1000]
-    cmovbe edi, DWORD PTR [rbx]
-    cmovbe ebx, DWORD PTR [rax]
+    cmovbe ebx, DWORD PTR [rip + 0x100]
     cmovbe esi, DWORD PTR [rax]
-    cmovbe ebx, DWORD PTR [rbx]
     cmovbe ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovbe edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovbe eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovbe edi, DWORD PTR [rip + 0x1000]
+    cmovbe esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovbe ebx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovbe edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovbe ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovbe ecx, DWORD PTR [rbx]
+    cmovbe eax, DWORD PTR [rbx]
+    cmovbe ecx, DWORD PTR [rip + 0x100]
 
 // === CMOVBE r64, r64 ===
-    cmovbe r9, r9
-    cmovbe r8, rcx
-    cmovbe r12, r8
-    cmovbe rcx, r8
-    cmovbe rdx, r8
-    cmovbe r9, r10
-    cmovbe rdi, r13
-    cmovbe rax, r10
-    cmovbe r11, r10
-    cmovbe r11, r9
+    cmovbe rsi, rsi
+    cmovbe rbx, rax
+    cmovbe r13, r12
+    cmovbe rcx, r13
+    cmovbe rdx, r10
+    cmovbe r9, r12
+    cmovbe rdx, rdi
+    cmovbe rbx, r10
+    cmovbe r13, r8
+    cmovbe r8, rsi
 
 // === CMOVBE r64, m64 ===
-    cmovbe r9, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovbe r11, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovbe r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovbe r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovbe rsi, QWORD PTR [rax]
+    cmovbe rdx, QWORD PTR [rax]
+    cmovbe rdx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovbe rbx, QWORD PTR [rip + 0x100]
     cmovbe r12, QWORD PTR [rbx]
-    cmovbe rsi, QWORD PTR [rip + 0x100]
-    cmovbe r13, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovbe rcx, QWORD PTR [rip + 0x100]
-    cmovbe rdi, QWORD PTR [rbx]
-    cmovbe r9, QWORD PTR [rip + 0x1000]
     cmovbe rax, QWORD PTR [rbx]
+    cmovbe rdi, QWORD PTR [rip + 0x100]
+    cmovbe rdi, QWORD PTR [rbx]
+    cmovbe rsi, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVC r16, r16 ===
-    cmovc dx, dx
-    cmovc si, dx
-    cmovc cx, ax
-    cmovc cx, bx
-    cmovc ax, dx
     cmovc cx, si
-    cmovc dx, cx
-    cmovc bx, cx
-    cmovc ax, ax
-    cmovc cx, dx
+    cmovc ax, cx
+    cmovc bx, si
+    cmovc si, si
+    cmovc cx, di
+    cmovc bx, di
+    cmovc ax, dx
+    cmovc cx, cx
+    cmovc ax, si
+    cmovc si, cx
 
 // === CMOVC r16, m16 ===
-    cmovc bx, WORD PTR [rip + 0x1000]
-    cmovc bx, WORD PTR [rax]
-    cmovc si, WORD PTR [rip + 0x100]
-    cmovc ax, WORD PTR [rax]
     cmovc di, WORD PTR [rip + 0x1000]
-    cmovc ax, WORD PTR [rip + 0x100]
-    cmovc cx, WORD PTR [rip + 0x1000]
-    cmovc ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovc cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovc ax, WORD PTR [rbx]
+    cmovc si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovc cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovc si, WORD PTR [rax]
+    cmovc dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovc cx, WORD PTR [rip + 0x100]
+    cmovc bx, WORD PTR [rbx]
     cmovc si, WORD PTR [rbx]
+    cmovc ax, WORD PTR [rip + 0x100]
 
 // === CMOVC r32, r32 ===
-    cmovc ebx, edi
-    cmovc ecx, edi
-    cmovc ecx, ecx
-    cmovc ebx, esi
-    cmovc edi, edx
-    cmovc ecx, ebx
-    cmovc ebx, edx
-    cmovc edx, eax
-    cmovc edi, edi
+    cmovc ebx, ecx
+    cmovc esi, esi
+    cmovc eax, esi
     cmovc edi, eax
+    cmovc ebx, esi
+    cmovc eax, ecx
+    cmovc edx, ebx
+    cmovc ecx, ebx
+    cmovc edi, esi
+    cmovc ebx, eax
 
 // === CMOVC r32, m32 ===
-    cmovc eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovc edx, DWORD PTR [rax]
+    cmovc edi, DWORD PTR [rip + 0x100]
+    cmovc ecx, DWORD PTR [rip + 0x100]
+    cmovc edx, DWORD PTR [rip + 0x1000]
+    cmovc ebx, DWORD PTR [rax]
     cmovc esi, DWORD PTR [rip + 0x1000]
-    cmovc eax, DWORD PTR [rax]
-    cmovc eax, DWORD PTR [rip + 0x1000]
-    cmovc ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovc ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovc esi, DWORD PTR [rip + 0x100]
-    cmovc edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovc eax, DWORD PTR [rbx]
+    cmovc eax, DWORD PTR [rip + 0x100]
+    cmovc ecx, DWORD PTR [rbx]
+    cmovc edx, DWORD PTR [rbx]
     cmovc ecx, DWORD PTR [rax]
 
 // === CMOVC r64, r64 ===
-    cmovc rbx, r10
-    cmovc rbx, r12
-    cmovc rdi, r10
-    cmovc rdx, r13
-    cmovc r9, rsi
-    cmovc r8, r8
     cmovc rbx, rsi
-    cmovc r13, rsi
-    cmovc r9, r9
-    cmovc r8, rbx
+    cmovc r13, r8
+    cmovc rbx, rdx
+    cmovc rdx, rbx
+    cmovc rdi, r12
+    cmovc rdi, rdi
+    cmovc rdx, rax
+    cmovc rbx, rdi
+    cmovc rsi, rsi
+    cmovc rax, r9
 
 // === CMOVC r64, m64 ===
-    cmovc r10, QWORD PTR [rip + 0x1000]
-    cmovc r12, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovc r10, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovc r12, QWORD PTR [rax]
-    cmovc rsi, QWORD PTR [rip + 0x1000]
-    cmovc r9, QWORD PTR [rip + 0x1000]
-    cmovc r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovc r9, QWORD PTR [rip + 0x100]
+    cmovc rbx, QWORD PTR [rip + 0x1000]
+    cmovc r13, QWORD PTR [rax]
+    cmovc rax, QWORD PTR [rip + 0x100]
+    cmovc r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovc rdi, QWORD PTR [rip + 0x100]
+    cmovc r10, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovc r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovc rdi, QWORD PTR [rax + rbx*4 + 0x100]
     cmovc r8, QWORD PTR [rip + 0x1000]
-    cmovc r10, QWORD PTR [rbx]
-    cmovc r13, QWORD PTR [rip + 0x100]
 
 // === CMOVE r16, r16 ===
-    cmove ax, di
-    cmove cx, di
-    cmove bx, cx
-    cmove dx, cx
-    cmove si, si
+    cmove di, dx
+    cmove bx, di
+    cmove cx, cx
     cmove cx, ax
     cmove si, di
+    cmove bx, si
     cmove si, ax
-    cmove bx, di
+    cmove bx, dx
+    cmove si, si
     cmove bx, ax
 
 // === CMOVE r16, m16 ===
-    cmove di, WORD PTR [rbx]
-    cmove si, WORD PTR [rip + 0x1000]
-    cmove bx, WORD PTR [rax + rbx*4 + 0x100]
     cmove dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmove ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmove cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmove si, WORD PTR [rip + 0x100]
-    cmove dx, WORD PTR [rbx]
-    cmove bx, WORD PTR [rax]
-    cmove cx, WORD PTR [rax]
+    cmove di, WORD PTR [rax]
+    cmove si, WORD PTR [rip + 0x1000]
+    cmove ax, WORD PTR [rax]
+    cmove dx, WORD PTR [rax]
+    cmove di, WORD PTR [rip + 0x1000]
+    cmove dx, WORD PTR [rip + 0x1000]
+    cmove si, WORD PTR [rax]
+    cmove bx, WORD PTR [rbx]
+    cmove di, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVE r32, r32 ===
-    cmove ecx, eax
-    cmove ebx, eax
-    cmove esi, edx
-    cmove edx, eax
-    cmove ecx, edx
+    cmove ebx, edi
+    cmove eax, edx
+    cmove esi, ebx
+    cmove edx, esi
     cmove ebx, ebx
+    cmove edi, eax
+    cmove edi, edx
+    cmove ecx, edi
+    cmove edx, ebx
     cmove esi, esi
-    cmove eax, ecx
-    cmove edx, edi
-    cmove edi, esi
 
 // === CMOVE r32, m32 ===
-    cmove ecx, DWORD PTR [rbx]
+    cmove edx, DWORD PTR [rbx]
+    cmove eax, DWORD PTR [rip + 0x100]
+    cmove ebx, DWORD PTR [rip + 0x1000]
     cmove ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmove ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmove ebx, DWORD PTR [rax]
-    cmove ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmove esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmove ecx, DWORD PTR [rax]
+    cmove esi, DWORD PTR [rip + 0x1000]
     cmove eax, DWORD PTR [rip + 0x1000]
-    cmove edi, DWORD PTR [rbx]
-    cmove esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmove eax, DWORD PTR [rax]
+    cmove ecx, DWORD PTR [rip + 0x100]
+    cmove ebx, DWORD PTR [rbx]
+    cmove edi, DWORD PTR [rip + 0x1000]
 
 // === CMOVE r64, r64 ===
-    cmove r12, rdx
-    cmove rdi, rbx
-    cmove r10, r13
-    cmove r12, r13
-    cmove r8, r8
-    cmove rsi, r9
-    cmove r9, rsi
-    cmove rbx, rdx
+    cmove r12, r12
+    cmove rdi, r9
+    cmove rcx, rcx
     cmove r10, r12
-    cmove rdx, rax
+    cmove r9, rax
+    cmove r13, rdx
+    cmove rax, rax
+    cmove r9, rsi
+    cmove r10, rdi
+    cmove r11, r9
 
 // === CMOVE r64, m64 ===
-    cmove rcx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmove r10, QWORD PTR [rax + rbx*1 + 0x10]
-    cmove rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmove r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmove r10, QWORD PTR [rax]
+    cmove r13, QWORD PTR [rbx]
+    cmove rsi, QWORD PTR [rbx]
+    cmove r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmove rbx, QWORD PTR [rbx]
+    cmove r11, QWORD PTR [rax + rbx*1 + 0x10]
+    cmove rbx, QWORD PTR [rax + rbx*1 + 0x10]
     cmove rdi, QWORD PTR [rbx]
-    cmove r11, QWORD PTR [rip + 0x100]
-    cmove r12, QWORD PTR [rbx]
     cmove r13, QWORD PTR [rax]
-    cmove r9, QWORD PTR [rip + 0x100]
+    cmove rdi, QWORD PTR [rip + 0x1000]
+    cmove r10, QWORD PTR [rip + 0x1000]
 
 // === CMOVG r16, r16 ===
-    cmovg si, cx
-    cmovg cx, si
-    cmovg si, ax
-    cmovg si, si
-    cmovg cx, di
-    cmovg di, ax
-    cmovg bx, si
-    cmovg dx, cx
+    cmovg ax, di
+    cmovg bx, di
+    cmovg si, dx
     cmovg ax, dx
-    cmovg si, bx
+    cmovg ax, cx
+    cmovg si, ax
+    cmovg bx, bx
+    cmovg cx, ax
+    cmovg dx, cx
+    cmovg cx, dx
 
 // === CMOVG r16, m16 ===
-    cmovg bx, WORD PTR [rip + 0x100]
-    cmovg bx, WORD PTR [rax]
-    cmovg si, WORD PTR [rbx]
-    cmovg cx, WORD PTR [rip + 0x100]
-    cmovg si, WORD PTR [rax]
-    cmovg si, WORD PTR [rip + 0x1000]
-    cmovg ax, WORD PTR [rip + 0x1000]
-    cmovg ax, WORD PTR [rbx]
     cmovg cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovg bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovg dx, WORD PTR [rip + 0x1000]
+    cmovg si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovg ax, WORD PTR [rip + 0x1000]
+    cmovg si, WORD PTR [rax]
+    cmovg cx, WORD PTR [rax]
+    cmovg di, WORD PTR [rip + 0x100]
+    cmovg dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovg di, WORD PTR [rax + rbx*1 + 0x10]
+    cmovg bx, WORD PTR [rax]
 
 // === CMOVG r32, r32 ===
-    cmovg ebx, edi
-    cmovg esi, ebx
-    cmovg ecx, ebx
-    cmovg eax, edi
-    cmovg esi, ecx
-    cmovg esi, edx
-    cmovg edi, ebx
-    cmovg eax, esi
-    cmovg edi, eax
+    cmovg eax, edx
+    cmovg ecx, edi
+    cmovg ecx, edx
+    cmovg ebx, ebx
+    cmovg esi, esi
+    cmovg edx, esi
+    cmovg edx, edi
+    cmovg edx, ecx
     cmovg ebx, eax
+    cmovg ebx, edx
 
 // === CMOVG r32, m32 ===
-    cmovg esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovg ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovg ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovg eax, DWORD PTR [rax]
-    cmovg ecx, DWORD PTR [rip + 0x1000]
-    cmovg edx, DWORD PTR [rax]
+    cmovg edi, DWORD PTR [rax]
+    cmovg edx, DWORD PTR [rip + 0x1000]
     cmovg ebx, DWORD PTR [rbx]
+    cmovg esi, DWORD PTR [rax]
+    cmovg eax, DWORD PTR [rax]
+    cmovg edi, DWORD PTR [rbx]
+    cmovg esi, DWORD PTR [rax + rbx*4 + 0x100]
     cmovg eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovg edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovg ecx, DWORD PTR [rbx]
+    cmovg edx, DWORD PTR [rip + 0x100]
+    cmovg ecx, DWORD PTR [rip + 0x1000]
 
 // === CMOVG r64, r64 ===
-    cmovg rax, rbx
-    cmovg rdi, rdx
+    cmovg r9, rbx
+    cmovg r11, r11
     cmovg rax, rdx
-    cmovg rax, rsi
-    cmovg rsi, rax
-    cmovg r9, r9
-    cmovg r10, rbx
-    cmovg r12, r13
-    cmovg rbx, rax
-    cmovg r11, r13
+    cmovg r10, rax
+    cmovg rdx, rdi
+    cmovg rbx, r13
+    cmovg r13, rsi
+    cmovg r10, r11
+    cmovg rdi, r13
+    cmovg rdx, r10
 
 // === CMOVG r64, m64 ===
-    cmovg r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovg r11, QWORD PTR [rip + 0x100]
-    cmovg rsi, QWORD PTR [rip + 0x1000]
-    cmovg rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovg r9, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovg r13, QWORD PTR [rip + 0x1000]
-    cmovg r8, QWORD PTR [rbx]
-    cmovg r13, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovg rbx, QWORD PTR [rip + 0x100]
-    cmovg r13, QWORD PTR [rbx]
+    cmovg rcx, QWORD PTR [rip + 0x1000]
+    cmovg r11, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovg rsi, QWORD PTR [rax]
+    cmovg r11, QWORD PTR [rip + 0x1000]
+    cmovg rbx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovg r9, QWORD PTR [rip + 0x100]
+    cmovg r13, QWORD PTR [rax]
+    cmovg rdi, QWORD PTR [rbx]
+    cmovg rsi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovg rcx, QWORD PTR [rip + 0x100]
 
 // === CMOVGE r16, r16 ===
-    cmovge si, si
-    cmovge ax, bx
-    cmovge dx, si
-    cmovge si, cx
-    cmovge cx, bx
-    cmovge ax, dx
-    cmovge cx, di
-    cmovge ax, si
+    cmovge bx, si
+    cmovge cx, ax
+    cmovge di, dx
+    cmovge dx, bx
     cmovge di, ax
-    cmovge ax, di
+    cmovge si, cx
+    cmovge di, bx
+    cmovge bx, di
+    cmovge dx, ax
+    cmovge si, si
 
 // === CMOVGE r16, m16 ===
-    cmovge di, WORD PTR [rax + rbx*4 + 0x100]
-    cmovge di, WORD PTR [rip + 0x100]
-    cmovge ax, WORD PTR [rax]
-    cmovge ax, WORD PTR [rip + 0x1000]
+    cmovge dx, WORD PTR [rip + 0x1000]
+    cmovge si, WORD PTR [rip + 0x1000]
+    cmovge dx, WORD PTR [rax + rbx*1 + 0x10]
     cmovge di, WORD PTR [rbx]
+    cmovge si, WORD PTR [rbx]
+    cmovge cx, WORD PTR [rip + 0x1000]
+    cmovge di, WORD PTR [rip + 0x100]
+    cmovge bx, WORD PTR [rip + 0x100]
     cmovge bx, WORD PTR [rip + 0x1000]
-    cmovge cx, WORD PTR [rbx]
-    cmovge di, WORD PTR [rax]
-    cmovge dx, WORD PTR [rip + 0x100]
-    cmovge bx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovge si, WORD PTR [rax]
 
 // === CMOVGE r32, r32 ===
-    cmovge esi, ebx
-    cmovge ebx, edi
-    cmovge eax, edi
-    cmovge edx, ecx
-    cmovge edi, edx
-    cmovge edx, esi
-    cmovge esi, edx
+    cmovge eax, esi
+    cmovge ebx, ebx
+    cmovge ebx, ecx
     cmovge ebx, eax
+    cmovge edx, esi
+    cmovge esi, ecx
     cmovge edi, ecx
-    cmovge edi, eax
+    cmovge edi, edx
+    cmovge edx, edx
+    cmovge esi, eax
 
 // === CMOVGE r32, m32 ===
-    cmovge edi, DWORD PTR [rax]
-    cmovge eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovge esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovge ecx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovge esi, DWORD PTR [rbx]
-    cmovge ebx, DWORD PTR [rip + 0x1000]
-    cmovge edi, DWORD PTR [rip + 0x1000]
+    cmovge edx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovge edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovge edx, DWORD PTR [rbx]
-    cmovge ebx, DWORD PTR [rip + 0x100]
-    cmovge edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovge eax, DWORD PTR [rip + 0x1000]
+    cmovge esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovge ecx, DWORD PTR [rbx]
+    cmovge eax, DWORD PTR [rbx]
+    cmovge ecx, DWORD PTR [rip + 0x1000]
+    cmovge ebx, DWORD PTR [rax]
 
 // === CMOVGE r64, r64 ===
-    cmovge rdx, rcx
-    cmovge rcx, rax
-    cmovge rax, r12
-    cmovge r12, r9
-    cmovge rsi, r10
-    cmovge rdi, r11
-    cmovge r9, r13
-    cmovge rcx, rsi
-    cmovge rdx, r10
-    cmovge r9, rbx
+    cmovge r9, rdi
+    cmovge rdi, r12
+    cmovge r13, rdi
+    cmovge r11, r12
+    cmovge rcx, r10
+    cmovge r13, r11
+    cmovge r9, rsi
+    cmovge r10, r13
+    cmovge rbx, r12
+    cmovge rbx, r13
 
 // === CMOVGE r64, m64 ===
-    cmovge rcx, QWORD PTR [rip + 0x100]
+    cmovge r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovge r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovge r12, QWORD PTR [rbx]
+    cmovge r8, QWORD PTR [rax + rbx*4 + 0x100]
     cmovge rdi, QWORD PTR [rax]
-    cmovge rsi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovge rcx, QWORD PTR [rip + 0x1000]
-    cmovge rax, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovge r12, QWORD PTR [rip + 0x100]
-    cmovge r12, QWORD PTR [rax]
-    cmovge r13, QWORD PTR [rbx]
-    cmovge r8, QWORD PTR [rax]
-    cmovge rsi, QWORD PTR [rip + 0x100]
+    cmovge r13, QWORD PTR [rip + 0x1000]
+    cmovge rbx, QWORD PTR [rip + 0x100]
+    cmovge r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovge r8, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovge rdi, QWORD PTR [rbx]
 
 // === CMOVL r16, r16 ===
-    cmovl ax, bx
-    cmovl bx, cx
-    cmovl ax, dx
-    cmovl cx, cx
+    cmovl cx, si
     cmovl dx, cx
-    cmovl dx, dx
-    cmovl di, si
     cmovl cx, ax
-    cmovl ax, cx
-    cmovl ax, di
+    cmovl cx, di
+    cmovl ax, si
+    cmovl dx, dx
+    cmovl si, si
+    cmovl dx, bx
+    cmovl di, ax
+    cmovl bx, cx
 
 // === CMOVL r16, m16 ===
-    cmovl si, WORD PTR [rip + 0x1000]
-    cmovl si, WORD PTR [rip + 0x100]
-    cmovl cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovl di, WORD PTR [rip + 0x100]
+    cmovl bx, WORD PTR [rax]
+    cmovl ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovl ax, WORD PTR [rip + 0x1000]
+    cmovl cx, WORD PTR [rip + 0x100]
     cmovl dx, WORD PTR [rip + 0x1000]
-    cmovl cx, WORD PTR [rbx]
-    cmovl ax, WORD PTR [rax]
-    cmovl dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovl di, WORD PTR [rax + rbx*1 + 0x10]
-    cmovl dx, WORD PTR [rbx]
-    cmovl bx, WORD PTR [rip + 0x100]
+    cmovl di, WORD PTR [rbx]
+    cmovl bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovl bx, WORD PTR [rbx]
+    cmovl si, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVL r32, r32 ===
-    cmovl esi, edx
-    cmovl esi, esi
-    cmovl edi, edx
-    cmovl ecx, edx
+    cmovl esi, edi
+    cmovl ebx, ecx
     cmovl edi, esi
-    cmovl esi, ebx
-    cmovl eax, ebx
+    cmovl ebx, edx
+    cmovl edx, edx
+    cmovl esi, eax
+    cmovl esi, ecx
     cmovl edx, edi
-    cmovl eax, edx
-    cmovl edi, ebx
+    cmovl edi, eax
+    cmovl eax, edi
 
 // === CMOVL r32, m32 ===
-    cmovl ebx, DWORD PTR [rip + 0x100]
-    cmovl eax, DWORD PTR [rax]
-    cmovl eax, DWORD PTR [rip + 0x1000]
-    cmovl edx, DWORD PTR [rax]
-    cmovl ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovl esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovl edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovl eax, DWORD PTR [rip + 0x100]
     cmovl esi, DWORD PTR [rax]
-    cmovl eax, DWORD PTR [rbx]
+    cmovl ecx, DWORD PTR [rax]
+    cmovl ebx, DWORD PTR [rbx]
+    cmovl ecx, DWORD PTR [rip + 0x100]
+    cmovl eax, DWORD PTR [rax]
+    cmovl ecx, DWORD PTR [rbx]
+    cmovl edx, DWORD PTR [rip + 0x1000]
+    cmovl ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovl esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovl edx, DWORD PTR [rax]
 
 // === CMOVL r64, r64 ===
-    cmovl rdi, rbx
-    cmovl r13, r13
-    cmovl rsi, r10
-    cmovl r11, rdi
-    cmovl r13, rdx
-    cmovl r10, rcx
-    cmovl r13, r11
+    cmovl rdi, rdi
     cmovl rsi, rsi
-    cmovl rbx, r11
-    cmovl r13, rbx
+    cmovl r8, rax
+    cmovl rdi, rdx
+    cmovl r11, rcx
+    cmovl r11, r8
+    cmovl r9, rsi
+    cmovl r13, r8
+    cmovl r12, r13
+    cmovl rcx, r9
 
 // === CMOVL r64, m64 ===
-    cmovl rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovl r11, QWORD PTR [rip + 0x1000]
-    cmovl rax, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovl rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovl r9, QWORD PTR [rbx]
-    cmovl r10, QWORD PTR [rbx]
-    cmovl r11, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovl rbx, QWORD PTR [rip + 0x1000]
-    cmovl r8, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovl rdx, QWORD PTR [rip + 0x1000]
+    cmovl rcx, QWORD PTR [rax]
+    cmovl r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovl r13, QWORD PTR [rbx]
+    cmovl r8, QWORD PTR [rip + 0x1000]
+    cmovl rsi, QWORD PTR [rip + 0x100]
+    cmovl r11, QWORD PTR [rax]
+    cmovl rbx, QWORD PTR [rip + 0x100]
+    cmovl r13, QWORD PTR [rip + 0x100]
+    cmovl rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovl r9, QWORD PTR [rip + 0x1000]
 
 // === CMOVLE r16, r16 ===
-    cmovle ax, si
-    cmovle cx, di
-    cmovle bx, bx
     cmovle di, di
-    cmovle dx, dx
-    cmovle cx, si
-    cmovle si, dx
-    cmovle di, si
+    cmovle bx, si
+    cmovle cx, di
+    cmovle ax, bx
+    cmovle ax, cx
+    cmovle bx, ax
     cmovle di, dx
-    cmovle cx, dx
+    cmovle dx, cx
+    cmovle cx, si
+    cmovle bx, dx
 
 // === CMOVLE r16, m16 ===
-    cmovle di, WORD PTR [rip + 0x1000]
-    cmovle bx, WORD PTR [rip + 0x100]
-    cmovle bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovle si, WORD PTR [rip + 0x1000]
-    cmovle bx, WORD PTR [rbx]
-    cmovle si, WORD PTR [rbx]
-    cmovle di, WORD PTR [rip + 0x100]
-    cmovle ax, WORD PTR [rax]
+    cmovle bx, WORD PTR [rax + rbx*4 + 0x100]
     cmovle cx, WORD PTR [rbx]
+    cmovle si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovle dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovle di, WORD PTR [rip + 0x100]
+    cmovle cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovle di, WORD PTR [rax + rbx*4 + 0x100]
     cmovle ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovle si, WORD PTR [rip + 0x100]
+    cmovle cx, WORD PTR [rax]
 
 // === CMOVLE r32, r32 ===
-    cmovle esi, esi
-    cmovle ecx, edx
-    cmovle esi, edi
-    cmovle ecx, edi
-    cmovle edx, edx
-    cmovle edx, edi
-    cmovle edx, esi
+    cmovle edi, esi
     cmovle eax, esi
-    cmovle edx, ecx
+    cmovle esi, eax
+    cmovle edx, edx
+    cmovle ecx, ecx
+    cmovle eax, ebx
+    cmovle esi, edi
+    cmovle edi, ecx
+    cmovle ecx, eax
     cmovle ecx, esi
 
 // === CMOVLE r32, m32 ===
-    cmovle ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovle ecx, DWORD PTR [rip + 0x1000]
-    cmovle ecx, DWORD PTR [rip + 0x100]
-    cmovle edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovle ebx, DWORD PTR [rax]
     cmovle ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovle edi, DWORD PTR [rbx]
+    cmovle ebx, DWORD PTR [rip + 0x1000]
     cmovle eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovle ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovle edi, DWORD PTR [rip + 0x1000]
+    cmovle ecx, DWORD PTR [rip + 0x100]
+    cmovle esi, DWORD PTR [rbx]
+    cmovle esi, DWORD PTR [rip + 0x1000]
+    cmovle ebx, DWORD PTR [rip + 0x100]
+    cmovle edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovle edi, DWORD PTR [rip + 0x100]
+    cmovle edx, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVLE r64, r64 ===
-    cmovle rdi, r11
-    cmovle r12, rcx
-    cmovle r10, r13
-    cmovle r11, r9
-    cmovle rsi, r10
-    cmovle r13, r9
-    cmovle rsi, rbx
-    cmovle r12, rbx
-    cmovle r13, r12
-    cmovle r8, r12
+    cmovle r9, r9
+    cmovle r8, rdi
+    cmovle r11, rax
+    cmovle r9, rax
+    cmovle rdi, rdi
+    cmovle rsi, r13
+    cmovle r11, rsi
+    cmovle r12, r13
+    cmovle rdx, r12
+    cmovle rsi, rdx
 
 // === CMOVLE r64, m64 ===
-    cmovle rcx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovle r9, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovle rbx, QWORD PTR [rip + 0x1000]
-    cmovle r12, QWORD PTR [rax]
-    cmovle r11, QWORD PTR [rip + 0x100]
-    cmovle r9, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovle rsi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovle rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovle r11, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovle rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovle r8, QWORD PTR [rip + 0x100]
+    cmovle r9, QWORD PTR [rip + 0x1000]
+    cmovle r9, QWORD PTR [rax]
+    cmovle rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovle r11, QWORD PTR [rbx]
+    cmovle rcx, QWORD PTR [rip + 0x1000]
+    cmovle rax, QWORD PTR [rip + 0x100]
+    cmovle rsi, QWORD PTR [rip + 0x100]
+    cmovle rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovle r8, QWORD PTR [rip + 0x1000]
 
 // === CMOVNA r16, r16 ===
+    cmovna bx, cx
     cmovna ax, cx
-    cmovna di, dx
-    cmovna cx, ax
     cmovna si, dx
-    cmovna dx, si
-    cmovna bx, di
+    cmovna dx, ax
+    cmovna ax, di
     cmovna ax, ax
-    cmovna si, bx
-    cmovna cx, di
-    cmovna dx, bx
+    cmovna di, cx
+    cmovna dx, dx
+    cmovna si, cx
+    cmovna bx, di
 
 // === CMOVNA r16, m16 ===
-    cmovna ax, WORD PTR [rax]
-    cmovna di, WORD PTR [rax + rbx*1 + 0x10]
-    cmovna si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovna di, WORD PTR [rip + 0x1000]
-    cmovna bx, WORD PTR [rbx]
-    cmovna cx, WORD PTR [rbx]
-    cmovna bx, WORD PTR [rip + 0x100]
-    cmovna cx, WORD PTR [rip + 0x100]
-    cmovna di, WORD PTR [rbx]
+    cmovna ax, WORD PTR [rip + 0x1000]
     cmovna cx, WORD PTR [rip + 0x1000]
+    cmovna si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovna bx, WORD PTR [rbx]
+    cmovna cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovna dx, WORD PTR [rip + 0x100]
+    cmovna cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovna cx, WORD PTR [rax]
+    cmovna bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovna di, WORD PTR [rip + 0x1000]
 
 // === CMOVNA r32, r32 ===
-    cmovna esi, ebx
-    cmovna edx, edx
-    cmovna edx, esi
-    cmovna eax, esi
-    cmovna edi, esi
-    cmovna ecx, edx
-    cmovna edi, edi
-    cmovna eax, eax
-    cmovna eax, ecx
-    cmovna eax, ebx
+    cmovna edx, ecx
+    cmovna eax, edx
+    cmovna esi, ecx
+    cmovna edi, ecx
+    cmovna edx, ebx
+    cmovna esi, edi
+    cmovna ecx, ebx
+    cmovna ebx, ebx
+    cmovna ecx, ecx
+    cmovna esi, eax
 
 // === CMOVNA r32, m32 ===
-    cmovna ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovna edi, DWORD PTR [rip + 0x1000]
+    cmovna esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovna edx, DWORD PTR [rip + 0x1000]
+    cmovna edx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovna esi, DWORD PTR [rax]
-    cmovna eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovna ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovna edi, DWORD PTR [rbx]
-    cmovna ecx, DWORD PTR [rip + 0x100]
-    cmovna edx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovna edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovna ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovna ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovna edx, DWORD PTR [rax]
+    cmovna ebx, DWORD PTR [rip + 0x100]
+    cmovna ecx, DWORD PTR [rip + 0x1000]
+    cmovna edi, DWORD PTR [rax]
 
 // === CMOVNA r64, r64 ===
-    cmovna rax, rdi
-    cmovna rdx, r11
-    cmovna rcx, r8
-    cmovna rax, r11
-    cmovna r8, r9
-    cmovna rsi, r13
-    cmovna r8, r12
-    cmovna r13, rcx
-    cmovna r9, rcx
-    cmovna rax, r12
+    cmovna rdx, r8
+    cmovna rcx, rdx
+    cmovna rdx, r13
+    cmovna r13, r12
+    cmovna r12, rsi
+    cmovna r9, rax
+    cmovna rsi, rax
+    cmovna r9, rbx
+    cmovna rsi, r8
+    cmovna r11, r9
 
 // === CMOVNA r64, m64 ===
-    cmovna rdi, QWORD PTR [rip + 0x1000]
-    cmovna rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovna r13, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovna r11, QWORD PTR [rip + 0x100]
-    cmovna rbx, QWORD PTR [rax]
-    cmovna r11, QWORD PTR [rip + 0x1000]
-    cmovna rcx, QWORD PTR [rip + 0x1000]
+    cmovna r12, QWORD PTR [rip + 0x1000]
+    cmovna rbx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovna r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovna r12, QWORD PTR [rip + 0x100]
+    cmovna r9, QWORD PTR [rip + 0x1000]
+    cmovna r13, QWORD PTR [rbx]
+    cmovna rsi, QWORD PTR [rax]
     cmovna r10, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovna r8, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovna r13, QWORD PTR [rip + 0x1000]
+    cmovna r13, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovna r11, QWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNAE r16, r16 ===
+    cmovnae ax, si
     cmovnae di, bx
-    cmovnae si, cx
-    cmovnae di, ax
-    cmovnae bx, ax
-    cmovnae cx, cx
-    cmovnae di, di
-    cmovnae si, bx
-    cmovnae ax, di
-    cmovnae dx, dx
+    cmovnae dx, cx
+    cmovnae cx, di
+    cmovnae dx, ax
+    cmovnae ax, dx
     cmovnae ax, bx
+    cmovnae si, dx
+    cmovnae ax, ax
+    cmovnae cx, si
 
 // === CMOVNAE r16, m16 ===
-    cmovnae dx, WORD PTR [rbx]
-    cmovnae dx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnae di, WORD PTR [rax]
+    cmovnae ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnae dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnae si, WORD PTR [rip + 0x1000]
+    cmovnae cx, WORD PTR [rip + 0x100]
+    cmovnae si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnae di, WORD PTR [rip + 0x100]
     cmovnae bx, WORD PTR [rip + 0x100]
-    cmovnae cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnae cx, WORD PTR [rax + rbx*1 + 0x10]
     cmovnae dx, WORD PTR [rip + 0x1000]
-    cmovnae si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnae cx, WORD PTR [rip + 0x1000]
-    cmovnae dx, WORD PTR [rax]
-    cmovnae dx, WORD PTR [rip + 0x100]
-    cmovnae si, WORD PTR [rax]
 
 // === CMOVNAE r32, r32 ===
-    cmovnae edx, ecx
-    cmovnae eax, edi
-    cmovnae esi, edi
-    cmovnae esi, eax
-    cmovnae esi, esi
+    cmovnae ebx, eax
+    cmovnae edi, ecx
+    cmovnae esi, ebx
+    cmovnae edi, esi
+    cmovnae esi, edx
+    cmovnae edx, edx
+    cmovnae edi, ebx
+    cmovnae ecx, ebx
+    cmovnae ebx, ecx
     cmovnae eax, edx
-    cmovnae ecx, eax
-    cmovnae ebx, esi
-    cmovnae edi, edi
-    cmovnae ecx, ecx
 
 // === CMOVNAE r32, m32 ===
-    cmovnae eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnae esi, DWORD PTR [rbx]
-    cmovnae ecx, DWORD PTR [rbx]
-    cmovnae edi, DWORD PTR [rax]
-    cmovnae edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnae eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnae ebx, DWORD PTR [rbx]
     cmovnae esi, DWORD PTR [rip + 0x100]
-    cmovnae ebx, DWORD PTR [rip + 0x100]
-    cmovnae edi, DWORD PTR [rbx]
-    cmovnae esi, DWORD PTR [rip + 0x1000]
-    cmovnae ecx, DWORD PTR [rip + 0x1000]
+    cmovnae ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnae eax, DWORD PTR [rbx]
+    cmovnae esi, DWORD PTR [rax]
+    cmovnae eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnae ebx, DWORD PTR [rax]
+    cmovnae esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnae ecx, DWORD PTR [rbx]
 
 // === CMOVNAE r64, r64 ===
-    cmovnae r11, r9
-    cmovnae rsi, r9
-    cmovnae r9, r8
-    cmovnae rdi, r8
-    cmovnae rdi, r11
-    cmovnae rax, r9
-    cmovnae rax, rdi
-    cmovnae rdi, rsi
+    cmovnae r9, r12
+    cmovnae rsi, r11
+    cmovnae rdx, r8
+    cmovnae r8, r12
+    cmovnae rdx, rdi
+    cmovnae r9, r13
     cmovnae r13, r11
-    cmovnae rsi, r12
+    cmovnae r8, r9
+    cmovnae rbx, r13
+    cmovnae rsi, r10
 
 // === CMOVNAE r64, m64 ===
-    cmovnae r13, QWORD PTR [rbx]
-    cmovnae r12, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnae rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnae r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnae rax, QWORD PTR [rbx]
+    cmovnae r13, QWORD PTR [rip + 0x1000]
+    cmovnae rax, QWORD PTR [rip + 0x1000]
+    cmovnae rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnae r12, QWORD PTR [rip + 0x1000]
+    cmovnae rdx, QWORD PTR [rax + rbx*1 + 0x10]
     cmovnae r12, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnae rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnae r8, QWORD PTR [rip + 0x100]
-    cmovnae rcx, QWORD PTR [rbx]
-    cmovnae r13, QWORD PTR [rax]
-    cmovnae r11, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovnae rdi, QWORD PTR [rip + 0x100]
+    cmovnae rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnae rax, QWORD PTR [rip + 0x100]
 
 // === CMOVNB r16, r16 ===
-    cmovnb si, ax
-    cmovnb dx, dx
-    cmovnb di, bx
-    cmovnb cx, ax
-    cmovnb cx, bx
-    cmovnb cx, si
-    cmovnb ax, ax
+    cmovnb bx, cx
+    cmovnb bx, di
+    cmovnb dx, bx
+    cmovnb di, dx
+    cmovnb si, cx
     cmovnb di, ax
-    cmovnb cx, di
-    cmovnb cx, dx
+    cmovnb bx, si
+    cmovnb si, dx
+    cmovnb dx, si
+    cmovnb ax, ax
 
 // === CMOVNB r16, m16 ===
-    cmovnb dx, WORD PTR [rbx]
-    cmovnb cx, WORD PTR [rip + 0x100]
+    cmovnb bx, WORD PTR [rip + 0x1000]
+    cmovnb bx, WORD PTR [rbx]
+    cmovnb bx, WORD PTR [rax]
+    cmovnb cx, WORD PTR [rip + 0x1000]
+    cmovnb di, WORD PTR [rbx]
     cmovnb cx, WORD PTR [rbx]
-    cmovnb di, WORD PTR [rax]
-    cmovnb di, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnb di, WORD PTR [rip + 0x100]
-    cmovnb bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnb cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnb si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnb dx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnb dx, WORD PTR [rax]
+    cmovnb ax, WORD PTR [rip + 0x100]
+    cmovnb dx, WORD PTR [rip + 0x1000]
+    cmovnb si, WORD PTR [rip + 0x100]
 
 // === CMOVNB r32, r32 ===
-    cmovnb eax, ebx
-    cmovnb ecx, ecx
+    cmovnb ebx, ecx
+    cmovnb esi, ecx
+    cmovnb edx, ecx
     cmovnb edi, edi
-    cmovnb edi, edx
-    cmovnb ecx, eax
-    cmovnb edx, esi
-    cmovnb ecx, edi
     cmovnb ecx, edx
-    cmovnb ebx, esi
-    cmovnb edi, ecx
+    cmovnb ecx, edi
+    cmovnb ebx, ebx
+    cmovnb ecx, ecx
+    cmovnb ecx, eax
+    cmovnb eax, esi
 
 // === CMOVNB r32, m32 ===
-    cmovnb ebx, DWORD PTR [rbx]
-    cmovnb ebx, DWORD PTR [rip + 0x100]
-    cmovnb ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnb ecx, DWORD PTR [rip + 0x100]
     cmovnb eax, DWORD PTR [rip + 0x1000]
-    cmovnb edi, DWORD PTR [rip + 0x100]
-    cmovnb ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnb edx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnb esi, DWORD PTR [rip + 0x1000]
+    cmovnb edi, DWORD PTR [rax + rbx*1 + 0x10]
     cmovnb eax, DWORD PTR [rbx]
-    cmovnb esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnb edx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnb ebx, DWORD PTR [rip + 0x100]
+    cmovnb ecx, DWORD PTR [rbx]
+    cmovnb edi, DWORD PTR [rip + 0x100]
+    cmovnb esi, DWORD PTR [rbx]
+    cmovnb edx, DWORD PTR [rip + 0x1000]
 
 // === CMOVNB r64, r64 ===
-    cmovnb r12, r12
-    cmovnb rbx, rdx
-    cmovnb r8, rcx
-    cmovnb rdx, rdx
-    cmovnb r13, r13
-    cmovnb rsi, r9
-    cmovnb rax, rsi
-    cmovnb rax, r9
+    cmovnb r8, r10
+    cmovnb rsi, rbx
+    cmovnb r10, rsi
+    cmovnb r9, rbx
+    cmovnb rsi, r8
+    cmovnb r12, rcx
+    cmovnb rcx, rax
     cmovnb rbx, rsi
-    cmovnb r8, r11
+    cmovnb r12, r10
+    cmovnb rdx, rdx
 
 // === CMOVNB r64, m64 ===
-    cmovnb r9, QWORD PTR [rip + 0x1000]
-    cmovnb r13, QWORD PTR [rax]
-    cmovnb rsi, QWORD PTR [rip + 0x1000]
-    cmovnb r11, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnb r13, QWORD PTR [rip + 0x1000]
     cmovnb rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnb rbx, QWORD PTR [rip + 0x100]
-    cmovnb rdi, QWORD PTR [rip + 0x1000]
-    cmovnb rdi, QWORD PTR [rip + 0x100]
-    cmovnb rdi, QWORD PTR [rax]
+    cmovnb rsi, QWORD PTR [rax]
+    cmovnb rbx, QWORD PTR [rax]
+    cmovnb rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnb rcx, QWORD PTR [rip + 0x100]
+    cmovnb rdx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnb rax, QWORD PTR [rbx]
+    cmovnb rax, QWORD PTR [rip + 0x100]
+    cmovnb r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnb rsi, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNBE r16, r16 ===
-    cmovnbe si, di
-    cmovnbe bx, dx
-    cmovnbe cx, cx
-    cmovnbe di, dx
-    cmovnbe ax, ax
     cmovnbe dx, ax
-    cmovnbe bx, si
-    cmovnbe dx, cx
-    cmovnbe ax, di
-    cmovnbe dx, di
+    cmovnbe di, si
+    cmovnbe ax, dx
+    cmovnbe di, di
+    cmovnbe dx, dx
+    cmovnbe ax, si
+    cmovnbe bx, dx
+    cmovnbe dx, bx
+    cmovnbe cx, ax
+    cmovnbe di, dx
 
 // === CMOVNBE r16, m16 ===
-    cmovnbe ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnbe dx, WORD PTR [rip + 0x100]
-    cmovnbe di, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe di, WORD PTR [rax]
+    cmovnbe di, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnbe bx, WORD PTR [rax]
+    cmovnbe dx, WORD PTR [rbx]
+    cmovnbe ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe si, WORD PTR [rip + 0x100]
+    cmovnbe si, WORD PTR [rax + rbx*4 + 0x100]
     cmovnbe si, WORD PTR [rax]
-    cmovnbe dx, WORD PTR [rip + 0x1000]
-    cmovnbe si, WORD PTR [rbx]
-    cmovnbe si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnbe cx, WORD PTR [rip + 0x1000]
-    cmovnbe di, WORD PTR [rbx]
-    cmovnbe ax, WORD PTR [rip + 0x1000]
+    cmovnbe di, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe ax, WORD PTR [rip + 0x100]
 
 // === CMOVNBE r32, r32 ===
-    cmovnbe ecx, esi
+    cmovnbe edx, esi
+    cmovnbe ebx, eax
     cmovnbe ebx, edi
-    cmovnbe esi, esi
-    cmovnbe edx, edx
-    cmovnbe edx, edi
-    cmovnbe ebx, ecx
     cmovnbe ebx, edx
-    cmovnbe edx, ebx
     cmovnbe ecx, edi
-    cmovnbe edx, eax
+    cmovnbe ecx, edx
+    cmovnbe ecx, esi
+    cmovnbe edx, edx
+    cmovnbe ecx, eax
+    cmovnbe esi, esi
 
 // === CMOVNBE r32, m32 ===
-    cmovnbe edx, DWORD PTR [rax]
-    cmovnbe edx, DWORD PTR [rbx]
+    cmovnbe eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnbe eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe edi, DWORD PTR [rip + 0x1000]
     cmovnbe ebx, DWORD PTR [rip + 0x100]
-    cmovnbe esi, DWORD PTR [rbx]
-    cmovnbe ecx, DWORD PTR [rax]
-    cmovnbe ebx, DWORD PTR [rbx]
-    cmovnbe eax, DWORD PTR [rax]
-    cmovnbe ecx, DWORD PTR [rbx]
-    cmovnbe eax, DWORD PTR [rip + 0x100]
+    cmovnbe edi, DWORD PTR [rax]
     cmovnbe edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe esi, DWORD PTR [rax]
+    cmovnbe esi, DWORD PTR [rip + 0x1000]
+    cmovnbe edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnbe ebx, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNBE r64, r64 ===
-    cmovnbe rcx, r9
-    cmovnbe r12, rsi
-    cmovnbe r11, rdx
-    cmovnbe r8, r8
-    cmovnbe r12, rdx
-    cmovnbe rdi, r9
-    cmovnbe r13, r13
-    cmovnbe r11, r8
-    cmovnbe r9, rbx
-    cmovnbe r13, rsi
+    cmovnbe rcx, rdi
+    cmovnbe r12, rbx
+    cmovnbe r13, r11
+    cmovnbe r9, r12
+    cmovnbe rax, rbx
+    cmovnbe r10, rbx
+    cmovnbe r13, rdi
+    cmovnbe r10, r11
+    cmovnbe rbx, rdx
+    cmovnbe r8, r10
 
 // === CMOVNBE r64, m64 ===
-    cmovnbe r10, QWORD PTR [rax]
-    cmovnbe rdx, QWORD PTR [rip + 0x1000]
-    cmovnbe r12, QWORD PTR [rax]
-    cmovnbe r9, QWORD PTR [rip + 0x1000]
+    cmovnbe rcx, QWORD PTR [rip + 0x100]
+    cmovnbe r8, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnbe rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnbe rsi, QWORD PTR [rbx]
+    cmovnbe rbx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovnbe rdx, QWORD PTR [rax]
+    cmovnbe r11, QWORD PTR [rbx]
+    cmovnbe r12, QWORD PTR [rax + rbx*4 + 0x100]
     cmovnbe r13, QWORD PTR [rbx]
-    cmovnbe rdi, QWORD PTR [rip + 0x1000]
-    cmovnbe r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnbe r10, QWORD PTR [rbx]
-    cmovnbe r8, QWORD PTR [rax]
     cmovnbe rdi, QWORD PTR [rbx]
 
 // === CMOVNC r16, r16 ===
-    cmovnc di, dx
-    cmovnc bx, di
-    cmovnc dx, si
-    cmovnc cx, di
-    cmovnc ax, bx
-    cmovnc si, si
-    cmovnc dx, dx
-    cmovnc si, ax
-    cmovnc di, bx
+    cmovnc dx, ax
     cmovnc bx, bx
+    cmovnc ax, dx
+    cmovnc si, di
+    cmovnc ax, si
+    cmovnc di, si
+    cmovnc dx, cx
+    cmovnc cx, si
+    cmovnc ax, bx
+    cmovnc si, bx
 
 // === CMOVNC r16, m16 ===
-    cmovnc ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnc di, WORD PTR [rip + 0x1000]
     cmovnc bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnc bx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnc ax, WORD PTR [rax]
-    cmovnc si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnc di, WORD PTR [rip + 0x100]
     cmovnc si, WORD PTR [rbx]
-    cmovnc cx, WORD PTR [rip + 0x100]
-    cmovnc cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnc si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnc bx, WORD PTR [rip + 0x1000]
+    cmovnc si, WORD PTR [rip + 0x1000]
+    cmovnc ax, WORD PTR [rax]
+    cmovnc dx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnc dx, WORD PTR [rbx]
+    cmovnc cx, WORD PTR [rax]
+    cmovnc cx, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNC r32, r32 ===
-    cmovnc ecx, edx
-    cmovnc ecx, edi
+    cmovnc edx, esi
+    cmovnc ebx, edi
     cmovnc edi, ecx
-    cmovnc edx, ecx
-    cmovnc edi, ebx
-    cmovnc ebx, ecx
-    cmovnc ecx, ecx
     cmovnc eax, eax
-    cmovnc esi, eax
-    cmovnc edi, esi
+    cmovnc eax, ecx
+    cmovnc ebx, esi
+    cmovnc ebx, ebx
+    cmovnc eax, esi
+    cmovnc ecx, ecx
+    cmovnc esi, edi
 
 // === CMOVNC r32, m32 ===
-    cmovnc edi, DWORD PTR [rip + 0x1000]
-    cmovnc ecx, DWORD PTR [rax]
-    cmovnc ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnc edx, DWORD PTR [rbx]
+    cmovnc esi, DWORD PTR [rip + 0x1000]
+    cmovnc edx, DWORD PTR [rip + 0x100]
     cmovnc esi, DWORD PTR [rax]
-    cmovnc edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnc ebx, DWORD PTR [rax]
-    cmovnc ebx, DWORD PTR [rip + 0x100]
-    cmovnc edi, DWORD PTR [rip + 0x100]
-    cmovnc edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnc esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc edx, DWORD PTR [rax]
+    cmovnc edx, DWORD PTR [rip + 0x1000]
+    cmovnc eax, DWORD PTR [rbx]
+    cmovnc eax, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNC r64, r64 ===
-    cmovnc r10, rsi
-    cmovnc rbx, r10
-    cmovnc rsi, r9
-    cmovnc rbx, rsi
-    cmovnc r8, r12
-    cmovnc rcx, rcx
-    cmovnc rax, rbx
-    cmovnc rsi, r12
+    cmovnc r8, r10
+    cmovnc r9, rax
+    cmovnc r11, rsi
+    cmovnc rbx, rcx
+    cmovnc rsi, r13
+    cmovnc r8, rax
+    cmovnc rdi, rbx
+    cmovnc r8, rsi
     cmovnc r10, rdx
-    cmovnc rdx, rdx
+    cmovnc r12, r12
 
 // === CMOVNC r64, m64 ===
-    cmovnc rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnc rax, QWORD PTR [rax]
-    cmovnc rbx, QWORD PTR [rbx]
-    cmovnc r9, QWORD PTR [rbx]
-    cmovnc r10, QWORD PTR [rbx]
-    cmovnc r8, QWORD PTR [rax]
-    cmovnc rdx, QWORD PTR [rax]
+    cmovnc r10, QWORD PTR [rip + 0x100]
+    cmovnc rdi, QWORD PTR [rbx]
+    cmovnc rdx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc r8, QWORD PTR [rip + 0x100]
+    cmovnc rsi, QWORD PTR [rax]
     cmovnc r10, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnc r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnc r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc r8, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnc r9, QWORD PTR [rip + 0x1000]
+    cmovnc r8, QWORD PTR [rax]
+    cmovnc rax, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNE r16, r16 ===
-    cmovne ax, di
-    cmovne si, ax
+    cmovne cx, bx
+    cmovne cx, cx
+    cmovne di, di
+    cmovne si, di
     cmovne dx, di
+    cmovne bx, ax
     cmovne di, dx
-    cmovne dx, ax
-    cmovne si, bx
-    cmovne dx, dx
-    cmovne bx, di
-    cmovne si, cx
-    cmovne ax, dx
+    cmovne bx, bx
+    cmovne bx, cx
+    cmovne si, dx
 
 // === CMOVNE r16, m16 ===
-    cmovne dx, WORD PTR [rip + 0x1000]
-    cmovne ax, WORD PTR [rip + 0x1000]
-    cmovne dx, WORD PTR [rbx]
-    cmovne ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovne bx, WORD PTR [rax]
+    cmovne di, WORD PTR [rip + 0x1000]
+    cmovne di, WORD PTR [rax + rbx*4 + 0x100]
+    cmovne cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovne cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovne ax, WORD PTR [rax]
     cmovne cx, WORD PTR [rip + 0x100]
-    cmovne si, WORD PTR [rip + 0x100]
-    cmovne dx, WORD PTR [rip + 0x100]
-    cmovne cx, WORD PTR [rax]
-    cmovne si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovne ax, WORD PTR [rip + 0x100]
+    cmovne cx, WORD PTR [rip + 0x1000]
+    cmovne dx, WORD PTR [rip + 0x1000]
+    cmovne bx, WORD PTR [rax]
 
 // === CMOVNE r32, r32 ===
-    cmovne esi, ebx
-    cmovne eax, ebx
-    cmovne edi, ebx
-    cmovne edx, ecx
-    cmovne edi, ecx
-    cmovne esi, edx
-    cmovne eax, esi
     cmovne esi, eax
+    cmovne ecx, edx
+    cmovne eax, ecx
+    cmovne ecx, ebx
     cmovne edx, eax
-    cmovne ecx, edi
+    cmovne edx, esi
+    cmovne esi, ecx
+    cmovne esi, edi
+    cmovne eax, eax
+    cmovne eax, edx
 
 // === CMOVNE r32, m32 ===
-    cmovne edi, DWORD PTR [rbx]
-    cmovne esi, DWORD PTR [rip + 0x1000]
-    cmovne eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovne ecx, DWORD PTR [rip + 0x100]
-    cmovne eax, DWORD PTR [rip + 0x100]
-    cmovne edi, DWORD PTR [rip + 0x1000]
-    cmovne edx, DWORD PTR [rip + 0x1000]
-    cmovne eax, DWORD PTR [rbx]
-    cmovne ecx, DWORD PTR [rbx]
+    cmovne esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovne edx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovne ecx, DWORD PTR [rip + 0x1000]
+    cmovne edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovne edx, DWORD PTR [rbx]
+    cmovne esi, DWORD PTR [rip + 0x100]
+    cmovne ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovne edi, DWORD PTR [rip + 0x100]
+    cmovne ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovne esi, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNE r64, r64 ===
-    cmovne rbx, r13
-    cmovne r11, r9
-    cmovne r12, rax
-    cmovne rbx, r10
-    cmovne rdi, r10
-    cmovne r11, rbx
-    cmovne rdx, r8
-    cmovne r10, rcx
-    cmovne r11, r8
-    cmovne r9, rax
+    cmovne rsi, r12
+    cmovne rax, rdx
+    cmovne r11, rax
+    cmovne r11, r10
+    cmovne r8, r10
+    cmovne rdi, r13
+    cmovne r8, rax
+    cmovne r8, r8
+    cmovne r13, r11
+    cmovne rcx, r12
 
 // === CMOVNE r64, m64 ===
-    cmovne r9, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovne rcx, QWORD PTR [rax]
-    cmovne rdi, QWORD PTR [rbx]
-    cmovne rbx, QWORD PTR [rip + 0x100]
-    cmovne rdx, QWORD PTR [rip + 0x1000]
-    cmovne r8, QWORD PTR [rip + 0x1000]
-    cmovne rcx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovne rcx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovne rax, QWORD PTR [rbx]
+    cmovne r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovne rbx, QWORD PTR [rbx]
+    cmovne r10, QWORD PTR [rbx]
     cmovne r8, QWORD PTR [rip + 0x100]
+    cmovne r9, QWORD PTR [rax]
+    cmovne r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovne r9, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovne r9, QWORD PTR [rip + 0x100]
+    cmovne rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovne rax, QWORD PTR [rip + 0x1000]
 
 // === CMOVNG r16, r16 ===
-    cmovng di, ax
-    cmovng si, di
-    cmovng si, dx
-    cmovng cx, cx
-    cmovng si, ax
     cmovng bx, si
-    cmovng bx, bx
-    cmovng cx, si
-    cmovng cx, bx
-    cmovng di, si
+    cmovng si, dx
+    cmovng bx, dx
+    cmovng dx, si
+    cmovng bx, di
+    cmovng dx, ax
+    cmovng di, ax
+    cmovng ax, dx
+    cmovng bx, cx
+    cmovng ax, bx
 
 // === CMOVNG r16, m16 ===
-    cmovng di, WORD PTR [rax]
+    cmovng si, WORD PTR [rip + 0x100]
+    cmovng dx, WORD PTR [rbx]
+    cmovng bx, WORD PTR [rip + 0x1000]
     cmovng ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovng cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovng si, WORD PTR [rip + 0x1000]
     cmovng bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovng cx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovng si, WORD PTR [rbx]
-    cmovng di, WORD PTR [rip + 0x1000]
-    cmovng cx, WORD PTR [rax]
+    cmovng bx, WORD PTR [rbx]
+    cmovng di, WORD PTR [rbx]
     cmovng ax, WORD PTR [rbx]
-    cmovng bx, WORD PTR [rax]
+    cmovng bx, WORD PTR [rip + 0x100]
 
 // === CMOVNG r32, r32 ===
-    cmovng esi, ecx
-    cmovng ecx, esi
-    cmovng edi, esi
-    cmovng edi, edx
-    cmovng esi, esi
-    cmovng eax, ebx
+    cmovng esi, ebx
+    cmovng ecx, ecx
     cmovng edx, eax
-    cmovng edx, edx
+    cmovng edx, edi
     cmovng eax, edx
+    cmovng esi, ecx
+    cmovng edi, ebx
     cmovng edi, eax
+    cmovng edx, esi
+    cmovng ecx, edi
 
 // === CMOVNG r32, m32 ===
-    cmovng ebx, DWORD PTR [rax]
+    cmovng ebx, DWORD PTR [rbx]
     cmovng ecx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovng esi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovng eax, DWORD PTR [rip + 0x100]
-    cmovng ecx, DWORD PTR [rax]
-    cmovng ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovng edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovng eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovng ecx, DWORD PTR [rbx]
+    cmovng esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovng eax, DWORD PTR [rbx]
+    cmovng ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovng edi, DWORD PTR [rax]
     cmovng eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovng ecx, DWORD PTR [rip + 0x100]
+    cmovng ecx, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNG r64, r64 ===
-    cmovng rdx, r12
-    cmovng r12, r10
-    cmovng r11, rdi
-    cmovng rdx, rdx
+    cmovng r10, r10
+    cmovng rdi, rsi
+    cmovng r10, r9
+    cmovng rdi, rdx
+    cmovng rbx, rbx
+    cmovng r11, r12
+    cmovng r10, rax
+    cmovng rsi, rcx
+    cmovng rdi, rdi
     cmovng r9, r8
-    cmovng r10, rsi
-    cmovng rbx, r10
-    cmovng r9, r9
-    cmovng r12, r8
-    cmovng rax, rax
 
 // === CMOVNG r64, m64 ===
-    cmovng r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovng rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovng rdi, QWORD PTR [rip + 0x1000]
-    cmovng r13, QWORD PTR [rip + 0x100]
-    cmovng r13, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovng r12, QWORD PTR [rip + 0x1000]
-    cmovng r12, QWORD PTR [rbx]
-    cmovng rbx, QWORD PTR [rip + 0x1000]
-    cmovng r9, QWORD PTR [rbx]
-    cmovng rax, QWORD PTR [rbx]
+    cmovng rsi, QWORD PTR [rbx]
+    cmovng rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovng rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovng r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovng r10, QWORD PTR [rip + 0x100]
+    cmovng r12, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovng rax, QWORD PTR [rip + 0x1000]
+    cmovng rcx, QWORD PTR [rax]
+    cmovng rdx, QWORD PTR [rip + 0x1000]
+    cmovng r11, QWORD PTR [rbx]
 
 // === CMOVNGE r16, r16 ===
-    cmovnge bx, bx
-    cmovnge cx, si
-    cmovnge dx, di
-    cmovnge di, di
-    cmovnge dx, cx
-    cmovnge cx, ax
+    cmovnge bx, ax
+    cmovnge dx, ax
+    cmovnge ax, si
+    cmovnge di, cx
+    cmovnge si, dx
+    cmovnge dx, bx
+    cmovnge si, si
+    cmovnge di, bx
+    cmovnge bx, di
     cmovnge ax, cx
-    cmovnge si, cx
-    cmovnge si, ax
-    cmovnge di, dx
 
 // === CMOVNGE r16, m16 ===
-    cmovnge di, WORD PTR [rbx]
-    cmovnge ax, WORD PTR [rip + 0x100]
-    cmovnge ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnge dx, WORD PTR [rax]
+    cmovnge bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnge si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnge dx, WORD PTR [rbx]
+    cmovnge si, WORD PTR [rax]
+    cmovnge dx, WORD PTR [rip + 0x1000]
+    cmovnge si, WORD PTR [rax + rbx*4 + 0x100]
     cmovnge cx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnge bx, WORD PTR [rax + rbx*4 + 0x100]
     cmovnge ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnge si, WORD PTR [rip + 0x100]
-    cmovnge cx, WORD PTR [rip + 0x100]
-    cmovnge di, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnge ax, WORD PTR [rbx]
+    cmovnge bx, WORD PTR [rbx]
 
 // === CMOVNGE r32, r32 ===
-    cmovnge edx, edx
-    cmovnge eax, eax
-    cmovnge edx, esi
-    cmovnge ecx, edx
-    cmovnge ecx, ecx
-    cmovnge edi, edi
-    cmovnge ebx, esi
+    cmovnge esi, esi
+    cmovnge esi, eax
+    cmovnge edx, eax
+    cmovnge eax, ecx
+    cmovnge eax, edi
+    cmovnge eax, ebx
     cmovnge esi, edx
-    cmovnge ebx, ebx
-    cmovnge edx, edi
+    cmovnge ecx, ecx
+    cmovnge edi, eax
+    cmovnge ebx, eax
 
 // === CMOVNGE r32, m32 ===
-    cmovnge esi, DWORD PTR [rbx]
-    cmovnge ecx, DWORD PTR [rip + 0x100]
-    cmovnge ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnge edi, DWORD PTR [rax]
-    cmovnge ebx, DWORD PTR [rip + 0x100]
-    cmovnge eax, DWORD PTR [rip + 0x100]
-    cmovnge esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnge ebx, DWORD PTR [rip + 0x1000]
+    cmovnge edi, DWORD PTR [rip + 0x1000]
+    cmovnge eax, DWORD PTR [rax]
     cmovnge edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnge ecx, DWORD PTR [rax + rbx*1 + 0x10]
     cmovnge eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnge edx, DWORD PTR [rip + 0x1000]
+    cmovnge ecx, DWORD PTR [rip + 0x100]
+    cmovnge edx, DWORD PTR [rip + 0x100]
+    cmovnge edi, DWORD PTR [rax]
+    cmovnge eax, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNGE r64, r64 ===
-    cmovnge r11, r13
-    cmovnge r11, rcx
-    cmovnge r12, r13
-    cmovnge r8, rbx
-    cmovnge rdx, r10
+    cmovnge r8, r8
+    cmovnge rcx, r9
+    cmovnge rdi, r12
+    cmovnge r13, rax
+    cmovnge rbx, rdi
     cmovnge rcx, r8
-    cmovnge r10, r9
-    cmovnge rax, r11
-    cmovnge r9, r9
-    cmovnge r11, rdi
+    cmovnge r12, r12
+    cmovnge r11, r9
+    cmovnge rsi, rsi
+    cmovnge rcx, rax
 
 // === CMOVNGE r64, m64 ===
-    cmovnge r9, QWORD PTR [rax]
-    cmovnge r12, QWORD PTR [rbx]
-    cmovnge r11, QWORD PTR [rip + 0x100]
-    cmovnge r8, QWORD PTR [rbx]
-    cmovnge r9, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnge r11, QWORD PTR [rbx]
-    cmovnge r13, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnge rbx, QWORD PTR [rip + 0x1000]
-    cmovnge rbx, QWORD PTR [rax]
+    cmovnge rdx, QWORD PTR [rip + 0x1000]
+    cmovnge r8, QWORD PTR [rax]
+    cmovnge r9, QWORD PTR [rip + 0x100]
+    cmovnge rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovnge r13, QWORD PTR [rip + 0x100]
+    cmovnge rdx, QWORD PTR [rbx]
+    cmovnge rax, QWORD PTR [rip + 0x100]
+    cmovnge rdi, QWORD PTR [rip + 0x100]
     cmovnge r9, QWORD PTR [rbx]
+    cmovnge r10, QWORD PTR [rbx]
 
 // === CMOVNL r16, r16 ===
-    cmovnl cx, ax
-    cmovnl bx, si
-    cmovnl si, dx
-    cmovnl bx, bx
-    cmovnl di, ax
     cmovnl dx, si
-    cmovnl di, bx
-    cmovnl cx, bx
-    cmovnl bx, di
-    cmovnl bx, ax
+    cmovnl di, di
+    cmovnl ax, dx
+    cmovnl ax, ax
+    cmovnl cx, cx
+    cmovnl bx, bx
+    cmovnl bx, dx
+    cmovnl dx, ax
+    cmovnl cx, di
+    cmovnl di, si
 
 // === CMOVNL r16, m16 ===
-    cmovnl bx, WORD PTR [rbx]
-    cmovnl si, WORD PTR [rip + 0x100]
-    cmovnl bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnl cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnl ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnl cx, WORD PTR [rip + 0x100]
     cmovnl di, WORD PTR [rax]
-    cmovnl dx, WORD PTR [rip + 0x100]
-    cmovnl cx, WORD PTR [rip + 0x1000]
-    cmovnl bx, WORD PTR [rip + 0x1000]
-    cmovnl si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnl si, WORD PTR [rip + 0x1000]
+    cmovnl dx, WORD PTR [rax]
+    cmovnl ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnl ax, WORD PTR [rip + 0x1000]
+    cmovnl ax, WORD PTR [rip + 0x100]
+    cmovnl dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnl si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnl di, WORD PTR [rbx]
 
 // === CMOVNL r32, r32 ===
-    cmovnl edi, ebx
+    cmovnl eax, esi
     cmovnl ebx, ecx
-    cmovnl edx, esi
-    cmovnl edx, ecx
+    cmovnl ebx, eax
     cmovnl ebx, esi
-    cmovnl ecx, eax
+    cmovnl edi, edi
     cmovnl ecx, ebx
-    cmovnl edx, edi
-    cmovnl eax, eax
-    cmovnl ecx, esi
+    cmovnl ebx, ebx
+    cmovnl edi, ebx
+    cmovnl esi, edx
+    cmovnl eax, ecx
 
 // === CMOVNL r32, m32 ===
+    cmovnl esi, DWORD PTR [rip + 0x1000]
+    cmovnl ebx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovnl esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnl esi, DWORD PTR [rbx]
+    cmovnl esi, DWORD PTR [rax]
     cmovnl ecx, DWORD PTR [rip + 0x100]
-    cmovnl edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnl ebx, DWORD PTR [rax]
-    cmovnl eax, DWORD PTR [rip + 0x100]
-    cmovnl edi, DWORD PTR [rip + 0x100]
-    cmovnl eax, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnl ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnl ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnl edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnl ecx, DWORD PTR [rax]
+    cmovnl eax, DWORD PTR [rax + rbx*4 + 0x100]
     cmovnl ebx, DWORD PTR [rip + 0x100]
 
 // === CMOVNL r64, r64 ===
-    cmovnl rax, rdi
-    cmovnl rdx, r9
-    cmovnl r8, rsi
-    cmovnl rcx, rdi
-    cmovnl rdi, rax
-    cmovnl r9, r10
-    cmovnl r8, r10
-    cmovnl r10, r12
-    cmovnl r8, rax
-    cmovnl r12, rcx
+    cmovnl r12, r9
+    cmovnl rbx, rsi
+    cmovnl r11, rcx
+    cmovnl rax, r9
+    cmovnl rdi, r9
+    cmovnl rsi, r13
+    cmovnl rcx, rsi
+    cmovnl r10, r9
+    cmovnl rdx, r11
+    cmovnl r8, rcx
 
 // === CMOVNL r64, m64 ===
-    cmovnl rax, QWORD PTR [rbx]
-    cmovnl r13, QWORD PTR [rip + 0x100]
-    cmovnl rcx, QWORD PTR [rbx]
-    cmovnl rbx, QWORD PTR [rbx]
-    cmovnl rbx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnl rax, QWORD PTR [rax]
-    cmovnl r11, QWORD PTR [rip + 0x1000]
+    cmovnl r8, QWORD PTR [rbx]
     cmovnl rdi, QWORD PTR [rip + 0x100]
-    cmovnl r8, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnl rdx, QWORD PTR [rip + 0x100]
+    cmovnl rbx, QWORD PTR [rip + 0x100]
+    cmovnl r10, QWORD PTR [rbx]
+    cmovnl r13, QWORD PTR [rax]
+    cmovnl rcx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovnl r12, QWORD PTR [rip + 0x100]
+    cmovnl r9, QWORD PTR [rip + 0x1000]
+    cmovnl r9, QWORD PTR [rbx]
+    cmovnl r12, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNLE r16, r16 ===
-    cmovnle si, di
-    cmovnle bx, si
+    cmovnle di, dx
+    cmovnle dx, bx
+    cmovnle cx, cx
+    cmovnle bx, di
+    cmovnle cx, bx
+    cmovnle di, cx
+    cmovnle cx, si
     cmovnle dx, si
     cmovnle si, dx
-    cmovnle dx, bx
-    cmovnle di, ax
-    cmovnle cx, bx
-    cmovnle cx, si
     cmovnle cx, dx
-    cmovnle ax, dx
 
 // === CMOVNLE r16, m16 ===
-    cmovnle di, WORD PTR [rip + 0x100]
-    cmovnle dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnle cx, WORD PTR [rax]
-    cmovnle dx, WORD PTR [rax]
-    cmovnle bx, WORD PTR [rbx]
-    cmovnle bx, WORD PTR [rip + 0x100]
-    cmovnle si, WORD PTR [rip + 0x100]
-    cmovnle ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnle ax, WORD PTR [rax]
+    cmovnle ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnle dx, WORD PTR [rip + 0x1000]
+    cmovnle cx, WORD PTR [rbx]
+    cmovnle si, WORD PTR [rip + 0x1000]
     cmovnle di, WORD PTR [rax]
+    cmovnle bx, WORD PTR [rip + 0x100]
+    cmovnle si, WORD PTR [rax]
+    cmovnle bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnle ax, WORD PTR [rip + 0x1000]
+    cmovnle cx, WORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNLE r32, r32 ===
-    cmovnle ebx, esi
-    cmovnle edx, ecx
-    cmovnle ecx, edi
-    cmovnle eax, ebx
-    cmovnle edi, ebx
-    cmovnle edi, edi
-    cmovnle edi, eax
+    cmovnle esi, edx
     cmovnle eax, edi
-    cmovnle ecx, ecx
+    cmovnle eax, esi
     cmovnle ecx, eax
+    cmovnle esi, eax
+    cmovnle edx, edi
+    cmovnle ecx, edx
+    cmovnle ebx, edx
+    cmovnle edx, ebx
+    cmovnle ecx, ebx
 
 // === CMOVNLE r32, m32 ===
-    cmovnle edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnle esi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnle esi, DWORD PTR [rbx]
+    cmovnle edx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovnle edi, DWORD PTR [rip + 0x1000]
-    cmovnle eax, DWORD PTR [rax]
-    cmovnle ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnle edx, DWORD PTR [rbx]
-    cmovnle ecx, DWORD PTR [rbx]
-    cmovnle edx, DWORD PTR [rip + 0x1000]
-    cmovnle edi, DWORD PTR [rip + 0x100]
+    cmovnle ebx, DWORD PTR [rbx]
+    cmovnle ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnle esi, DWORD PTR [rbx]
+    cmovnle eax, DWORD PTR [rbx]
+    cmovnle edx, DWORD PTR [rip + 0x100]
+    cmovnle ebx, DWORD PTR [rax]
+    cmovnle esi, DWORD PTR [rax]
+    cmovnle edi, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNLE r64, r64 ===
-    cmovnle r9, rsi
-    cmovnle rsi, rcx
-    cmovnle rax, rdx
-    cmovnle r13, r8
-    cmovnle rax, r9
-    cmovnle r10, rdi
-    cmovnle rsi, r13
-    cmovnle r10, rdx
-    cmovnle rdx, rax
-    cmovnle r11, rdi
+    cmovnle r12, rax
+    cmovnle rbx, r12
+    cmovnle rdi, rcx
+    cmovnle r9, rdx
+    cmovnle rbx, r13
+    cmovnle rbx, r9
+    cmovnle rcx, rcx
+    cmovnle r8, rsi
+    cmovnle rbx, rsi
+    cmovnle r9, rdi
 
 // === CMOVNLE r64, m64 ===
-    cmovnle r10, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnle rcx, QWORD PTR [rbx]
-    cmovnle r13, QWORD PTR [rip + 0x100]
-    cmovnle rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnle r10, QWORD PTR [rip + 0x1000]
+    cmovnle r8, QWORD PTR [rip + 0x100]
+    cmovnle rax, QWORD PTR [rax]
     cmovnle r12, QWORD PTR [rax]
-    cmovnle r8, QWORD PTR [rax]
-    cmovnle rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnle rdi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnle r11, QWORD PTR [rbx]
+    cmovnle r10, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovnle rcx, QWORD PTR [rip + 0x100]
+    cmovnle rdx, QWORD PTR [rbx]
+    cmovnle rdi, QWORD PTR [rip + 0x100]
+    cmovnle r10, QWORD PTR [rip + 0x1000]
+    cmovnle rsi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnle rsi, QWORD PTR [rbx]
 
 // === CMOVNO r16, r16 ===
-    cmovno bx, bx
+    cmovno bx, si
+    cmovno si, di
+    cmovno bx, di
+    cmovno cx, si
+    cmovno dx, di
     cmovno dx, dx
     cmovno ax, cx
-    cmovno di, di
-    cmovno si, cx
-    cmovno si, di
-    cmovno ax, si
-    cmovno di, dx
-    cmovno ax, ax
-    cmovno cx, ax
+    cmovno ax, bx
+    cmovno bx, dx
+    cmovno cx, dx
 
 // === CMOVNO r16, m16 ===
-    cmovno di, WORD PTR [rax]
-    cmovno si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovno dx, WORD PTR [rip + 0x100]
-    cmovno dx, WORD PTR [rip + 0x1000]
-    cmovno bx, WORD PTR [rax]
-    cmovno si, WORD PTR [rbx]
-    cmovno cx, WORD PTR [rax]
+    cmovno di, WORD PTR [rbx]
+    cmovno dx, WORD PTR [rax + rbx*1 + 0x10]
     cmovno ax, WORD PTR [rax]
-    cmovno si, WORD PTR [rip + 0x1000]
+    cmovno bx, WORD PTR [rip + 0x100]
+    cmovno si, WORD PTR [rax]
+    cmovno di, WORD PTR [rip + 0x1000]
+    cmovno ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovno cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovno dx, WORD PTR [rax]
     cmovno di, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNO r32, r32 ===
-    cmovno ebx, ebx
-    cmovno ebx, edi
-    cmovno ebx, esi
-    cmovno edx, eax
-    cmovno ecx, esi
-    cmovno edi, ebx
+    cmovno ecx, ebx
     cmovno edx, esi
-    cmovno eax, ecx
-    cmovno esi, edi
+    cmovno edx, ebx
+    cmovno edi, edi
     cmovno ecx, ecx
+    cmovno ecx, edi
+    cmovno eax, edi
+    cmovno edi, ebx
+    cmovno eax, edx
+    cmovno esi, edx
 
 // === CMOVNO r32, m32 ===
-    cmovno eax, DWORD PTR [rax]
-    cmovno edx, DWORD PTR [rbx]
-    cmovno esi, DWORD PTR [rip + 0x1000]
-    cmovno edx, DWORD PTR [rax]
-    cmovno ecx, DWORD PTR [rip + 0x100]
-    cmovno ebx, DWORD PTR [rax]
-    cmovno edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovno esi, DWORD PTR [rbx]
+    cmovno edi, DWORD PTR [rip + 0x1000]
     cmovno edi, DWORD PTR [rax]
-    cmovno ecx, DWORD PTR [rbx]
+    cmovno edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovno edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovno ecx, DWORD PTR [rip + 0x100]
+    cmovno ebx, DWORD PTR [rip + 0x100]
+    cmovno ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovno ebx, DWORD PTR [rip + 0x1000]
     cmovno esi, DWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNO r64, r64 ===
-    cmovno rcx, r8
-    cmovno rcx, rdi
-    cmovno r11, rbx
-    cmovno r10, r10
+    cmovno r11, rax
+    cmovno rsi, rdi
     cmovno rdx, r13
-    cmovno rbx, rcx
-    cmovno rsi, r12
-    cmovno r11, r9
-    cmovno r13, r9
-    cmovno rdx, r12
+    cmovno r12, r11
+    cmovno rcx, r13
+    cmovno rdi, rcx
+    cmovno r10, r9
+    cmovno r10, r13
+    cmovno rdx, rdi
+    cmovno r9, rdx
 
 // === CMOVNO r64, m64 ===
-    cmovno r8, QWORD PTR [rip + 0x1000]
-    cmovno r9, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovno rcx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovno rsi, QWORD PTR [rbx]
-    cmovno r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovno rdx, QWORD PTR [rip + 0x100]
+    cmovno rbx, QWORD PTR [rbx]
+    cmovno rdx, QWORD PTR [rax]
+    cmovno r9, QWORD PTR [rbx]
+    cmovno rsi, QWORD PTR [rax + rbx*1 + 0x10]
     cmovno rdx, QWORD PTR [rip + 0x1000]
-    cmovno rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovno r11, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovno r10, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovno rcx, QWORD PTR [rip + 0x100]
+    cmovno r12, QWORD PTR [rbx]
+    cmovno rax, QWORD PTR [rbx]
+    cmovno rdx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovno rsi, QWORD PTR [rax]
 
 // === CMOVNP r16, r16 ===
-    cmovnp dx, cx
-    cmovnp dx, ax
+    cmovnp bx, bx
     cmovnp cx, dx
-    cmovnp di, cx
-    cmovnp bx, si
-    cmovnp di, di
+    cmovnp cx, ax
+    cmovnp di, si
+    cmovnp si, cx
+    cmovnp bx, di
+    cmovnp dx, bx
     cmovnp ax, bx
-    cmovnp si, si
-    cmovnp cx, si
-    cmovnp di, ax
+    cmovnp bx, cx
+    cmovnp ax, cx
 
 // === CMOVNP r16, m16 ===
-    cmovnp di, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnp bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnp dx, WORD PTR [rip + 0x100]
-    cmovnp dx, WORD PTR [rax]
-    cmovnp di, WORD PTR [rax]
-    cmovnp si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnp ax, WORD PTR [rip + 0x100]
     cmovnp ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnp dx, WORD PTR [rbx]
-    cmovnp dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovnp ax, WORD PTR [rbx]
+    cmovnp bx, WORD PTR [rbx]
+    cmovnp cx, WORD PTR [rax]
+    cmovnp di, WORD PTR [rax]
+    cmovnp cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnp cx, WORD PTR [rip + 0x100]
+    cmovnp dx, WORD PTR [rax]
+    cmovnp si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnp di, WORD PTR [rip + 0x1000]
 
 // === CMOVNP r32, r32 ===
-    cmovnp ebx, ecx
-    cmovnp ebx, edx
-    cmovnp edx, edi
-    cmovnp edi, ebx
-    cmovnp ecx, esi
-    cmovnp ebx, eax
-    cmovnp esi, ebx
+    cmovnp eax, ecx
+    cmovnp ebx, ebx
+    cmovnp edi, edi
+    cmovnp edi, ecx
+    cmovnp ecx, edx
+    cmovnp ecx, eax
     cmovnp eax, esi
-    cmovnp eax, edi
-    cmovnp ecx, edi
+    cmovnp esi, ebx
+    cmovnp ecx, ecx
+    cmovnp eax, ebx
 
 // === CMOVNP r32, m32 ===
-    cmovnp eax, DWORD PTR [rax]
-    cmovnp edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnp ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnp ebx, DWORD PTR [rax]
-    cmovnp edi, DWORD PTR [rax]
-    cmovnp edx, DWORD PTR [rbx]
-    cmovnp ecx, DWORD PTR [rax]
-    cmovnp ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnp ecx, DWORD PTR [rbx]
     cmovnp esi, DWORD PTR [rax]
-    cmovnp eax, DWORD PTR [rip + 0x1000]
+    cmovnp edx, DWORD PTR [rip + 0x100]
+    cmovnp eax, DWORD PTR [rip + 0x100]
+    cmovnp eax, DWORD PTR [rbx]
+    cmovnp edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnp eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnp edi, DWORD PTR [rip + 0x1000]
+    cmovnp ebx, DWORD PTR [rip + 0x1000]
+    cmovnp esi, DWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNP r64, r64 ===
-    cmovnp rbx, r10
-    cmovnp rsi, rcx
-    cmovnp r11, rdx
-    cmovnp rdx, rdi
-    cmovnp r11, r10
-    cmovnp r13, rsi
-    cmovnp r9, rsi
-    cmovnp rcx, rcx
-    cmovnp r12, rdx
-    cmovnp r12, rdi
+    cmovnp rbx, r11
+    cmovnp r13, r9
+    cmovnp rbx, rdi
+    cmovnp rdi, rdi
+    cmovnp r9, rbx
+    cmovnp r8, r8
+    cmovnp rdx, rcx
+    cmovnp r10, r12
+    cmovnp r12, rcx
+    cmovnp rsi, r8
 
 // === CMOVNP r64, m64 ===
-    cmovnp r11, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnp r12, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnp rdx, QWORD PTR [rax]
+    cmovnp r8, QWORD PTR [rax]
     cmovnp r13, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnp r9, QWORD PTR [rax]
-    cmovnp rdi, QWORD PTR [rbx]
-    cmovnp r11, QWORD PTR [rax]
-    cmovnp rcx, QWORD PTR [rbx]
+    cmovnp rcx, QWORD PTR [rax]
+    cmovnp r12, QWORD PTR [rip + 0x1000]
+    cmovnp r10, QWORD PTR [rip + 0x1000]
+    cmovnp rdi, QWORD PTR [rip + 0x1000]
     cmovnp r8, QWORD PTR [rbx]
-    cmovnp r13, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovnp r9, QWORD PTR [rip + 0x1000]
+    cmovnp rdi, QWORD PTR [rbx]
+    cmovnp rax, QWORD PTR [rax]
 
 // === CMOVNS r16, r16 ===
-    cmovns bx, dx
-    cmovns cx, ax
-    cmovns ax, di
-    cmovns bx, bx
-    cmovns si, si
-    cmovns ax, si
-    cmovns di, ax
-    cmovns dx, cx
     cmovns dx, dx
-    cmovns cx, cx
+    cmovns ax, cx
+    cmovns bx, ax
+    cmovns cx, si
+    cmovns si, di
+    cmovns dx, si
+    cmovns cx, di
+    cmovns di, dx
+    cmovns si, dx
+    cmovns dx, ax
 
 // === CMOVNS r16, m16 ===
-    cmovns bx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovns si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovns bx, WORD PTR [rip + 0x1000]
-    cmovns di, WORD PTR [rax + rbx*1 + 0x10]
-    cmovns cx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovns di, WORD PTR [rax]
-    cmovns bx, WORD PTR [rax]
-    cmovns dx, WORD PTR [rip + 0x100]
-    cmovns di, WORD PTR [rip + 0x1000]
+    cmovns cx, WORD PTR [rbx]
+    cmovns di, WORD PTR [rbx]
+    cmovns di, WORD PTR [rax + rbx*4 + 0x100]
+    cmovns ax, WORD PTR [rip + 0x100]
     cmovns ax, WORD PTR [rip + 0x1000]
+    cmovns si, WORD PTR [rax]
+    cmovns ax, WORD PTR [rax]
+    cmovns ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovns dx, WORD PTR [rip + 0x1000]
+    cmovns si, WORD PTR [rbx]
 
 // === CMOVNS r32, r32 ===
-    cmovns edx, edx
-    cmovns ecx, ecx
-    cmovns esi, ebx
-    cmovns ecx, ebx
-    cmovns edi, esi
     cmovns edx, esi
-    cmovns eax, ecx
-    cmovns edi, edi
-    cmovns edi, ecx
-    cmovns ebx, esi
+    cmovns esi, esi
+    cmovns esi, eax
+    cmovns ebx, eax
+    cmovns ecx, edx
+    cmovns edi, eax
+    cmovns edx, ebx
+    cmovns eax, edx
+    cmovns esi, edx
+    cmovns edi, esi
 
 // === CMOVNS r32, m32 ===
+    cmovns edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovns eax, DWORD PTR [rip + 0x100]
     cmovns edx, DWORD PTR [rip + 0x100]
-    cmovns edi, DWORD PTR [rbx]
-    cmovns ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovns ebx, DWORD PTR [rbx]
-    cmovns esi, DWORD PTR [rax]
-    cmovns eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovns ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovns ecx, DWORD PTR [rbx]
-    cmovns edi, DWORD PTR [rip + 0x1000]
-    cmovns ebx, DWORD PTR [rax]
+    cmovns eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovns edi, DWORD PTR [rax]
+    cmovns edi, DWORD PTR [rip + 0x100]
+    cmovns edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovns esi, DWORD PTR [rbx]
+    cmovns edx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovns ebx, DWORD PTR [rip + 0x100]
 
 // === CMOVNS r64, r64 ===
-    cmovns rcx, rdx
-    cmovns r8, rsi
-    cmovns rbx, rcx
-    cmovns rcx, rsi
-    cmovns r9, rsi
-    cmovns rax, r12
-    cmovns r11, r10
-    cmovns rdi, rdx
+    cmovns rax, rax
+    cmovns r9, rcx
     cmovns r13, r9
     cmovns rcx, rax
+    cmovns r13, r12
+    cmovns r10, rbx
+    cmovns r12, r12
+    cmovns rsi, r9
+    cmovns rcx, r12
+    cmovns rdx, r9
 
 // === CMOVNS r64, m64 ===
-    cmovns rdx, QWORD PTR [rbx]
-    cmovns rdi, QWORD PTR [rax]
-    cmovns r8, QWORD PTR [rax]
-    cmovns rcx, QWORD PTR [rbx]
-    cmovns rcx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovns rbx, QWORD PTR [rax]
-    cmovns r9, QWORD PTR [rip + 0x1000]
-    cmovns rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovns rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovns r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovns rdx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovns r8, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovns rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovns r10, QWORD PTR [rbx]
+    cmovns r13, QWORD PTR [rip + 0x1000]
+    cmovns r13, QWORD PTR [rax]
+    cmovns r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovns r10, QWORD PTR [rip + 0x100]
+    cmovns r11, QWORD PTR [rip + 0x1000]
+    cmovns r11, QWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVNZ r16, r16 ===
-    cmovnz ax, si
-    cmovnz cx, di
-    cmovnz di, ax
-    cmovnz cx, bx
-    cmovnz bx, di
-    cmovnz di, di
+    cmovnz ax, di
     cmovnz cx, cx
-    cmovnz dx, cx
-    cmovnz ax, ax
-    cmovnz si, si
+    cmovnz cx, si
+    cmovnz si, bx
+    cmovnz dx, dx
+    cmovnz ax, cx
+    cmovnz ax, dx
+    cmovnz dx, si
+    cmovnz si, di
+    cmovnz cx, ax
 
 // === CMOVNZ r16, m16 ===
-    cmovnz bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovnz cx, WORD PTR [rax]
-    cmovnz bx, WORD PTR [rip + 0x100]
+    cmovnz si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovnz dx, WORD PTR [rax]
     cmovnz ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovnz si, WORD PTR [rax]
-    cmovnz bx, WORD PTR [rip + 0x1000]
+    cmovnz cx, WORD PTR [rax + rbx*1 + 0x10]
     cmovnz cx, WORD PTR [rip + 0x1000]
-    cmovnz di, WORD PTR [rbx]
-    cmovnz di, WORD PTR [rip + 0x1000]
-    cmovnz cx, WORD PTR [rip + 0x100]
+    cmovnz dx, WORD PTR [rbx]
+    cmovnz cx, WORD PTR [rbx]
+    cmovnz ax, WORD PTR [rip + 0x100]
+    cmovnz ax, WORD PTR [rip + 0x1000]
+    cmovnz di, WORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVNZ r32, r32 ===
-    cmovnz ecx, eax
-    cmovnz esi, edi
-    cmovnz edx, eax
-    cmovnz ecx, edi
-    cmovnz edx, ecx
-    cmovnz ecx, edx
-    cmovnz eax, edx
-    cmovnz edx, ebx
     cmovnz ebx, esi
-    cmovnz edi, edi
+    cmovnz ebx, eax
+    cmovnz edi, eax
+    cmovnz ebx, ecx
+    cmovnz esi, ecx
+    cmovnz edx, ecx
+    cmovnz ebx, ebx
+    cmovnz edx, edi
+    cmovnz edx, edx
+    cmovnz edi, ebx
 
 // === CMOVNZ r32, m32 ===
-    cmovnz ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnz edx, DWORD PTR [rbx]
     cmovnz eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovnz eax, DWORD PTR [rip + 0x1000]
-    cmovnz edi, DWORD PTR [rip + 0x100]
-    cmovnz edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovnz edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz edx, DWORD PTR [rip + 0x1000]
+    cmovnz esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz eax, DWORD PTR [rip + 0x100]
+    cmovnz ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovnz ecx, DWORD PTR [rip + 0x100]
     cmovnz ebx, DWORD PTR [rax]
-    cmovnz edx, DWORD PTR [rax]
-    cmovnz ecx, DWORD PTR [rax]
+    cmovnz eax, DWORD PTR [rbx]
+    cmovnz ecx, DWORD PTR [rip + 0x1000]
 
 // === CMOVNZ r64, r64 ===
-    cmovnz rsi, rcx
+    cmovnz rax, rcx
+    cmovnz rdi, rsi
+    cmovnz rdi, rdi
+    cmovnz rax, r12
     cmovnz rax, rdi
-    cmovnz r11, r10
-    cmovnz r12, r8
-    cmovnz r10, rdi
-    cmovnz r12, r12
-    cmovnz r8, r11
-    cmovnz r9, r9
-    cmovnz rbx, rsi
-    cmovnz rdx, r12
+    cmovnz rsi, r11
+    cmovnz rax, r10
+    cmovnz r13, r13
+    cmovnz r11, r11
+    cmovnz r10, rdx
 
 // === CMOVNZ r64, m64 ===
-    cmovnz rdx, QWORD PTR [rip + 0x1000]
-    cmovnz r8, QWORD PTR [rax]
-    cmovnz r10, QWORD PTR [rax]
-    cmovnz r13, QWORD PTR [rip + 0x100]
-    cmovnz rax, QWORD PTR [rax]
+    cmovnz r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz r8, QWORD PTR [rip + 0x1000]
+    cmovnz r9, QWORD PTR [rbx]
+    cmovnz r10, QWORD PTR [rip + 0x100]
     cmovnz rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovnz r13, QWORD PTR [rax]
-    cmovnz rax, QWORD PTR [rip + 0x1000]
+    cmovnz rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz rdx, QWORD PTR [rax]
+    cmovnz rdx, QWORD PTR [rax + rbx*1 + 0x10]
     cmovnz rdx, QWORD PTR [rip + 0x100]
-    cmovnz rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovnz rdx, QWORD PTR [rip + 0x1000]
 
 // === CMOVO r16, r16 ===
-    cmovo si, si
+    cmovo ax, ax
     cmovo ax, si
-    cmovo si, bx
     cmovo ax, cx
-    cmovo dx, di
-    cmovo ax, dx
+    cmovo bx, cx
     cmovo bx, si
-    cmovo si, ax
-    cmovo dx, si
-    cmovo si, di
+    cmovo cx, si
+    cmovo bx, ax
+    cmovo dx, di
+    cmovo di, cx
+    cmovo ax, dx
 
 // === CMOVO r16, m16 ===
-    cmovo cx, WORD PTR [rax]
-    cmovo si, WORD PTR [rip + 0x1000]
-    cmovo cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovo si, WORD PTR [rax]
-    cmovo cx, WORD PTR [rip + 0x1000]
-    cmovo ax, WORD PTR [rip + 0x1000]
-    cmovo si, WORD PTR [rax + rbx*4 + 0x100]
     cmovo si, WORD PTR [rip + 0x100]
-    cmovo bx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovo di, WORD PTR [rax + rbx*4 + 0x100]
+    cmovo cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovo dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovo bx, WORD PTR [rip + 0x100]
+    cmovo si, WORD PTR [rax + rbx*4 + 0x100]
+    cmovo di, WORD PTR [rbx]
+    cmovo cx, WORD PTR [rax]
     cmovo dx, WORD PTR [rbx]
+    cmovo bx, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVO r32, r32 ===
-    cmovo esi, eax
-    cmovo eax, edx
-    cmovo ebx, edi
-    cmovo edx, ebx
-    cmovo eax, edi
-    cmovo edi, esi
-    cmovo edi, ecx
-    cmovo edi, ebx
-    cmovo ecx, edx
+    cmovo ebx, edx
+    cmovo ecx, edi
+    cmovo edx, eax
+    cmovo eax, ebx
+    cmovo ebx, ebx
+    cmovo ebx, ecx
+    cmovo eax, ecx
+    cmovo edx, edi
+    cmovo edx, edx
     cmovo ecx, eax
 
 // === CMOVO r32, m32 ===
-    cmovo edx, DWORD PTR [rip + 0x100]
-    cmovo ebx, DWORD PTR [rip + 0x1000]
-    cmovo edi, DWORD PTR [rip + 0x1000]
-    cmovo eax, DWORD PTR [rip + 0x100]
-    cmovo ebx, DWORD PTR [rax]
-    cmovo esi, DWORD PTR [rip + 0x100]
-    cmovo edi, DWORD PTR [rip + 0x100]
-    cmovo ecx, DWORD PTR [rax]
     cmovo edi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovo ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovo esi, DWORD PTR [rip + 0x100]
+    cmovo edi, DWORD PTR [rax]
+    cmovo ecx, DWORD PTR [rax]
+    cmovo esi, DWORD PTR [rip + 0x1000]
+    cmovo ebx, DWORD PTR [rip + 0x100]
+    cmovo eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovo eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovo edx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovo eax, DWORD PTR [rip + 0x1000]
 
 // === CMOVO r64, r64 ===
-    cmovo r11, r10
+    cmovo r10, rbx
+    cmovo rcx, rdx
+    cmovo r11, rcx
+    cmovo r9, r10
+    cmovo r10, rsi
+    cmovo rsi, r9
+    cmovo r12, r11
+    cmovo rax, r11
+    cmovo r10, r8
     cmovo rdx, r8
-    cmovo r9, rbx
-    cmovo rsi, r8
-    cmovo r9, rsi
-    cmovo r11, rax
-    cmovo r8, r8
-    cmovo r10, r10
-    cmovo r13, r8
-    cmovo r9, rdi
 
 // === CMOVO r64, m64 ===
-    cmovo rbx, QWORD PTR [rip + 0x100]
-    cmovo rdi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovo rbx, QWORD PTR [rax]
-    cmovo r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovo rax, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovo r12, QWORD PTR [rip + 0x100]
-    cmovo rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovo rdx, QWORD PTR [rax]
-    cmovo r10, QWORD PTR [rax]
-    cmovo r12, QWORD PTR [rip + 0x1000]
+    cmovo rbx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovo rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovo r8, QWORD PTR [rip + 0x100]
+    cmovo rdi, QWORD PTR [rip + 0x100]
+    cmovo rsi, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovo rsi, QWORD PTR [rbx]
+    cmovo rax, QWORD PTR [rbx]
+    cmovo rcx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovo r13, QWORD PTR [rip + 0x100]
+    cmovo r10, QWORD PTR [rip + 0x100]
 
 // === CMOVP r16, r16 ===
     cmovp dx, bx
-    cmovp si, bx
-    cmovp ax, di
-    cmovp ax, bx
-    cmovp cx, si
-    cmovp cx, dx
-    cmovp cx, bx
+    cmovp di, ax
     cmovp bx, dx
-    cmovp di, dx
+    cmovp ax, cx
+    cmovp cx, ax
     cmovp bx, ax
+    cmovp ax, si
+    cmovp ax, di
+    cmovp di, dx
+    cmovp di, si
 
 // === CMOVP r16, m16 ===
-    cmovp dx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovp di, WORD PTR [rip + 0x100]
-    cmovp dx, WORD PTR [rax]
-    cmovp si, WORD PTR [rbx]
-    cmovp cx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovp ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovp ax, WORD PTR [rip + 0x100]
+    cmovp bx, WORD PTR [rip + 0x1000]
     cmovp si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovp di, WORD PTR [rbx]
+    cmovp ax, WORD PTR [rax + rbx*4 + 0x100]
     cmovp ax, WORD PTR [rax]
-    cmovp bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovp di, WORD PTR [rax]
+    cmovp cx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovp si, WORD PTR [rip + 0x1000]
+    cmovp si, WORD PTR [rip + 0x100]
+    cmovp di, WORD PTR [rip + 0x1000]
 
 // === CMOVP r32, r32 ===
-    cmovp ebx, ecx
-    cmovp ecx, ecx
-    cmovp ecx, eax
-    cmovp edi, eax
-    cmovp esi, eax
-    cmovp esi, edi
-    cmovp edi, esi
-    cmovp esi, esi
-    cmovp ebx, esi
+    cmovp esi, ebx
+    cmovp ecx, edi
     cmovp edx, edx
+    cmovp esi, esi
+    cmovp edi, ebx
+    cmovp ecx, eax
+    cmovp eax, ebx
+    cmovp ebx, eax
+    cmovp esi, eax
+    cmovp eax, esi
 
 // === CMOVP r32, m32 ===
-    cmovp edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovp ebx, DWORD PTR [rip + 0x100]
-    cmovp esi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovp ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovp edx, DWORD PTR [rax]
-    cmovp edx, DWORD PTR [rbx]
-    cmovp eax, DWORD PTR [rbx]
-    cmovp ecx, DWORD PTR [rbx]
-    cmovp esi, DWORD PTR [rbx]
     cmovp edi, DWORD PTR [rax]
+    cmovp ecx, DWORD PTR [rax]
+    cmovp edi, DWORD PTR [rip + 0x1000]
+    cmovp ebx, DWORD PTR [rbx]
+    cmovp ecx, DWORD PTR [rip + 0x1000]
+    cmovp eax, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovp esi, DWORD PTR [rip + 0x1000]
+    cmovp eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovp ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovp eax, DWORD PTR [rip + 0x100]
 
 // === CMOVP r64, r64 ===
-    cmovp rax, rax
-    cmovp r11, rbx
-    cmovp rsi, rdx
-    cmovp rdi, rcx
-    cmovp r11, rsi
-    cmovp r11, rdx
-    cmovp rax, r9
-    cmovp r13, r13
-    cmovp rsi, rbx
-    cmovp r9, r11
+    cmovp rdi, r8
+    cmovp rax, r11
+    cmovp r13, rsi
+    cmovp rax, r8
+    cmovp r9, rbx
+    cmovp rsi, r12
+    cmovp r10, r9
+    cmovp r10, rdx
+    cmovp rbx, rax
+    cmovp rdx, rbx
 
 // === CMOVP r64, m64 ===
-    cmovp r11, QWORD PTR [rip + 0x1000]
+    cmovp rsi, QWORD PTR [rax + rbx*1 + 0x10]
     cmovp r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovp rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovp r8, QWORD PTR [rbx]
-    cmovp r10, QWORD PTR [rip + 0x100]
-    cmovp r9, QWORD PTR [rip + 0x1000]
-    cmovp rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovp rbx, QWORD PTR [rip + 0x100]
-    cmovp r11, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovp rdi, QWORD PTR [rax + rbx*4 + 0x100]
     cmovp rcx, QWORD PTR [rbx]
+    cmovp r9, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovp r12, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovp r11, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovp rax, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovp r13, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovp rax, QWORD PTR [rbx]
 
 // === CMOVPE r16, r16 ===
-    cmovpe cx, bx
-    cmovpe dx, cx
-    cmovpe di, dx
-    cmovpe ax, ax
+    cmovpe bx, dx
+    cmovpe cx, cx
+    cmovpe si, di
+    cmovpe si, si
+    cmovpe si, dx
+    cmovpe ax, si
     cmovpe bx, bx
-    cmovpe bx, ax
-    cmovpe cx, ax
-    cmovpe cx, dx
-    cmovpe dx, ax
-    cmovpe bx, cx
+    cmovpe si, ax
+    cmovpe di, bx
+    cmovpe dx, di
 
 // === CMOVPE r16, m16 ===
-    cmovpe ax, WORD PTR [rip + 0x1000]
-    cmovpe cx, WORD PTR [rip + 0x100]
-    cmovpe si, WORD PTR [rip + 0x1000]
-    cmovpe ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovpe ax, WORD PTR [rip + 0x100]
-    cmovpe di, WORD PTR [rbx]
-    cmovpe si, WORD PTR [rax]
+    cmovpe si, WORD PTR [rax + rbx*1 + 0x10]
+    cmovpe ax, WORD PTR [rbx]
+    cmovpe di, WORD PTR [rax + rbx*4 + 0x100]
     cmovpe cx, WORD PTR [rax]
-    cmovpe dx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovpe dx, WORD PTR [rax]
+    cmovpe ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmovpe bx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovpe dx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovpe bx, WORD PTR [rax]
+    cmovpe di, WORD PTR [rip + 0x1000]
+    cmovpe si, WORD PTR [rax]
 
 // === CMOVPE r32, r32 ===
-    cmovpe edi, esi
-    cmovpe eax, ebx
-    cmovpe ebx, esi
-    cmovpe ebx, edx
-    cmovpe esi, esi
-    cmovpe ecx, ecx
-    cmovpe edx, edi
-    cmovpe esi, eax
+    cmovpe ecx, edx
     cmovpe edx, ebx
+    cmovpe eax, edi
+    cmovpe eax, eax
+    cmovpe eax, esi
+    cmovpe esi, edx
+    cmovpe edi, ecx
+    cmovpe eax, ebx
+    cmovpe ecx, ebx
     cmovpe edx, eax
 
 // === CMOVPE r32, m32 ===
-    cmovpe ecx, DWORD PTR [rbx]
+    cmovpe edx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovpe eax, DWORD PTR [rax]
+    cmovpe ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovpe ecx, DWORD PTR [rip + 0x100]
     cmovpe edx, DWORD PTR [rax + rbx*4 + 0x100]
     cmovpe esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovpe ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovpe ebx, DWORD PTR [rax]
-    cmovpe ebx, DWORD PTR [rbx]
-    cmovpe ecx, DWORD PTR [rip + 0x1000]
-    cmovpe esi, DWORD PTR [rbx]
-    cmovpe ecx, DWORD PTR [rip + 0x100]
     cmovpe esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovpe edi, DWORD PTR [rip + 0x1000]
+    cmovpe esi, DWORD PTR [rip + 0x100]
+    cmovpe esi, DWORD PTR [rax]
 
 // === CMOVPE r64, r64 ===
-    cmovpe rdx, r13
-    cmovpe rbx, rdx
-    cmovpe r9, rdx
-    cmovpe r9, rbx
-    cmovpe rsi, rdi
-    cmovpe rax, rdx
-    cmovpe rbx, rbx
-    cmovpe r10, rax
-    cmovpe r13, rcx
-    cmovpe r8, r12
+    cmovpe r9, rax
+    cmovpe r12, rdx
+    cmovpe r8, rbx
+    cmovpe rax, rax
+    cmovpe r9, r9
+    cmovpe rax, rbx
+    cmovpe rdx, r12
+    cmovpe r9, rdi
+    cmovpe r11, rsi
+    cmovpe r11, rdx
 
 // === CMOVPE r64, m64 ===
-    cmovpe r8, QWORD PTR [rip + 0x1000]
-    cmovpe r11, QWORD PTR [rax]
-    cmovpe rsi, QWORD PTR [rax]
-    cmovpe r11, QWORD PTR [rbx]
-    cmovpe r12, QWORD PTR [rip + 0x100]
-    cmovpe r8, QWORD PTR [rax]
-    cmovpe rax, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovpe r9, QWORD PTR [rax]
-    cmovpe r10, QWORD PTR [rip + 0x100]
-    cmovpe r13, QWORD PTR [rax]
+    cmovpe rdx, QWORD PTR [rax]
+    cmovpe r9, QWORD PTR [rip + 0x100]
+    cmovpe rbx, QWORD PTR [rax]
+    cmovpe rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovpe rbx, QWORD PTR [rip + 0x100]
+    cmovpe r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovpe rax, QWORD PTR [rax]
+    cmovpe rsi, QWORD PTR [rip + 0x100]
+    cmovpe rax, QWORD PTR [rbx]
+    cmovpe rbx, QWORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVPO r16, r16 ===
-    cmovpo ax, si
-    cmovpo si, bx
-    cmovpo di, cx
-    cmovpo dx, di
+    cmovpo cx, cx
+    cmovpo ax, cx
+    cmovpo cx, si
+    cmovpo dx, dx
+    cmovpo cx, bx
+    cmovpo bx, bx
+    cmovpo di, di
+    cmovpo si, cx
     cmovpo di, si
-    cmovpo bx, cx
     cmovpo di, dx
-    cmovpo dx, si
-    cmovpo si, di
-    cmovpo ax, ax
 
 // === CMOVPO r16, m16 ===
-    cmovpo bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovpo ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovpo ax, WORD PTR [rbx]
-    cmovpo ax, WORD PTR [rip + 0x100]
-    cmovpo ax, WORD PTR [rax]
-    cmovpo si, WORD PTR [rip + 0x1000]
-    cmovpo ax, WORD PTR [rip + 0x1000]
-    cmovpo di, WORD PTR [rbx]
+    cmovpo di, WORD PTR [rax + rbx*1 + 0x10]
+    cmovpo cx, WORD PTR [rbx]
+    cmovpo bx, WORD PTR [rip + 0x100]
+    cmovpo ax, WORD PTR [rax + rbx*4 + 0x100]
     cmovpo di, WORD PTR [rax]
-    cmovpo dx, WORD PTR [rip + 0x100]
+    cmovpo bx, WORD PTR [rip + 0x1000]
+    cmovpo bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovpo bx, WORD PTR [rax]
+    cmovpo ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmovpo si, WORD PTR [rip + 0x1000]
 
 // === CMOVPO r32, r32 ===
+    cmovpo esi, esi
+    cmovpo ebx, edx
+    cmovpo edi, edx
+    cmovpo ecx, ebx
     cmovpo edi, eax
-    cmovpo ecx, ecx
-    cmovpo edx, eax
-    cmovpo esi, ecx
-    cmovpo esi, edi
-    cmovpo ecx, eax
-    cmovpo edx, edx
-    cmovpo eax, ecx
     cmovpo edi, esi
-    cmovpo edx, esi
+    cmovpo edx, edi
+    cmovpo edx, ebx
+    cmovpo eax, edx
+    cmovpo ebx, esi
 
 // === CMOVPO r32, m32 ===
-    cmovpo ebx, DWORD PTR [rax]
-    cmovpo eax, DWORD PTR [rbx]
-    cmovpo eax, DWORD PTR [rax + rbx*1 + 0x10]
     cmovpo ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovpo ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovpo edx, DWORD PTR [rbx]
-    cmovpo ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovpo edi, DWORD PTR [rbx]
+    cmovpo ecx, DWORD PTR [rip + 0x100]
+    cmovpo edx, DWORD PTR [rip + 0x1000]
+    cmovpo ebx, DWORD PTR [rip + 0x1000]
+    cmovpo esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovpo esi, DWORD PTR [rax + rbx*4 + 0x100]
     cmovpo ecx, DWORD PTR [rip + 0x1000]
-    cmovpo edx, DWORD PTR [rip + 0x100]
-    cmovpo ecx, DWORD PTR [rax]
+    cmovpo ebx, DWORD PTR [rip + 0x100]
+    cmovpo ebx, DWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVPO r64, r64 ===
-    cmovpo r9, r13
-    cmovpo rsi, rax
-    cmovpo rdx, rdx
-    cmovpo r9, rsi
+    cmovpo r12, r8
+    cmovpo r10, r9
+    cmovpo r12, rbx
+    cmovpo rsi, r13
+    cmovpo rbx, rdx
     cmovpo rsi, r11
-    cmovpo r12, r11
-    cmovpo r11, r10
-    cmovpo r9, rax
-    cmovpo r11, rdx
-    cmovpo rdx, r11
+    cmovpo rdx, rbx
+    cmovpo r9, r11
+    cmovpo r8, r9
+    cmovpo rax, r8
 
 // === CMOVPO r64, m64 ===
+    cmovpo rax, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovpo rdi, QWORD PTR [rip + 0x100]
+    cmovpo r12, QWORD PTR [rax]
+    cmovpo r9, QWORD PTR [rbx]
+    cmovpo rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovpo r11, QWORD PTR [rbx]
     cmovpo rbx, QWORD PTR [rip + 0x1000]
-    cmovpo rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovpo r13, QWORD PTR [rip + 0x100]
-    cmovpo rsi, QWORD PTR [rax]
-    cmovpo rcx, QWORD PTR [rip + 0x1000]
-    cmovpo r8, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovpo rbx, QWORD PTR [rax]
-    cmovpo r8, QWORD PTR [rax]
-    cmovpo rdx, QWORD PTR [rbx]
-    cmovpo r8, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovpo rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovpo rcx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovpo rax, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === CMOVS r16, r16 ===
-    cmovs cx, bx
-    cmovs ax, di
     cmovs di, si
-    cmovs ax, cx
-    cmovs dx, dx
-    cmovs bx, ax
-    cmovs di, ax
-    cmovs ax, ax
     cmovs si, si
-    cmovs dx, di
+    cmovs bx, cx
+    cmovs cx, dx
+    cmovs bx, si
+    cmovs si, di
+    cmovs si, dx
+    cmovs ax, ax
+    cmovs cx, di
+    cmovs di, di
 
 // === CMOVS r16, m16 ===
     cmovs cx, WORD PTR [rax + rbx*1 + 0x10]
     cmovs dx, WORD PTR [rax]
-    cmovs bx, WORD PTR [rax + rbx*1 + 0x10]
+    cmovs bx, WORD PTR [rip + 0x100]
+    cmovs di, WORD PTR [rbx]
+    cmovs cx, WORD PTR [rip + 0x1000]
     cmovs bx, WORD PTR [rax + rbx*4 + 0x100]
-    cmovs ax, WORD PTR [rax + rbx*4 + 0x100]
-    cmovs cx, WORD PTR [rax]
-    cmovs ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmovs dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovs si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovs dx, WORD PTR [rip + 0x100]
+    cmovs di, WORD PTR [rax]
+    cmovs di, WORD PTR [rip + 0x100]
+    cmovs dx, WORD PTR [rax + rbx*4 + 0x100]
+    cmovs bx, WORD PTR [rax + rbx*1 + 0x10]
 
 // === CMOVS r32, r32 ===
-    cmovs ecx, esi
-    cmovs edx, edi
-    cmovs edi, esi
-    cmovs esi, esi
-    cmovs eax, edx
-    cmovs eax, edi
+    cmovs ecx, ebx
+    cmovs esi, edi
+    cmovs eax, ecx
+    cmovs eax, esi
     cmovs ebx, edx
     cmovs eax, eax
-    cmovs edx, eax
-    cmovs edx, ebx
+    cmovs eax, edi
+    cmovs edi, edi
+    cmovs ecx, edx
+    cmovs eax, edx
 
 // === CMOVS r32, m32 ===
-    cmovs edi, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovs ecx, DWORD PTR [rip + 0x100]
-    cmovs ebx, DWORD PTR [rbx]
-    cmovs eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovs esi, DWORD PTR [rax]
-    cmovs eax, DWORD PTR [rax]
-    cmovs edx, DWORD PTR [rax]
+    cmovs eax, DWORD PTR [rip + 0x100]
+    cmovs edx, DWORD PTR [rbx]
+    cmovs esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovs ecx, DWORD PTR [rip + 0x1000]
     cmovs esi, DWORD PTR [rip + 0x1000]
-    cmovs eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovs esi, DWORD PTR [rax]
     cmovs ebx, DWORD PTR [rax]
+    cmovs eax, DWORD PTR [rip + 0x1000]
+    cmovs edi, DWORD PTR [rip + 0x100]
+    cmovs esi, DWORD PTR [rbx]
 
 // === CMOVS r64, r64 ===
-    cmovs rsi, rsi
-    cmovs rsi, rbx
-    cmovs rdi, rdi
-    cmovs r11, r8
-    cmovs r9, rsi
-    cmovs rdx, rdx
+    cmovs r12, rdx
+    cmovs r10, rsi
+    cmovs r12, r8
+    cmovs r11, r11
+    cmovs rax, r12
+    cmovs r12, r13
+    cmovs r10, r8
+    cmovs r9, rcx
     cmovs rdx, r12
-    cmovs r12, r10
-    cmovs rsi, r12
-    cmovs r11, r13
+    cmovs rdx, rbx
 
 // === CMOVS r64, m64 ===
-    cmovs r8, QWORD PTR [rip + 0x1000]
-    cmovs rdi, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovs rcx, QWORD PTR [rbx]
-    cmovs r11, QWORD PTR [rax]
+    cmovs rax, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovs r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovs r10, QWORD PTR [rax]
     cmovs r9, QWORD PTR [rip + 0x1000]
-    cmovs rax, QWORD PTR [rbx]
-    cmovs r13, QWORD PTR [rbx]
-    cmovs rdi, QWORD PTR [rbx]
-    cmovs rax, QWORD PTR [rax]
-    cmovs rsi, QWORD PTR [rip + 0x100]
+    cmovs rdx, QWORD PTR [rip + 0x1000]
+    cmovs r8, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovs rdi, QWORD PTR [rip + 0x1000]
+    cmovs r8, QWORD PTR [rax]
+    cmovs r11, QWORD PTR [rbx]
+    cmovs rcx, QWORD PTR [rax]
 
 // === CMOVZ r16, r16 ===
-    cmovz di, si
-    cmovz si, bx
-    cmovz dx, di
-    cmovz dx, cx
-    cmovz bx, di
-    cmovz ax, di
-    cmovz si, dx
-    cmovz di, dx
+    cmovz si, si
+    cmovz bx, bx
+    cmovz ax, dx
     cmovz bx, ax
-    cmovz dx, bx
+    cmovz si, di
+    cmovz dx, cx
+    cmovz dx, ax
+    cmovz di, di
+    cmovz ax, di
+    cmovz di, dx
 
 // === CMOVZ r16, m16 ===
-    cmovz si, WORD PTR [rax + rbx*1 + 0x10]
-    cmovz dx, WORD PTR [rip + 0x1000]
+    cmovz si, WORD PTR [rbx]
+    cmovz dx, WORD PTR [rip + 0x100]
     cmovz bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovz si, WORD PTR [rax + rbx*4 + 0x100]
-    cmovz di, WORD PTR [rip + 0x1000]
-    cmovz bx, WORD PTR [rbx]
     cmovz di, WORD PTR [rip + 0x100]
-    cmovz cx, WORD PTR [rip + 0x100]
+    cmovz si, WORD PTR [rax]
+    cmovz dx, WORD PTR [rax + rbx*4 + 0x100]
     cmovz dx, WORD PTR [rax + rbx*1 + 0x10]
-    cmovz di, WORD PTR [rbx]
+    cmovz ax, WORD PTR [rbx]
+    cmovz bx, WORD PTR [rbx]
+    cmovz si, WORD PTR [rip + 0x1000]
 
 // === CMOVZ r32, r32 ===
-    cmovz esi, ebx
-    cmovz edx, edi
-    cmovz edx, esi
-    cmovz eax, ecx
-    cmovz edi, eax
+    cmovz eax, edi
+    cmovz esi, edi
+    cmovz ebx, edi
     cmovz ebx, ecx
-    cmovz eax, edx
-    cmovz esi, edx
-    cmovz edx, eax
-    cmovz ecx, ecx
+    cmovz ebx, esi
+    cmovz edx, edx
+    cmovz eax, ebx
+    cmovz edx, esi
+    cmovz ebx, edx
+    cmovz esi, ecx
 
 // === CMOVZ r32, m32 ===
-    cmovz esi, DWORD PTR [rip + 0x1000]
-    cmovz eax, DWORD PTR [rax + rbx*4 + 0x100]
-    cmovz ebx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmovz edx, DWORD PTR [rip + 0x100]
-    cmovz ebx, DWORD PTR [rax]
-    cmovz edi, DWORD PTR [rax]
-    cmovz edx, DWORD PTR [rbx]
-    cmovz ecx, DWORD PTR [rax]
-    cmovz edx, DWORD PTR [rip + 0x1000]
     cmovz esi, DWORD PTR [rip + 0x100]
+    cmovz esi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovz ebx, DWORD PTR [rbx]
+    cmovz ecx, DWORD PTR [rbx]
+    cmovz esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovz ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    cmovz ecx, DWORD PTR [rip + 0x1000]
+    cmovz ebx, DWORD PTR [rip + 0x1000]
+    cmovz edi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmovz edi, DWORD PTR [rip + 0x1000]
 
 // === CMOVZ r64, r64 ===
-    cmovz r11, rdx
-    cmovz rdi, rsi
+    cmovz r10, r8
+    cmovz r10, rbx
+    cmovz rbx, rbx
+    cmovz rsi, rdx
+    cmovz rdx, rax
     cmovz r8, rsi
-    cmovz r8, rdx
-    cmovz r11, r10
-    cmovz r13, r11
-    cmovz r9, rax
-    cmovz rbx, rsi
-    cmovz r12, r12
-    cmovz r12, rdi
+    cmovz rax, r11
+    cmovz r13, r10
+    cmovz rax, rdi
+    cmovz r10, r9
 
 // === CMOVZ r64, m64 ===
-    cmovz rdi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmovz rax, QWORD PTR [rbx]
+    cmovz r9, QWORD PTR [rax]
+    cmovz rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    cmovz r13, QWORD PTR [rax + rbx*1 + 0x10]
     cmovz r11, QWORD PTR [rip + 0x1000]
-    cmovz rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmovz r12, QWORD PTR [rbx]
-    cmovz r9, QWORD PTR [rip + 0x1000]
-    cmovz rbx, QWORD PTR [rip + 0x1000]
-    cmovz r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovz r12, QWORD PTR [rip + 0x1000]
+    cmovz rax, QWORD PTR [rip + 0x1000]
     cmovz r8, QWORD PTR [rip + 0x1000]
-    cmovz r11, QWORD PTR [rbx]
+    cmovz rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovz r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmovz r11, QWORD PTR [rax]
 
 // === CMP AL, imm8 ===
     cmp al, 0xff
@@ -3686,268 +3687,268 @@
 // === CMP r8, imm8 ===
     cmp bl, 0xff
     cmp cl, 0xff
-    cmp al, 0xff
     cmp dl, 0xff
+    cmp al, 0xff
 
 // === CMP m8, imm8 ===
-    cmp BYTE PTR [rip + 0x1000], 0xff
     cmp BYTE PTR [rip + 0x100], 0xff
+    cmp BYTE PTR [rip + 0x1000], 0xff
     cmp BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    cmp BYTE PTR [rax], 0xff
     cmp BYTE PTR [rax + rbx*4 + 0x100], 0xff
     cmp BYTE PTR [rbx], 0xff
-    cmp BYTE PTR [rax], 0xff
 
 // === CMP r16, imm16 ===
-    cmp dx, 0xffff
+    cmp ax, 0xffff
     cmp di, 0xffff
     cmp si, 0xffff
     cmp bx, 0xffff
     cmp cx, 0xffff
-    cmp ax, 0xffff
+    cmp dx, 0xffff
 
 // === CMP m16, imm16 ===
     cmp WORD PTR [rip + 0x100], 0xffff
-    cmp WORD PTR [rax + rbx*4 + 0x100], 0xffff
-    cmp WORD PTR [rax], 0xffff
-    cmp WORD PTR [rax + rbx*1 + 0x10], 0xffff
     cmp WORD PTR [rbx], 0xffff
+    cmp WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    cmp WORD PTR [rax + rbx*4 + 0x100], 0xffff
     cmp WORD PTR [rip + 0x1000], 0xffff
+    cmp WORD PTR [rax], 0xffff
 
 // === CMP r32, imm32 ===
-    cmp edi, 0xffffffff
     cmp eax, 0xffffffff
     cmp esi, 0xffffffff
-    cmp ecx, 0xffffffff
+    cmp edi, 0xffffffff
     cmp ebx, 0xffffffff
     cmp edx, 0xffffffff
+    cmp ecx, 0xffffffff
 
 // === CMP m32, imm32 ===
-    cmp DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    cmp DWORD PTR [rax], 0xffffffff
-    cmp DWORD PTR [rip + 0x1000], 0xffffffff
     cmp DWORD PTR [rip + 0x100], 0xffffffff
-    cmp DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    cmp DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    cmp DWORD PTR [rip + 0x1000], 0xffffffff
     cmp DWORD PTR [rbx], 0xffffffff
+    cmp DWORD PTR [rax], 0xffffffff
+    cmp DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
 
 // === CMP r64, imm32 ===
-    cmp rbx, 0x7fffffff
+    cmp r12, -1
+    cmp r9, -1
+    cmp r10, 0x7fffffff
+    cmp rax, -1
     cmp rdi, 0x7fffffff
-    cmp rcx, 0x7fffffff
-    cmp rcx, -1
-    cmp rsi, 0x7fffffff
-    cmp rax, 0x7fffffff
-    cmp r12, 0x7fffffff
     cmp r13, 0x7fffffff
+    cmp r8, -1
+    cmp rsi, -1
     cmp r11, -1
     cmp rdx, -1
 
 // === CMP m64, imm32 ===
-    cmp QWORD PTR [rip + 0x100], 0x7fffffff
     cmp QWORD PTR [rbx], 0x7fffffff
-    cmp QWORD PTR [rip + 0x1000], 0x7fffffff
-    cmp QWORD PTR [rip + 0x100], -1
+    cmp QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
     cmp QWORD PTR [rax + rbx*1 + 0x10], -1
+    cmp QWORD PTR [rax], -1
     cmp QWORD PTR [rax + rbx*4 + 0x100], -1
     cmp QWORD PTR [rbx], -1
     cmp QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    cmp QWORD PTR [rax], -1
-    cmp QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
+    cmp QWORD PTR [rax], 0x7fffffff
+    cmp QWORD PTR [rip + 0x1000], 0x7fffffff
+    cmp QWORD PTR [rip + 0x100], -1
 
 // === CMP r16, imm8 ===
     cmp di, 0xff
-    cmp dx, 0xff
-    cmp si, 0xff
     cmp cx, 0xff
     cmp bx, 0xff
     cmp ax, 0xff
+    cmp dx, 0xff
+    cmp si, 0xff
 
 // === CMP m16, imm8 ===
-    cmp WORD PTR [rax], 0xff
-    cmp WORD PTR [rax + rbx*4 + 0x100], 0xff
-    cmp WORD PTR [rax + rbx*1 + 0x10], 0xff
     cmp WORD PTR [rip + 0x100], 0xff
+    cmp WORD PTR [rax + rbx*4 + 0x100], 0xff
     cmp WORD PTR [rbx], 0xff
+    cmp WORD PTR [rax + rbx*1 + 0x10], 0xff
     cmp WORD PTR [rip + 0x1000], 0xff
+    cmp WORD PTR [rax], 0xff
 
 // === CMP r32, imm8 ===
-    cmp eax, 0xff
-    cmp ecx, 0xff
     cmp edx, 0xff
-    cmp edi, 0xff
     cmp ebx, 0xff
+    cmp eax, 0xff
+    cmp edi, 0xff
+    cmp ecx, 0xff
     cmp esi, 0xff
 
 // === CMP m32, imm8 ===
     cmp DWORD PTR [rax], 0xff
-    cmp DWORD PTR [rax + rbx*4 + 0x100], 0xff
     cmp DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    cmp DWORD PTR [rip + 0x1000], 0xff
-    cmp DWORD PTR [rbx], 0xff
     cmp DWORD PTR [rip + 0x100], 0xff
+    cmp DWORD PTR [rbx], 0xff
+    cmp DWORD PTR [rip + 0x1000], 0xff
+    cmp DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === CMP r64, imm8 ===
-    cmp rsi, 0xff
-    cmp rcx, 0xff
-    cmp rbx, 0xff
-    cmp rdi, 0xff
-    cmp r10, 0xff
     cmp r9, 0xff
+    cmp rsi, 0xff
+    cmp r11, 0xff
     cmp rax, 0xff
+    cmp r8, 0xff
+    cmp r10, 0xff
+    cmp rcx, 0xff
+    cmp rdi, 0xff
     cmp rdx, 0xff
     cmp r12, 0xff
-    cmp r13, 0xff
 
 // === CMP m64, imm8 ===
-    cmp QWORD PTR [rbx], 0xff
-    cmp QWORD PTR [rax], 0xff
-    cmp QWORD PTR [rax + rbx*1 + 0x10], 0xff
     cmp QWORD PTR [rip + 0x1000], 0xff
-    cmp QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    cmp QWORD PTR [rax], 0xff
+    cmp QWORD PTR [rbx], 0xff
+    cmp QWORD PTR [rax + rbx*1 + 0x10], 0xff
     cmp QWORD PTR [rip + 0x100], 0xff
+    cmp QWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === CMP r8, r8 ===
-    cmp bl, al
-    cmp cl, cl
-    cmp cl, al
-    cmp dl, bl
-    cmp dl, al
     cmp bl, dl
     cmp al, bl
-    cmp al, dl
-    cmp cl, dl
+    cmp dl, bl
+    cmp cl, bl
+    cmp cl, al
+    cmp cl, cl
+    cmp bl, cl
     cmp al, cl
+    cmp al, dl
+    cmp dl, cl
 
 // === CMP m8, r8 ===
+    cmp BYTE PTR [rax + rbx*1 + 0x10], bl
+    cmp BYTE PTR [rax + rbx*4 + 0x100], al
     cmp BYTE PTR [rax], al
-    cmp BYTE PTR [rax + rbx*4 + 0x100], bl
-    cmp BYTE PTR [rax + rbx*4 + 0x100], dl
-    cmp BYTE PTR [rip + 0x100], bl
-    cmp BYTE PTR [rax + rbx*1 + 0x10], dl
-    cmp BYTE PTR [rip + 0x1000], dl
-    cmp BYTE PTR [rax], dl
-    cmp BYTE PTR [rip + 0x100], al
-    cmp BYTE PTR [rbx], cl
-    cmp BYTE PTR [rip + 0x100], dl
+    cmp BYTE PTR [rip + 0x100], cl
+    cmp BYTE PTR [rip + 0x1000], cl
+    cmp BYTE PTR [rax], cl
+    cmp BYTE PTR [rax + rbx*1 + 0x10], al
+    cmp BYTE PTR [rbx], bl
+    cmp BYTE PTR [rax + rbx*1 + 0x10], cl
+    cmp BYTE PTR [rbx], dl
 
 // === CMP r16, r16 ===
-    cmp di, dx
-    cmp bx, dx
-    cmp bx, si
-    cmp dx, cx
-    cmp ax, si
-    cmp ax, cx
-    cmp di, bx
-    cmp bx, di
+    cmp dx, di
     cmp si, cx
-    cmp di, cx
+    cmp si, di
+    cmp si, dx
+    cmp di, dx
+    cmp ax, di
+    cmp dx, ax
+    cmp ax, dx
+    cmp cx, dx
+    cmp ax, cx
 
 // === CMP m16, r16 ===
+    cmp WORD PTR [rbx], bx
+    cmp WORD PTR [rax + rbx*4 + 0x100], ax
+    cmp WORD PTR [rax], cx
+    cmp WORD PTR [rip + 0x1000], si
     cmp WORD PTR [rax], di
-    cmp WORD PTR [rip + 0x1000], cx
-    cmp WORD PTR [rax + rbx*4 + 0x100], bx
-    cmp WORD PTR [rax], dx
-    cmp WORD PTR [rax + rbx*4 + 0x100], cx
-    cmp WORD PTR [rip + 0x1000], bx
-    cmp WORD PTR [rax + rbx*1 + 0x10], si
-    cmp WORD PTR [rbx], si
-    cmp WORD PTR [rax + rbx*1 + 0x10], ax
-    cmp WORD PTR [rax + rbx*4 + 0x100], di
+    cmp WORD PTR [rip + 0x1000], dx
+    cmp WORD PTR [rax + rbx*1 + 0x10], cx
+    cmp WORD PTR [rbx], dx
+    cmp WORD PTR [rip + 0x100], dx
+    cmp WORD PTR [rip + 0x1000], di
 
 // === CMP r32, r32 ===
-    cmp edx, edx
-    cmp ecx, eax
-    cmp edx, esi
-    cmp edi, esi
-    cmp edi, edi
+    cmp edx, ebx
     cmp esi, edi
+    cmp edx, edx
+    cmp ebx, eax
+    cmp ecx, edx
+    cmp edi, edx
+    cmp ecx, eax
     cmp edi, ecx
-    cmp esi, ecx
-    cmp edx, ecx
-    cmp esi, eax
+    cmp ecx, ecx
+    cmp esi, edx
 
 // === CMP m32, r32 ===
-    cmp DWORD PTR [rax], eax
-    cmp DWORD PTR [rax + rbx*4 + 0x100], edi
-    cmp DWORD PTR [rax + rbx*4 + 0x100], edx
-    cmp DWORD PTR [rip + 0x1000], ebx
-    cmp DWORD PTR [rax + rbx*4 + 0x100], ecx
-    cmp DWORD PTR [rax], esi
+    cmp DWORD PTR [rax + rbx*4 + 0x100], eax
+    cmp DWORD PTR [rip + 0x100], ebx
+    cmp DWORD PTR [rax + rbx*1 + 0x10], esi
+    cmp DWORD PTR [rip + 0x1000], edx
+    cmp DWORD PTR [rax + rbx*1 + 0x10], eax
+    cmp DWORD PTR [rax + rbx*1 + 0x10], ebx
     cmp DWORD PTR [rax + rbx*4 + 0x100], esi
-    cmp DWORD PTR [rbx], edi
-    cmp DWORD PTR [rip + 0x100], edx
+    cmp DWORD PTR [rip + 0x1000], eax
+    cmp DWORD PTR [rip + 0x1000], edi
     cmp DWORD PTR [rip + 0x100], esi
 
 // === CMP r64,r64 ===
-    cmp rdi, rdx
-    cmp r9, r9
-    cmp rax, rbx
-    cmp rcx, rsi
-    cmp r11, rdx
-    cmp rbx, r8
-    cmp r13, rsi
-    cmp rdi, r12
-    cmp r12, r11
-    cmp r10, rcx
+    cmp r10, r9
+    cmp rcx, r8
+    cmp rdx, r13
+    cmp rsi, r12
+    cmp r11, rcx
+    cmp rbx, r12
+    cmp rcx, rcx
+    cmp rdx, r11
+    cmp r11, r10
+    cmp rcx, rbx
 
 // === CMP m64,r64 ===
-    cmp QWORD PTR [rax + rbx*1 + 0x10], rdx
-    cmp QWORD PTR [rax + rbx*4 + 0x100], r10
-    cmp QWORD PTR [rax], rsi
-    cmp QWORD PTR [rax + rbx*4 + 0x100], rax
-    cmp QWORD PTR [rax + rbx*1 + 0x10], rax
-    cmp QWORD PTR [rax + rbx*4 + 0x100], r12
-    cmp QWORD PTR [rip + 0x100], rdx
-    cmp QWORD PTR [rax + rbx*4 + 0x100], rdi
-    cmp QWORD PTR [rax], r10
-    cmp QWORD PTR [rax + rbx*4 + 0x100], r11
+    cmp QWORD PTR [rax + rbx*1 + 0x10], r11
+    cmp QWORD PTR [rax], rax
+    cmp QWORD PTR [rax + rbx*4 + 0x100], r13
+    cmp QWORD PTR [rax], rdx
+    cmp QWORD PTR [rbx], r12
+    cmp QWORD PTR [rip + 0x1000], rax
+    cmp QWORD PTR [rax + rbx*1 + 0x10], r13
+    cmp QWORD PTR [rax + rbx*1 + 0x10], r10
+    cmp QWORD PTR [rax + rbx*1 + 0x10], rdi
+    cmp QWORD PTR [rax + rbx*4 + 0x100], r9
 
 // === CMP r8, m8 ===
-    cmp cl, BYTE PTR [rax + rbx*4 + 0x100]
-    cmp cl, BYTE PTR [rax]
-    cmp cl, BYTE PTR [rip + 0x1000]
-    cmp cl, BYTE PTR [rax + rbx*1 + 0x10]
-    cmp bl, BYTE PTR [rax]
-    cmp bl, BYTE PTR [rax + rbx*4 + 0x100]
-    cmp cl, BYTE PTR [rbx]
-    cmp al, BYTE PTR [rax]
-    cmp dl, BYTE PTR [rax + rbx*4 + 0x100]
+    cmp dl, BYTE PTR [rax + rbx*1 + 0x10]
+    cmp dl, BYTE PTR [rbx]
+    cmp al, BYTE PTR [rax + rbx*4 + 0x100]
+    cmp dl, BYTE PTR [rax]
     cmp dl, BYTE PTR [rip + 0x100]
+    cmp bl, BYTE PTR [rip + 0x100]
+    cmp cl, BYTE PTR [rip + 0x100]
+    cmp bl, BYTE PTR [rbx]
+    cmp bl, BYTE PTR [rax + rbx*1 + 0x10]
+    cmp dl, BYTE PTR [rip + 0x1000]
 
 // === CMP r16, m16 ===
-    cmp ax, WORD PTR [rax + rbx*1 + 0x10]
-    cmp bx, WORD PTR [rbx]
-    cmp di, WORD PTR [rax + rbx*1 + 0x10]
-    cmp bx, WORD PTR [rax + rbx*1 + 0x10]
-    cmp dx, WORD PTR [rax + rbx*4 + 0x100]
-    cmp ax, WORD PTR [rax]
-    cmp si, WORD PTR [rip + 0x100]
-    cmp di, WORD PTR [rax]
+    cmp di, WORD PTR [rip + 0x100]
+    cmp dx, WORD PTR [rip + 0x1000]
+    cmp cx, WORD PTR [rax]
+    cmp ax, WORD PTR [rax + rbx*4 + 0x100]
+    cmp dx, WORD PTR [rbx]
     cmp cx, WORD PTR [rax + rbx*4 + 0x100]
-    cmp si, WORD PTR [rbx]
+    cmp si, WORD PTR [rax]
+    cmp bx, WORD PTR [rbx]
+    cmp ax, WORD PTR [rax + rbx*1 + 0x10]
+    cmp bx, WORD PTR [rax]
 
 // === CMP r32, m32 ===
+    cmp edi, DWORD PTR [rax + rbx*1 + 0x10]
+    cmp ecx, DWORD PTR [rbx]
+    cmp esi, DWORD PTR [rax + rbx*4 + 0x100]
+    cmp eax, DWORD PTR [rax + rbx*1 + 0x10]
+    cmp ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    cmp ecx, DWORD PTR [rax + rbx*1 + 0x10]
     cmp edx, DWORD PTR [rip + 0x1000]
-    cmp esi, DWORD PTR [rax]
-    cmp edi, DWORD PTR [rbx]
-    cmp eax, DWORD PTR [rbx]
+    cmp esi, DWORD PTR [rbx]
     cmp ecx, DWORD PTR [rax]
-    cmp ebx, DWORD PTR [rip + 0x1000]
-    cmp edx, DWORD PTR [rax + rbx*1 + 0x10]
-    cmp ebx, DWORD PTR [rip + 0x100]
-    cmp esi, DWORD PTR [rax + rbx*1 + 0x10]
-    cmp esi, DWORD PTR [rip + 0x1000]
+    cmp edx, DWORD PTR [rip + 0x100]
 
 // === CMP r64, m64 ===
-    cmp r11, QWORD PTR [rax + rbx*4 + 0x100]
-    cmp r13, QWORD PTR [rax + rbx*4 + 0x100]
+    cmp r11, QWORD PTR [rax + rbx*1 + 0x10]
+    cmp r13, QWORD PTR [rip + 0x1000]
+    cmp r10, QWORD PTR [rax + rbx*4 + 0x100]
+    cmp r12, QWORD PTR [rax + rbx*1 + 0x10]
+    cmp rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    cmp r12, QWORD PTR [rip + 0x100]
+    cmp rcx, QWORD PTR [rax + rbx*1 + 0x10]
+    cmp r12, QWORD PTR [rax + rbx*4 + 0x100]
     cmp rax, QWORD PTR [rip + 0x1000]
-    cmp r9, QWORD PTR [rax]
-    cmp r8, QWORD PTR [rax]
-    cmp rax, QWORD PTR [rax + rbx*4 + 0x100]
-    cmp rsi, QWORD PTR [rax + rbx*4 + 0x100]
-    cmp rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    cmp rdx, QWORD PTR [rbx]
-    cmp rax, QWORD PTR [rax + rbx*1 + 0x10]
+    cmp rbx, QWORD PTR [rip + 0x100]
 
 // === CMPS m8, m8 ===
     cmps BYTE PTR [rsi], BYTE PTR [rdi]
@@ -3976,218 +3977,218 @@
 // === CMPXCHG r8, r8 ===
     cmpxchg al, cl
     cmpxchg bl, bl
-    cmpxchg cl, dl
-    cmpxchg al, al
-    cmpxchg dl, al
-    cmpxchg al, bl
-    cmpxchg bl, al
-    cmpxchg cl, al
-    cmpxchg bl, dl
+    cmpxchg cl, bl
     cmpxchg dl, bl
+    cmpxchg cl, al
+    cmpxchg cl, cl
+    cmpxchg bl, dl
+    cmpxchg dl, dl
+    cmpxchg dl, al
+    cmpxchg dl, cl
 
 // === CMPXCHG m8, r8 ===
     cmpxchg BYTE PTR [rax + rbx*1 + 0x10], cl
-    cmpxchg BYTE PTR [rax + rbx*4 + 0x100], dl
-    cmpxchg BYTE PTR [rip + 0x1000], cl
-    cmpxchg BYTE PTR [rbx], bl
-    cmpxchg BYTE PTR [rax], dl
     cmpxchg BYTE PTR [rip + 0x1000], al
+    cmpxchg BYTE PTR [rip + 0x1000], cl
+    cmpxchg BYTE PTR [rbx], dl
+    cmpxchg BYTE PTR [rip + 0x1000], dl
+    cmpxchg BYTE PTR [rbx], bl
     cmpxchg BYTE PTR [rax + rbx*4 + 0x100], bl
+    cmpxchg BYTE PTR [rax], dl
+    cmpxchg BYTE PTR [rax], cl
     cmpxchg BYTE PTR [rip + 0x100], al
-    cmpxchg BYTE PTR [rax + rbx*1 + 0x10], dl
-    cmpxchg BYTE PTR [rip + 0x1000], bl
 
 // === CMPXCHG r16, r16 ===
-    cmpxchg ax, di
-    cmpxchg cx, cx
-    cmpxchg dx, di
     cmpxchg dx, ax
-    cmpxchg dx, dx
+    cmpxchg bx, di
+    cmpxchg dx, cx
+    cmpxchg bx, cx
+    cmpxchg si, cx
     cmpxchg si, si
-    cmpxchg cx, ax
+    cmpxchg ax, si
+    cmpxchg cx, bx
+    cmpxchg di, si
     cmpxchg si, bx
-    cmpxchg bx, dx
-    cmpxchg cx, dx
 
 // === CMPXCHG m16, r16 ===
+    cmpxchg WORD PTR [rip + 0x100], si
+    cmpxchg WORD PTR [rbx], ax
     cmpxchg WORD PTR [rip + 0x1000], ax
+    cmpxchg WORD PTR [rax + rbx*1 + 0x10], ax
     cmpxchg WORD PTR [rax + rbx*1 + 0x10], si
-    cmpxchg WORD PTR [rax + rbx*1 + 0x10], cx
-    cmpxchg WORD PTR [rax], di
-    cmpxchg WORD PTR [rax + rbx*4 + 0x100], ax
+    cmpxchg WORD PTR [rax + rbx*4 + 0x100], dx
     cmpxchg WORD PTR [rax], bx
-    cmpxchg WORD PTR [rbx], si
+    cmpxchg WORD PTR [rax + rbx*4 + 0x100], di
+    cmpxchg WORD PTR [rax], dx
     cmpxchg WORD PTR [rax + rbx*1 + 0x10], dx
-    cmpxchg WORD PTR [rbx], bx
-    cmpxchg WORD PTR [rbx], cx
 
 // === CMPXCHG r32, r32 ===
-    cmpxchg ecx, eax
-    cmpxchg esi, ebx
-    cmpxchg ecx, edx
-    cmpxchg esi, edx
-    cmpxchg eax, esi
-    cmpxchg ebx, eax
-    cmpxchg ebx, edi
+    cmpxchg edx, ecx
+    cmpxchg ebx, esi
+    cmpxchg ebx, ebx
     cmpxchg edi, edx
+    cmpxchg eax, esi
     cmpxchg edi, ecx
-    cmpxchg esi, edi
+    cmpxchg edi, esi
+    cmpxchg edi, eax
+    cmpxchg ecx, esi
+    cmpxchg ecx, ebx
 
 // === CMPXCHG m32, r32 ===
-    cmpxchg DWORD PTR [rax + rbx*4 + 0x100], esi
-    cmpxchg DWORD PTR [rax + rbx*1 + 0x10], esi
-    cmpxchg DWORD PTR [rip + 0x100], edi
-    cmpxchg DWORD PTR [rip + 0x100], edx
+    cmpxchg DWORD PTR [rip + 0x1000], edi
+    cmpxchg DWORD PTR [rax + rbx*1 + 0x10], edi
+    cmpxchg DWORD PTR [rax + rbx*1 + 0x10], edx
+    cmpxchg DWORD PTR [rax + rbx*4 + 0x100], edx
+    cmpxchg DWORD PTR [rax + rbx*4 + 0x100], eax
     cmpxchg DWORD PTR [rip + 0x1000], ebx
-    cmpxchg DWORD PTR [rax], esi
-    cmpxchg DWORD PTR [rax + rbx*4 + 0x100], ebx
-    cmpxchg DWORD PTR [rax], ecx
-    cmpxchg DWORD PTR [rbx], edx
-    cmpxchg DWORD PTR [rip + 0x1000], eax
+    cmpxchg DWORD PTR [rip + 0x100], esi
+    cmpxchg DWORD PTR [rax + rbx*4 + 0x100], ecx
+    cmpxchg DWORD PTR [rip + 0x1000], ecx
+    cmpxchg DWORD PTR [rax], edi
 
 // === CMPXCHG r64, r64 ===
-    cmpxchg rsi, r13
-    cmpxchg rdx, r8
-    cmpxchg r11, rcx
-    cmpxchg rcx, rdi
+    cmpxchg rax, r13
+    cmpxchg r11, rbx
+    cmpxchg r13, rdi
+    cmpxchg r11, rdi
+    cmpxchg r13, r8
+    cmpxchg r13, r9
+    cmpxchg r10, rdx
+    cmpxchg rcx, rdx
     cmpxchg r11, r13
-    cmpxchg rbx, r8
-    cmpxchg rsi, rcx
-    cmpxchg rdx, rax
-    cmpxchg rbx, rcx
-    cmpxchg r9, rsi
+    cmpxchg r12, r13
 
 // === CMPXCHG m64, r64 ===
-    cmpxchg QWORD PTR [rax + rbx*4 + 0x100], r11
-    cmpxchg QWORD PTR [rip + 0x1000], rax
-    cmpxchg QWORD PTR [rax], r9
-    cmpxchg QWORD PTR [rax + rbx*4 + 0x100], rdx
-    cmpxchg QWORD PTR [rax], r11
-    cmpxchg QWORD PTR [rip + 0x100], r8
-    cmpxchg QWORD PTR [rbx], r9
-    cmpxchg QWORD PTR [rip + 0x1000], r12
-    cmpxchg QWORD PTR [rax], r10
-    cmpxchg QWORD PTR [rax + rbx*1 + 0x10], r12
+    cmpxchg QWORD PTR [rax + rbx*1 + 0x10], r11
+    cmpxchg QWORD PTR [rbx], r8
+    cmpxchg QWORD PTR [rax], rbx
+    cmpxchg QWORD PTR [rip + 0x100], rsi
+    cmpxchg QWORD PTR [rax], rcx
+    cmpxchg QWORD PTR [rip + 0x1000], r9
+    cmpxchg QWORD PTR [rax], r8
+    cmpxchg QWORD PTR [rax + rbx*4 + 0x100], rbx
+    cmpxchg QWORD PTR [rip + 0x100], rdi
+    cmpxchg QWORD PTR [rip + 0x1000], rdx
 
 // === CRC32 r32, r8 ===
-    crc32 ecx, cl
     crc32 edx, al
+    crc32 edi, bl
+    crc32 esi, al
     crc32 edx, cl
-    crc32 ebx, cl
+    crc32 eax, cl
+    crc32 edi, cl
     crc32 eax, bl
-    crc32 ebx, dl
     crc32 edx, bl
-    crc32 ecx, bl
-    crc32 esi, dl
-    crc32 eax, al
+    crc32 ebx, dl
+    crc32 ecx, cl
 
 // === CRC32 r32, m8 ===
-    crc32 ecx, BYTE PTR [rax]
-    crc32 edi, BYTE PTR [rax]
-    crc32 ebx, BYTE PTR [rip + 0x1000]
-    crc32 ebx, BYTE PTR [rax + rbx*4 + 0x100]
-    crc32 ebx, BYTE PTR [rax]
-    crc32 ebx, BYTE PTR [rbx]
-    crc32 ecx, BYTE PTR [rip + 0x100]
     crc32 edx, BYTE PTR [rax + rbx*1 + 0x10]
-    crc32 edi, BYTE PTR [rax + rbx*4 + 0x100]
-    crc32 ecx, BYTE PTR [rbx]
+    crc32 edx, BYTE PTR [rax + rbx*4 + 0x100]
+    crc32 eax, BYTE PTR [rax + rbx*4 + 0x100]
+    crc32 edi, BYTE PTR [rax]
+    crc32 esi, BYTE PTR [rip + 0x1000]
+    crc32 ecx, BYTE PTR [rax + rbx*4 + 0x100]
+    crc32 edi, BYTE PTR [rax + rbx*1 + 0x10]
+    crc32 ebx, BYTE PTR [rip + 0x100]
+    crc32 edx, BYTE PTR [rax]
+    crc32 ecx, BYTE PTR [rax + rbx*1 + 0x10]
 
 // === CRC32 r32, r16 ===
-    crc32 edi, di
-    crc32 ebx, cx
-    crc32 edx, ax
-    crc32 eax, si
-    crc32 esi, di
-    crc32 ebx, ax
+    crc32 edx, dx
     crc32 ebx, si
-    crc32 eax, di
-    crc32 edx, di
-    crc32 esi, cx
+    crc32 ebx, ax
+    crc32 edx, cx
+    crc32 edi, si
+    crc32 eax, si
+    crc32 edi, cx
+    crc32 ecx, dx
+    crc32 esi, di
+    crc32 esi, dx
 
 // === CRC32 r32, m16 ===
-    crc32 esi, WORD PTR [rip + 0x1000]
-    crc32 edx, WORD PTR [rbx]
-    crc32 edi, WORD PTR [rax]
-    crc32 esi, WORD PTR [rax + rbx*1 + 0x10]
-    crc32 ebx, WORD PTR [rip + 0x1000]
-    crc32 eax, WORD PTR [rip + 0x1000]
-    crc32 ebx, WORD PTR [rip + 0x100]
-    crc32 eax, WORD PTR [rax + rbx*4 + 0x100]
+    crc32 edi, WORD PTR [rbx]
+    crc32 edi, WORD PTR [rip + 0x1000]
+    crc32 eax, WORD PTR [rax + rbx*1 + 0x10]
+    crc32 esi, WORD PTR [rip + 0x100]
     crc32 edx, WORD PTR [rip + 0x100]
-    crc32 eax, WORD PTR [rbx]
+    crc32 eax, WORD PTR [rax]
+    crc32 ebx, WORD PTR [rax + rbx*1 + 0x10]
+    crc32 ebx, WORD PTR [rax]
+    crc32 ebx, WORD PTR [rip + 0x100]
+    crc32 ebx, WORD PTR [rax + rbx*4 + 0x100]
 
 // === CRC32 r32, r32 ===
-    crc32 edi, edx
-    crc32 edx, edx
     crc32 edx, ebx
-    crc32 edx, edi
-    crc32 edi, esi
-    crc32 ecx, edx
-    crc32 ebx, esi
+    crc32 ecx, ecx
+    crc32 edx, esi
     crc32 eax, edi
-    crc32 ebx, ebx
-    crc32 edx, ecx
+    crc32 eax, esi
+    crc32 ecx, esi
+    crc32 eax, ecx
+    crc32 eax, eax
+    crc32 ecx, edx
+    crc32 esi, edx
 
 // === CRC32 r32, m32 ===
-    crc32 esi, DWORD PTR [rip + 0x100]
-    crc32 ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    crc32 eax, DWORD PTR [rbx]
+    crc32 edi, DWORD PTR [rax]
+    crc32 eax, DWORD PTR [rax]
+    crc32 eax, DWORD PTR [rip + 0x100]
+    crc32 eax, DWORD PTR [rax + rbx*4 + 0x100]
+    crc32 ebx, DWORD PTR [rip + 0x100]
+    crc32 esi, DWORD PTR [rax + rbx*1 + 0x10]
+    crc32 ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    crc32 edx, DWORD PTR [rip + 0x1000]
     crc32 ebx, DWORD PTR [rip + 0x1000]
-    crc32 edx, DWORD PTR [rip + 0x100]
-    crc32 eax, DWORD PTR [rip + 0x1000]
-    crc32 edi, DWORD PTR [rip + 0x100]
-    crc32 ecx, DWORD PTR [rax]
-    crc32 ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    crc32 ecx, DWORD PTR [rbx]
+    crc32 ecx, DWORD PTR [rip + 0x1000]
 
 // === CRC32 r64, r8 ===
-    crc32 rdi, cl
-    crc32 r12, al
-    crc32 r12, cl
-    crc32 rcx, dl
-    crc32 r13, dl
-    crc32 rcx, bl
-    crc32 r8, bl
+    crc32 r9, dl
+    crc32 rdx, bl
+    crc32 r11, cl
+    crc32 r11, al
+    crc32 r10, dl
+    crc32 rbx, cl
     crc32 rbx, dl
-    crc32 rax, cl
-    crc32 rax, dl
+    crc32 r11, bl
+    crc32 r9, al
+    crc32 r10, cl
 
 // === CRC32 r64, m8 ===
-    crc32 r8, BYTE PTR [rip + 0x100]
-    crc32 r9, BYTE PTR [rip + 0x100]
-    crc32 rax, BYTE PTR [rax + rbx*4 + 0x100]
-    crc32 rbx, BYTE PTR [rbx]
-    crc32 r13, BYTE PTR [rax + rbx*4 + 0x100]
-    crc32 rdi, BYTE PTR [rbx]
-    crc32 rsi, BYTE PTR [rip + 0x100]
-    crc32 r11, BYTE PTR [rax]
-    crc32 r10, BYTE PTR [rax + rbx*1 + 0x10]
+    crc32 rcx, BYTE PTR [rax]
+    crc32 rdx, BYTE PTR [rax]
+    crc32 rdi, BYTE PTR [rax + rbx*1 + 0x10]
     crc32 rcx, BYTE PTR [rip + 0x1000]
+    crc32 r10, BYTE PTR [rip + 0x1000]
+    crc32 rsi, BYTE PTR [rip + 0x1000]
+    crc32 r13, BYTE PTR [rbx]
+    crc32 rdi, BYTE PTR [rip + 0x1000]
+    crc32 rbx, BYTE PTR [rax]
+    crc32 rbx, BYTE PTR [rip + 0x100]
 
 // === CRC32 r64, r64 ===
-    crc32 r11, r10
-    crc32 rdx, r10
-    crc32 r10, rcx
-    crc32 rax, r13
-    crc32 rbx, rdi
-    crc32 rbx, rsi
-    crc32 r11, r9
-    crc32 r9, r9
-    crc32 r8, rsi
-    crc32 r11, rbx
+    crc32 r12, rax
+    crc32 rdx, rdi
+    crc32 r11, rsi
+    crc32 r13, rax
+    crc32 rcx, r12
+    crc32 rbx, rcx
+    crc32 rdi, r11
+    crc32 r9, r11
+    crc32 r11, r13
+    crc32 r11, rax
 
 // === CRC32 r64, m64 ===
-    crc32 rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    crc32 r13, QWORD PTR [rax]
-    crc32 r8, QWORD PTR [rax + rbx*1 + 0x10]
-    crc32 r9, QWORD PTR [rax + rbx*4 + 0x100]
-    crc32 rdi, QWORD PTR [rbx]
-    crc32 r10, QWORD PTR [rbx]
-    crc32 rcx, QWORD PTR [rip + 0x1000]
-    crc32 r8, QWORD PTR [rax]
-    crc32 r11, QWORD PTR [rip + 0x1000]
-    crc32 rdi, QWORD PTR [rip + 0x1000]
+    crc32 r13, QWORD PTR [rip + 0x1000]
+    crc32 rdx, QWORD PTR [rbx]
+    crc32 rdx, QWORD PTR [rip + 0x100]
+    crc32 r10, QWORD PTR [rip + 0x1000]
+    crc32 r9, QWORD PTR [rip + 0x1000]
+    crc32 r8, QWORD PTR [rax + rbx*4 + 0x100]
+    crc32 rax, QWORD PTR [rip + 0x1000]
+    crc32 r8, QWORD PTR [rbx]
+    crc32 r13, QWORD PTR [rip + 0x100]
+    crc32 r11, QWORD PTR [rax + rbx*1 + 0x10]
 
 // === CWD ===
     cwd
@@ -4199,136 +4200,136 @@
     cqo
 
 // === DEC r8 ===
-    dec dl
     dec al
     dec cl
+    dec dl
     dec bl
 
 // === DEC m8 ===
+    dec BYTE PTR [rax + rbx*4 + 0x100]
+    dec BYTE PTR [rbx]
+    dec BYTE PTR [rax + rbx*1 + 0x10]
     dec BYTE PTR [rip + 0x1000]
     dec BYTE PTR [rip + 0x100]
-    dec BYTE PTR [rax + rbx*1 + 0x10]
     dec BYTE PTR [rax]
-    dec BYTE PTR [rbx]
-    dec BYTE PTR [rax + rbx*4 + 0x100]
 
 // === DEC r16 ===
+    dec ax
+    dec di
     dec dx
     dec cx
     dec si
-    dec ax
     dec bx
-    dec di
 
 // === DEC m16 ===
-    dec WORD PTR [rbx]
-    dec WORD PTR [rip + 0x100]
-    dec WORD PTR [rip + 0x1000]
     dec WORD PTR [rax + rbx*1 + 0x10]
-    dec WORD PTR [rax + rbx*4 + 0x100]
     dec WORD PTR [rax]
+    dec WORD PTR [rip + 0x1000]
+    dec WORD PTR [rip + 0x100]
+    dec WORD PTR [rax + rbx*4 + 0x100]
+    dec WORD PTR [rbx]
 
 // === DEC r32 ===
     dec esi
-    dec edi
-    dec ebx
-    dec ecx
     dec eax
     dec edx
+    dec ecx
+    dec ebx
+    dec edi
 
 // === DEC m32 ===
-    dec DWORD PTR [rbx]
     dec DWORD PTR [rax + rbx*1 + 0x10]
     dec DWORD PTR [rip + 0x100]
     dec DWORD PTR [rip + 0x1000]
-    dec DWORD PTR [rax]
     dec DWORD PTR [rax + rbx*4 + 0x100]
+    dec DWORD PTR [rbx]
+    dec DWORD PTR [rax]
 
 // === DEC r64 ===
-    dec r13
     dec rcx
-    dec r10
-    dec rbx
-    dec r11
-    dec r9
     dec r12
-    dec rdi
-    dec rsi
+    dec rbx
+    dec r13
     dec r8
+    dec r11
+    dec rsi
+    dec rdx
+    dec rdi
+    dec r10
 
 // === DEC m64 ===
-    dec QWORD PTR [rax]
     dec QWORD PTR [rip + 0x1000]
+    dec QWORD PTR [rax + rbx*4 + 0x100]
+    dec QWORD PTR [rax]
     dec QWORD PTR [rip + 0x100]
     dec QWORD PTR [rax + rbx*1 + 0x10]
     dec QWORD PTR [rbx]
-    dec QWORD PTR [rax + rbx*4 + 0x100]
 
 // === DIV r8 ===
-    div al
-    div bl
     div cl
     div dl
+    div al
+    div bl
 
 // === DIV m8 ===
-    div BYTE PTR [rax + rbx*1 + 0x10]
     div BYTE PTR [rip + 0x1000]
-    div BYTE PTR [rip + 0x100]
-    div BYTE PTR [rax]
-    div BYTE PTR [rbx]
     div BYTE PTR [rax + rbx*4 + 0x100]
+    div BYTE PTR [rip + 0x100]
+    div BYTE PTR [rbx]
+    div BYTE PTR [rax]
+    div BYTE PTR [rax + rbx*1 + 0x10]
 
 // === DIV r16 ===
-    div dx
-    div si
-    div bx
-    div cx
-    div di
     div ax
+    div di
+    div cx
+    div bx
+    div si
+    div dx
 
 // === DIV m16 ===
-    div WORD PTR [rax + rbx*1 + 0x10]
     div WORD PTR [rip + 0x1000]
-    div WORD PTR [rip + 0x100]
-    div WORD PTR [rax + rbx*4 + 0x100]
     div WORD PTR [rax]
     div WORD PTR [rbx]
+    div WORD PTR [rax + rbx*4 + 0x100]
+    div WORD PTR [rax + rbx*1 + 0x10]
+    div WORD PTR [rip + 0x100]
 
 // === DIV r32 ===
-    div ebx
-    div edx
-    div ecx
-    div edi
     div esi
+    div ebx
+    div ecx
+    div edx
     div eax
+    div edi
 
 // === DIV m32 ===
-    div DWORD PTR [rbx]
-    div DWORD PTR [rip + 0x100]
-    div DWORD PTR [rax + rbx*1 + 0x10]
-    div DWORD PTR [rip + 0x1000]
     div DWORD PTR [rax + rbx*4 + 0x100]
     div DWORD PTR [rax]
+    div DWORD PTR [rbx]
+    div DWORD PTR [rip + 0x1000]
+    div DWORD PTR [rip + 0x100]
+    div DWORD PTR [rax + rbx*1 + 0x10]
 
 // === DIV r64 ===
-    div r9
-    div r10
-    div r13
+    div rcx
+    div rdi
+    div rsi
     div r8
     div rdx
-    div r12
-    div rsi
-    div rdi
+    div rax
     div r11
-    div rcx
+    div r12
+    div rbx
+    div r13
 
 // === DIV m64 ===
-    div QWORD PTR [rbx]
-    div QWORD PTR [rip + 0x1000]
-    div QWORD PTR [rax + rbx*4 + 0x100]
-    div QWORD PTR [rip + 0x100]
-    div QWORD PTR [rax]
     div QWORD PTR [rax + rbx*1 + 0x10]
+    div QWORD PTR [rax + rbx*4 + 0x100]
+    div QWORD PTR [rax]
+    div QWORD PTR [rbx]
+    div QWORD PTR [rip + 0x100]
+    div QWORD PTR [rip + 0x1000]
 
 // === EMMS ===
     emms
@@ -4355,57 +4356,73 @@
     fabs
 
 // === FADD m32fp ===
-    fadd DWORD PTR [rbx]
-    fadd DWORD PTR [rax + rbx*4 + 0x100]
-    fadd DWORD PTR [rip + 0x1000]
     fadd DWORD PTR [rax]
-    fadd DWORD PTR [rip + 0x100]
     fadd DWORD PTR [rax + rbx*1 + 0x10]
+    fadd DWORD PTR [rip + 0x1000]
+    fadd DWORD PTR [rip + 0x100]
+    fadd DWORD PTR [rax + rbx*4 + 0x100]
+    fadd DWORD PTR [rbx]
 
 // === FADD m64fp ===
+    fadd QWORD PTR [rax + rbx*4 + 0x100]
     fadd QWORD PTR [rip + 0x100]
     fadd QWORD PTR [rax]
-    fadd QWORD PTR [rax + rbx*1 + 0x10]
     fadd QWORD PTR [rip + 0x1000]
     fadd QWORD PTR [rbx]
-    fadd QWORD PTR [rax + rbx*4 + 0x100]
+    fadd QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FADD ST(0), ST(i) ===
-    fadd st(0), st(0)
-    fadd st(0), st(1)
-    fadd st(0), st(3)
     fadd st(0), st(2)
+    fadd st(0), st(1)
+    fadd st(0), st(0)
+    fadd st(0), st(3)
 
 // === FADD ST(i), ST(0) ===
-    fadd st(2), st(0)
     fadd st(3), st(0)
     fadd st(0), st(0)
+    fadd st(2), st(0)
     fadd st(1), st(0)
 
 // === FADDP ST(i), ST(0) ===
-    faddp st(1), st(0)
-    faddp st(0), st(0)
-    faddp st(2), st(0)
     faddp st(3), st(0)
+    faddp st(0), st(0)
+    faddp st(1), st(0)
+    faddp st(2), st(0)
 
 // === FADDP ===
     faddp
 
 // === FIADD m32int ===
     fiadd DWORD PTR [rip + 0x100]
-    fiadd DWORD PTR [rax]
-    fiadd DWORD PTR [rax + rbx*4 + 0x100]
     fiadd DWORD PTR [rax + rbx*1 + 0x10]
     fiadd DWORD PTR [rip + 0x1000]
     fiadd DWORD PTR [rbx]
+    fiadd DWORD PTR [rax + rbx*4 + 0x100]
+    fiadd DWORD PTR [rax]
 
 // === FIADD m16int ===
-    fiadd WORD PTR [rbx]
-    fiadd WORD PTR [rip + 0x1000]
-    fiadd WORD PTR [rax + rbx*1 + 0x10]
-    fiadd WORD PTR [rax]
-    fiadd WORD PTR [rip + 0x100]
     fiadd WORD PTR [rax + rbx*4 + 0x100]
+    fiadd WORD PTR [rax]
+    fiadd WORD PTR [rax + rbx*1 + 0x10]
+    fiadd WORD PTR [rip + 0x1000]
+    fiadd WORD PTR [rbx]
+    fiadd WORD PTR [rip + 0x100]
+
+// === FBLD m80bcd ===
+    fbld TBYTE PTR [rip + 0x100]
+    fbld TBYTE PTR [rax + rbx*1 + 0x10]
+    fbld TBYTE PTR [rax + rbx*4 + 0x100]
+    fbld TBYTE PTR [rip + 0x1000]
+    fbld TBYTE PTR [rbx]
+    fbld TBYTE PTR [rax]
+
+// === FBSTP m80bcd ===
+    fbstp TBYTE PTR [rax]
+    fbstp TBYTE PTR [rip + 0x100]
+    fbstp TBYTE PTR [rip + 0x1000]
+    fbstp TBYTE PTR [rbx]
+    fbstp TBYTE PTR [rax + rbx*4 + 0x100]
+    fbstp TBYTE PTR [rax + rbx*1 + 0x10]
 
 // === FCHS ===
     fchs
@@ -4417,34 +4434,34 @@
     fnclex
 
 // === FCMOVB ST(0), ST(i) ===
+    fcmovb st(0), st(0)
     fcmovb st(0), st(2)
     fcmovb st(0), st(1)
     fcmovb st(0), st(3)
-    fcmovb st(0), st(0)
 
 // === FCMOVE ST(0), ST(i) ===
     fcmove st(0), st(1)
     fcmove st(0), st(2)
-    fcmove st(0), st(3)
     fcmove st(0), st(0)
+    fcmove st(0), st(3)
 
 // === FCMOVBE ST(0), ST(i) ===
     fcmovbe st(0), st(1)
-    fcmovbe st(0), st(2)
     fcmovbe st(0), st(3)
+    fcmovbe st(0), st(2)
     fcmovbe st(0), st(0)
 
 // === FCMOVU ST(0), ST(i) ===
     fcmovu st(0), st(3)
-    fcmovu st(0), st(1)
     fcmovu st(0), st(2)
     fcmovu st(0), st(0)
+    fcmovu st(0), st(1)
 
 // === FCMOVNB ST(0), ST(i) ===
+    fcmovnb st(0), st(0)
+    fcmovnb st(0), st(3)
     fcmovnb st(0), st(2)
     fcmovnb st(0), st(1)
-    fcmovnb st(0), st(3)
-    fcmovnb st(0), st(0)
 
 // === FCMOVNE ST(0), ST(i) ===
     fcmovne st(0), st(1)
@@ -4454,35 +4471,35 @@
 
 // === FCMOVNBE ST(0), ST(i) ===
     fcmovnbe st(0), st(3)
+    fcmovnbe st(0), st(1)
     fcmovnbe st(0), st(0)
     fcmovnbe st(0), st(2)
-    fcmovnbe st(0), st(1)
 
 // === FCMOVNU ST(0), ST(i) ===
-    fcmovnu st(0), st(3)
     fcmovnu st(0), st(2)
-    fcmovnu st(0), st(0)
+    fcmovnu st(0), st(3)
     fcmovnu st(0), st(1)
+    fcmovnu st(0), st(0)
 
 // === FCOM m32fp ===
-    fcom DWORD PTR [rip + 0x100]
     fcom DWORD PTR [rax + rbx*4 + 0x100]
-    fcom DWORD PTR [rip + 0x1000]
-    fcom DWORD PTR [rax]
     fcom DWORD PTR [rax + rbx*1 + 0x10]
+    fcom DWORD PTR [rip + 0x1000]
     fcom DWORD PTR [rbx]
+    fcom DWORD PTR [rip + 0x100]
+    fcom DWORD PTR [rax]
 
 // === FCOM m64fp ===
-    fcom QWORD PTR [rip + 0x1000]
-    fcom QWORD PTR [rax + rbx*1 + 0x10]
     fcom QWORD PTR [rax]
-    fcom QWORD PTR [rax + rbx*4 + 0x100]
-    fcom QWORD PTR [rbx]
+    fcom QWORD PTR [rip + 0x1000]
     fcom QWORD PTR [rip + 0x100]
+    fcom QWORD PTR [rax + rbx*1 + 0x10]
+    fcom QWORD PTR [rbx]
+    fcom QWORD PTR [rax + rbx*4 + 0x100]
 
 // === FCOM ST(i) ===
-    fcom st(0)
     fcom st(1)
+    fcom st(0)
     fcom st(2)
     fcom st(3)
 
@@ -4490,26 +4507,26 @@
     fcom
 
 // === FCOMP m32fp ===
-    fcomp DWORD PTR [rax + rbx*1 + 0x10]
-    fcomp DWORD PTR [rip + 0x100]
     fcomp DWORD PTR [rax]
-    fcomp DWORD PTR [rbx]
-    fcomp DWORD PTR [rip + 0x1000]
+    fcomp DWORD PTR [rip + 0x100]
     fcomp DWORD PTR [rax + rbx*4 + 0x100]
+    fcomp DWORD PTR [rax + rbx*1 + 0x10]
+    fcomp DWORD PTR [rip + 0x1000]
+    fcomp DWORD PTR [rbx]
 
 // === FCOMP m64fp ===
     fcomp QWORD PTR [rax]
-    fcomp QWORD PTR [rbx]
-    fcomp QWORD PTR [rax + rbx*4 + 0x100]
     fcomp QWORD PTR [rax + rbx*1 + 0x10]
-    fcomp QWORD PTR [rip + 0x100]
+    fcomp QWORD PTR [rax + rbx*4 + 0x100]
+    fcomp QWORD PTR [rbx]
     fcomp QWORD PTR [rip + 0x1000]
+    fcomp QWORD PTR [rip + 0x100]
 
 // === FCOMP ST(i) ===
     fcomp st(2)
     fcomp st(1)
-    fcomp st(3)
     fcomp st(0)
+    fcomp st(3)
 
 // === FCOMP ===
     fcomp
@@ -4519,27 +4536,27 @@
 
 // === FCOMI ST, ST(i) ===
     fcomi st(0), st(2)
+    fcomi st(0), st(0)
     fcomi st(0), st(1)
     fcomi st(0), st(3)
-    fcomi st(0), st(0)
 
 // === FCOMIP ST, ST(i) ===
+    fcomip st(0), st(3)
+    fcomip st(0), st(2)
     fcomip st(0), st(1)
     fcomip st(0), st(0)
-    fcomip st(0), st(2)
-    fcomip st(0), st(3)
 
 // === FUCOMI ST, ST(i) ===
-    fucomi st(0), st(2)
     fucomi st(0), st(1)
     fucomi st(0), st(3)
     fucomi st(0), st(0)
+    fucomi st(0), st(2)
 
 // === FUCOMIP ST, ST(i) ===
     fucomip st(0), st(2)
-    fucomip st(0), st(1)
     fucomip st(0), st(3)
     fucomip st(0), st(0)
+    fucomip st(0), st(1)
 
 // === FCOS ===
     fcos
@@ -4548,172 +4565,172 @@
     fdecstp
 
 // === FDIV m32fp ===
-    fdiv DWORD PTR [rip + 0x1000]
+    fdiv DWORD PTR [rax + rbx*4 + 0x100]
     fdiv DWORD PTR [rax + rbx*1 + 0x10]
+    fdiv DWORD PTR [rax]
+    fdiv DWORD PTR [rip + 0x1000]
     fdiv DWORD PTR [rbx]
     fdiv DWORD PTR [rip + 0x100]
-    fdiv DWORD PTR [rax]
-    fdiv DWORD PTR [rax + rbx*4 + 0x100]
 
 // === FDIV m64fp ===
     fdiv QWORD PTR [rip + 0x1000]
-    fdiv QWORD PTR [rbx]
-    fdiv QWORD PTR [rip + 0x100]
-    fdiv QWORD PTR [rax]
-    fdiv QWORD PTR [rax + rbx*1 + 0x10]
     fdiv QWORD PTR [rax + rbx*4 + 0x100]
+    fdiv QWORD PTR [rip + 0x100]
+    fdiv QWORD PTR [rax + rbx*1 + 0x10]
+    fdiv QWORD PTR [rax]
+    fdiv QWORD PTR [rbx]
 
 // === FDIV ST(0), ST(i) ===
-    fdiv st(0), st(2)
-    fdiv st(0), st(0)
-    fdiv st(0), st(1)
     fdiv st(0), st(3)
+    fdiv st(0), st(0)
+    fdiv st(0), st(2)
+    fdiv st(0), st(1)
 
 // === FDIV ST(i), ST(0) ===
-    fdiv st(1), st(0)
     fdiv st(2), st(0)
     fdiv st(3), st(0)
+    fdiv st(1), st(0)
     fdiv st(0), st(0)
 
 // === FDIVP ST(i), ST(0) ===
-    fdivp st(0), st(0)
-    fdivp st(1), st(0)
     fdivp st(3), st(0)
     fdivp st(2), st(0)
+    fdivp st(1), st(0)
+    fdivp st(0), st(0)
 
 // === FDIVP ===
     fdivp
 
 // === FIDIV m32int ===
-    fidiv DWORD PTR [rax + rbx*4 + 0x100]
-    fidiv DWORD PTR [rbx]
-    fidiv DWORD PTR [rip + 0x100]
-    fidiv DWORD PTR [rax]
     fidiv DWORD PTR [rip + 0x1000]
+    fidiv DWORD PTR [rbx]
+    fidiv DWORD PTR [rax + rbx*4 + 0x100]
+    fidiv DWORD PTR [rax]
+    fidiv DWORD PTR [rip + 0x100]
     fidiv DWORD PTR [rax + rbx*1 + 0x10]
 
 // === FIDIV m16int ===
-    fidiv WORD PTR [rip + 0x100]
-    fidiv WORD PTR [rax]
-    fidiv WORD PTR [rip + 0x1000]
-    fidiv WORD PTR [rax + rbx*1 + 0x10]
-    fidiv WORD PTR [rbx]
     fidiv WORD PTR [rax + rbx*4 + 0x100]
+    fidiv WORD PTR [rax + rbx*1 + 0x10]
+    fidiv WORD PTR [rip + 0x1000]
+    fidiv WORD PTR [rip + 0x100]
+    fidiv WORD PTR [rbx]
+    fidiv WORD PTR [rax]
 
 // === FDIVR m32fp ===
+    fdivr DWORD PTR [rax]
+    fdivr DWORD PTR [rax + rbx*4 + 0x100]
+    fdivr DWORD PTR [rip + 0x100]
     fdivr DWORD PTR [rip + 0x1000]
     fdivr DWORD PTR [rbx]
-    fdivr DWORD PTR [rax]
     fdivr DWORD PTR [rax + rbx*1 + 0x10]
-    fdivr DWORD PTR [rip + 0x100]
-    fdivr DWORD PTR [rax + rbx*4 + 0x100]
 
 // === FDIVR m64fp ===
     fdivr QWORD PTR [rax + rbx*1 + 0x10]
-    fdivr QWORD PTR [rip + 0x1000]
-    fdivr QWORD PTR [rbx]
     fdivr QWORD PTR [rax]
+    fdivr QWORD PTR [rip + 0x1000]
     fdivr QWORD PTR [rax + rbx*4 + 0x100]
     fdivr QWORD PTR [rip + 0x100]
+    fdivr QWORD PTR [rbx]
 
 // === FDIVR ST(0), ST(i) ===
-    fdivr st(0), st(2)
     fdivr st(0), st(0)
-    fdivr st(0), st(3)
     fdivr st(0), st(1)
+    fdivr st(0), st(3)
+    fdivr st(0), st(2)
 
 // === FDIVR ST(i), ST(0) ===
-    fdivr st(2), st(0)
-    fdivr st(3), st(0)
     fdivr st(0), st(0)
     fdivr st(1), st(0)
+    fdivr st(3), st(0)
+    fdivr st(2), st(0)
 
 // === FDIVRP ST(i), ST(0) ===
-    fdivrp st(3), st(0)
-    fdivrp st(2), st(0)
-    fdivrp st(1), st(0)
     fdivrp st(0), st(0)
+    fdivrp st(1), st(0)
+    fdivrp st(2), st(0)
+    fdivrp st(3), st(0)
 
 // === FDIVRP ===
     fdivrp
 
 // === FIDIVR m32int ===
-    fidivr DWORD PTR [rax + rbx*1 + 0x10]
     fidivr DWORD PTR [rax]
-    fidivr DWORD PTR [rbx]
+    fidivr DWORD PTR [rax + rbx*1 + 0x10]
     fidivr DWORD PTR [rip + 0x1000]
-    fidivr DWORD PTR [rip + 0x100]
+    fidivr DWORD PTR [rbx]
     fidivr DWORD PTR [rax + rbx*4 + 0x100]
+    fidivr DWORD PTR [rip + 0x100]
 
 // === FIDIVR m16int ===
-    fidivr WORD PTR [rip + 0x1000]
-    fidivr WORD PTR [rbx]
-    fidivr WORD PTR [rax + rbx*1 + 0x10]
     fidivr WORD PTR [rax + rbx*4 + 0x100]
-    fidivr WORD PTR [rax]
     fidivr WORD PTR [rip + 0x100]
+    fidivr WORD PTR [rip + 0x1000]
+    fidivr WORD PTR [rax + rbx*1 + 0x10]
+    fidivr WORD PTR [rbx]
+    fidivr WORD PTR [rax]
 
 // === FFREE ST(i) ===
-    ffree st(0)
     ffree st(3)
     ffree st(2)
+    ffree st(0)
     ffree st(1)
 
 // === FICOM m16int ===
     ficom WORD PTR [rip + 0x100]
     ficom WORD PTR [rax + rbx*4 + 0x100]
+    ficom WORD PTR [rbx]
     ficom WORD PTR [rax + rbx*1 + 0x10]
     ficom WORD PTR [rax]
-    ficom WORD PTR [rbx]
     ficom WORD PTR [rip + 0x1000]
 
 // === FICOM m32int ===
-    ficom DWORD PTR [rip + 0x1000]
-    ficom DWORD PTR [rip + 0x100]
-    ficom DWORD PTR [rbx]
-    ficom DWORD PTR [rax]
-    ficom DWORD PTR [rax + rbx*4 + 0x100]
     ficom DWORD PTR [rax + rbx*1 + 0x10]
+    ficom DWORD PTR [rax]
+    ficom DWORD PTR [rip + 0x1000]
+    ficom DWORD PTR [rbx]
+    ficom DWORD PTR [rip + 0x100]
+    ficom DWORD PTR [rax + rbx*4 + 0x100]
 
 // === FICOMP m16int ===
-    ficomp WORD PTR [rax]
     ficomp WORD PTR [rip + 0x100]
-    ficomp WORD PTR [rip + 0x1000]
-    ficomp WORD PTR [rax + rbx*4 + 0x100]
+    ficomp WORD PTR [rax]
     ficomp WORD PTR [rbx]
+    ficomp WORD PTR [rax + rbx*4 + 0x100]
     ficomp WORD PTR [rax + rbx*1 + 0x10]
+    ficomp WORD PTR [rip + 0x1000]
 
 // === FICOMP m32int ===
+    ficomp DWORD PTR [rax + rbx*4 + 0x100]
+    ficomp DWORD PTR [rax + rbx*1 + 0x10]
     ficomp DWORD PTR [rip + 0x100]
     ficomp DWORD PTR [rbx]
-    ficomp DWORD PTR [rax + rbx*4 + 0x100]
-    ficomp DWORD PTR [rip + 0x1000]
-    ficomp DWORD PTR [rax + rbx*1 + 0x10]
     ficomp DWORD PTR [rax]
+    ficomp DWORD PTR [rip + 0x1000]
 
 // === FILD m16int ===
-    fild WORD PTR [rip + 0x100]
-    fild WORD PTR [rbx]
-    fild WORD PTR [rax + rbx*1 + 0x10]
     fild WORD PTR [rip + 0x1000]
-    fild WORD PTR [rax]
+    fild WORD PTR [rbx]
     fild WORD PTR [rax + rbx*4 + 0x100]
+    fild WORD PTR [rax + rbx*1 + 0x10]
+    fild WORD PTR [rax]
+    fild WORD PTR [rip + 0x100]
 
 // === FILD m32int ===
+    fild DWORD PTR [rax]
+    fild DWORD PTR [rax + rbx*1 + 0x10]
     fild DWORD PTR [rip + 0x1000]
     fild DWORD PTR [rax + rbx*4 + 0x100]
-    fild DWORD PTR [rax + rbx*1 + 0x10]
     fild DWORD PTR [rbx]
     fild DWORD PTR [rip + 0x100]
-    fild DWORD PTR [rax]
 
 // === FILD m64int ===
-    fild QWORD PTR [rax + rbx*1 + 0x10]
-    fild QWORD PTR [rax + rbx*4 + 0x100]
-    fild QWORD PTR [rip + 0x100]
-    fild QWORD PTR [rip + 0x1000]
     fild QWORD PTR [rax]
     fild QWORD PTR [rbx]
+    fild QWORD PTR [rip + 0x100]
+    fild QWORD PTR [rax + rbx*4 + 0x100]
+    fild QWORD PTR [rip + 0x1000]
+    fild QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FINCSTP ===
     fincstp
@@ -4725,98 +4742,98 @@
     fninit
 
 // === FIST m16int ===
-    fist WORD PTR [rip + 0x1000]
-    fist WORD PTR [rax]
-    fist WORD PTR [rax + rbx*1 + 0x10]
-    fist WORD PTR [rax + rbx*4 + 0x100]
-    fist WORD PTR [rip + 0x100]
     fist WORD PTR [rbx]
+    fist WORD PTR [rax + rbx*1 + 0x10]
+    fist WORD PTR [rip + 0x1000]
+    fist WORD PTR [rip + 0x100]
+    fist WORD PTR [rax + rbx*4 + 0x100]
+    fist WORD PTR [rax]
 
 // === FIST m32int ===
     fist DWORD PTR [rax]
-    fist DWORD PTR [rax + rbx*4 + 0x100]
-    fist DWORD PTR [rip + 0x100]
-    fist DWORD PTR [rax + rbx*1 + 0x10]
-    fist DWORD PTR [rbx]
     fist DWORD PTR [rip + 0x1000]
+    fist DWORD PTR [rip + 0x100]
+    fist DWORD PTR [rbx]
+    fist DWORD PTR [rax + rbx*4 + 0x100]
+    fist DWORD PTR [rax + rbx*1 + 0x10]
 
 // === FISTP m16int ===
     fistp WORD PTR [rip + 0x1000]
     fistp WORD PTR [rax + rbx*4 + 0x100]
     fistp WORD PTR [rax + rbx*1 + 0x10]
-    fistp WORD PTR [rip + 0x100]
     fistp WORD PTR [rax]
+    fistp WORD PTR [rip + 0x100]
     fistp WORD PTR [rbx]
 
 // === FISTP m32int ===
+    fistp DWORD PTR [rip + 0x1000]
+    fistp DWORD PTR [rip + 0x100]
+    fistp DWORD PTR [rax]
+    fistp DWORD PTR [rax + rbx*4 + 0x100]
     fistp DWORD PTR [rbx]
     fistp DWORD PTR [rax + rbx*1 + 0x10]
-    fistp DWORD PTR [rax]
-    fistp DWORD PTR [rip + 0x1000]
-    fistp DWORD PTR [rax + rbx*4 + 0x100]
-    fistp DWORD PTR [rip + 0x100]
 
 // === FISTP m64int ===
-    fistp QWORD PTR [rbx]
-    fistp QWORD PTR [rip + 0x100]
     fistp QWORD PTR [rax + rbx*4 + 0x100]
+    fistp QWORD PTR [rip + 0x100]
     fistp QWORD PTR [rip + 0x1000]
-    fistp QWORD PTR [rax + rbx*1 + 0x10]
     fistp QWORD PTR [rax]
+    fistp QWORD PTR [rbx]
+    fistp QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FISTTP m16int ===
-    fisttp WORD PTR [rax]
-    fisttp WORD PTR [rbx]
     fisttp WORD PTR [rax + rbx*1 + 0x10]
     fisttp WORD PTR [rax + rbx*4 + 0x100]
-    fisttp WORD PTR [rip + 0x1000]
     fisttp WORD PTR [rip + 0x100]
+    fisttp WORD PTR [rbx]
+    fisttp WORD PTR [rax]
+    fisttp WORD PTR [rip + 0x1000]
 
 // === FISTTP m32int ===
-    fisttp DWORD PTR [rax]
-    fisttp DWORD PTR [rip + 0x1000]
-    fisttp DWORD PTR [rbx]
-    fisttp DWORD PTR [rax + rbx*4 + 0x100]
     fisttp DWORD PTR [rip + 0x100]
+    fisttp DWORD PTR [rax]
+    fisttp DWORD PTR [rbx]
+    fisttp DWORD PTR [rip + 0x1000]
+    fisttp DWORD PTR [rax + rbx*4 + 0x100]
     fisttp DWORD PTR [rax + rbx*1 + 0x10]
 
 // === FISTTP m64int ===
-    fisttp QWORD PTR [rax + rbx*4 + 0x100]
     fisttp QWORD PTR [rip + 0x1000]
-    fisttp QWORD PTR [rax + rbx*1 + 0x10]
-    fisttp QWORD PTR [rax]
-    fisttp QWORD PTR [rbx]
     fisttp QWORD PTR [rip + 0x100]
+    fisttp QWORD PTR [rax + rbx*4 + 0x100]
+    fisttp QWORD PTR [rbx]
+    fisttp QWORD PTR [rax]
+    fisttp QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FLD m32fp ===
-    fld DWORD PTR [rax + rbx*4 + 0x100]
-    fld DWORD PTR [rax]
     fld DWORD PTR [rip + 0x1000]
+    fld DWORD PTR [rax + rbx*1 + 0x10]
     fld DWORD PTR [rip + 0x100]
     fld DWORD PTR [rbx]
-    fld DWORD PTR [rax + rbx*1 + 0x10]
+    fld DWORD PTR [rax]
+    fld DWORD PTR [rax + rbx*4 + 0x100]
 
 // === FLD m64fp ===
-    fld QWORD PTR [rax + rbx*4 + 0x100]
-    fld QWORD PTR [rbx]
     fld QWORD PTR [rax]
-    fld QWORD PTR [rax + rbx*1 + 0x10]
-    fld QWORD PTR [rip + 0x1000]
     fld QWORD PTR [rip + 0x100]
+    fld QWORD PTR [rbx]
+    fld QWORD PTR [rax + rbx*4 + 0x100]
+    fld QWORD PTR [rip + 0x1000]
+    fld QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FLD m80fp ===
-    fld TBYTE PTR [rip + 0x100]
-    fld TBYTE PTR [rip + 0x1000]
+    fld TBYTE PTR [rax]
     fld TBYTE PTR [rbx]
     fld TBYTE PTR [rax + rbx*1 + 0x10]
     fld TBYTE PTR [rax + rbx*4 + 0x100]
-    fld TBYTE PTR [rax]
+    fld TBYTE PTR [rip + 0x1000]
+    fld TBYTE PTR [rip + 0x100]
 
 // === FLD ST(i) ===
-    fld st(0)
-    fld st(3)
-    fld st(2)
     fld st(1)
+    fld st(0)
+    fld st(2)
+    fld st(3)
 
 // === FLD1 ===
     fld1
@@ -4839,58 +4856,74 @@
 // === FLDZ ===
     fldz
 
+// === FLDCW m2byte ===
+    fldcw WORD PTR [rax + rbx*1 + 0x10]
+    fldcw WORD PTR [rbx]
+    fldcw WORD PTR [rax]
+    fldcw WORD PTR [rax + rbx*4 + 0x100]
+    fldcw WORD PTR [rip + 0x1000]
+    fldcw WORD PTR [rip + 0x100]
+
+// === FLDENV m14/28byte ===
+    fldenv [rax + rbx*4 + 0x100]
+    fldenv [rax + rbx*1 + 0x10]
+    fldenv [rip + 0x1000]
+    fldenv [rip + 0x100]
+    fldenv [rbx]
+    fldenv [rax]
+
 // === FMUL m32fp ===
-    fmul DWORD PTR [rax + rbx*1 + 0x10]
     fmul DWORD PTR [rip + 0x100]
-    fmul DWORD PTR [rax]
     fmul DWORD PTR [rbx]
     fmul DWORD PTR [rax + rbx*4 + 0x100]
     fmul DWORD PTR [rip + 0x1000]
+    fmul DWORD PTR [rax + rbx*1 + 0x10]
+    fmul DWORD PTR [rax]
 
 // === FMUL m64fp ===
-    fmul QWORD PTR [rip + 0x100]
-    fmul QWORD PTR [rax + rbx*4 + 0x100]
-    fmul QWORD PTR [rip + 0x1000]
-    fmul QWORD PTR [rbx]
     fmul QWORD PTR [rax]
+    fmul QWORD PTR [rip + 0x1000]
+    fmul QWORD PTR [rip + 0x100]
+    fmul QWORD PTR [rbx]
+    fmul QWORD PTR [rax + rbx*4 + 0x100]
     fmul QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FMUL ST(0), ST(i) ===
-    fmul st(0), st(0)
     fmul st(0), st(1)
-    fmul st(0), st(2)
     fmul st(0), st(3)
+    fmul st(0), st(0)
+    fmul st(0), st(2)
 
 // === FMUL ST(i), ST(0) ===
-    fmul st(1), st(0)
-    fmul st(3), st(0)
-    fmul st(0), st(0)
     fmul st(2), st(0)
+    fmul st(3), st(0)
+    fmul st(1), st(0)
+    fmul st(0), st(0)
 
 // === FMULP ST(i), ST(0) ===
     fmulp st(3), st(0)
-    fmulp st(0), st(0)
-    fmulp st(1), st(0)
     fmulp st(2), st(0)
+    fmulp st(1), st(0)
+    fmulp st(0), st(0)
 
 // === FMULP ===
     fmulp
 
 // === FIMUL m32int ===
-    fimul DWORD PTR [rax]
-    fimul DWORD PTR [rip + 0x100]
     fimul DWORD PTR [rax + rbx*1 + 0x10]
-    fimul DWORD PTR [rax + rbx*4 + 0x100]
     fimul DWORD PTR [rbx]
+    fimul DWORD PTR [rax]
     fimul DWORD PTR [rip + 0x1000]
+    fimul DWORD PTR [rax + rbx*4 + 0x100]
+    fimul DWORD PTR [rip + 0x100]
 
 // === FIMUL m16int ===
-    fimul WORD PTR [rip + 0x1000]
-    fimul WORD PTR [rax + rbx*4 + 0x100]
-    fimul WORD PTR [rip + 0x100]
-    fimul WORD PTR [rbx]
-    fimul WORD PTR [rax]
     fimul WORD PTR [rax + rbx*1 + 0x10]
+    fimul WORD PTR [rip + 0x1000]
+    fimul WORD PTR [rbx]
+    fimul WORD PTR [rip + 0x100]
+    fimul WORD PTR [rax]
+    fimul WORD PTR [rax + rbx*4 + 0x100]
 
 // === FNOP ===
     fnop
@@ -4910,6 +4943,30 @@
 // === FRNDINT ===
     frndint
 
+// === FRSTOR m94/108byte ===
+    frstor [rax]
+    frstor [rbx]
+    frstor [rax + rbx*1 + 0x10]
+    frstor [rip + 0x100]
+    frstor [rax + rbx*4 + 0x100]
+    frstor [rip + 0x1000]
+
+// === FSAVE m94/108byte ===
+    fsave [rbx]
+    fsave [rax + rbx*1 + 0x10]
+    fsave [rax + rbx*4 + 0x100]
+    fsave [rip + 0x1000]
+    fsave [rip + 0x100]
+    fsave [rax]
+
+// === FNSAVE m94/108byte ===
+    fnsave [rip + 0x100]
+    fnsave [rbx]
+    fnsave [rip + 0x1000]
+    fnsave [rax]
+    fnsave [rax + rbx*1 + 0x10]
+    fnsave [rax + rbx*4 + 0x100]
+
 // === FSCALE ===
     fscale
 
@@ -4923,142 +4980,190 @@
     fsqrt
 
 // === FST m32fp ===
-    fst DWORD PTR [rax + rbx*1 + 0x10]
     fst DWORD PTR [rbx]
     fst DWORD PTR [rip + 0x100]
     fst DWORD PTR [rax + rbx*4 + 0x100]
-    fst DWORD PTR [rip + 0x1000]
     fst DWORD PTR [rax]
+    fst DWORD PTR [rax + rbx*1 + 0x10]
+    fst DWORD PTR [rip + 0x1000]
 
 // === FST m64fp ===
+    fst QWORD PTR [rax + rbx*1 + 0x10]
     fst QWORD PTR [rip + 0x100]
     fst QWORD PTR [rbx]
     fst QWORD PTR [rax + rbx*4 + 0x100]
-    fst QWORD PTR [rax + rbx*1 + 0x10]
     fst QWORD PTR [rip + 0x1000]
     fst QWORD PTR [rax]
 
 // === FST ST(i) ===
-    fst st(1)
-    fst st(0)
     fst st(2)
     fst st(3)
+    fst st(1)
+    fst st(0)
 
 // === FSTP m32fp ===
     fstp DWORD PTR [rbx]
-    fstp DWORD PTR [rip + 0x100]
-    fstp DWORD PTR [rax]
-    fstp DWORD PTR [rax + rbx*1 + 0x10]
-    fstp DWORD PTR [rip + 0x1000]
     fstp DWORD PTR [rax + rbx*4 + 0x100]
+    fstp DWORD PTR [rax]
+    fstp DWORD PTR [rip + 0x100]
+    fstp DWORD PTR [rip + 0x1000]
+    fstp DWORD PTR [rax + rbx*1 + 0x10]
 
 // === FSTP m64fp ===
-    fstp QWORD PTR [rip + 0x100]
     fstp QWORD PTR [rip + 0x1000]
-    fstp QWORD PTR [rax + rbx*1 + 0x10]
-    fstp QWORD PTR [rax]
+    fstp QWORD PTR [rip + 0x100]
     fstp QWORD PTR [rax + rbx*4 + 0x100]
+    fstp QWORD PTR [rax]
     fstp QWORD PTR [rbx]
+    fstp QWORD PTR [rax + rbx*1 + 0x10]
 
 // === FSTP m80fp ===
-    fstp TBYTE PTR [rax + rbx*1 + 0x10]
-    fstp TBYTE PTR [rip + 0x100]
-    fstp TBYTE PTR [rax + rbx*4 + 0x100]
-    fstp TBYTE PTR [rbx]
     fstp TBYTE PTR [rip + 0x1000]
+    fstp TBYTE PTR [rip + 0x100]
+    fstp TBYTE PTR [rbx]
+    fstp TBYTE PTR [rax + rbx*4 + 0x100]
+    fstp TBYTE PTR [rax + rbx*1 + 0x10]
     fstp TBYTE PTR [rax]
 
 // === FSTP ST(i) ===
     fstp st(0)
     fstp st(1)
-    fstp st(3)
     fstp st(2)
+    fstp st(3)
+
+// === FSTCW m2byte ===
+    fstcw WORD PTR [rip + 0x100]
+    fstcw WORD PTR [rax + rbx*1 + 0x10]
+    fstcw WORD PTR [rip + 0x1000]
+    fstcw WORD PTR [rax]
+    fstcw WORD PTR [rax + rbx*4 + 0x100]
+    fstcw WORD PTR [rbx]
+
+// === FNSTCW m2byte ===
+    fnstcw WORD PTR [rbx]
+    fnstcw WORD PTR [rax + rbx*1 + 0x10]
+    fnstcw WORD PTR [rip + 0x100]
+    fnstcw WORD PTR [rip + 0x1000]
+    fnstcw WORD PTR [rax]
+    fnstcw WORD PTR [rax + rbx*4 + 0x100]
+
+// === FSTENV m14/28byte ===
+    fstenv [rax]
+    fstenv [rax + rbx*4 + 0x100]
+    fstenv [rax + rbx*1 + 0x10]
+    fstenv [rip + 0x100]
+    fstenv [rbx]
+    fstenv [rip + 0x1000]
+
+// === FNSTENV m14/28byte ===
+    fnstenv [rax + rbx*1 + 0x10]
+    fnstenv [rax + rbx*4 + 0x100]
+    fnstenv [rip + 0x100]
+    fnstenv [rip + 0x1000]
+    fnstenv [rax]
+    fnstenv [rbx]
+
+// === FSTSW m2byte ===
+    fstsw WORD PTR [rbx]
+    fstsw WORD PTR [rax + rbx*4 + 0x100]
+    fstsw WORD PTR [rax]
+    fstsw WORD PTR [rip + 0x100]
+    fstsw WORD PTR [rax + rbx*1 + 0x10]
+    fstsw WORD PTR [rip + 0x1000]
 
 // === FSTSW AX ===
     fstsw ax
+
+// === FNSTSW m2byte ===
+    fnstsw WORD PTR [rbx]
+    fnstsw WORD PTR [rax]
+    fnstsw WORD PTR [rip + 0x100]
+    fnstsw WORD PTR [rax + rbx*1 + 0x10]
+    fnstsw WORD PTR [rip + 0x1000]
+    fnstsw WORD PTR [rax + rbx*4 + 0x100]
 
 // === FNSTSW AX ===
     fnstsw ax
 
 // === FSUB m32fp ===
-    fsub DWORD PTR [rbx]
-    fsub DWORD PTR [rax + rbx*4 + 0x100]
-    fsub DWORD PTR [rax]
     fsub DWORD PTR [rax + rbx*1 + 0x10]
     fsub DWORD PTR [rip + 0x1000]
     fsub DWORD PTR [rip + 0x100]
+    fsub DWORD PTR [rax]
+    fsub DWORD PTR [rax + rbx*4 + 0x100]
+    fsub DWORD PTR [rbx]
 
 // === FSUB m64fp ===
     fsub QWORD PTR [rax]
-    fsub QWORD PTR [rax + rbx*1 + 0x10]
     fsub QWORD PTR [rip + 0x1000]
+    fsub QWORD PTR [rax + rbx*1 + 0x10]
+    fsub QWORD PTR [rbx]
     fsub QWORD PTR [rip + 0x100]
     fsub QWORD PTR [rax + rbx*4 + 0x100]
-    fsub QWORD PTR [rbx]
 
 // === FSUB ST(0), ST(i) ===
-    fsub st(0), st(3)
-    fsub st(0), st(1)
     fsub st(0), st(0)
     fsub st(0), st(2)
+    fsub st(0), st(1)
+    fsub st(0), st(3)
 
 // === FSUB ST(i), ST(0) ===
-    fsub st(0), st(0)
-    fsub st(1), st(0)
     fsub st(2), st(0)
+    fsub st(1), st(0)
     fsub st(3), st(0)
+    fsub st(0), st(0)
 
 // === FSUBP ST(i), ST(0) ===
     fsubp st(3), st(0)
-    fsubp st(2), st(0)
-    fsubp st(0), st(0)
     fsubp st(1), st(0)
+    fsubp st(0), st(0)
+    fsubp st(2), st(0)
 
 // === FSUBP ===
     fsubp
 
 // === FISUB m32int ===
     fisub DWORD PTR [rax]
-    fisub DWORD PTR [rip + 0x1000]
-    fisub DWORD PTR [rax + rbx*4 + 0x100]
-    fisub DWORD PTR [rbx]
-    fisub DWORD PTR [rax + rbx*1 + 0x10]
     fisub DWORD PTR [rip + 0x100]
+    fisub DWORD PTR [rip + 0x1000]
+    fisub DWORD PTR [rax + rbx*1 + 0x10]
+    fisub DWORD PTR [rbx]
+    fisub DWORD PTR [rax + rbx*4 + 0x100]
 
 // === FISUB m16int ===
     fisub WORD PTR [rip + 0x1000]
-    fisub WORD PTR [rax + rbx*4 + 0x100]
     fisub WORD PTR [rax + rbx*1 + 0x10]
-    fisub WORD PTR [rip + 0x100]
-    fisub WORD PTR [rax]
     fisub WORD PTR [rbx]
+    fisub WORD PTR [rax + rbx*4 + 0x100]
+    fisub WORD PTR [rax]
+    fisub WORD PTR [rip + 0x100]
 
 // === FSUBR m32fp ===
     fsubr DWORD PTR [rbx]
-    fsubr DWORD PTR [rax + rbx*1 + 0x10]
     fsubr DWORD PTR [rax + rbx*4 + 0x100]
-    fsubr DWORD PTR [rip + 0x100]
     fsubr DWORD PTR [rax]
     fsubr DWORD PTR [rip + 0x1000]
+    fsubr DWORD PTR [rip + 0x100]
+    fsubr DWORD PTR [rax + rbx*1 + 0x10]
 
 // === FSUBR m64fp ===
-    fsubr QWORD PTR [rax + rbx*4 + 0x100]
-    fsubr QWORD PTR [rax]
-    fsubr QWORD PTR [rip + 0x100]
     fsubr QWORD PTR [rax + rbx*1 + 0x10]
     fsubr QWORD PTR [rip + 0x1000]
     fsubr QWORD PTR [rbx]
+    fsubr QWORD PTR [rax + rbx*4 + 0x100]
+    fsubr QWORD PTR [rax]
+    fsubr QWORD PTR [rip + 0x100]
 
 // === FSUBR ST(0), ST(i) ===
-    fsubr st(0), st(2)
-    fsubr st(0), st(0)
     fsubr st(0), st(1)
     fsubr st(0), st(3)
+    fsubr st(0), st(2)
+    fsubr st(0), st(0)
 
 // === FSUBR ST(i), ST(0) ===
-    fsubr st(3), st(0)
     fsubr st(1), st(0)
     fsubr st(2), st(0)
+    fsubr st(3), st(0)
     fsubr st(0), st(0)
 
 // === FSUBRP ST(i), ST(0) ===
@@ -5071,38 +5176,38 @@
     fsubrp
 
 // === FISUBR m32int ===
-    fisubr DWORD PTR [rax + rbx*1 + 0x10]
+    fisubr DWORD PTR [rax]
     fisubr DWORD PTR [rbx]
+    fisubr DWORD PTR [rax + rbx*1 + 0x10]
+    fisubr DWORD PTR [rip + 0x100]
     fisubr DWORD PTR [rip + 0x1000]
     fisubr DWORD PTR [rax + rbx*4 + 0x100]
-    fisubr DWORD PTR [rip + 0x100]
-    fisubr DWORD PTR [rax]
 
 // === FISUBR m16int ===
-    fisubr WORD PTR [rip + 0x100]
-    fisubr WORD PTR [rax + rbx*4 + 0x100]
-    fisubr WORD PTR [rax + rbx*1 + 0x10]
     fisubr WORD PTR [rbx]
-    fisubr WORD PTR [rax]
+    fisubr WORD PTR [rip + 0x100]
     fisubr WORD PTR [rip + 0x1000]
+    fisubr WORD PTR [rax]
+    fisubr WORD PTR [rax + rbx*1 + 0x10]
+    fisubr WORD PTR [rax + rbx*4 + 0x100]
 
 // === FTST ===
     ftst
 
 // === FUCOM ST(i) ===
+    fucom st(3)
+    fucom st(2)
     fucom st(1)
     fucom st(0)
-    fucom st(2)
-    fucom st(3)
 
 // === FUCOM ===
     fucom
 
 // === FUCOMP ST(i) ===
-    fucomp st(2)
     fucomp st(0)
-    fucomp st(1)
+    fucomp st(2)
     fucomp st(3)
+    fucomp st(1)
 
 // === FUCOMP ===
     fucomp
@@ -5114,10 +5219,10 @@
     fxam
 
 // === FXCH ST(i) ===
-    fxch st(0)
+    fxch st(2)
     fxch st(3)
     fxch st(1)
-    fxch st(2)
+    fxch st(0)
 
 // === FXCH ===
     fxch
@@ -5133,351 +5238,351 @@
 
 // === IDIV r8 ===
     idiv al
-    idiv dl
     idiv bl
     idiv cl
+    idiv dl
 
 // === IDIV m8 ===
-    idiv BYTE PTR [rip + 0x100]
     idiv BYTE PTR [rbx]
-    idiv BYTE PTR [rax + rbx*4 + 0x100]
     idiv BYTE PTR [rip + 0x1000]
+    idiv BYTE PTR [rip + 0x100]
     idiv BYTE PTR [rax]
+    idiv BYTE PTR [rax + rbx*4 + 0x100]
     idiv BYTE PTR [rax + rbx*1 + 0x10]
 
 // === IDIV r16 ===
-    idiv bx
-    idiv di
-    idiv cx
-    idiv ax
-    idiv dx
     idiv si
+    idiv di
+    idiv ax
+    idiv cx
+    idiv bx
+    idiv dx
 
 // === IDIV m16 ===
-    idiv WORD PTR [rax]
-    idiv WORD PTR [rip + 0x1000]
     idiv WORD PTR [rip + 0x100]
+    idiv WORD PTR [rip + 0x1000]
+    idiv WORD PTR [rax]
     idiv WORD PTR [rax + rbx*4 + 0x100]
-    idiv WORD PTR [rax + rbx*1 + 0x10]
     idiv WORD PTR [rbx]
+    idiv WORD PTR [rax + rbx*1 + 0x10]
 
 // === IDIV r32 ===
-    idiv ebx
-    idiv edx
     idiv esi
     idiv eax
-    idiv ecx
+    idiv ebx
+    idiv edx
     idiv edi
+    idiv ecx
 
 // === IDIV m32 ===
+    idiv DWORD PTR [rip + 0x1000]
+    idiv DWORD PTR [rbx]
     idiv DWORD PTR [rax]
     idiv DWORD PTR [rip + 0x100]
-    idiv DWORD PTR [rbx]
-    idiv DWORD PTR [rip + 0x1000]
     idiv DWORD PTR [rax + rbx*4 + 0x100]
     idiv DWORD PTR [rax + rbx*1 + 0x10]
 
 // === IDIV r64 ===
-    idiv r8
-    idiv rdi
-    idiv r13
-    idiv r11
-    idiv rbx
-    idiv r9
-    idiv rsi
     idiv rdx
+    idiv r9
     idiv rax
     idiv r12
+    idiv rcx
+    idiv rbx
+    idiv r10
+    idiv rdi
+    idiv r8
+    idiv rsi
 
 // === IDIV m64 ===
-    idiv QWORD PTR [rip + 0x1000]
+    idiv QWORD PTR [rax]
     idiv QWORD PTR [rax + rbx*1 + 0x10]
+    idiv QWORD PTR [rax + rbx*4 + 0x100]
     idiv QWORD PTR [rip + 0x100]
     idiv QWORD PTR [rbx]
-    idiv QWORD PTR [rax]
-    idiv QWORD PTR [rax + rbx*4 + 0x100]
+    idiv QWORD PTR [rip + 0x1000]
 
 // === IMUL r8 ===
-    imul al
     imul dl
-    imul bl
     imul cl
+    imul bl
+    imul al
 
 // === IMUL m8 ===
-    imul BYTE PTR [rip + 0x100]
-    imul BYTE PTR [rip + 0x1000]
-    imul BYTE PTR [rbx]
-    imul BYTE PTR [rax + rbx*1 + 0x10]
     imul BYTE PTR [rax]
+    imul BYTE PTR [rax + rbx*1 + 0x10]
     imul BYTE PTR [rax + rbx*4 + 0x100]
+    imul BYTE PTR [rip + 0x1000]
+    imul BYTE PTR [rip + 0x100]
+    imul BYTE PTR [rbx]
 
 // === IMUL r16 ===
-    imul bx
     imul dx
     imul si
     imul cx
     imul ax
+    imul bx
     imul di
 
 // === IMUL m16 ===
     imul WORD PTR [rax + rbx*1 + 0x10]
     imul WORD PTR [rax + rbx*4 + 0x100]
+    imul WORD PTR [rbx]
+    imul WORD PTR [rax]
     imul WORD PTR [rip + 0x1000]
     imul WORD PTR [rip + 0x100]
-    imul WORD PTR [rax]
-    imul WORD PTR [rbx]
 
 // === IMUL r32 ===
-    imul eax
     imul edx
-    imul ebx
-    imul edi
     imul ecx
+    imul edi
+    imul eax
     imul esi
+    imul ebx
 
 // === IMUL m32 ===
     imul DWORD PTR [rip + 0x100]
-    imul DWORD PTR [rax + rbx*1 + 0x10]
-    imul DWORD PTR [rip + 0x1000]
-    imul DWORD PTR [rax + rbx*4 + 0x100]
     imul DWORD PTR [rbx]
     imul DWORD PTR [rax]
+    imul DWORD PTR [rax + rbx*1 + 0x10]
+    imul DWORD PTR [rax + rbx*4 + 0x100]
+    imul DWORD PTR [rip + 0x1000]
 
 // === IMUL r64 ===
-    imul rbx
-    imul r11
-    imul r10
-    imul r9
-    imul r13
-    imul rdx
-    imul rcx
+    imul r8
     imul r12
+    imul rbx
+    imul r10
     imul rdi
-    imul rsi
+    imul r9
+    imul rax
+    imul r13
+    imul r11
+    imul rcx
 
 // === IMUL m64 ===
     imul QWORD PTR [rax]
+    imul QWORD PTR [rax + rbx*4 + 0x100]
     imul QWORD PTR [rbx]
     imul QWORD PTR [rip + 0x100]
-    imul QWORD PTR [rax + rbx*4 + 0x100]
-    imul QWORD PTR [rax + rbx*1 + 0x10]
     imul QWORD PTR [rip + 0x1000]
+    imul QWORD PTR [rax + rbx*1 + 0x10]
 
 // === IMUL r16, r16 ===
-    imul bx, si
-    imul ax, dx
-    imul dx, di
-    imul cx, ax
-    imul si, si
-    imul cx, dx
-    imul si, dx
-    imul cx, di
-    imul bx, ax
+    imul dx, si
+    imul cx, cx
+    imul dx, cx
+    imul ax, ax
     imul di, di
+    imul cx, si
+    imul di, dx
+    imul bx, dx
+    imul bx, cx
+    imul bx, si
 
 // === IMUL r16, m16 ===
-    imul ax, WORD PTR [rax + rbx*1 + 0x10]
-    imul di, WORD PTR [rax + rbx*1 + 0x10]
-    imul cx, WORD PTR [rip + 0x1000]
-    imul ax, WORD PTR [rax + rbx*4 + 0x100]
-    imul cx, WORD PTR [rbx]
-    imul di, WORD PTR [rbx]
-    imul di, WORD PTR [rip + 0x1000]
-    imul si, WORD PTR [rip + 0x100]
+    imul bx, WORD PTR [rip + 0x1000]
+    imul bx, WORD PTR [rax + rbx*1 + 0x10]
+    imul ax, WORD PTR [rbx]
+    imul bx, WORD PTR [rax]
+    imul si, WORD PTR [rip + 0x1000]
+    imul si, WORD PTR [rax + rbx*1 + 0x10]
     imul bx, WORD PTR [rip + 0x100]
-    imul si, WORD PTR [rbx]
+    imul dx, WORD PTR [rax]
+    imul di, WORD PTR [rax + rbx*1 + 0x10]
+    imul ax, WORD PTR [rax]
 
 // === IMUL r32, r32 ===
-    imul edx, edx
-    imul eax, eax
-    imul esi, edx
-    imul ecx, eax
-    imul esi, esi
-    imul edx, esi
-    imul ebx, esi
+    imul eax, ebx
+    imul edi, ebx
+    imul esi, ecx
+    imul eax, ecx
     imul edi, edi
+    imul esi, eax
+    imul eax, esi
+    imul ecx, eax
+    imul eax, edx
     imul edx, edi
-    imul ecx, edx
 
 // === IMUL r32, m32 ===
+    imul ecx, DWORD PTR [rip + 0x100]
+    imul edi, DWORD PTR [rax]
+    imul esi, DWORD PTR [rbx]
+    imul ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    imul esi, DWORD PTR [rax + rbx*1 + 0x10]
+    imul eax, DWORD PTR [rax]
     imul eax, DWORD PTR [rip + 0x100]
-    imul edi, DWORD PTR [rip + 0x100]
-    imul esi, DWORD PTR [rax + rbx*4 + 0x100]
-    imul ebx, DWORD PTR [rip + 0x1000]
-    imul edi, DWORD PTR [rbx]
-    imul eax, DWORD PTR [rip + 0x1000]
-    imul edx, DWORD PTR [rax + rbx*1 + 0x10]
-    imul edi, DWORD PTR [rax + rbx*1 + 0x10]
-    imul edx, DWORD PTR [rip + 0x100]
-    imul edx, DWORD PTR [rip + 0x1000]
+    imul edi, DWORD PTR [rax + rbx*4 + 0x100]
+    imul edi, DWORD PTR [rip + 0x1000]
+    imul edx, DWORD PTR [rax]
 
 // === IMUL r64, r64 ===
-    imul rbx, r8
-    imul rdi, r10
-    imul rsi, rbx
-    imul r13, rdx
-    imul rax, rax
-    imul r13, r11
-    imul rdx, rcx
-    imul rcx, rax
-    imul r8, rsi
-    imul r8, rcx
+    imul r12, rcx
+    imul rsi, r11
+    imul rbx, rbx
+    imul r8, r11
+    imul r11, rdx
+    imul rsi, r13
+    imul r9, r12
+    imul r10, r9
+    imul r9, r8
+    imul rcx, r11
 
 // === IMUL r64, m64 ===
-    imul rax, QWORD PTR [rax + rbx*4 + 0x100]
-    imul r12, QWORD PTR [rax + rbx*4 + 0x100]
-    imul r9, QWORD PTR [rbx]
-    imul r11, QWORD PTR [rip + 0x100]
-    imul rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    imul rbx, QWORD PTR [rip + 0x100]
-    imul r12, QWORD PTR [rax + rbx*1 + 0x10]
-    imul r13, QWORD PTR [rax]
-    imul rcx, QWORD PTR [rip + 0x100]
-    imul r13, QWORD PTR [rip + 0x1000]
+    imul r9, QWORD PTR [rax + rbx*1 + 0x10]
+    imul r13, QWORD PTR [rax + rbx*4 + 0x100]
+    imul r9, QWORD PTR [rip + 0x100]
+    imul rdx, QWORD PTR [rax]
+    imul rcx, QWORD PTR [rax]
+    imul r10, QWORD PTR [rbx]
+    imul rbx, QWORD PTR [rip + 0x1000]
+    imul r11, QWORD PTR [rip + 0x1000]
+    imul r12, QWORD PTR [rbx]
+    imul rax, QWORD PTR [rip + 0x1000]
 
 // === IMUL r16, r16, imm8 ===
-    imul di, bx, 0xff
-    imul bx, di, 0xff
-    imul bx, dx, 0xff
+    imul ax, dx, 0xff
+    imul dx, cx, 0xff
+    imul si, dx, 0xff
+    imul cx, cx, 0xff
+    imul dx, bx, 0xff
     imul si, di, 0xff
-    imul si, ax, 0xff
-    imul ax, cx, 0xff
-    imul di, dx, 0xff
-    imul di, si, 0xff
-    imul bx, si, 0xff
-    imul cx, dx, 0xff
+    imul bx, ax, 0xff
+    imul ax, bx, 0xff
+    imul cx, di, 0xff
+    imul cx, si, 0xff
 
 // === IMUL r16, m16, imm8 ===
-    imul dx, WORD PTR [rbx], 0xff
-    imul si, WORD PTR [rax], 0xff
+    imul dx, WORD PTR [rax + rbx*1 + 0x10], 0xff
     imul bx, WORD PTR [rax], 0xff
-    imul di, WORD PTR [rbx], 0xff
-    imul cx, WORD PTR [rbx], 0xff
-    imul ax, WORD PTR [rax], 0xff
-    imul di, WORD PTR [rax], 0xff
-    imul bx, WORD PTR [rbx], 0xff
-    imul ax, WORD PTR [rip + 0x1000], 0xff
-    imul cx, WORD PTR [rip + 0x1000], 0xff
+    imul bx, WORD PTR [rip + 0x100], 0xff
+    imul di, WORD PTR [rax + rbx*1 + 0x10], 0xff
+    imul ax, WORD PTR [rbx], 0xff
+    imul si, WORD PTR [rbx], 0xff
+    imul bx, WORD PTR [rip + 0x1000], 0xff
+    imul si, WORD PTR [rip + 0x1000], 0xff
+    imul ax, WORD PTR [rip + 0x100], 0xff
+    imul dx, WORD PTR [rip + 0x1000], 0xff
 
 // === IMUL r32, r32, imm8 ===
-    imul edi, edi, 0xff
-    imul ecx, ebx, 0xff
-    imul eax, eax, 0xff
-    imul edx, edi, 0xff
-    imul edi, ecx, 0xff
-    imul eax, esi, 0xff
-    imul eax, ecx, 0xff
-    imul esi, ecx, 0xff
-    imul eax, edi, 0xff
     imul ecx, eax, 0xff
+    imul ebx, ecx, 0xff
+    imul edi, eax, 0xff
+    imul esi, esi, 0xff
+    imul eax, edx, 0xff
+    imul esi, ecx, 0xff
+    imul ecx, edi, 0xff
+    imul edx, edx, 0xff
+    imul eax, ecx, 0xff
+    imul edx, ecx, 0xff
 
 // === IMUL r32, m32, imm8 ===
-    imul eax, DWORD PTR [rbx], 0xff
-    imul edi, DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    imul eax, DWORD PTR [rax], 0xff
-    imul esi, DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul eax, DWORD PTR [rip + 0x100], 0xff
-    imul edx, DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul ebx, DWORD PTR [rip + 0x100], 0xff
-    imul esi, DWORD PTR [rax], 0xff
+    imul edx, DWORD PTR [rip + 0x1000], 0xff
+    imul edx, DWORD PTR [rax], 0xff
+    imul ebx, DWORD PTR [rax], 0xff
+    imul eax, DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    imul ebx, DWORD PTR [rbx], 0xff
+    imul edx, DWORD PTR [rbx], 0xff
+    imul edi, DWORD PTR [rip + 0x1000], 0xff
     imul esi, DWORD PTR [rip + 0x100], 0xff
-    imul ecx, DWORD PTR [rip + 0x100], 0xff
+    imul eax, DWORD PTR [rax], 0xff
+    imul edx, DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === IMUL r64, r64, imm8 ===
+    imul r11, r13, 0xff
     imul r9, rbx, 0xff
-    imul rax, rsi, 0xff
-    imul rbx, rsi, 0xff
-    imul rsi, r8, 0xff
-    imul r9, rdi, 0xff
-    imul rbx, rax, 0xff
-    imul r10, rdx, 0xff
-    imul r10, r13, 0xff
-    imul rdi, r11, 0xff
-    imul rcx, r9, 0xff
+    imul r11, r8, 0xff
+    imul r10, rbx, 0xff
+    imul rcx, r8, 0xff
+    imul rbx, r8, 0xff
+    imul r8, r12, 0xff
+    imul r11, r9, 0xff
+    imul rax, r9, 0xff
+    imul rcx, rbx, 0xff
 
 // === IMUL r64, m64, imm8 ===
-    imul rdx, QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul rsi, QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul rdi, QWORD PTR [rbx], 0xff
-    imul r12, QWORD PTR [rbx], 0xff
-    imul r9, QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    imul r11, QWORD PTR [rax], 0xff
-    imul r10, QWORD PTR [rbx], 0xff
-    imul r13, QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul r12, QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    imul rax, QWORD PTR [rip + 0x1000], 0xff
+    imul r9, QWORD PTR [rax], 0xff
+    imul rbx, QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    imul r11, QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    imul r9, QWORD PTR [rbx], 0xff
+    imul r8, QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    imul rsi, QWORD PTR [rip + 0x100], 0xff
+    imul r10, QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    imul r13, QWORD PTR [rax], 0xff
+    imul rdi, QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    imul r12, QWORD PTR [rax], 0xff
 
 // === IMUL r16, r16, imm16 ===
-    imul si, cx, 0xffff
-    imul ax, si, 0xffff
-    imul cx, dx, 0xffff
     imul ax, dx, 0xffff
-    imul dx, dx, 0xffff
-    imul bx, dx, 0xffff
-    imul ax, di, 0xffff
-    imul ax, ax, 0xffff
-    imul bx, ax, 0xffff
-    imul di, di, 0xffff
+    imul bx, di, 0xffff
+    imul si, dx, 0xffff
+    imul dx, ax, 0xffff
+    imul cx, cx, 0xffff
+    imul si, di, 0xffff
+    imul dx, si, 0xffff
+    imul di, bx, 0xffff
+    imul si, si, 0xffff
+    imul cx, bx, 0xffff
 
 // === IMUL r16, m16, imm16 ===
+    imul cx, WORD PTR [rax], 0xffff
+    imul di, WORD PTR [rbx], 0xffff
+    imul ax, WORD PTR [rax], 0xffff
+    imul dx, WORD PTR [rax + rbx*4 + 0x100], 0xffff
+    imul dx, WORD PTR [rip + 0x1000], 0xffff
     imul bx, WORD PTR [rip + 0x100], 0xffff
-    imul si, WORD PTR [rbx], 0xffff
-    imul cx, WORD PTR [rip + 0x100], 0xffff
-    imul si, WORD PTR [rax], 0xffff
+    imul bx, WORD PTR [rbx], 0xffff
+    imul cx, WORD PTR [rbx], 0xffff
     imul di, WORD PTR [rax + rbx*4 + 0x100], 0xffff
-    imul ax, WORD PTR [rax + rbx*4 + 0x100], 0xffff
-    imul ax, WORD PTR [rip + 0x100], 0xffff
-    imul bx, WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    imul cx, WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    imul si, WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    imul dx, WORD PTR [rbx], 0xffff
 
 // === IMUL r32, r32, imm32 ===
-    imul edx, edi, 0xffffffff
-    imul edx, edx, 0xffffffff
-    imul edx, ebx, 0xffffffff
-    imul eax, esi, 0xffffffff
-    imul edi, ebx, 0xffffffff
-    imul ebx, ecx, 0xffffffff
     imul eax, ecx, 0xffffffff
-    imul ebx, esi, 0xffffffff
-    imul edi, edx, 0xffffffff
-    imul eax, edx, 0xffffffff
+    imul ebx, ecx, 0xffffffff
+    imul edx, edi, 0xffffffff
+    imul edx, eax, 0xffffffff
+    imul ebx, edi, 0xffffffff
+    imul edx, edx, 0xffffffff
+    imul edx, esi, 0xffffffff
+    imul esi, edx, 0xffffffff
+    imul edi, ecx, 0xffffffff
+    imul ecx, eax, 0xffffffff
 
 // === IMUL r32, m32, imm32 ===
-    imul eax, DWORD PTR [rax], 0xffffffff
-    imul edi, DWORD PTR [rip + 0x1000], 0xffffffff
-    imul esi, DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    imul esi, DWORD PTR [rbx], 0xffffffff
-    imul esi, DWORD PTR [rax], 0xffffffff
-    imul edx, DWORD PTR [rbx], 0xffffffff
-    imul esi, DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    imul eax, DWORD PTR [rip + 0x1000], 0xffffffff
+    imul edx, DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    imul esi, DWORD PTR [rip + 0x1000], 0xffffffff
+    imul ebx, DWORD PTR [rip + 0x100], 0xffffffff
+    imul ecx, DWORD PTR [rax], 0xffffffff
+    imul edi, DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
     imul eax, DWORD PTR [rip + 0x100], 0xffffffff
+    imul esi, DWORD PTR [rax], 0xffffffff
     imul edx, DWORD PTR [rip + 0x1000], 0xffffffff
-    imul edi, DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    imul edi, DWORD PTR [rax], 0xffffffff
 
 // === IMUL r64, r64, imm32 ===
+    imul r12, r8, 0x7fffffff
+    imul r12, rcx, -1
+    imul rcx, rdx, -1
     imul rdi, rax, -1
-    imul r10, r11, 0x7fffffff
-    imul rcx, rdi, -1
-    imul r13, rcx, -1
-    imul rdx, r9, -1
-    imul rax, r9, 0x7fffffff
-    imul rsi, rbx, 0x7fffffff
-    imul rcx, rsi, 0x7fffffff
-    imul r8, r12, 0x7fffffff
-    imul r9, r9, 0x7fffffff
+    imul r13, r12, -1
+    imul rdx, rcx, 0x7fffffff
+    imul r13, r8, 0x7fffffff
+    imul rcx, r9, -1
+    imul r8, r13, 0x7fffffff
+    imul rsi, rax, -1
 
 // === IMUL r64, m64, imm32 ===
-    imul rdx, QWORD PTR [rax + rbx*4 + 0x100], -1
-    imul rdx, QWORD PTR [rax], 0x7fffffff
-    imul rdi, QWORD PTR [rbx], 0x7fffffff
-    imul rax, QWORD PTR [rax], 0x7fffffff
-    imul rdi, QWORD PTR [rax], -1
-    imul rsi, QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    imul rsi, QWORD PTR [rip + 0x100], -1
-    imul r13, QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    imul rcx, QWORD PTR [rbx], 0x7fffffff
+    imul r13, QWORD PTR [rip + 0x100], 0x7fffffff
+    imul r9, QWORD PTR [rax + rbx*1 + 0x10], -1
     imul r13, QWORD PTR [rax + rbx*1 + 0x10], -1
+    imul r13, QWORD PTR [rax], 0x7fffffff
+    imul rdx, QWORD PTR [rax], -1
+    imul r12, QWORD PTR [rax], 0x7fffffff
+    imul rsi, QWORD PTR [rax], 0x7fffffff
+    imul r8, QWORD PTR [rax + rbx*4 + 0x100], -1
+    imul rbx, QWORD PTR [rax + rbx*1 + 0x10], -1
+    imul r9, QWORD PTR [rip + 0x100], -1
 
 // === IN AL, imm8 ===
     in al, 0xff
@@ -5498,70 +5603,70 @@
     in eax, dx
 
 // === INC r8 ===
-    inc al
     inc cl
-    inc dl
+    inc al
     inc bl
+    inc dl
 
 // === INC m8 ===
-    inc BYTE PTR [rbx]
-    inc BYTE PTR [rip + 0x100]
-    inc BYTE PTR [rax + rbx*4 + 0x100]
-    inc BYTE PTR [rax + rbx*1 + 0x10]
-    inc BYTE PTR [rip + 0x1000]
     inc BYTE PTR [rax]
+    inc BYTE PTR [rip + 0x100]
+    inc BYTE PTR [rip + 0x1000]
+    inc BYTE PTR [rax + rbx*1 + 0x10]
+    inc BYTE PTR [rax + rbx*4 + 0x100]
+    inc BYTE PTR [rbx]
 
 // === INC r16 ===
     inc cx
-    inc di
     inc si
-    inc ax
+    inc di
     inc dx
+    inc ax
     inc bx
 
 // === INC m16 ===
-    inc WORD PTR [rbx]
-    inc WORD PTR [rax]
     inc WORD PTR [rax + rbx*4 + 0x100]
-    inc WORD PTR [rax + rbx*1 + 0x10]
     inc WORD PTR [rip + 0x100]
+    inc WORD PTR [rax + rbx*1 + 0x10]
+    inc WORD PTR [rax]
+    inc WORD PTR [rbx]
     inc WORD PTR [rip + 0x1000]
 
 // === INC r32 ===
+    inc ebx
     inc edi
     inc edx
     inc esi
-    inc ebx
-    inc eax
     inc ecx
+    inc eax
 
 // === INC m32 ===
-    inc DWORD PTR [rip + 0x100]
-    inc DWORD PTR [rip + 0x1000]
-    inc DWORD PTR [rax + rbx*4 + 0x100]
-    inc DWORD PTR [rbx]
     inc DWORD PTR [rax]
     inc DWORD PTR [rax + rbx*1 + 0x10]
+    inc DWORD PTR [rip + 0x1000]
+    inc DWORD PTR [rip + 0x100]
+    inc DWORD PTR [rbx]
+    inc DWORD PTR [rax + rbx*4 + 0x100]
 
 // === INC r64 ===
     inc r12
+    inc r9
+    inc r8
     inc rdi
-    inc r11
     inc r13
-    inc rdx
     inc rcx
-    inc rsi
-    inc r10
     inc rax
+    inc rsi
     inc rbx
+    inc r10
 
 // === INC m64 ===
-    inc QWORD PTR [rip + 0x1000]
-    inc QWORD PTR [rax + rbx*4 + 0x100]
     inc QWORD PTR [rax]
     inc QWORD PTR [rbx]
+    inc QWORD PTR [rip + 0x1000]
     inc QWORD PTR [rip + 0x100]
     inc QWORD PTR [rax + rbx*1 + 0x10]
+    inc QWORD PTR [rax + rbx*4 + 0x100]
 
 // === INS m8, DX ===
     ins BYTE PTR [rdi], dx
@@ -5594,425 +5699,458 @@
     invd
 
 // === INVLPG m ===
-    invlpg QWORD PTR [rax]
-    invlpg QWORD PTR [rip + 0x100]
-    invlpg QWORD PTR [rax + rbx*1 + 0x10]
-    invlpg QWORD PTR [rbx]
-    invlpg QWORD PTR [rip + 0x1000]
-    invlpg QWORD PTR [rax + rbx*4 + 0x100]
+    invlpg [rbx]
+    invlpg [rip + 0x1000]
+    invlpg [rax + rbx*4 + 0x100]
+    invlpg [rax + rbx*1 + 0x10]
+    invlpg [rip + 0x100]
+    invlpg [rax]
 
 // === IRETQ ===
     iretq
 
 // === JA rel8 ===
-    ja .
+    ja 0f
+0:
 
 // === JAE rel8 ===
-    jae .
+    jae 0f
+0:
 
 // === JB rel8 ===
-    jb .
+    jb 0f
+0:
 
 // === JBE rel8 ===
-    jbe .
+    jbe 0f
+0:
 
 // === JC rel8 ===
-    jc .
+    jc 0f
+0:
 
 // === JRCXZ rel8 ===
-    jrcxz .
+    jrcxz 0f
+0:
 
 // === JE rel8 ===
-    je .
+    je 0f
+0:
 
 // === JG rel8 ===
-    jg .
+    jg 0f
+0:
 
 // === JGE rel8 ===
-    jge .
+    jge 0f
+0:
 
 // === JL rel8 ===
-    jl .
+    jl 0f
+0:
 
 // === JLE rel8 ===
-    jle .
+    jle 0f
+0:
 
 // === JNA rel8 ===
-    jna .
+    jna 0f
+0:
 
 // === JNAE rel8 ===
-    jnae .
+    jnae 0f
+0:
 
 // === JNB rel8 ===
-    jnb .
+    jnb 0f
+0:
 
 // === JNBE rel8 ===
-    jnbe .
+    jnbe 0f
+0:
 
 // === JNC rel8 ===
-    jnc .
+    jnc 0f
+0:
 
 // === JNE rel8 ===
-    jne .
+    jne 0f
+0:
 
 // === JNG rel8 ===
-    jng .
+    jng 0f
+0:
 
 // === JNGE rel8 ===
-    jnge .
+    jnge 0f
+0:
 
 // === JNL rel8 ===
-    jnl .
+    jnl 0f
+0:
 
 // === JNLE rel8 ===
-    jnle .
+    jnle 0f
+0:
 
 // === JNO rel8 ===
-    jno .
+    jno 0f
+0:
 
 // === JNP rel8 ===
-    jnp .
+    jnp 0f
+0:
 
 // === JNS rel8 ===
-    jns .
+    jns 0f
+0:
 
 // === JNZ rel8 ===
-    jnz .
+    jnz 0f
+0:
 
 // === JO rel8 ===
-    jo .
+    jo 0f
+0:
 
 // === JP rel8 ===
-    jp .
+    jp 0f
+0:
 
 // === JPE rel8 ===
-    jpe .
+    jpe 0f
+0:
 
 // === JPO rel8 ===
-    jpo .
+    jpo 0f
+0:
 
 // === JS rel8 ===
-    js .
+    js 0f
+0:
 
 // === JZ rel8 ===
-    jz .
+    jz 0f
+0:
 
 // === JA rel32 ===
-    ja .
+    ja 0f
+0:
 
 // === JAE rel32 ===
-    jae .
+    jae 0f
+0:
 
 // === JB rel32 ===
-    jb .
+    jb 0f
+0:
 
 // === JBE rel32 ===
-    jbe .
+    jbe 0f
+0:
 
 // === JC rel32 ===
-    jc .
+    jc 0f
+0:
 
 // === JE rel32 ===
-    je .
+    je 0f
+0:
 
 // === JZ rel32 ===
-    jz .
+    jz 0f
+0:
 
 // === JG rel32 ===
-    jg .
+    jg 0f
+0:
 
 // === JGE rel32 ===
-    jge .
+    jge 0f
+0:
 
 // === JL rel32 ===
-    jl .
+    jl 0f
+0:
 
 // === JLE rel32 ===
-    jle .
+    jle 0f
+0:
 
 // === JNA rel32 ===
-    jna .
+    jna 0f
+0:
 
 // === JNAE rel32 ===
-    jnae .
+    jnae 0f
+0:
 
 // === JNB rel32 ===
-    jnb .
+    jnb 0f
+0:
 
 // === JNBE rel32 ===
-    jnbe .
+    jnbe 0f
+0:
 
 // === JNC rel32 ===
-    jnc .
+    jnc 0f
+0:
 
 // === JNE rel32 ===
-    jne .
+    jne 0f
+0:
 
 // === JNG rel32 ===
-    jng .
+    jng 0f
+0:
 
 // === JNGE rel32 ===
-    jnge .
+    jnge 0f
+0:
 
 // === JNL rel32 ===
-    jnl .
+    jnl 0f
+0:
 
 // === JNLE rel32 ===
-    jnle .
+    jnle 0f
+0:
 
 // === JNO rel32 ===
-    jno .
+    jno 0f
+0:
 
 // === JNP rel32 ===
-    jnp .
+    jnp 0f
+0:
 
 // === JNS rel32 ===
-    jns .
+    jns 0f
+0:
 
 // === JNZ rel32 ===
-    jnz .
+    jnz 0f
+0:
 
 // === JO rel32 ===
-    jo .
+    jo 0f
+0:
 
 // === JP rel32 ===
-    jp .
+    jp 0f
+0:
 
 // === JPE rel32 ===
-    jpe .
+    jpe 0f
+0:
 
 // === JPO rel32 ===
-    jpo .
+    jpo 0f
+0:
 
 // === JS rel32 ===
-    js .
+    js 0f
+0:
 
 // === JMP rel8 ===
-    jmp .
+    jmp 0f
+0:
 
 // === JMP rel32 ===
-    jmp .
+    jmp 0f
+0:
 
 // === JMP r64 ===
-    jmp rdi
-    jmp rax
-    jmp rsi
-    jmp r9
-    jmp r13
-    jmp rcx
-    jmp rdx
-    jmp r10
+    jmp r12
     jmp r11
-    jmp rbx
+    jmp rcx
+    jmp r10
+    jmp r13
+    jmp rsi
+    jmp rax
+    jmp r8
+    jmp rdi
+    jmp rdx
 
 // === JMP m64 ===
-    jmp QWORD PTR [rip + 0x1000]
     jmp QWORD PTR [rbx]
-    jmp QWORD PTR [rax + rbx*4 + 0x100]
-    jmp QWORD PTR [rax + rbx*1 + 0x10]
     jmp QWORD PTR [rip + 0x100]
+    jmp QWORD PTR [rax + rbx*1 + 0x10]
+    jmp QWORD PTR [rax + rbx*4 + 0x100]
+    jmp QWORD PTR [rip + 0x1000]
     jmp QWORD PTR [rax]
 
 // === LAHF ===
     lahf
 
 // === LAR r16, r16/m16 ===
+    lar di, bx
+    lar di, di
+    lar si, di
+    lar si, dx
     lar ax, WORD PTR [rax + rbx*1 + 0x10]
-    lar si, WORD PTR [rax]
-    lar ax, WORD PTR [rax + rbx*4 + 0x100]
-    lar dx, WORD PTR [rax + rbx*4 + 0x100]
-    lar bx, WORD PTR [rip + 0x1000]
-    lar bx, WORD PTR [rbx]
-    lar cx, WORD PTR [rip + 0x100]
-    lar ax, WORD PTR [rbx]
-    lar dx, WORD PTR [rip + 0x1000]
-    lar dx, WORD PTR [rip + 0x100]
+    lar cx, WORD PTR [rbx]
+    lar si, WORD PTR [rip + 0x1000]
+    lar dx, di
+    lar ax, WORD PTR [rax]
+    lar cx, si
 
 // === LAR r32, r32/m16 ===
-    lar edi, WORD PTR [rip + 0x100]
+    lar edx, WORD PTR [rax + rbx*1 + 0x10]
     lar ecx, WORD PTR [rax + rbx*1 + 0x10]
+    lar esi, esi
+    lar edi, esi
+    lar ebx, WORD PTR [rax + rbx*4 + 0x100]
+    lar edx, WORD PTR [rax]
+    lar ebx, ebx
+    lar edi, WORD PTR [rip + 0x1000]
     lar eax, WORD PTR [rax + rbx*1 + 0x10]
-    lar ecx, WORD PTR [rip + 0x1000]
-    lar esi, WORD PTR [rax + rbx*1 + 0x10]
-    lar ebx, WORD PTR [rip + 0x1000]
-    lar ebx, WORD PTR [rbx]
     lar esi, WORD PTR [rip + 0x1000]
-    lar edx, WORD PTR [rax + rbx*4 + 0x100]
-    lar ecx, WORD PTR [rbx]
 
 // === LSS r16,m16:16 ===
-    lss bx, DWORD PTR [rax]
-    lss cx, DWORD PTR [rip + 0x1000]
-    lss si, DWORD PTR [rax + rbx*1 + 0x10]
-    lss si, DWORD PTR [rbx]
-    lss dx, DWORD PTR [rax + rbx*4 + 0x100]
-    lss cx, DWORD PTR [rax]
-    lss di, DWORD PTR [rip + 0x100]
-    lss di, DWORD PTR [rbx]
     lss di, DWORD PTR [rax + rbx*4 + 0x100]
-    lss bx, DWORD PTR [rbx]
+    lss cx, DWORD PTR [rip + 0x100]
+    lss cx, DWORD PTR [rip + 0x1000]
+    lss di, DWORD PTR [rax + rbx*1 + 0x10]
+    lss bx, DWORD PTR [rax]
+    lss si, DWORD PTR [rip + 0x1000]
+    lss di, DWORD PTR [rip + 0x100]
+    lss di, DWORD PTR [rax]
+    lss bx, DWORD PTR [rip + 0x100]
+    lss di, DWORD PTR [rip + 0x1000]
 
 // === LSS r32,m16:32 ===
-    lss esi, FWORD PTR [rax + rbx*4 + 0x100]
-    lss ebx, FWORD PTR [rip + 0x100]
-    lss eax, FWORD PTR [rip + 0x1000]
-    lss ecx, FWORD PTR [rax]
-    lss ebx, FWORD PTR [rip + 0x1000]
+    lss edi, FWORD PTR [rax + rbx*1 + 0x10]
+    lss eax, FWORD PTR [rip + 0x100]
+    lss eax, FWORD PTR [rax + rbx*1 + 0x10]
+    lss edx, FWORD PTR [rax + rbx*4 + 0x100]
+    lss edx, FWORD PTR [rip + 0x1000]
+    lss edx, FWORD PTR [rbx]
+    lss ecx, FWORD PTR [rip + 0x1000]
+    lss edi, FWORD PTR [rax + rbx*4 + 0x100]
     lss ebx, FWORD PTR [rax + rbx*4 + 0x100]
-    lss esi, FWORD PTR [rax]
-    lss ecx, FWORD PTR [rax + rbx*4 + 0x100]
-    lss edi, FWORD PTR [rip + 0x1000]
-    lss ebx, FWORD PTR [rax + rbx*1 + 0x10]
+    lss ebx, FWORD PTR [rbx]
 
 // === LSS r64,m16:64 ===
-    lss rdi, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lss'
-    lss r8, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lss'
-    lss r8, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lss'
+    lss r11, TBYTE PTR [rip + 0x1000]
+    lss rcx, TBYTE PTR [rax + rbx*1 + 0x10]
+    lss rbx, TBYTE PTR [rax + rbx*1 + 0x10]
+    lss rbx, TBYTE PTR [rbx]
+    lss rsi, TBYTE PTR [rip + 0x1000]
+    lss rax, TBYTE PTR [rax]
+    lss r9, TBYTE PTR [rax + rbx*1 + 0x10]
+    lss r12, TBYTE PTR [rax + rbx*4 + 0x100]
     lss r12, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lss'
-    lss rdi, TBYTE PTR [rax + rbx*1 + 0x10]
-    # [as ERROR] operand size mismatch for `lss'
-    lss rax, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lss'
-    lss r11, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lss'
-    lss rdx, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lss'
-    lss r9, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lss'
-    lss rdi, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lss'
+    lss r8, TBYTE PTR [rax + rbx*1 + 0x10]
 
 // === LFS r16,m16:16 ===
-    lfs di, DWORD PTR [rax]
     lfs ax, DWORD PTR [rbx]
-    lfs bx, DWORD PTR [rax + rbx*4 + 0x100]
+    lfs cx, DWORD PTR [rip + 0x1000]
+    lfs cx, DWORD PTR [rax]
+    lfs si, DWORD PTR [rip + 0x100]
+    lfs si, DWORD PTR [rax]
     lfs di, DWORD PTR [rip + 0x1000]
-    lfs bx, DWORD PTR [rbx]
-    lfs cx, DWORD PTR [rax + rbx*4 + 0x100]
-    lfs dx, DWORD PTR [rbx]
-    lfs di, DWORD PTR [rax + rbx*1 + 0x10]
-    lfs dx, DWORD PTR [rip + 0x100]
+    lfs dx, DWORD PTR [rax + rbx*1 + 0x10]
+    lfs si, DWORD PTR [rax + rbx*4 + 0x100]
     lfs di, DWORD PTR [rax + rbx*4 + 0x100]
+    lfs bx, DWORD PTR [rip + 0x100]
 
 // === LFS r32,m16:32 ===
-    lfs esi, FWORD PTR [rax + rbx*1 + 0x10]
-    lfs ecx, FWORD PTR [rax + rbx*1 + 0x10]
-    lfs edx, FWORD PTR [rax + rbx*1 + 0x10]
-    lfs ecx, FWORD PTR [rbx]
-    lfs eax, FWORD PTR [rax]
-    lfs ebx, FWORD PTR [rbx]
-    lfs ebx, FWORD PTR [rax]
-    lfs ecx, FWORD PTR [rax + rbx*4 + 0x100]
+    lfs edx, FWORD PTR [rip + 0x1000]
+    lfs esi, FWORD PTR [rax + rbx*4 + 0x100]
+    lfs ecx, FWORD PTR [rax]
+    lfs edx, FWORD PTR [rip + 0x100]
+    lfs ebx, FWORD PTR [rip + 0x100]
+    lfs edi, FWORD PTR [rax + rbx*1 + 0x10]
     lfs edi, FWORD PTR [rbx]
-    lfs edx, FWORD PTR [rax]
+    lfs ecx, FWORD PTR [rbx]
+    lfs edi, FWORD PTR [rax + rbx*4 + 0x100]
+    lfs ecx, FWORD PTR [rip + 0x1000]
 
 // === LFS r64,m16:64 ===
-    lfs r13, TBYTE PTR [rip + 0x100]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs rsi, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs rcx, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs rax, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs rbx, TBYTE PTR [rbx]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs r9, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lfs'
     lfs r9, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs r11, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs rax, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lfs'
-    lfs r8, TBYTE PTR [rax + rbx*1 + 0x10]
-    # [as ERROR] operand size mismatch for `lfs'
+    lfs rsi, TBYTE PTR [rax + rbx*4 + 0x100]
+    lfs rdi, TBYTE PTR [rax + rbx*4 + 0x100]
+    lfs rbx, TBYTE PTR [rip + 0x1000]
+    lfs r9, TBYTE PTR [rbx]
+    lfs r12, TBYTE PTR [rax + rbx*4 + 0x100]
+    lfs r9, TBYTE PTR [rip + 0x1000]
+    lfs r12, TBYTE PTR [rax]
+    lfs r10, TBYTE PTR [rip + 0x1000]
+    lfs r11, TBYTE PTR [rip + 0x1000]
 
 // === LGS r16,m16:16 ===
-    lgs di, DWORD PTR [rax + rbx*4 + 0x100]
-    lgs ax, DWORD PTR [rip + 0x100]
-    lgs bx, DWORD PTR [rip + 0x1000]
-    lgs di, DWORD PTR [rip + 0x100]
     lgs bx, DWORD PTR [rax]
-    lgs bx, DWORD PTR [rax + rbx*4 + 0x100]
-    lgs cx, DWORD PTR [rip + 0x1000]
-    lgs dx, DWORD PTR [rax + rbx*1 + 0x10]
-    lgs cx, DWORD PTR [rbx]
+    lgs dx, DWORD PTR [rax]
+    lgs si, DWORD PTR [rip + 0x100]
+    lgs di, DWORD PTR [rip + 0x100]
+    lgs ax, DWORD PTR [rip + 0x100]
     lgs si, DWORD PTR [rbx]
+    lgs si, DWORD PTR [rax + rbx*4 + 0x100]
+    lgs bx, DWORD PTR [rax + rbx*1 + 0x10]
+    lgs cx, DWORD PTR [rip + 0x1000]
+    lgs bx, DWORD PTR [rbx]
 
 // === LGS r32,m16:32 ===
-    lgs edi, FWORD PTR [rip + 0x1000]
-    lgs ebx, FWORD PTR [rax + rbx*4 + 0x100]
-    lgs edx, FWORD PTR [rax + rbx*4 + 0x100]
-    lgs ebx, FWORD PTR [rbx]
-    lgs edi, FWORD PTR [rax]
-    lgs esi, FWORD PTR [rbx]
-    lgs eax, FWORD PTR [rip + 0x100]
     lgs ecx, FWORD PTR [rip + 0x100]
+    lgs edx, FWORD PTR [rip + 0x100]
+    lgs esi, FWORD PTR [rax + rbx*4 + 0x100]
+    lgs eax, FWORD PTR [rip + 0x1000]
+    lgs ebx, FWORD PTR [rbx]
+    lgs eax, FWORD PTR [rbx]
+    lgs edi, FWORD PTR [rax + rbx*1 + 0x10]
+    lgs ecx, FWORD PTR [rax + rbx*4 + 0x100]
     lgs ecx, FWORD PTR [rax]
-    lgs eax, FWORD PTR [rax + rbx*4 + 0x100]
+    lgs edi, FWORD PTR [rax + rbx*4 + 0x100]
 
 // === LGS r64,m16:64 ===
-    lgs rax, TBYTE PTR [rip + 0x100]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r13, TBYTE PTR [rip + 0x100]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r8, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs rcx, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r8, TBYTE PTR [rax + rbx*1 + 0x10]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r11, TBYTE PTR [rax + rbx*1 + 0x10]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs rcx, TBYTE PTR [rax + rbx*4 + 0x100]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r10, TBYTE PTR [rax]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs r10, TBYTE PTR [rip + 0x1000]
-    # [as ERROR] operand size mismatch for `lgs'
-    lgs rdx, TBYTE PTR [rbx]
-    # [as ERROR] operand size mismatch for `lgs'
+    lgs rbx, TBYTE PTR [rip + 0x1000]
+    lgs r8, TBYTE PTR [rax + rbx*4 + 0x100]
+    lgs r11, TBYTE PTR [rip + 0x1000]
+    lgs r12, TBYTE PTR [rax + rbx*1 + 0x10]
+    lgs rdi, TBYTE PTR [rip + 0x100]
+    lgs rsi, TBYTE PTR [rip + 0x100]
+    lgs rdx, TBYTE PTR [rip + 0x1000]
+    lgs rax, TBYTE PTR [rax + rbx*4 + 0x100]
+    lgs rsi, TBYTE PTR [rax]
+    lgs rdx, TBYTE PTR [rip + 0x100]
 
 // === LEA r16,m ===
-    lea cx, QWORD PTR [rbx]
-    lea cx, QWORD PTR [rax + rbx*1 + 0x10]
-    lea si, QWORD PTR [rax + rbx*1 + 0x10]
-    lea bx, QWORD PTR [rax]
-    lea dx, QWORD PTR [rbx]
-    lea dx, QWORD PTR [rip + 0x100]
-    lea cx, QWORD PTR [rip + 0x1000]
-    lea di, QWORD PTR [rip + 0x1000]
-    lea cx, QWORD PTR [rax + rbx*4 + 0x100]
-    lea dx, QWORD PTR [rip + 0x1000]
+    lea si, [rax]
+    lea di, [rax + rbx*1 + 0x10]
+    lea cx, [rip + 0x1000]
+    lea bx, [rbx]
+    lea si, [rip + 0x100]
+    lea dx, [rax + rbx*1 + 0x10]
+    lea bx, [rip + 0x1000]
+    lea cx, [rax + rbx*4 + 0x100]
+    lea dx, [rbx]
+    lea si, [rax + rbx*4 + 0x100]
 
 // === LEA r32,m ===
-    lea eax, QWORD PTR [rip + 0x100]
-    lea ebx, QWORD PTR [rax]
-    lea eax, QWORD PTR [rbx]
-    lea ecx, QWORD PTR [rip + 0x100]
-    lea ecx, QWORD PTR [rax + rbx*1 + 0x10]
-    lea eax, QWORD PTR [rax + rbx*4 + 0x100]
-    lea eax, QWORD PTR [rip + 0x1000]
-    lea ecx, QWORD PTR [rbx]
-    lea esi, QWORD PTR [rax + rbx*4 + 0x100]
-    lea esi, QWORD PTR [rax]
+    lea eax, [rax]
+    lea edi, [rax + rbx*4 + 0x100]
+    lea eax, [rip + 0x1000]
+    lea ebx, [rip + 0x100]
+    lea edx, [rax]
+    lea esi, [rbx]
+    lea esi, [rip + 0x100]
+    lea ebx, [rax]
+    lea edx, [rax + rbx*4 + 0x100]
+    lea edi, [rbx]
 
 // === LEA r64,m ===
-    lea r9, QWORD PTR [rip + 0x1000]
-    lea r10, QWORD PTR [rbx]
-    lea rbx, QWORD PTR [rax + rbx*1 + 0x10]
-    lea rcx, QWORD PTR [rbx]
-    lea rsi, QWORD PTR [rip + 0x100]
-    lea r11, QWORD PTR [rbx]
-    lea r12, QWORD PTR [rip + 0x1000]
-    lea r12, QWORD PTR [rax + rbx*4 + 0x100]
-    lea r13, QWORD PTR [rbx]
-    lea r8, QWORD PTR [rip + 0x100]
+    lea r13, [rip + 0x1000]
+    lea rcx, [rip + 0x1000]
+    lea rsi, [rax]
+    lea r8, [rax + rbx*1 + 0x10]
+    lea r8, [rax + rbx*4 + 0x100]
+    lea rdx, [rip + 0x100]
+    lea r12, [rip + 0x1000]
+    lea r8, [rip + 0x100]
+    lea r13, [rax]
+    lea rdi, [rax + rbx*4 + 0x100]
 
 // === LEAVE ===
     leave
@@ -6028,51 +6166,51 @@
     lidt [rip + 0x100]
 
 // === LKGS r16 ===
-    lkgs si
-    lkgs cx
     lkgs ax
-    lkgs di
-    lkgs bx
     lkgs dx
+    lkgs bx
+    lkgs di
+    lkgs cx
+    lkgs si
 
 // === LKGS m16 ===
-    lkgs WORD PTR [rip + 0x1000]
-    lkgs WORD PTR [rax + rbx*1 + 0x10]
-    lkgs WORD PTR [rbx]
-    lkgs WORD PTR [rip + 0x100]
-    lkgs WORD PTR [rax + rbx*4 + 0x100]
     lkgs WORD PTR [rax]
+    lkgs WORD PTR [rax + rbx*1 + 0x10]
+    lkgs WORD PTR [rax + rbx*4 + 0x100]
+    lkgs WORD PTR [rip + 0x100]
+    lkgs WORD PTR [rbx]
+    lkgs WORD PTR [rip + 0x1000]
 
 // === LLDT r16 ===
-    lldt cx
-    lldt bx
     lldt ax
-    lldt si
     lldt di
+    lldt si
+    lldt cx
     lldt dx
+    lldt bx
 
 // === LLDT m16 ===
-    lldt WORD PTR [rax]
-    lldt WORD PTR [rax + rbx*4 + 0x100]
-    lldt WORD PTR [rax + rbx*1 + 0x10]
-    lldt WORD PTR [rbx]
     lldt WORD PTR [rip + 0x100]
     lldt WORD PTR [rip + 0x1000]
+    lldt WORD PTR [rax + rbx*1 + 0x10]
+    lldt WORD PTR [rax]
+    lldt WORD PTR [rax + rbx*4 + 0x100]
+    lldt WORD PTR [rbx]
 
 // === LMSW r16 ===
-    lmsw dx
     lmsw cx
-    lmsw ax
     lmsw bx
+    lmsw ax
     lmsw si
     lmsw di
+    lmsw dx
 
 // === LMSW m16 ===
-    lmsw WORD PTR [rbx]
-    lmsw WORD PTR [rip + 0x100]
     lmsw WORD PTR [rax + rbx*4 + 0x100]
-    lmsw WORD PTR [rax]
     lmsw WORD PTR [rip + 0x1000]
+    lmsw WORD PTR [rbx]
+    lmsw WORD PTR [rax]
+    lmsw WORD PTR [rip + 0x100]
     lmsw WORD PTR [rax + rbx*1 + 0x10]
 
 // === LOCK ===
@@ -6103,63 +6241,72 @@
     lodsq
 
 // === LOOP rel8 ===
-    loop .
+    loop 0f
+0:
 
 // === LOOPE rel8 ===
-    loope .
+    loope 0f
+0:
 
 // === LOOPNE rel8 ===
-    loopne .
+    loopne 0f
+0:
 
 // === LSL r16, r16/m16 ===
-    lsl ax, WORD PTR [rip + 0x100]
-    lsl di, WORD PTR [rax]
-    lsl si, WORD PTR [rax]
-    lsl di, WORD PTR [rax + rbx*4 + 0x100]
-    lsl bx, WORD PTR [rax + rbx*4 + 0x100]
-    lsl ax, WORD PTR [rbx]
-    lsl bx, WORD PTR [rip + 0x100]
-    lsl dx, WORD PTR [rip + 0x100]
+    lsl bx, bx
+    lsl cx, WORD PTR [rax + rbx*1 + 0x10]
+    lsl si, WORD PTR [rbx]
+    lsl cx, di
+    lsl di, ax
+    lsl di, dx
+    lsl ax, di
+    lsl bx, dx
+    lsl cx, cx
     lsl di, WORD PTR [rip + 0x1000]
-    lsl dx, WORD PTR [rax]
 
 // === LSL r32, r32/m16 ===
-    lsl ecx, WORD PTR [rax + rbx*1 + 0x10]
-    lsl eax, WORD PTR [rip + 0x1000]
-    lsl esi, WORD PTR [rip + 0x1000]
-    lsl esi, WORD PTR [rip + 0x100]
-    lsl edx, WORD PTR [rax + rbx*1 + 0x10]
-    lsl edx, WORD PTR [rax]
-    lsl esi, WORD PTR [rax + rbx*1 + 0x10]
+    lsl ecx, edx
+    lsl ebx, ecx
+    lsl eax, WORD PTR [rax + rbx*1 + 0x10]
+    lsl edi, WORD PTR [rip + 0x100]
+    lsl eax, ecx
+    lsl edi, WORD PTR [rbx]
+    lsl edi, esi
+    lsl esi, WORD PTR [rax + rbx*4 + 0x100]
+    lsl ebx, WORD PTR [rax + rbx*4 + 0x100]
     lsl eax, WORD PTR [rax + rbx*4 + 0x100]
-    lsl edi, WORD PTR [rax + rbx*4 + 0x100]
-    lsl ebx, WORD PTR [rax]
 
 // === LSL r64, r32/m16 ===
-    lsl rsi, WORD PTR [rbx]
-    lsl r12, WORD PTR [rax + rbx*4 + 0x100]
-    lsl r10, WORD PTR [rip + 0x100]
-    lsl rbx, WORD PTR [rip + 0x1000]
-    lsl rdi, WORD PTR [rip + 0x100]
-    lsl rbx, WORD PTR [rax + rbx*1 + 0x10]
-    lsl rbx, WORD PTR [rax]
-    lsl r10, WORD PTR [rip + 0x1000]
-    lsl r10, WORD PTR [rbx]
-    lsl r8, WORD PTR [rax + rbx*1 + 0x10]
+    lsl rax, eax
+    # [as ERROR] register type mismatch for `lsl'
+    lsl r13, ebx
+    # [as ERROR] register type mismatch for `lsl'
+    lsl rbx, ecx
+    # [as ERROR] register type mismatch for `lsl'
+    lsl r10, esi
+    # [as ERROR] register type mismatch for `lsl'
+    lsl rax, ebx
+    # [as ERROR] register type mismatch for `lsl'
+    lsl r13, WORD PTR [rbx]
+    lsl rcx, edx
+    # [as ERROR] register type mismatch for `lsl'
+    lsl rsi, WORD PTR [rip + 0x1000]
+    lsl rsi, WORD PTR [rax]
+    lsl r9, WORD PTR [rip + 0x100]
 
 // === LTR r16 ===
-    ltr bx
     ltr di
-    ltr cx
-    ltr dx
     ltr si
+    ltr cx
+    ltr bx
+    ltr dx
     ltr ax
 
 // === LTR m16 ===
-    ltr WORD PTR [rax]
-    ltr WORD PTR [rax + rbx*1 + 0x10]
-    ltr WORD PTR [rax + rbx*4 + 0x100]
     ltr WORD PTR [rip + 0x1000]
+    ltr WORD PTR [rax + rbx*1 + 0x10]
+    ltr WORD PTR [rax]
+    ltr WORD PTR [rax + rbx*4 + 0x100]
     ltr WORD PTR [rip + 0x100]
     ltr WORD PTR [rbx]
 
@@ -6167,244 +6314,244 @@
     monitor
 
 // === MOV r8, r8 ===
+    mov dl, cl
+    mov cl, al
+    mov al, bl
+    mov cl, cl
     mov al, dl
     mov bl, cl
-    mov bl, al
-    mov bl, dl
-    mov dl, cl
     mov bl, bl
-    mov dl, dl
-    mov cl, cl
     mov cl, dl
-    mov al, al
+    mov dl, bl
+    mov bl, dl
 
 // === MOV m8, r8 ===
-    mov BYTE PTR [rax + rbx*4 + 0x100], cl
+    mov BYTE PTR [rbx], bl
     mov BYTE PTR [rax + rbx*4 + 0x100], dl
-    mov BYTE PTR [rip + 0x1000], dl
-    mov BYTE PTR [rbx], dl
     mov BYTE PTR [rip + 0x100], cl
-    mov BYTE PTR [rip + 0x100], dl
-    mov BYTE PTR [rip + 0x100], bl
-    mov BYTE PTR [rbx], cl
-    mov BYTE PTR [rax], al
-    mov BYTE PTR [rip + 0x1000], al
+    mov BYTE PTR [rax + rbx*1 + 0x10], al
+    mov BYTE PTR [rip + 0x100], al
+    mov BYTE PTR [rax + rbx*4 + 0x100], bl
+    mov BYTE PTR [rax], bl
+    mov BYTE PTR [rbx], dl
+    mov BYTE PTR [rax + rbx*1 + 0x10], bl
+    mov BYTE PTR [rax + rbx*1 + 0x10], dl
 
 // === MOV r16, r16 ===
-    mov bx, ax
+    mov ax, cx
     mov bx, si
-    mov cx, ax
-    mov ax, dx
-    mov dx, bx
-    mov dx, cx
-    mov di, si
     mov dx, dx
-    mov bx, di
-    mov di, bx
+    mov ax, si
+    mov dx, ax
+    mov cx, si
+    mov si, si
+    mov cx, ax
+    mov di, ax
+    mov si, cx
 
 // === MOV m16, r16 ===
-    mov WORD PTR [rax], bx
     mov WORD PTR [rax], cx
+    mov WORD PTR [rip + 0x100], dx
+    mov WORD PTR [rbx], dx
+    mov WORD PTR [rip + 0x100], di
+    mov WORD PTR [rip + 0x1000], si
     mov WORD PTR [rax + rbx*1 + 0x10], cx
-    mov WORD PTR [rbx], bx
+    mov WORD PTR [rax + rbx*4 + 0x100], ax
     mov WORD PTR [rip + 0x100], si
-    mov WORD PTR [rip + 0x100], bx
-    mov WORD PTR [rip + 0x1000], cx
-    mov WORD PTR [rip + 0x1000], dx
-    mov WORD PTR [rax + rbx*1 + 0x10], si
-    mov WORD PTR [rax + rbx*1 + 0x10], bx
+    mov WORD PTR [rip + 0x1000], ax
+    mov WORD PTR [rip + 0x1000], bx
 
 // === MOV r32, r32 ===
-    mov edx, ecx
-    mov eax, ebx
-    mov edi, edx
-    mov edi, esi
-    mov eax, edx
+    mov ecx, esi
     mov edi, ebx
-    mov edi, edi
-    mov eax, esi
-    mov ebx, ebx
-    mov eax, ecx
+    mov edi, eax
+    mov edi, edx
+    mov edx, ecx
+    mov ecx, edi
+    mov eax, edi
+    mov ebx, edi
+    mov eax, eax
+    mov esi, ebx
 
 // === MOV m32, r32 ===
     mov DWORD PTR [rip + 0x100], esi
-    mov DWORD PTR [rax + rbx*1 + 0x10], edi
-    mov DWORD PTR [rip + 0x1000], ecx
-    mov DWORD PTR [rbx], ebx
-    mov DWORD PTR [rax], ecx
-    mov DWORD PTR [rip + 0x1000], eax
-    mov DWORD PTR [rbx], ecx
-    mov DWORD PTR [rax + rbx*4 + 0x100], esi
+    mov DWORD PTR [rip + 0x100], ebx
+    mov DWORD PTR [rip + 0x100], ecx
     mov DWORD PTR [rax + rbx*4 + 0x100], ebx
-    mov DWORD PTR [rax + rbx*4 + 0x100], eax
+    mov DWORD PTR [rax + rbx*4 + 0x100], esi
+    mov DWORD PTR [rip + 0x1000], edx
+    mov DWORD PTR [rip + 0x100], edi
+    mov DWORD PTR [rax], eax
+    mov DWORD PTR [rip + 0x100], edx
+    mov DWORD PTR [rbx], ebx
 
 // === MOV r64, r64 ===
-    mov rax, r11
-    mov r11, r11
-    mov r8, rsi
-    mov rbx, rcx
-    mov rsi, r11
-    mov rdi, r8
-    mov r10, r10
-    mov r12, rbx
-    mov r11, rbx
+    mov rdx, rbx
+    mov rsi, rcx
     mov rbx, rbx
+    mov r12, rcx
+    mov rdi, rdx
+    mov rsi, rax
+    mov rsi, rsi
+    mov rsi, r12
+    mov r9, rcx
+    mov r13, rbx
 
 // === MOV m64, r64 ===
-    mov QWORD PTR [rbx], r11
-    mov QWORD PTR [rax], r11
-    mov QWORD PTR [rax + rbx*4 + 0x100], rsi
-    mov QWORD PTR [rbx], r8
-    mov QWORD PTR [rip + 0x100], rsi
+    mov QWORD PTR [rbx], rdi
+    mov QWORD PTR [rip + 0x100], r8
+    mov QWORD PTR [rax + rbx*4 + 0x100], r9
+    mov QWORD PTR [rip + 0x100], r13
+    mov QWORD PTR [rax + rbx*1 + 0x10], r8
     mov QWORD PTR [rax], rbx
-    mov QWORD PTR [rax], r9
-    mov QWORD PTR [rip + 0x1000], rcx
-    mov QWORD PTR [rbx], rsi
-    mov QWORD PTR [rip + 0x1000], r8
+    mov QWORD PTR [rbx], r11
+    mov QWORD PTR [rbx], r13
+    mov QWORD PTR [rax + rbx*1 + 0x10], rdx
+    mov QWORD PTR [rip + 0x100], rdx
 
 // === MOV r8, m8 ===
-    mov bl, BYTE PTR [rax]
-    mov cl, BYTE PTR [rip + 0x100]
-    mov al, BYTE PTR [rip + 0x100]
+    mov al, BYTE PTR [rip + 0x1000]
+    mov cl, BYTE PTR [rax + rbx*4 + 0x100]
+    mov bl, BYTE PTR [rbx]
+    mov al, BYTE PTR [rax + rbx*4 + 0x100]
+    mov bl, BYTE PTR [rax + rbx*4 + 0x100]
     mov al, BYTE PTR [rax]
     mov cl, BYTE PTR [rax]
-    mov al, BYTE PTR [rbx]
-    mov bl, BYTE PTR [rbx]
-    mov dl, BYTE PTR [rax + rbx*4 + 0x100]
-    mov cl, BYTE PTR [rip + 0x1000]
-    mov bl, BYTE PTR [rip + 0x1000]
+    mov bl, BYTE PTR [rax + rbx*1 + 0x10]
+    mov dl, BYTE PTR [rax]
+    mov cl, BYTE PTR [rax + rbx*1 + 0x10]
 
 // === MOV r16, m16 ===
-    mov ax, WORD PTR [rax + rbx*4 + 0x100]
+    mov cx, WORD PTR [rax + rbx*1 + 0x10]
+    mov cx, WORD PTR [rax]
+    mov si, WORD PTR [rax + rbx*1 + 0x10]
+    mov ax, WORD PTR [rbx]
+    mov di, WORD PTR [rbx]
+    mov bx, WORD PTR [rip + 0x1000]
+    mov bx, WORD PTR [rax + rbx*4 + 0x100]
+    mov dx, WORD PTR [rax + rbx*1 + 0x10]
     mov ax, WORD PTR [rip + 0x100]
-    mov cx, WORD PTR [rax + rbx*4 + 0x100]
-    mov di, WORD PTR [rax + rbx*4 + 0x100]
-    mov ax, WORD PTR [rax + rbx*1 + 0x10]
-    mov si, WORD PTR [rip + 0x1000]
     mov si, WORD PTR [rax]
-    mov cx, WORD PTR [rip + 0x1000]
-    mov bx, WORD PTR [rbx]
-    mov ax, WORD PTR [rip + 0x1000]
 
 // === MOV r32, m32 ===
-    mov eax, DWORD PTR [rax]
-    mov edi, DWORD PTR [rax + rbx*4 + 0x100]
-    mov edi, DWORD PTR [rbx]
-    mov edi, DWORD PTR [rax + rbx*1 + 0x10]
-    mov ecx, DWORD PTR [rip + 0x100]
     mov ebx, DWORD PTR [rax]
-    mov eax, DWORD PTR [rax + rbx*4 + 0x100]
-    mov ebx, DWORD PTR [rip + 0x100]
-    mov esi, DWORD PTR [rip + 0x100]
+    mov eax, DWORD PTR [rax + rbx*1 + 0x10]
+    mov edi, DWORD PTR [rax + rbx*1 + 0x10]
     mov edi, DWORD PTR [rax]
+    mov ecx, DWORD PTR [rip + 0x100]
+    mov ebx, DWORD PTR [rip + 0x1000]
+    mov esi, DWORD PTR [rax + rbx*1 + 0x10]
+    mov ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    mov ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    mov esi, DWORD PTR [rip + 0x1000]
 
 // === MOV r64, m64 ===
-    mov r8, QWORD PTR [rip + 0x100]
+    mov rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    mov rbx, QWORD PTR [rip + 0x1000]
+    mov r10, QWORD PTR [rax + rbx*1 + 0x10]
+    mov rbx, QWORD PTR [rbx]
+    mov rax, QWORD PTR [rax + rbx*1 + 0x10]
     mov rsi, QWORD PTR [rax]
     mov rsi, QWORD PTR [rip + 0x100]
-    mov r8, QWORD PTR [rbx]
-    mov r13, QWORD PTR [rax + rbx*4 + 0x100]
+    mov rdx, QWORD PTR [rax + rbx*1 + 0x10]
     mov rdi, QWORD PTR [rip + 0x1000]
-    mov rax, QWORD PTR [rip + 0x100]
-    mov r13, QWORD PTR [rip + 0x100]
-    mov rcx, QWORD PTR [rip + 0x100]
-    mov rax, QWORD PTR [rbx]
+    mov r13, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === MOV r16, Sreg ===
-    mov ax, cs
-    mov si, fs
-    mov ax, gs
-    mov di, cs
-    mov dx, fs
+    mov dx, gs
+    mov bx, es
+    mov cx, cs
+    mov bx, ss
+    mov bx, cs
     mov cx, ss
-    mov si, es
-    mov dx, ds
-    mov cx, es
-    mov bx, gs
+    mov dx, cs
+    mov dx, fs
+    mov si, cs
+    mov si, ss
 
 // === MOV m16, Sreg ===
-    mov WORD PTR [rax], ss
-    mov WORD PTR [rax], gs
-    mov WORD PTR [rax], es
+    mov WORD PTR [rax + rbx*1 + 0x10], ds
+    mov WORD PTR [rip + 0x100], ss
     mov WORD PTR [rbx], gs
+    mov WORD PTR [rax + rbx*1 + 0x10], ss
+    mov WORD PTR [rax + rbx*4 + 0x100], ss
     mov WORD PTR [rip + 0x100], es
-    mov WORD PTR [rax + rbx*4 + 0x100], es
-    mov WORD PTR [rax], ds
-    mov WORD PTR [rax + rbx*4 + 0x100], gs
-    mov WORD PTR [rax + rbx*4 + 0x100], ds
+    mov WORD PTR [rax + rbx*4 + 0x100], fs
+    mov WORD PTR [rax + rbx*1 + 0x10], cs
     mov WORD PTR [rax + rbx*1 + 0x10], es
+    mov WORD PTR [rax + rbx*4 + 0x100], es
 
 // === MOV r16/r32/m16, Sreg ===
-    mov WORD PTR [rip + 0x100], cs
-    mov WORD PTR [rax + rbx*1 + 0x10], ds
-    mov WORD PTR [rax], ds
-    mov WORD PTR [rbx], ss
-    mov WORD PTR [rax + rbx*1 + 0x10], es
-    mov WORD PTR [rip + 0x100], gs
-    mov WORD PTR [rip + 0x100], ds
-    mov WORD PTR [rax + rbx*4 + 0x100], es
+    mov ecx, ss
+    mov esi, ds
+    mov cx, ds
+    mov WORD PTR [rip + 0x100], fs
+    mov WORD PTR [rax + rbx*4 + 0x100], gs
+    mov si, ds
+    mov WORD PTR [rbx], ds
     mov WORD PTR [rax + rbx*4 + 0x100], ss
-    mov WORD PTR [rip + 0x1000], fs
+    mov WORD PTR [rip + 0x1000], es
+    mov si, ss
 
 // === MOV r64/m16, Sreg ===
-    mov WORD PTR [rbx], ss
-    mov WORD PTR [rax], fs
-    mov WORD PTR [rip + 0x1000], fs
-    mov WORD PTR [rip + 0x100], es
-    mov WORD PTR [rax + rbx*1 + 0x10], es
-    mov WORD PTR [rax + rbx*4 + 0x100], fs
-    mov WORD PTR [rax], es
-    mov WORD PTR [rip + 0x100], fs
-    mov WORD PTR [rip + 0x100], gs
-    mov WORD PTR [rax + rbx*4 + 0x100], ds
+    mov r8, fs
+    mov r11, cs
+    mov r12, ss
+    mov rcx, fs
+    mov r13, fs
+    mov r9, ds
+    mov rsi, gs
+    mov rdx, ds
+    mov WORD PTR [rip + 0x100], cs
+    mov r11, ds
 
 // === MOV Sreg, r16 ===
-    mov gs, ax
-    mov ds, si
-    mov fs, cx
-    mov cs, si
-    mov ds, ax
-    mov gs, cx
-    mov ss, si
-    mov ss, ax
-    mov es, si
+    mov cs, di
+    mov cs, bx
     mov gs, dx
+    mov ss, bx
+    mov ss, cx
+    mov ss, ax
+    mov ds, dx
+    mov fs, bx
+    mov gs, cx
+    mov ds, bx
 
 // === MOV Sreg, m16 ===
-    mov ds, WORD PTR [rax]
-    mov gs, WORD PTR [rip + 0x100]
-    mov fs, WORD PTR [rip + 0x1000]
-    mov cs, WORD PTR [rip + 0x1000]
-    mov gs, WORD PTR [rax + rbx*4 + 0x100]
-    mov gs, WORD PTR [rip + 0x1000]
-    mov ds, WORD PTR [rbx]
-    mov es, WORD PTR [rax]
+    mov ss, WORD PTR [rip + 0x1000]
+    mov es, WORD PTR [rbx]
+    mov gs, WORD PTR [rbx]
+    mov ds, WORD PTR [rax + rbx*4 + 0x100]
+    mov fs, WORD PTR [rax + rbx*1 + 0x10]
+    mov ss, WORD PTR [rax + rbx*1 + 0x10]
+    mov ds, WORD PTR [rip + 0x1000]
+    mov cs, WORD PTR [rip + 0x100]
     mov ss, WORD PTR [rax]
-    mov gs, WORD PTR [rax + rbx*1 + 0x10]
+    mov gs, WORD PTR [rip + 0x100]
 
 // === MOV Sreg, r64 ===
-    mov gs, r8
-    mov cs, rdi
-    mov ss, rax
-    mov es, rdi
-    mov gs, rbx
-    mov es, r12
-    mov fs, r11
-    mov ss, r12
-    mov cs, rcx
-    mov ds, rdi
+    mov ss, rbx
+    mov fs, r12
+    mov ds, rbx
+    mov cs, r8
+    mov cs, rbx
+    mov ss, rcx
+    mov es, r13
+    mov cs, rdx
+    mov fs, rax
+    mov ds, r8
 
 // === MOV Sreg, m64 ===
-    mov cs, WORD PTR [rax + rbx*1 + 0x10]
-    mov fs, WORD PTR [rax + rbx*1 + 0x10]
-    mov ds, WORD PTR [rip + 0x100]
     mov cs, WORD PTR [rip + 0x100]
-    mov gs, WORD PTR [rip + 0x1000]
-    mov gs, WORD PTR [rax + rbx*1 + 0x10]
+    mov ds, WORD PTR [rax + rbx*4 + 0x100]
     mov gs, WORD PTR [rax]
-    mov ss, WORD PTR [rax]
-    mov es, WORD PTR [rax]
-    mov fs, WORD PTR [rip + 0x100]
+    mov es, WORD PTR [rip + 0x1000]
+    mov fs, WORD PTR [rip + 0x1000]
+    mov gs, WORD PTR [rax + rbx*1 + 0x10]
+    mov gs, WORD PTR [rip + 0x100]
+    mov fs, WORD PTR [rax + rbx*1 + 0x10]
+    mov ss, WORD PTR [rax + rbx*1 + 0x10]
+    mov ss, WORD PTR [rbx]
 
 // === MOV AL, moffs8 ===
     mov al, [0x1000]
@@ -6431,110 +6578,182 @@
     mov [0x1000], rax
 
 // === MOV r8, imm8 ===
+    mov dl, 0xff
     mov al, 0xff
     mov cl, 0xff
     mov bl, 0xff
-    mov dl, 0xff
 
 // === MOV r16, imm16 ===
+    mov dx, 0xffff
     mov bx, 0xffff
     mov si, 0xffff
-    mov dx, 0xffff
-    mov cx, 0xffff
-    mov ax, 0xffff
     mov di, 0xffff
+    mov ax, 0xffff
+    mov cx, 0xffff
 
 // === MOV r32, imm32 ===
-    mov edi, 0xffffffff
-    mov ebx, 0xffffffff
-    mov ecx, 0xffffffff
-    mov eax, 0xffffffff
     mov esi, 0xffffffff
+    mov ecx, 0xffffffff
     mov edx, 0xffffffff
+    mov ebx, 0xffffffff
+    mov eax, 0xffffffff
+    mov edi, 0xffffffff
 
 // === MOV r64, imm64 ===
+    mov r11, 0x7fffffffffffffff
+    mov r8, 0x7fffffffffffffff
+    mov rdi, 0x7fffffffffffffff
+    mov r9, 0x7fffffffffffffff
+    mov rax, 0x7fffffffffffffff
+    mov rbx, 0x7fffffffffffffff
     mov rdx, 0x7fffffffffffffff
     mov rcx, 0x7fffffffffffffff
     mov rsi, 0x7fffffffffffffff
-    mov rbx, 0x7fffffffffffffff
-    mov r13, 0x7fffffffffffffff
-    mov r9, 0x7fffffffffffffff
     mov r12, 0x7fffffffffffffff
-    mov r11, 0x7fffffffffffffff
-    mov rax, 0x7fffffffffffffff
-    mov r10, 0x7fffffffffffffff
 
 // === MOV m8, imm8 ===
+    mov BYTE PTR [rax], 0xff
     mov BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    mov BYTE PTR [rax + rbx*4 + 0x100], 0xff
     mov BYTE PTR [rbx], 0xff
     mov BYTE PTR [rip + 0x1000], 0xff
-    mov BYTE PTR [rax + rbx*4 + 0x100], 0xff
     mov BYTE PTR [rip + 0x100], 0xff
-    mov BYTE PTR [rax], 0xff
 
 // === MOV m16, imm16 ===
-    mov WORD PTR [rip + 0x1000], 0xffff
     mov WORD PTR [rax + rbx*4 + 0x100], 0xffff
-    mov WORD PTR [rax], 0xffff
-    mov WORD PTR [rbx], 0xffff
-    mov WORD PTR [rax + rbx*1 + 0x10], 0xffff
     mov WORD PTR [rip + 0x100], 0xffff
+    mov WORD PTR [rax], 0xffff
+    mov WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    mov WORD PTR [rip + 0x1000], 0xffff
+    mov WORD PTR [rbx], 0xffff
 
 // === MOV m32, imm32 ===
     mov DWORD PTR [rip + 0x1000], 0xffffffff
-    mov DWORD PTR [rax], 0xffffffff
-    mov DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
     mov DWORD PTR [rbx], 0xffffffff
     mov DWORD PTR [rip + 0x100], 0xffffffff
+    mov DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    mov DWORD PTR [rax], 0xffffffff
     mov DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
 
 // === MOV r64, imm32 ===
-    mov r13, 0x7fffffff
-    mov r8, 0x7fffffff
-    mov r8, -1
-    mov rsi, 0x7fffffff
     mov rdx, 0x7fffffff
-    mov r9, -1
+    mov rsi, 0x7fffffff
+    mov rax, 0x7fffffff
+    mov r9, 0x7fffffff
+    mov rbx, 0x7fffffff
+    mov r8, -1
+    mov r10, 0x7fffffff
+    mov r10, -1
+    mov rcx, -1
     mov rdi, -1
-    mov r13, -1
-    mov r12, 0x7fffffff
-    mov rdx, -1
 
 // === MOV m64, imm32 ===
-    mov QWORD PTR [rax], 0x7fffffff
-    mov QWORD PTR [rax], -1
     mov QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    mov QWORD PTR [rip + 0x100], -1
-    mov QWORD PTR [rax + rbx*1 + 0x10], -1
-    mov QWORD PTR [rbx], 0x7fffffff
     mov QWORD PTR [rip + 0x1000], 0x7fffffff
     mov QWORD PTR [rip + 0x1000], -1
+    mov QWORD PTR [rax + rbx*1 + 0x10], -1
+    mov QWORD PTR [rip + 0x100], -1
+    mov QWORD PTR [rax], 0x7fffffff
+    mov QWORD PTR [rax + rbx*4 + 0x100], -1
     mov QWORD PTR [rip + 0x100], 0x7fffffff
-    mov QWORD PTR [rbx], -1
+    mov QWORD PTR [rbx], 0x7fffffff
+    mov QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
+
+// === MOV r64, CR0–CR7 ===
+    mov r13, cr0
+    mov rcx, cr4
+    mov r10, cr0
+    mov r8, cr0
+    mov rdx, cr0
+    mov rbx, cr4
+    mov r10, cr3
+    mov rdi, cr4
+    mov r8, cr3
+    mov r9, cr2
+
+// === MOV r64, CR8 ===
+    mov rax, cr8
+    mov r9, cr8
+    mov r12, cr8
+    mov rdx, cr8
+    mov rsi, cr8
+    mov rcx, cr8
+    mov r13, cr8
+    mov r10, cr8
+    mov r8, cr8
+    mov r11, cr8
+
+// === MOV CR0–CR7, r64 ===
+    mov cr4, r9
+    mov cr3, r11
+    mov cr0, r11
+    mov cr3, r9
+    mov cr0, rcx
+    mov cr3, rax
+    mov cr2, r9
+    mov cr0, rax
+    mov cr0, rbx
+    mov cr0, r8
+
+// === MOV CR8, r64 ===
+    mov cr8, rdx
+    mov cr8, r9
+    mov cr8, rsi
+    mov cr8, rcx
+    mov cr8, rax
+    mov cr8, rbx
+    mov cr8, r12
+    mov cr8, r13
+    mov cr8, r11
+    mov cr8, rdi
+
+// === MOV r64, DR0–DR7 ===
+    mov r12, dr3
+    mov rcx, dr6
+    mov r10, dr2
+    mov rsi, dr0
+    mov r9, dr7
+    mov rbx, dr2
+    mov r11, dr7
+    mov rbx, dr6
+    mov rbx, dr3
+    mov rcx, dr0
+
+// === MOV DR0–DR7, r64 ===
+    mov dr2, rcx
+    mov dr6, rdx
+    mov dr6, r12
+    mov dr1, rdx
+    mov dr7, rbx
+    mov dr2, rbx
+    mov dr7, rax
+    mov dr2, r12
+    mov dr3, r10
+    mov dr3, rbx
 
 // === MOVDQ2Q mm, xmm ===
+    movdq2q mm2, xmm3
+    movdq2q mm0, xmm1
+    movdq2q mm1, xmm0
+    movdq2q mm3, xmm3
     movdq2q mm3, xmm0
     movdq2q mm2, xmm2
-    movdq2q mm3, xmm3
-    movdq2q mm3, xmm1
-    movdq2q mm2, xmm3
-    movdq2q mm1, xmm1
-    movdq2q mm0, xmm1
+    movdq2q mm2, xmm0
     movdq2q mm0, xmm2
-    movdq2q mm1, xmm3
-    movdq2q mm1, xmm0
+    movdq2q mm1, xmm1
+    movdq2q mm3, xmm2
 
 // === MOVNTQ m64, mm ===
-    movntq QWORD PTR [rbx], mm2
-    movntq QWORD PTR [rax + rbx*4 + 0x100], mm1
-    movntq QWORD PTR [rbx], mm1
+    movntq QWORD PTR [rax + rbx*4 + 0x100], mm2
+    movntq QWORD PTR [rip + 0x100], mm1
     movntq QWORD PTR [rax], mm1
-    movntq QWORD PTR [rbx], mm3
     movntq QWORD PTR [rip + 0x100], mm0
-    movntq QWORD PTR [rax], mm3
-    movntq QWORD PTR [rip + 0x1000], mm0
-    movntq QWORD PTR [rax + rbx*1 + 0x10], mm2
+    movntq QWORD PTR [rax + rbx*4 + 0x100], mm3
+    movntq QWORD PTR [rax + rbx*4 + 0x100], mm0
+    movntq QWORD PTR [rip + 0x1000], mm2
     movntq QWORD PTR [rip + 0x1000], mm3
+    movntq QWORD PTR [rbx], mm1
+    movntq QWORD PTR [rax + rbx*1 + 0x10], mm0
 
 // === MOVS m8, m8 ===
     movs BYTE PTR [rdi], BYTE PTR [rsi]
@@ -6561,331 +6780,331 @@
     movsq
 
 // === MOVSX r16, r8 ===
+    movsx bx, dl
     movsx si, al
-    movsx dx, dl
-    movsx dx, bl
-    movsx di, al
-    movsx bx, al
-    movsx di, cl
-    movsx cx, bl
     movsx bx, cl
-    movsx ax, cl
-    movsx cx, al
+    movsx cx, dl
+    movsx di, bl
+    movsx ax, bl
+    movsx di, cl
+    movsx di, al
+    movsx dx, bl
+    movsx si, cl
 
 // === MOVSX r16, m8 ===
-    movsx dx, BYTE PTR [rax + rbx*1 + 0x10]
-    movsx dx, BYTE PTR [rbx]
-    movsx di, BYTE PTR [rax]
-    movsx di, BYTE PTR [rip + 0x1000]
-    movsx si, BYTE PTR [rax + rbx*1 + 0x10]
-    movsx si, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx bx, BYTE PTR [rip + 0x100]
+    movsx di, BYTE PTR [rip + 0x100]
+    movsx ax, BYTE PTR [rax + rbx*4 + 0x100]
     movsx dx, BYTE PTR [rax]
-    movsx bx, BYTE PTR [rip + 0x1000]
-    movsx bx, BYTE PTR [rax]
+    movsx bx, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx ax, BYTE PTR [rax]
+    movsx di, BYTE PTR [rip + 0x1000]
+    movsx si, BYTE PTR [rbx]
     movsx di, BYTE PTR [rax + rbx*1 + 0x10]
+    movsx si, BYTE PTR [rip + 0x1000]
 
 // === MOVSX r32, r8 ===
-    movsx edx, al
-    movsx ecx, al
-    movsx esi, dl
-    movsx esi, cl
-    movsx ebx, bl
-    movsx ebx, dl
-    movsx eax, cl
-    movsx ecx, dl
-    movsx edx, cl
     movsx edi, cl
+    movsx esi, cl
+    movsx ebx, dl
+    movsx ecx, bl
+    movsx edi, dl
+    movsx ecx, dl
+    movsx ecx, cl
+    movsx eax, al
+    movsx ebx, bl
+    movsx edx, bl
 
 // === MOVSX r32, m8 ===
-    movsx esi, BYTE PTR [rax + rbx*1 + 0x10]
-    movsx edx, BYTE PTR [rbx]
-    movsx eax, BYTE PTR [rbx]
-    movsx ecx, BYTE PTR [rax + rbx*4 + 0x100]
-    movsx ebx, BYTE PTR [rbx]
+    movsx esi, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx edi, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx eax, BYTE PTR [rax]
+    movsx ebx, BYTE PTR [rax]
+    movsx eax, BYTE PTR [rax + rbx*1 + 0x10]
+    movsx ecx, BYTE PTR [rax + rbx*1 + 0x10]
     movsx ecx, BYTE PTR [rax]
-    movsx ecx, BYTE PTR [rbx]
-    movsx ebx, BYTE PTR [rip + 0x100]
     movsx esi, BYTE PTR [rip + 0x1000]
-    movsx eax, BYTE PTR [rip + 0x1000]
+    movsx edx, BYTE PTR [rip + 0x100]
+    movsx esi, BYTE PTR [rax]
 
 // === MOVSX r64, r8 ===
-    movsx rcx, bl
-    movsx rdi, cl
-    movsx r8, bl
-    movsx rdi, al
+    movsx r8, cl
+    movsx r9, bl
+    movsx r8, al
+    movsx r13, dl
+    movsx rsi, al
+    movsx r8, dl
     movsx r11, cl
     movsx r9, cl
     movsx rax, al
-    movsx rbx, bl
     movsx rdx, al
-    movsx r9, bl
 
 // === MOVSX r64, m8 ===
-    movsx rcx, BYTE PTR [rip + 0x1000]
-    movsx rcx, BYTE PTR [rax]
-    movsx rbx, BYTE PTR [rax]
-    movsx r12, BYTE PTR [rip + 0x1000]
-    movsx rdx, BYTE PTR [rbx]
-    movsx r10, BYTE PTR [rbx]
+    movsx rax, BYTE PTR [rax + rbx*1 + 0x10]
+    movsx r13, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx rbx, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx r11, BYTE PTR [rip + 0x1000]
+    movsx r11, BYTE PTR [rax + rbx*1 + 0x10]
     movsx rdx, BYTE PTR [rip + 0x100]
-    movsx r9, BYTE PTR [rax + rbx*1 + 0x10]
-    movsx r9, BYTE PTR [rbx]
-    movsx r13, BYTE PTR [rip + 0x100]
+    movsx rbx, BYTE PTR [rip + 0x1000]
+    movsx r10, BYTE PTR [rip + 0x1000]
+    movsx rdi, BYTE PTR [rax + rbx*4 + 0x100]
+    movsx r10, BYTE PTR [rax + rbx*4 + 0x100]
 
 // === MOVSX r32, r16 ===
-    movsx ecx, dx
+    movsx edx, cx
+    movsx edi, si
     movsx edi, cx
-    movsx edx, di
-    movsx esi, di
-    movsx edi, ax
-    movsx ebx, di
-    movsx eax, dx
-    movsx ebx, ax
+    movsx esi, dx
+    movsx edi, bx
+    movsx eax, si
+    movsx ecx, di
+    movsx eax, di
     movsx edx, ax
-    movsx eax, bx
+    movsx ebx, cx
 
 // === MOVSX r32, m16 ===
-    movsx esi, WORD PTR [rbx]
     movsx ecx, WORD PTR [rip + 0x100]
-    movsx edx, WORD PTR [rip + 0x1000]
-    movsx eax, WORD PTR [rax + rbx*4 + 0x100]
+    movsx ecx, WORD PTR [rbx]
+    movsx edx, WORD PTR [rax + rbx*4 + 0x100]
+    movsx eax, WORD PTR [rbx]
+    movsx eax, WORD PTR [rip + 0x1000]
+    movsx eax, WORD PTR [rip + 0x100]
     movsx edi, WORD PTR [rip + 0x1000]
-    movsx edi, WORD PTR [rax + rbx*1 + 0x10]
-    movsx edi, WORD PTR [rip + 0x100]
-    movsx ebx, WORD PTR [rax]
-    movsx ebx, WORD PTR [rbx]
-    movsx esi, WORD PTR [rax]
+    movsx eax, WORD PTR [rax]
+    movsx ecx, WORD PTR [rip + 0x1000]
+    movsx ecx, WORD PTR [rax]
 
 // === MOVSX r64, r16 ===
-    movsx rcx, cx
-    movsx r13, si
-    movsx r9, si
-    movsx rbx, di
-    movsx r12, ax
-    movsx rcx, dx
-    movsx rax, dx
+    movsx rdx, bx
+    movsx rsi, ax
     movsx rcx, bx
-    movsx r8, ax
-    movsx r12, dx
+    movsx r13, di
+    movsx rbx, cx
+    movsx rax, di
+    movsx r9, di
+    movsx r9, dx
+    movsx r12, di
+    movsx rsi, di
 
 // === MOVSX r64, m16 ===
-    movsx r13, WORD PTR [rax]
-    movsx rsi, WORD PTR [rip + 0x1000]
-    movsx rcx, WORD PTR [rax + rbx*1 + 0x10]
-    movsx rdi, WORD PTR [rip + 0x100]
-    movsx r8, WORD PTR [rax + rbx*1 + 0x10]
-    movsx rbx, WORD PTR [rax + rbx*1 + 0x10]
-    movsx rdi, WORD PTR [rip + 0x1000]
-    movsx r10, WORD PTR [rbx]
-    movsx rdx, WORD PTR [rax]
+    movsx r9, WORD PTR [rax + rbx*1 + 0x10]
+    movsx r8, WORD PTR [rax + rbx*4 + 0x100]
     movsx rdx, WORD PTR [rip + 0x1000]
+    movsx r10, WORD PTR [rip + 0x100]
+    movsx r8, WORD PTR [rip + 0x1000]
+    movsx rax, WORD PTR [rax]
+    movsx rax, WORD PTR [rbx]
+    movsx rcx, WORD PTR [rax]
+    movsx rdx, WORD PTR [rax]
+    movsx r12, WORD PTR [rip + 0x1000]
 
 // === MOVSXD r64, r32 ===
-    movsxd r10, ecx
+    movsxd r9, edi
+    movsxd r9, eax
+    movsxd r12, ebx
     movsxd rcx, esi
+    movsxd rax, ecx
+    movsxd r13, ecx
+    movsxd rcx, ecx
+    movsxd rbx, edx
+    movsxd r8, eax
     movsxd r9, ebx
-    movsxd rdx, ebx
-    movsxd rax, edx
-    movsxd r9, ecx
-    movsxd rdx, ecx
-    movsxd r8, ecx
-    movsxd rax, ebx
-    movsxd rdx, eax
 
 // === MOVSXD r64, m32 ===
-    movsxd rdi, DWORD PTR [rax + rbx*1 + 0x10]
-    movsxd r12, DWORD PTR [rax + rbx*1 + 0x10]
-    movsxd r13, DWORD PTR [rax]
-    movsxd rcx, DWORD PTR [rax]
-    movsxd rcx, DWORD PTR [rax + rbx*1 + 0x10]
-    movsxd rcx, DWORD PTR [rip + 0x100]
+    movsxd r11, DWORD PTR [rip + 0x1000]
+    movsxd r11, DWORD PTR [rip + 0x100]
+    movsxd r11, DWORD PTR [rax + rbx*1 + 0x10]
+    movsxd rdi, DWORD PTR [rbx]
+    movsxd rsi, DWORD PTR [rax + rbx*1 + 0x10]
+    movsxd r9, DWORD PTR [rax + rbx*1 + 0x10]
+    movsxd r8, DWORD PTR [rip + 0x100]
     movsxd rdx, DWORD PTR [rax + rbx*1 + 0x10]
-    movsxd r12, DWORD PTR [rip + 0x100]
-    movsxd r8, DWORD PTR [rax]
-    movsxd rax, DWORD PTR [rip + 0x1000]
+    movsxd r10, DWORD PTR [rbx]
+    movsxd r12, DWORD PTR [rbx]
 
 // === MOVZX r16, r8 ===
-    movzx dx, al
-    movzx di, al
-    movzx cx, al
-    movzx bx, cl
     movzx dx, bl
-    movzx cx, bl
+    movzx si, cl
+    movzx cx, dl
+    movzx di, cl
+    movzx bx, cl
+    movzx bx, bl
+    movzx bx, dl
     movzx si, al
     movzx ax, al
-    movzx di, cl
-    movzx bx, al
+    movzx si, bl
 
 // === MOVZX r16, m8 ===
-    movzx dx, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx di, BYTE PTR [rax + rbx*1 + 0x10]
+    movzx di, BYTE PTR [rax + rbx*4 + 0x100]
     movzx di, BYTE PTR [rip + 0x1000]
-    movzx si, BYTE PTR [rax]
-    movzx dx, BYTE PTR [rbx]
-    movzx ax, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx ax, BYTE PTR [rip + 0x100]
-    movzx di, BYTE PTR [rip + 0x100]
-    movzx cx, BYTE PTR [rax]
-    movzx cx, BYTE PTR [rbx]
+    movzx di, BYTE PTR [rax]
+    movzx cx, BYTE PTR [rax + rbx*4 + 0x100]
+    movzx bx, BYTE PTR [rbx]
+    movzx bx, BYTE PTR [rip + 0x1000]
+    movzx bx, BYTE PTR [rax]
+    movzx bx, BYTE PTR [rip + 0x100]
+    movzx si, BYTE PTR [rax + rbx*1 + 0x10]
+    movzx di, BYTE PTR [rbx]
 
 // === MOVZX r32, r8 ===
-    movzx edi, al
-    movzx edx, dl
-    movzx edi, dl
-    movzx ecx, bl
-    movzx edi, bl
-    movzx ecx, dl
     movzx ecx, al
-    movzx eax, bl
+    movzx eax, cl
+    movzx edi, dl
+    movzx ecx, dl
+    movzx eax, al
     movzx ebx, al
-    movzx edx, cl
+    movzx edi, bl
+    movzx edi, cl
+    movzx ebx, cl
+    movzx esi, al
 
 // === MOVZX r32, m8 ===
-    movzx esi, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx ebx, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx esi, BYTE PTR [rax + rbx*1 + 0x10]
-    movzx ecx, BYTE PTR [rip + 0x1000]
-    movzx esi, BYTE PTR [rbx]
-    movzx eax, BYTE PTR [rax + rbx*1 + 0x10]
     movzx eax, BYTE PTR [rip + 0x1000]
-    movzx edx, BYTE PTR [rip + 0x1000]
-    movzx ecx, BYTE PTR [rip + 0x100]
-    movzx edx, BYTE PTR [rax]
+    movzx edx, BYTE PTR [rax + rbx*4 + 0x100]
+    movzx ebx, BYTE PTR [rax + rbx*4 + 0x100]
+    movzx edi, BYTE PTR [rip + 0x1000]
+    movzx edx, BYTE PTR [rax + rbx*1 + 0x10]
+    movzx ecx, BYTE PTR [rax + rbx*1 + 0x10]
+    movzx eax, BYTE PTR [rax + rbx*1 + 0x10]
+    movzx ecx, BYTE PTR [rip + 0x1000]
+    movzx edx, BYTE PTR [rbx]
+    movzx ebx, BYTE PTR [rax]
 
 // === MOVZX r64, r8 ===
-    movzx rax, cl
-    movzx r9, al
-    movzx rsi, cl
+    movzx r12, cl
+    movzx r8, dl
+    movzx r9, dl
+    movzx rdx, al
+    movzx r11, al
+    movzx r13, cl
+    movzx r12, al
+    movzx rcx, al
+    movzx rdx, cl
     movzx r12, bl
-    movzx r12, dl
-    movzx rbx, al
-    movzx r9, bl
-    movzx rsi, dl
-    movzx rax, al
-    movzx rdx, bl
 
 // === MOVZX r64, m8 ===
-    movzx rbx, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx rax, BYTE PTR [rax + rbx*4 + 0x100]
-    movzx rdi, BYTE PTR [rip + 0x100]
-    movzx r11, BYTE PTR [rax]
-    movzx rbx, BYTE PTR [rax]
-    movzx rax, BYTE PTR [rip + 0x1000]
+    movzx rsi, BYTE PTR [rip + 0x1000]
+    movzx rax, BYTE PTR [rax]
     movzx r13, BYTE PTR [rax]
-    movzx rbx, BYTE PTR [rbx]
-    movzx r13, BYTE PTR [rip + 0x100]
+    movzx r8, BYTE PTR [rax + rbx*4 + 0x100]
+    movzx rcx, BYTE PTR [rip + 0x100]
+    movzx r11, BYTE PTR [rbx]
+    movzx r9, BYTE PTR [rip + 0x100]
+    movzx r12, BYTE PTR [rip + 0x1000]
     movzx rdx, BYTE PTR [rip + 0x1000]
+    movzx rax, BYTE PTR [rip + 0x100]
 
 // === MOVZX r32, r16 ===
+    movzx eax, di
+    movzx ecx, cx
+    movzx ecx, ax
+    movzx edx, si
     movzx edx, ax
-    movzx ebx, cx
-    movzx edi, dx
-    movzx ebx, ax
-    movzx ebx, di
-    movzx esi, bx
-    movzx ecx, dx
-    movzx eax, cx
-    movzx esi, si
-    movzx edi, cx
+    movzx edi, bx
+    movzx edi, ax
+    movzx esi, cx
+    movzx esi, di
+    movzx edi, di
 
 // === MOVZX r32, m16 ===
-    movzx eax, WORD PTR [rax]
-    movzx ecx, WORD PTR [rax + rbx*1 + 0x10]
-    movzx eax, WORD PTR [rbx]
+    movzx ecx, WORD PTR [rax]
+    movzx edi, WORD PTR [rax]
+    movzx eax, WORD PTR [rip + 0x1000]
+    movzx edx, WORD PTR [rax + rbx*4 + 0x100]
+    movzx edi, WORD PTR [rip + 0x100]
+    movzx ebx, WORD PTR [rax]
+    movzx esi, WORD PTR [rip + 0x1000]
     movzx eax, WORD PTR [rax + rbx*4 + 0x100]
-    movzx ecx, WORD PTR [rip + 0x100]
-    movzx edi, WORD PTR [rax + rbx*4 + 0x100]
-    movzx eax, WORD PTR [rax + rbx*1 + 0x10]
-    movzx ebx, WORD PTR [rbx]
-    movzx edi, WORD PTR [rbx]
     movzx ebx, WORD PTR [rax + rbx*4 + 0x100]
+    movzx esi, WORD PTR [rax]
 
 // === MOVZX r64, r16 ===
-    movzx rbx, di
-    movzx rdx, bx
-    movzx rax, si
-    movzx rax, cx
-    movzx r8, dx
-    movzx r13, ax
-    movzx rcx, si
+    movzx r11, di
+    movzx rax, di
+    movzx r10, cx
+    movzx rcx, cx
+    movzx r11, cx
     movzx r8, bx
-    movzx rbx, ax
-    movzx rdi, dx
+    movzx r10, si
+    movzx r8, cx
+    movzx r8, si
+    movzx rsi, bx
 
 // === MOVZX r64, m16 ===
-    movzx r11, WORD PTR [rax + rbx*4 + 0x100]
-    movzx rbx, WORD PTR [rip + 0x1000]
-    movzx r9, WORD PTR [rip + 0x1000]
+    movzx rsi, WORD PTR [rax]
+    movzx rdx, WORD PTR [rax + rbx*1 + 0x10]
+    movzx r11, WORD PTR [rip + 0x100]
+    movzx r11, WORD PTR [rip + 0x1000]
+    movzx rcx, WORD PTR [rax + rbx*1 + 0x10]
+    movzx rdi, WORD PTR [rax + rbx*1 + 0x10]
+    movzx r11, WORD PTR [rax + rbx*1 + 0x10]
+    movzx rcx, WORD PTR [rip + 0x100]
+    movzx r11, WORD PTR [rbx]
     movzx rbx, WORD PTR [rax + rbx*4 + 0x100]
-    movzx rcx, WORD PTR [rax + rbx*4 + 0x100]
-    movzx r9, WORD PTR [rip + 0x100]
-    movzx rcx, WORD PTR [rax]
-    movzx rsi, WORD PTR [rax + rbx*1 + 0x10]
-    movzx r12, WORD PTR [rax + rbx*4 + 0x100]
-    movzx rsi, WORD PTR [rip + 0x1000]
 
 // === MUL r8 ===
     mul bl
+    mul cl
     mul dl
     mul al
-    mul cl
 
 // === MUL m8 ===
-    mul BYTE PTR [rax + rbx*1 + 0x10]
     mul BYTE PTR [rbx]
-    mul BYTE PTR [rax + rbx*4 + 0x100]
     mul BYTE PTR [rax]
+    mul BYTE PTR [rax + rbx*4 + 0x100]
     mul BYTE PTR [rip + 0x100]
+    mul BYTE PTR [rax + rbx*1 + 0x10]
     mul BYTE PTR [rip + 0x1000]
 
 // === MUL r16 ===
-    mul di
-    mul ax
-    mul cx
     mul si
+    mul ax
     mul dx
+    mul cx
     mul bx
+    mul di
 
 // === MUL m16 ===
-    mul WORD PTR [rax + rbx*4 + 0x100]
-    mul WORD PTR [rip + 0x1000]
     mul WORD PTR [rbx]
+    mul WORD PTR [rip + 0x1000]
     mul WORD PTR [rax]
+    mul WORD PTR [rax + rbx*4 + 0x100]
     mul WORD PTR [rax + rbx*1 + 0x10]
     mul WORD PTR [rip + 0x100]
 
 // === MUL r32 ===
-    mul ecx
-    mul ebx
-    mul esi
     mul eax
     mul edx
     mul edi
+    mul ebx
+    mul ecx
+    mul esi
 
 // === MUL m32 ===
-    mul DWORD PTR [rax + rbx*4 + 0x100]
-    mul DWORD PTR [rax + rbx*1 + 0x10]
-    mul DWORD PTR [rax]
-    mul DWORD PTR [rbx]
     mul DWORD PTR [rip + 0x1000]
+    mul DWORD PTR [rax + rbx*1 + 0x10]
     mul DWORD PTR [rip + 0x100]
+    mul DWORD PTR [rbx]
+    mul DWORD PTR [rax]
+    mul DWORD PTR [rax + rbx*4 + 0x100]
 
 // === MUL r64 ===
-    mul r10
-    mul rsi
-    mul r11
-    mul rdx
-    mul rbx
+    mul rcx
+    mul r8
     mul rdi
-    mul r9
+    mul r10
     mul rax
-    mul r12
+    mul rsi
+    mul rdx
     mul r13
+    mul r9
+    mul rbx
 
 // === MUL m64 ===
-    mul QWORD PTR [rbx]
-    mul QWORD PTR [rax + rbx*1 + 0x10]
     mul QWORD PTR [rax + rbx*4 + 0x100]
+    mul QWORD PTR [rax + rbx*1 + 0x10]
+    mul QWORD PTR [rbx]
     mul QWORD PTR [rip + 0x100]
     mul QWORD PTR [rip + 0x1000]
     mul QWORD PTR [rax]
@@ -6894,171 +7113,171 @@
     mwait
 
 // === NEG r8 ===
-    neg bl
-    neg dl
-    neg cl
     neg al
+    neg bl
+    neg cl
+    neg dl
 
 // === NEG m8 ===
     neg BYTE PTR [rax + rbx*1 + 0x10]
+    neg BYTE PTR [rip + 0x100]
+    neg BYTE PTR [rax]
+    neg BYTE PTR [rip + 0x1000]
     neg BYTE PTR [rbx]
     neg BYTE PTR [rax + rbx*4 + 0x100]
-    neg BYTE PTR [rax]
-    neg BYTE PTR [rip + 0x100]
-    neg BYTE PTR [rip + 0x1000]
 
 // === NEG r16 ===
-    neg bx
     neg di
-    neg cx
     neg dx
-    neg si
     neg ax
+    neg si
+    neg bx
+    neg cx
 
 // === NEG m16 ===
-    neg WORD PTR [rax + rbx*1 + 0x10]
-    neg WORD PTR [rax]
-    neg WORD PTR [rip + 0x1000]
     neg WORD PTR [rbx]
-    neg WORD PTR [rip + 0x100]
+    neg WORD PTR [rax]
     neg WORD PTR [rax + rbx*4 + 0x100]
+    neg WORD PTR [rip + 0x1000]
+    neg WORD PTR [rax + rbx*1 + 0x10]
+    neg WORD PTR [rip + 0x100]
 
 // === NEG r32 ===
+    neg edi
     neg esi
     neg eax
     neg ecx
-    neg ebx
     neg edx
-    neg edi
+    neg ebx
 
 // === NEG m32 ===
-    neg DWORD PTR [rax + rbx*1 + 0x10]
-    neg DWORD PTR [rip + 0x1000]
     neg DWORD PTR [rbx]
     neg DWORD PTR [rax + rbx*4 + 0x100]
-    neg DWORD PTR [rax]
     neg DWORD PTR [rip + 0x100]
+    neg DWORD PTR [rax]
+    neg DWORD PTR [rax + rbx*1 + 0x10]
+    neg DWORD PTR [rip + 0x1000]
 
 // === NEG r64 ===
-    neg rax
     neg r9
-    neg r13
-    neg rbx
-    neg r12
-    neg rcx
     neg r10
-    neg rdx
+    neg r13
+    neg r12
+    neg rax
+    neg rbx
     neg rsi
-    neg rdi
+    neg rdx
+    neg rcx
+    neg r11
 
 // === NEG m64 ===
-    neg QWORD PTR [rax + rbx*1 + 0x10]
     neg QWORD PTR [rip + 0x100]
-    neg QWORD PTR [rax + rbx*4 + 0x100]
-    neg QWORD PTR [rax]
-    neg QWORD PTR [rip + 0x1000]
     neg QWORD PTR [rbx]
+    neg QWORD PTR [rax + rbx*4 + 0x100]
+    neg QWORD PTR [rax + rbx*1 + 0x10]
+    neg QWORD PTR [rip + 0x1000]
+    neg QWORD PTR [rax]
 
 // === NOP ===
     nop
 
 // === NOP r16 ===
-    nop dx
-    nop ax
-    nop bx
-    nop cx
-    nop di
     nop si
+    nop dx
+    nop bx
+    nop di
+    nop ax
+    nop cx
 
 // === NOP m16 ===
     nop WORD PTR [rbx]
-    nop WORD PTR [rax]
-    nop WORD PTR [rax + rbx*4 + 0x100]
-    nop WORD PTR [rip + 0x100]
-    nop WORD PTR [rip + 0x1000]
     nop WORD PTR [rax + rbx*1 + 0x10]
+    nop WORD PTR [rax + rbx*4 + 0x100]
+    nop WORD PTR [rax]
+    nop WORD PTR [rip + 0x1000]
+    nop WORD PTR [rip + 0x100]
 
 // === NOP r32 ===
-    nop ebx
-    nop edx
     nop ecx
-    nop eax
+    nop edx
+    nop ebx
     nop edi
+    nop eax
     nop esi
 
 // === NOP m32 ===
-    nop DWORD PTR [rax]
-    nop DWORD PTR [rip + 0x100]
     nop DWORD PTR [rax + rbx*1 + 0x10]
-    nop DWORD PTR [rbx]
-    nop DWORD PTR [rax + rbx*4 + 0x100]
+    nop DWORD PTR [rax]
     nop DWORD PTR [rip + 0x1000]
+    nop DWORD PTR [rip + 0x100]
+    nop DWORD PTR [rax + rbx*4 + 0x100]
+    nop DWORD PTR [rbx]
 
 // === NOT r8 ===
-    not bl
-    not dl
     not al
     not cl
+    not bl
+    not dl
 
 // === NOT m8 ===
-    not BYTE PTR [rax]
-    not BYTE PTR [rip + 0x1000]
-    not BYTE PTR [rax + rbx*4 + 0x100]
-    not BYTE PTR [rbx]
     not BYTE PTR [rax + rbx*1 + 0x10]
+    not BYTE PTR [rax]
     not BYTE PTR [rip + 0x100]
+    not BYTE PTR [rip + 0x1000]
+    not BYTE PTR [rbx]
+    not BYTE PTR [rax + rbx*4 + 0x100]
 
 // === NOT r16 ===
-    not dx
-    not si
-    not cx
     not ax
+    not cx
     not bx
+    not si
+    not dx
     not di
 
 // === NOT m16 ===
-    not WORD PTR [rbx]
     not WORD PTR [rip + 0x100]
     not WORD PTR [rax]
+    not WORD PTR [rbx]
     not WORD PTR [rax + rbx*4 + 0x100]
     not WORD PTR [rip + 0x1000]
     not WORD PTR [rax + rbx*1 + 0x10]
 
 // === NOT r32 ===
-    not esi
     not eax
+    not esi
     not edi
-    not edx
     not ecx
+    not edx
     not ebx
 
 // === NOT m32 ===
-    not DWORD PTR [rip + 0x1000]
-    not DWORD PTR [rax + rbx*4 + 0x100]
     not DWORD PTR [rax + rbx*1 + 0x10]
-    not DWORD PTR [rip + 0x100]
     not DWORD PTR [rbx]
     not DWORD PTR [rax]
+    not DWORD PTR [rax + rbx*4 + 0x100]
+    not DWORD PTR [rip + 0x1000]
+    not DWORD PTR [rip + 0x100]
 
 // === NOT r64 ===
-    not rdi
-    not r12
     not rdx
     not r9
-    not r13
-    not r10
-    not rcx
-    not r11
-    not rbx
+    not r8
+    not rdi
+    not r12
     not rax
+    not r10
+    not rsi
+    not r13
+    not rbx
 
 // === NOT m64 ===
-    not QWORD PTR [rax + rbx*4 + 0x100]
-    not QWORD PTR [rip + 0x1000]
-    not QWORD PTR [rax]
     not QWORD PTR [rbx]
-    not QWORD PTR [rip + 0x100]
     not QWORD PTR [rax + rbx*1 + 0x10]
+    not QWORD PTR [rip + 0x1000]
+    not QWORD PTR [rip + 0x100]
+    not QWORD PTR [rax]
+    not QWORD PTR [rax + rbx*4 + 0x100]
 
 // === OR AL, imm8 ===
     or al, 0xff
@@ -7070,274 +7289,274 @@
     or eax, 0xffffffff
 
 // === OR RAX, imm32 ===
-    or rax, -1
     or rax, 0x7fffffff
+    or rax, -1
 
 // === OR r8, imm8 ===
-    or cl, 0xff
     or bl, 0xff
-    or dl, 0xff
     or al, 0xff
+    or dl, 0xff
+    or cl, 0xff
 
 // === OR m8, imm8 ===
-    or BYTE PTR [rip + 0x100], 0xff
     or BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    or BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    or BYTE PTR [rip + 0x1000], 0xff
-    or BYTE PTR [rax], 0xff
+    or BYTE PTR [rip + 0x100], 0xff
     or BYTE PTR [rbx], 0xff
+    or BYTE PTR [rip + 0x1000], 0xff
+    or BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    or BYTE PTR [rax], 0xff
 
 // === OR r16, imm16 ===
-    or dx, 0xffff
-    or ax, 0xffff
     or cx, 0xffff
-    or bx, 0xffff
-    or si, 0xffff
+    or dx, 0xffff
     or di, 0xffff
+    or ax, 0xffff
+    or si, 0xffff
+    or bx, 0xffff
 
 // === OR m16, imm16 ===
+    or WORD PTR [rax], 0xffff
     or WORD PTR [rbx], 0xffff
+    or WORD PTR [rax + rbx*4 + 0x100], 0xffff
     or WORD PTR [rip + 0x100], 0xffff
     or WORD PTR [rip + 0x1000], 0xffff
-    or WORD PTR [rax], 0xffff
-    or WORD PTR [rax + rbx*4 + 0x100], 0xffff
     or WORD PTR [rax + rbx*1 + 0x10], 0xffff
 
 // === OR r32, imm32 ===
-    or ecx, 0xffffffff
-    or esi, 0xffffffff
-    or eax, 0xffffffff
-    or ebx, 0xffffffff
     or edx, 0xffffffff
+    or ebx, 0xffffffff
+    or esi, 0xffffffff
     or edi, 0xffffffff
+    or ecx, 0xffffffff
+    or eax, 0xffffffff
 
 // === OR m32, imm32 ===
-    or DWORD PTR [rax], 0xffffffff
-    or DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
-    or DWORD PTR [rbx], 0xffffffff
     or DWORD PTR [rip + 0x1000], 0xffffffff
-    or DWORD PTR [rip + 0x100], 0xffffffff
+    or DWORD PTR [rbx], 0xffffffff
     or DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    or DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    or DWORD PTR [rip + 0x100], 0xffffffff
+    or DWORD PTR [rax], 0xffffffff
 
 // === OR r64, imm32 ===
-    or rdx, 0x7fffffff
-    or rax, 0x7fffffff
+    or rcx, 0x7fffffff
+    or rbx, -1
+    or r11, -1
+    or r9, -1
+    or r13, -1
+    or rdi, -1
+    or r13, 0x7fffffff
     or r12, 0x7fffffff
     or r11, 0x7fffffff
-    or r8, -1
-    or rsi, 0x7fffffff
-    or rbx, -1
-    or r8, 0x7fffffff
-    or r9, 0x7fffffff
-    or r11, -1
+    or rbx, 0x7fffffff
 
 // === OR m64, imm32 ===
-    or QWORD PTR [rbx], 0x7fffffff
-    or QWORD PTR [rip + 0x100], -1
     or QWORD PTR [rbx], -1
-    or QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    or QWORD PTR [rip + 0x100], -1
+    or QWORD PTR [rbx], 0x7fffffff
+    or QWORD PTR [rip + 0x100], 0x7fffffff
     or QWORD PTR [rax], -1
-    or QWORD PTR [rip + 0x1000], 0x7fffffff
+    or QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
     or QWORD PTR [rax + rbx*4 + 0x100], -1
-    or QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
     or QWORD PTR [rip + 0x1000], -1
-    or QWORD PTR [rax], 0x7fffffff
+    or QWORD PTR [rip + 0x1000], 0x7fffffff
+    or QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
 
 // === OR r16, imm8 ===
+    or bx, 0xff
     or dx, 0xff
     or cx, 0xff
-    or bx, 0xff
-    or si, 0xff
     or di, 0xff
+    or si, 0xff
     or ax, 0xff
 
 // === OR m16, imm8 ===
     or WORD PTR [rax + rbx*1 + 0x10], 0xff
     or WORD PTR [rax + rbx*4 + 0x100], 0xff
-    or WORD PTR [rbx], 0xff
-    or WORD PTR [rip + 0x100], 0xff
-    or WORD PTR [rip + 0x1000], 0xff
     or WORD PTR [rax], 0xff
+    or WORD PTR [rip + 0x100], 0xff
+    or WORD PTR [rbx], 0xff
+    or WORD PTR [rip + 0x1000], 0xff
 
 // === OR r32, imm8 ===
     or ebx, 0xff
     or eax, 0xff
     or edx, 0xff
-    or edi, 0xff
     or esi, 0xff
     or ecx, 0xff
+    or edi, 0xff
 
 // === OR m32, imm8 ===
-    or DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    or DWORD PTR [rax], 0xff
-    or DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    or DWORD PTR [rip + 0x1000], 0xff
     or DWORD PTR [rbx], 0xff
+    or DWORD PTR [rax], 0xff
+    or DWORD PTR [rax + rbx*1 + 0x10], 0xff
     or DWORD PTR [rip + 0x100], 0xff
+    or DWORD PTR [rip + 0x1000], 0xff
+    or DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === OR r64, imm8 ===
-    or r12, 0xff
-    or r10, 0xff
-    or rdi, 0xff
-    or r9, 0xff
+    or rax, 0xff
+    or r11, 0xff
     or rcx, 0xff
-    or rbx, 0xff
+    or r10, 0xff
     or rsi, 0xff
+    or rbx, 0xff
     or r8, 0xff
     or r13, 0xff
-    or r11, 0xff
+    or r9, 0xff
+    or rdx, 0xff
 
 // === OR m64, imm8 ===
-    or QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    or QWORD PTR [rip + 0x100], 0xff
+    or QWORD PTR [rbx], 0xff
     or QWORD PTR [rax], 0xff
     or QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    or QWORD PTR [rip + 0x100], 0xff
+    or QWORD PTR [rax + rbx*1 + 0x10], 0xff
     or QWORD PTR [rip + 0x1000], 0xff
-    or QWORD PTR [rbx], 0xff
 
 // === OR r8, r8 ===
-    or dl, al
-    or cl, bl
-    or cl, al
     or bl, cl
     or al, al
-    or bl, bl
-    or cl, dl
-    or dl, dl
-    or dl, bl
     or al, cl
+    or cl, al
+    or al, dl
+    or dl, cl
+    or bl, dl
+    or al, bl
+    or dl, bl
+    or bl, al
 
 // === OR m8, r8 ===
-    or BYTE PTR [rbx], cl
-    or BYTE PTR [rax + rbx*4 + 0x100], bl
-    or BYTE PTR [rax], cl
     or BYTE PTR [rax + rbx*4 + 0x100], al
+    or BYTE PTR [rax + rbx*1 + 0x10], cl
+    or BYTE PTR [rip + 0x1000], bl
+    or BYTE PTR [rip + 0x1000], dl
+    or BYTE PTR [rax + rbx*1 + 0x10], bl
+    or BYTE PTR [rax + rbx*1 + 0x10], al
+    or BYTE PTR [rax], dl
     or BYTE PTR [rip + 0x1000], cl
-    or BYTE PTR [rax], al
-    or BYTE PTR [rbx], dl
-    or BYTE PTR [rax + rbx*4 + 0x100], cl
-    or BYTE PTR [rip + 0x100], bl
-    or BYTE PTR [rip + 0x100], dl
+    or BYTE PTR [rax + rbx*1 + 0x10], dl
+    or BYTE PTR [rbx], cl
 
 // === OR r16, r16 ===
-    or si, ax
-    or bx, dx
-    or ax, ax
-    or ax, si
-    or si, di
     or dx, bx
-    or ax, di
-    or di, si
-    or si, cx
-    or di, di
+    or cx, ax
+    or si, bx
+    or dx, si
+    or ax, bx
+    or ax, dx
+    or dx, dx
+    or bx, ax
+    or di, bx
+    or bx, dx
 
 // === OR m16, r16 ===
-    or WORD PTR [rip + 0x100], di
-    or WORD PTR [rip + 0x100], cx
     or WORD PTR [rax], si
-    or WORD PTR [rax + rbx*4 + 0x100], dx
-    or WORD PTR [rax + rbx*4 + 0x100], cx
-    or WORD PTR [rax + rbx*1 + 0x10], ax
-    or WORD PTR [rbx], cx
-    or WORD PTR [rip + 0x1000], si
-    or WORD PTR [rip + 0x100], si
+    or WORD PTR [rip + 0x1000], cx
+    or WORD PTR [rbx], si
+    or WORD PTR [rip + 0x1000], bx
     or WORD PTR [rbx], dx
+    or WORD PTR [rax + rbx*1 + 0x10], di
+    or WORD PTR [rax], di
+    or WORD PTR [rax + rbx*4 + 0x100], di
+    or WORD PTR [rax + rbx*4 + 0x100], ax
+    or WORD PTR [rax + rbx*1 + 0x10], cx
 
 // === OR r32, r32 ===
-    or edi, ebx
-    or ebx, ebx
+    or ebx, esi
     or edx, edx
-    or edx, edi
-    or edi, esi
-    or edi, edx
-    or esi, esi
-    or edx, ebx
+    or eax, ebx
+    or ecx, edx
     or eax, edi
-    or esi, edi
+    or eax, edx
+    or edx, ebx
+    or edi, edi
+    or ecx, ecx
+    or edi, edx
 
 // === OR m32, r32 ===
-    or DWORD PTR [rax + rbx*1 + 0x10], edx
-    or DWORD PTR [rax], edi
+    or DWORD PTR [rbx], eax
+    or DWORD PTR [rax + rbx*1 + 0x10], ecx
+    or DWORD PTR [rip + 0x1000], esi
+    or DWORD PTR [rax + rbx*1 + 0x10], eax
+    or DWORD PTR [rip + 0x100], edx
     or DWORD PTR [rax], eax
     or DWORD PTR [rax + rbx*4 + 0x100], edi
-    or DWORD PTR [rax + rbx*1 + 0x10], eax
-    or DWORD PTR [rip + 0x1000], edi
-    or DWORD PTR [rip + 0x100], ebx
-    or DWORD PTR [rax + rbx*1 + 0x10], edi
-    or DWORD PTR [rax + rbx*4 + 0x100], ebx
     or DWORD PTR [rip + 0x1000], edx
+    or DWORD PTR [rax + rbx*4 + 0x100], ebx
+    or DWORD PTR [rip + 0x100], eax
 
 // === OR r64, r64 ===
-    or r11, r8
-    or r9, r9
-    or rsi, rdi
-    or r8, rdi
-    or r12, r10
-    or r11, r11
-    or r8, rax
-    or rdx, r13
-    or r12, rdx
-    or rdi, r8
+    or r11, r12
+    or rdi, rax
+    or rsi, r10
+    or rdx, r9
+    or rbx, rbx
+    or r12, rcx
+    or r11, rax
+    or r13, r8
+    or rdx, rbx
+    or rsi, r12
 
 // === OR m64, r64 ===
-    or QWORD PTR [rbx], rsi
-    or QWORD PTR [rip + 0x100], rdx
     or QWORD PTR [rax + rbx*4 + 0x100], r11
+    or QWORD PTR [rax], rsi
+    or QWORD PTR [rbx], r11
+    or QWORD PTR [rax + rbx*1 + 0x10], rcx
+    or QWORD PTR [rax + rbx*1 + 0x10], r13
+    or QWORD PTR [rax + rbx*4 + 0x100], r9
     or QWORD PTR [rip + 0x1000], rdi
-    or QWORD PTR [rbx], rdx
-    or QWORD PTR [rbx], r8
-    or QWORD PTR [rip + 0x100], r13
-    or QWORD PTR [rip + 0x100], r9
-    or QWORD PTR [rip + 0x1000], rbx
-    or QWORD PTR [rax + rbx*4 + 0x100], rsi
+    or QWORD PTR [rax], rdx
+    or QWORD PTR [rip + 0x100], r12
+    or QWORD PTR [rip + 0x1000], rcx
 
 // === OR r8, m8 ===
-    or dl, BYTE PTR [rax]
-    or cl, BYTE PTR [rbx]
-    or dl, BYTE PTR [rax + rbx*4 + 0x100]
-    or al, BYTE PTR [rax + rbx*4 + 0x100]
-    or bl, BYTE PTR [rbx]
-    or bl, BYTE PTR [rax + rbx*4 + 0x100]
+    or cl, BYTE PTR [rax]
+    or dl, BYTE PTR [rax + rbx*1 + 0x10]
+    or dl, BYTE PTR [rbx]
     or al, BYTE PTR [rax + rbx*1 + 0x10]
-    or bl, BYTE PTR [rax]
-    or dl, BYTE PTR [rip + 0x100]
+    or al, BYTE PTR [rax]
+    or bl, BYTE PTR [rax + rbx*4 + 0x100]
+    or cl, BYTE PTR [rbx]
+    or al, BYTE PTR [rbx]
     or al, BYTE PTR [rip + 0x1000]
+    or bl, BYTE PTR [rip + 0x1000]
 
 // === OR r16, m16 ===
-    or bx, WORD PTR [rax + rbx*4 + 0x100]
-    or cx, WORD PTR [rbx]
     or bx, WORD PTR [rip + 0x1000]
-    or ax, WORD PTR [rip + 0x1000]
-    or di, WORD PTR [rip + 0x100]
-    or bx, WORD PTR [rax]
-    or ax, WORD PTR [rax]
-    or di, WORD PTR [rax + rbx*1 + 0x10]
-    or dx, WORD PTR [rip + 0x100]
     or bx, WORD PTR [rbx]
+    or di, WORD PTR [rip + 0x100]
+    or di, WORD PTR [rbx]
+    or si, WORD PTR [rip + 0x100]
+    or cx, WORD PTR [rbx]
+    or cx, WORD PTR [rip + 0x100]
+    or ax, WORD PTR [rax + rbx*4 + 0x100]
+    or ax, WORD PTR [rip + 0x100]
+    or bx, WORD PTR [rax]
 
 // === OR r32, m32 ===
-    or esi, DWORD PTR [rip + 0x100]
-    or eax, DWORD PTR [rip + 0x1000]
-    or esi, DWORD PTR [rip + 0x1000]
-    or ecx, DWORD PTR [rax]
-    or eax, DWORD PTR [rbx]
-    or ecx, DWORD PTR [rbx]
+    or edx, DWORD PTR [rax]
     or eax, DWORD PTR [rax + rbx*4 + 0x100]
-    or edi, DWORD PTR [rax + rbx*1 + 0x10]
-    or edx, DWORD PTR [rax + rbx*1 + 0x10]
-    or eax, DWORD PTR [rip + 0x100]
+    or eax, DWORD PTR [rip + 0x1000]
+    or ebx, DWORD PTR [rbx]
+    or ebx, DWORD PTR [rip + 0x1000]
+    or edi, DWORD PTR [rax]
+    or edx, DWORD PTR [rip + 0x100]
+    or esi, DWORD PTR [rip + 0x100]
+    or ecx, DWORD PTR [rax]
+    or edx, DWORD PTR [rbx]
 
 // === OR r64, m64 ===
-    or r8, QWORD PTR [rip + 0x1000]
-    or r10, QWORD PTR [rax + rbx*1 + 0x10]
-    or rcx, QWORD PTR [rax + rbx*1 + 0x10]
+    or r13, QWORD PTR [rax + rbx*4 + 0x100]
+    or r11, QWORD PTR [rax + rbx*4 + 0x100]
+    or rsi, QWORD PTR [rax + rbx*1 + 0x10]
     or r8, QWORD PTR [rbx]
-    or r9, QWORD PTR [rip + 0x1000]
-    or r11, QWORD PTR [rip + 0x100]
-    or r9, QWORD PTR [rbx]
-    or r10, QWORD PTR [rip + 0x100]
-    or rax, QWORD PTR [rax + rbx*1 + 0x10]
-    or rcx, QWORD PTR [rip + 0x100]
+    or rdi, QWORD PTR [rax + rbx*4 + 0x100]
+    or rdi, QWORD PTR [rbx]
+    or rcx, QWORD PTR [rip + 0x1000]
+    or rax, QWORD PTR [rbx]
+    or r10, QWORD PTR [rax + rbx*1 + 0x10]
+    or rdx, QWORD PTR [rip + 0x1000]
 
 // === OUT imm8, AL ===
     out 0xff, al
@@ -7379,38 +7598,38 @@
     pause
 
 // === POP r16 ===
-    pop si
-    pop bx
-    pop cx
     pop dx
+    pop bx
     pop di
+    pop cx
     pop ax
+    pop si
 
 // === POP m16 ===
-    pop WORD PTR [rip + 0x1000]
+    pop WORD PTR [rbx]
+    pop WORD PTR [rax + rbx*1 + 0x10]
     pop WORD PTR [rax + rbx*4 + 0x100]
     pop WORD PTR [rip + 0x100]
-    pop WORD PTR [rax + rbx*1 + 0x10]
-    pop WORD PTR [rbx]
+    pop WORD PTR [rip + 0x1000]
     pop WORD PTR [rax]
 
 // === POP r64 ===
-    pop rax
-    pop rdi
-    pop r11
     pop rsi
     pop rcx
-    pop rbx
-    pop r8
-    pop r9
+    pop rdi
+    pop rdx
     pop r12
+    pop rax
+    pop r8
+    pop r11
+    pop r10
     pop r13
 
 // === POP m64 ===
-    pop QWORD PTR [rip + 0x100]
     pop QWORD PTR [rax + rbx*1 + 0x10]
-    pop QWORD PTR [rbx]
     pop QWORD PTR [rax]
+    pop QWORD PTR [rip + 0x100]
+    pop QWORD PTR [rbx]
     pop QWORD PTR [rip + 0x1000]
     pop QWORD PTR [rax + rbx*4 + 0x100]
 
@@ -7421,76 +7640,76 @@
     pop gs
 
 // === POPCNT r16, r16 ===
-    popcnt bx, bx
     popcnt dx, cx
-    popcnt dx, bx
-    popcnt cx, bx
-    popcnt bx, di
-    popcnt di, si
-    popcnt bx, si
-    popcnt bx, cx
-    popcnt si, cx
+    popcnt ax, ax
     popcnt di, bx
+    popcnt bx, dx
+    popcnt dx, dx
+    popcnt cx, si
+    popcnt bx, ax
+    popcnt dx, bx
+    popcnt ax, dx
+    popcnt ax, si
 
 // === POPCNT r16, m16 ===
-    popcnt si, WORD PTR [rax + rbx*4 + 0x100]
-    popcnt dx, WORD PTR [rax]
-    popcnt bx, WORD PTR [rbx]
-    popcnt si, WORD PTR [rip + 0x100]
-    popcnt ax, WORD PTR [rax + rbx*1 + 0x10]
-    popcnt ax, WORD PTR [rbx]
-    popcnt di, WORD PTR [rax + rbx*1 + 0x10]
-    popcnt bx, WORD PTR [rip + 0x1000]
+    popcnt dx, WORD PTR [rip + 0x100]
+    popcnt si, WORD PTR [rax + rbx*1 + 0x10]
+    popcnt dx, WORD PTR [rax + rbx*1 + 0x10]
+    popcnt bx, WORD PTR [rip + 0x100]
+    popcnt si, WORD PTR [rax]
+    popcnt cx, WORD PTR [rbx]
+    popcnt dx, WORD PTR [rip + 0x1000]
     popcnt di, WORD PTR [rbx]
-    popcnt di, WORD PTR [rip + 0x100]
+    popcnt ax, WORD PTR [rax + rbx*4 + 0x100]
+    popcnt cx, WORD PTR [rax + rbx*4 + 0x100]
 
 // === POPCNT r32, r32 ===
-    popcnt ecx, ebx
-    popcnt esi, esi
+    popcnt edi, esi
+    popcnt esi, edx
+    popcnt edi, ebx
     popcnt edx, edx
-    popcnt esi, ecx
-    popcnt edi, ecx
-    popcnt esi, edi
-    popcnt eax, ebx
+    popcnt eax, edx
     popcnt ebx, ecx
-    popcnt ebx, ebx
-    popcnt edi, edx
+    popcnt eax, ebx
+    popcnt ecx, edi
+    popcnt ecx, ebx
+    popcnt edx, ecx
 
 // === POPCNT r32, m32 ===
     popcnt ecx, DWORD PTR [rax + rbx*4 + 0x100]
-    popcnt eax, DWORD PTR [rax + rbx*4 + 0x100]
-    popcnt edi, DWORD PTR [rax + rbx*4 + 0x100]
-    popcnt ebx, DWORD PTR [rax]
-    popcnt edi, DWORD PTR [rbx]
-    popcnt ebx, DWORD PTR [rax + rbx*4 + 0x100]
     popcnt ebx, DWORD PTR [rbx]
-    popcnt esi, DWORD PTR [rip + 0x1000]
+    popcnt esi, DWORD PTR [rbx]
+    popcnt ebx, DWORD PTR [rax + rbx*4 + 0x100]
     popcnt ecx, DWORD PTR [rip + 0x1000]
-    popcnt edi, DWORD PTR [rax]
+    popcnt edx, DWORD PTR [rip + 0x100]
+    popcnt edx, DWORD PTR [rax + rbx*1 + 0x10]
+    popcnt esi, DWORD PTR [rip + 0x100]
+    popcnt edx, DWORD PTR [rax]
+    popcnt ecx, DWORD PTR [rip + 0x100]
 
 // === POPCNT r64, r64 ===
-    popcnt r13, r10
-    popcnt rcx, r8
-    popcnt rax, rsi
-    popcnt r12, r10
-    popcnt rdi, r11
-    popcnt r13, rbx
-    popcnt r12, rdx
-    popcnt rbx, rdx
-    popcnt rax, rdx
-    popcnt r10, r10
+    popcnt rbx, r13
+    popcnt r13, rdx
+    popcnt rcx, rax
+    popcnt r12, rcx
+    popcnt r9, r13
+    popcnt r13, rdi
+    popcnt r12, rdi
+    popcnt r10, r9
+    popcnt r8, r13
+    popcnt r9, r8
 
 // === POPCNT r64, m64 ===
+    popcnt rax, QWORD PTR [rax]
+    popcnt r9, QWORD PTR [rbx]
+    popcnt r12, QWORD PTR [rip + 0x1000]
+    popcnt r13, QWORD PTR [rax]
     popcnt r11, QWORD PTR [rip + 0x100]
-    popcnt r8, QWORD PTR [rax + rbx*1 + 0x10]
-    popcnt rdi, QWORD PTR [rip + 0x100]
-    popcnt r11, QWORD PTR [rax + rbx*4 + 0x100]
-    popcnt r8, QWORD PTR [rax + rbx*4 + 0x100]
-    popcnt r11, QWORD PTR [rax]
-    popcnt rax, QWORD PTR [rax + rbx*4 + 0x100]
     popcnt rcx, QWORD PTR [rax]
-    popcnt rdx, QWORD PTR [rax + rbx*4 + 0x100]
-    popcnt rsi, QWORD PTR [rax + rbx*4 + 0x100]
+    popcnt rdx, QWORD PTR [rip + 0x100]
+    popcnt r8, QWORD PTR [rbx]
+    popcnt rbx, QWORD PTR [rax + rbx*4 + 0x100]
+    popcnt rdi, QWORD PTR [rip + 0x1000]
 
 // === POPF ===
     popf
@@ -7499,40 +7718,40 @@
     popfq
 
 // === PUSH r16 ===
-    push ax
+    push dx
     push si
     push di
-    push dx
     push bx
     push cx
+    push ax
 
 // === PUSH m16 ===
-    push WORD PTR [rax + rbx*4 + 0x100]
-    push WORD PTR [rip + 0x100]
-    push WORD PTR [rip + 0x1000]
-    push WORD PTR [rax]
     push WORD PTR [rax + rbx*1 + 0x10]
+    push WORD PTR [rax + rbx*4 + 0x100]
+    push WORD PTR [rip + 0x1000]
     push WORD PTR [rbx]
+    push WORD PTR [rip + 0x100]
+    push WORD PTR [rax]
 
 // === PUSH r64 ===
-    push rdx
-    push rbx
     push r13
-    push r8
     push rsi
     push rdi
-    push r10
-    push r12
+    push rdx
     push r9
+    push rbx
+    push r12
+    push rcx
+    push r10
     push r11
 
 // === PUSH m64 ===
-    push QWORD PTR [rip + 0x100]
-    push QWORD PTR [rbx]
     push QWORD PTR [rax + rbx*1 + 0x10]
     push QWORD PTR [rax]
-    push QWORD PTR [rax + rbx*4 + 0x100]
+    push QWORD PTR [rbx]
+    push QWORD PTR [rip + 0x100]
     push QWORD PTR [rip + 0x1000]
+    push QWORD PTR [rax + rbx*4 + 0x100]
 
 // === PUSH imm8 ===
     push 0xff
@@ -7557,796 +7776,796 @@
     pushfq
 
 // === RCL r8, 1 ===
-    rcl dl, 1
-    rcl bl, 1
     rcl al, 1
+    rcl dl, 1
     rcl cl, 1
+    rcl bl, 1
 
 // === RCL m8, 1 ===
-    rcl BYTE PTR [rip + 0x1000], 1
-    rcl BYTE PTR [rip + 0x100], 1
-    rcl BYTE PTR [rbx], 1
     rcl BYTE PTR [rax], 1
     rcl BYTE PTR [rax + rbx*4 + 0x100], 1
     rcl BYTE PTR [rax + rbx*1 + 0x10], 1
+    rcl BYTE PTR [rbx], 1
+    rcl BYTE PTR [rip + 0x100], 1
+    rcl BYTE PTR [rip + 0x1000], 1
 
 // === RCL r8, CL ===
-    rcl al, cl
-    rcl dl, cl
-    rcl bl, cl
     rcl cl, cl
+    rcl bl, cl
+    rcl dl, cl
+    rcl al, cl
 
 // === RCL m8, CL ===
-    rcl BYTE PTR [rax + rbx*1 + 0x10], cl
-    rcl BYTE PTR [rbx], cl
-    rcl BYTE PTR [rip + 0x1000], cl
-    rcl BYTE PTR [rip + 0x100], cl
     rcl BYTE PTR [rax + rbx*4 + 0x100], cl
     rcl BYTE PTR [rax], cl
+    rcl BYTE PTR [rip + 0x100], cl
+    rcl BYTE PTR [rbx], cl
+    rcl BYTE PTR [rax + rbx*1 + 0x10], cl
+    rcl BYTE PTR [rip + 0x1000], cl
 
 // === RCL r8, imm8 ===
-    rcl cl, 0xff
-    rcl bl, 0xff
     rcl al, 0xff
+    rcl bl, 0xff
     rcl dl, 0xff
+    rcl cl, 0xff
 
 // === RCL m8, imm8 ===
-    rcl BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    rcl BYTE PTR [rip + 0x100], 0xff
     rcl BYTE PTR [rax], 0xff
-    rcl BYTE PTR [rbx], 0xff
     rcl BYTE PTR [rax + rbx*4 + 0x100], 0xff
     rcl BYTE PTR [rip + 0x1000], 0xff
-    rcl BYTE PTR [rip + 0x100], 0xff
+    rcl BYTE PTR [rbx], 0xff
+    rcl BYTE PTR [rax + rbx*1 + 0x10], 0xff
 
 // === RCL r16, 1 ===
-    rcl dx, 1
-    rcl ax, 1
     rcl si, 1
     rcl bx, 1
-    rcl di, 1
     rcl cx, 1
+    rcl di, 1
+    rcl dx, 1
+    rcl ax, 1
 
 // === RCL m16, 1 ===
-    rcl WORD PTR [rax + rbx*1 + 0x10], 1
-    rcl WORD PTR [rax], 1
     rcl WORD PTR [rbx], 1
-    rcl WORD PTR [rip + 0x1000], 1
+    rcl WORD PTR [rax + rbx*1 + 0x10], 1
     rcl WORD PTR [rax + rbx*4 + 0x100], 1
+    rcl WORD PTR [rax], 1
     rcl WORD PTR [rip + 0x100], 1
+    rcl WORD PTR [rip + 0x1000], 1
 
 // === RCL r16, CL ===
     rcl cx, cl
+    rcl dx, cl
+    rcl si, cl
     rcl ax, cl
     rcl bx, cl
     rcl di, cl
-    rcl si, cl
-    rcl dx, cl
 
 // === RCL m16, CL ===
-    rcl WORD PTR [rip + 0x1000], cl
-    rcl WORD PTR [rax + rbx*1 + 0x10], cl
-    rcl WORD PTR [rip + 0x100], cl
     rcl WORD PTR [rax + rbx*4 + 0x100], cl
-    rcl WORD PTR [rbx], cl
     rcl WORD PTR [rax], cl
+    rcl WORD PTR [rip + 0x100], cl
+    rcl WORD PTR [rbx], cl
+    rcl WORD PTR [rax + rbx*1 + 0x10], cl
+    rcl WORD PTR [rip + 0x1000], cl
 
 // === RCL r16, imm8 ===
-    rcl di, 0xff
-    rcl cx, 0xff
-    rcl bx, 0xff
     rcl si, 0xff
+    rcl bx, 0xff
+    rcl cx, 0xff
+    rcl di, 0xff
     rcl dx, 0xff
     rcl ax, 0xff
 
 // === RCL m16, imm8 ===
     rcl WORD PTR [rbx], 0xff
-    rcl WORD PTR [rax + rbx*4 + 0x100], 0xff
-    rcl WORD PTR [rax + rbx*1 + 0x10], 0xff
     rcl WORD PTR [rip + 0x100], 0xff
-    rcl WORD PTR [rax], 0xff
     rcl WORD PTR [rip + 0x1000], 0xff
+    rcl WORD PTR [rax + rbx*1 + 0x10], 0xff
+    rcl WORD PTR [rax], 0xff
+    rcl WORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === RCL r32, 1 ===
     rcl eax, 1
     rcl esi, 1
-    rcl ebx, 1
-    rcl edi, 1
     rcl ecx, 1
+    rcl edi, 1
     rcl edx, 1
+    rcl ebx, 1
 
 // === RCL m32, 1 ===
-    rcl DWORD PTR [rip + 0x100], 1
-    rcl DWORD PTR [rax], 1
     rcl DWORD PTR [rbx], 1
+    rcl DWORD PTR [rax + rbx*1 + 0x10], 1
+    rcl DWORD PTR [rax], 1
     rcl DWORD PTR [rax + rbx*4 + 0x100], 1
     rcl DWORD PTR [rip + 0x1000], 1
-    rcl DWORD PTR [rax + rbx*1 + 0x10], 1
+    rcl DWORD PTR [rip + 0x100], 1
 
 // === RCL r64, 1 ===
-    rcl rdi, 1
-    rcl rcx, 1
     rcl r10, 1
-    rcl r8, 1
-    rcl rbx, 1
-    rcl r12, 1
-    rcl rsi, 1
-    rcl r13, 1
-    rcl r9, 1
+    rcl rax, 1
     rcl r11, 1
+    rcl r9, 1
+    rcl r8, 1
+    rcl rdi, 1
+    rcl r13, 1
+    rcl rcx, 1
+    rcl r12, 1
+    rcl rbx, 1
 
 // === RCL m64, 1 ===
-    rcl QWORD PTR [rip + 0x100], 1
     rcl QWORD PTR [rax + rbx*1 + 0x10], 1
-    rcl QWORD PTR [rax], 1
-    rcl QWORD PTR [rbx], 1
     rcl QWORD PTR [rax + rbx*4 + 0x100], 1
+    rcl QWORD PTR [rbx], 1
     rcl QWORD PTR [rip + 0x1000], 1
+    rcl QWORD PTR [rip + 0x100], 1
+    rcl QWORD PTR [rax], 1
 
 // === RCL r32, CL ===
-    rcl edx, cl
+    rcl eax, cl
     rcl esi, cl
     rcl ecx, cl
-    rcl eax, cl
     rcl ebx, cl
+    rcl edx, cl
     rcl edi, cl
 
 // === RCL m32, CL ===
-    rcl DWORD PTR [rax], cl
-    rcl DWORD PTR [rip + 0x1000], cl
     rcl DWORD PTR [rax + rbx*4 + 0x100], cl
-    rcl DWORD PTR [rbx], cl
-    rcl DWORD PTR [rax + rbx*1 + 0x10], cl
     rcl DWORD PTR [rip + 0x100], cl
+    rcl DWORD PTR [rax + rbx*1 + 0x10], cl
+    rcl DWORD PTR [rip + 0x1000], cl
+    rcl DWORD PTR [rax], cl
+    rcl DWORD PTR [rbx], cl
 
 // === RCL r64, CL ===
     rcl r10, cl
-    rcl rax, cl
     rcl rdi, cl
-    rcl r13, cl
-    rcl r11, cl
-    rcl rdx, cl
-    rcl rbx, cl
     rcl rcx, cl
     rcl r9, cl
+    rcl rsi, cl
+    rcl rax, cl
+    rcl r8, cl
+    rcl rdx, cl
     rcl r12, cl
+    rcl r13, cl
 
 // === RCL m64, CL ===
-    rcl QWORD PTR [rip + 0x100], cl
-    rcl QWORD PTR [rip + 0x1000], cl
-    rcl QWORD PTR [rax + rbx*1 + 0x10], cl
-    rcl QWORD PTR [rax], cl
-    rcl QWORD PTR [rbx], cl
     rcl QWORD PTR [rax + rbx*4 + 0x100], cl
+    rcl QWORD PTR [rip + 0x100], cl
+    rcl QWORD PTR [rbx], cl
+    rcl QWORD PTR [rax + rbx*1 + 0x10], cl
+    rcl QWORD PTR [rip + 0x1000], cl
+    rcl QWORD PTR [rax], cl
 
 // === RCL r32, imm8 ===
     rcl ecx, 0xff
+    rcl edi, 0xff
     rcl esi, 0xff
-    rcl ebx, 0xff
     rcl eax, 0xff
     rcl edx, 0xff
-    rcl edi, 0xff
+    rcl ebx, 0xff
 
 // === RCL m32, imm8 ===
-    rcl DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    rcl DWORD PTR [rax + rbx*4 + 0x100], 0xff
     rcl DWORD PTR [rbx], 0xff
-    rcl DWORD PTR [rip + 0x100], 0xff
+    rcl DWORD PTR [rax + rbx*1 + 0x10], 0xff
     rcl DWORD PTR [rax], 0xff
+    rcl DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    rcl DWORD PTR [rip + 0x100], 0xff
     rcl DWORD PTR [rip + 0x1000], 0xff
 
 // === RCL r64, imm8 ===
-    rcl r11, 0xff
-    rcl r9, 0xff
-    rcl rdi, 0xff
     rcl rdx, 0xff
+    rcl rbx, 0xff
+    rcl r13, 0xff
+    rcl rcx, 0xff
     rcl r10, 0xff
     rcl rax, 0xff
-    rcl rcx, 0xff
-    rcl r12, 0xff
-    rcl rbx, 0xff
-    rcl r8, 0xff
+    rcl rdi, 0xff
+    rcl r11, 0xff
+    rcl rsi, 0xff
+    rcl r9, 0xff
 
 // === RCL m64, imm8 ===
-    rcl QWORD PTR [rax + rbx*1 + 0x10], 0xff
     rcl QWORD PTR [rip + 0x100], 0xff
-    rcl QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    rcl QWORD PTR [rax + rbx*1 + 0x10], 0xff
     rcl QWORD PTR [rip + 0x1000], 0xff
-    rcl QWORD PTR [rax], 0xff
+    rcl QWORD PTR [rax + rbx*4 + 0x100], 0xff
     rcl QWORD PTR [rbx], 0xff
+    rcl QWORD PTR [rax], 0xff
 
 // === RCR r8, 1 ===
     rcr dl, 1
+    rcr bl, 1
     rcr cl, 1
     rcr al, 1
-    rcr bl, 1
 
 // === RCR m8, 1 ===
-    rcr BYTE PTR [rip + 0x1000], 1
-    rcr BYTE PTR [rbx], 1
-    rcr BYTE PTR [rax + rbx*4 + 0x100], 1
-    rcr BYTE PTR [rip + 0x100], 1
     rcr BYTE PTR [rax + rbx*1 + 0x10], 1
+    rcr BYTE PTR [rbx], 1
+    rcr BYTE PTR [rip + 0x100], 1
+    rcr BYTE PTR [rax + rbx*4 + 0x100], 1
     rcr BYTE PTR [rax], 1
+    rcr BYTE PTR [rip + 0x1000], 1
 
 // === RCR r8, CL ===
-    rcr dl, cl
-    rcr al, cl
     rcr cl, cl
+    rcr al, cl
     rcr bl, cl
+    rcr dl, cl
 
 // === RCR m8, CL ===
-    rcr BYTE PTR [rax], cl
     rcr BYTE PTR [rax + rbx*1 + 0x10], cl
-    rcr BYTE PTR [rax + rbx*4 + 0x100], cl
-    rcr BYTE PTR [rbx], cl
     rcr BYTE PTR [rip + 0x100], cl
+    rcr BYTE PTR [rax + rbx*4 + 0x100], cl
     rcr BYTE PTR [rip + 0x1000], cl
+    rcr BYTE PTR [rax], cl
+    rcr BYTE PTR [rbx], cl
 
 // === RCR r8, imm8 ===
+    rcr bl, 0xff
     rcr dl, 0xff
     rcr al, 0xff
-    rcr bl, 0xff
     rcr cl, 0xff
 
 // === RCR m8, imm8 ===
-    rcr BYTE PTR [rbx], 0xff
     rcr BYTE PTR [rax], 0xff
     rcr BYTE PTR [rip + 0x100], 0xff
-    rcr BYTE PTR [rip + 0x1000], 0xff
     rcr BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    rcr BYTE PTR [rbx], 0xff
+    rcr BYTE PTR [rip + 0x1000], 0xff
     rcr BYTE PTR [rax + rbx*1 + 0x10], 0xff
 
 // === RCR r16, 1 ===
-    rcr di, 1
     rcr dx, 1
-    rcr si, 1
     rcr ax, 1
+    rcr si, 1
+    rcr di, 1
     rcr cx, 1
     rcr bx, 1
 
 // === RCR m16, 1 ===
     rcr WORD PTR [rax + rbx*4 + 0x100], 1
-    rcr WORD PTR [rax], 1
-    rcr WORD PTR [rax + rbx*1 + 0x10], 1
-    rcr WORD PTR [rbx], 1
     rcr WORD PTR [rip + 0x100], 1
+    rcr WORD PTR [rbx], 1
+    rcr WORD PTR [rax + rbx*1 + 0x10], 1
+    rcr WORD PTR [rax], 1
     rcr WORD PTR [rip + 0x1000], 1
 
 // === RCR r16, CL ===
-    rcr dx, cl
     rcr di, cl
     rcr si, cl
-    rcr bx, cl
-    rcr cx, cl
     rcr ax, cl
+    rcr dx, cl
+    rcr cx, cl
+    rcr bx, cl
 
 // === RCR m16, CL ===
     rcr WORD PTR [rax + rbx*4 + 0x100], cl
-    rcr WORD PTR [rbx], cl
-    rcr WORD PTR [rip + 0x1000], cl
-    rcr WORD PTR [rip + 0x100], cl
     rcr WORD PTR [rax + rbx*1 + 0x10], cl
     rcr WORD PTR [rax], cl
+    rcr WORD PTR [rip + 0x1000], cl
+    rcr WORD PTR [rip + 0x100], cl
+    rcr WORD PTR [rbx], cl
 
 // === RCR r16, imm8 ===
-    rcr di, 0xff
     rcr cx, 0xff
-    rcr bx, 0xff
-    rcr si, 0xff
     rcr ax, 0xff
+    rcr si, 0xff
     rcr dx, 0xff
+    rcr di, 0xff
+    rcr bx, 0xff
 
 // === RCR m16, imm8 ===
-    rcr WORD PTR [rip + 0x1000], 0xff
-    rcr WORD PTR [rip + 0x100], 0xff
-    rcr WORD PTR [rax + rbx*1 + 0x10], 0xff
     rcr WORD PTR [rax + rbx*4 + 0x100], 0xff
+    rcr WORD PTR [rip + 0x100], 0xff
+    rcr WORD PTR [rip + 0x1000], 0xff
     rcr WORD PTR [rax], 0xff
     rcr WORD PTR [rbx], 0xff
+    rcr WORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === RCR r32, 1 ===
+    rcr ecx, 1
+    rcr edi, 1
     rcr ebx, 1
     rcr esi, 1
-    rcr edi, 1
     rcr edx, 1
-    rcr ecx, 1
     rcr eax, 1
 
 // === RCR m32, 1 ===
     rcr DWORD PTR [rip + 0x1000], 1
-    rcr DWORD PTR [rip + 0x100], 1
-    rcr DWORD PTR [rbx], 1
-    rcr DWORD PTR [rax + rbx*4 + 0x100], 1
     rcr DWORD PTR [rax], 1
     rcr DWORD PTR [rax + rbx*1 + 0x10], 1
+    rcr DWORD PTR [rbx], 1
+    rcr DWORD PTR [rip + 0x100], 1
+    rcr DWORD PTR [rax + rbx*4 + 0x100], 1
 
 // === RCR r64, 1 ===
-    rcr r9, 1
+    rcr rdx, 1
     rcr r13, 1
     rcr r8, 1
-    rcr r12, 1
-    rcr r10, 1
-    rcr rdx, 1
-    rcr rsi, 1
+    rcr rbx, 1
+    rcr rcx, 1
     rcr rdi, 1
     rcr r11, 1
     rcr rax, 1
+    rcr r9, 1
+    rcr r10, 1
 
 // === RCR m64, 1 ===
-    rcr QWORD PTR [rip + 0x100], 1
-    rcr QWORD PTR [rip + 0x1000], 1
     rcr QWORD PTR [rax + rbx*4 + 0x100], 1
+    rcr QWORD PTR [rip + 0x100], 1
     rcr QWORD PTR [rax], 1
     rcr QWORD PTR [rax + rbx*1 + 0x10], 1
+    rcr QWORD PTR [rip + 0x1000], 1
     rcr QWORD PTR [rbx], 1
 
 // === RCR r32, CL ===
-    rcr ebx, cl
+    rcr eax, cl
     rcr ecx, cl
     rcr esi, cl
-    rcr eax, cl
+    rcr ebx, cl
     rcr edx, cl
     rcr edi, cl
 
 // === RCR m32, CL ===
-    rcr DWORD PTR [rax + rbx*4 + 0x100], cl
     rcr DWORD PTR [rbx], cl
-    rcr DWORD PTR [rax + rbx*1 + 0x10], cl
     rcr DWORD PTR [rip + 0x1000], cl
-    rcr DWORD PTR [rax], cl
     rcr DWORD PTR [rip + 0x100], cl
+    rcr DWORD PTR [rax + rbx*4 + 0x100], cl
+    rcr DWORD PTR [rax], cl
+    rcr DWORD PTR [rax + rbx*1 + 0x10], cl
 
 // === RCR r64, CL ===
-    rcr rax, cl
-    rcr rbx, cl
-    rcr r8, cl
-    rcr r13, cl
-    rcr rsi, cl
-    rcr r12, cl
-    rcr rcx, cl
-    rcr r11, cl
+    rcr r10, cl
     rcr rdi, cl
+    rcr r11, cl
+    rcr r9, cl
     rcr rdx, cl
+    rcr rax, cl
+    rcr r12, cl
+    rcr rbx, cl
+    rcr rsi, cl
+    rcr r8, cl
 
 // === RCR m64, CL ===
     rcr QWORD PTR [rax + rbx*1 + 0x10], cl
     rcr QWORD PTR [rip + 0x1000], cl
     rcr QWORD PTR [rax + rbx*4 + 0x100], cl
-    rcr QWORD PTR [rax], cl
-    rcr QWORD PTR [rip + 0x100], cl
     rcr QWORD PTR [rbx], cl
+    rcr QWORD PTR [rip + 0x100], cl
+    rcr QWORD PTR [rax], cl
 
 // === RCR r32, imm8 ===
     rcr eax, 0xff
-    rcr ecx, 0xff
     rcr edi, 0xff
-    rcr edx, 0xff
-    rcr esi, 0xff
     rcr ebx, 0xff
+    rcr esi, 0xff
+    rcr edx, 0xff
+    rcr ecx, 0xff
 
 // === RCR m32, imm8 ===
     rcr DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    rcr DWORD PTR [rip + 0x1000], 0xff
     rcr DWORD PTR [rip + 0x100], 0xff
-    rcr DWORD PTR [rax + rbx*1 + 0x10], 0xff
     rcr DWORD PTR [rax], 0xff
     rcr DWORD PTR [rbx], 0xff
+    rcr DWORD PTR [rax + rbx*1 + 0x10], 0xff
+    rcr DWORD PTR [rip + 0x1000], 0xff
 
 // === RCR r64, imm8 ===
+    rcr rbx, 0xff
+    rcr rdi, 0xff
     rcr rcx, 0xff
+    rcr rsi, 0xff
     rcr r8, 0xff
     rcr rax, 0xff
-    rcr r10, 0xff
-    rcr r12, 0xff
-    rcr rbx, 0xff
+    rcr r11, 0xff
+    rcr r9, 0xff
     rcr r13, 0xff
-    rcr rdi, 0xff
-    rcr rdx, 0xff
-    rcr rsi, 0xff
+    rcr r12, 0xff
 
 // === RCR m64, imm8 ===
+    rcr QWORD PTR [rbx], 0xff
     rcr QWORD PTR [rip + 0x100], 0xff
     rcr QWORD PTR [rip + 0x1000], 0xff
     rcr QWORD PTR [rax], 0xff
     rcr QWORD PTR [rax + rbx*4 + 0x100], 0xff
     rcr QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    rcr QWORD PTR [rbx], 0xff
 
 // === ROL r8, 1 ===
     rol cl, 1
-    rol bl, 1
     rol al, 1
     rol dl, 1
+    rol bl, 1
 
 // === ROL m8, 1 ===
-    rol BYTE PTR [rip + 0x1000], 1
     rol BYTE PTR [rax], 1
-    rol BYTE PTR [rax + rbx*4 + 0x100], 1
     rol BYTE PTR [rip + 0x100], 1
-    rol BYTE PTR [rbx], 1
     rol BYTE PTR [rax + rbx*1 + 0x10], 1
+    rol BYTE PTR [rip + 0x1000], 1
+    rol BYTE PTR [rbx], 1
+    rol BYTE PTR [rax + rbx*4 + 0x100], 1
 
 // === ROL r8, CL ===
-    rol al, cl
-    rol dl, cl
-    rol cl, cl
     rol bl, cl
+    rol al, cl
+    rol cl, cl
+    rol dl, cl
 
 // === ROL m8, CL ===
+    rol BYTE PTR [rip + 0x100], cl
     rol BYTE PTR [rax + rbx*1 + 0x10], cl
     rol BYTE PTR [rax], cl
     rol BYTE PTR [rip + 0x1000], cl
     rol BYTE PTR [rbx], cl
-    rol BYTE PTR [rip + 0x100], cl
     rol BYTE PTR [rax + rbx*4 + 0x100], cl
 
 // === ROL r8, imm8 ===
-    rol al, 0xff
     rol dl, 0xff
-    rol bl, 0xff
     rol cl, 0xff
+    rol al, 0xff
+    rol bl, 0xff
 
 // === ROL m8, imm8 ===
-    rol BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    rol BYTE PTR [rip + 0x100], 0xff
-    rol BYTE PTR [rax], 0xff
     rol BYTE PTR [rip + 0x1000], 0xff
-    rol BYTE PTR [rbx], 0xff
     rol BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    rol BYTE PTR [rax], 0xff
+    rol BYTE PTR [rip + 0x100], 0xff
+    rol BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    rol BYTE PTR [rbx], 0xff
 
 // === ROL r16, 1 ===
-    rol di, 1
-    rol cx, 1
-    rol si, 1
-    rol bx, 1
     rol dx, 1
+    rol bx, 1
+    rol cx, 1
     rol ax, 1
+    rol di, 1
+    rol si, 1
 
 // === ROL m16, 1 ===
-    rol WORD PTR [rip + 0x1000], 1
-    rol WORD PTR [rax + rbx*4 + 0x100], 1
-    rol WORD PTR [rax + rbx*1 + 0x10], 1
     rol WORD PTR [rip + 0x100], 1
     rol WORD PTR [rax], 1
     rol WORD PTR [rbx], 1
+    rol WORD PTR [rax + rbx*4 + 0x100], 1
+    rol WORD PTR [rip + 0x1000], 1
+    rol WORD PTR [rax + rbx*1 + 0x10], 1
 
 // === ROL r16, CL ===
-    rol cx, cl
     rol dx, cl
-    rol bx, cl
-    rol di, cl
+    rol cx, cl
     rol si, cl
+    rol di, cl
     rol ax, cl
+    rol bx, cl
 
 // === ROL m16, CL ===
     rol WORD PTR [rbx], cl
-    rol WORD PTR [rip + 0x1000], cl
-    rol WORD PTR [rip + 0x100], cl
     rol WORD PTR [rax], cl
     rol WORD PTR [rax + rbx*4 + 0x100], cl
+    rol WORD PTR [rip + 0x100], cl
     rol WORD PTR [rax + rbx*1 + 0x10], cl
+    rol WORD PTR [rip + 0x1000], cl
 
 // === ROL r16, imm8 ===
-    rol ax, 0xff
     rol dx, 0xff
-    rol bx, 0xff
-    rol cx, 0xff
-    rol si, 0xff
     rol di, 0xff
+    rol ax, 0xff
+    rol cx, 0xff
+    rol bx, 0xff
+    rol si, 0xff
 
 // === ROL m16, imm8 ===
-    rol WORD PTR [rbx], 0xff
-    rol WORD PTR [rax + rbx*1 + 0x10], 0xff
-    rol WORD PTR [rax + rbx*4 + 0x100], 0xff
-    rol WORD PTR [rax], 0xff
     rol WORD PTR [rip + 0x100], 0xff
+    rol WORD PTR [rax + rbx*4 + 0x100], 0xff
     rol WORD PTR [rip + 0x1000], 0xff
+    rol WORD PTR [rax], 0xff
+    rol WORD PTR [rax + rbx*1 + 0x10], 0xff
+    rol WORD PTR [rbx], 0xff
 
 // === ROL r32, 1 ===
+    rol edi, 1
+    rol edx, 1
+    rol ecx, 1
     rol ebx, 1
     rol eax, 1
     rol esi, 1
-    rol edx, 1
-    rol ecx, 1
-    rol edi, 1
 
 // === ROL m32, 1 ===
+    rol DWORD PTR [rip + 0x1000], 1
     rol DWORD PTR [rax + rbx*4 + 0x100], 1
     rol DWORD PTR [rax], 1
     rol DWORD PTR [rax + rbx*1 + 0x10], 1
-    rol DWORD PTR [rip + 0x1000], 1
-    rol DWORD PTR [rbx], 1
     rol DWORD PTR [rip + 0x100], 1
+    rol DWORD PTR [rbx], 1
 
 // === ROL r64, 1 ===
-    rol r9, 1
     rol rdi, 1
     rol rax, 1
+    rol r9, 1
+    rol rcx, 1
+    rol r13, 1
     rol r10, 1
     rol rbx, 1
-    rol rcx, 1
-    rol r11, 1
+    rol rsi, 1
     rol r12, 1
-    rol r8, 1
     rol rdx, 1
 
 // === ROL m64, 1 ===
-    rol QWORD PTR [rax + rbx*4 + 0x100], 1
-    rol QWORD PTR [rip + 0x100], 1
-    rol QWORD PTR [rax], 1
     rol QWORD PTR [rbx], 1
+    rol QWORD PTR [rax], 1
+    rol QWORD PTR [rip + 0x100], 1
     rol QWORD PTR [rax + rbx*1 + 0x10], 1
+    rol QWORD PTR [rax + rbx*4 + 0x100], 1
     rol QWORD PTR [rip + 0x1000], 1
 
 // === ROL r32, CL ===
-    rol edx, cl
-    rol esi, cl
     rol eax, cl
     rol ecx, cl
     rol ebx, cl
+    rol edx, cl
     rol edi, cl
+    rol esi, cl
 
 // === ROL m32, CL ===
     rol DWORD PTR [rax], cl
     rol DWORD PTR [rax + rbx*4 + 0x100], cl
     rol DWORD PTR [rip + 0x100], cl
     rol DWORD PTR [rip + 0x1000], cl
-    rol DWORD PTR [rbx], cl
     rol DWORD PTR [rax + rbx*1 + 0x10], cl
+    rol DWORD PTR [rbx], cl
 
 // === ROL r64, CL ===
-    rol r8, cl
-    rol rax, cl
-    rol r10, cl
-    rol rbx, cl
-    rol r12, cl
-    rol rdx, cl
     rol rdi, cl
+    rol rdx, cl
     rol r13, cl
-    rol rsi, cl
+    rol r10, cl
+    rol r12, cl
     rol rcx, cl
+    rol rax, cl
+    rol r9, cl
+    rol rsi, cl
+    rol rbx, cl
 
 // === ROL m64, CL ===
     rol QWORD PTR [rip + 0x100], cl
     rol QWORD PTR [rax], cl
-    rol QWORD PTR [rip + 0x1000], cl
     rol QWORD PTR [rbx], cl
     rol QWORD PTR [rax + rbx*4 + 0x100], cl
     rol QWORD PTR [rax + rbx*1 + 0x10], cl
+    rol QWORD PTR [rip + 0x1000], cl
 
 // === ROL r32, imm8 ===
-    rol edx, 0xff
-    rol eax, 0xff
-    rol esi, 0xff
     rol ecx, 0xff
-    rol ebx, 0xff
+    rol esi, 0xff
     rol edi, 0xff
+    rol ebx, 0xff
+    rol eax, 0xff
+    rol edx, 0xff
 
 // === ROL m32, imm8 ===
     rol DWORD PTR [rip + 0x1000], 0xff
+    rol DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    rol DWORD PTR [rbx], 0xff
     rol DWORD PTR [rax], 0xff
     rol DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    rol DWORD PTR [rbx], 0xff
     rol DWORD PTR [rip + 0x100], 0xff
-    rol DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === ROL r64, imm8 ===
+    rol rdx, 0xff
+    rol rsi, 0xff
+    rol rbx, 0xff
+    rol r8, 0xff
+    rol r12, 0xff
+    rol rdi, 0xff
     rol r10, 0xff
     rol r11, 0xff
-    rol rdi, 0xff
-    rol rbx, 0xff
-    rol rcx, 0xff
-    rol r12, 0xff
     rol r13, 0xff
-    rol rsi, 0xff
-    rol rdx, 0xff
     rol rax, 0xff
 
 // === ROL m64, imm8 ===
-    rol QWORD PTR [rax], 0xff
     rol QWORD PTR [rip + 0x100], 0xff
     rol QWORD PTR [rip + 0x1000], 0xff
     rol QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    rol QWORD PTR [rbx], 0xff
     rol QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    rol QWORD PTR [rbx], 0xff
+    rol QWORD PTR [rax], 0xff
 
 // === ROR r8, 1 ===
-    ror bl, 1
-    ror al, 1
-    ror cl, 1
     ror dl, 1
+    ror al, 1
+    ror bl, 1
+    ror cl, 1
 
 // === ROR m8, 1 ===
-    ror BYTE PTR [rbx], 1
     ror BYTE PTR [rax + rbx*4 + 0x100], 1
-    ror BYTE PTR [rax], 1
-    ror BYTE PTR [rip + 0x1000], 1
-    ror BYTE PTR [rip + 0x100], 1
+    ror BYTE PTR [rbx], 1
     ror BYTE PTR [rax + rbx*1 + 0x10], 1
+    ror BYTE PTR [rax], 1
+    ror BYTE PTR [rip + 0x100], 1
+    ror BYTE PTR [rip + 0x1000], 1
 
 // === ROR r8, CL ===
-    ror cl, cl
-    ror al, cl
     ror bl, cl
+    ror al, cl
     ror dl, cl
+    ror cl, cl
 
 // === ROR m8, CL ===
+    ror BYTE PTR [rax], cl
     ror BYTE PTR [rax + rbx*4 + 0x100], cl
     ror BYTE PTR [rbx], cl
-    ror BYTE PTR [rax], cl
-    ror BYTE PTR [rax + rbx*1 + 0x10], cl
     ror BYTE PTR [rip + 0x1000], cl
+    ror BYTE PTR [rax + rbx*1 + 0x10], cl
     ror BYTE PTR [rip + 0x100], cl
 
 // === ROR r8, imm8 ===
+    ror dl, 0xff
     ror al, 0xff
     ror bl, 0xff
     ror cl, 0xff
-    ror dl, 0xff
 
 // === ROR m8, imm8 ===
-    ror BYTE PTR [rip + 0x100], 0xff
-    ror BYTE PTR [rax + rbx*4 + 0x100], 0xff
     ror BYTE PTR [rbx], 0xff
-    ror BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    ror BYTE PTR [rax], 0xff
+    ror BYTE PTR [rip + 0x100], 0xff
     ror BYTE PTR [rip + 0x1000], 0xff
+    ror BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    ror BYTE PTR [rax], 0xff
+    ror BYTE PTR [rax + rbx*1 + 0x10], 0xff
 
 // === ROR r16, 1 ===
-    ror bx, 1
     ror di, 1
     ror cx, 1
-    ror ax, 1
     ror dx, 1
+    ror ax, 1
+    ror bx, 1
     ror si, 1
 
 // === ROR m16, 1 ===
-    ror WORD PTR [rax], 1
-    ror WORD PTR [rip + 0x1000], 1
-    ror WORD PTR [rbx], 1
-    ror WORD PTR [rax + rbx*1 + 0x10], 1
     ror WORD PTR [rip + 0x100], 1
+    ror WORD PTR [rip + 0x1000], 1
     ror WORD PTR [rax + rbx*4 + 0x100], 1
+    ror WORD PTR [rax + rbx*1 + 0x10], 1
+    ror WORD PTR [rbx], 1
+    ror WORD PTR [rax], 1
 
 // === ROR r16, CL ===
+    ror ax, cl
     ror bx, cl
     ror si, cl
-    ror ax, cl
-    ror di, cl
-    ror dx, cl
     ror cx, cl
+    ror dx, cl
+    ror di, cl
 
 // === ROR m16, CL ===
-    ror WORD PTR [rip + 0x100], cl
     ror WORD PTR [rip + 0x1000], cl
+    ror WORD PTR [rip + 0x100], cl
     ror WORD PTR [rax], cl
-    ror WORD PTR [rax + rbx*1 + 0x10], cl
     ror WORD PTR [rax + rbx*4 + 0x100], cl
+    ror WORD PTR [rax + rbx*1 + 0x10], cl
     ror WORD PTR [rbx], cl
 
 // === ROR r16, imm8 ===
-    ror si, 0xff
-    ror ax, 0xff
     ror di, 0xff
     ror bx, 0xff
     ror dx, 0xff
+    ror si, 0xff
+    ror ax, 0xff
     ror cx, 0xff
 
 // === ROR m16, imm8 ===
-    ror WORD PTR [rax + rbx*1 + 0x10], 0xff
-    ror WORD PTR [rip + 0x1000], 0xff
-    ror WORD PTR [rax + rbx*4 + 0x100], 0xff
-    ror WORD PTR [rbx], 0xff
     ror WORD PTR [rax], 0xff
     ror WORD PTR [rip + 0x100], 0xff
+    ror WORD PTR [rax + rbx*1 + 0x10], 0xff
+    ror WORD PTR [rax + rbx*4 + 0x100], 0xff
+    ror WORD PTR [rip + 0x1000], 0xff
+    ror WORD PTR [rbx], 0xff
 
 // === ROR r32, 1 ===
-    ror ecx, 1
-    ror edx, 1
-    ror ebx, 1
-    ror esi, 1
-    ror eax, 1
     ror edi, 1
+    ror eax, 1
+    ror ebx, 1
+    ror ecx, 1
+    ror esi, 1
+    ror edx, 1
 
 // === ROR m32, 1 ===
+    ror DWORD PTR [rax + rbx*1 + 0x10], 1
+    ror DWORD PTR [rip + 0x1000], 1
+    ror DWORD PTR [rip + 0x100], 1
     ror DWORD PTR [rax], 1
     ror DWORD PTR [rax + rbx*4 + 0x100], 1
     ror DWORD PTR [rbx], 1
-    ror DWORD PTR [rip + 0x1000], 1
-    ror DWORD PTR [rax + rbx*1 + 0x10], 1
-    ror DWORD PTR [rip + 0x100], 1
 
 // === ROR r64, 1 ===
-    ror r9, 1
-    ror rcx, 1
-    ror rdi, 1
+    ror rdx, 1
     ror rbx, 1
-    ror r13, 1
+    ror rdi, 1
     ror r12, 1
     ror rax, 1
+    ror r10, 1
     ror r11, 1
-    ror rdx, 1
+    ror rsi, 1
     ror r8, 1
+    ror r13, 1
 
 // === ROR m64, 1 ===
-    ror QWORD PTR [rax + rbx*4 + 0x100], 1
-    ror QWORD PTR [rax + rbx*1 + 0x10], 1
-    ror QWORD PTR [rax], 1
     ror QWORD PTR [rip + 0x100], 1
+    ror QWORD PTR [rax], 1
+    ror QWORD PTR [rax + rbx*1 + 0x10], 1
     ror QWORD PTR [rbx], 1
     ror QWORD PTR [rip + 0x1000], 1
+    ror QWORD PTR [rax + rbx*4 + 0x100], 1
 
 // === ROR r32, CL ===
-    ror edx, cl
+    ror ebx, cl
     ror edi, cl
-    ror ecx, cl
     ror esi, cl
     ror eax, cl
-    ror ebx, cl
+    ror ecx, cl
+    ror edx, cl
 
 // === ROR m32, CL ===
-    ror DWORD PTR [rax + rbx*1 + 0x10], cl
-    ror DWORD PTR [rbx], cl
-    ror DWORD PTR [rax], cl
     ror DWORD PTR [rip + 0x100], cl
     ror DWORD PTR [rip + 0x1000], cl
+    ror DWORD PTR [rax], cl
+    ror DWORD PTR [rbx], cl
+    ror DWORD PTR [rax + rbx*1 + 0x10], cl
     ror DWORD PTR [rax + rbx*4 + 0x100], cl
 
 // === ROR r64, CL ===
-    ror rsi, cl
-    ror rax, cl
-    ror rdi, cl
-    ror r8, cl
     ror rcx, cl
-    ror r9, cl
-    ror rdx, cl
+    ror rax, cl
+    ror r8, cl
+    ror rdi, cl
     ror r13, cl
+    ror rsi, cl
+    ror r11, cl
+    ror r9, cl
     ror r10, cl
-    ror r12, cl
+    ror rbx, cl
 
 // === ROR m64, CL ===
-    ror QWORD PTR [rip + 0x1000], cl
-    ror QWORD PTR [rip + 0x100], cl
-    ror QWORD PTR [rax], cl
-    ror QWORD PTR [rax + rbx*1 + 0x10], cl
-    ror QWORD PTR [rax + rbx*4 + 0x100], cl
     ror QWORD PTR [rbx], cl
+    ror QWORD PTR [rax + rbx*1 + 0x10], cl
+    ror QWORD PTR [rax], cl
+    ror QWORD PTR [rip + 0x1000], cl
+    ror QWORD PTR [rax + rbx*4 + 0x100], cl
+    ror QWORD PTR [rip + 0x100], cl
 
 // === ROR r32, imm8 ===
-    ror ecx, 0xff
-    ror esi, 0xff
-    ror ebx, 0xff
     ror edi, 0xff
-    ror eax, 0xff
+    ror ecx, 0xff
     ror edx, 0xff
+    ror ebx, 0xff
+    ror eax, 0xff
+    ror esi, 0xff
 
 // === ROR m32, imm8 ===
-    ror DWORD PTR [rax + rbx*1 + 0x10], 0xff
     ror DWORD PTR [rax], 0xff
     ror DWORD PTR [rip + 0x1000], 0xff
-    ror DWORD PTR [rip + 0x100], 0xff
     ror DWORD PTR [rbx], 0xff
+    ror DWORD PTR [rip + 0x100], 0xff
     ror DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    ror DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === ROR r64, imm8 ===
-    ror r8, 0xff
-    ror rax, 0xff
+    ror r9, 0xff
+    ror r12, 0xff
+    ror r10, 0xff
+    ror r13, 0xff
+    ror rcx, 0xff
     ror r11, 0xff
     ror rbx, 0xff
-    ror rsi, 0xff
-    ror r13, 0xff
-    ror r10, 0xff
-    ror rcx, 0xff
+    ror r8, 0xff
+    ror rax, 0xff
     ror rdx, 0xff
-    ror rdi, 0xff
 
 // === ROR m64, imm8 ===
-    ror QWORD PTR [rbx], 0xff
-    ror QWORD PTR [rip + 0x100], 0xff
-    ror QWORD PTR [rip + 0x1000], 0xff
-    ror QWORD PTR [rax + rbx*1 + 0x10], 0xff
     ror QWORD PTR [rax], 0xff
+    ror QWORD PTR [rip + 0x100], 0xff
+    ror QWORD PTR [rax + rbx*1 + 0x10], 0xff
     ror QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    ror QWORD PTR [rip + 0x1000], 0xff
+    ror QWORD PTR [rbx], 0xff
 
 // === RDMSR ===
     rdmsr
@@ -8363,6 +8582,108 @@
 // === RDTSCP ===
     rdtscp
 
+// === REP INS m8, DX ===
+    rep insb
+
+// === REP INS m16, DX ===
+    rep insw
+
+// === REP INS m32, DX ===
+    rep insd
+
+// === REP LODS AL ===
+    rep lodsb
+
+// === REP LODS AX ===
+    rep lodsw
+
+// === REP LODS EAX ===
+    rep lodsd
+
+// === REP LODS RAX ===
+    rep lodsq
+
+// === REP MOVS m8, m8 ===
+    rep movsb
+
+// === REP MOVS m16, m16 ===
+    rep movsw
+
+// === REP MOVS m32, m32 ===
+    rep movsd
+
+// === REP MOVS m64, m64 ===
+    rep movsq
+
+// === REP OUTS DX, m8 ===
+    rep outsb
+
+// === REP OUTS DX, m16 ===
+    rep outsw
+
+// === REP OUTS DX, m32 ===
+    rep outsd
+
+// === REP STOS m8 ===
+    rep stosb
+
+// === REP STOS m16 ===
+    rep stosw
+
+// === REP STOS m32 ===
+    rep stosd
+
+// === REP STOS m64 ===
+    rep stosq
+
+// === REPE CMPS m8, m8 ===
+    repe cmpsb
+
+// === REPE CMPS m16, m16 ===
+    repe cmpsw
+
+// === REPE CMPS m32, m32 ===
+    repe cmpsd
+
+// === REPE CMPS m64, m64 ===
+    repe cmpsq
+
+// === REPE SCAS m8 ===
+    repe scasb
+
+// === REPE SCAS m16 ===
+    repe scasw
+
+// === REPE SCAS m32 ===
+    repe scasd
+
+// === REPE SCAS m64 ===
+    repe scasq
+
+// === REPNE CMPS m8, m8 ===
+    repne cmpsb
+
+// === REPNE CMPS m16, m16 ===
+    repne cmpsw
+
+// === REPNE CMPS m32, m32 ===
+    repne cmpsd
+
+// === REPNE CMPS m64, m64 ===
+    repne cmpsq
+
+// === REPNE SCAS m8 ===
+    repne scasb
+
+// === REPNE SCAS m16 ===
+    repne scasw
+
+// === REPNE SCAS m32 ===
+    repne scasd
+
+// === REPNE SCAS m64 ===
+    repne scasq
+
 // === RET ===
     ret
 
@@ -8376,428 +8697,428 @@
     sahf
 
 // === SAL r8, 1 ===
-    sal cl, 1
     sal bl, 1
-    sal al, 1
     sal dl, 1
+    sal cl, 1
+    sal al, 1
 
 // === SAL m8, 1 ===
+    sal BYTE PTR [rax + rbx*1 + 0x10], 1
+    sal BYTE PTR [rax + rbx*4 + 0x100], 1
+    sal BYTE PTR [rbx], 1
     sal BYTE PTR [rip + 0x100], 1
     sal BYTE PTR [rax], 1
     sal BYTE PTR [rip + 0x1000], 1
-    sal BYTE PTR [rax + rbx*1 + 0x10], 1
-    sal BYTE PTR [rbx], 1
-    sal BYTE PTR [rax + rbx*4 + 0x100], 1
 
 // === SAL r8, CL ===
-    sal cl, cl
     sal al, cl
     sal dl, cl
+    sal cl, cl
     sal bl, cl
 
 // === SAL m8, CL ===
-    sal BYTE PTR [rip + 0x1000], cl
-    sal BYTE PTR [rax], cl
     sal BYTE PTR [rax + rbx*4 + 0x100], cl
-    sal BYTE PTR [rax + rbx*1 + 0x10], cl
-    sal BYTE PTR [rip + 0x100], cl
+    sal BYTE PTR [rax], cl
     sal BYTE PTR [rbx], cl
+    sal BYTE PTR [rip + 0x100], cl
+    sal BYTE PTR [rip + 0x1000], cl
+    sal BYTE PTR [rax + rbx*1 + 0x10], cl
 
 // === SAL r8, imm8 ===
+    sal cl, 0xff
+    sal bl, 0xff
     sal al, 0xff
     sal dl, 0xff
-    sal bl, 0xff
-    sal cl, 0xff
 
 // === SAL m8, imm8 ===
-    sal BYTE PTR [rbx], 0xff
-    sal BYTE PTR [rax + rbx*4 + 0x100], 0xff
     sal BYTE PTR [rip + 0x100], 0xff
+    sal BYTE PTR [rax + rbx*4 + 0x100], 0xff
     sal BYTE PTR [rax], 0xff
+    sal BYTE PTR [rbx], 0xff
     sal BYTE PTR [rax + rbx*1 + 0x10], 0xff
     sal BYTE PTR [rip + 0x1000], 0xff
 
 // === SAL r16, 1 ===
-    sal ax, 1
+    sal dx, 1
     sal bx, 1
-    sal di, 1
+    sal ax, 1
     sal cx, 1
     sal si, 1
-    sal dx, 1
+    sal di, 1
 
 // === SAL m16, 1 ===
     sal WORD PTR [rax + rbx*1 + 0x10], 1
-    sal WORD PTR [rbx], 1
     sal WORD PTR [rip + 0x1000], 1
+    sal WORD PTR [rbx], 1
     sal WORD PTR [rax], 1
-    sal WORD PTR [rax + rbx*4 + 0x100], 1
     sal WORD PTR [rip + 0x100], 1
+    sal WORD PTR [rax + rbx*4 + 0x100], 1
 
 // === SAL r16, CL ===
     sal si, cl
+    sal dx, cl
     sal cx, cl
+    sal ax, cl
     sal bx, cl
     sal di, cl
-    sal ax, cl
-    sal dx, cl
 
 // === SAL m16, CL ===
+    sal WORD PTR [rax], cl
     sal WORD PTR [rip + 0x100], cl
+    sal WORD PTR [rax + rbx*1 + 0x10], cl
     sal WORD PTR [rip + 0x1000], cl
     sal WORD PTR [rbx], cl
-    sal WORD PTR [rax], cl
     sal WORD PTR [rax + rbx*4 + 0x100], cl
-    sal WORD PTR [rax + rbx*1 + 0x10], cl
 
 // === SAL r16, imm8 ===
-    sal cx, 0xff
-    sal dx, 0xff
-    sal di, 0xff
     sal ax, 0xff
-    sal bx, 0xff
     sal si, 0xff
+    sal cx, 0xff
+    sal bx, 0xff
+    sal di, 0xff
+    sal dx, 0xff
 
 // === SAL m16, imm8 ===
-    sal WORD PTR [rax + rbx*1 + 0x10], 0xff
     sal WORD PTR [rax], 0xff
-    sal WORD PTR [rbx], 0xff
-    sal WORD PTR [rip + 0x100], 0xff
-    sal WORD PTR [rip + 0x1000], 0xff
     sal WORD PTR [rax + rbx*4 + 0x100], 0xff
+    sal WORD PTR [rip + 0x1000], 0xff
+    sal WORD PTR [rax + rbx*1 + 0x10], 0xff
+    sal WORD PTR [rip + 0x100], 0xff
+    sal WORD PTR [rbx], 0xff
 
 // === SAL r32, 1 ===
     sal eax, 1
-    sal ebx, 1
     sal esi, 1
+    sal edx, 1
+    sal ebx, 1
     sal edi, 1
     sal ecx, 1
-    sal edx, 1
 
 // === SAL m32, 1 ===
+    sal DWORD PTR [rax + rbx*4 + 0x100], 1
+    sal DWORD PTR [rax + rbx*1 + 0x10], 1
     sal DWORD PTR [rax], 1
     sal DWORD PTR [rip + 0x1000], 1
-    sal DWORD PTR [rax + rbx*1 + 0x10], 1
-    sal DWORD PTR [rip + 0x100], 1
     sal DWORD PTR [rbx], 1
-    sal DWORD PTR [rax + rbx*4 + 0x100], 1
+    sal DWORD PTR [rip + 0x100], 1
 
 // === SAL r64, 1 ===
-    sal rdi, 1
-    sal rsi, 1
-    sal rdx, 1
     sal r10, 1
-    sal rbx, 1
-    sal r13, 1
-    sal rcx, 1
-    sal r9, 1
+    sal rdi, 1
+    sal r11, 1
     sal r12, 1
+    sal rdx, 1
+    sal rbx, 1
+    sal r9, 1
+    sal rcx, 1
     sal rax, 1
+    sal r8, 1
 
 // === SAL m64, 1 ===
-    sal QWORD PTR [rax], 1
-    sal QWORD PTR [rax + rbx*1 + 0x10], 1
     sal QWORD PTR [rbx], 1
-    sal QWORD PTR [rax + rbx*4 + 0x100], 1
     sal QWORD PTR [rip + 0x1000], 1
+    sal QWORD PTR [rax], 1
     sal QWORD PTR [rip + 0x100], 1
+    sal QWORD PTR [rax + rbx*4 + 0x100], 1
+    sal QWORD PTR [rax + rbx*1 + 0x10], 1
 
 // === SAL r32, CL ===
-    sal ecx, cl
-    sal esi, cl
-    sal eax, cl
     sal edi, cl
+    sal eax, cl
+    sal esi, cl
+    sal ecx, cl
     sal edx, cl
     sal ebx, cl
 
 // === SAL m32, CL ===
     sal DWORD PTR [rbx], cl
-    sal DWORD PTR [rax + rbx*1 + 0x10], cl
     sal DWORD PTR [rax], cl
-    sal DWORD PTR [rax + rbx*4 + 0x100], cl
+    sal DWORD PTR [rax + rbx*1 + 0x10], cl
     sal DWORD PTR [rip + 0x1000], cl
+    sal DWORD PTR [rax + rbx*4 + 0x100], cl
     sal DWORD PTR [rip + 0x100], cl
 
 // === SAL r64, CL ===
-    sal r13, cl
-    sal r12, cl
-    sal r8, cl
     sal rbx, cl
     sal rax, cl
+    sal rsi, cl
+    sal r11, cl
     sal rcx, cl
-    sal r9, cl
-    sal rdx, cl
     sal rdi, cl
+    sal r12, cl
+    sal r8, cl
+    sal r9, cl
     sal r10, cl
 
 // === SAL m64, CL ===
     sal QWORD PTR [rax + rbx*4 + 0x100], cl
-    sal QWORD PTR [rbx], cl
-    sal QWORD PTR [rax + rbx*1 + 0x10], cl
-    sal QWORD PTR [rax], cl
-    sal QWORD PTR [rip + 0x1000], cl
     sal QWORD PTR [rip + 0x100], cl
+    sal QWORD PTR [rax + rbx*1 + 0x10], cl
+    sal QWORD PTR [rip + 0x1000], cl
+    sal QWORD PTR [rbx], cl
+    sal QWORD PTR [rax], cl
 
 // === SAL r32, imm8 ===
-    sal ecx, 0xff
-    sal edx, 0xff
     sal esi, 0xff
+    sal ecx, 0xff
     sal ebx, 0xff
     sal edi, 0xff
     sal eax, 0xff
+    sal edx, 0xff
 
 // === SAL m32, imm8 ===
     sal DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    sal DWORD PTR [rip + 0x100], 0xff
-    sal DWORD PTR [rip + 0x1000], 0xff
-    sal DWORD PTR [rbx], 0xff
     sal DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    sal DWORD PTR [rip + 0x100], 0xff
+    sal DWORD PTR [rbx], 0xff
     sal DWORD PTR [rax], 0xff
+    sal DWORD PTR [rip + 0x1000], 0xff
 
 // === SAL r64, imm8 ===
-    sal rdx, 0xff
-    sal rsi, 0xff
+    sal r13, 0xff
+    sal r12, 0xff
     sal r9, 0xff
+    sal rsi, 0xff
+    sal r11, 0xff
+    sal r8, 0xff
     sal rax, 0xff
     sal rbx, 0xff
-    sal r11, 0xff
-    sal rcx, 0xff
-    sal r13, 0xff
-    sal r8, 0xff
     sal rdi, 0xff
+    sal r10, 0xff
 
 // === SAL m64, imm8 ===
-    sal QWORD PTR [rip + 0x100], 0xff
-    sal QWORD PTR [rip + 0x1000], 0xff
     sal QWORD PTR [rbx], 0xff
-    sal QWORD PTR [rax], 0xff
+    sal QWORD PTR [rip + 0x100], 0xff
     sal QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    sal QWORD PTR [rip + 0x1000], 0xff
+    sal QWORD PTR [rax], 0xff
     sal QWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === SAR r8, 1 ===
     sar al, 1
     sar cl, 1
-    sar dl, 1
     sar bl, 1
+    sar dl, 1
 
 // === SAR m8, 1 ===
     sar BYTE PTR [rbx], 1
     sar BYTE PTR [rax], 1
     sar BYTE PTR [rax + rbx*4 + 0x100], 1
     sar BYTE PTR [rip + 0x100], 1
-    sar BYTE PTR [rax + rbx*1 + 0x10], 1
     sar BYTE PTR [rip + 0x1000], 1
+    sar BYTE PTR [rax + rbx*1 + 0x10], 1
 
 // === SAR r8, CL ===
-    sar cl, cl
-    sar bl, cl
     sar dl, cl
+    sar bl, cl
     sar al, cl
+    sar cl, cl
 
 // === SAR m8, CL ===
     sar BYTE PTR [rip + 0x100], cl
+    sar BYTE PTR [rip + 0x1000], cl
     sar BYTE PTR [rbx], cl
-    sar BYTE PTR [rax + rbx*1 + 0x10], cl
     sar BYTE PTR [rax], cl
     sar BYTE PTR [rax + rbx*4 + 0x100], cl
-    sar BYTE PTR [rip + 0x1000], cl
+    sar BYTE PTR [rax + rbx*1 + 0x10], cl
 
 // === SAR r8, imm8 ===
-    sar al, 0xff
-    sar bl, 0xff
     sar dl, 0xff
+    sar al, 0xff
     sar cl, 0xff
+    sar bl, 0xff
 
 // === SAR m8, imm8 ===
-    sar BYTE PTR [rax], 0xff
-    sar BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    sar BYTE PTR [rbx], 0xff
     sar BYTE PTR [rip + 0x1000], 0xff
-    sar BYTE PTR [rip + 0x100], 0xff
+    sar BYTE PTR [rbx], 0xff
     sar BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    sar BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    sar BYTE PTR [rax], 0xff
+    sar BYTE PTR [rip + 0x100], 0xff
 
 // === SAR r16,1 ===
-    sar dx, 1
-    sar si, 1
     sar di, 1
     sar bx, 1
-    sar cx, 1
     sar ax, 1
+    sar cx, 1
+    sar dx, 1
+    sar si, 1
 
 // === SAR m16,1 ===
-    sar WORD PTR [rax + rbx*4 + 0x100], 1
-    sar WORD PTR [rax], 1
-    sar WORD PTR [rax + rbx*1 + 0x10], 1
-    sar WORD PTR [rbx], 1
-    sar WORD PTR [rip + 0x100], 1
     sar WORD PTR [rip + 0x1000], 1
+    sar WORD PTR [rax], 1
+    sar WORD PTR [rbx], 1
+    sar WORD PTR [rax + rbx*1 + 0x10], 1
+    sar WORD PTR [rip + 0x100], 1
+    sar WORD PTR [rax + rbx*4 + 0x100], 1
 
 // === SAR r16, CL ===
-    sar si, cl
-    sar di, cl
-    sar cx, cl
-    sar dx, cl
     sar ax, cl
+    sar di, cl
     sar bx, cl
+    sar dx, cl
+    sar cx, cl
+    sar si, cl
 
 // === SAR m16, CL ===
-    sar WORD PTR [rax], cl
-    sar WORD PTR [rip + 0x1000], cl
     sar WORD PTR [rax + rbx*4 + 0x100], cl
     sar WORD PTR [rip + 0x100], cl
     sar WORD PTR [rax + rbx*1 + 0x10], cl
     sar WORD PTR [rbx], cl
+    sar WORD PTR [rip + 0x1000], cl
+    sar WORD PTR [rax], cl
 
 // === SAR r16, imm8 ===
-    sar si, 0xff
     sar cx, 0xff
+    sar dx, 0xff
+    sar di, 0xff
+    sar si, 0xff
     sar ax, 0xff
     sar bx, 0xff
-    sar di, 0xff
-    sar dx, 0xff
 
 // === SAR m16, imm8 ===
-    sar WORD PTR [rax + rbx*4 + 0x100], 0xff
-    sar WORD PTR [rbx], 0xff
-    sar WORD PTR [rax + rbx*1 + 0x10], 0xff
-    sar WORD PTR [rax], 0xff
-    sar WORD PTR [rip + 0x1000], 0xff
     sar WORD PTR [rip + 0x100], 0xff
+    sar WORD PTR [rax], 0xff
+    sar WORD PTR [rax + rbx*1 + 0x10], 0xff
+    sar WORD PTR [rbx], 0xff
+    sar WORD PTR [rax + rbx*4 + 0x100], 0xff
+    sar WORD PTR [rip + 0x1000], 0xff
 
 // === SAR r32, 1 ===
-    sar eax, 1
     sar ebx, 1
-    sar esi, 1
     sar edi, 1
+    sar esi, 1
+    sar eax, 1
     sar ecx, 1
     sar edx, 1
 
 // === SAR m32, 1 ===
-    sar DWORD PTR [rbx], 1
-    sar DWORD PTR [rax + rbx*4 + 0x100], 1
-    sar DWORD PTR [rip + 0x1000], 1
     sar DWORD PTR [rip + 0x100], 1
+    sar DWORD PTR [rip + 0x1000], 1
+    sar DWORD PTR [rax + rbx*4 + 0x100], 1
     sar DWORD PTR [rax], 1
+    sar DWORD PTR [rbx], 1
     sar DWORD PTR [rax + rbx*1 + 0x10], 1
 
 // === SAR r64, 1 ===
+    sar rbx, 1
     sar rax, 1
     sar r8, 1
-    sar r9, 1
-    sar r10, 1
-    sar rbx, 1
-    sar r13, 1
-    sar rsi, 1
-    sar rdi, 1
     sar rdx, 1
     sar rcx, 1
+    sar r11, 1
+    sar r9, 1
+    sar r12, 1
+    sar rsi, 1
+    sar rdi, 1
 
 // === SAR m64, 1 ===
     sar QWORD PTR [rbx], 1
     sar QWORD PTR [rip + 0x100], 1
-    sar QWORD PTR [rax + rbx*1 + 0x10], 1
     sar QWORD PTR [rax], 1
-    sar QWORD PTR [rip + 0x1000], 1
     sar QWORD PTR [rax + rbx*4 + 0x100], 1
+    sar QWORD PTR [rax + rbx*1 + 0x10], 1
+    sar QWORD PTR [rip + 0x1000], 1
 
 // === SAR r32, CL ===
-    sar eax, cl
     sar ebx, cl
-    sar edi, cl
     sar edx, cl
-    sar esi, cl
+    sar edi, cl
     sar ecx, cl
+    sar eax, cl
+    sar esi, cl
 
 // === SAR m32, CL ===
-    sar DWORD PTR [rip + 0x100], cl
-    sar DWORD PTR [rax + rbx*1 + 0x10], cl
     sar DWORD PTR [rbx], cl
-    sar DWORD PTR [rax + rbx*4 + 0x100], cl
-    sar DWORD PTR [rip + 0x1000], cl
     sar DWORD PTR [rax], cl
+    sar DWORD PTR [rax + rbx*1 + 0x10], cl
+    sar DWORD PTR [rax + rbx*4 + 0x100], cl
+    sar DWORD PTR [rip + 0x100], cl
+    sar DWORD PTR [rip + 0x1000], cl
 
 // === SAR r64, CL ===
+    sar r11, cl
+    sar rbx, cl
+    sar rax, cl
     sar rdi, cl
     sar r10, cl
     sar rdx, cl
-    sar rax, cl
-    sar rsi, cl
-    sar r9, cl
     sar r12, cl
-    sar rbx, cl
-    sar r13, cl
+    sar r8, cl
+    sar rsi, cl
     sar rcx, cl
 
 // === SAR m64, CL ===
-    sar QWORD PTR [rip + 0x1000], cl
-    sar QWORD PTR [rbx], cl
-    sar QWORD PTR [rax + rbx*1 + 0x10], cl
     sar QWORD PTR [rax], cl
+    sar QWORD PTR [rax + rbx*1 + 0x10], cl
+    sar QWORD PTR [rip + 0x1000], cl
     sar QWORD PTR [rip + 0x100], cl
     sar QWORD PTR [rax + rbx*4 + 0x100], cl
+    sar QWORD PTR [rbx], cl
 
 // === SAR r32, imm8 ===
-    sar ecx, 0xff
+    sar edi, 0xff
     sar esi, 0xff
-    sar ebx, 0xff
     sar eax, 0xff
     sar edx, 0xff
-    sar edi, 0xff
+    sar ecx, 0xff
+    sar ebx, 0xff
 
 // === SAR m32, imm8 ===
     sar DWORD PTR [rax], 0xff
+    sar DWORD PTR [rax + rbx*1 + 0x10], 0xff
     sar DWORD PTR [rip + 0x1000], 0xff
+    sar DWORD PTR [rax + rbx*4 + 0x100], 0xff
     sar DWORD PTR [rbx], 0xff
     sar DWORD PTR [rip + 0x100], 0xff
-    sar DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    sar DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === SAR r64, imm8 ===
-    sar rsi, 0xff
-    sar rdx, 0xff
-    sar rcx, 0xff
-    sar rdi, 0xff
-    sar r9, 0xff
     sar r12, 0xff
-    sar r13, 0xff
     sar rax, 0xff
+    sar rdi, 0xff
     sar rbx, 0xff
+    sar r9, 0xff
+    sar rsi, 0xff
+    sar rcx, 0xff
+    sar r13, 0xff
+    sar rdx, 0xff
     sar r10, 0xff
 
 // === SAR m64, imm8 ===
-    sar QWORD PTR [rax], 0xff
-    sar QWORD PTR [rbx], 0xff
-    sar QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    sar QWORD PTR [rip + 0x100], 0xff
-    sar QWORD PTR [rax + rbx*1 + 0x10], 0xff
     sar QWORD PTR [rip + 0x1000], 0xff
+    sar QWORD PTR [rbx], 0xff
+    sar QWORD PTR [rip + 0x100], 0xff
+    sar QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    sar QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    sar QWORD PTR [rax], 0xff
 
 // === SHL r8, 1 ===
-    shl al, 1
-    shl cl, 1
     shl bl, 1
     shl dl, 1
+    shl cl, 1
+    shl al, 1
 
 // === SHL m8, 1 ===
-    shl BYTE PTR [rax + rbx*1 + 0x10], 1
-    shl BYTE PTR [rbx], 1
-    shl BYTE PTR [rip + 0x1000], 1
     shl BYTE PTR [rax], 1
+    shl BYTE PTR [rbx], 1
+    shl BYTE PTR [rax + rbx*1 + 0x10], 1
     shl BYTE PTR [rip + 0x100], 1
+    shl BYTE PTR [rip + 0x1000], 1
     shl BYTE PTR [rax + rbx*4 + 0x100], 1
 
 // === SHL r8, CL ===
-    shl dl, cl
-    shl bl, cl
     shl al, cl
+    shl dl, cl
     shl cl, cl
+    shl bl, cl
 
 // === SHL m8, CL ===
-    shl BYTE PTR [rbx], cl
-    shl BYTE PTR [rax + rbx*4 + 0x100], cl
-    shl BYTE PTR [rax], cl
     shl BYTE PTR [rip + 0x1000], cl
+    shl BYTE PTR [rbx], cl
     shl BYTE PTR [rax + rbx*1 + 0x10], cl
     shl BYTE PTR [rip + 0x100], cl
+    shl BYTE PTR [rax + rbx*4 + 0x100], cl
+    shl BYTE PTR [rax], cl
 
 // === SHL r8, imm8 ===
     shl dl, 0xff
@@ -8806,366 +9127,366 @@
     shl al, 0xff
 
 // === SHL m8, imm8 ===
-    shl BYTE PTR [rip + 0x100], 0xff
-    shl BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    shl BYTE PTR [rax + rbx*1 + 0x10], 0xff
     shl BYTE PTR [rax], 0xff
-    shl BYTE PTR [rbx], 0xff
+    shl BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    shl BYTE PTR [rax + rbx*4 + 0x100], 0xff
     shl BYTE PTR [rip + 0x1000], 0xff
+    shl BYTE PTR [rip + 0x100], 0xff
+    shl BYTE PTR [rbx], 0xff
 
 // === SHL r16,1 ===
-    shl bx, 1
-    shl dx, 1
-    shl si, 1
     shl ax, 1
-    shl cx, 1
     shl di, 1
+    shl dx, 1
+    shl bx, 1
+    shl si, 1
+    shl cx, 1
 
 // === SHL m16,1 ===
     shl WORD PTR [rax + rbx*1 + 0x10], 1
-    shl WORD PTR [rip + 0x1000], 1
-    shl WORD PTR [rax + rbx*4 + 0x100], 1
     shl WORD PTR [rip + 0x100], 1
-    shl WORD PTR [rbx], 1
     shl WORD PTR [rax], 1
+    shl WORD PTR [rbx], 1
+    shl WORD PTR [rax + rbx*4 + 0x100], 1
+    shl WORD PTR [rip + 0x1000], 1
 
 // === SHL r16, CL ===
-    shl bx, cl
-    shl si, cl
-    shl ax, cl
-    shl cx, cl
-    shl di, cl
     shl dx, cl
+    shl si, cl
+    shl cx, cl
+    shl ax, cl
+    shl di, cl
+    shl bx, cl
 
 // === SHL m16, CL ===
-    shl WORD PTR [rbx], cl
-    shl WORD PTR [rax + rbx*1 + 0x10], cl
-    shl WORD PTR [rax + rbx*4 + 0x100], cl
-    shl WORD PTR [rip + 0x1000], cl
-    shl WORD PTR [rax], cl
     shl WORD PTR [rip + 0x100], cl
+    shl WORD PTR [rax + rbx*1 + 0x10], cl
+    shl WORD PTR [rip + 0x1000], cl
+    shl WORD PTR [rbx], cl
+    shl WORD PTR [rax + rbx*4 + 0x100], cl
+    shl WORD PTR [rax], cl
 
 // === SHL r16, imm8 ===
     shl bx, 0xff
-    shl di, 0xff
-    shl dx, 0xff
-    shl cx, 0xff
     shl si, 0xff
     shl ax, 0xff
+    shl cx, 0xff
+    shl dx, 0xff
+    shl di, 0xff
 
 // === SHL m16, imm8 ===
+    shl WORD PTR [rax + rbx*4 + 0x100], 0xff
+    shl WORD PTR [rbx], 0xff
     shl WORD PTR [rip + 0x100], 0xff
     shl WORD PTR [rip + 0x1000], 0xff
-    shl WORD PTR [rax + rbx*4 + 0x100], 0xff
-    shl WORD PTR [rax], 0xff
     shl WORD PTR [rax + rbx*1 + 0x10], 0xff
-    shl WORD PTR [rbx], 0xff
+    shl WORD PTR [rax], 0xff
 
 // === SHL r32,1 ===
-    shl esi, 1
-    shl edx, 1
-    shl ecx, 1
     shl eax, 1
     shl ebx, 1
+    shl edx, 1
+    shl ecx, 1
     shl edi, 1
+    shl esi, 1
 
 // === SHL m32,1 ===
-    shl DWORD PTR [rbx], 1
+    shl DWORD PTR [rip + 0x1000], 1
     shl DWORD PTR [rax], 1
     shl DWORD PTR [rax + rbx*4 + 0x100], 1
-    shl DWORD PTR [rip + 0x1000], 1
-    shl DWORD PTR [rax + rbx*1 + 0x10], 1
     shl DWORD PTR [rip + 0x100], 1
+    shl DWORD PTR [rbx], 1
+    shl DWORD PTR [rax + rbx*1 + 0x10], 1
 
 // === SHL r64,1 ===
+    shl r8, 1
+    shl r12, 1
+    shl r11, 1
+    shl r10, 1
+    shl rdx, 1
+    shl rbx, 1
+    shl r9, 1
+    shl rsi, 1
     shl rdi, 1
     shl rcx, 1
-    shl r11, 1
-    shl rdx, 1
-    shl r13, 1
-    shl r8, 1
-    shl r10, 1
-    shl rax, 1
-    shl r9, 1
-    shl r12, 1
 
 // === SHL m64,1 ===
-    shl QWORD PTR [rip + 0x100], 1
-    shl QWORD PTR [rbx], 1
-    shl QWORD PTR [rax + rbx*1 + 0x10], 1
     shl QWORD PTR [rax], 1
-    shl QWORD PTR [rip + 0x1000], 1
+    shl QWORD PTR [rbx], 1
+    shl QWORD PTR [rip + 0x100], 1
+    shl QWORD PTR [rax + rbx*1 + 0x10], 1
     shl QWORD PTR [rax + rbx*4 + 0x100], 1
+    shl QWORD PTR [rip + 0x1000], 1
 
 // === SHL r32, CL ===
-    shl edi, cl
-    shl esi, cl
     shl ecx, cl
-    shl edx, cl
-    shl ebx, cl
     shl eax, cl
+    shl edi, cl
+    shl ebx, cl
+    shl edx, cl
+    shl esi, cl
 
 // === SHL m32, CL ===
-    shl DWORD PTR [rax + rbx*1 + 0x10], cl
-    shl DWORD PTR [rip + 0x1000], cl
-    shl DWORD PTR [rax + rbx*4 + 0x100], cl
     shl DWORD PTR [rax], cl
+    shl DWORD PTR [rax + rbx*4 + 0x100], cl
+    shl DWORD PTR [rip + 0x1000], cl
     shl DWORD PTR [rip + 0x100], cl
+    shl DWORD PTR [rax + rbx*1 + 0x10], cl
     shl DWORD PTR [rbx], cl
 
 // === SHL r64, CL ===
-    shl r13, cl
-    shl r9, cl
-    shl r8, cl
-    shl r12, cl
-    shl rbx, cl
-    shl rdx, cl
+    shl rax, cl
     shl rdi, cl
-    shl r11, cl
-    shl r10, cl
+    shl r9, cl
     shl rcx, cl
+    shl r11, cl
+    shl rbx, cl
+    shl r10, cl
+    shl r12, cl
+    shl r13, cl
+    shl rsi, cl
 
 // === SHL m64, CL ===
-    shl QWORD PTR [rip + 0x100], cl
     shl QWORD PTR [rax + rbx*4 + 0x100], cl
-    shl QWORD PTR [rax], cl
     shl QWORD PTR [rbx], cl
-    shl QWORD PTR [rip + 0x1000], cl
+    shl QWORD PTR [rip + 0x100], cl
+    shl QWORD PTR [rax], cl
     shl QWORD PTR [rax + rbx*1 + 0x10], cl
+    shl QWORD PTR [rip + 0x1000], cl
 
 // === SHL r32, imm8 ===
-    shl esi, 0xff
-    shl ebx, 0xff
-    shl ecx, 0xff
-    shl eax, 0xff
-    shl edx, 0xff
     shl edi, 0xff
+    shl ecx, 0xff
+    shl ebx, 0xff
+    shl esi, 0xff
+    shl edx, 0xff
+    shl eax, 0xff
 
 // === SHL m32, imm8 ===
+    shl DWORD PTR [rax + rbx*4 + 0x100], 0xff
     shl DWORD PTR [rip + 0x1000], 0xff
     shl DWORD PTR [rax], 0xff
-    shl DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    shl DWORD PTR [rax + rbx*1 + 0x10], 0xff
     shl DWORD PTR [rbx], 0xff
     shl DWORD PTR [rip + 0x100], 0xff
-    shl DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === SHL r64, imm8 ===
+    shl r10, 0xff
+    shl r13, 0xff
+    shl rbx, 0xff
+    shl r12, 0xff
+    shl rsi, 0xff
     shl r11, 0xff
+    shl r8, 0xff
+    shl rax, 0xff
     shl r9, 0xff
     shl rdi, 0xff
-    shl r8, 0xff
-    shl rsi, 0xff
-    shl r10, 0xff
-    shl rax, 0xff
-    shl rdx, 0xff
-    shl rbx, 0xff
-    shl rcx, 0xff
 
 // === SHL m64, imm8 ===
-    shl QWORD PTR [rip + 0x100], 0xff
     shl QWORD PTR [rax], 0xff
+    shl QWORD PTR [rip + 0x1000], 0xff
+    shl QWORD PTR [rip + 0x100], 0xff
+    shl QWORD PTR [rbx], 0xff
     shl QWORD PTR [rax + rbx*4 + 0x100], 0xff
     shl QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    shl QWORD PTR [rip + 0x1000], 0xff
-    shl QWORD PTR [rbx], 0xff
 
 // === SHR r8, ===
-    shr bl
     shr cl
-    shr dl
     shr al
+    shr bl
+    shr dl
 
 // === SHR m8, ===
+    shr BYTE PTR [rax + rbx*1 + 0x10]
+    shr BYTE PTR [rax + rbx*4 + 0x100]
+    shr BYTE PTR [rax]
+    shr BYTE PTR [rip + 0x1000]
     shr BYTE PTR [rbx]
     shr BYTE PTR [rip + 0x100]
-    shr BYTE PTR [rax]
-    shr BYTE PTR [rax + rbx*4 + 0x100]
-    shr BYTE PTR [rip + 0x1000]
-    shr BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SHR r8, CL ===
+    shr dl, cl
     shr cl, cl
     shr bl, cl
     shr al, cl
-    shr dl, cl
 
 // === SHR m8, CL ===
-    shr BYTE PTR [rip + 0x100], cl
     shr BYTE PTR [rax + rbx*4 + 0x100], cl
-    shr BYTE PTR [rax], cl
-    shr BYTE PTR [rip + 0x1000], cl
     shr BYTE PTR [rax + rbx*1 + 0x10], cl
+    shr BYTE PTR [rax], cl
     shr BYTE PTR [rbx], cl
+    shr BYTE PTR [rip + 0x100], cl
+    shr BYTE PTR [rip + 0x1000], cl
 
 // === SHR r8, imm8 ===
-    shr cl, 0xff
-    shr dl, 0xff
     shr al, 0xff
     shr bl, 0xff
+    shr cl, 0xff
+    shr dl, 0xff
 
 // === SHR m8, imm8 ===
-    shr BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    shr BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    shr BYTE PTR [rip + 0x1000], 0xff
-    shr BYTE PTR [rip + 0x100], 0xff
-    shr BYTE PTR [rax], 0xff
     shr BYTE PTR [rbx], 0xff
+    shr BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    shr BYTE PTR [rip + 0x100], 0xff
+    shr BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    shr BYTE PTR [rax], 0xff
+    shr BYTE PTR [rip + 0x1000], 0xff
 
 // === SHR r16, 1 ===
-    shr si, 1
-    shr ax, 1
-    shr dx, 1
-    shr di, 1
     shr bx, 1
+    shr di, 1
+    shr ax, 1
     shr cx, 1
+    shr si, 1
+    shr dx, 1
 
 // === SHR m16, 1 ===
-    shr WORD PTR [rax], 1
+    shr WORD PTR [rip + 0x1000], 1
+    shr WORD PTR [rax + rbx*1 + 0x10], 1
+    shr WORD PTR [rip + 0x100], 1
     shr WORD PTR [rax + rbx*4 + 0x100], 1
     shr WORD PTR [rbx], 1
-    shr WORD PTR [rip + 0x1000], 1
-    shr WORD PTR [rip + 0x100], 1
-    shr WORD PTR [rax + rbx*1 + 0x10], 1
+    shr WORD PTR [rax], 1
 
 // === SHR r16, CL ===
-    shr ax, cl
-    shr dx, cl
-    shr si, cl
-    shr cx, cl
     shr di, cl
     shr bx, cl
+    shr dx, cl
+    shr ax, cl
+    shr si, cl
+    shr cx, cl
 
 // === SHR m16, CL ===
-    shr WORD PTR [rax], cl
-    shr WORD PTR [rbx], cl
-    shr WORD PTR [rax + rbx*1 + 0x10], cl
-    shr WORD PTR [rip + 0x100], cl
-    shr WORD PTR [rip + 0x1000], cl
     shr WORD PTR [rax + rbx*4 + 0x100], cl
+    shr WORD PTR [rbx], cl
+    shr WORD PTR [rip + 0x100], cl
+    shr WORD PTR [rax], cl
+    shr WORD PTR [rax + rbx*1 + 0x10], cl
+    shr WORD PTR [rip + 0x1000], cl
 
 // === SHR r16, imm8 ===
-    shr ax, 0xff
+    shr bx, 0xff
     shr dx, 0xff
+    shr ax, 0xff
+    shr si, 0xff
     shr di, 0xff
     shr cx, 0xff
-    shr bx, 0xff
-    shr si, 0xff
 
 // === SHR m16, imm8 ===
     shr WORD PTR [rax + rbx*1 + 0x10], 0xff
+    shr WORD PTR [rbx], 0xff
     shr WORD PTR [rax], 0xff
     shr WORD PTR [rax + rbx*4 + 0x100], 0xff
-    shr WORD PTR [rip + 0x100], 0xff
     shr WORD PTR [rip + 0x1000], 0xff
-    shr WORD PTR [rbx], 0xff
+    shr WORD PTR [rip + 0x100], 0xff
 
 // === SHR r32, 1 ===
     shr ecx, 1
+    shr esi, 1
     shr edx, 1
     shr ebx, 1
     shr edi, 1
-    shr esi, 1
     shr eax, 1
 
 // === SHR m32, 1 ===
-    shr DWORD PTR [rip + 0x100], 1
-    shr DWORD PTR [rax + rbx*4 + 0x100], 1
-    shr DWORD PTR [rax], 1
-    shr DWORD PTR [rax + rbx*1 + 0x10], 1
     shr DWORD PTR [rip + 0x1000], 1
+    shr DWORD PTR [rip + 0x100], 1
+    shr DWORD PTR [rax + rbx*1 + 0x10], 1
     shr DWORD PTR [rbx], 1
+    shr DWORD PTR [rax], 1
+    shr DWORD PTR [rax + rbx*4 + 0x100], 1
 
 // === SHR r64, 1 ===
-    shr r13, 1
-    shr rbx, 1
     shr rdi, 1
-    shr rcx, 1
-    shr rsi, 1
-    shr r8, 1
-    shr rdx, 1
-    shr r11, 1
     shr r10, 1
+    shr rax, 1
+    shr rdx, 1
     shr r9, 1
+    shr r11, 1
+    shr r8, 1
+    shr rsi, 1
+    shr r12, 1
+    shr rbx, 1
 
 // === SHR m64, 1 ===
     shr QWORD PTR [rbx], 1
-    shr QWORD PTR [rip + 0x100], 1
-    shr QWORD PTR [rax], 1
-    shr QWORD PTR [rip + 0x1000], 1
     shr QWORD PTR [rax + rbx*1 + 0x10], 1
+    shr QWORD PTR [rip + 0x1000], 1
+    shr QWORD PTR [rax], 1
+    shr QWORD PTR [rip + 0x100], 1
     shr QWORD PTR [rax + rbx*4 + 0x100], 1
 
 // === SHR r32, CL ===
-    shr esi, cl
     shr edx, cl
-    shr ecx, cl
-    shr ebx, cl
     shr edi, cl
     shr eax, cl
+    shr ecx, cl
+    shr esi, cl
+    shr ebx, cl
 
 // === SHR m32, CL ===
     shr DWORD PTR [rbx], cl
     shr DWORD PTR [rip + 0x100], cl
-    shr DWORD PTR [rax + rbx*1 + 0x10], cl
-    shr DWORD PTR [rip + 0x1000], cl
     shr DWORD PTR [rax + rbx*4 + 0x100], cl
+    shr DWORD PTR [rip + 0x1000], cl
     shr DWORD PTR [rax], cl
+    shr DWORD PTR [rax + rbx*1 + 0x10], cl
 
 // === SHR r64, CL ===
-    shr r11, cl
-    shr r12, cl
-    shr rdi, cl
-    shr rsi, cl
     shr rcx, cl
-    shr r13, cl
-    shr rax, cl
+    shr r11, cl
     shr r9, cl
+    shr rbx, cl
+    shr rdi, cl
     shr rdx, cl
-    shr r8, cl
+    shr r10, cl
+    shr rax, cl
+    shr r13, cl
+    shr rsi, cl
 
 // === SHR m64, CL ===
-    shr QWORD PTR [rax + rbx*1 + 0x10], cl
     shr QWORD PTR [rip + 0x100], cl
-    shr QWORD PTR [rax], cl
     shr QWORD PTR [rip + 0x1000], cl
-    shr QWORD PTR [rbx], cl
+    shr QWORD PTR [rax], cl
+    shr QWORD PTR [rax + rbx*1 + 0x10], cl
     shr QWORD PTR [rax + rbx*4 + 0x100], cl
+    shr QWORD PTR [rbx], cl
 
 // === SHR r32, imm8 ===
-    shr esi, 0xff
-    shr ebx, 0xff
     shr edi, 0xff
+    shr edx, 0xff
+    shr ebx, 0xff
+    shr esi, 0xff
     shr ecx, 0xff
     shr eax, 0xff
-    shr edx, 0xff
 
 // === SHR m32, imm8 ===
-    shr DWORD PTR [rax + rbx*4 + 0x100], 0xff
     shr DWORD PTR [rip + 0x100], 0xff
-    shr DWORD PTR [rbx], 0xff
     shr DWORD PTR [rax], 0xff
+    shr DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    shr DWORD PTR [rbx], 0xff
     shr DWORD PTR [rax + rbx*1 + 0x10], 0xff
     shr DWORD PTR [rip + 0x1000], 0xff
 
 // === SHR r64, imm8 ===
-    shr r8, 0xff
-    shr rsi, 0xff
-    shr r9, 0xff
-    shr r11, 0xff
-    shr r10, 0xff
-    shr rcx, 0xff
-    shr r13, 0xff
     shr rax, 0xff
-    shr rbx, 0xff
     shr rdi, 0xff
+    shr r12, 0xff
+    shr rbx, 0xff
+    shr r9, 0xff
+    shr rcx, 0xff
+    shr r11, 0xff
+    shr rsi, 0xff
+    shr rdx, 0xff
+    shr r8, 0xff
 
 // === SHR m64, imm8 ===
     shr QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    shr QWORD PTR [rbx], 0xff
-    shr QWORD PTR [rip + 0x100], 0xff
     shr QWORD PTR [rip + 0x1000], 0xff
     shr QWORD PTR [rax + rbx*1 + 0x10], 0xff
     shr QWORD PTR [rax], 0xff
+    shr QWORD PTR [rbx], 0xff
+    shr QWORD PTR [rip + 0x100], 0xff
 
 // === SBB AL, imm8 ===
     sbb al, 0xff
@@ -9181,270 +9502,270 @@
     sbb rax, -1
 
 // === SBB r8, imm8 ===
-    sbb al, 0xff
-    sbb bl, 0xff
     sbb cl, 0xff
+    sbb bl, 0xff
+    sbb al, 0xff
     sbb dl, 0xff
 
 // === SBB m8, imm8 ===
-    sbb BYTE PTR [rbx], 0xff
-    sbb BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    sbb BYTE PTR [rax + rbx*1 + 0x10], 0xff
     sbb BYTE PTR [rip + 0x100], 0xff
+    sbb BYTE PTR [rax + rbx*4 + 0x100], 0xff
     sbb BYTE PTR [rax], 0xff
     sbb BYTE PTR [rip + 0x1000], 0xff
+    sbb BYTE PTR [rbx], 0xff
+    sbb BYTE PTR [rax + rbx*1 + 0x10], 0xff
 
 // === SBB r16, imm16 ===
+    sbb ax, 0xffff
+    sbb di, 0xffff
+    sbb cx, 0xffff
+    sbb bx, 0xffff
     sbb dx, 0xffff
     sbb si, 0xffff
-    sbb di, 0xffff
-    sbb bx, 0xffff
-    sbb ax, 0xffff
-    sbb cx, 0xffff
 
 // === SBB m16, imm16 ===
-    sbb WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    sbb WORD PTR [rip + 0x1000], 0xffff
-    sbb WORD PTR [rip + 0x100], 0xffff
     sbb WORD PTR [rbx], 0xffff
-    sbb WORD PTR [rax + rbx*4 + 0x100], 0xffff
     sbb WORD PTR [rax], 0xffff
+    sbb WORD PTR [rip + 0x1000], 0xffff
+    sbb WORD PTR [rax + rbx*4 + 0x100], 0xffff
+    sbb WORD PTR [rip + 0x100], 0xffff
+    sbb WORD PTR [rax + rbx*1 + 0x10], 0xffff
 
 // === SBB r32, imm32 ===
-    sbb ebx, 0xffffffff
-    sbb ecx, 0xffffffff
-    sbb eax, 0xffffffff
     sbb edx, 0xffffffff
-    sbb edi, 0xffffffff
+    sbb ecx, 0xffffffff
     sbb esi, 0xffffffff
+    sbb eax, 0xffffffff
+    sbb ebx, 0xffffffff
+    sbb edi, 0xffffffff
 
 // === SBB m32, imm32 ===
-    sbb DWORD PTR [rax], 0xffffffff
-    sbb DWORD PTR [rip + 0x100], 0xffffffff
-    sbb DWORD PTR [rip + 0x1000], 0xffffffff
-    sbb DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    sbb DWORD PTR [rbx], 0xffffffff
     sbb DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
+    sbb DWORD PTR [rbx], 0xffffffff
+    sbb DWORD PTR [rax], 0xffffffff
+    sbb DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    sbb DWORD PTR [rip + 0x1000], 0xffffffff
+    sbb DWORD PTR [rip + 0x100], 0xffffffff
 
 // === SBB r64, imm32 ===
-    sbb r11, 0x7fffffff
+    sbb r12, -1
+    sbb rcx, 0x7fffffff
+    sbb r10, -1
+    sbb r9, 0x7fffffff
     sbb rsi, -1
-    sbb rcx, -1
+    sbb rdi, -1
+    sbb rdx, 0x7fffffff
     sbb r9, -1
     sbb r8, 0x7fffffff
-    sbb rdx, 0x7fffffff
-    sbb r12, 0x7fffffff
-    sbb rcx, 0x7fffffff
-    sbb r8, -1
-    sbb rdi, -1
+    sbb rax, 0x7fffffff
 
 // === SBB m64, imm32 ===
-    sbb QWORD PTR [rbx], -1
-    sbb QWORD PTR [rax], 0x7fffffff
-    sbb QWORD PTR [rax + rbx*1 + 0x10], -1
     sbb QWORD PTR [rip + 0x1000], 0x7fffffff
-    sbb QWORD PTR [rax], -1
-    sbb QWORD PTR [rip + 0x1000], -1
+    sbb QWORD PTR [rax + rbx*1 + 0x10], -1
     sbb QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    sbb QWORD PTR [rbx], 0x7fffffff
+    sbb QWORD PTR [rax], 0x7fffffff
+    sbb QWORD PTR [rbx], -1
+    sbb QWORD PTR [rip + 0x1000], -1
+    sbb QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
     sbb QWORD PTR [rip + 0x100], -1
     sbb QWORD PTR [rip + 0x100], 0x7fffffff
-    sbb QWORD PTR [rax + rbx*4 + 0x100], -1
 
 // === SBB r16, imm8 ===
-    sbb di, 0xff
-    sbb bx, 0xff
-    sbb cx, 0xff
-    sbb si, 0xff
-    sbb dx, 0xff
     sbb ax, 0xff
+    sbb di, 0xff
+    sbb si, 0xff
+    sbb cx, 0xff
+    sbb bx, 0xff
+    sbb dx, 0xff
 
 // === SBB m16, imm8 ===
-    sbb WORD PTR [rax + rbx*4 + 0x100], 0xff
-    sbb WORD PTR [rip + 0x1000], 0xff
-    sbb WORD PTR [rip + 0x100], 0xff
-    sbb WORD PTR [rax + rbx*1 + 0x10], 0xff
-    sbb WORD PTR [rax], 0xff
     sbb WORD PTR [rbx], 0xff
+    sbb WORD PTR [rax], 0xff
+    sbb WORD PTR [rax + rbx*1 + 0x10], 0xff
+    sbb WORD PTR [rip + 0x1000], 0xff
+    sbb WORD PTR [rax + rbx*4 + 0x100], 0xff
+    sbb WORD PTR [rip + 0x100], 0xff
 
 // === SBB r32, imm8 ===
-    sbb esi, 0xff
-    sbb eax, 0xff
-    sbb edx, 0xff
     sbb ecx, 0xff
-    sbb edi, 0xff
     sbb ebx, 0xff
+    sbb edx, 0xff
+    sbb eax, 0xff
+    sbb esi, 0xff
+    sbb edi, 0xff
 
 // === SBB m32, imm8 ===
-    sbb DWORD PTR [rax + rbx*1 + 0x10], 0xff
-    sbb DWORD PTR [rax + rbx*4 + 0x100], 0xff
     sbb DWORD PTR [rip + 0x1000], 0xff
     sbb DWORD PTR [rbx], 0xff
     sbb DWORD PTR [rax], 0xff
+    sbb DWORD PTR [rax + rbx*1 + 0x10], 0xff
     sbb DWORD PTR [rip + 0x100], 0xff
+    sbb DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === SBB r64, imm8 ===
-    sbb r12, 0xff
-    sbb rdi, 0xff
-    sbb r8, 0xff
-    sbb rsi, 0xff
-    sbb r13, 0xff
-    sbb rdx, 0xff
-    sbb rcx, 0xff
-    sbb r9, 0xff
     sbb r11, 0xff
+    sbb r10, 0xff
+    sbb rdi, 0xff
+    sbb rsi, 0xff
     sbb rbx, 0xff
+    sbb rdx, 0xff
+    sbb r8, 0xff
+    sbb rax, 0xff
+    sbb r13, 0xff
+    sbb r12, 0xff
 
 // === SBB m64, imm8 ===
     sbb QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    sbb QWORD PTR [rbx], 0xff
-    sbb QWORD PTR [rax + rbx*1 + 0x10], 0xff
-    sbb QWORD PTR [rip + 0x100], 0xff
     sbb QWORD PTR [rax], 0xff
+    sbb QWORD PTR [rbx], 0xff
+    sbb QWORD PTR [rip + 0x100], 0xff
+    sbb QWORD PTR [rax + rbx*1 + 0x10], 0xff
     sbb QWORD PTR [rip + 0x1000], 0xff
 
 // === SBB r8, r8 ===
-    sbb dl, dl
-    sbb al, bl
-    sbb al, al
-    sbb bl, dl
+    sbb cl, al
     sbb al, cl
-    sbb cl, bl
-    sbb dl, bl
-    sbb cl, dl
-    sbb bl, al
+    sbb dl, al
     sbb bl, cl
+    sbb dl, dl
+    sbb cl, cl
+    sbb dl, cl
+    sbb bl, al
+    sbb cl, dl
+    sbb bl, dl
 
 // === SBB m8, r8 ===
-    sbb BYTE PTR [rip + 0x1000], cl
-    sbb BYTE PTR [rax + rbx*1 + 0x10], cl
-    sbb BYTE PTR [rbx], cl
-    sbb BYTE PTR [rip + 0x1000], al
+    sbb BYTE PTR [rbx], dl
+    sbb BYTE PTR [rbx], bl
+    sbb BYTE PTR [rbx], al
+    sbb BYTE PTR [rip + 0x100], bl
     sbb BYTE PTR [rax + rbx*4 + 0x100], dl
-    sbb BYTE PTR [rax + rbx*4 + 0x100], al
-    sbb BYTE PTR [rax + rbx*1 + 0x10], dl
+    sbb BYTE PTR [rip + 0x1000], al
+    sbb BYTE PTR [rax], bl
+    sbb BYTE PTR [rax + rbx*1 + 0x10], bl
+    sbb BYTE PTR [rax + rbx*4 + 0x100], bl
     sbb BYTE PTR [rip + 0x100], al
-    sbb BYTE PTR [rip + 0x100], dl
-    sbb BYTE PTR [rax], dl
 
 // === SBB r16, r16 ===
-    sbb di, dx
-    sbb si, dx
-    sbb ax, bx
-    sbb si, si
-    sbb di, si
-    sbb di, cx
-    sbb dx, dx
-    sbb dx, si
-    sbb ax, di
+    sbb dx, ax
+    sbb si, di
+    sbb cx, di
+    sbb dx, cx
+    sbb di, ax
     sbb cx, cx
+    sbb ax, ax
+    sbb dx, di
+    sbb ax, si
+    sbb si, ax
 
 // === SBB m16, r16 ===
-    sbb WORD PTR [rip + 0x1000], cx
-    sbb WORD PTR [rax + rbx*1 + 0x10], bx
-    sbb WORD PTR [rax + rbx*4 + 0x100], si
-    sbb WORD PTR [rax + rbx*1 + 0x10], di
-    sbb WORD PTR [rbx], dx
-    sbb WORD PTR [rip + 0x1000], si
-    sbb WORD PTR [rbx], bx
     sbb WORD PTR [rbx], si
-    sbb WORD PTR [rip + 0x1000], ax
-    sbb WORD PTR [rbx], di
+    sbb WORD PTR [rax + rbx*4 + 0x100], bx
+    sbb WORD PTR [rip + 0x1000], si
+    sbb WORD PTR [rax + rbx*4 + 0x100], di
+    sbb WORD PTR [rip + 0x1000], cx
+    sbb WORD PTR [rip + 0x100], si
+    sbb WORD PTR [rax + rbx*4 + 0x100], si
+    sbb WORD PTR [rip + 0x100], ax
+    sbb WORD PTR [rax + rbx*1 + 0x10], ax
+    sbb WORD PTR [rbx], bx
 
 // === SBB r32, r32 ===
-    sbb edi, edi
-    sbb edi, eax
-    sbb ebx, ecx
     sbb ebx, esi
-    sbb eax, esi
-    sbb edi, ecx
-    sbb eax, eax
+    sbb esi, edx
     sbb edi, edx
-    sbb ecx, edx
-    sbb edx, ecx
+    sbb eax, ebx
+    sbb esi, esi
+    sbb ebx, ebx
+    sbb ebx, ecx
+    sbb ecx, eax
+    sbb ebx, edi
+    sbb ecx, esi
 
 // === SBB m32, r32 ===
-    sbb DWORD PTR [rbx], esi
+    sbb DWORD PTR [rax], eax
+    sbb DWORD PTR [rip + 0x1000], edx
+    sbb DWORD PTR [rip + 0x1000], edi
     sbb DWORD PTR [rax + rbx*1 + 0x10], edx
-    sbb DWORD PTR [rax], ecx
-    sbb DWORD PTR [rax + rbx*1 + 0x10], ebx
-    sbb DWORD PTR [rip + 0x100], esi
-    sbb DWORD PTR [rbx], edi
-    sbb DWORD PTR [rax + rbx*4 + 0x100], esi
-    sbb DWORD PTR [rip + 0x100], ecx
-    sbb DWORD PTR [rax + rbx*4 + 0x100], eax
-    sbb DWORD PTR [rax + rbx*1 + 0x10], ecx
+    sbb DWORD PTR [rax + rbx*1 + 0x10], eax
+    sbb DWORD PTR [rip + 0x1000], eax
+    sbb DWORD PTR [rbx], esi
+    sbb DWORD PTR [rbx], eax
+    sbb DWORD PTR [rip + 0x100], eax
+    sbb DWORD PTR [rip + 0x1000], ebx
 
 // === SBB r64, r64 ===
+    sbb r11, rbx
     sbb rax, rax
-    sbb r12, r10
+    sbb r8, r12
     sbb rsi, r13
-    sbb rdi, r13
-    sbb rdx, rcx
-    sbb r13, r13
+    sbb r10, rdi
+    sbb rbx, rdi
+    sbb rcx, r12
+    sbb rsi, r8
     sbb rbx, r9
-    sbb rdx, r10
-    sbb r8, rax
-    sbb rdx, rdx
+    sbb rax, r12
 
 // === SBB m64, r64 ===
-    sbb QWORD PTR [rip + 0x1000], r13
-    sbb QWORD PTR [rip + 0x1000], rsi
-    sbb QWORD PTR [rax + rbx*1 + 0x10], rsi
-    sbb QWORD PTR [rbx], r8
-    sbb QWORD PTR [rip + 0x100], r11
-    sbb QWORD PTR [rbx], rcx
-    sbb QWORD PTR [rax + rbx*1 + 0x10], r12
-    sbb QWORD PTR [rbx], rdi
-    sbb QWORD PTR [rip + 0x1000], rcx
+    sbb QWORD PTR [rax + rbx*1 + 0x10], r8
+    sbb QWORD PTR [rax], r11
+    sbb QWORD PTR [rax + rbx*1 + 0x10], rbx
+    sbb QWORD PTR [rax + rbx*1 + 0x10], r10
+    sbb QWORD PTR [rax + rbx*1 + 0x10], r13
     sbb QWORD PTR [rbx], r13
+    sbb QWORD PTR [rax + rbx*1 + 0x10], rcx
+    sbb QWORD PTR [rip + 0x100], rbx
+    sbb QWORD PTR [rax], rdx
+    sbb QWORD PTR [rbx], rbx
 
 // === SBB r8, m8 ===
-    sbb dl, BYTE PTR [rax + rbx*4 + 0x100]
-    sbb cl, BYTE PTR [rax + rbx*1 + 0x10]
-    sbb bl, BYTE PTR [rip + 0x1000]
-    sbb al, BYTE PTR [rbx]
-    sbb dl, BYTE PTR [rbx]
-    sbb cl, BYTE PTR [rax + rbx*4 + 0x100]
-    sbb al, BYTE PTR [rip + 0x100]
+    sbb dl, BYTE PTR [rax + rbx*1 + 0x10]
+    sbb bl, BYTE PTR [rax]
     sbb al, BYTE PTR [rax]
-    sbb al, BYTE PTR [rax + rbx*1 + 0x10]
-    sbb bl, BYTE PTR [rip + 0x100]
+    sbb dl, BYTE PTR [rip + 0x1000]
+    sbb cl, BYTE PTR [rax]
+    sbb cl, BYTE PTR [rip + 0x100]
+    sbb bl, BYTE PTR [rax + rbx*4 + 0x100]
+    sbb al, BYTE PTR [rip + 0x1000]
+    sbb dl, BYTE PTR [rax + rbx*4 + 0x100]
+    sbb al, BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SBB r16, m16 ===
-    sbb di, WORD PTR [rip + 0x100]
-    sbb cx, WORD PTR [rax + rbx*1 + 0x10]
-    sbb si, WORD PTR [rbx]
-    sbb si, WORD PTR [rax + rbx*1 + 0x10]
-    sbb ax, WORD PTR [rip + 0x1000]
-    sbb dx, WORD PTR [rbx]
-    sbb bx, WORD PTR [rax + rbx*4 + 0x100]
-    sbb bx, WORD PTR [rbx]
-    sbb si, WORD PTR [rax]
+    sbb bx, WORD PTR [rax + rbx*1 + 0x10]
+    sbb dx, WORD PTR [rax]
     sbb cx, WORD PTR [rax + rbx*4 + 0x100]
+    sbb bx, WORD PTR [rip + 0x1000]
+    sbb di, WORD PTR [rax]
+    sbb di, WORD PTR [rax + rbx*1 + 0x10]
+    sbb si, WORD PTR [rbx]
+    sbb dx, WORD PTR [rax + rbx*4 + 0x100]
+    sbb cx, WORD PTR [rax]
+    sbb ax, WORD PTR [rip + 0x100]
 
 // === SBB r32, m32 ===
-    sbb esi, DWORD PTR [rax + rbx*4 + 0x100]
+    sbb ebx, DWORD PTR [rbx]
+    sbb eax, DWORD PTR [rax + rbx*4 + 0x100]
+    sbb edi, DWORD PTR [rbx]
     sbb eax, DWORD PTR [rip + 0x100]
-    sbb ecx, DWORD PTR [rip + 0x1000]
-    sbb esi, DWORD PTR [rip + 0x1000]
-    sbb edi, DWORD PTR [rax + rbx*1 + 0x10]
-    sbb edx, DWORD PTR [rax + rbx*4 + 0x100]
-    sbb ecx, DWORD PTR [rip + 0x100]
-    sbb edi, DWORD PTR [rip + 0x100]
-    sbb edx, DWORD PTR [rax + rbx*1 + 0x10]
+    sbb esi, DWORD PTR [rip + 0x100]
+    sbb ebx, DWORD PTR [rip + 0x1000]
     sbb eax, DWORD PTR [rax + rbx*1 + 0x10]
+    sbb edx, DWORD PTR [rbx]
+    sbb edi, DWORD PTR [rax + rbx*4 + 0x100]
+    sbb ecx, DWORD PTR [rax]
 
 // === SBB r64, m64 ===
-    sbb r12, QWORD PTR [rip + 0x100]
-    sbb rdx, QWORD PTR [rax]
-    sbb rsi, QWORD PTR [rax + rbx*1 + 0x10]
-    sbb r10, QWORD PTR [rax]
-    sbb rdx, QWORD PTR [rip + 0x1000]
-    sbb rsi, QWORD PTR [rip + 0x1000]
-    sbb rdi, QWORD PTR [rip + 0x1000]
+    sbb rdi, QWORD PTR [rax + rbx*1 + 0x10]
+    sbb r13, QWORD PTR [rax + rbx*4 + 0x100]
+    sbb r9, QWORD PTR [rax + rbx*1 + 0x10]
+    sbb r12, QWORD PTR [rax + rbx*1 + 0x10]
+    sbb rsi, QWORD PTR [rip + 0x100]
+    sbb rdi, QWORD PTR [rip + 0x100]
+    sbb rax, QWORD PTR [rax + rbx*1 + 0x10]
+    sbb rax, QWORD PTR [rax]
+    sbb r12, QWORD PTR [rax + rbx*4 + 0x100]
     sbb r9, QWORD PTR [rip + 0x100]
-    sbb r13, QWORD PTR [rax]
-    sbb rbx, QWORD PTR [rip + 0x1000]
 
 // === SCAS m8 ===
     scas BYTE PTR [rdi]
@@ -9471,17 +9792,17 @@
     scasq
 
 // === SETA r8 ===
-    seta bl
+    seta dl
     seta cl
     seta al
-    seta dl
+    seta bl
 
 // === SETA m8 ===
-    seta BYTE PTR [rip + 0x1000]
-    seta BYTE PTR [rax + rbx*1 + 0x10]
     seta BYTE PTR [rax + rbx*4 + 0x100]
-    seta BYTE PTR [rbx]
     seta BYTE PTR [rip + 0x100]
+    seta BYTE PTR [rip + 0x1000]
+    seta BYTE PTR [rbx]
+    seta BYTE PTR [rax + rbx*1 + 0x10]
     seta BYTE PTR [rax]
 
 // === SETAE r8 ===
@@ -9492,123 +9813,123 @@
 
 // === SETAE m8 ===
     setae BYTE PTR [rax + rbx*1 + 0x10]
-    setae BYTE PTR [rip + 0x100]
     setae BYTE PTR [rip + 0x1000]
-    setae BYTE PTR [rax]
     setae BYTE PTR [rbx]
     setae BYTE PTR [rax + rbx*4 + 0x100]
+    setae BYTE PTR [rip + 0x100]
+    setae BYTE PTR [rax]
 
 // === SETB r8 ===
-    setb bl
     setb al
     setb cl
     setb dl
+    setb bl
 
 // === SETB m8 ===
-    setb BYTE PTR [rax + rbx*1 + 0x10]
-    setb BYTE PTR [rax]
-    setb BYTE PTR [rip + 0x100]
-    setb BYTE PTR [rip + 0x1000]
-    setb BYTE PTR [rbx]
     setb BYTE PTR [rax + rbx*4 + 0x100]
+    setb BYTE PTR [rax]
+    setb BYTE PTR [rbx]
+    setb BYTE PTR [rax + rbx*1 + 0x10]
+    setb BYTE PTR [rip + 0x1000]
+    setb BYTE PTR [rip + 0x100]
 
 // === SETBE r8 ===
+    setbe cl
     setbe al
     setbe dl
     setbe bl
-    setbe cl
 
 // === SETBE m8 ===
-    setbe BYTE PTR [rax + rbx*4 + 0x100]
-    setbe BYTE PTR [rax]
-    setbe BYTE PTR [rip + 0x1000]
     setbe BYTE PTR [rax + rbx*1 + 0x10]
     setbe BYTE PTR [rbx]
     setbe BYTE PTR [rip + 0x100]
+    setbe BYTE PTR [rax + rbx*4 + 0x100]
+    setbe BYTE PTR [rax]
+    setbe BYTE PTR [rip + 0x1000]
 
 // === SETC r8 ===
-    setc al
-    setc bl
     setc cl
     setc dl
+    setc al
+    setc bl
 
 // === SETC m8 ===
-    setc BYTE PTR [rip + 0x1000]
     setc BYTE PTR [rbx]
+    setc BYTE PTR [rip + 0x1000]
     setc BYTE PTR [rax + rbx*4 + 0x100]
     setc BYTE PTR [rip + 0x100]
-    setc BYTE PTR [rax + rbx*1 + 0x10]
     setc BYTE PTR [rax]
+    setc BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SETE r8 ===
-    sete bl
     sete cl
     sete dl
+    sete bl
     sete al
 
 // === SETE m8 ===
-    sete BYTE PTR [rax + rbx*1 + 0x10]
-    sete BYTE PTR [rax + rbx*4 + 0x100]
     sete BYTE PTR [rax]
     sete BYTE PTR [rip + 0x1000]
-    sete BYTE PTR [rip + 0x100]
+    sete BYTE PTR [rax + rbx*1 + 0x10]
     sete BYTE PTR [rbx]
+    sete BYTE PTR [rax + rbx*4 + 0x100]
+    sete BYTE PTR [rip + 0x100]
 
 // === SETG r8 ===
-    setg dl
     setg bl
+    setg dl
     setg al
     setg cl
 
 // === SETG m8 ===
-    setg BYTE PTR [rip + 0x1000]
-    setg BYTE PTR [rax + rbx*1 + 0x10]
-    setg BYTE PTR [rbx]
-    setg BYTE PTR [rax]
     setg BYTE PTR [rip + 0x100]
+    setg BYTE PTR [rax + rbx*1 + 0x10]
+    setg BYTE PTR [rip + 0x1000]
     setg BYTE PTR [rax + rbx*4 + 0x100]
+    setg BYTE PTR [rax]
+    setg BYTE PTR [rbx]
 
 // === SETGE r8 ===
-    setge bl
-    setge dl
     setge cl
     setge al
+    setge bl
+    setge dl
 
 // === SETGE m8 ===
-    setge BYTE PTR [rax]
     setge BYTE PTR [rbx]
-    setge BYTE PTR [rax + rbx*4 + 0x100]
     setge BYTE PTR [rip + 0x1000]
-    setge BYTE PTR [rip + 0x100]
     setge BYTE PTR [rax + rbx*1 + 0x10]
+    setge BYTE PTR [rax]
+    setge BYTE PTR [rip + 0x100]
+    setge BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETL r8 ===
+    setl cl
+    setl al
     setl bl
     setl dl
-    setl al
-    setl cl
 
 // === SETL m8 ===
     setl BYTE PTR [rax]
-    setl BYTE PTR [rip + 0x100]
-    setl BYTE PTR [rax + rbx*1 + 0x10]
-    setl BYTE PTR [rax + rbx*4 + 0x100]
-    setl BYTE PTR [rip + 0x1000]
     setl BYTE PTR [rbx]
+    setl BYTE PTR [rax + rbx*4 + 0x100]
+    setl BYTE PTR [rip + 0x100]
+    setl BYTE PTR [rip + 0x1000]
+    setl BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SETLE r8 ===
-    setle al
+    setle dl
     setle cl
     setle bl
-    setle dl
+    setle al
 
 // === SETLE m8 ===
+    setle BYTE PTR [rbx]
     setle BYTE PTR [rax + rbx*4 + 0x100]
+    setle BYTE PTR [rip + 0x1000]
+    setle BYTE PTR [rip + 0x100]
     setle BYTE PTR [rax + rbx*1 + 0x10]
     setle BYTE PTR [rax]
-    setle BYTE PTR [rbx]
-    setle BYTE PTR [rip + 0x100]
-    setle BYTE PTR [rip + 0x1000]
 
 // === SETNA r8 ===
     setna al
@@ -9617,12 +9938,12 @@
     setna dl
 
 // === SETNA m8 ===
+    setna BYTE PTR [rbx]
+    setna BYTE PTR [rax + rbx*4 + 0x100]
     setna BYTE PTR [rax]
+    setna BYTE PTR [rax + rbx*1 + 0x10]
     setna BYTE PTR [rip + 0x100]
     setna BYTE PTR [rip + 0x1000]
-    setna BYTE PTR [rax + rbx*1 + 0x10]
-    setna BYTE PTR [rax + rbx*4 + 0x100]
-    setna BYTE PTR [rbx]
 
 // === SETNAE r8 ===
     setnae bl
@@ -9631,180 +9952,180 @@
     setnae dl
 
 // === SETNAE m8 ===
-    setnae BYTE PTR [rip + 0x100]
     setnae BYTE PTR [rip + 0x1000]
-    setnae BYTE PTR [rax]
-    setnae BYTE PTR [rbx]
     setnae BYTE PTR [rax + rbx*4 + 0x100]
+    setnae BYTE PTR [rax]
     setnae BYTE PTR [rax + rbx*1 + 0x10]
+    setnae BYTE PTR [rip + 0x100]
+    setnae BYTE PTR [rbx]
 
 // === SETNB r8 ===
-    setnb cl
-    setnb al
-    setnb bl
     setnb dl
+    setnb bl
+    setnb al
+    setnb cl
 
 // === SETNB m8 ===
     setnb BYTE PTR [rbx]
-    setnb BYTE PTR [rax]
     setnb BYTE PTR [rip + 0x1000]
+    setnb BYTE PTR [rax]
     setnb BYTE PTR [rip + 0x100]
     setnb BYTE PTR [rax + rbx*1 + 0x10]
     setnb BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETNBE r8 ===
+    setnbe dl
+    setnbe al
     setnbe cl
     setnbe bl
-    setnbe al
-    setnbe dl
 
 // === SETNBE m8 ===
-    setnbe BYTE PTR [rax + rbx*1 + 0x10]
     setnbe BYTE PTR [rip + 0x100]
     setnbe BYTE PTR [rip + 0x1000]
+    setnbe BYTE PTR [rax + rbx*1 + 0x10]
     setnbe BYTE PTR [rax]
-    setnbe BYTE PTR [rax + rbx*4 + 0x100]
     setnbe BYTE PTR [rbx]
+    setnbe BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETNC r8 ===
+    setnc al
     setnc dl
     setnc cl
     setnc bl
-    setnc al
 
 // === SETNC m8 ===
+    setnc BYTE PTR [rax]
     setnc BYTE PTR [rip + 0x1000]
-    setnc BYTE PTR [rax + rbx*1 + 0x10]
+    setnc BYTE PTR [rip + 0x100]
     setnc BYTE PTR [rbx]
     setnc BYTE PTR [rax + rbx*4 + 0x100]
-    setnc BYTE PTR [rax]
-    setnc BYTE PTR [rip + 0x100]
+    setnc BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SETNE r8 ===
     setne bl
-    setne dl
-    setne cl
     setne al
+    setne cl
+    setne dl
 
 // === SETNE m8 ===
-    setne BYTE PTR [rax + rbx*1 + 0x10]
-    setne BYTE PTR [rax + rbx*4 + 0x100]
-    setne BYTE PTR [rip + 0x100]
-    setne BYTE PTR [rax]
     setne BYTE PTR [rip + 0x1000]
+    setne BYTE PTR [rip + 0x100]
+    setne BYTE PTR [rax + rbx*1 + 0x10]
     setne BYTE PTR [rbx]
+    setne BYTE PTR [rax]
+    setne BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETNG r8 ===
-    setng dl
     setng al
-    setng cl
     setng bl
+    setng cl
+    setng dl
 
 // === SETNG m8 ===
-    setng BYTE PTR [rbx]
     setng BYTE PTR [rip + 0x1000]
-    setng BYTE PTR [rax]
     setng BYTE PTR [rax + rbx*4 + 0x100]
-    setng BYTE PTR [rax + rbx*1 + 0x10]
+    setng BYTE PTR [rax]
     setng BYTE PTR [rip + 0x100]
+    setng BYTE PTR [rax + rbx*1 + 0x10]
+    setng BYTE PTR [rbx]
 
 // === SETNGE r8 ===
-    setnge al
-    setnge dl
-    setnge bl
     setnge cl
+    setnge al
+    setnge bl
+    setnge dl
 
 // === SETNGE m8 ===
-    setnge BYTE PTR [rax]
-    setnge BYTE PTR [rax + rbx*4 + 0x100]
     setnge BYTE PTR [rip + 0x1000]
-    setnge BYTE PTR [rbx]
+    setnge BYTE PTR [rax + rbx*4 + 0x100]
     setnge BYTE PTR [rax + rbx*1 + 0x10]
     setnge BYTE PTR [rip + 0x100]
+    setnge BYTE PTR [rbx]
+    setnge BYTE PTR [rax]
 
 // === SETNL r8 ===
     setnl dl
     setnl bl
-    setnl cl
     setnl al
+    setnl cl
 
 // === SETNL m8 ===
-    setnl BYTE PTR [rax + rbx*1 + 0x10]
-    setnl BYTE PTR [rax]
     setnl BYTE PTR [rip + 0x1000]
-    setnl BYTE PTR [rbx]
     setnl BYTE PTR [rip + 0x100]
+    setnl BYTE PTR [rbx]
+    setnl BYTE PTR [rax]
     setnl BYTE PTR [rax + rbx*4 + 0x100]
+    setnl BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SETNLE r8 ===
     setnle cl
-    setnle dl
-    setnle bl
     setnle al
+    setnle bl
+    setnle dl
 
 // === SETNLE m8 ===
-    setnle BYTE PTR [rax + rbx*1 + 0x10]
     setnle BYTE PTR [rip + 0x100]
-    setnle BYTE PTR [rax + rbx*4 + 0x100]
     setnle BYTE PTR [rbx]
-    setnle BYTE PTR [rip + 0x1000]
     setnle BYTE PTR [rax]
+    setnle BYTE PTR [rip + 0x1000]
+    setnle BYTE PTR [rax + rbx*1 + 0x10]
+    setnle BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETNO r8 ===
-    setno cl
     setno bl
-    setno dl
+    setno cl
     setno al
+    setno dl
 
 // === SETNO m8 ===
-    setno BYTE PTR [rip + 0x1000]
-    setno BYTE PTR [rax + rbx*4 + 0x100]
     setno BYTE PTR [rax]
     setno BYTE PTR [rbx]
-    setno BYTE PTR [rax + rbx*1 + 0x10]
     setno BYTE PTR [rip + 0x100]
+    setno BYTE PTR [rax + rbx*4 + 0x100]
+    setno BYTE PTR [rip + 0x1000]
+    setno BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SETNP r8 ===
+    setnp al
+    setnp bl
     setnp dl
     setnp cl
-    setnp bl
-    setnp al
 
 // === SETNP m8 ===
     setnp BYTE PTR [rax + rbx*1 + 0x10]
     setnp BYTE PTR [rip + 0x100]
-    setnp BYTE PTR [rax]
     setnp BYTE PTR [rip + 0x1000]
     setnp BYTE PTR [rax + rbx*4 + 0x100]
     setnp BYTE PTR [rbx]
+    setnp BYTE PTR [rax]
 
 // === SETNS r8 ===
-    setns dl
-    setns cl
-    setns bl
     setns al
+    setns cl
+    setns dl
+    setns bl
 
 // === SETNS m8 ===
+    setns BYTE PTR [rbx]
+    setns BYTE PTR [rax]
+    setns BYTE PTR [rax + rbx*4 + 0x100]
     setns BYTE PTR [rip + 0x1000]
     setns BYTE PTR [rip + 0x100]
-    setns BYTE PTR [rbx]
     setns BYTE PTR [rax + rbx*1 + 0x10]
-    setns BYTE PTR [rax + rbx*4 + 0x100]
-    setns BYTE PTR [rax]
 
 // === SETNZ r8 ===
+    setnz al
     setnz bl
     setnz cl
-    setnz al
     setnz dl
 
 // === SETNZ m8 ===
-    setnz BYTE PTR [rip + 0x1000]
     setnz BYTE PTR [rbx]
-    setnz BYTE PTR [rax]
-    setnz BYTE PTR [rip + 0x100]
-    setnz BYTE PTR [rax + rbx*1 + 0x10]
+    setnz BYTE PTR [rip + 0x1000]
     setnz BYTE PTR [rax + rbx*4 + 0x100]
+    setnz BYTE PTR [rax + rbx*1 + 0x10]
+    setnz BYTE PTR [rip + 0x100]
+    setnz BYTE PTR [rax]
 
 // === SETO r8 ===
     seto dl
@@ -9813,421 +10134,439 @@
     seto al
 
 // === SETO m8 ===
-    seto BYTE PTR [rax + rbx*1 + 0x10]
-    seto BYTE PTR [rax + rbx*4 + 0x100]
-    seto BYTE PTR [rax]
     seto BYTE PTR [rip + 0x1000]
+    seto BYTE PTR [rax + rbx*1 + 0x10]
     seto BYTE PTR [rbx]
+    seto BYTE PTR [rax]
+    seto BYTE PTR [rax + rbx*4 + 0x100]
     seto BYTE PTR [rip + 0x100]
 
 // === SETP r8 ===
-    setp dl
     setp al
     setp cl
+    setp dl
     setp bl
 
 // === SETP m8 ===
-    setp BYTE PTR [rax + rbx*4 + 0x100]
-    setp BYTE PTR [rbx]
-    setp BYTE PTR [rip + 0x1000]
     setp BYTE PTR [rax]
+    setp BYTE PTR [rip + 0x1000]
     setp BYTE PTR [rax + rbx*1 + 0x10]
     setp BYTE PTR [rip + 0x100]
+    setp BYTE PTR [rbx]
+    setp BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETPE r8 ===
-    setpe al
     setpe cl
     setpe dl
     setpe bl
+    setpe al
 
 // === SETPE m8 ===
-    setpe BYTE PTR [rax + rbx*1 + 0x10]
-    setpe BYTE PTR [rip + 0x1000]
-    setpe BYTE PTR [rbx]
-    setpe BYTE PTR [rip + 0x100]
     setpe BYTE PTR [rax]
+    setpe BYTE PTR [rbx]
+    setpe BYTE PTR [rip + 0x1000]
+    setpe BYTE PTR [rax + rbx*1 + 0x10]
     setpe BYTE PTR [rax + rbx*4 + 0x100]
+    setpe BYTE PTR [rip + 0x100]
 
 // === SETPO r8 ===
+    setpo al
     setpo bl
     setpo cl
-    setpo al
     setpo dl
 
 // === SETPO m8 ===
-    setpo BYTE PTR [rip + 0x100]
-    setpo BYTE PTR [rip + 0x1000]
-    setpo BYTE PTR [rax]
-    setpo BYTE PTR [rax + rbx*4 + 0x100]
-    setpo BYTE PTR [rbx]
     setpo BYTE PTR [rax + rbx*1 + 0x10]
+    setpo BYTE PTR [rax + rbx*4 + 0x100]
+    setpo BYTE PTR [rip + 0x1000]
+    setpo BYTE PTR [rbx]
+    setpo BYTE PTR [rax]
+    setpo BYTE PTR [rip + 0x100]
 
 // === SETS r8 ===
-    sets al
-    sets cl
     sets bl
+    sets cl
     sets dl
+    sets al
 
 // === SETS m8 ===
+    sets BYTE PTR [rax]
+    sets BYTE PTR [rip + 0x1000]
+    sets BYTE PTR [rax + rbx*4 + 0x100]
+    sets BYTE PTR [rip + 0x100]
     sets BYTE PTR [rax + rbx*1 + 0x10]
     sets BYTE PTR [rbx]
-    sets BYTE PTR [rip + 0x1000]
-    sets BYTE PTR [rip + 0x100]
-    sets BYTE PTR [rax]
-    sets BYTE PTR [rax + rbx*4 + 0x100]
 
 // === SETZ r8 ===
-    setz dl
     setz bl
-    setz al
     setz cl
+    setz al
+    setz dl
 
 // === SETZ m8 ===
     setz BYTE PTR [rax + rbx*4 + 0x100]
-    setz BYTE PTR [rax]
-    setz BYTE PTR [rip + 0x100]
     setz BYTE PTR [rbx]
-    setz BYTE PTR [rax + rbx*1 + 0x10]
+    setz BYTE PTR [rax]
     setz BYTE PTR [rip + 0x1000]
+    setz BYTE PTR [rip + 0x100]
+    setz BYTE PTR [rax + rbx*1 + 0x10]
 
 // === SFENCE ===
     sfence
 
+// === SGDT m ===
+    sgdt [rax]
+    sgdt [rbx]
+    sgdt [rip + 0x100]
+
 // === SHLD r16, r16, imm8 ===
-    shld cx, si, 0xff
-    shld dx, si, 0xff
-    shld cx, cx, 0xff
-    shld dx, dx, 0xff
-    shld ax, bx, 0xff
-    shld cx, dx, 0xff
-    shld ax, si, 0xff
-    shld si, cx, 0xff
-    shld ax, cx, 0xff
     shld dx, ax, 0xff
+    shld di, ax, 0xff
+    shld bx, di, 0xff
+    shld dx, bx, 0xff
+    shld bx, cx, 0xff
+    shld si, di, 0xff
+    shld cx, di, 0xff
+    shld cx, cx, 0xff
+    shld si, bx, 0xff
+    shld cx, dx, 0xff
 
 // === SHLD m16, r16, imm8 ===
     shld WORD PTR [rip + 0x100], bx, 0xff
-    shld WORD PTR [rip + 0x100], cx, 0xff
-    shld WORD PTR [rip + 0x100], si, 0xff
-    shld WORD PTR [rbx], cx, 0xff
-    shld WORD PTR [rip + 0x1000], ax, 0xff
-    shld WORD PTR [rip + 0x1000], cx, 0xff
+    shld WORD PTR [rax + rbx*1 + 0x10], ax, 0xff
+    shld WORD PTR [rip + 0x1000], di, 0xff
+    shld WORD PTR [rip + 0x1000], dx, 0xff
+    shld WORD PTR [rip + 0x1000], si, 0xff
+    shld WORD PTR [rbx], bx, 0xff
     shld WORD PTR [rax + rbx*1 + 0x10], dx, 0xff
-    shld WORD PTR [rax + rbx*1 + 0x10], di, 0xff
-    shld WORD PTR [rax + rbx*4 + 0x100], cx, 0xff
-    shld WORD PTR [rip + 0x1000], bx, 0xff
+    shld WORD PTR [rax + rbx*4 + 0x100], ax, 0xff
+    shld WORD PTR [rip + 0x100], cx, 0xff
+    shld WORD PTR [rax + rbx*1 + 0x10], bx, 0xff
 
 // === SHLD r16, r16, CL ===
-    shld si, di, cl
-    shld ax, si, cl
-    shld di, cx, cl
+    shld ax, cx, cl
+    shld si, dx, cl
+    shld dx, si, cl
+    shld di, si, cl
+    shld bx, bx, cl
+    shld cx, ax, cl
     shld cx, cx, cl
-    shld bx, ax, cl
-    shld di, ax, cl
     shld dx, bx, cl
-    shld bx, di, cl
-    shld di, di, cl
-    shld ax, di, cl
+    shld di, dx, cl
+    shld bx, dx, cl
 
 // === SHLD m16, r16, CL ===
-    shld WORD PTR [rip + 0x1000], di, cl
-    shld WORD PTR [rax + rbx*1 + 0x10], cx, cl
-    shld WORD PTR [rax + rbx*1 + 0x10], dx, cl
-    shld WORD PTR [rip + 0x100], dx, cl
+    shld WORD PTR [rax + rbx*4 + 0x100], dx, cl
     shld WORD PTR [rax + rbx*4 + 0x100], ax, cl
-    shld WORD PTR [rax], di, cl
-    shld WORD PTR [rax + rbx*4 + 0x100], bx, cl
-    shld WORD PTR [rax + rbx*1 + 0x10], bx, cl
-    shld WORD PTR [rip + 0x100], ax, cl
-    shld WORD PTR [rax], ax, cl
+    shld WORD PTR [rbx], dx, cl
+    shld WORD PTR [rax], cx, cl
+    shld WORD PTR [rax + rbx*1 + 0x10], cx, cl
+    shld WORD PTR [rax], bx, cl
+    shld WORD PTR [rip + 0x1000], si, cl
+    shld WORD PTR [rbx], bx, cl
+    shld WORD PTR [rip + 0x1000], di, cl
+    shld WORD PTR [rax + rbx*1 + 0x10], di, cl
 
 // === SHLD r32, r32, imm8 ===
+    shld edi, esi, 0xff
+    shld edi, eax, 0xff
     shld ecx, edx, 0xff
-    shld ecx, ecx, 0xff
-    shld edx, eax, 0xff
-    shld ebx, esi, 0xff
-    shld esi, edi, 0xff
-    shld esi, edx, 0xff
-    shld edi, ebx, 0xff
-    shld eax, edx, 0xff
     shld edx, edx, 0xff
-    shld esi, ecx, 0xff
+    shld esi, edx, 0xff
+    shld ecx, esi, 0xff
+    shld ebx, edi, 0xff
+    shld eax, edi, 0xff
+    shld eax, edx, 0xff
+    shld edi, edx, 0xff
 
 // === SHLD m32, r32, imm8 ===
-    shld DWORD PTR [rax + rbx*1 + 0x10], ecx, 0xff
-    shld DWORD PTR [rax], edx, 0xff
-    shld DWORD PTR [rip + 0x1000], ebx, 0xff
-    shld DWORD PTR [rip + 0x1000], edx, 0xff
+    shld DWORD PTR [rbx], esi, 0xff
+    shld DWORD PTR [rbx], edx, 0xff
+    shld DWORD PTR [rax], ebx, 0xff
+    shld DWORD PTR [rip + 0x100], esi, 0xff
     shld DWORD PTR [rax + rbx*1 + 0x10], ebx, 0xff
-    shld DWORD PTR [rbx], ebx, 0xff
-    shld DWORD PTR [rbx], ecx, 0xff
-    shld DWORD PTR [rax + rbx*1 + 0x10], eax, 0xff
+    shld DWORD PTR [rip + 0x100], ecx, 0xff
+    shld DWORD PTR [rax + rbx*4 + 0x100], eax, 0xff
+    shld DWORD PTR [rip + 0x1000], eax, 0xff
+    shld DWORD PTR [rip + 0x1000], edx, 0xff
     shld DWORD PTR [rax], eax, 0xff
-    shld DWORD PTR [rbx], edi, 0xff
 
 // === SHLD r64, r64, imm8 ===
-    shld rsi, rbx, 0xff
-    shld r13, rsi, 0xff
-    shld rbx, r9, 0xff
-    shld r11, rdx, 0xff
-    shld r8, rdx, 0xff
-    shld rcx, rax, 0xff
-    shld r10, rax, 0xff
-    shld r11, r8, 0xff
-    shld r10, rsi, 0xff
-    shld rax, rdx, 0xff
+    shld r9, r9, 0xff
+    shld r11, rdi, 0xff
+    shld r9, r12, 0xff
+    shld rax, r12, 0xff
+    shld r13, rcx, 0xff
+    shld r9, rsi, 0xff
+    shld rdx, rdi, 0xff
+    shld rbx, r13, 0xff
+    shld r11, r9, 0xff
+    shld r9, r11, 0xff
 
 // === SHLD m64, r64, imm8 ===
-    shld QWORD PTR [rax + rbx*4 + 0x100], r8, 0xff
-    shld QWORD PTR [rax + rbx*1 + 0x10], rcx, 0xff
-    shld QWORD PTR [rax + rbx*4 + 0x100], r13, 0xff
-    shld QWORD PTR [rbx], rax, 0xff
-    shld QWORD PTR [rbx], r9, 0xff
-    shld QWORD PTR [rax + rbx*1 + 0x10], rbx, 0xff
+    shld QWORD PTR [rax + rbx*1 + 0x10], rsi, 0xff
+    shld QWORD PTR [rax + rbx*4 + 0x100], rdi, 0xff
     shld QWORD PTR [rip + 0x1000], r12, 0xff
-    shld QWORD PTR [rip + 0x1000], rdi, 0xff
-    shld QWORD PTR [rax + rbx*1 + 0x10], r13, 0xff
-    shld QWORD PTR [rip + 0x100], rbx, 0xff
+    shld QWORD PTR [rax + rbx*4 + 0x100], r9, 0xff
+    shld QWORD PTR [rbx], rbx, 0xff
+    shld QWORD PTR [rax], rcx, 0xff
+    shld QWORD PTR [rbx], r8, 0xff
+    shld QWORD PTR [rip + 0x100], r8, 0xff
+    shld QWORD PTR [rax], r8, 0xff
+    shld QWORD PTR [rip + 0x1000], r11, 0xff
 
 // === SHLD r32, r32, CL ===
-    shld edi, ebx, cl
-    shld edx, edi, cl
     shld ebx, esi, cl
-    shld ecx, ecx, cl
-    shld edx, eax, cl
-    shld esi, edi, cl
-    shld ebx, eax, cl
-    shld edi, edx, cl
-    shld ecx, eax, cl
-    shld ecx, edi, cl
+    shld edi, ecx, cl
+    shld esi, eax, cl
+    shld edi, ebx, cl
+    shld ebx, ebx, cl
+    shld edx, esi, cl
+    shld eax, edi, cl
+    shld eax, edx, cl
+    shld edx, ebx, cl
+    shld esi, ebx, cl
 
 // === SHLD m32, r32, CL ===
-    shld DWORD PTR [rip + 0x1000], esi, cl
-    shld DWORD PTR [rbx], edx, cl
-    shld DWORD PTR [rax + rbx*1 + 0x10], ebx, cl
-    shld DWORD PTR [rbx], ecx, cl
-    shld DWORD PTR [rip + 0x100], ecx, cl
-    shld DWORD PTR [rax + rbx*4 + 0x100], ecx, cl
+    shld DWORD PTR [rax + rbx*4 + 0x100], eax, cl
+    shld DWORD PTR [rip + 0x1000], eax, cl
+    shld DWORD PTR [rip + 0x1000], ebx, cl
     shld DWORD PTR [rax + rbx*4 + 0x100], edi, cl
-    shld DWORD PTR [rip + 0x100], esi, cl
     shld DWORD PTR [rax + rbx*4 + 0x100], ebx, cl
-    shld DWORD PTR [rax + rbx*1 + 0x10], ecx, cl
+    shld DWORD PTR [rip + 0x100], ecx, cl
+    shld DWORD PTR [rax + rbx*4 + 0x100], edx, cl
+    shld DWORD PTR [rax], edi, cl
+    shld DWORD PTR [rip + 0x100], esi, cl
+    shld DWORD PTR [rip + 0x100], edx, cl
 
 // === SHLD r64, r64, CL ===
-    shld r13, r8, cl
-    shld r11, rcx, cl
-    shld rbx, r13, cl
-    shld r9, rax, cl
-    shld rsi, r13, cl
-    shld r13, rdi, cl
-    shld rcx, rcx, cl
-    shld rcx, rax, cl
-    shld rbx, r10, cl
-    shld rbx, r9, cl
+    shld r8, r9, cl
+    shld r11, rdx, cl
+    shld rdi, r8, cl
+    shld rbx, r12, cl
+    shld r10, rbx, cl
+    shld rsi, rcx, cl
+    shld r13, rdx, cl
+    shld rsi, rdx, cl
+    shld rsi, rax, cl
+    shld rsi, rsi, cl
 
 // === SHLD m64, r64, CL ===
     shld QWORD PTR [rip + 0x1000], rcx, cl
-    shld QWORD PTR [rax], rax, cl
-    shld QWORD PTR [rax + rbx*4 + 0x100], r8, cl
-    shld QWORD PTR [rip + 0x1000], rdx, cl
-    shld QWORD PTR [rip + 0x100], rdx, cl
-    shld QWORD PTR [rbx], r12, cl
-    shld QWORD PTR [rbx], r9, cl
-    shld QWORD PTR [rip + 0x100], r8, cl
-    shld QWORD PTR [rax + rbx*1 + 0x10], rax, cl
-    shld QWORD PTR [rax + rbx*4 + 0x100], rbx, cl
+    shld QWORD PTR [rax + rbx*1 + 0x10], rdx, cl
+    shld QWORD PTR [rax + rbx*4 + 0x100], r9, cl
+    shld QWORD PTR [rbx], rdx, cl
+    shld QWORD PTR [rax + rbx*4 + 0x100], r11, cl
+    shld QWORD PTR [rip + 0x1000], rax, cl
+    shld QWORD PTR [rax], r11, cl
+    shld QWORD PTR [rip + 0x1000], r12, cl
+    shld QWORD PTR [rip + 0x1000], r11, cl
+    shld QWORD PTR [rip + 0x100], rax, cl
 
 // === SHRD r16, r16, imm8 ===
-    shrd cx, dx, 0xff
-    shrd si, si, 0xff
     shrd ax, dx, 0xff
-    shrd dx, cx, 0xff
-    shrd cx, di, 0xff
-    shrd bx, dx, 0xff
-    shrd ax, di, 0xff
-    shrd bx, di, 0xff
-    shrd cx, si, 0xff
+    shrd dx, di, 0xff
+    shrd di, cx, 0xff
+    shrd di, si, 0xff
+    shrd cx, ax, 0xff
+    shrd cx, dx, 0xff
+    shrd bx, bx, 0xff
+    shrd di, dx, 0xff
+    shrd dx, ax, 0xff
     shrd dx, dx, 0xff
 
 // === SHRD m16, r16, imm8 ===
-    shrd WORD PTR [rax], bx, 0xff
-    shrd WORD PTR [rax + rbx*1 + 0x10], dx, 0xff
-    shrd WORD PTR [rip + 0x100], di, 0xff
-    shrd WORD PTR [rip + 0x1000], si, 0xff
-    shrd WORD PTR [rip + 0x100], dx, 0xff
-    shrd WORD PTR [rbx], di, 0xff
-    shrd WORD PTR [rax], di, 0xff
+    shrd WORD PTR [rip + 0x1000], cx, 0xff
+    shrd WORD PTR [rbx], si, 0xff
     shrd WORD PTR [rax], ax, 0xff
-    shrd WORD PTR [rip + 0x100], si, 0xff
-    shrd WORD PTR [rip + 0x100], ax, 0xff
+    shrd WORD PTR [rax + rbx*1 + 0x10], cx, 0xff
+    shrd WORD PTR [rip + 0x100], dx, 0xff
+    shrd WORD PTR [rax + rbx*4 + 0x100], ax, 0xff
+    shrd WORD PTR [rbx], cx, 0xff
+    shrd WORD PTR [rax + rbx*1 + 0x10], bx, 0xff
+    shrd WORD PTR [rip + 0x1000], si, 0xff
+    shrd WORD PTR [rax], si, 0xff
 
 // === SHRD r16, r16, CL ===
-    shrd si, bx, cl
-    shrd bx, cx, cl
-    shrd si, si, cl
-    shrd dx, si, cl
-    shrd ax, dx, cl
-    shrd cx, bx, cl
-    shrd ax, cx, cl
-    shrd di, cx, cl
-    shrd si, cx, cl
+    shrd dx, cx, cl
+    shrd cx, di, cl
     shrd dx, di, cl
+    shrd dx, bx, cl
+    shrd si, cx, cl
+    shrd si, bx, cl
+    shrd di, si, cl
+    shrd cx, si, cl
+    shrd cx, cx, cl
+    shrd cx, ax, cl
 
 // === SHRD m16, r16, CL ===
-    shrd WORD PTR [rbx], ax, cl
-    shrd WORD PTR [rax], si, cl
-    shrd WORD PTR [rax + rbx*1 + 0x10], cx, cl
     shrd WORD PTR [rip + 0x100], si, cl
-    shrd WORD PTR [rip + 0x100], dx, cl
+    shrd WORD PTR [rip + 0x100], di, cl
     shrd WORD PTR [rax + rbx*1 + 0x10], si, cl
-    shrd WORD PTR [rip + 0x1000], dx, cl
+    shrd WORD PTR [rip + 0x1000], ax, cl
     shrd WORD PTR [rax + rbx*1 + 0x10], di, cl
-    shrd WORD PTR [rbx], cx, cl
-    shrd WORD PTR [rax], dx, cl
+    shrd WORD PTR [rip + 0x1000], di, cl
+    shrd WORD PTR [rax], cx, cl
+    shrd WORD PTR [rax + rbx*4 + 0x100], si, cl
+    shrd WORD PTR [rbx], si, cl
+    shrd WORD PTR [rax + rbx*4 + 0x100], cx, cl
 
 // === SHRD r32, r32, imm8 ===
-    shrd ecx, edx, 0xff
-    shrd edx, ebx, 0xff
-    shrd edx, edx, 0xff
-    shrd ecx, edi, 0xff
-    shrd esi, ecx, 0xff
-    shrd ebx, edx, 0xff
-    shrd edi, ebx, 0xff
+    shrd ecx, eax, 0xff
+    shrd ebx, esi, 0xff
+    shrd ebx, eax, 0xff
+    shrd esi, edx, 0xff
+    shrd ecx, esi, 0xff
     shrd esi, eax, 0xff
-    shrd eax, ebx, 0xff
-    shrd eax, eax, 0xff
+    shrd esi, ecx, 0xff
+    shrd ecx, ebx, 0xff
+    shrd edi, esi, 0xff
+    shrd ecx, edx, 0xff
 
 // === SHRD m32, r32, imm8 ===
-    shrd DWORD PTR [rip + 0x100], edi, 0xff
-    shrd DWORD PTR [rax + rbx*4 + 0x100], edx, 0xff
-    shrd DWORD PTR [rax + rbx*4 + 0x100], esi, 0xff
-    shrd DWORD PTR [rbx], edi, 0xff
-    shrd DWORD PTR [rip + 0x1000], ecx, 0xff
-    shrd DWORD PTR [rax + rbx*1 + 0x10], esi, 0xff
-    shrd DWORD PTR [rax], edx, 0xff
-    shrd DWORD PTR [rax + rbx*1 + 0x10], edx, 0xff
     shrd DWORD PTR [rax + rbx*4 + 0x100], edi, 0xff
     shrd DWORD PTR [rip + 0x1000], ebx, 0xff
+    shrd DWORD PTR [rip + 0x1000], edi, 0xff
+    shrd DWORD PTR [rax + rbx*4 + 0x100], eax, 0xff
+    shrd DWORD PTR [rbx], edi, 0xff
+    shrd DWORD PTR [rbx], ebx, 0xff
+    shrd DWORD PTR [rip + 0x1000], edx, 0xff
+    shrd DWORD PTR [rbx], ecx, 0xff
+    shrd DWORD PTR [rax], esi, 0xff
+    shrd DWORD PTR [rax], edi, 0xff
 
 // === SHRD r64, r64, imm8 ===
-    shrd r13, r9, 0xff
-    shrd r12, rsi, 0xff
-    shrd rax, rsi, 0xff
-    shrd r8, rdx, 0xff
-    shrd rbx, rax, 0xff
-    shrd r13, r11, 0xff
-    shrd r13, r12, 0xff
-    shrd rcx, r11, 0xff
-    shrd r8, r11, 0xff
-    shrd rax, r12, 0xff
+    shrd rbx, rbx, 0xff
+    shrd rbx, rcx, 0xff
+    shrd r9, rdx, 0xff
+    shrd r11, r9, 0xff
+    shrd r10, rcx, 0xff
+    shrd rax, r8, 0xff
+    shrd r10, rdx, 0xff
+    shrd r12, r8, 0xff
+    shrd r9, rcx, 0xff
+    shrd rax, rdx, 0xff
 
 // === SHRD m64, r64, imm8 ===
-    shrd QWORD PTR [rax + rbx*1 + 0x10], rdx, 0xff
-    shrd QWORD PTR [rip + 0x100], r11, 0xff
-    shrd QWORD PTR [rax + rbx*1 + 0x10], rbx, 0xff
-    shrd QWORD PTR [rip + 0x100], rdi, 0xff
-    shrd QWORD PTR [rax], rax, 0xff
-    shrd QWORD PTR [rax + rbx*1 + 0x10], r9, 0xff
-    shrd QWORD PTR [rip + 0x1000], rbx, 0xff
-    shrd QWORD PTR [rax], r9, 0xff
+    shrd QWORD PTR [rax + rbx*4 + 0x100], rbx, 0xff
+    shrd QWORD PTR [rip + 0x100], rdx, 0xff
+    shrd QWORD PTR [rax], r13, 0xff
+    shrd QWORD PTR [rip + 0x1000], rcx, 0xff
+    shrd QWORD PTR [rax + rbx*4 + 0x100], r9, 0xff
+    shrd QWORD PTR [rbx], rdx, 0xff
+    shrd QWORD PTR [rax + rbx*4 + 0x100], r12, 0xff
+    shrd QWORD PTR [rbx], rcx, 0xff
     shrd QWORD PTR [rip + 0x100], rax, 0xff
-    shrd QWORD PTR [rax + rbx*4 + 0x100], r13, 0xff
+    shrd QWORD PTR [rip + 0x100], rdi, 0xff
 
 // === SHRD r32, r32, CL ===
-    shrd esi, ebx, cl
-    shrd ecx, ebx, cl
     shrd ebx, esi, cl
-    shrd ebx, edi, cl
-    shrd edx, ebx, cl
+    shrd ebx, ecx, cl
+    shrd esi, edx, cl
+    shrd ebx, eax, cl
+    shrd esi, ebx, cl
+    shrd edi, eax, cl
     shrd edi, edx, cl
-    shrd esi, edi, cl
-    shrd esi, eax, cl
-    shrd edx, edi, cl
-    shrd ecx, ecx, cl
+    shrd edi, ebx, cl
+    shrd edi, ecx, cl
+    shrd eax, ebx, cl
 
 // === SHRD m32, r32, CL ===
-    shrd DWORD PTR [rax + rbx*1 + 0x10], edx, cl
-    shrd DWORD PTR [rip + 0x1000], eax, cl
-    shrd DWORD PTR [rip + 0x100], edx, cl
-    shrd DWORD PTR [rbx], edx, cl
-    shrd DWORD PTR [rip + 0x1000], esi, cl
-    shrd DWORD PTR [rbx], eax, cl
     shrd DWORD PTR [rax + rbx*4 + 0x100], esi, cl
-    shrd DWORD PTR [rbx], esi, cl
-    shrd DWORD PTR [rax + rbx*4 + 0x100], eax, cl
-    shrd DWORD PTR [rax], ecx, cl
+    shrd DWORD PTR [rax + rbx*1 + 0x10], edi, cl
+    shrd DWORD PTR [rbx], ebx, cl
+    shrd DWORD PTR [rip + 0x100], ecx, cl
+    shrd DWORD PTR [rip + 0x100], edx, cl
+    shrd DWORD PTR [rbx], ecx, cl
+    shrd DWORD PTR [rbx], eax, cl
+    shrd DWORD PTR [rax], esi, cl
+    shrd DWORD PTR [rbx], edi, cl
+    shrd DWORD PTR [rax + rbx*1 + 0x10], edx, cl
 
 // === SHRD r64, r64, CL ===
-    shrd rdx, rdx, cl
-    shrd rdx, r10, cl
-    shrd r12, rax, cl
-    shrd r9, rdi, cl
-    shrd r12, r13, cl
-    shrd r8, r8, cl
-    shrd r10, r8, cl
-    shrd r11, rbx, cl
-    shrd rsi, r11, cl
-    shrd rax, r12, cl
+    shrd rdi, rax, cl
+    shrd r10, rdi, cl
+    shrd r13, r13, cl
+    shrd rdi, r8, cl
+    shrd rcx, r8, cl
+    shrd r10, r13, cl
+    shrd r13, rdi, cl
+    shrd rdi, rdx, cl
+    shrd rcx, rdi, cl
+    shrd r11, r10, cl
 
 // === SHRD m64, r64, CL ===
-    shrd QWORD PTR [rax], rdi, cl
-    shrd QWORD PTR [rip + 0x100], r12, cl
-    shrd QWORD PTR [rip + 0x1000], rdi, cl
-    shrd QWORD PTR [rax], r8, cl
-    shrd QWORD PTR [rip + 0x100], r10, cl
-    shrd QWORD PTR [rbx], r10, cl
-    shrd QWORD PTR [rip + 0x100], r8, cl
-    shrd QWORD PTR [rax + rbx*1 + 0x10], r10, cl
-    shrd QWORD PTR [rax + rbx*4 + 0x100], r11, cl
-    shrd QWORD PTR [rbx], rsi, cl
+    shrd QWORD PTR [rax + rbx*1 + 0x10], rcx, cl
+    shrd QWORD PTR [rip + 0x1000], rbx, cl
+    shrd QWORD PTR [rax + rbx*4 + 0x100], r10, cl
+    shrd QWORD PTR [rbx], rbx, cl
+    shrd QWORD PTR [rbx], rax, cl
+    shrd QWORD PTR [rip + 0x100], rax, cl
+    shrd QWORD PTR [rax], rbx, cl
+    shrd QWORD PTR [rip + 0x1000], rcx, cl
+    shrd QWORD PTR [rax + rbx*4 + 0x100], rdi, cl
+    shrd QWORD PTR [rip + 0x100], rdi, cl
+
+// === SIDT m ===
+    sidt [rax]
+    sidt [rbx]
+    sidt [rip + 0x100]
 
 // === SLDT r16 ===
-    sldt si
     sldt bx
+    sldt dx
     sldt cx
     sldt ax
+    sldt si
     sldt di
-    sldt dx
 
 // === SLDT m16 ===
-    sldt WORD PTR [rbx]
     sldt WORD PTR [rip + 0x1000]
+    sldt WORD PTR [rax + rbx*1 + 0x10]
+    sldt WORD PTR [rbx]
     sldt WORD PTR [rax]
     sldt WORD PTR [rax + rbx*4 + 0x100]
-    sldt WORD PTR [rax + rbx*1 + 0x10]
     sldt WORD PTR [rip + 0x100]
 
 // === SMSW r16 ===
-    smsw di
-    smsw si
     smsw bx
-    smsw ax
     smsw dx
     smsw cx
+    smsw di
+    smsw ax
+    smsw si
 
 // === SMSW m16 ===
-    smsw WORD PTR [rax + rbx*1 + 0x10]
-    smsw WORD PTR [rax + rbx*4 + 0x100]
     smsw WORD PTR [rip + 0x100]
+    smsw WORD PTR [rax + rbx*4 + 0x100]
+    smsw WORD PTR [rip + 0x1000]
     smsw WORD PTR [rax]
     smsw WORD PTR [rbx]
-    smsw WORD PTR [rip + 0x1000]
+    smsw WORD PTR [rax + rbx*1 + 0x10]
 
 // === SMSW r32/m16 ===
-    smsw WORD PTR [rip + 0x100]
-    smsw WORD PTR [rip + 0x1000]
-    smsw WORD PTR [rbx]
-    smsw WORD PTR [rax]
+    smsw eax
+    smsw ecx
+    smsw esi
+    smsw edi
     smsw WORD PTR [rax + rbx*1 + 0x10]
+    smsw WORD PTR [rip + 0x100]
+    smsw WORD PTR [rax]
+    smsw WORD PTR [rbx]
     smsw WORD PTR [rax + rbx*4 + 0x100]
+    smsw ebx
 
 // === SMSW r64/m16 ===
-    smsw WORD PTR [rbx]
+    smsw rcx
     smsw WORD PTR [rax + rbx*1 + 0x10]
-    smsw WORD PTR [rip + 0x1000]
+    smsw r11
     smsw WORD PTR [rax]
-    smsw WORD PTR [rax + rbx*4 + 0x100]
+    smsw rsi
+    smsw WORD PTR [rip + 0x1000]
+    smsw rax
+    smsw rdx
     smsw WORD PTR [rip + 0x100]
+    smsw WORD PTR [rax + rbx*4 + 0x100]
 
 // === STC ===
     stc
@@ -10263,18 +10602,18 @@
     stosq
 
 // === STR r16 ===
-    str si
-    str bx
-    str dx
     str cx
+    str dx
     str ax
     str di
+    str si
+    str bx
 
 // === STR m16 ===
-    str WORD PTR [rip + 0x1000]
+    str WORD PTR [rax + rbx*1 + 0x10]
     str WORD PTR [rax + rbx*4 + 0x100]
     str WORD PTR [rip + 0x100]
-    str WORD PTR [rax + rbx*1 + 0x10]
+    str WORD PTR [rip + 0x1000]
     str WORD PTR [rbx]
     str WORD PTR [rax]
 
@@ -10292,270 +10631,270 @@
     sub rax, -1
 
 // === SUB r8, imm8 ===
-    sub cl, 0xff
+    sub dl, 0xff
     sub bl, 0xff
     sub al, 0xff
-    sub dl, 0xff
+    sub cl, 0xff
 
 // === SUB m8, imm8 ===
-    sub BYTE PTR [rip + 0x1000], 0xff
+    sub BYTE PTR [rip + 0x100], 0xff
     sub BYTE PTR [rbx], 0xff
+    sub BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    sub BYTE PTR [rip + 0x1000], 0xff
     sub BYTE PTR [rax], 0xff
     sub BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    sub BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    sub BYTE PTR [rip + 0x100], 0xff
 
 // === SUB r16, imm16 ===
-    sub di, 0xffff
-    sub bx, 0xffff
-    sub dx, 0xffff
-    sub cx, 0xffff
-    sub si, 0xffff
     sub ax, 0xffff
+    sub si, 0xffff
+    sub cx, 0xffff
+    sub bx, 0xffff
+    sub di, 0xffff
+    sub dx, 0xffff
 
 // === SUB m16, imm16 ===
+    sub WORD PTR [rax], 0xffff
+    sub WORD PTR [rip + 0x100], 0xffff
     sub WORD PTR [rbx], 0xffff
     sub WORD PTR [rip + 0x1000], 0xffff
-    sub WORD PTR [rip + 0x100], 0xffff
     sub WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    sub WORD PTR [rax], 0xffff
     sub WORD PTR [rax + rbx*4 + 0x100], 0xffff
 
 // === SUB r32, imm32 ===
-    sub edx, 0xffffffff
-    sub esi, 0xffffffff
     sub ebx, 0xffffffff
-    sub edi, 0xffffffff
     sub ecx, 0xffffffff
+    sub edx, 0xffffffff
     sub eax, 0xffffffff
+    sub edi, 0xffffffff
+    sub esi, 0xffffffff
 
 // === SUB m32, imm32 ===
+    sub DWORD PTR [rip + 0x1000], 0xffffffff
+    sub DWORD PTR [rax], 0xffffffff
+    sub DWORD PTR [rip + 0x100], 0xffffffff
+    sub DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
     sub DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
     sub DWORD PTR [rbx], 0xffffffff
-    sub DWORD PTR [rip + 0x1000], 0xffffffff
-    sub DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
-    sub DWORD PTR [rip + 0x100], 0xffffffff
-    sub DWORD PTR [rax], 0xffffffff
 
 // === SUB r64, imm32 ===
-    sub r11, 0x7fffffff
-    sub rdi, 0x7fffffff
-    sub rsi, -1
-    sub r13, -1
-    sub r9, -1
-    sub r11, -1
-    sub r13, 0x7fffffff
     sub rax, -1
-    sub rax, 0x7fffffff
-    sub rdi, -1
+    sub rbx, 0x7fffffff
+    sub r12, -1
+    sub rsi, -1
+    sub r12, 0x7fffffff
+    sub r9, -1
+    sub rdi, 0x7fffffff
+    sub r10, -1
+    sub r11, -1
+    sub r13, -1
 
 // === SUB m64, imm32 ===
-    sub QWORD PTR [rax], 0x7fffffff
-    sub QWORD PTR [rip + 0x100], -1
     sub QWORD PTR [rip + 0x1000], 0x7fffffff
-    sub QWORD PTR [rax + rbx*1 + 0x10], -1
-    sub QWORD PTR [rax], -1
-    sub QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
     sub QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    sub QWORD PTR [rip + 0x100], 0x7fffffff
-    sub QWORD PTR [rbx], -1
+    sub QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    sub QWORD PTR [rip + 0x1000], -1
     sub QWORD PTR [rbx], 0x7fffffff
+    sub QWORD PTR [rax + rbx*1 + 0x10], -1
+    sub QWORD PTR [rip + 0x100], -1
+    sub QWORD PTR [rax + rbx*4 + 0x100], -1
+    sub QWORD PTR [rbx], -1
+    sub QWORD PTR [rip + 0x100], 0x7fffffff
 
 // === SUB r16, imm8 ===
+    sub di, 0xff
     sub dx, 0xff
     sub bx, 0xff
     sub ax, 0xff
-    sub di, 0xff
-    sub cx, 0xff
     sub si, 0xff
+    sub cx, 0xff
 
 // === SUB m16, imm8 ===
-    sub WORD PTR [rax + rbx*4 + 0x100], 0xff
-    sub WORD PTR [rax], 0xff
-    sub WORD PTR [rip + 0x100], 0xff
-    sub WORD PTR [rax + rbx*1 + 0x10], 0xff
     sub WORD PTR [rbx], 0xff
     sub WORD PTR [rip + 0x1000], 0xff
+    sub WORD PTR [rax], 0xff
+    sub WORD PTR [rax + rbx*1 + 0x10], 0xff
+    sub WORD PTR [rax + rbx*4 + 0x100], 0xff
+    sub WORD PTR [rip + 0x100], 0xff
 
 // === SUB r32, imm8 ===
-    sub ebx, 0xff
     sub eax, 0xff
-    sub edx, 0xff
-    sub edi, 0xff
-    sub esi, 0xff
     sub ecx, 0xff
+    sub edx, 0xff
+    sub esi, 0xff
+    sub edi, 0xff
+    sub ebx, 0xff
 
 // === SUB m32, imm8 ===
-    sub DWORD PTR [rip + 0x1000], 0xff
-    sub DWORD PTR [rip + 0x100], 0xff
-    sub DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    sub DWORD PTR [rbx], 0xff
     sub DWORD PTR [rax], 0xff
+    sub DWORD PTR [rip + 0x100], 0xff
+    sub DWORD PTR [rbx], 0xff
+    sub DWORD PTR [rax + rbx*4 + 0x100], 0xff
+    sub DWORD PTR [rip + 0x1000], 0xff
     sub DWORD PTR [rax + rbx*1 + 0x10], 0xff
 
 // === SUB r64, imm8 ===
-    sub r10, 0xff
-    sub r12, 0xff
-    sub rsi, 0xff
-    sub rdi, 0xff
+    sub r8, 0xff
+    sub r13, 0xff
     sub r9, 0xff
     sub rdx, 0xff
-    sub rax, 0xff
-    sub r11, 0xff
-    sub r8, 0xff
     sub rbx, 0xff
+    sub r12, 0xff
+    sub r11, 0xff
+    sub rdi, 0xff
+    sub r10, 0xff
+    sub rax, 0xff
 
 // === SUB m64, imm8 ===
-    sub QWORD PTR [rip + 0x1000], 0xff
-    sub QWORD PTR [rax + rbx*4 + 0x100], 0xff
-    sub QWORD PTR [rbx], 0xff
-    sub QWORD PTR [rax], 0xff
-    sub QWORD PTR [rip + 0x100], 0xff
     sub QWORD PTR [rax + rbx*1 + 0x10], 0xff
+    sub QWORD PTR [rbx], 0xff
+    sub QWORD PTR [rip + 0x1000], 0xff
+    sub QWORD PTR [rip + 0x100], 0xff
+    sub QWORD PTR [rax], 0xff
+    sub QWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === SUB r8, r8 ===
-    sub cl, cl
-    sub dl, cl
-    sub bl, al
-    sub bl, cl
-    sub al, al
     sub al, dl
-    sub al, cl
-    sub dl, al
+    sub bl, cl
     sub cl, bl
     sub cl, dl
+    sub bl, bl
+    sub cl, al
+    sub al, bl
+    sub bl, al
+    sub bl, dl
+    sub al, cl
 
 // === SUB m8, r8 ===
     sub BYTE PTR [rip + 0x1000], dl
-    sub BYTE PTR [rax], al
-    sub BYTE PTR [rip + 0x100], cl
+    sub BYTE PTR [rbx], bl
+    sub BYTE PTR [rax], cl
+    sub BYTE PTR [rax], dl
+    sub BYTE PTR [rip + 0x100], bl
     sub BYTE PTR [rbx], al
-    sub BYTE PTR [rax], bl
-    sub BYTE PTR [rax + rbx*1 + 0x10], dl
-    sub BYTE PTR [rip + 0x100], dl
-    sub BYTE PTR [rax + rbx*4 + 0x100], bl
+    sub BYTE PTR [rax + rbx*4 + 0x100], al
+    sub BYTE PTR [rip + 0x100], cl
+    sub BYTE PTR [rax + rbx*1 + 0x10], al
     sub BYTE PTR [rax + rbx*1 + 0x10], cl
-    sub BYTE PTR [rip + 0x1000], al
 
 // === SUB r16, r16 ===
-    sub bx, di
-    sub di, si
-    sub si, cx
-    sub dx, cx
-    sub di, dx
-    sub bx, si
-    sub bx, ax
     sub di, cx
+    sub dx, dx
+    sub cx, ax
+    sub di, di
+    sub dx, si
+    sub cx, dx
+    sub bx, cx
+    sub di, bx
+    sub ax, si
     sub cx, cx
-    sub ax, bx
 
 // === SUB m16, r16 ===
-    sub WORD PTR [rbx], bx
-    sub WORD PTR [rax + rbx*1 + 0x10], di
-    sub WORD PTR [rip + 0x100], ax
-    sub WORD PTR [rbx], ax
-    sub WORD PTR [rax], si
-    sub WORD PTR [rax + rbx*1 + 0x10], si
-    sub WORD PTR [rip + 0x100], dx
     sub WORD PTR [rip + 0x1000], dx
     sub WORD PTR [rip + 0x1000], cx
-    sub WORD PTR [rip + 0x1000], di
+    sub WORD PTR [rax], ax
+    sub WORD PTR [rax + rbx*1 + 0x10], cx
+    sub WORD PTR [rbx], si
+    sub WORD PTR [rax], bx
+    sub WORD PTR [rax], dx
+    sub WORD PTR [rax + rbx*4 + 0x100], cx
+    sub WORD PTR [rax + rbx*1 + 0x10], ax
+    sub WORD PTR [rip + 0x100], cx
 
 // === SUB r32, r32 ===
-    sub ebx, edi
-    sub esi, edx
-    sub eax, ecx
-    sub edx, esi
-    sub ecx, edi
+    sub edi, eax
+    sub edx, edx
+    sub edi, ebx
+    sub eax, edx
+    sub edi, ecx
+    sub ecx, edx
+    sub eax, esi
+    sub edi, edx
     sub edx, ebx
-    sub esi, edi
-    sub esi, esi
-    sub ecx, ebx
-    sub ebx, ebx
+    sub ebx, eax
 
 // === SUB m32, r32 ===
-    sub DWORD PTR [rip + 0x1000], ebx
-    sub DWORD PTR [rip + 0x1000], edi
-    sub DWORD PTR [rbx], edx
-    sub DWORD PTR [rax], ebx
-    sub DWORD PTR [rax + rbx*1 + 0x10], eax
-    sub DWORD PTR [rip + 0x100], ecx
+    sub DWORD PTR [rip + 0x100], ebx
+    sub DWORD PTR [rax + rbx*1 + 0x10], esi
+    sub DWORD PTR [rbx], eax
+    sub DWORD PTR [rip + 0x1000], esi
+    sub DWORD PTR [rax + rbx*4 + 0x100], eax
+    sub DWORD PTR [rip + 0x100], eax
+    sub DWORD PTR [rbx], ecx
+    sub DWORD PTR [rax], edx
+    sub DWORD PTR [rax + rbx*4 + 0x100], edi
     sub DWORD PTR [rax + rbx*4 + 0x100], ebx
-    sub DWORD PTR [rip + 0x100], esi
-    sub DWORD PTR [rax + rbx*1 + 0x10], ebx
-    sub DWORD PTR [rax], esi
 
 // === SUB r64, r64 ===
-    sub rsi, r13
-    sub rbx, r8
-    sub r11, r13
-    sub r9, rcx
-    sub rdx, r9
-    sub r12, rdi
-    sub rcx, r10
-    sub r12, r11
-    sub r13, r9
-    sub r9, r12
+    sub rax, r11
+    sub r12, rax
+    sub rdi, r12
+    sub r10, rcx
+    sub r11, r12
+    sub r13, rdi
+    sub r8, rax
+    sub rsi, rsi
+    sub rdi, rax
+    sub rsi, r12
 
 // === SUB m64, r64 ===
-    sub QWORD PTR [rax + rbx*1 + 0x10], rax
-    sub QWORD PTR [rax], r8
-    sub QWORD PTR [rax], r11
-    sub QWORD PTR [rip + 0x100], rdi
-    sub QWORD PTR [rip + 0x100], rbx
-    sub QWORD PTR [rip + 0x1000], rbx
-    sub QWORD PTR [rip + 0x100], r12
-    sub QWORD PTR [rax + rbx*4 + 0x100], rcx
-    sub QWORD PTR [rbx], rbx
+    sub QWORD PTR [rip + 0x1000], r11
     sub QWORD PTR [rax + rbx*1 + 0x10], rbx
+    sub QWORD PTR [rax], r8
+    sub QWORD PTR [rip + 0x100], r11
+    sub QWORD PTR [rax + rbx*4 + 0x100], r10
+    sub QWORD PTR [rax + rbx*4 + 0x100], r8
+    sub QWORD PTR [rax], r11
+    sub QWORD PTR [rbx], rsi
+    sub QWORD PTR [rax + rbx*4 + 0x100], r13
+    sub QWORD PTR [rax + rbx*4 + 0x100], rdi
 
 // === SUB r8, m8 ===
-    sub al, BYTE PTR [rax + rbx*1 + 0x10]
-    sub al, BYTE PTR [rax + rbx*4 + 0x100]
-    sub dl, BYTE PTR [rip + 0x1000]
     sub cl, BYTE PTR [rax + rbx*1 + 0x10]
-    sub al, BYTE PTR [rip + 0x100]
     sub bl, BYTE PTR [rax + rbx*1 + 0x10]
-    sub cl, BYTE PTR [rbx]
-    sub al, BYTE PTR [rbx]
+    sub al, BYTE PTR [rip + 0x100]
+    sub dl, BYTE PTR [rip + 0x1000]
     sub dl, BYTE PTR [rax]
-    sub bl, BYTE PTR [rip + 0x100]
+    sub dl, BYTE PTR [rip + 0x100]
+    sub bl, BYTE PTR [rbx]
+    sub cl, BYTE PTR [rbx]
+    sub dl, BYTE PTR [rax + rbx*4 + 0x100]
+    sub cl, BYTE PTR [rax]
 
 // === SUB r16, m16 ===
-    sub di, WORD PTR [rax + rbx*1 + 0x10]
-    sub ax, WORD PTR [rip + 0x100]
-    sub si, WORD PTR [rbx]
-    sub bx, WORD PTR [rbx]
-    sub si, WORD PTR [rip + 0x100]
-    sub bx, WORD PTR [rax + rbx*4 + 0x100]
-    sub di, WORD PTR [rax]
+    sub dx, WORD PTR [rip + 0x1000]
+    sub cx, WORD PTR [rip + 0x1000]
     sub cx, WORD PTR [rbx]
-    sub dx, WORD PTR [rax]
-    sub dx, WORD PTR [rip + 0x100]
+    sub ax, WORD PTR [rip + 0x100]
+    sub dx, WORD PTR [rax + rbx*1 + 0x10]
+    sub bx, WORD PTR [rax]
+    sub ax, WORD PTR [rip + 0x1000]
+    sub di, WORD PTR [rax + rbx*4 + 0x100]
+    sub si, WORD PTR [rip + 0x1000]
+    sub di, WORD PTR [rax]
 
 // === SUB r32, m32 ===
-    sub edx, DWORD PTR [rax + rbx*4 + 0x100]
-    sub ecx, DWORD PTR [rax + rbx*1 + 0x10]
-    sub edi, DWORD PTR [rbx]
-    sub esi, DWORD PTR [rax]
     sub ecx, DWORD PTR [rip + 0x1000]
-    sub eax, DWORD PTR [rax + rbx*4 + 0x100]
-    sub eax, DWORD PTR [rip + 0x1000]
-    sub esi, DWORD PTR [rbx]
-    sub ebx, DWORD PTR [rax]
-    sub edi, DWORD PTR [rax + rbx*4 + 0x100]
+    sub edx, DWORD PTR [rax + rbx*4 + 0x100]
+    sub esi, DWORD PTR [rax + rbx*1 + 0x10]
+    sub ecx, DWORD PTR [rax + rbx*4 + 0x100]
+    sub edi, DWORD PTR [rbx]
+    sub ebx, DWORD PTR [rip + 0x100]
+    sub edx, DWORD PTR [rbx]
+    sub eax, DWORD PTR [rip + 0x100]
+    sub edi, DWORD PTR [rip + 0x100]
+    sub eax, DWORD PTR [rax]
 
 // === SUB r64, m64 ===
-    sub r9, QWORD PTR [rax + rbx*4 + 0x100]
-    sub rcx, QWORD PTR [rax + rbx*4 + 0x100]
-    sub rdx, QWORD PTR [rip + 0x100]
-    sub rax, QWORD PTR [rax]
-    sub rax, QWORD PTR [rax + rbx*4 + 0x100]
-    sub rdi, QWORD PTR [rax]
-    sub rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    sub r13, QWORD PTR [rax + rbx*4 + 0x100]
+    sub rcx, QWORD PTR [rip + 0x1000]
+    sub rbx, QWORD PTR [rax]
     sub r13, QWORD PTR [rbx]
-    sub r10, QWORD PTR [rax + rbx*1 + 0x10]
+    sub r11, QWORD PTR [rip + 0x100]
+    sub r9, QWORD PTR [rax]
+    sub rax, QWORD PTR [rax]
+    sub rsi, QWORD PTR [rip + 0x100]
+    sub rbx, QWORD PTR [rip + 0x100]
+    sub r10, QWORD PTR [rax]
+    sub r13, QWORD PTR [rip + 0x1000]
 
 // === SWAPGS ===
     swapgs
@@ -10582,198 +10921,198 @@
     test eax, 0xffffffff
 
 // === TEST RAX, imm32 ===
-    test rax, -1
     test rax, 0x7fffffff
+    test rax, -1
 
 // === TEST r8, imm8 ===
     test al, 0xff
-    test cl, 0xff
     test dl, 0xff
     test bl, 0xff
+    test cl, 0xff
 
 // === TEST m8, imm8 ===
-    test BYTE PTR [rip + 0x100], 0xff
-    test BYTE PTR [rax], 0xff
-    test BYTE PTR [rax + rbx*4 + 0x100], 0xff
     test BYTE PTR [rbx], 0xff
-    test BYTE PTR [rip + 0x1000], 0xff
+    test BYTE PTR [rax], 0xff
     test BYTE PTR [rax + rbx*1 + 0x10], 0xff
+    test BYTE PTR [rax + rbx*4 + 0x100], 0xff
+    test BYTE PTR [rip + 0x100], 0xff
+    test BYTE PTR [rip + 0x1000], 0xff
 
 // === TEST r16, imm16 ===
-    test cx, 0xffff
     test si, 0xffff
+    test cx, 0xffff
     test di, 0xffff
     test ax, 0xffff
     test dx, 0xffff
     test bx, 0xffff
 
 // === TEST m16, imm16 ===
-    test WORD PTR [rax + rbx*4 + 0x100], 0xffff
-    test WORD PTR [rip + 0x1000], 0xffff
     test WORD PTR [rip + 0x100], 0xffff
-    test WORD PTR [rax + rbx*1 + 0x10], 0xffff
+    test WORD PTR [rip + 0x1000], 0xffff
+    test WORD PTR [rax + rbx*4 + 0x100], 0xffff
     test WORD PTR [rbx], 0xffff
+    test WORD PTR [rax + rbx*1 + 0x10], 0xffff
     test WORD PTR [rax], 0xffff
 
 // === TEST r32, imm32 ===
+    test ecx, 0xffffffff
+    test eax, 0xffffffff
+    test ebx, 0xffffffff
+    test esi, 0xffffffff
     test edx, 0xffffffff
     test edi, 0xffffffff
-    test esi, 0xffffffff
-    test eax, 0xffffffff
-    test ecx, 0xffffffff
-    test ebx, 0xffffffff
 
 // === TEST m32, imm32 ===
-    test DWORD PTR [rip + 0x1000], 0xffffffff
-    test DWORD PTR [rip + 0x100], 0xffffffff
-    test DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
     test DWORD PTR [rbx], 0xffffffff
     test DWORD PTR [rax], 0xffffffff
+    test DWORD PTR [rip + 0x100], 0xffffffff
+    test DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
     test DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
+    test DWORD PTR [rip + 0x1000], 0xffffffff
 
 // === TEST r64, imm32 ===
-    test r13, 0x7fffffff
-    test r12, 0x7fffffff
-    test rdi, 0x7fffffff
-    test rdx, -1
-    test rbx, -1
-    test rax, -1
     test rax, 0x7fffffff
-    test r11, -1
     test rsi, 0x7fffffff
+    test rcx, 0x7fffffff
+    test rax, -1
+    test r9, 0x7fffffff
+    test r10, -1
+    test rcx, -1
     test rsi, -1
+    test r8, -1
+    test r11, 0x7fffffff
 
 // === TEST m64, imm32 ===
     test QWORD PTR [rax], 0x7fffffff
-    test QWORD PTR [rbx], -1
-    test QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    test QWORD PTR [rip + 0x100], 0x7fffffff
-    test QWORD PTR [rax + rbx*4 + 0x100], -1
-    test QWORD PTR [rip + 0x100], -1
-    test QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    test QWORD PTR [rax + rbx*1 + 0x10], -1
     test QWORD PTR [rip + 0x1000], -1
+    test QWORD PTR [rax + rbx*1 + 0x10], -1
+    test QWORD PTR [rax], -1
+    test QWORD PTR [rip + 0x100], 0x7fffffff
+    test QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
+    test QWORD PTR [rax + rbx*4 + 0x100], -1
+    test QWORD PTR [rbx], -1
+    test QWORD PTR [rip + 0x100], -1
     test QWORD PTR [rip + 0x1000], 0x7fffffff
 
 // === TEST r8, r8 ===
+    test bl, cl
     test cl, bl
-    test dl, al
-    test cl, al
-    test cl, cl
-    test cl, dl
-    test bl, al
     test bl, bl
-    test al, dl
+    test cl, al
     test bl, dl
-    test al, al
+    test dl, cl
+    test bl, al
+    test cl, cl
+    test dl, al
+    test al, bl
 
 // === TEST m8, r8 ===
-    test BYTE PTR [rax + rbx*1 + 0x10], al
-    test BYTE PTR [rbx], al
-    test BYTE PTR [rip + 0x1000], bl
-    test BYTE PTR [rax + rbx*4 + 0x100], cl
-    test BYTE PTR [rip + 0x1000], cl
-    test BYTE PTR [rax + rbx*4 + 0x100], dl
-    test BYTE PTR [rax + rbx*4 + 0x100], bl
+    test BYTE PTR [rbx], bl
     test BYTE PTR [rax + rbx*4 + 0x100], al
+    test BYTE PTR [rip + 0x100], al
+    test BYTE PTR [rip + 0x100], dl
     test BYTE PTR [rax], cl
-    test BYTE PTR [rip + 0x100], bl
+    test BYTE PTR [rax], dl
+    test BYTE PTR [rax], bl
+    test BYTE PTR [rbx], al
+    test BYTE PTR [rax], al
+    test BYTE PTR [rax + rbx*1 + 0x10], al
 
 // === TEST r16, r16 ===
-    test cx, si
     test cx, ax
-    test si, di
-    test dx, si
-    test ax, si
-    test dx, ax
-    test cx, cx
-    test ax, bx
     test di, di
-    test di, cx
+    test dx, cx
+    test cx, di
+    test cx, si
+    test dx, ax
+    test ax, ax
+    test di, si
+    test di, ax
+    test bx, cx
 
 // === TEST m16, r16 ===
-    test WORD PTR [rip + 0x1000], bx
+    test WORD PTR [rbx], bx
+    test WORD PTR [rax + rbx*4 + 0x100], ax
     test WORD PTR [rip + 0x100], ax
-    test WORD PTR [rax + rbx*1 + 0x10], dx
-    test WORD PTR [rip + 0x100], cx
+    test WORD PTR [rip + 0x1000], bx
+    test WORD PTR [rax], bx
+    test WORD PTR [rax], si
     test WORD PTR [rbx], si
-    test WORD PTR [rax + rbx*1 + 0x10], ax
-    test WORD PTR [rax], ax
-    test WORD PTR [rip + 0x100], di
+    test WORD PTR [rbx], di
+    test WORD PTR [rip + 0x100], bx
     test WORD PTR [rax + rbx*4 + 0x100], bx
-    test WORD PTR [rbx], dx
 
 // === TEST r32, r32 ===
-    test edx, edi
-    test edi, edi
-    test ecx, ebx
-    test eax, edx
-    test eax, esi
-    test ebx, ecx
-    test eax, ebx
-    test esi, edi
+    test edx, edx
+    test edi, eax
     test ecx, edx
+    test eax, edi
+    test eax, ebx
+    test eax, edx
+    test esi, edi
+    test ebx, edx
     test ebx, ebx
+    test esi, ecx
 
 // === TEST m32, r32 ===
-    test DWORD PTR [rip + 0x100], esi
-    test DWORD PTR [rax + rbx*4 + 0x100], eax
-    test DWORD PTR [rbx], edi
-    test DWORD PTR [rbx], ecx
-    test DWORD PTR [rip + 0x1000], eax
-    test DWORD PTR [rip + 0x100], ebx
-    test DWORD PTR [rax], edx
+    test DWORD PTR [rax + rbx*1 + 0x10], eax
+    test DWORD PTR [rip + 0x100], edi
+    test DWORD PTR [rax + rbx*1 + 0x10], esi
+    test DWORD PTR [rbx], esi
     test DWORD PTR [rip + 0x1000], ecx
-    test DWORD PTR [rax + rbx*4 + 0x100], ebx
-    test DWORD PTR [rax + rbx*1 + 0x10], edi
+    test DWORD PTR [rip + 0x1000], ebx
+    test DWORD PTR [rax], edx
+    test DWORD PTR [rip + 0x100], eax
+    test DWORD PTR [rax + rbx*4 + 0x100], ecx
+    test DWORD PTR [rip + 0x1000], esi
 
 // === TEST r64, r64 ===
-    test rdi, rcx
-    test rbx, rcx
+    test rcx, r11
+    test r10, rdi
+    test r12, rdx
+    test r9, rcx
+    test rdx, r11
+    test rdx, r13
+    test rsi, rdx
     test rsi, r9
-    test r12, rcx
-    test rdx, r8
-    test r11, rsi
-    test r13, r13
-    test r13, r12
-    test rdi, r12
-    test r10, rax
+    test rax, r12
+    test rcx, rax
 
 // === TEST m64, r64 ===
-    test QWORD PTR [rax + rbx*1 + 0x10], rdi
-    test QWORD PTR [rax + rbx*1 + 0x10], rdx
-    test QWORD PTR [rax + rbx*4 + 0x100], r10
-    test QWORD PTR [rax + rbx*4 + 0x100], rsi
-    test QWORD PTR [rip + 0x1000], rdi
-    test QWORD PTR [rax + rbx*1 + 0x10], r8
-    test QWORD PTR [rax + rbx*4 + 0x100], rax
-    test QWORD PTR [rip + 0x100], rbx
-    test QWORD PTR [rax], r10
-    test QWORD PTR [rip + 0x100], r8
+    test QWORD PTR [rax], r13
+    test QWORD PTR [rax], rsi
+    test QWORD PTR [rax + rbx*4 + 0x100], rdx
+    test QWORD PTR [rip + 0x1000], rdx
+    test QWORD PTR [rip + 0x100], rdi
+    test QWORD PTR [rax + rbx*4 + 0x100], r12
+    test QWORD PTR [rbx], rsi
+    test QWORD PTR [rbx], r12
+    test QWORD PTR [rax + rbx*4 + 0x100], r8
+    test QWORD PTR [rbx], r13
 
 // === UD1 r32, r32 ===
-    ud1 ecx, esi
-    ud1 esi, eax
-    ud1 edi, esi
+    ud1 eax, esi
+    ud1 esi, esi
     ud1 esi, ebx
-    ud1 edi, ebx
-    ud1 ebx, eax
-    ud1 ebx, ecx
-    ud1 eax, ecx
-    ud1 ecx, ecx
+    ud1 edx, esi
+    ud1 ecx, esi
+    ud1 edx, ecx
+    ud1 ebx, edx
     ud1 esi, edi
+    ud1 edi, ebx
+    ud1 eax, edx
 
 // === UD1 r32, m32 ===
     ud1 esi, DWORD PTR [rax]
     ud1 edi, DWORD PTR [rip + 0x1000]
-    ud1 edi, DWORD PTR [rip + 0x100]
-    ud1 eax, DWORD PTR [rbx]
-    ud1 esi, DWORD PTR [rax + rbx*4 + 0x100]
-    ud1 ecx, DWORD PTR [rax + rbx*1 + 0x10]
+    ud1 edx, DWORD PTR [rbx]
+    ud1 eax, DWORD PTR [rip + 0x100]
     ud1 ebx, DWORD PTR [rax + rbx*4 + 0x100]
-    ud1 edi, DWORD PTR [rax]
-    ud1 ecx, DWORD PTR [rip + 0x100]
+    ud1 ebx, DWORD PTR [rip + 0x100]
+    ud1 edi, DWORD PTR [rax + rbx*4 + 0x100]
+    ud1 ebx, DWORD PTR [rax]
     ud1 ebx, DWORD PTR [rip + 0x1000]
+    ud1 eax, DWORD PTR [rax + rbx*4 + 0x100]
 
 // === UD2 ===
     ud2
@@ -10791,300 +11130,300 @@
     wrmsr
 
 // === XADD r8, r8 ===
-    xadd cl, al
-    xadd dl, al
-    xadd dl, bl
     xadd bl, al
-    xadd dl, dl
+    xadd dl, bl
     xadd bl, bl
-    xadd dl, cl
-    xadd bl, dl
-    xadd cl, dl
+    xadd bl, cl
+    xadd dl, dl
+    xadd al, dl
     xadd al, bl
+    xadd al, cl
+    xadd cl, bl
+    xadd dl, cl
 
 // === XADD m8, r8 ===
-    xadd BYTE PTR [rax], cl
-    xadd BYTE PTR [rax], al
-    xadd BYTE PTR [rip + 0x1000], dl
-    xadd BYTE PTR [rip + 0x1000], cl
-    xadd BYTE PTR [rip + 0x1000], bl
-    xadd BYTE PTR [rip + 0x100], al
+    xadd BYTE PTR [rax + rbx*4 + 0x100], al
     xadd BYTE PTR [rax + rbx*1 + 0x10], al
-    xadd BYTE PTR [rax + rbx*4 + 0x100], bl
-    xadd BYTE PTR [rax + rbx*4 + 0x100], cl
-    xadd BYTE PTR [rbx], al
+    xadd BYTE PTR [rax + rbx*4 + 0x100], dl
+    xadd BYTE PTR [rax], al
+    xadd BYTE PTR [rax], dl
+    xadd BYTE PTR [rbx], dl
+    xadd BYTE PTR [rax], bl
+    xadd BYTE PTR [rip + 0x100], cl
+    xadd BYTE PTR [rbx], cl
+    xadd BYTE PTR [rax + rbx*1 + 0x10], cl
 
 // === XADD r16, r16 ===
-    xadd di, di
-    xadd si, di
-    xadd di, si
-    xadd si, cx
-    xadd cx, di
-    xadd dx, di
-    xadd ax, ax
+    xadd cx, ax
     xadd si, bx
-    xadd ax, si
-    xadd si, dx
+    xadd cx, bx
+    xadd bx, si
+    xadd si, cx
+    xadd ax, ax
+    xadd dx, dx
+    xadd di, ax
+    xadd di, cx
+    xadd dx, si
 
 // === XADD m16, r16 ===
-    xadd WORD PTR [rip + 0x100], cx
-    xadd WORD PTR [rbx], dx
-    xadd WORD PTR [rax + rbx*1 + 0x10], si
-    xadd WORD PTR [rax + rbx*1 + 0x10], bx
-    xadd WORD PTR [rbx], di
-    xadd WORD PTR [rax + rbx*4 + 0x100], di
-    xadd WORD PTR [rax], dx
-    xadd WORD PTR [rax + rbx*1 + 0x10], di
+    xadd WORD PTR [rax + rbx*4 + 0x100], bx
     xadd WORD PTR [rbx], si
+    xadd WORD PTR [rax + rbx*4 + 0x100], dx
+    xadd WORD PTR [rip + 0x1000], bx
+    xadd WORD PTR [rax + rbx*1 + 0x10], bx
+    xadd WORD PTR [rip + 0x1000], di
+    xadd WORD PTR [rax + rbx*4 + 0x100], si
+    xadd WORD PTR [rax], di
     xadd WORD PTR [rip + 0x100], di
+    xadd WORD PTR [rax + rbx*1 + 0x10], di
 
 // === XADD r32, r32 ===
-    xadd eax, edi
-    xadd eax, eax
-    xadd ecx, esi
-    xadd edx, esi
-    xadd eax, ebx
-    xadd eax, esi
-    xadd ebx, edx
-    xadd edi, ebx
     xadd esi, edx
-    xadd edi, ecx
+    xadd edx, esi
+    xadd eax, edi
+    xadd edx, edi
+    xadd eax, ecx
+    xadd ebx, edi
+    xadd esi, eax
+    xadd esi, ecx
+    xadd edi, ebx
+    xadd ecx, esi
 
 // === XADD m32, r32 ===
+    xadd DWORD PTR [rbx], edx
     xadd DWORD PTR [rbx], ebx
-    xadd DWORD PTR [rip + 0x1000], eax
-    xadd DWORD PTR [rip + 0x1000], ebx
+    xadd DWORD PTR [rax + rbx*4 + 0x100], esi
+    xadd DWORD PTR [rip + 0x100], edx
+    xadd DWORD PTR [rip + 0x100], ecx
+    xadd DWORD PTR [rax + rbx*1 + 0x10], edx
     xadd DWORD PTR [rax + rbx*4 + 0x100], ebx
-    xadd DWORD PTR [rax], eax
-    xadd DWORD PTR [rip + 0x100], esi
+    xadd DWORD PTR [rip + 0x1000], edx
     xadd DWORD PTR [rip + 0x1000], ecx
     xadd DWORD PTR [rax + rbx*1 + 0x10], edi
-    xadd DWORD PTR [rax], edi
-    xadd DWORD PTR [rax + rbx*4 + 0x100], ecx
 
 // === XADD r64, r64 ===
-    xadd rsi, r13
-    xadd rdi, r11
-    xadd r9, rax
-    xadd r11, r12
-    xadd r8, r9
-    xadd r13, r9
-    xadd rbx, rsi
-    xadd rsi, r12
-    xadd rcx, r12
-    xadd rdi, r12
+    xadd r9, r12
+    xadd rsi, r11
+    xadd rbx, r11
+    xadd r11, r11
+    xadd rdx, r9
+    xadd rax, rcx
+    xadd r11, rax
+    xadd r11, r9
+    xadd rbx, r12
+    xadd rdi, rdx
 
 // === XADD m64, r64 ===
-    xadd QWORD PTR [rip + 0x1000], r9
     xadd QWORD PTR [rax], rsi
+    xadd QWORD PTR [rax + rbx*1 + 0x10], r11
+    xadd QWORD PTR [rip + 0x1000], r9
     xadd QWORD PTR [rip + 0x1000], r12
-    xadd QWORD PTR [rip + 0x100], rsi
-    xadd QWORD PTR [rip + 0x100], r11
-    xadd QWORD PTR [rbx], rax
-    xadd QWORD PTR [rip + 0x100], r13
-    xadd QWORD PTR [rax + rbx*4 + 0x100], r9
-    xadd QWORD PTR [rip + 0x100], r10
-    xadd QWORD PTR [rax], rdi
+    xadd QWORD PTR [rax + rbx*1 + 0x10], r13
+    xadd QWORD PTR [rbx], r10
+    xadd QWORD PTR [rip + 0x1000], rcx
+    xadd QWORD PTR [rip + 0x1000], r13
+    xadd QWORD PTR [rax], rcx
+    xadd QWORD PTR [rip + 0x1000], r11
 
 // === XCHG AX, r16 ===
-    xchg ax, di
-    xchg ax, cx
     xchg ax, ax
-    xchg ax, si
-    xchg ax, bx
+    xchg ax, di
     xchg ax, dx
+    xchg ax, bx
+    xchg ax, cx
+    xchg ax, si
 
 // === XCHG r16, AX ===
-    xchg dx, ax
-    xchg bx, ax
-    xchg si, ax
-    xchg ax, ax
     xchg cx, ax
     xchg di, ax
+    xchg bx, ax
+    xchg dx, ax
+    xchg si, ax
+    xchg ax, ax
 
 // === XCHG EAX, r32 ===
-    xchg eax, ecx
-    xchg eax, esi
-    xchg eax, ebx
-    xchg eax, edi
-    xchg eax, eax
     xchg eax, edx
+    xchg eax, esi
+    xchg eax, eax
+    xchg eax, edi
+    xchg eax, ecx
+    xchg eax, ebx
 
 // === XCHG RAX, r64 ===
-    xchg rax, r11
-    xchg rax, r13
-    xchg rax, r12
-    xchg rax, r8
-    xchg rax, rdx
-    xchg rax, rsi
-    xchg rax, rdi
-    xchg rax, rax
+    xchg rax, r9
     xchg rax, r10
+    xchg rax, r12
     xchg rax, rbx
+    xchg rax, rsi
+    xchg rax, rax
+    xchg rax, r8
+    xchg rax, rcx
+    xchg rax, rdx
+    xchg rax, r13
 
 // === XCHG r32, EAX ===
-    xchg ecx, eax
-    xchg esi, eax
     xchg edx, eax
-    xchg eax, eax
     xchg edi, eax
+    xchg esi, eax
+    xchg eax, eax
     xchg ebx, eax
+    xchg ecx, eax
 
 // === XCHG r64, RAX ===
-    xchg r8, rax
     xchg r9, rax
-    xchg r13, rax
-    xchg r10, rax
-    xchg rdx, rax
     xchg rbx, rax
-    xchg r12, rax
+    xchg r8, rax
+    xchg r10, rax
+    xchg r13, rax
+    xchg r11, rax
     xchg rdi, rax
     xchg rax, rax
+    xchg r12, rax
     xchg rsi, rax
 
 // === XCHG r8, r8 ===
-    xchg bl, cl
-    xchg al, bl
-    xchg al, al
-    xchg cl, bl
-    xchg cl, cl
     xchg dl, dl
-    xchg dl, cl
+    xchg cl, al
+    xchg cl, bl
     xchg dl, al
+    xchg dl, bl
+    xchg al, bl
     xchg bl, al
-    xchg bl, bl
+    xchg bl, cl
+    xchg al, dl
+    xchg dl, cl
 
 // === XCHG m8, r8 ===
-    xchg BYTE PTR [rip + 0x1000], dl
-    xchg BYTE PTR [rax + rbx*4 + 0x100], dl
+    xchg BYTE PTR [rax], dl
+    xchg BYTE PTR [rax + rbx*1 + 0x10], bl
     xchg BYTE PTR [rbx], bl
-    xchg BYTE PTR [rax], al
-    xchg BYTE PTR [rbx], cl
-    xchg BYTE PTR [rip + 0x1000], al
-    xchg BYTE PTR [rip + 0x100], cl
-    xchg BYTE PTR [rax], cl
-    xchg BYTE PTR [rip + 0x100], dl
+    xchg BYTE PTR [rax + rbx*4 + 0x100], cl
     xchg BYTE PTR [rip + 0x1000], cl
+    xchg BYTE PTR [rax + rbx*4 + 0x100], bl
+    xchg BYTE PTR [rip + 0x100], dl
+    xchg BYTE PTR [rax], cl
+    xchg BYTE PTR [rbx], al
+    xchg BYTE PTR [rax + rbx*1 + 0x10], dl
 
 // === XCHG r8, m8 ===
-    xchg cl, BYTE PTR [rbx]
-    xchg cl, BYTE PTR [rip + 0x100]
-    xchg dl, BYTE PTR [rax + rbx*4 + 0x100]
-    xchg cl, BYTE PTR [rax]
     xchg dl, BYTE PTR [rbx]
     xchg bl, BYTE PTR [rax]
-    xchg dl, BYTE PTR [rip + 0x100]
-    xchg cl, BYTE PTR [rip + 0x1000]
-    xchg bl, BYTE PTR [rax + rbx*4 + 0x100]
-    xchg al, BYTE PTR [rbx]
+    xchg cl, BYTE PTR [rip + 0x100]
+    xchg bl, BYTE PTR [rip + 0x100]
+    xchg al, BYTE PTR [rip + 0x1000]
+    xchg al, BYTE PTR [rip + 0x100]
+    xchg al, BYTE PTR [rax + rbx*1 + 0x10]
+    xchg dl, BYTE PTR [rax]
+    xchg bl, BYTE PTR [rax + rbx*1 + 0x10]
+    xchg bl, BYTE PTR [rip + 0x1000]
 
 // === XCHG r16, r16 ===
-    xchg bx, si
-    xchg cx, si
-    xchg bx, ax
-    xchg di, dx
-    xchg dx, bx
-    xchg dx, si
-    xchg ax, si
-    xchg di, cx
+    xchg si, si
+    xchg di, ax
+    xchg ax, cx
     xchg si, bx
+    xchg cx, bx
+    xchg bx, ax
+    xchg si, dx
+    xchg cx, cx
     xchg bx, di
+    xchg di, di
 
 // === XCHG m16, r16 ===
-    xchg WORD PTR [rip + 0x1000], ax
-    xchg WORD PTR [rax + rbx*1 + 0x10], dx
-    xchg WORD PTR [rip + 0x1000], di
-    xchg WORD PTR [rbx], di
+    xchg WORD PTR [rax + rbx*4 + 0x100], si
+    xchg WORD PTR [rip + 0x100], ax
+    xchg WORD PTR [rip + 0x100], bx
+    xchg WORD PTR [rax + rbx*4 + 0x100], bx
+    xchg WORD PTR [rax + rbx*1 + 0x10], si
+    xchg WORD PTR [rax + rbx*4 + 0x100], di
+    xchg WORD PTR [rax + rbx*1 + 0x10], bx
+    xchg WORD PTR [rax], dx
+    xchg WORD PTR [rbx], si
     xchg WORD PTR [rax + rbx*4 + 0x100], dx
-    xchg WORD PTR [rbx], bx
-    xchg WORD PTR [rax], ax
-    xchg WORD PTR [rax + rbx*1 + 0x10], ax
-    xchg WORD PTR [rax], di
-    xchg WORD PTR [rip + 0x1000], si
 
 // === XCHG r16, m16 ===
-    xchg di, WORD PTR [rax + rbx*1 + 0x10]
-    xchg di, WORD PTR [rip + 0x1000]
-    xchg dx, WORD PTR [rax]
-    xchg si, WORD PTR [rip + 0x1000]
-    xchg ax, WORD PTR [rip + 0x1000]
-    xchg bx, WORD PTR [rip + 0x100]
-    xchg cx, WORD PTR [rax]
     xchg ax, WORD PTR [rax + rbx*1 + 0x10]
-    xchg ax, WORD PTR [rax]
+    xchg cx, WORD PTR [rbx]
+    xchg di, WORD PTR [rax + rbx*1 + 0x10]
+    xchg dx, WORD PTR [rax + rbx*1 + 0x10]
+    xchg dx, WORD PTR [rax + rbx*4 + 0x100]
+    xchg di, WORD PTR [rax]
+    xchg di, WORD PTR [rax + rbx*4 + 0x100]
+    xchg si, WORD PTR [rax]
+    xchg bx, WORD PTR [rip + 0x100]
     xchg cx, WORD PTR [rip + 0x100]
 
 // === XCHG r32, r32 ===
-    xchg eax, ebx
-    xchg eax, edx
-    xchg ecx, edx
-    xchg edx, ebx
     xchg edx, eax
-    xchg ecx, edi
-    xchg ebx, edi
-    xchg ecx, esi
+    xchg ecx, ebx
+    xchg edx, esi
+    xchg edi, ebx
+    xchg edx, ecx
+    xchg esi, esi
     xchg edi, ecx
-    xchg eax, eax
+    xchg edx, ebx
+    xchg ebx, esi
+    xchg edx, edi
 
 // === XCHG m32, r32 ===
+    xchg DWORD PTR [rbx], ebx
+    xchg DWORD PTR [rax], ebx
+    xchg DWORD PTR [rax + rbx*1 + 0x10], esi
+    xchg DWORD PTR [rip + 0x100], esi
+    xchg DWORD PTR [rip + 0x100], edi
     xchg DWORD PTR [rip + 0x1000], esi
-    xchg DWORD PTR [rbx], edi
-    xchg DWORD PTR [rax + rbx*4 + 0x100], ecx
-    xchg DWORD PTR [rip + 0x1000], ebx
+    xchg DWORD PTR [rax + rbx*4 + 0x100], edx
     xchg DWORD PTR [rbx], esi
-    xchg DWORD PTR [rax + rbx*4 + 0x100], ebx
     xchg DWORD PTR [rax + rbx*1 + 0x10], ebx
-    xchg DWORD PTR [rip + 0x100], ecx
-    xchg DWORD PTR [rax], ecx
-    xchg DWORD PTR [rip + 0x1000], edx
+    xchg DWORD PTR [rax + rbx*1 + 0x10], ecx
 
 // === XCHG r64, r64 ===
-    xchg rbx, r12
-    xchg r8, rax
-    xchg rdi, rax
-    xchg rax, rcx
-    xchg rbx, r13
-    xchg rdx, rsi
-    xchg rdi, rbx
-    xchg r9, rdx
-    xchg rbx, rsi
-    xchg rdi, r10
+    xchg r8, r8
+    xchg rsi, rcx
+    xchg r9, rbx
+    xchg r13, rsi
+    xchg rbx, rcx
+    xchg r11, rcx
+    xchg r10, rsi
+    xchg r8, r12
+    xchg rdx, rcx
+    xchg r11, rsi
 
 // === XCHG m64, r64 ===
-    xchg QWORD PTR [rbx], r10
-    xchg QWORD PTR [rbx], rdx
-    xchg QWORD PTR [rip + 0x1000], rdx
-    xchg QWORD PTR [rbx], rcx
-    xchg QWORD PTR [rip + 0x100], r13
-    xchg QWORD PTR [rax + rbx*4 + 0x100], r11
-    xchg QWORD PTR [rax + rbx*1 + 0x10], rbx
-    xchg QWORD PTR [rbx], r11
-    xchg QWORD PTR [rax], rax
-    xchg QWORD PTR [rax], rdx
+    xchg QWORD PTR [rax + rbx*1 + 0x10], r8
+    xchg QWORD PTR [rip + 0x1000], rbx
+    xchg QWORD PTR [rax], rbx
+    xchg QWORD PTR [rip + 0x100], r12
+    xchg QWORD PTR [rbx], rbx
+    xchg QWORD PTR [rax], r12
+    xchg QWORD PTR [rip + 0x100], rdx
+    xchg QWORD PTR [rax + rbx*4 + 0x100], r13
+    xchg QWORD PTR [rip + 0x1000], rax
+    xchg QWORD PTR [rip + 0x1000], r9
 
 // === XCHG r32, m32 ===
-    xchg edi, DWORD PTR [rip + 0x1000]
-    xchg ecx, DWORD PTR [rip + 0x100]
-    xchg ebx, DWORD PTR [rbx]
-    xchg esi, DWORD PTR [rax]
-    xchg esi, DWORD PTR [rip + 0x1000]
-    xchg eax, DWORD PTR [rip + 0x1000]
-    xchg edx, DWORD PTR [rip + 0x1000]
+    xchg ecx, DWORD PTR [rip + 0x1000]
     xchg edi, DWORD PTR [rax + rbx*1 + 0x10]
-    xchg edi, DWORD PTR [rax + rbx*4 + 0x100]
-    xchg ebx, DWORD PTR [rax]
+    xchg esi, DWORD PTR [rax + rbx*1 + 0x10]
+    xchg ebx, DWORD PTR [rax + rbx*4 + 0x100]
+    xchg edx, DWORD PTR [rbx]
+    xchg edx, DWORD PTR [rax + rbx*1 + 0x10]
+    xchg edx, DWORD PTR [rip + 0x100]
+    xchg ebx, DWORD PTR [rbx]
+    xchg edx, DWORD PTR [rax]
+    xchg edi, DWORD PTR [rip + 0x1000]
 
 // === XCHG r64, m64 ===
-    xchg r9, QWORD PTR [rax + rbx*1 + 0x10]
-    xchg rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    xchg r9, QWORD PTR [rip + 0x1000]
-    xchg r11, QWORD PTR [rip + 0x100]
-    xchg r8, QWORD PTR [rbx]
-    xchg rbx, QWORD PTR [rip + 0x1000]
-    xchg rcx, QWORD PTR [rip + 0x100]
-    xchg r9, QWORD PTR [rax + rbx*4 + 0x100]
+    xchg r11, QWORD PTR [rax + rbx*1 + 0x10]
     xchg rax, QWORD PTR [rax + rbx*4 + 0x100]
+    xchg r10, QWORD PTR [rbx]
     xchg r8, QWORD PTR [rax]
+    xchg r10, QWORD PTR [rax + rbx*1 + 0x10]
+    xchg rax, QWORD PTR [rax]
+    xchg rdx, QWORD PTR [rip + 0x100]
+    xchg rdi, QWORD PTR [rbx]
+    xchg rdx, QWORD PTR [rax + rbx*4 + 0x100]
+    xchg rcx, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === XGETBV ===
     xgetbv
@@ -11105,28 +11444,28 @@
     xor eax, 0xffffffff
 
 // === XOR RAX, imm32 ===
-    xor rax, 0x7fffffff
     xor rax, -1
+    xor rax, 0x7fffffff
 
 // === XOR r8, imm8 ===
-    xor al, 0xff
     xor cl, 0xff
-    xor bl, 0xff
+    xor al, 0xff
     xor dl, 0xff
+    xor bl, 0xff
 
 // === XOR m8, imm8 ===
     xor BYTE PTR [rip + 0x1000], 0xff
+    xor BYTE PTR [rax], 0xff
+    xor BYTE PTR [rbx], 0xff
+    xor BYTE PTR [rax + rbx*4 + 0x100], 0xff
     xor BYTE PTR [rip + 0x100], 0xff
     xor BYTE PTR [rax + rbx*1 + 0x10], 0xff
-    xor BYTE PTR [rax], 0xff
-    xor BYTE PTR [rax + rbx*4 + 0x100], 0xff
-    xor BYTE PTR [rbx], 0xff
 
 // === XOR r16, imm16 ===
-    xor ax, 0xffff
-    xor dx, 0xffff
-    xor si, 0xffff
     xor bx, 0xffff
+    xor si, 0xffff
+    xor dx, 0xffff
+    xor ax, 0xffff
     xor cx, 0xffff
     xor di, 0xffff
 
@@ -11135,244 +11474,244 @@
     xor WORD PTR [rbx], 0xffff
     xor WORD PTR [rip + 0x100], 0xffff
     xor WORD PTR [rax + rbx*1 + 0x10], 0xffff
-    xor WORD PTR [rax + rbx*4 + 0x100], 0xffff
     xor WORD PTR [rip + 0x1000], 0xffff
+    xor WORD PTR [rax + rbx*4 + 0x100], 0xffff
 
 // === XOR r32, imm32 ===
     xor esi, 0xffffffff
+    xor ebx, 0xffffffff
+    xor eax, 0xffffffff
+    xor ecx, 0xffffffff
     xor edi, 0xffffffff
     xor edx, 0xffffffff
-    xor eax, 0xffffffff
-    xor ebx, 0xffffffff
-    xor ecx, 0xffffffff
 
 // === XOR m32, imm32 ===
-    xor DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
-    xor DWORD PTR [rbx], 0xffffffff
     xor DWORD PTR [rax], 0xffffffff
-    xor DWORD PTR [rip + 0x1000], 0xffffffff
+    xor DWORD PTR [rbx], 0xffffffff
+    xor DWORD PTR [rax + rbx*4 + 0x100], 0xffffffff
     xor DWORD PTR [rip + 0x100], 0xffffffff
+    xor DWORD PTR [rip + 0x1000], 0xffffffff
     xor DWORD PTR [rax + rbx*1 + 0x10], 0xffffffff
 
 // === XOR r64, imm32 ===
     xor r13, -1
-    xor rcx, -1
+    xor r8, -1
+    xor rdx, 0x7fffffff
+    xor rbx, -1
+    xor rcx, 0x7fffffff
+    xor r12, -1
+    xor rax, -1
     xor rsi, -1
-    xor rax, 0x7fffffff
-    xor r12, 0x7fffffff
     xor r13, 0x7fffffff
-    xor r11, -1
-    xor rsi, 0x7fffffff
-    xor r9, -1
-    xor r8, 0x7fffffff
+    xor r12, 0x7fffffff
 
 // === XOR m64, imm32 ===
-    xor QWORD PTR [rax], -1
-    xor QWORD PTR [rip + 0x1000], 0x7fffffff
-    xor QWORD PTR [rax + rbx*4 + 0x100], -1
-    xor QWORD PTR [rbx], 0x7fffffff
-    xor QWORD PTR [rip + 0x1000], -1
-    xor QWORD PTR [rax], 0x7fffffff
-    xor QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
-    xor QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
-    xor QWORD PTR [rax + rbx*1 + 0x10], -1
+    xor QWORD PTR [rip + 0x100], 0x7fffffff
     xor QWORD PTR [rip + 0x100], -1
+    xor QWORD PTR [rax], 0x7fffffff
+    xor QWORD PTR [rax + rbx*4 + 0x100], -1
+    xor QWORD PTR [rax], -1
+    xor QWORD PTR [rax + rbx*1 + 0x10], -1
+    xor QWORD PTR [rax + rbx*4 + 0x100], 0x7fffffff
+    xor QWORD PTR [rbx], 0x7fffffff
+    xor QWORD PTR [rbx], -1
+    xor QWORD PTR [rax + rbx*1 + 0x10], 0x7fffffff
 
 // === XOR r16, imm8 ===
-    xor bx, 0xff
     xor di, 0xff
     xor ax, 0xff
     xor si, 0xff
-    xor cx, 0xff
     xor dx, 0xff
+    xor bx, 0xff
+    xor cx, 0xff
 
 // === XOR m16, imm8 ===
     xor WORD PTR [rax], 0xff
-    xor WORD PTR [rax + rbx*4 + 0x100], 0xff
-    xor WORD PTR [rax + rbx*1 + 0x10], 0xff
     xor WORD PTR [rbx], 0xff
+    xor WORD PTR [rax + rbx*1 + 0x10], 0xff
     xor WORD PTR [rip + 0x1000], 0xff
     xor WORD PTR [rip + 0x100], 0xff
+    xor WORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === XOR r32, imm8 ===
     xor edx, 0xff
-    xor edi, 0xff
     xor ebx, 0xff
     xor ecx, 0xff
+    xor edi, 0xff
     xor esi, 0xff
     xor eax, 0xff
 
 // === XOR m32, imm8 ===
-    xor DWORD PTR [rbx], 0xff
-    xor DWORD PTR [rax + rbx*4 + 0x100], 0xff
-    xor DWORD PTR [rip + 0x1000], 0xff
-    xor DWORD PTR [rip + 0x100], 0xff
-    xor DWORD PTR [rax], 0xff
     xor DWORD PTR [rax + rbx*1 + 0x10], 0xff
+    xor DWORD PTR [rax], 0xff
+    xor DWORD PTR [rip + 0x100], 0xff
+    xor DWORD PTR [rbx], 0xff
+    xor DWORD PTR [rip + 0x1000], 0xff
+    xor DWORD PTR [rax + rbx*4 + 0x100], 0xff
 
 // === XOR r64, imm8 ===
-    xor rsi, 0xff
-    xor rax, 0xff
-    xor rdx, 0xff
-    xor r9, 0xff
-    xor r8, 0xff
-    xor rcx, 0xff
     xor r12, 0xff
+    xor rsi, 0xff
     xor r11, 0xff
+    xor rax, 0xff
+    xor r13, 0xff
     xor rdi, 0xff
-    xor r10, 0xff
+    xor rdx, 0xff
+    xor rbx, 0xff
+    xor rcx, 0xff
+    xor r8, 0xff
 
 // === XOR m64, imm8 ===
-    xor QWORD PTR [rbx], 0xff
-    xor QWORD PTR [rip + 0x100], 0xff
-    xor QWORD PTR [rax + rbx*1 + 0x10], 0xff
     xor QWORD PTR [rip + 0x1000], 0xff
     xor QWORD PTR [rax + rbx*4 + 0x100], 0xff
+    xor QWORD PTR [rip + 0x100], 0xff
+    xor QWORD PTR [rax + rbx*1 + 0x10], 0xff
     xor QWORD PTR [rax], 0xff
+    xor QWORD PTR [rbx], 0xff
 
 // === XOR r8, r8 ===
-    xor cl, dl
-    xor bl, dl
-    xor bl, bl
-    xor cl, bl
     xor dl, bl
-    xor al, bl
-    xor dl, dl
-    xor bl, al
-    xor cl, cl
+    xor cl, bl
+    xor bl, dl
+    xor cl, al
+    xor bl, cl
     xor dl, al
+    xor cl, dl
+    xor al, al
+    xor bl, bl
+    xor dl, dl
 
 // === XOR m8, r8 ===
-    xor BYTE PTR [rax], al
-    xor BYTE PTR [rbx], al
-    xor BYTE PTR [rip + 0x1000], cl
-    xor BYTE PTR [rip + 0x1000], al
-    xor BYTE PTR [rip + 0x1000], bl
-    xor BYTE PTR [rax + rbx*4 + 0x100], al
-    xor BYTE PTR [rax + rbx*1 + 0x10], dl
     xor BYTE PTR [rip + 0x100], dl
-    xor BYTE PTR [rax + rbx*1 + 0x10], cl
+    xor BYTE PTR [rax], bl
+    xor BYTE PTR [rax], dl
+    xor BYTE PTR [rip + 0x1000], bl
+    xor BYTE PTR [rax], cl
+    xor BYTE PTR [rip + 0x100], al
+    xor BYTE PTR [rip + 0x100], bl
     xor BYTE PTR [rbx], dl
+    xor BYTE PTR [rax + rbx*4 + 0x100], al
+    xor BYTE PTR [rip + 0x1000], dl
 
 // === XOR r16, r16 ===
-    xor di, si
-    xor di, cx
-    xor ax, bx
-    xor ax, cx
-    xor di, ax
-    xor bx, ax
-    xor cx, cx
+    xor ax, si
     xor dx, dx
-    xor cx, bx
-    xor si, bx
+    xor cx, ax
+    xor di, bx
+    xor dx, si
+    xor dx, cx
+    xor si, cx
+    xor bx, bx
+    xor bx, cx
+    xor di, si
 
 // === XOR m16, r16 ===
-    xor WORD PTR [rax + rbx*1 + 0x10], di
+    xor WORD PTR [rax], dx
     xor WORD PTR [rip + 0x100], si
-    xor WORD PTR [rax], cx
-    xor WORD PTR [rip + 0x100], dx
+    xor WORD PTR [rax + rbx*1 + 0x10], di
+    xor WORD PTR [rip + 0x100], ax
     xor WORD PTR [rax + rbx*1 + 0x10], bx
-    xor WORD PTR [rbx], cx
-    xor WORD PTR [rbx], bx
-    xor WORD PTR [rax], ax
-    xor WORD PTR [rip + 0x1000], cx
-    xor WORD PTR [rax + rbx*4 + 0x100], dx
+    xor WORD PTR [rbx], ax
+    xor WORD PTR [rax + rbx*4 + 0x100], di
+    xor WORD PTR [rax + rbx*1 + 0x10], ax
+    xor WORD PTR [rip + 0x1000], ax
+    xor WORD PTR [rax], si
 
 // === XOR r32, r32 ===
-    xor eax, edi
-    xor esi, esi
-    xor ebx, ebx
+    xor eax, ecx
     xor ebx, esi
-    xor esi, edi
-    xor ebx, edx
-    xor ebx, edi
-    xor eax, eax
-    xor ecx, edi
+    xor esi, ebx
     xor edx, esi
+    xor ecx, esi
+    xor eax, edx
+    xor ecx, edi
+    xor edi, esi
+    xor edi, edi
+    xor ebx, ebx
 
 // === XOR m32, r32 ===
-    xor DWORD PTR [rbx], edx
-    xor DWORD PTR [rip + 0x100], ebx
-    xor DWORD PTR [rip + 0x1000], ecx
-    xor DWORD PTR [rip + 0x100], ecx
     xor DWORD PTR [rip + 0x100], edx
-    xor DWORD PTR [rax + rbx*4 + 0x100], esi
-    xor DWORD PTR [rax + rbx*4 + 0x100], edi
-    xor DWORD PTR [rbx], eax
-    xor DWORD PTR [rip + 0x100], eax
+    xor DWORD PTR [rbx], edx
+    xor DWORD PTR [rax + rbx*1 + 0x10], edi
+    xor DWORD PTR [rip + 0x1000], eax
+    xor DWORD PTR [rip + 0x1000], ecx
+    xor DWORD PTR [rax], ecx
+    xor DWORD PTR [rbx], esi
     xor DWORD PTR [rip + 0x1000], edx
+    xor DWORD PTR [rax + rbx*4 + 0x100], ebx
+    xor DWORD PTR [rax + rbx*1 + 0x10], esi
 
 // === XOR r64, r64 ===
-    xor rdx, rsi
-    xor rbx, r9
-    xor r10, rax
-    xor r9, rcx
-    xor r9, r10
-    xor r13, rax
-    xor r13, r10
-    xor rax, r12
-    xor r8, rcx
+    xor r8, r9
+    xor rcx, r9
+    xor r12, r9
     xor r12, r11
+    xor rbx, r13
+    xor rdi, r12
+    xor r13, r12
+    xor rbx, rsi
+    xor r9, r13
+    xor rdx, rcx
 
 // === XOR m64, r64 ===
-    xor QWORD PTR [rax], r11
-    xor QWORD PTR [rax + rbx*1 + 0x10], rdi
-    xor QWORD PTR [rax], r12
-    xor QWORD PTR [rax + rbx*1 + 0x10], r9
-    xor QWORD PTR [rax], r13
-    xor QWORD PTR [rbx], r13
-    xor QWORD PTR [rbx], rdx
-    xor QWORD PTR [rbx], rsi
+    xor QWORD PTR [rip + 0x100], rdi
+    xor QWORD PTR [rax + rbx*4 + 0x100], rdi
+    xor QWORD PTR [rax + rbx*1 + 0x10], rax
     xor QWORD PTR [rip + 0x100], r12
-    xor QWORD PTR [rip + 0x100], r9
+    xor QWORD PTR [rax + rbx*1 + 0x10], r12
+    xor QWORD PTR [rax], r8
+    xor QWORD PTR [rax + rbx*1 + 0x10], r9
+    xor QWORD PTR [rbx], r11
+    xor QWORD PTR [rax + rbx*1 + 0x10], r8
+    xor QWORD PTR [rbx], rbx
 
 // === XOR r8, m8 ===
+    xor al, BYTE PTR [rax + rbx*4 + 0x100]
+    xor dl, BYTE PTR [rbx]
     xor cl, BYTE PTR [rip + 0x1000]
     xor bl, BYTE PTR [rax + rbx*1 + 0x10]
-    xor al, BYTE PTR [rip + 0x100]
-    xor dl, BYTE PTR [rbx]
     xor bl, BYTE PTR [rax]
-    xor cl, BYTE PTR [rbx]
+    xor dl, BYTE PTR [rax + rbx*1 + 0x10]
+    xor al, BYTE PTR [rbx]
     xor cl, BYTE PTR [rax]
-    xor dl, BYTE PTR [rip + 0x1000]
-    xor cl, BYTE PTR [rax + rbx*4 + 0x100]
-    xor dl, BYTE PTR [rax]
+    xor al, BYTE PTR [rip + 0x1000]
+    xor al, BYTE PTR [rax + rbx*1 + 0x10]
 
 // === XOR r16, m16 ===
-    xor ax, WORD PTR [rip + 0x1000]
-    xor ax, WORD PTR [rbx]
-    xor ax, WORD PTR [rip + 0x100]
-    xor dx, WORD PTR [rip + 0x100]
-    xor bx, WORD PTR [rax + rbx*4 + 0x100]
-    xor cx, WORD PTR [rip + 0x100]
+    xor di, WORD PTR [rax]
+    xor si, WORD PTR [rip + 0x1000]
+    xor dx, WORD PTR [rax + rbx*4 + 0x100]
     xor dx, WORD PTR [rax + rbx*1 + 0x10]
-    xor dx, WORD PTR [rip + 0x1000]
-    xor ax, WORD PTR [rax + rbx*4 + 0x100]
-    xor cx, WORD PTR [rbx]
+    xor si, WORD PTR [rip + 0x100]
+    xor dx, WORD PTR [rip + 0x100]
+    xor si, WORD PTR [rax + rbx*1 + 0x10]
+    xor si, WORD PTR [rbx]
+    xor di, WORD PTR [rbx]
+    xor cx, WORD PTR [rip + 0x1000]
 
 // === XOR r32, m32 ===
-    xor ebx, DWORD PTR [rip + 0x100]
-    xor edi, DWORD PTR [rax + rbx*4 + 0x100]
-    xor eax, DWORD PTR [rip + 0x100]
-    xor esi, DWORD PTR [rip + 0x1000]
+    xor edx, DWORD PTR [rax + rbx*4 + 0x100]
+    xor ecx, DWORD PTR [rbx]
+    xor ebx, DWORD PTR [rbx]
     xor esi, DWORD PTR [rax + rbx*1 + 0x10]
-    xor edi, DWORD PTR [rip + 0x1000]
-    xor esi, DWORD PTR [rip + 0x100]
-    xor edx, DWORD PTR [rip + 0x100]
-    xor eax, DWORD PTR [rax + rbx*1 + 0x10]
     xor eax, DWORD PTR [rax + rbx*4 + 0x100]
+    xor esi, DWORD PTR [rip + 0x100]
+    xor ecx, DWORD PTR [rax]
+    xor ebx, DWORD PTR [rax + rbx*1 + 0x10]
+    xor ebx, DWORD PTR [rip + 0x100]
+    xor eax, DWORD PTR [rbx]
 
 // === XOR r64, m64 ===
-    xor r12, QWORD PTR [rax + rbx*4 + 0x100]
-    xor rsi, QWORD PTR [rax]
-    xor r8, QWORD PTR [rip + 0x100]
-    xor r9, QWORD PTR [rax + rbx*1 + 0x10]
-    xor r12, QWORD PTR [rax]
-    xor r9, QWORD PTR [rax]
-    xor rax, QWORD PTR [rip + 0x100]
-    xor rdx, QWORD PTR [rax + rbx*1 + 0x10]
-    xor r13, QWORD PTR [rax]
+    xor r10, QWORD PTR [rip + 0x1000]
+    xor r10, QWORD PTR [rax + rbx*1 + 0x10]
+    xor rdi, QWORD PTR [rip + 0x100]
     xor rcx, QWORD PTR [rax + rbx*4 + 0x100]
+    xor r13, QWORD PTR [rax + rbx*4 + 0x100]
+    xor rsi, QWORD PTR [rax]
+    xor r12, QWORD PTR [rip + 0x1000]
+    xor r11, QWORD PTR [rax + rbx*1 + 0x10]
+    xor rsi, QWORD PTR [rip + 0x1000]
+    xor r10, QWORD PTR [rax + rbx*4 + 0x100]
 
 // === XSETBV ===
     xsetbv

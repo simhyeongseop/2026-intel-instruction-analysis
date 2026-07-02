@@ -1,0 +1,562 @@
+﻿mnemonic,page,heading,constraint_type,evidence
+AESIMC,174,AESIMC—Perform the AES InvMixColumn Transformation,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+AESKEYGENASSIST,175,AESKEYGENASSIST—AES Round Key Generation Assist,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+ANDN,179,ANDN—Logical AND NOT,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+BEXTR,194,BEXTR—Bit Field Extract,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+BLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,An attempt to execute BLENDVPD with a VEX prefix will cause #UD.
+BLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+BLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+BLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,An attempt to execute BLENDVPS with a VEX prefix will cause #UD.
+BLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+BLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+BLSI,204,BLSI—Extract Lowest Set Isolated Bit,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+BLSMSK,205,BLSMSK—Get Mask Up to Lowest Set Bit,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+BLSR,206,BLSR—Reset Lowest Set Bit,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+BNDMK,214,BNDMK—Make Bounds,ud_generic,The instruction causes an invalid-opcode exception (#UD)
+BZHI,237,BZHI—Zero High Bits Starting with Specified Bit Position,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+CLAC,256,CLAC—Clear AC Flag in EFLAGS Register,ud_generic,Attempts to execute CLAC when CPL > 0 cause #UD.
+CMPNBXADD,281,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNLEXADD,281,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNLXADD,281,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNOXADD,281,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNPXADD,282,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNSXADD,282,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPNZXADD,282,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPOXADD,282,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPPXADD,282,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPSXADD,283,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+CMPZXADD,283,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,The value 3 for MODRM.MOD is reserved and will cause an invalid opcode exception (#UD).
+COMISD,316,COMISD—Compare Scalar Ordered Double Precision Floating-Point Values and Set EFLAGS,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTDQ2PD,325,CVTDQ2PD—Convert Packed Doubleword Integers to Packed Double Precision Floating-Point,evex_b,Attempt to encode this instruction with EVEX embedded rounding is ignored.
+CVTDQ2PD,325,CVTDQ2PD—Convert Packed Doubleword Integers to Packed Double Precision Floating-Point,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTDQ2PS,328,CVTDQ2PS—Convert Packed Doubleword Integers to Packed Single Precision Floating-Point,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTPD2DQ,331,CVTPD2DQ—Convert Packed Double Precision Floating-Point Values to Packed Doubleword,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+CVTPD2DQ,331,CVTPD2DQ—Convert Packed Double Precision Floating-Point Values to Packed Doubleword,ud_generic,"2A 3-214 VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTPD2PS,336,CVTPD2PS—Convert Packed Double Precision Floating-Point Values to Packed Single Precision,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+CVTPD2PS,336,CVTPD2PS—Convert Packed Double Precision Floating-Point Values to Packed Single Precision,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+CVTPS2DQ,342,CVTPS2DQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+CVTPS2DQ,342,CVTPS2DQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,ud_generic,2A 3-225 VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+CVTPS2PD,345,CVTPS2PD—Convert Packed Single Precision Floating-Point Values to Packed Double Precision,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+CVTSD2SI,349,CVTSD2SI—Convert Scalar Double Precision Floating-Point Value to Signed Integer,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTSI2SD,353,CVTSI2SD—Convert Signed Integer to Scalar Double Precision Floating-Point Value,evex_b,EVEX.W0 version: attempt to encode this instruction with EVEX embedded rounding is ignored.
+CVTSI2SS,355,CVTSI2SS—Convert Signed Integer to Scalar Single Precision Floating-Point Value,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+CVTSS2SI,359,CVTSS2SI—Convert Scalar Single Precision Floating-Point Value to Signed Integer,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+CVTSS2SI,359,CVTSS2SI—Convert Scalar Single Precision Floating-Point Value to Signed Integer,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTTPD2DQ,361,CVTTPD2DQ—Convert with Truncation Packed Double Precision Floating-Point Values to,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTTPS2DQ,366,CVTTPS2DQ—Convert With Truncation Packed Single Precision Floating-Point Values to Packed,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+CVTTSD2SI,370,CVTTSD2SI—Convert With Truncation Scalar Double Precision Floating-Point Value to Signed,ud_generic,"2A 3-253 Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+CVTTSS2SI,372,CVTTSS2SI—Convert With Truncation Scalar Single Precision Floating-Point Value to Signed,ud_generic,"2A 3-255 Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+DPPD,394,DPPD—Dot Product of Packed Double Precision Floating-Point Values,ud_generic,"If VDPPD is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+ERETS,415,ERETS—Event Return to Supervisor,ud_generic,Execution of ERETS causes an invalid-opcode exception (#UD)
+ERETU,418,ERETU—Event Return to User,ud_generic,Execution of ERETU causes an invalid-opcode exception (#UD)
+EXTRACTPS,422,EXTRACTPS—Extract Packed Floating-Point Values,ud_generic,"If VEXTRACTPS is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+EXTRACTPS,422,EXTRACTPS—Extract Packed Floating-Point Values,ud_generic,VEX.vvvv/EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+GETSEC[CAPABILITIES],2317,SAFER MODE EXTENSIONS REFERENCE,ud_generic,"GETSEC[CAPABILITIES] may be executed at all privilege levels, but the CR4.SMXE bit must be set or an unde- fined opcode exception (#UD)"
+GETSEC[CAPABILITIES],2317,SAFER MODE EXTENSIONS REFERENCE,ud_generic,"If the bit value at a given bit index is 0, then the GETSEC leaf function corresponding to that index is unsupported and attempted execution results in a #UD."
+INSERTPS,578,INSERTPS—Insert Scalar Single Precision Floating-Point Value,ud_generic,"If VINSERTPS is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+KTESTB,644,KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+KTESTD,644,KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+KTESTQ,644,KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+KTESTW,644,KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+LDMXCSR,656,LDMXCSR—Load MXCSR Register,ud_generic,"If VLDMXCSR is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+LDMXCSR,656,LDMXCSR—Load MXCSR Register,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+LOCK,682,LOCK—Assert LOCK# Signal Prefix,ud_generic,"If the LOCK prefix is used with one of these instructions and the source operand is a memory operand, an undefined opcode exception (#UD)"
+MONITOR,728,MONITOR—Set Up Monitor Address,ud_generic,"When set, MONITOR may be executed only at privilege level 0 (use at any other privilege level results in an invalid-opcode exception)."
+MOV,730,MOV—Move,ud_generic,Attempting to do so results in an invalid opcode excep- tion (#UD).
+MOVAPD,739,MOVAPD—Move Aligned Packed Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVAPS,743,MOVAPS—Move Aligned Packed Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVDDUP,750,MOVDDUP—Replicate Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVDQA,762,"MOVDQA,VMOVDQA32/64—Move Aligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVDQU,767,"MOVDQU,VMOVDQU8/16/32/64—Move Unaligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVHLPS,775,MOVHLPS—Move Packed Single Precision Floating-Point Values High to Low,ud_generic,"If VMOVHLPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVHPD,777,MOVHPD—Move High Packed Double Precision Floating-Point Value,ud_generic,"If VMOVHPD is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVHPD,777,MOVHPD—Move High Packed Double Precision Floating-Point Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+MOVHPS,779,MOVHPS—Move High Packed Single Precision Floating-Point Values,ud_generic,"If VMOVHPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVHPS,779,MOVHPS—Move High Packed Single Precision Floating-Point Values,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+MOVLHPS,781,MOVLHPS—Move Packed Single Precision Floating-Point Values Low to High,ud_generic,"If VMOVLHPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVLPD,783,MOVLPD—Move Low Packed Double Precision Floating-Point Value,ud_generic,"If VMOVLPD is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVLPD,783,MOVLPD—Move Low Packed Double Precision Floating-Point Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+MOVLPS,785,MOVLPS—Move Low Packed Single Precision Floating-Point Values,ud_generic,"If VMOVLPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+MOVLPS,785,MOVLPS—Move Low Packed Single Precision Floating-Point Values,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+MOVMSKPD,787,MOVMSKPD—Extract Packed Double Precision Floating-Point Sign Mask,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+MOVMSKPS,789,MOVMSKPS—Extract Packed Single Precision Floating-Point Sign Mask,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+MOVNTDQ,791,MOVNTDQ—Store Packed Integers Using Non-Temporal Hint,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, VEX.L must be 0; otherwise instructions will #UD."
+MOVNTPD,797,MOVNTPD—Store Packed Double Precision Floating-Point Values Using Non-Temporal Hint,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, VEX.L must be 0; otherwise instructions will #UD."
+MOVNTPS,799,MOVNTPS—Store Packed Single Precision Floating-Point Values Using Non-Temporal Hint,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVSHDUP,814,MOVSHDUP—Replicate Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVSLDUP,817,MOVSLDUP—Replicate Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+MOVSS,820,MOVSS—Move or Merge Scalar Single Precision Floating-Point Value,ud_generic,"For memory store form instruction “VMOVSS mv {k1}, xmm1”, EVEX.vvvv is reserved and must be 1111b otherwise instruction will #UD."
+MOVSS,820,MOVSS—Move or Merge Scalar Single Precision Floating-Point Value,ud_generic,"Note: For memory store form instruction “VMOVSS m32, xmm1”, VEX.vvvv is reserved and must be 1111b other- wise instruction will #UD."
+MOVUPD,825,MOVUPD—Move Unaligned Packed Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+MOVUPS,829,MOVUPS—Move Unaligned Packed Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+MULX,855,MULX—Unsigned Multiply Without Affecting Flags,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+MWAIT,857,MWAIT—Monitor Wait,ud_generic,The operating system or system BIOS may disable this instruction by using the IA32_MISC_ENABLE MSR; disabling MWAIT clears the CPUID feature flag and causes execution to generate an invalid-opcode exception.
+MWAIT,857,MWAIT—Monitor Wait,ud_generic,"When set, MWAIT may be executed only at privilege level 0 (use at any other privilege level results in an invalid-opcode exception)."
+PABSB,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PABSD,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PABSW,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,An attempt to execute PBLENDVB with a VEX prefix will cause #UD.
+PBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+PCMPESTRM,958,"PCMPESTRM—Packed Compare Explicit Length Strings, Return Mask",ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PCMPISTRI,969,"PCMPISTRI—Packed Compare Implicit Length Strings, Return Index",ud_generic,"Note that the Arithmetic Flags are written in a non-standard manner in order to supply the most relevant informa- tion: CFlag – Reset if IntRes2 is equal to zero, set otherwise ZFlag – Set if any byte/word of xmm2/mem128 is null, reset otherwise SFlag – Set if any byte/word of xmm1 is null, reset ot"
+PCMPISTRM,971,"PCMPISTRM—Packed Compare Implicit Length Strings, Return Mask",ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PDEP,984,PDEP—Parallel Bits Deposit,mask_lowbit,PDEP takes the low bits from the first source operand and deposit them in the destination operand at the corresponding bit locations that are set in the second source operand (mask).
+PDEP,984,PDEP—Parallel Bits Deposit,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+PEXT,986,PEXT—Parallel Bits Extract,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+PEXTRB,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+PEXTRB,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PEXTRD,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+PEXTRD,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PEXTRQ,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+PEXTRQ,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PEXTRW,991,PEXTRW—Extract Word,ud_generic,2B 4-289 otherwise the instruction will #UD.
+PEXTRW,991,PEXTRW—Extract Word,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PHMINPOSUW,1000,PHMINPOSUW—Packed Horizontal Word Minimum,ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+PINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+PINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+PINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+PINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+PINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+PINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PINSRW,1010,PINSRW—Insert Word,ud_generic,"VEX.L/EVEX.L’L must be 0, otherwise the instruc- tion will #UD."
+PMOVSXBD,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVSXBQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVSXBW,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVSXDQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVSXWD,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVSXWQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXBD,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXBQ,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXBW,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXDQ,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXWD,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMOVZXWQ,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+PMULHUW,1081,PMULHUW—Multiply Packed Unsigned Integers and Store High Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PMULHW,1085,PMULHW—Multiply Packed Signed Integers and Store High Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PMULLW,1093,PMULLW—Multiply Packed Signed Integers and Store Low Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+PSHUFHW,1132,PSHUFHW—Shuffle Packed High Words,ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+PSIGNB,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+PSIGND,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+PSIGNW,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+PTEST,1200,PTEST—Logical Compare,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+PTWRITE,1202,PTWRITE—Write Data to a Processor Trace Packet,ud_generic,Note: The instruction will #UD if prefix 66H is used.
+RDMSR,1246,RDMSR—Read From Model Specific Register,ud_generic,Execution of this instruction by an IA-32 processor earlier than the Pentium processor results in an invalid opcode exception #UD.
+RDPKRU,1251,RDPKRU—Read Protection Key Rights for User Pages,ud_generic,"RDPKRU can be executed only if CR4.PKE = 1; otherwise, an invalid-opcode exception (#UD)"
+RORX,1284,RORX — Rotate Right Logical Without Affecting Flags,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+ROUNDPD,1285,ROUNDPD—Round Packed Double Precision Floating-Point Values,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+ROUNDPS,1288,ROUNDPS—Round Packed Single Precision Floating-Point Values,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b otherwise instructions will #UD."
+RSQRTPS,1296,RSQRTPS—Compute Reciprocals of Square Roots of Packed Single Precision Floating-Point,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+SARX,1310,SARX/SHLX/SHRX—Shift Without Affecting Flags,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+SHLX,1310,SARX/SHLX/SHRX—Shift Without Affecting Flags,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+SHRX,1310,SARX/SHLX/SHRX—Shift Without Affecting Flags,ud_generic,An attempt to execute this instruction with VEX.L not equal to 0 will cause #UD.
+SQRTPD,1362,SQRTPD—Square Root of Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+SQRTPS,1365,SQRTPS—Square Root of Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+STAC,1372,STAC—Set AC Flag in EFLAGS Register,ud_generic,Attempts to execute STAC when CPL > 0 cause #UD.
+STMXCSR,1377,STMXCSR—Store MXCSR Register State,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+STMXCSR,1377,STMXCSR—Store MXCSR Register State,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+UCOMISD,1431,UCOMISD—Unordered Compare Scalar Double Precision Floating-Point Values and Set EFLAGS,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+UCOMISS,1433,UCOMISS—Unordered Compare Scalar Single Precision Floating-Point Values and Set EFLAGS,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+UD01,1435,UD—Undefined Instruction,ud_generic,"Even though it is the execution of the UD instruction that causes the invalid opcode exception, the instruction pointer saved by delivery of the exception references the UD instruction (and not the following instruction)."
+UD01,1435,UD—Undefined Instruction,ud_generic,Generates an invalid opcode exception.
+UD01,1435,UD—Undefined Instruction,ud_generic,"Other than raising the invalid opcode exception, this instruction has no effect on processor state or memory."
+UD01,1435,UD—Undefined Instruction,ud_generic,This instruction is provided for software testing to explicitly generate an invalid opcode exception.
+UD1,1435,UD—Undefined Instruction,ud_generic,"Even though it is the execution of the UD instruction that causes the invalid opcode exception, the instruction pointer saved by delivery of the exception references the UD instruction (and not the following instruction)."
+UD1,1435,UD—Undefined Instruction,ud_generic,Generates an invalid opcode exception.
+UD1,1435,UD—Undefined Instruction,ud_generic,"Other than raising the invalid opcode exception, this instruction has no effect on processor state or memory."
+UD1,1435,UD—Undefined Instruction,ud_generic,This instruction is provided for software testing to explicitly generate an invalid opcode exception.
+UD2,1435,UD—Undefined Instruction,ud_generic,"Even though it is the execution of the UD instruction that causes the invalid opcode exception, the instruction pointer saved by delivery of the exception references the UD instruction (and not the following instruction)."
+UD2,1435,UD—Undefined Instruction,ud_generic,Generates an invalid opcode exception.
+UD2,1435,UD—Undefined Instruction,ud_generic,"Other than raising the invalid opcode exception, this instruction has no effect on processor state or memory."
+UD2,1435,UD—Undefined Instruction,ud_generic,This instruction is provided for software testing to explicitly generate an invalid opcode exception.
+UDB,1435,UD—Undefined Instruction,ud_generic,"Even though it is the execution of the UD instruction that causes the invalid opcode exception, the instruction pointer saved by delivery of the exception references the UD instruction (and not the following instruction)."
+UDB,1435,UD—Undefined Instruction,ud_generic,Generates an invalid opcode exception.
+UDB,1435,UD—Undefined Instruction,ud_generic,"Other than raising the invalid opcode exception, this instruction has no effect on processor state or memory."
+UDB,1435,UD—Undefined Instruction,ud_generic,This instruction is provided for software testing to explicitly generate an invalid opcode exception.
+VAESIMC,174,AESIMC—Perform the AES InvMixColumn Transformation,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VAESKEYGENASSIST,175,AESKEYGENASSIST—AES Round Key Generation Assist,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VBLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,An attempt to execute BLENDVPD with a VEX prefix will cause #UD.
+VBLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+VBLENDVPD,199,BLENDVPD—Variable Blend Packed Double Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+VBLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,An attempt to execute BLENDVPS with a VEX prefix will cause #UD.
+VBLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+VBLENDVPS,201,BLENDVPS—Variable Blend Packed Single Precision Floating-Point Values,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+VBROADCASTF128,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF128,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF128,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTF32X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF32X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF32X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTF32X4,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF32X4,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF32X4,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTF32X8,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF32X8,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF32X8,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTF64X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF64X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF64X2,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTF64X4,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTF64X4,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTF64X4,1474,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTI128,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI128,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI128,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI128,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTI32X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI32X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI32X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI32X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTI32X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI32X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI32X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI32X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTI32X8,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI32X8,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI32X8,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI32X8,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTI64X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI64X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI64X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI64X2,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTI64X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTI64X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTI64X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VBROADCASTI64X4,1904,Opcode/ Op / 64/32 CPUID Feature Description,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VBROADCASTSD,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTSD,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTSD,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VBROADCASTSS,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,"If VBROADCASTSD or VBROADCASTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VBROADCASTSS,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VBROADCASTSS,1473,VBROADCAST—Load with Broadcast Floating-Point Data,ud_generic,Register source encodings are reserved and will #UD.
+VCOMISD,316,COMISD—Compare Scalar Ordered Double Precision Floating-Point Values and Set EFLAGS,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCOMISH,1485,VCOMISH—Compare Scalar Ordered FP16 Values and Set EFLAGS,ud_generic,"EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCOMPRESSPD,1487,VCOMPRESSPD—Store Sparse Packed Double Precision Floating-Point Values Into Dense,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCOMPRESSPS,1489,VCOMPRESSPS—Store Sparse Packed Single Precision Floating-Point Values Into Dense Memory,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTDQ2PD,325,CVTDQ2PD—Convert Packed Doubleword Integers to Packed Double Precision Floating-Point,evex_b,Attempt to encode this instruction with EVEX embedded rounding is ignored.
+VCVTDQ2PD,325,CVTDQ2PD—Convert Packed Doubleword Integers to Packed Double Precision Floating-Point,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTDQ2PH,1491,VCVTDQ2PH—Convert Packed Signed Doubleword Integers to Packed FP16 Values,ud_generic,"EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTDQ2PS,328,CVTDQ2PS—Convert Packed Doubleword Integers to Packed Single Precision Floating-Point,ud_generic,"VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTNEPS2BF16,1499,VCVTNEPS2BF16—Convert Packed Single Data to Packed BF16 Data,ud_generic,EVEX.vvvv is reserved and must be 0b1111 otherwise instructions will #UD.
+VCVTPD2DQ,331,CVTPD2DQ—Convert Packed Double Precision Floating-Point Values to Packed Doubleword,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2DQ,331,CVTPD2DQ—Convert Packed Double Precision Floating-Point Values to Packed Doubleword,ud_generic,"2A 3-214 VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTPD2PH,1501,VCVTPD2PH—Convert Packed Double Precision FP Values to Packed FP16 Values,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2PH,1501,VCVTPD2PH—Convert Packed Double Precision FP Values to Packed FP16 Values,ud_generic,EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VCVTPD2PS,336,CVTPD2PS—Convert Packed Double Precision Floating-Point Values to Packed Single Precision,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2PS,336,CVTPD2PS—Convert Packed Double Precision Floating-Point Values to Packed Single Precision,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VCVTPD2QQ,1503,VCVTPD2QQ—Convert Packed Double Precision Floating-Point Values to Packed Quadword,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2QQ,1503,VCVTPD2QQ—Convert Packed Double Precision Floating-Point Values to Packed Quadword,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTPD2UDQ,1505,VCVTPD2UDQ—Convert Packed Double Precision Floating-Point Values to Packed Unsigned,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2UDQ,1505,VCVTPD2UDQ—Convert Packed Double Precision Floating-Point Values to Packed Unsigned,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTPD2UQQ,1508,VCVTPD2UQQ—Convert Packed Double Precision Floating-Point Values to Packed Unsigned,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPD2UQQ,1508,VCVTPD2UQQ—Convert Packed Double Precision Floating-Point Values to Packed Unsigned,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTPH2DQ,1511,VCVTPH2DQ—Convert Packed FP16 Values to Signed Doubleword Integers,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPH2PS,1515,VCVTPH2PS/VCVTPH2PSX—Convert Packed FP16 Values to Single Precision Floating-Point,evex_b,The VCVTPH2PSX instruction has the embedded broadcasting option available.
+VCVTPH2PS,1515,VCVTPH2PS/VCVTPH2PSX—Convert Packed FP16 Values to Single Precision Floating-Point,evex_b,does not support embedded broadcasting.
+VCVTPH2PSX,1515,VCVTPH2PS/VCVTPH2PSX—Convert Packed FP16 Values to Single Precision Floating-Point,evex_b,The VCVTPH2PSX instruction has the embedded broadcasting option available.
+VCVTPH2PSX,1515,VCVTPH2PS/VCVTPH2PSX—Convert Packed FP16 Values to Single Precision Floating-Point,evex_b,does not support embedded broadcasting.
+VCVTPH2QQ,1519,VCVTPH2QQ—Convert Packed FP16 Values to Signed Quadword Integer Values,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPH2UDQ,1521,VCVTPH2UDQ—Convert Packed FP16 Values to Unsigned Doubleword Integers,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPH2UQQ,1523,VCVTPH2UQQ—Convert Packed FP16 Values to Unsigned Quadword Integers,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPH2UW,1525,VCVTPH2UW—Convert Packed FP16 Values to Unsigned Word Integers,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPH2W,1527,VCVTPH2W—Convert Packed FP16 Values to Signed Word Integers,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPS2DQ,342,CVTPS2DQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPS2DQ,342,CVTPS2DQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,ud_generic,2A 3-225 VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VCVTPS2PD,345,CVTPS2PD—Convert Packed Single Precision Floating-Point Values to Packed Double Precision,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VCVTPS2QQ,1535,VCVTPS2QQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPS2QQ,1535,VCVTPS2QQ—Convert Packed Single Precision Floating-Point Values to Packed Signed,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTPS2UDQ,1537,VCVTPS2UDQ—Convert Packed Single Precision Floating-Point Values to Packed Unsigned,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPS2UDQ,1537,VCVTPS2UDQ—Convert Packed Single Precision Floating-Point Values to Packed Unsigned,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTPS2UQQ,1540,VCVTPS2UQQ—Convert Packed Single Precision Floating-Point Values to Packed Unsigned,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTPS2UQQ,1540,VCVTPS2UQQ—Convert Packed Single Precision Floating-Point Values to Packed Unsigned,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTQQ2PD,1542,VCVTQQ2PD—Convert Packed Quadword Integers to Packed Double Precision Floating-Point,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTQQ2PH,1544,VCVTQQ2PH—Convert Packed Signed Quadword Integers to Packed FP16 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTQQ2PS,1546,VCVTQQ2PS—Convert Packed Quadword Integers to Packed Single Precision Floating-Point,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTSD2SI,349,CVTSD2SI—Convert Scalar Double Precision Floating-Point Value to Signed Integer,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTSD2USI,1549,VCVTSD2USI—Convert Scalar Double Precision Floating-Point Value to Unsigned Integer,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSH2SI,1552,VCVTSH2SI—Convert Low FP16 Value to Signed Integer,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSH2USI,1555,VCVTSH2USI—Convert Low FP16 Value to Unsigned Integer,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSI2SD,353,CVTSI2SD—Convert Signed Integer to Scalar Double Precision Floating-Point Value,evex_b,EVEX.W0 version: attempt to encode this instruction with EVEX embedded rounding is ignored.
+VCVTSI2SH,1557,VCVTSI2SH—Convert a Signed Doubleword/Quadword Integer to an FP16 Value,evex_b,"When conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or embedded rounding controls."
+VCVTSI2SS,355,CVTSI2SS—Convert Signed Integer to Scalar Single Precision Floating-Point Value,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSS2SI,359,CVTSS2SI—Convert Scalar Single Precision Floating-Point Value to Signed Integer,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSS2SI,359,CVTSS2SI—Convert Scalar Single Precision Floating-Point Value to Signed Integer,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTSS2USI,1560,VCVTSS2USI—Convert Scalar Single Precision Floating-Point Value to Unsigned Doubleword,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTSS2USI,1560,VCVTSS2USI—Convert Scalar Single Precision Floating-Point Value to Unsigned Doubleword,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTPD2DQ,361,CVTTPD2DQ—Convert with Truncation Packed Double Precision Floating-Point Values to,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTPD2QQ,1562,VCVTTPD2QQ—Convert With Truncation Packed Double Precision Floating-Point Values to,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTPD2UDQ,1564,VCVTTPD2UDQ—Convert With Truncation Packed Double Precision Floating-Point Values to,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTPD2UQQ,1566,VCVTTPD2UQQ—Convert With Truncation Packed Double Precision Floating-Point Values to,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTPS2DQ,366,CVTTPS2DQ—Convert With Truncation Packed Single Precision Floating-Point Values to Packed,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VCVTTPS2QQ,1580,VCVTTPS2QQ—Convert With Truncation Packed Single Precision Floating-Point Values to,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTTPS2UDQ,1582,VCVTTPS2UDQ—Convert With Truncation Packed Single Precision Floating-Point Values to,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTTPS2UQQ,1584,VCVTTPS2UQQ—Convert With Truncation Packed Single Precision Floating-Point Values to,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTTSD2SI,370,CVTTSD2SI—Convert With Truncation Scalar Double Precision Floating-Point Value to Signed,ud_generic,"2A 3-253 Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTSS2SI,372,CVTTSS2SI—Convert With Truncation Scalar Single Precision Floating-Point Value to Signed,ud_generic,"2A 3-255 Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VCVTTSS2USI,1590,VCVTTSS2USI—Convert With Truncation Scalar Single Precision Floating-Point Value to,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTUDQ2PD,1592,VCVTUDQ2PD—Convert Packed Unsigned Doubleword Integers to Packed Double Precision,evex_b,Attempt to encode this instruction with EVEX embedded rounding is ignored.
+VCVTUDQ2PD,1592,VCVTUDQ2PD—Convert Packed Unsigned Doubleword Integers to Packed Double Precision,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTUDQ2PH,1594,VCVTUDQ2PH—Convert Packed Unsigned Doubleword Integers to Packed FP16 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTUDQ2PS,1596,VCVTUDQ2PS—Convert Packed Unsigned Doubleword Integers to Packed Single Precision,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTUQQ2PD,1599,VCVTUQQ2PD—Convert Packed Unsigned Quadword Integers to Packed Double Precision,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTUQQ2PH,1601,VCVTUQQ2PH—Convert Packed Unsigned Quadword Integers to Packed FP16 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VCVTUQQ2PS,1603,VCVTUQQ2PS—Convert Packed Unsigned Quadword Integers to Packed Single Precision,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VCVTUSI2SD,1605,VCVTUSI2SD—Convert Unsigned Integer to Scalar Double Precision Floating-Point Value,evex_b,EVEX.W0 version: attempt to encode this instruction with EVEX embedded rounding is ignored.
+VCVTUSI2SH,1607,VCVTUSI2SH—Convert Unsigned Doubleword Integer to an FP16 Value,evex_b,"When conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or embedded rounding controls."
+VCVTUSI2SS,1609,VCVTUSI2SS—Convert Unsigned Integer to Scalar Single Precision Floating-Point Value,evex_b,"When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits."
+VCVTUW2PH,1611,VCVTUW2PH—Convert Packed Unsigned Word Integers to FP16 Values,evex_b,"When conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or embedded rounding controls."
+VCVTW2PH,1613,VCVTW2PH—Convert Packed Signed Word Integers to FP16 Values,evex_b,"When conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or embedded rounding controls."
+VDPPD,394,DPPD—Dot Product of Packed Double Precision Floating-Point Values,ud_generic,"If VDPPD is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+VEXP2PD,2361,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VEXP2PS,2363,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VEXPANDPD,1625,VEXPANDPD—Load Sparse Packed Double Precision Floating-Point Values From Dense Memory,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VEXPANDPS,1627,VEXPANDPS—Load Sparse Packed Single Precision Floating-Point Values From Dense Memory,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTF128,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,"2C 5-168 If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTF128,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTF32X4,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,"2C 5-168 If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTF32X4,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTF32X8,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,"2C 5-168 If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTF32X8,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTF64X2,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,"2C 5-168 If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTF64X2,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTF64X4,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,"2C 5-168 If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTF64X4,1629,VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTI128,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,"If VEXTRACTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTI128,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTI32X4,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,"If VEXTRACTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTI32X4,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTI32X8,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,"If VEXTRACTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTI32X8,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTI64X2,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,"If VEXTRACTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTI64X2,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTI64X4,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,"If VEXTRACTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VEXTRACTI64X4,1635,VEXTRACTI128/VEXTRACTI32x4/VEXTRACTI64x2/VEXTRACTI32x8/VEXTRACTI64x4—Extract,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VEXTRACTPS,422,EXTRACTPS—Extract Packed Floating-Point Values,ud_generic,"If VEXTRACTPS is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+VEXTRACTPS,422,EXTRACTPS—Extract Packed Floating-Point Values,ud_generic,VEX.vvvv/EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VFPCLASSPD,1806,VFPCLASSPD—Tests Types of Packed Float64 Values,ud_generic,2C 5-345 EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VFPCLASSPS,1812,VFPCLASSPS—Tests Types of Packed Float32 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VFPCLASSSD,1814,VFPCLASSSD—Tests Type of a Scalar Float64 Value,mask_lowbit,The result is written to the low bit in a mask register k2 according to the writemask k1.
+VFPCLASSSD,1814,VFPCLASSSD—Tests Type of a Scalar Float64 Value,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VFPCLASSSH,1816,VFPCLASSSH—Test Types of Scalar FP16 Values,mask_lowbit,The result is written to the low bit in the destination mask register according to the writemask.
+VFPCLASSSS,1817,VFPCLASSSS—Tests Type of a Scalar Float32 Value,mask_lowbit,The result is written to the low bit in a mask register k2 according to the writemask k1.
+VFPCLASSSS,1817,VFPCLASSSS—Tests Type of a Scalar Float32 Value,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VGATHERPF0DPD,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF0DPD,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF0DPS,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF0DPS,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF0QPD,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF0QPD,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF0QPS,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF0QPS,2365,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF1DPD,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF1DPD,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF1DPS,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF1DPS,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF1QPD,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF1QPD,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGATHERPF1QPS,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VGATHERPF1QPS,2367,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VGETEXPPD,1833,VGETEXPPD—Convert Exponents of Packed Double Precision Floating-Point Values to Double,ud_generic,"EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VGETEXPPS,1840,VGETEXPPS—Convert Exponents of Packed Single Precision Floating-Point Values to Single,ud_generic,"EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VGETMANTPS,1858,VGETMANTPS—Extract Float32 Vector of Normalized Mantissas From Float32 Vector,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, VEX.L must be 0; otherwise instructions will #UD."
+VINSERTI128,1872,VINSERTI128/VINSERTI32x4/VINSERTI64x2/VINSERTI32x8/VINSERTI64x4—Insert Packed,ud_generic,"VEX.L must be 1, otherwise attempt to execute this instruction with VEX.L=0 will cause #UD."
+VINSERTI32X4,1872,VINSERTI128/VINSERTI32x4/VINSERTI64x2/VINSERTI32x8/VINSERTI64x4—Insert Packed,ud_generic,"VEX.L must be 1, otherwise attempt to execute this instruction with VEX.L=0 will cause #UD."
+VINSERTI32X8,1872,VINSERTI128/VINSERTI32x4/VINSERTI64x2/VINSERTI32x8/VINSERTI64x4—Insert Packed,ud_generic,"VEX.L must be 1, otherwise attempt to execute this instruction with VEX.L=0 will cause #UD."
+VINSERTI64X2,1872,VINSERTI128/VINSERTI32x4/VINSERTI64x2/VINSERTI32x8/VINSERTI64x4—Insert Packed,ud_generic,"VEX.L must be 1, otherwise attempt to execute this instruction with VEX.L=0 will cause #UD."
+VINSERTI64X4,1872,VINSERTI128/VINSERTI32x4/VINSERTI64x2/VINSERTI32x8/VINSERTI64x4—Insert Packed,ud_generic,"VEX.L must be 1, otherwise attempt to execute this instruction with VEX.L=0 will cause #UD."
+VINSERTPS,578,INSERTPS—Insert Scalar Single Precision Floating-Point Value,ud_generic,"If VINSERTPS is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+VLDMXCSR,656,LDMXCSR—Load MXCSR Register,ud_generic,"If VLDMXCSR is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception."
+VLDMXCSR,656,LDMXCSR—Load MXCSR Register,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VMOVAPD,739,MOVAPD—Move Aligned Packed Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVAPS,743,MOVAPS—Move Aligned Packed Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDDUP,750,MOVDDUP—Replicate Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQA,762,"MOVDQA,VMOVDQA32/64—Move Aligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQA32,762,"MOVDQA,VMOVDQA32/64—Move Aligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQA64,762,"MOVDQA,VMOVDQA32/64—Move Aligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQU,767,"MOVDQU,VMOVDQU8/16/32/64—Move Unaligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQU16,767,"MOVDQU,VMOVDQU8/16/32/64—Move Unaligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQU32,768,Opcode/ Op/En 64/32 bit CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQU64,768,Opcode/ Op/En 64/32 bit CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVDQU8,767,"MOVDQU,VMOVDQU8/16/32/64—Move Unaligned Packed Integer Values",ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVHLPS,775,MOVHLPS—Move Packed Single Precision Floating-Point Values High to Low,ud_generic,"If VMOVHLPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVHPD,777,MOVHPD—Move High Packed Double Precision Floating-Point Value,ud_generic,"If VMOVHPD is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVHPD,777,MOVHPD—Move High Packed Double Precision Floating-Point Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+VMOVHPS,779,MOVHPS—Move High Packed Single Precision Floating-Point Values,ud_generic,"If VMOVHPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVHPS,779,MOVHPS—Move High Packed Single Precision Floating-Point Values,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+VMOVLHPS,781,MOVLHPS—Move Packed Single Precision Floating-Point Values Low to High,ud_generic,"If VMOVLHPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVLPD,783,MOVLPD—Move Low Packed Double Precision Floating-Point Value,ud_generic,"If VMOVLPD is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVLPD,783,MOVLPD—Move Low Packed Double Precision Floating-Point Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+VMOVLPS,785,MOVLPS—Move Low Packed Single Precision Floating-Point Values,ud_generic,"If VMOVLPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception."
+VMOVLPS,785,MOVLPS—Move Low Packed Single Precision Floating-Point Values,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD.
+VMOVMSKPD,787,MOVMSKPD—Extract Packed Double Precision Floating-Point Sign Mask,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VMOVMSKPS,789,MOVMSKPS—Extract Packed Single Precision Floating-Point Sign Mask,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VMOVNTDQ,791,MOVNTDQ—Store Packed Integers Using Non-Temporal Hint,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, VEX.L must be 0; otherwise instructions will #UD."
+VMOVNTPD,797,MOVNTPD—Store Packed Double Precision Floating-Point Values Using Non-Temporal Hint,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, VEX.L must be 0; otherwise instructions will #UD."
+VMOVNTPS,799,MOVNTPS—Store Packed Single Precision Floating-Point Values Using Non-Temporal Hint,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVSD,811,MOVSD—Move or Merge Scalar Double Precision Floating-Point Value,ud_generic,"Note: For VMOVSD (memory store and load forms), VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instruction will #UD."
+VMOVSHDUP,814,MOVSHDUP—Replicate Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVSLDUP,817,MOVSLDUP—Replicate Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VMOVSS,820,MOVSS—Move or Merge Scalar Single Precision Floating-Point Value,ud_generic,"For memory store form instruction “VMOVSS mv {k1}, xmm1”, EVEX.vvvv is reserved and must be 1111b otherwise instruction will #UD."
+VMOVSS,820,MOVSS—Move or Merge Scalar Single Precision Floating-Point Value,ud_generic,"Note: For memory store form instruction “VMOVSS m32, xmm1”, VEX.vvvv is reserved and must be 1111b other- wise instruction will #UD."
+VMOVUPD,825,MOVUPD—Move Unaligned Packed Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VMOVUPS,829,MOVUPS—Move Unaligned Packed Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VP2INTERSECTD,1894,VP2INTERSECTD/VP2INTERSECTQ—Compute Intersection Between DWORDS/QUADWORDS to a,mask_lowbit,The low bit of that field is masked off (set to zero)
+VP2INTERSECTQ,1894,VP2INTERSECTD/VP2INTERSECTQ—Compute Intersection Between DWORDS/QUADWORDS to a,mask_lowbit,The low bit of that field is masked off (set to zero)
+VPABSB,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPABSD,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPABSQ,880,Opcode/ Op/ 64/32 bit CPUID Feature Description,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPABSW,879,PABSB/PABSW/PABSD/PABSQ—Packed Absolute Value,ud_generic,VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,An attempt to execute PBLENDVB with a VEX prefix will cause #UD.
+VPBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPBLENDVB,933,PBLENDVB—Variable Blend Packed Bytes,ud_generic,"VEX.W must be 0, otherwise, the instruction will #UD."
+VPBROADCASTB,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPBROADCASTB,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTB,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VPBROADCASTB,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VPBROADCASTD,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPBROADCASTD,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTD,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VPBROADCASTD,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VPBROADCASTMB2Q,1915,VPBROADCASTM—Broadcast Mask to Vector Register,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTMW2D,1915,VPBROADCASTM—Broadcast Mask to Vector Register,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTQ,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPBROADCASTQ,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTQ,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VPBROADCASTQ,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VPBROADCASTW,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,"If VPBROADCASTI128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPBROADCASTW,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPBROADCASTW,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VBROADCASTI32X4 and VBROADCASTI64X4 are reserved and will #UD.
+VPBROADCASTW,1903,VPBROADCAST—Load Integer and Broadcast,ud_generic,Register source encodings for VPBROADCAS- TI128 is reserved and will #UD.
+VPCMPESTRM,958,"PCMPESTRM—Packed Compare Explicit Length Strings, Return Mask",ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPCMPISTRI,969,"PCMPISTRI—Packed Compare Implicit Length Strings, Return Index",ud_generic,"Note that the Arithmetic Flags are written in a non-standard manner in order to supply the most relevant informa- tion: CFlag – Reset if IntRes2 is equal to zero, set otherwise ZFlag – Set if any byte/word of xmm2/mem128 is null, reset otherwise SFlag – Set if any byte/word of xmm1 is null, reset ot"
+VPCMPISTRM,971,"PCMPISTRM—Packed Compare Implicit Length Strings, Return Mask",ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPCOMPRESSB,1929,VPCOMPRESSB/VCOMPRESSW—Store Sparse Packed Byte/Word Integer Values Into Dense,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPCOMPRESSD,1932,VPCOMPRESSD—Store Sparse Packed Doubleword Integer Values Into Dense Memory/Register,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPCOMPRESSQ,1934,VPCOMPRESSQ—Store Sparse Packed Quadword Integer Values Into Dense Memory/Register,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPCOMPRESSW,1929,VPCOMPRESSB/VCOMPRESSW—Store Sparse Packed Byte/Word Integer Values Into Dense,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPCONFLICTD,1936,VPCONFLICTD/Q—Detect Conflicts Within a Vector of Packed Dword/Qword Values Into Dense,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPCONFLICTQ,1936,VPCONFLICTD/Q—Detect Conflicts Within a Vector of Packed Dword/Qword Values Into Dense,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPERM2F128,1955,VPERM2F128—Permute Floating-Point Values,ud_generic,"VEX.L must be 1, otherwise the instruction will #UD."
+VPERM2I128,1957,VPERM2I128—Permute Integer Values,ud_generic,"VEX.L must be 1, otherwise the instruction will #UD."
+VPERMILPS,1978,VPERMILPS—Permute In-Lane of Quadruples of Single Precision Floating-Point Values,ud_generic,"Note: For the imm8 version, VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instruction will #UD."
+VPERMPD,1983,VPERMPD—Permute Double Precision Floating-Point Elements,ud_generic,"If VPERMPD is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPERMPD,1983,VPERMPD—Permute Double Precision Floating-Point Elements,ud_generic,The imm8 versions: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPERMPS,1987,VPERMPS—Permute Single Precision Floating-Point Elements,ud_generic,"If VPERMPS is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception."
+VPERMQ,1990,VPERMQ—Qwords Element Permutation,ud_generic,"If VPERMPQ is encoded with VEX.L= 0 or EVEX.128, an attempt to execute the instruction will cause an #UD excep- tion."
+VPERMQ,1990,VPERMQ—Qwords Element Permutation,ud_generic,Immediate control versions: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPEXPANDB,2002,VPEXPANDB/VPEXPANDW—Expand Byte/Word Values,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPEXPANDD,2005,VPEXPANDD—Load Sparse Packed Doubleword Integer Values From Dense Memory/Register,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPEXPANDQ,2007,VPEXPANDQ—Load Sparse Packed Quadword Integer Values From Dense Memory/Register,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPEXPANDW,2002,VPEXPANDB/VPEXPANDW—Expand Byte/Word Values,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPEXTRB,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+VPEXTRB,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPEXTRD,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+VPEXTRD,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPEXTRQ,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD."
+VPEXTRQ,988,PEXTRB/PEXTRD/PEXTRQ—Extract Byte/Dword/Qword,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPEXTRW,991,PEXTRW—Extract Word,ud_generic,2B 4-289 otherwise the instruction will #UD.
+VPEXTRW,991,PEXTRW—Extract Word,ud_generic,"Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPHMINPOSUW,1000,PHMINPOSUW—Packed Horizontal Word Minimum,ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+VPINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+VPINSRB,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+VPINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+VPINSRD,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,Attempt to execute VPINSRQ in non-64-bit mode will cause #UD.
+VPINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"EVEX.L’L must be 0, other- wise the instruction will #UD."
+VPINSRQ,1007,PINSRB/PINSRD/PINSRQ—Insert Byte/Dword/Qword,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPINSRW,1010,PINSRW—Insert Word,ud_generic,"VEX.L/EVEX.L’L must be 0, otherwise the instruc- tion will #UD."
+VPLZCNTD,2023,"VPLZCNTD/Q—Count the Number of Leading Zero Bits for Packed Dword, Packed Qword Values",ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPLZCNTQ,2023,"VPLZCNTD/Q—Count the Number of Leading Zero Bits for Packed Dword, Packed Qword Values",ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVB2M,2035,VPMOVB2M/VPMOVW2M/VPMOVD2M/VPMOVQ2M—Convert a Vector Register to a Mask,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVD2M,2035,VPMOVB2M/VPMOVW2M/VPMOVD2M/VPMOVQ2M—Convert a Vector Register to a Mask,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVDB,2038,VPMOVDB/VPMOVSDB/VPMOVUSDB—Down Convert DWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVDW,2042,VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVM2B,2046,VPMOVM2B/VPMOVM2W/VPMOVM2D/VPMOVM2Q—Convert a Mask Register to a Vector,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVM2D,2046,VPMOVM2B/VPMOVM2W/VPMOVM2D/VPMOVM2Q—Convert a Mask Register to a Vector,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVM2Q,2046,VPMOVM2B/VPMOVM2W/VPMOVM2D/VPMOVM2Q—Convert a Mask Register to a Vector,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVM2W,2046,VPMOVM2B/VPMOVM2W/VPMOVM2D/VPMOVM2Q—Convert a Mask Register to a Vector,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVQ2M,2035,VPMOVB2M/VPMOVW2M/VPMOVD2M/VPMOVQ2M—Convert a Vector Register to a Mask,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVQB,2049,VPMOVQB/VPMOVSQB/VPMOVUSQB—Down Convert QWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVQD,2053,VPMOVQD/VPMOVSQD/VPMOVUSQD—Down Convert QWord to DWord,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVQW,2057,VPMOVQW/VPMOVSQW/VPMOVUSQW—Down Convert QWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSDB,2038,VPMOVDB/VPMOVSDB/VPMOVUSDB—Down Convert DWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSDW,2042,VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSQB,2049,VPMOVQB/VPMOVSQB/VPMOVUSQB—Down Convert QWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSQD,2053,VPMOVQD/VPMOVSQD/VPMOVUSQD—Down Convert QWord to DWord,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSQW,2057,VPMOVQW/VPMOVSQW/VPMOVUSQW—Down Convert QWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSWB,2061,VPMOVWB/VPMOVSWB/VPMOVUSWB—Down Convert Word to Byte,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXBD,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXBQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXBW,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXDQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXWD,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVSXWQ,1054,PMOVSX—Packed Move With Sign Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSDB,2038,VPMOVDB/VPMOVSDB/VPMOVUSDB—Down Convert DWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSDW,2042,VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSQB,2049,VPMOVQB/VPMOVSQB/VPMOVUSQB—Down Convert QWord to Byte,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSQD,2053,VPMOVQD/VPMOVSQD/VPMOVUSQD—Down Convert QWord to DWord,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSQW,2057,VPMOVQW/VPMOVSQW/VPMOVUSQW—Down Convert QWord to Word,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVUSWB,2061,VPMOVWB/VPMOVSWB/VPMOVUSWB—Down Convert Word to Byte,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVW2M,2035,VPMOVB2M/VPMOVW2M/VPMOVD2M/VPMOVQ2M—Convert a Vector Register to a Mask,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVWB,2061,VPMOVWB/VPMOVSWB/VPMOVUSWB—Down Convert Word to Byte,ud_generic,Note: EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXBD,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXBQ,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXBW,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXDQ,1065,Opcode/ Op / 64/32 bit CPUID Feature Description,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXWD,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMOVZXWQ,1064,PMOVZX—Packed Move With Zero Extend,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VPMULHUW,1081,PMULHUW—Multiply Packed Unsigned Integers and Store High Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPMULHW,1085,PMULHW—Multiply Packed Signed Integers and Store High Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPMULLW,1093,PMULLW—Multiply Packed Signed Integers and Store Low Result,ud_generic,"VEX.L must be 0, otherwise the instruction will #UD."
+VPSHUFHW,1132,PSHUFHW—Shuffle Packed High Words,ud_generic,"VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD."
+VPSIGNB,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+VPSIGND,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+VPSIGNW,1139,PSIGNB/PSIGNW/PSIGND—Packed SIGN,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+VPTEST,1200,PTEST—Logical Compare,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VRCP14PD,2135,VRCP14PD—Compute Approximate Reciprocals of Packed Float64 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRCP14PS,2137,VRCP14PS—Compute Approximate Reciprocals of Packed Float32 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRCP28PD,2373,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRCP28PS,2377,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VREDUCEPD,2146,VREDUCEPD—Perform Reduction Transformation on Packed Float64 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VREDUCEPS,2152,VREDUCEPS—Perform Reduction Transformation on Packed Float32 Values,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRNDSCALEPH,2163,VRNDSCALEPH—Round Packed FP16 Values to Include a Given Number of Fraction Bits,ud_generic,"EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VROUNDPD,1285,ROUNDPD—Round Packed Double Precision Floating-Point Values,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VROUNDPS,1288,ROUNDPS—Round Packed Single Precision Floating-Point Values,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b otherwise instructions will #UD."
+VRSQRT14PD,2175,VRSQRT14PD—Compute Approximate Reciprocals of Square Roots of Packed Float64 Values,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VRSQRT14PS,2177,VRSQRT14PS—Compute Approximate Reciprocals of Square Roots of Packed Float32 Values,ud_generic,"Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VRSQRT28PD,2381,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRSQRT28PS,2385,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+VRSQRTPS,1296,RSQRTPS—Compute Reciprocals of Square Roots of Packed Single Precision Floating-Point,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VSCATTERPF0DPD,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF0DPD,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF0DPS,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF0DPS,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF0QPD,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF0QPD,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF0QPS,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF0QPS,2389,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF1DPD,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF1DPD,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF1DPS,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF1DPS,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF1QPD,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF1QPD,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSCATTERPF1QPS,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,A #UD is signaled if the memory operand is encoded without the SIB byte.
+VSCATTERPF1QPS,2391,INSTRUCTION SET REFERENCE UNIQUE TO INTEL® XEON PHI™ PROCESSORS,ud_generic,Will deliver a #UD fault.
+VSQRTPD,1362,SQRTPD—Square Root of Double Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VSQRTPS,1365,SQRTPS—Square Root of Single Precision Floating-Point Values,ud_generic,Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.
+VSTMXCSR,1377,STMXCSR—Store MXCSR Register State,ud_generic,"Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VSTMXCSR,1377,STMXCSR—Store MXCSR Register State,ud_generic,"VEX.L must be 0, otherwise instructions will #UD."
+VTESTPD,2232,VTESTPD/VTESTPS—Packed Bit Test,ud_generic,An attempt to execute VTESTPS with VEX.W=1 will cause #UD.
+VTESTPS,2232,VTESTPD/VTESTPS—Packed Bit Test,ud_generic,An attempt to execute VTESTPS with VEX.W=1 will cause #UD.
+VUCOMISD,1431,UCOMISD—Unordered Compare Scalar Double Precision Floating-Point Values and Set EFLAGS,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VUCOMISH,2235,VUCOMISH—Unordered Compare Scalar FP16 Values and Set EFLAGS,ud_generic,"EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VUCOMISS,1433,UCOMISS—Unordered Compare Scalar Single Precision Floating-Point Values and Set EFLAGS,ud_generic,"Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD."
+VZEROALL,2236,"VZEROALL—Zero XMM, YMM, and ZMM Registers",ud_generic,"Note: VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD."
+VZEROUPPER,2237,VZEROUPPER—Zero Upper Bits of YMM and ZMM Registers,ud_generic,Note: VEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.
+WRPKRU,2252,WRPKRU—Write Data to User Page Key Register,ud_generic,"WRPKRU can be executed only if CR4.PKE = 1; otherwise, an invalid-opcode exception (#UD)"

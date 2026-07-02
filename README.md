@@ -2,126 +2,91 @@
 
 Intel SDM(Software Developer's Manual) Volume 2에서 instruction form을 추출하고, 이를 실제 Intel-syntax assembly test case로 변환한 뒤 assembler/disassembler 동작을 검증하는 연구 프로젝트입니다.
 
-## 현재 목표
-
-현재 프로젝트의 핵심 질문은 다음과 같습니다.
+## 연구 질문
 
 ```text
-Intel manual의 instruction form을 실제 assembly로 만들었을 때,
-GNU as / GCC / Clang / objdump가 이를 어떻게 해석하는가?
+Intel SDM의 instruction form을 실제 assembly로 만들었을 때,
+GNU as(binutils)와 llvm-mc(LLVM)가 이를 어떻게 인코딩하는가?
+두 어셈블러 간 divergence가 발생하는 조건은 무엇인가?
 ```
-
-일반 프로그램을 실행하는 프로젝트가 아니라, instruction 단위의 assembler/disassembler 처리 차이를 분석하는 프로젝트입니다.
 
 ## 파이프라인
 
 ```text
-Intel SDM PDF
-  -> Stage 1: instruction form 추출
-  -> Stage 2: opcode / mnemonic / operand form 분리
-  -> Stage 3: operand form별 concrete operand 후보 정의
-  -> Stage 4: assembly test case 생성
-  -> Stage 4 check: GNU as / GCC / Clang accept 여부 확인
-  -> Stage 5: objdump 결과와 source assembly 비교
-  -> mismatch category 분류
+Intel SDM PDF (Vol. 2A-2D)
+  ├─ Stage 1: instruction form 전량 추출 (64비트 무효 포함)
+  ├─ Stage 2: opcode / mnemonic / operand 분리 + r/m 확장
+  ├─ Stage 3: operand type → concrete assembly 매핑 + 변주 축(A/C/D) + 음성셋(N1/N2)
+  ├─ Stage 4: assembly test case 생성 + compile error triage (TODO: 재실행 필요)
+  ├─ Stage 5: objdump roundtrip 비교 (TODO: 재실행 필요)
+  └─ Stage 6: differential encoding (as vs llvm-mc → divergence 측정)
 ```
+
+## 현재 진행 상태
+
+| Stage | 상태 | 산출물 행수 |
+|-------|------|------------|
+| 1 | ✅ 완료 | 4,184 form (Invalid 포함) |
+| 2 | ✅ 완료 | 4,757 행 (r/m split) |
+| 3 | ⏳ 재실행 필요 | — |
+| 4 | ⏳ Stage 3 이후 재실행 | — |
+| 5 | ⏳ Stage 4 이후 재실행 | — |
+| 6 | ✅ 기반 코드 완료 | base 116 divergence |
 
 ## 주요 디렉터리
 
 ```text
 src/
   stage1_extraction/              PDF에서 instruction form 추출
-  stage2_opcode_separation/       opcode / instruction form 분리
-  stage3_operand_grouping/        operand 후보 정의
+  stage2_opcode_separation/       opcode/instruction 분리 + r/m 확장
+  stage3_operand_processing/      operand 매핑, 축 변주, 음성셋 생성
   stage4_test_generation/         assembly 생성 및 compile error triage
-  stage5_disassembly_validation/  objdump 기반 source/disassembly 비교
+  stage5_disassembly_validation/  objdump roundtrip 비교
+  stage6_differential/            as vs llvm-mc differential encoding
 
 data/
   stage1_extracted/               Stage 1 산출물
   stage2_opcode_split/            Stage 2 산출물
-  stage3_operands/                operand 후보 및 coverage report
-  stage4_tests/                   생성된 assembly와 compile/triage 결과
-  stage5_disassembly/             Stage 5 재생성 대상 산출물
+  stage3_operands/                operand 매핑 + coverage + .s 파일
+  stage4_tests/                   생성된 assembly와 에러 결과
+  stage5_disassembly/             disassembly 비교 결과
+  stage6_differential/            differential encoding 결과
+  instruction_db/                 instruction description DB
 
-docs/
-  INTERIM_REPORT_2026-05-29.md
-  stage5_equivalence_classification_rules.md
-  stage5_disassembly_validation.md
-  MEETING_NOTES/
-
-experiments/
-  run_operand_micro_tests.sh      7회 미팅 피드백 재현용 소규모 실험
+scripts/                          일회성 분석/검증 스크립트
+docs/                             설계 문서, 미팅 노트, 보고서
 ```
 
-## 현재 반영된 핵심 수정
-
-7회 미팅 피드백 이후, generic memory operand `m`을 무조건 `m64`로 해석하던 문제를 수정했습니다.
-
-기존:
-
-```text
-m -> m64 -> QWORD PTR [rax]
-```
-
-수정 후:
-
-```text
-m -> [rax]
-```
-
-따라서 `INVLPG m`, `LEA r16/r32/r64,m` 계열은 다음처럼 생성됩니다.
-
-```asm
-invlpg [rax]
-lea rax, [rbx]
-```
-
-## Stage 5 분류 방향
-
-`source assembly`와 `objdump` 결과가 다르다고 바로 오류로 보지 않습니다. 다음과 같이 분류합니다.
-
-| Category | 의미 |
-|---|---|
-| `exact_match` | 정규화 후 source와 objdump가 동일 |
-| `alias` | 의미가 같은 다른 표기 |
-| `generic_memory_size_inferred` | generic `m`에 대해 objdump가 PTR size를 출력 |
-| `effective_address_size_directive_changed` | `LEA`에서 PTR size가 생략 또는 무시됨 |
-| `moffset_size_inferred` | register 크기에서 memory size가 추론됨 |
-| `far_pointer_size_repr_changed` | `TBYTE PTR`/`FWORD PTR` 등 far pointer 표기 차이 |
-| `register_width_changed` | register width가 다르게 출력되어 확인 필요 |
-| `bug_candidate` | encoding 또는 동작 의미가 달라졌을 가능성 |
-
-자세한 기준은 `docs/stage5_equivalence_classification_rules.md`를 참고합니다.
-
-## 실행 예시
-
-Stage 4 test case 생성:
+## 실행
 
 ```bash
-python src/stage4_test_generation/step4_test_generator.py
+# Stage 1: PDF에서 form 추출
+python src/stage1_extraction/extract_instruction_forms.py
+
+# Stage 2: opcode 분리 + r/m split
+python src/stage2_opcode_separation/step2_separate_operands.py
+
+# Stage 3: operand 매핑 + assembly 생성
+python src/stage3_operand_processing/step3_operand_mapping.py
+
+# Stage 6: differential encoding (WSL 필요)
+python src/stage6_differential/diff_encode.py --src data/stage3_operands/step3_generated.s
 ```
 
-Stage 4 compile/error 분석:
+## 설계 원칙
 
-```bash
-python src/stage4_test_generation/step4_compile_and_analyze.py
-python src/stage4_test_generation/step4_error_triage.py
-```
+- **전량 추출**: 64비트 무효(Invalid/N.E./N.S.) form도 추출하고 `ModeSupport` 컬럼으로 구분. 무효 form은 음성 테스트셋(N9)으로 활용 가능.
+- **독립 오라클**: GNU as(binutils) vs llvm-mc(LLVM) 두 어셈블러를 독립 오라클로 사용.
+- **지표**: 통과율이 아닌 **divergence** (support_diff + semantic_divergence + decode_disagree).
+- **정답 기준**: Intel SDM 매뉴얼 원문.
 
-Stage 5 disassembly 비교:
+## 환경 요구사항
 
-```bash
-python src/stage5_disassembly_validation/step5_disassemble_compare.py
-```
+- Python 3.10+ (pdfplumber, iced-x86)
+- WSL(Ubuntu): `as`, `llvm-mc`, `objdump` 설치 필요
+- 입력 PDF: `325383-090-sdm-vol-2abcd.pdf` (git 미포함, 별도 준비)
 
-7회 미팅 피드백 재현용 소규모 실험:
+## 주의사항
 
-```bash
-bash experiments/run_operand_micro_tests.sh
-```
-
-## 현재 주의 사항
-
-- `data/stage5_disassembly/`의 비교 결과는 Stage 4 assembly를 수정한 뒤 다시 생성해야 합니다.
-- Ubuntu/WSL에서 `as`, `gcc`, `clang`, `objdump`가 설치되어 있어야 전체 검증이 가능합니다.
-- `experiments/out_operand_micro_tests/`는 실험 실행 시 생기는 중간 출력이며 git에 포함하지 않습니다.
+- `data/` 산출물은 재생성 가능하며, 스크립트 재실행으로 복구됩니다.
+- Stage 4/5는 현재 Stage 2 갱신 이후 아직 재실행되지 않았으므로 과거 결과가 남아 있을 수 있습니다.

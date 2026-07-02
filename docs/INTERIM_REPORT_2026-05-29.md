@@ -2,6 +2,8 @@
 
 작성일: 2026-05-29
 
+추가 중간 보고: `docs/INTERIM_REPORT_STAGE4_MAPPING_AND_EQUIVALENCE_2026-05-29.md`에 Stage 4 재생성 범위와 동등 동작 분류 seed 파일을 정리했다.
+
 ## 1. 이번 주 확인한 핵심 문제
 
 지난 회의에서 확인한 가장 큰 문제는 Intel manual의 operand form을 실제 assembly test case로 바꾸는 과정이 너무 단순했다는 점이다.

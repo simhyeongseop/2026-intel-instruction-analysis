@@ -46,6 +46,8 @@ data/stage5_disassembly/step5_disasm_report.md
 
 현재 repository에서는 수정 전 Stage 5 결과를 삭제했다. Stage 3/4의 operand mapping 수정 후 Ubuntu/WSL 환경에서 다시 생성해야 한다.
 
+동등 동작 분류 seed 파일은 `data/stage5_disassembly/equivalence_categories_seed.csv`에 둔다.
+
 ## 비교 시 주의점
 
 objdump는 원래 source text를 복원하지 않는다. object file 안의 machine code bytes를 자신만의 assembly syntax로 다시 출력한다.

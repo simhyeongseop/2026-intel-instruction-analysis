@@ -81,9 +81,41 @@ m512,ZMMWORD PTR [rax + rbx*1 + 0x10]
 m512,ZMMWORD PTR [rax + rbx*4 + 0x100]
 m512,ZMMWORD PTR [rip + 0x100]
 m512,ZMMWORD PTR [rip + 0x1000]
+m2byte,WORD PTR [rax]
+m2byte,WORD PTR [rbx]
+m2byte,WORD PTR [rax + rbx*1 + 0x10]
+m2byte,WORD PTR [rax + rbx*4 + 0x100]
+m2byte,WORD PTR [rip + 0x100]
+m2byte,WORD PTR [rip + 0x1000]
+m14/28byte,[rax]
+m14/28byte,[rbx]
+m14/28byte,[rax + rbx*1 + 0x10]
+m14/28byte,[rax + rbx*4 + 0x100]
+m14/28byte,[rip + 0x100]
+m14/28byte,[rip + 0x1000]
+m94/108byte,[rax]
+m94/108byte,[rbx]
+m94/108byte,[rax + rbx*1 + 0x10]
+m94/108byte,[rax + rbx*4 + 0x100]
+m94/108byte,[rip + 0x100]
+m94/108byte,[rip + 0x1000]
+m80bcd,TBYTE PTR [rax]
+m80bcd,TBYTE PTR [rbx]
+m80bcd,TBYTE PTR [rax + rbx*1 + 0x10]
+m80bcd,TBYTE PTR [rax + rbx*4 + 0x100]
+m80bcd,TBYTE PTR [rip + 0x100]
+m80bcd,TBYTE PTR [rip + 0x1000]
+m16&64,[rax]
+m16&64,[rbx]
+m16&64,[rax + rbx*1 + 0x10]
+m16&64,[rax + rbx*4 + 0x100]
+m16&64,[rip + 0x100]
+m16&64,[rip + 0x1000]
 imm8,0xff
 imm16,0xffff
-imm32,0x7fffffff
+imm32,0xffffffff
+imm32_sext,0x7fffffff
+imm32_sext,-1
 imm64,0x7fffffffffffffff
 imm_1,1
 rel8,.
@@ -161,6 +193,17 @@ bnd,bnd0
 bnd,bnd1
 bnd1,bnd0
 bnd2,bnd1
+CR0–CR7,cr0
+CR0–CR7,cr2
+CR0–CR7,cr3
+CR0–CR7,cr4
+CR8,cr8
+DR0–DR7,dr0
+DR0–DR7,dr1
+DR0–DR7,dr2
+DR0–DR7,dr3
+DR0–DR7,dr6
+DR0–DR7,dr7
 ptr16:16,0x0033:0x1000
 ptr16:32,0x0033:0x1000
 moffset,[0x1000]
@@ -182,3 +225,63 @@ m16:64,TBYTE PTR [rax + rbx*1 + 0x10]
 m16:64,TBYTE PTR [rax + rbx*4 + 0x100]
 m16:64,TBYTE PTR [rip + 0x100]
 m16:64,TBYTE PTR [rip + 0x1000]
+r16/m16,ax
+r16/m16,bx
+r16/m16,cx
+r16/m16,dx
+r16/m16,si
+r16/m16,di
+r16/m16,WORD PTR [rax]
+r16/m16,WORD PTR [rbx]
+r16/m16,WORD PTR [rax + rbx*1 + 0x10]
+r16/m16,WORD PTR [rax + rbx*4 + 0x100]
+r16/m16,WORD PTR [rip + 0x100]
+r16/m16,WORD PTR [rip + 0x1000]
+r32/m16,eax
+r32/m16,ebx
+r32/m16,ecx
+r32/m16,edx
+r32/m16,esi
+r32/m16,edi
+r32/m16,WORD PTR [rax]
+r32/m16,WORD PTR [rbx]
+r32/m16,WORD PTR [rax + rbx*1 + 0x10]
+r32/m16,WORD PTR [rax + rbx*4 + 0x100]
+r32/m16,WORD PTR [rip + 0x100]
+r32/m16,WORD PTR [rip + 0x1000]
+r64/m16,rax
+r64/m16,rbx
+r64/m16,rcx
+r64/m16,rdx
+r64/m16,rsi
+r64/m16,rdi
+r64/m16,r8
+r64/m16,r9
+r64/m16,r10
+r64/m16,r11
+r64/m16,r12
+r64/m16,r13
+r64/m16,WORD PTR [rax]
+r64/m16,WORD PTR [rbx]
+r64/m16,WORD PTR [rax + rbx*1 + 0x10]
+r64/m16,WORD PTR [rax + rbx*4 + 0x100]
+r64/m16,WORD PTR [rip + 0x100]
+r64/m16,WORD PTR [rip + 0x1000]
+r16/r32/m16,ax
+r16/r32/m16,bx
+r16/r32/m16,cx
+r16/r32/m16,dx
+r16/r32/m16,si
+r16/r32/m16,di
+r16/r32/m16,eax
+r16/r32/m16,ebx
+r16/r32/m16,ecx
+r16/r32/m16,edx
+r16/r32/m16,esi
+r16/r32/m16,edi
+r16/r32/m16,WORD PTR [rax]
+r16/r32/m16,WORD PTR [rbx]
+r16/r32/m16,WORD PTR [rax + rbx*1 + 0x10]
+r16/r32/m16,WORD PTR [rax + rbx*4 + 0x100]
+r16/r32/m16,WORD PTR [rip + 0x100]
+r16/r32/m16,WORD PTR [rip + 0x1000]

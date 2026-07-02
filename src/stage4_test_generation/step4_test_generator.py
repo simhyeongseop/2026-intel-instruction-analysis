@@ -62,11 +62,16 @@ SKIP_INSTR_FORMS = {
     'MOVSXD r16, r16', 'MOVSXD r16, m16',
     'MOVSXD r32, r32', 'MOVSXD r32, m32',
     # SGDT/SIDT: GAS는 메모리 크기 지정 없이 [mem]만 허용 → 별도 처리
-    'SGDT m', 'SIDT m',
 }
 
 # SGDT/SIDT: GAS 요구사항 — size prefix 없이 [reg] 형태만 허용
 BARE_MEM_INSTRS = {'SGDT', 'SIDT', 'LGDT', 'LIDT'}
+PREFIX_MNEMONICS = {'REP', 'REPE', 'REPNE'}
+RELATIVE_OPERANDS = {'rel8', 'rel16', 'rel32'}
+STRING_SUFFIX = {
+    'm8': 'b', 'm16': 'w', 'm32': 'd', 'm64': 'q',
+    'AL': 'b', 'AX': 'w', 'EAX': 'd', 'RAX': 'q',
+}
 
 
 def get_string_instr_candidate(mnemonic: str, idx: int, token: str) -> list[str] | None:
@@ -78,6 +83,30 @@ def get_string_instr_candidate(mnemonic: str, idx: int, token: str) -> list[str]
     size = token[1:]  # 'm8' → '8'
     ptr = PTR_MAP.get(size, 'BYTE PTR')
     return [f'{ptr} [{reg}]']
+
+
+def generate_prefixed_string_line(prefix: str, operands_str: str) -> list[str]:
+    """Generate REP/REPE/REPNE string instructions from Stage2 prefix rows."""
+    text = operands_str.strip()
+    if not text or ' ' not in text:
+        return []
+
+    inner_mnemonic, inner_operands = text.split(' ', 1)
+    inner_mnemonic = inner_mnemonic.upper()
+    tokens = parse_operand_tokens(inner_operands)
+
+    if inner_mnemonic not in {'INS', 'LODS', 'MOVS', 'OUTS', 'STOS', 'CMPS', 'SCAS'}:
+        return []
+
+    suffix_token_idx = 1 if inner_mnemonic == 'OUTS' else 0
+    suffix_token = tokens[suffix_token_idx] if len(tokens) > suffix_token_idx else ''
+    suffix = STRING_SUFFIX.get(suffix_token)
+    if suffix is None:
+        return []
+    if inner_mnemonic in {'INS', 'OUTS'} and suffix == 'q':
+        return []
+
+    return [f"{prefix.lower()} {inner_mnemonic.lower()}{suffix}"]
 
 
 def generate_lines(mnemonic: str, operand_tokens: list[str], n: int = N_PER_FORM) -> list[str]:
@@ -113,6 +142,12 @@ def generate_lines(mnemonic: str, operand_tokens: list[str], n: int = N_PER_FORM
 
     candidate_lists = []
     for idx, token in enumerate(operand_tokens):
+        # Clang integrated assembler rejects "." as a branch target in this
+        # context. A numeric local label is accepted by GAS/Clang and keeps
+        # this as an assembly-only test case.
+        if token in RELATIVE_OPERANDS:
+            candidate_lists.append(['0f\n0:'])
+            continue
         # 스트링 명령어 특수 처리
         string_cand = get_string_instr_candidate(mnemonic, idx, token)
         if string_cand is not None:
@@ -199,14 +234,17 @@ def build_asm_file(df: pd.DataFrame, output_path: Path, n: int = N_PER_FORM):
             mnemonic   = q_mnemonic.upper()
             instr      = q_mnemonic
 
-        tokens = parse_operand_tokens(operands_str) if operands_str else []
-        form_key = (mnemonic, tuple(tokens))
+        if mnemonic.upper() in PREFIX_MNEMONICS and operands_str:
+            test_lines = generate_prefixed_string_line(mnemonic, operands_str)
+            form_key = (mnemonic, operands_str)
+        else:
+            tokens = parse_operand_tokens(operands_str) if operands_str else []
+            form_key = (mnemonic, tuple(tokens))
+            test_lines = generate_lines(mnemonic, tokens, n)
 
         if form_key in seen_forms:
             continue
         seen_forms.add(form_key)
-
-        test_lines = generate_lines(mnemonic, tokens, n)
 
         if not test_lines:
             skipped_forms += 1

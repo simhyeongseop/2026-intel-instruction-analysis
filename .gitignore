@@ -40,6 +40,7 @@ Thumbs.db
 # Jupyter Notebook
 .ipynb_checkpoints/
 *.ipynb_checkpoints
+*.ipynb
 
 # Research / Data
 *.xlsx
@@ -67,6 +68,15 @@ Thumbs.db
 
 # 개인 임시 파일
 data/stage4_tests/my_errors.txt
+
+# Stage 4 에러 로그 (개인 경로 포함, 재생성 가능)
+data/stage4_tests/step4_gcc_errors.txt
+data/stage4_tests/step4_as_errors.txt
+data/stage4_tests/step4_clang_errors.txt
+data/stage4_tests/step4_error_triage.csv
+
+# Claude/Kiro IDE 설정
+.claude/
 
 # Generated experiment outputs
 experiments/out_operand_micro_tests/

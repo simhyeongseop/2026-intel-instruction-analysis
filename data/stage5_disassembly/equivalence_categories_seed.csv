@@ -1,0 +1,13 @@
+category,decision,meaning,source_pattern,disasm_pattern,example_source,example_disasm,next_action
+exact_match,benign,Source and objdump text match after normalization,any,any,"add eax, ebx","add eax,ebx",Accept
+alias,benign,Different spelling or mnemonic with the same opcode/meaning,alias mnemonic,canonical mnemonic,"sal eax, 1","shl eax,1",Group as expression difference
+relative_target_resolved,benign,Symbolic relative target is printed as a concrete address,rel8/rel16/rel32,address,"jz 0f","je 0x10",Group as target resolution
+generic_memory_size_inferred,benign_or_expression_difference,Manual form uses generic m and objdump prints an inferred PTR size,generic m,printed PTR size,"invlpg [rax]","invlpg BYTE PTR [rax]",Do not report as bug by itself
+effective_address_size_directive_changed,benign_or_expression_difference,LEA uses an effective address so PTR size text is not semantic,LEA with PTR or bare memory,LEA with normalized memory,"lea rax, QWORD PTR [rbx]","lea rax,[rbx]",Prefer bare memory in generated tests
+moffset_size_inferred,benign_or_expression_difference,Memory offset size is inferred from the register operand,moffs/moffset,printed PTR size,"mov al, [0x1000]","mov al,BYTE PTR ds:0x1000",Group as inferred size
+far_pointer_size_repr_changed,review_group,Far pointer memory operand has assembler/objdump representation differences,m16:16/m16:32/m16:64,TBYTE/FWORD/DWORD text changes,"lss rax, TBYTE PTR [rax]","lss rax,FWORD PTR [rax]",Review by instruction family
+register_width_changed,review_group,Displayed register width changed between source and objdump,register operand,register operand with different width,"lldt ax","lldt eax",Check opcode bytes and assembler acceptance
+operand_size_changed,review_needed,Pointer size changed without a known rule,typed memory operand,different PTR size,"mov WORD PTR [rax], ax","mov DWORD PTR [rax],eax",Review manually
+mnemonic_changed,review_needed,Mnemonic changed and is not a known alias,any,other mnemonic,"source mnemonic","disasm mnemonic",Review manually
+operand_changed,review_needed,Operand structure changed while mnemonic stayed comparable,any,changed operands,"source operands","disasm operands",Review manually
+bug_candidate,priority_review,Opcode bytes may encode a different width or behavior than the manual form,any,any,"add rax, 0x7fffffff","add rax,0x7fffffff",Prioritize for professor discussion

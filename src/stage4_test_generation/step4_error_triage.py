@@ -26,6 +26,10 @@ ASM_FILE = OUT_DIR / "test_all_instructions.s"
 # ============================================================
 
 TRIAGE_RULES = [
+    (r"invalid instruction mnemonic",        "unknown_instruction",          "unknown instruction mnemonic"),
+    (r"register type mismatch",             "register_type_mismatch",       "register type/width mismatch"),
+    (r"memory operand is only for determining the size",
+                                            "size_only_memory_warning",      "size-only memory operand warning"),
     # (패턴, 카테고리명, 설명)
     (r"number of operands mismatch",        "operand_count_mismatch",       "오퍼랜드 개수 불일치"),
     (r"unsupported instruction",            "unsupported_instruction",      "지원되지 않는 명령어"),
@@ -172,13 +176,13 @@ def build_report(df: pd.DataFrame, line_map: dict[int, str]) -> str:
     if "compiler" in df.columns:
         comp_table = df.groupby(["compiler", "category"]).size().unstack(fill_value=0)
         lines_md.append("```")
-        lines_md.append(comp_table.to_string())
+        lines_md.extend(line.rstrip() for line in comp_table.to_string().splitlines())
         lines_md.append("```")
     else:
         lines_md.append("_(컴파일러 정보 없음 — GCC/Clang 모두 설치 후 재실행 필요)_")
     lines_md.append("")
 
-    return "\n".join(lines_md)
+    return "\n".join(line.rstrip() for line in lines_md)
 
 
 # ============================================================

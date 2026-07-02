@@ -174,6 +174,9 @@ def parse_source_instructions(src_asm: Path) -> list[SourceInstruction]:
         if line.startswith(("//", "#", ".")):
             continue
 
+        if re.fullmatch(r"(?:\d+|[A-Za-z_.$][\w.$]*):", line):
+            continue
+
         if line.lower() in prefix_only:
             pending_prefix = (line_num, current_form, line)
             continue
@@ -548,7 +551,13 @@ def is_relative_target_resolution(source_form: str, source_text: str, disasm_tex
     dis_mnemonic, dis_operands = split_mnemonic_operands(disasm_text)
     if canonical_mnemonic(src_mnemonic) != canonical_mnemonic(dis_mnemonic):
         return False
-    return src_operands == "." and bool(re.fullmatch(r"0x[0-9a-f]+", dis_operands))
+    source_is_symbolic = bool(
+        src_operands == "."
+        or re.fullmatch(r"\d+[fb]", src_operands)
+        or re.fullmatch(r"[A-Za-z_.$][\w.$]*", src_operands)
+    )
+    disasm_is_address = bool(re.fullmatch(r"(?:0x)?[0-9a-f]+(?: <.*>)?", dis_operands))
+    return source_is_symbolic and disasm_is_address
 
 
 def expected_immediate_bits(source_form: str, source_text: str) -> int | None:

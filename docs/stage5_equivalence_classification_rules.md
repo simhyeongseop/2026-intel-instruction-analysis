@@ -2,6 +2,8 @@
 
 목적: source assembly와 objdump 결과가 다를 때, 이를 즉시 오류로 판단하지 않고 machine code 해석상 같은 동작인지 분류한다.
 
+분류 seed CSV는 `data/stage5_disassembly/equivalence_categories_seed.csv`에 둔다.
+
 ## 분류 기준
 
 | Category | 정상/확인 | 판단 기준 |

@@ -1,0 +1,290 @@
+﻿operand_type,concrete_value,status
+0,0,ok
+1,1,ok
+1 m8,,UNMAPPED
+1 r8,,UNMAPPED
+2 1,,UNMAPPED
+<EAX>,,implicit_drop
+<XMM0-2>,,implicit_drop
+<XMM0-7>,,implicit_drop
+<XMM0>,,implicit_drop
+<XMM4-6>,,implicit_drop
+<eax>,,implicit_drop
+<edx>,,implicit_drop
+AL,al,ok
+AX,ax,ok
+CL,cl,ok
+CMPS m16,,UNMAPPED
+CMPS m32,,UNMAPPED
+CMPS m64,,UNMAPPED
+CMPS m8,,UNMAPPED
+CR0–CR7,cr0,ok
+CR8,cr8,ok
+DR0–DR7,dr0,ok
+DX,dx,ok
+EAX,eax,ok
+FS,fs,ok
+GS,gs,ok
+INS m16,,UNMAPPED
+INS m32,,UNMAPPED
+INS m8,,UNMAPPED
+LODS AL,,UNMAPPED
+LODS AX,,UNMAPPED
+LODS EAX,,UNMAPPED
+LODS RAX,,UNMAPPED
+MOVS m16,,UNMAPPED
+MOVS m32,,UNMAPPED
+MOVS m64,,UNMAPPED
+MOVS m8,,UNMAPPED
+OUTS DX,,UNMAPPED
+RAX,rax,ok
+SCAS m16,,UNMAPPED
+SCAS m32,,UNMAPPED
+SCAS m64,,UNMAPPED
+SCAS m8,,UNMAPPED
+ST,st(0),ok
+ST(0),st(0),ok
+ST(i),st(1),ok
+STOS m16,,UNMAPPED
+STOS m32,,UNMAPPED
+STOS m64,,UNMAPPED
+STOS m8,,UNMAPPED
+Sreg,ds,ok
+bnd,bnd0,ok
+bnd1,bnd1,ok
+bnd1/m128,bnd1,ok
+bnd2,bnd2,ok
+bnd2/m128,bnd2,ok
+imm16,0x1,ok
+imm32,0x1,ok
+imm64,0x1,ok
+imm8,0x1,ok
+imm8/r,,UNMAPPED
+k1,k1,ok
+k1 {k2},k1{k2},ok
+k1+1,k2,ok
+k1{k2},k1{k2},ok
+k2,k2,ok
+k2 {k1},k2{k1},ok
+k2/m16,k2,ok
+k2/m32,k2,ok
+k2/m64,k2,ok
+k2/m8,k2,ok
+k3,k3,ok
+m,[rax],ok
+m128,[rax],ok
+m128{k1},[rax],ok
+m14/28byte,[rax],ok
+m16,WORD PTR [rax],ok
+m16&64,[rax],ok
+m16:16,DWORD PTR [rax],ok
+m16:32,FWORD PTR [rax],ok
+m16:64,TBYTE PTR [rax],ok
+m16int,WORD PTR [rax],ok
+m16{k1},WORD PTR [rax],ok
+m256,[rax],ok
+m256{k1},[rax],ok
+m2byte,[rax],ok
+m32,DWORD PTR [rax],ok
+m32 {k1},DWORD PTR [rax],ok
+m32fp,DWORD PTR [rax],ok
+m32int,DWORD PTR [rax],ok
+m32{er},DWORD PTR [rax],ok
+m384,[rax],ok
+m512,[rax],ok
+m512byte,[rax],ok
+m512{k1},[rax],ok
+m64,QWORD PTR [rax],ok
+m64 {k1},QWORD PTR [rax],ok
+m64fp,QWORD PTR [rax],ok
+m64int,QWORD PTR [rax],ok
+m64{er},QWORD PTR [rax],ok
+m8,BYTE PTR [rax],ok
+m80bcd,TBYTE PTR [rax],ok
+m80fp,TBYTE PTR [rax],ok
+m94/108byte,[rax],ok
+mem,[rax],ok
+mib,[rax+rbx*1],ok
+mm,mm0,ok
+mm/m32,mm0,ok
+mm/m64,mm0,ok
+mm1,mm1,ok
+mm2,mm2,ok
+mm2/m64,mm2,ok
+moffs16,[0x1000],ok
+moffs32,[0x1000],ok
+moffs64,[0x1000],ok
+moffs8,[0x1000],ok
+ptr16:16,,UNMAPPED
+ptr16:32,,UNMAPPED
+r16,ax,ok
+r16/m16,ax,ok
+r16/r32/m16,eax,ok
+r16/r32/r64,rax,ok
+r32,eax,ok
+r32 <XMM0-6>,eax,ok
+r32/m16,eax,ok
+r32/m32,eax,ok
+r32/m32 {er},eax,ok
+r32/m8,eax,ok
+r32/r64,rax,ok
+r32a,eax,ok
+r32b,eax,ok
+r32{er},eax,ok
+r64,rax,ok
+r64/m16,rax,ok
+r64/m64,rax,ok
+r64/m64 {er},rax,ok
+r64a,rax,ok
+r64b,rax,ok
+r64{er},rax,ok
+r8,al,ok
+reg,eax,ok
+reg/m16,eax,ok
+reg/m32,eax,ok
+reg/m8,eax,ok
+rel16,.,ok
+rel32,.,ok
+rel8,.,ok
+sibmem,[rax+rbx*1],ok
+tmm1,tmm1,ok
+tmm2,tmm2,ok
+tmm3,tmm3,ok
+vm32x,[rax+xmm14*1],ok
+vm32x {k1},[rax+xmm14*1]{k1},ok
+vm32y,[rax+ymm14*1],ok
+vm32y {k1},[rax+ymm14*1]{k1},ok
+vm32z,[rax+zmm14*1],ok
+vm32z {k1},[rax+zmm14*1]{k1},ok
+vm64x,[rax+xmm14*1],ok
+vm64x {k1},[rax+xmm14*1]{k1},ok
+vm64y,[rax+ymm14*1],ok
+vm64y {k1},[rax+ymm14*1]{k1},ok
+vm64z,[rax+zmm14*1],ok
+vm64z {k1},[rax+zmm14*1]{k1},ok
+xmm,xmm0,ok
+xmm/m128,xmm0,ok
+xmm/m64,xmm0,ok
+xmm0 {k1}{z},xmm0{k1}{z},ok
+xmm1,xmm1,ok
+xmm1 {k1},xmm1{k1},ok
+xmm1 {k1}{z},xmm1{k1}{z},ok
+xmm1/m128,xmm1,ok
+xmm1/m128 {k1}{z},xmm1{k1}{z},ok
+xmm1/m128/m16bcst,xmm1,ok
+xmm1/m16,xmm1,ok
+xmm1/m16 {er},xmm1,ok
+xmm1/m16 {k1}{z},xmm1{k1}{z},ok
+xmm1/m16 {sae},xmm1,ok
+xmm1/m32,xmm1,ok
+xmm1/m32 {k1}{z},xmm1{k1}{z},ok
+xmm1/m32{er},xmm1,ok
+xmm1/m32{sae},xmm1,ok
+xmm1/m64,xmm1,ok
+xmm1/m64 {k1}{z},xmm1{k1}{z},ok
+xmm1/m64{er},xmm1,ok
+xmm1/m64{sae},xmm1,ok
+xmm1{k1}{z},xmm1{k1}{z},ok
+xmm2,xmm2,ok
+xmm2+3,xmm2,ok
+xmm2/ m128,xmm2,ok
+xmm2/m128,xmm2,ok
+xmm2/m128 {k1}{z},xmm2{k1}{z},ok
+xmm2/m128/m16bcst,xmm2,ok
+xmm2/m128/m16bcst {er},xmm2,ok
+xmm2/m128/m16bcst {sae},xmm2,ok
+xmm2/m128/m32bcst,xmm2,ok
+xmm2/m128/m64bcst,xmm2,ok
+xmm2/m16,xmm2,ok
+xmm2/m16 {sae},xmm2,ok
+xmm2/m32,xmm2,ok
+xmm2/m32/m16bcst,xmm2,ok
+xmm2/m32{sae},xmm2,ok
+xmm2/m64,xmm2,ok
+xmm2/m64/m16bcst,xmm2,ok
+xmm2/m64/m32bcst,xmm2,ok
+xmm2/m64{sae},xmm2,ok
+xmm2/m8,xmm2,ok
+xmm2/mm128,xmm2,ok
+xmm3,xmm3,ok
+xmm3 /m128,xmm3,ok
+xmm3/m128,xmm3,ok
+xmm3/m128/m16bcst,xmm3,ok
+xmm3/m128/m32bcst,xmm3,ok
+xmm3/m128/m64bcst,xmm3,ok
+xmm3/m16,xmm3,ok
+xmm3/m16 {er},xmm3,ok
+xmm3/m16 {sae},xmm3,ok
+xmm3/m32,xmm3,ok
+xmm3/m32 {er},xmm3,ok
+xmm3/m32 {sae},xmm3,ok
+xmm3/m32{er},xmm3,ok
+xmm3/m32{sae},xmm3,ok
+xmm3/m64,xmm3,ok
+xmm3/m64 {er},xmm3,ok
+xmm3/m64 {sae},xmm3,ok
+xmm3/m64{er},xmm3,ok
+xmm3/m64{sae},xmm3,ok
+xmm4,xmm4,ok
+ymm1,ymm1,ok
+ymm1 {k1},ymm1{k1},ok
+ymm1 {k1}{z},ymm1{k1}{z},ok
+ymm1/m256 {k1}{z},ymm1{k1}{z},ok
+ymm1/m256/m16bcst,ymm1,ok
+ymm1{k1}{z},ymm1{k1}{z},ok
+ymm2,ymm2,ok
+ymm2/m256,ymm2,ok
+ymm2/m256 {k1}{z},ymm2{k1}{z},ok
+ymm2/m256 {sae},ymm2,ok
+ymm2/m256/m16bcst,ymm2,ok
+ymm2/m256/m16bcst {er},ymm2,ok
+ymm2/m256/m16bcst {sae},ymm2,ok
+ymm2/m256/m32bcst,ymm2,ok
+ymm2/m256/m32bcst {er},ymm2,ok
+ymm2/m256/m32bcst {sae},ymm2,ok
+ymm2/m256/m64bcst,ymm2,ok
+ymm3 /m256,ymm3,ok
+ymm3/.m256,ymm3,ok
+ymm3/m256,ymm3,ok
+ymm3/m256/m16bcst,ymm3,ok
+ymm3/m256/m32bcst,ymm3,ok
+ymm3/m256/m64bcst,ymm3,ok
+ymm4,ymm4,ok
+zmm1,zmm1,ok
+zmm1 {k1},zmm1{k1},ok
+zmm1 {k1}{z},zmm1{k1}{z},ok
+zmm1/m512 {k1}{z},zmm1{k1}{z},ok
+zmm1/m512/m16bcst,zmm1,ok
+zmm1{k1}{z},zmm1{k1}{z},ok
+zmm2,zmm2,ok
+zmm2 {sae},zmm2,ok
+zmm2+3,zmm2,ok
+zmm2/m512,zmm2,ok
+zmm2/m512 {k1}{z},zmm2{k1}{z},ok
+zmm2/m512/m16bcst,zmm2,ok
+zmm2/m512/m16bcst {er},zmm2,ok
+zmm2/m512/m16bcst {sae},zmm2,ok
+zmm2/m512/m32bcst,zmm2,ok
+zmm2/m512/m32bcst {er},zmm2,ok
+zmm2/m512/m32bcst {sae},zmm2,ok
+zmm2/m512/m32bcst{er},zmm2,ok
+zmm2/m512/m32bcst{sae},zmm2,ok
+zmm2/m512/m64bcst,zmm2,ok
+zmm2/m512/m64bcst {er},zmm2,ok
+zmm2/m512/m64bcst {sae},zmm2,ok
+zmm2/m512/m64bcst{er},zmm2,ok
+zmm2/m512/m64bcst{sae},zmm2,ok
+zmm3 /m512,zmm3,ok
+zmm3/m512,zmm3,ok
+zmm3/m512/m16bcst {er},zmm3,ok
+zmm3/m512/m16bcst {sae},zmm3,ok
+zmm3/m512/m32bcst,zmm3,ok
+zmm3/m512/m32bcst {er},zmm3,ok
+zmm3/m512/m32bcst {sae},zmm3,ok
+zmm3/m512/m32bcst{er},zmm3,ok
+zmm3/m512/m32bcst{sae},zmm3,ok
+zmm3/m512/m64bcst,zmm3,ok
+zmm3/m512/m64bcst {er},zmm3,ok
+zmm3/m512/m64bcst {sae},zmm3,ok
+zmm3/m512/m64bcst{er},zmm3,ok
+zmm3/m512/m64bcst{sae},zmm3,ok
