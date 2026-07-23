@@ -67,3 +67,11 @@
 - verifier: **pass** — tokens.csv는 `mode_support` 컬럼 309행, combos.csv는 `expected_valid`+`mode_support` 2개 컬럼 196행만 변경(다른 컬럼 변경 0건, 구조적 회귀 없음) 확인. ADCX/MOVBE REX.W 폼이 실제로 `mismatch=False`로 바뀜을 직접 확인. mov/add/push 정답지 범위는 이번 라운드에 변경 0건(회귀 없음, 기존 무관한 이슈 6건은 그대로 존재). row_id 570 스킵 유지.
 - 새로 드러난 것: mode_support가 정확해지면서 새로 mismatch로 잡힌 14건(BNDCL/BNDCU/BNDCN/BNDMK/BNDMOV×2/LDTILECFG/STTILECFG/TDPB*류) — 회귀가 아니라 combiner가 "같은 레지스터를 여러 슬롯에 재사용"하거나 addr32 프리픽스를 안 넣는 기존 한계가 데이터 정확도가 올라가면서 드러난 것. triage 단계에서 combiner 개선 후보로 다룰 것.
 - 남은 것: roundtrip(`pipeline/m6_roundtrip.py`) 구현 시작.
+
+## 2026-07-24  [roundtrip]  Stage 6 구현 — objdump 역어셈블 후 원본과 same/different 비교
+- 무엇을: `pipeline/m6_roundtrip.py` 작성. `.claude/agents/roundtrip.md`의 "입력은 단일 out/tests.o" 설명은 낡은 것이라 무시하고, 실제 assembler(5단계) 출력 구조(`out/asm_result.csv`의 `actual_result=="ok"` 7,010행 + `out/objects/combo_<id>.o` 개별 파일)에 맞춰 구현. objdump를 7,010번 개별 실행하지 않고 여러 파일을 한 번에 인자로 넘겨 배치 실행한 뒤 `"파일: file format"` 헤더로 출력을 블록 분리해서 파싱(약 1분). EVEX+immediate 등 인코딩이 길어 헥스 바이트 덤프가 다음 줄로 줄바꿈되는 경우(니모닉 없는 줄) 명령어로 오인하지 않게 필터링. 정규화는 공백/대소문자만 흡수하고 숫자 표기(`1` vs `0x1`)나 라벨/주소는 의도적으로 안 흡수. 결과를 `out/roundtrip.csv`(same/different)로 저장.
+- 왜: CLAUDE.md 6절 "objdump는 원본을 복원하는 도구가 아니다, 차이≠버그" 원칙에 따라 이 단계는 "같다/다르다"만 정확히 내고 원인분석은 triage(7단계)로 넘기도록 역할을 분리.
+- verifier: **pass** — objdump 배치 파싱 재현 확인(combo_id 6692 등), roundtrip.csv 7,010행이 asm_result.csv의 ok 집합과 완전히 1:1(missing/extra 0), same/different 스팟체크 20건 전부 objdump 재실행과 일치, mov/add/push 정답지 대조, different 사례(조건부 분기 alias jc→jb, decimal→hex, 문자열 명령어 암묵 오퍼랜드, imm8이 니모닉 접미사로 흡수되는 vpclmulqdq 계열, mov→movabs) 전부 objdump로 재현해 "코드 버그가 아닌 표기 차이"임을 확인.
+- 결과: 대상 7,010건 중 same 5,659건 / different 1,351건.
+- 새로 드러난 이슈(generator 4단계 개선 후보, 이번 라운드에서는 안 고침): `combo_id=1684`(`mov al, 0x1000`) 등 imm 즉시값을 목적지 오퍼랜드 크기(8/16/32/64비트)에 맞추지 않고 고정값을 그대로 써서 `as`가 조용히 잘라 인코딩(truncate)하는 케이스 다수(`0x1000` 패턴만 75건) — roundtrip은 이를 정확히 different로 잡아내지만, 원래 의도한 "정상 크기 imm 테스트"가 안 되고 있는 것. triage 단계에서 다룰 것.
+- 남은 것: triage(`pipeline/m7_triage.py`) 구현 시작 — roundtrip의 different 1,351건 + assembler의 mismatch 248건을 유형별로 그룹핑하고 alias/false alarm과 실제 버그 후보를 구분.
