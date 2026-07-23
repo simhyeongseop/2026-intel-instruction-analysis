@@ -34,3 +34,10 @@
 - 왜: extractor가 `REP MOVS m8, m8` 같은 문자열 반복 명령어를 mnemonic="REP", operands="MOVS m8, m8"로 1차 분리해둔 걸 그대로 콤마 분리하면 서브니모닉이 오퍼랜드에 섞이는 문제가 있어, x86 문자열 명령어 7개(INS/OUTS/LODS/MOVS/CMPS/SCAS/STOS)에 한정한 고정 목록으로 mnemonic을 복원(`fix_repeat_prefix_mnemonic`). 이건 extractor 때 문제였던 "화이트리스트로 각주숫자 잡기"(무한히 늘어나는 집합이라 계속 놓침)와 달리 ISA 상 고정된 유한 집합이라 안전하다고 판단.
 - verifier: **pass** (1차 통과 — 정답지 대조, REP 병합 34행, row_id 무결성 4,210건, operand_kind 스팟체크, other 14행 PDF 대조, 회귀 검사 전부 실측 확인)
 - 남은 것: `tests/answer_keys/*.csv`의 `intel_asm`/`expect_bytes`/`expect_disasm` 칸이 아직 비어 있음 — generator/assembler 단계 검증부터는 이 칸을 형섭이 직접 채워야 바이트 단위 정밀 대조가 가능함. combiner(`pipeline/m3_combine.py`) 구현 시작.
+
+## 2026-07-23  [combiner]  Stage 3 구현 — operand 타입을 구체값으로 전개
+- 무엇을: `pipeline/m3_combine.py` 작성. `data/db/tokens.csv`(9,820행)의 오퍼랜드 타입(`r32`, `r/m32`, `imm8`, `xmm` 등)을 대표 구체값(`ecx`, `dword ptr [eax]`/`ecx`, `1`, `xmm0` 등)으로 전개해 `data/db/combos.csv`(7,277행) 생성. `r/m32` 같은 reg_or_mem 슬래시 표기는 정확히 레지스터 후보 1개+메모리 후보 1개로만 쪼개고, 여러 오퍼랜드가 있어도 zip 방식(cartesian product 아님)으로 묶어 조합 폭발을 막음. `expected_valid`는 `mode_support=="Valid"` 여부로 결정(Invalid/N.E./N.S.도 생성하되 플래그만 다르게 표시).
+- 왜: CLAUDE.4 "심플 우선" 원칙에 따라 타입별 전수 조합 대신 대표값 1~2개씩만 뽑아 폭발을 피함. generator(다음 단계)가 조합 후보 중 실제로 쓸 것을 고르게 하기 위해 combos.csv에 여러 대표 조합을 남겨둠.
+- verifier: **pass** (1차 통과 — 정답지 mov/add/push 전체 대조, reg_or_mem 폭발 없음 확인(1~2개 조합만), 메모리 사이즈 매핑 스팟체크, expected_valid/mode_support 7,277행 전수 일관성, 회귀 검사 전부 실측 확인)
+- 알려진 이슈: ENCODEKEY256(row_id 570) 1건 — tokenizer 입력 자체에 콤마 누락(`"r32, r32 <XMM0-6>"`)이 있어 combiner가 구체값을 만들어도 SDM 기준으로는 틀린 조합(`ecx, xmm0`)이 나옴. 전체 9,820개 토큰 중 이 패턴은 이 1건뿐이라 국소적 이슈로 기록만 하고 넘어감 — generator 단계에서 이 row는 스킵하거나 예외 처리 권장.
+- 남은 것: `tests/answer_keys/*.csv`의 `intel_asm`/`expect_bytes`/`expect_disasm` 칸을 형섭이 채워야 generator/assembler 단계부터 바이트 단위 정밀 검증 가능. generator(`pipeline/m4_generate.py`) 구현 시작.
