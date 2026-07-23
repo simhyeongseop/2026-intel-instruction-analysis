@@ -45,8 +45,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 24,ADC,1,2,r/m64,reg_or_mem,"ADC r64, r/m64",RM,Valid,,127
 25,ADCX,0,2,r32,register,"ADCX r32, r/m32",RM,Valid,ADX,130
 25,ADCX,1,2,r/m32,reg_or_mem,"ADCX r32, r/m32",RM,Valid,ADX,130
-26,ADCX,0,2,r64,register,"ADCX r64, r/m64",RM,N.E.,ADX,130
-26,ADCX,1,2,r/m64,reg_or_mem,"ADCX r64, r/m64",RM,N.E.,ADX,130
+26,ADCX,0,2,r64,register,"ADCX r64, r/m64",RM,Valid,ADX,130
+26,ADCX,1,2,r/m64,reg_or_mem,"ADCX r64, r/m64",RM,Valid,ADX,130
 27,ADD,0,2,AL,register,"ADD AL, imm8",I,Valid,,132
 27,ADD,1,2,imm8,immediate,"ADD AL, imm8",I,Valid,,132
 28,ADD,0,2,AX,register,"ADD AX, imm16",I,Valid,,132
@@ -153,8 +153,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 69,VADDSUBPS,2,3,ymm3/m256,reg_or_mem,"VADDSUBPS ymm1, ymm2, ymm3/m256",RVM,Valid,AVX,146
 70,ADOX,0,2,r32,register,"ADOX r32, r/m32",RM,Valid,ADX,149
 70,ADOX,1,2,r/m32,reg_or_mem,"ADOX r32, r/m32",RM,Valid,ADX,149
-71,ADOX,0,2,r64,register,"ADOX r64, r/m64",RM,N.E.,ADX,149
-71,ADOX,1,2,r/m64,reg_or_mem,"ADOX r64, r/m64",RM,N.E.,ADX,149
+71,ADOX,0,2,r64,register,"ADOX r64, r/m64",RM,Valid,ADX,149
+71,ADOX,1,2,r/m64,reg_or_mem,"ADOX r64, r/m64",RM,Valid,ADX,149
 72,AESDEC,0,2,xmm1,register,"AESDEC xmm1, xmm2/m128",A,Valid,AES,151
 72,AESDEC,1,2,xmm2/m128,reg_or_mem,"AESDEC xmm1, xmm2/m128",A,Valid,AES,151
 73,VAESDEC,0,3,xmm1,register,"VAESDEC xmm1, xmm2, xmm3/m128",B,Valid,AES AVX,151
@@ -290,9 +290,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 127,ANDN,0,3,r32a,register,"ANDN r32a, r32b, r/m32",RVM,Valid,BMI1,180
 127,ANDN,1,3,r32b,register,"ANDN r32a, r32b, r/m32",RVM,Valid,BMI1,180
 127,ANDN,2,3,r/m32,reg_or_mem,"ANDN r32a, r32b, r/m32",RVM,Valid,BMI1,180
-128,ANDN,0,3,r64a,register,"ANDN r64a, r64b, r/m64",RVM,N.E.,BMI1,180
-128,ANDN,1,3,r64b,register,"ANDN r64a, r64b, r/m64",RVM,N.E.,BMI1,180
-128,ANDN,2,3,r/m64,reg_or_mem,"ANDN r64a, r64b, r/m64",RVM,N.E.,BMI1,180
+128,ANDN,0,3,r64a,register,"ANDN r64a, r64b, r/m64",RVM,Valid,BMI1,180
+128,ANDN,1,3,r64b,register,"ANDN r64a, r64b, r/m64",RVM,Valid,BMI1,180
+128,ANDN,2,3,r/m64,reg_or_mem,"ANDN r64a, r64b, r/m64",RVM,Valid,BMI1,180
 129,ANDNPD,0,2,xmm1,register,"ANDNPD xmm1, xmm2/m128",A,Valid,SSE2,181
 129,ANDNPD,1,2,xmm2/m128,reg_or_mem,"ANDNPD xmm1, xmm2/m128",A,Valid,SSE2,181
 130,VANDNPD,0,3,xmm1,register,"VANDNPD xmm1, xmm2, xmm3/m128",B,Valid,AVX,181
@@ -366,9 +366,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 154,BEXTR,0,3,r32a,register,"BEXTR r32a, r/m32, r32b",RMV,Valid,BMI1,195
 154,BEXTR,1,3,r/m32,reg_or_mem,"BEXTR r32a, r/m32, r32b",RMV,Valid,BMI1,195
 154,BEXTR,2,3,r32b,register,"BEXTR r32a, r/m32, r32b",RMV,Valid,BMI1,195
-155,BEXTR,0,3,r64a,register,"BEXTR r64a, r/m64, r64b",RMV,N.E.,BMI1,195
-155,BEXTR,1,3,r/m64,reg_or_mem,"BEXTR r64a, r/m64, r64b",RMV,N.E.,BMI1,195
-155,BEXTR,2,3,r64b,register,"BEXTR r64a, r/m64, r64b",RMV,N.E.,BMI1,195
+155,BEXTR,0,3,r64a,register,"BEXTR r64a, r/m64, r64b",RMV,Valid,BMI1,195
+155,BEXTR,1,3,r/m64,reg_or_mem,"BEXTR r64a, r/m64, r64b",RMV,Valid,BMI1,195
+155,BEXTR,2,3,r64b,register,"BEXTR r64a, r/m64, r64b",RMV,Valid,BMI1,195
 156,BLENDPD,0,3,xmm1,register,"BLENDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,196
 156,BLENDPD,1,3,xmm2/m128,reg_or_mem,"BLENDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,196
 156,BLENDPD,2,3,imm8,immediate,"BLENDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,196
@@ -415,42 +415,42 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 167,VBLENDVPS,3,4,ymm4,register,"VBLENDVPS ymm1, ymm2, ymm3/m256, ymm4",RVMR,Valid,AVX,202
 168,BLSI,0,2,r32,register,"BLSI r32, r/m32",VM,Valid,BMI1,205
 168,BLSI,1,2,r/m32,reg_or_mem,"BLSI r32, r/m32",VM,Valid,BMI1,205
-169,BLSI,0,2,r64,register,"BLSI r64, r/m64",VM,N.E.,BMI1,205
-169,BLSI,1,2,r/m64,reg_or_mem,"BLSI r64, r/m64",VM,N.E.,BMI1,205
+169,BLSI,0,2,r64,register,"BLSI r64, r/m64",VM,Valid,BMI1,205
+169,BLSI,1,2,r/m64,reg_or_mem,"BLSI r64, r/m64",VM,Valid,BMI1,205
 170,BLSMSK,0,2,r32,register,"BLSMSK r32, r/m32",VM,Valid,BMI1,206
 170,BLSMSK,1,2,r/m32,reg_or_mem,"BLSMSK r32, r/m32",VM,Valid,BMI1,206
-171,BLSMSK,0,2,r64,register,"BLSMSK r64, r/m64",VM,N.E.,BMI1,206
-171,BLSMSK,1,2,r/m64,reg_or_mem,"BLSMSK r64, r/m64",VM,N.E.,BMI1,206
+171,BLSMSK,0,2,r64,register,"BLSMSK r64, r/m64",VM,Valid,BMI1,206
+171,BLSMSK,1,2,r/m64,reg_or_mem,"BLSMSK r64, r/m64",VM,Valid,BMI1,206
 172,BLSR,0,2,r32,register,"BLSR r32, r/m32",VM,Valid,BMI1,207
 172,BLSR,1,2,r/m32,reg_or_mem,"BLSR r32, r/m32",VM,Valid,BMI1,207
-173,BLSR,0,2,r64,register,"BLSR r64, r/m64",VM,N.E.,BMI1,207
-173,BLSR,1,2,r/m64,reg_or_mem,"BLSR r64, r/m64",VM,N.E.,BMI1,207
+173,BLSR,0,2,r64,register,"BLSR r64, r/m64",VM,Valid,BMI1,207
+173,BLSR,1,2,r/m64,reg_or_mem,"BLSR r64, r/m64",VM,Valid,BMI1,207
 174,BNDCL,0,2,bnd,register,"BNDCL bnd, r/m32",RM,N.E.,MPX,208
 174,BNDCL,1,2,r/m32,reg_or_mem,"BNDCL bnd, r/m32",RM,N.E.,MPX,208
-175,BNDCL,0,2,bnd,register,"BNDCL bnd, r/m64",RM,N.E.,MPX,208
-175,BNDCL,1,2,r/m64,reg_or_mem,"BNDCL bnd, r/m64",RM,N.E.,MPX,208
+175,BNDCL,0,2,bnd,register,"BNDCL bnd, r/m64",RM,Valid,MPX,208
+175,BNDCL,1,2,r/m64,reg_or_mem,"BNDCL bnd, r/m64",RM,Valid,MPX,208
 176,BNDCU,0,2,bnd,register,"BNDCU bnd, r/m32",RM,N.E.,MPX,210
 176,BNDCU,1,2,r/m32,reg_or_mem,"BNDCU bnd, r/m32",RM,N.E.,MPX,210
-177,BNDCU,0,2,bnd,register,"BNDCU bnd, r/m64",RM,N.E.,MPX,210
-177,BNDCU,1,2,r/m64,reg_or_mem,"BNDCU bnd, r/m64",RM,N.E.,MPX,210
+177,BNDCU,0,2,bnd,register,"BNDCU bnd, r/m64",RM,Valid,MPX,210
+177,BNDCU,1,2,r/m64,reg_or_mem,"BNDCU bnd, r/m64",RM,Valid,MPX,210
 178,BNDCN,0,2,bnd,register,"BNDCN bnd, r/m32",RM,N.E.,MPX,210
 178,BNDCN,1,2,r/m32,reg_or_mem,"BNDCN bnd, r/m32",RM,N.E.,MPX,210
-179,BNDCN,0,2,bnd,register,"BNDCN bnd, r/m64",RM,N.E.,MPX,210
-179,BNDCN,1,2,r/m64,reg_or_mem,"BNDCN bnd, r/m64",RM,N.E.,MPX,210
+179,BNDCN,0,2,bnd,register,"BNDCN bnd, r/m64",RM,Valid,MPX,210
+179,BNDCN,1,2,r/m64,reg_or_mem,"BNDCN bnd, r/m64",RM,Valid,MPX,210
 180,BNDLDX,0,2,bnd,register,"BNDLDX bnd, mib",RM,Valid,MPX,212
 180,BNDLDX,1,2,mib,memory,"BNDLDX bnd, mib",RM,Valid,MPX,212
 181,BNDMK,0,2,bnd,register,"BNDMK bnd, m32",RM,N.E.,MPX,215
 181,BNDMK,1,2,m32,memory,"BNDMK bnd, m32",RM,N.E.,MPX,215
-182,BNDMK,0,2,bnd,register,"BNDMK bnd, m64",RM,N.E.,MPX,215
-182,BNDMK,1,2,m64,memory,"BNDMK bnd, m64",RM,N.E.,MPX,215
+182,BNDMK,0,2,bnd,register,"BNDMK bnd, m64",RM,Valid,MPX,215
+182,BNDMK,1,2,m64,memory,"BNDMK bnd, m64",RM,Valid,MPX,215
 183,BNDMOV,0,2,bnd1,register,"BNDMOV bnd1, bnd2/m64",RM,N.E.,MPX,217
 183,BNDMOV,1,2,bnd2/m64,reg_or_mem,"BNDMOV bnd1, bnd2/m64",RM,N.E.,MPX,217
-184,BNDMOV,0,2,bnd1,register,"BNDMOV bnd1, bnd2/m128",RM,N.E.,MPX,217
-184,BNDMOV,1,2,bnd2/m128,reg_or_mem,"BNDMOV bnd1, bnd2/m128",RM,N.E.,MPX,217
+184,BNDMOV,0,2,bnd1,register,"BNDMOV bnd1, bnd2/m128",RM,Valid,MPX,217
+184,BNDMOV,1,2,bnd2/m128,reg_or_mem,"BNDMOV bnd1, bnd2/m128",RM,Valid,MPX,217
 185,BNDMOV,0,2,bnd1/m64,reg_or_mem,"BNDMOV bnd1/m64, bnd2",MR,N.E.,MPX,217
 185,BNDMOV,1,2,bnd2,register,"BNDMOV bnd1/m64, bnd2",MR,N.E.,MPX,217
-186,BNDMOV,0,2,bnd1/m128,reg_or_mem,"BNDMOV bnd1/m128, bnd2",MR,N.E.,MPX,217
-186,BNDMOV,1,2,bnd2,register,"BNDMOV bnd1/m128, bnd2",MR,N.E.,MPX,217
+186,BNDMOV,0,2,bnd1/m128,reg_or_mem,"BNDMOV bnd1/m128, bnd2",MR,Valid,MPX,217
+186,BNDMOV,1,2,bnd2,register,"BNDMOV bnd1/m128, bnd2",MR,Valid,MPX,217
 187,BNDSTX,0,2,mib,memory,"BNDSTX mib, bnd",MR,Valid,MPX,220
 187,BNDSTX,1,2,bnd,register,"BNDSTX mib, bnd",MR,Valid,MPX,220
 188,BOUND,0,2,r16,register,"BOUND r16, m16&16",RM,Invalid,,223
@@ -522,9 +522,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 222,BZHI,0,3,r32a,register,"BZHI r32a, r/m32, r32b",RMV,Valid,BMI2,238
 222,BZHI,1,3,r/m32,reg_or_mem,"BZHI r32a, r/m32, r32b",RMV,Valid,BMI2,238
 222,BZHI,2,3,r32b,register,"BZHI r32a, r/m32, r32b",RMV,Valid,BMI2,238
-223,BZHI,0,3,r64a,register,"BZHI r64a, r/m64, r64b",RMV,N.E.,BMI2,238
-223,BZHI,1,3,r/m64,reg_or_mem,"BZHI r64a, r/m64, r64b",RMV,N.E.,BMI2,238
-223,BZHI,2,3,r64b,register,"BZHI r64a, r/m64, r64b",RMV,N.E.,BMI2,238
+223,BZHI,0,3,r64a,register,"BZHI r64a, r/m64, r64b",RMV,Valid,BMI2,238
+223,BZHI,1,3,r/m64,reg_or_mem,"BZHI r64a, r/m64, r64b",RMV,Valid,BMI2,238
+223,BZHI,2,3,r64b,register,"BZHI r64a, r/m64, r64b",RMV,Valid,BMI2,238
 224,CALL,0,1,rel16,relative,CALL rel16,D,N.S.,,239
 225,CALL,0,1,rel32,relative,CALL rel32,D,Valid,,239
 226,CALL,0,1,r/m16,reg_or_mem,CALL r/m16,M,N.E.,,239
@@ -590,8 +590,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 267,CMOVG,1,2,r/m16,reg_or_mem,"CMOVG r16, r/m16",RM,Valid,,275
 268,CMOVG,0,2,r32,register,"CMOVG r32, r/m32",RM,Valid,,275
 268,CMOVG,1,2,r/m32,reg_or_mem,"CMOVG r32, r/m32",RM,Valid,,275
-269,CMOVG,0,2,r64,register,"CMOVG r64, r/m64",RM,N.E.,,275
-269,CMOVG,1,2,r/m64,reg_or_mem,"CMOVG r64, r/m64",RM,N.E.,,275
+269,CMOVG,0,2,r64,register,"CMOVG r64, r/m64",RM,Valid,,275
+269,CMOVG,1,2,r/m64,reg_or_mem,"CMOVG r64, r/m64",RM,Valid,,275
 270,CMOVGE,0,2,r16,register,"CMOVGE r16, r/m16",RM,Valid,,275
 270,CMOVGE,1,2,r/m16,reg_or_mem,"CMOVGE r16, r/m16",RM,Valid,,275
 271,CMOVGE,0,2,r32,register,"CMOVGE r32, r/m32",RM,Valid,,275
@@ -768,102 +768,102 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 356,CMP,1,2,r/m32,reg_or_mem,"CMP r32, r/m32",RM,Valid,,279
 357,CMP,0,2,r64,register,"CMP r64, r/m64",RM,Valid,,279
 357,CMP,1,2,r/m64,reg_or_mem,"CMP r64, r/m64",RM,Valid,,279
-358,CMPBEXADD,0,3,m32,memory,"CMPBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-358,CMPBEXADD,1,3,r32,register,"CMPBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-358,CMPBEXADD,2,3,r32,register,"CMPBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-359,CMPBEXADD,0,3,m64,memory,"CMPBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-359,CMPBEXADD,1,3,r64,register,"CMPBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-359,CMPBEXADD,2,3,r64,register,"CMPBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-360,CMPBXADD,0,3,m32,memory,"CMPBXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-360,CMPBXADD,1,3,r32,register,"CMPBXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-360,CMPBXADD,2,3,r32,register,"CMPBXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-361,CMPBXADD,0,3,m64,memory,"CMPBXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-361,CMPBXADD,1,3,r64,register,"CMPBXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-361,CMPBXADD,2,3,r64,register,"CMPBXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-362,CMPLEXADD,0,3,m32,memory,"CMPLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-362,CMPLEXADD,1,3,r32,register,"CMPLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-362,CMPLEXADD,2,3,r32,register,"CMPLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-363,CMPLEXADD,0,3,m64,memory,"CMPLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-363,CMPLEXADD,1,3,r64,register,"CMPLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-363,CMPLEXADD,2,3,r64,register,"CMPLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-364,CMPLXADD,0,3,m32,memory,"CMPLXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-364,CMPLXADD,1,3,r32,register,"CMPLXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-364,CMPLXADD,2,3,r32,register,"CMPLXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-365,CMPLXADD,0,3,m64,memory,"CMPLXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-365,CMPLXADD,1,3,r64,register,"CMPLXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-365,CMPLXADD,2,3,r64,register,"CMPLXADD m64, r64, r64",A,N.E.,CMPCCXADD,281
-366,CMPNBEXADD,0,3,m32,memory,"CMPNBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-366,CMPNBEXADD,1,3,r32,register,"CMPNBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-366,CMPNBEXADD,2,3,r32,register,"CMPNBEXADD m32, r32, r32",A,N.E.,CMPCCXADD,281
-367,CMPNBEXADD,0,3,m64,memory,"CMPNBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-367,CMPNBEXADD,1,3,r64,register,"CMPNBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-367,CMPNBEXADD,2,3,r64,register,"CMPNBEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-368,CMPNBXADD,0,3,m32,memory,"CMPNBXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-368,CMPNBXADD,1,3,r32,register,"CMPNBXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-368,CMPNBXADD,2,3,r32,register,"CMPNBXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-369,CMPNBXADD,0,3,m64,memory,"CMPNBXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-369,CMPNBXADD,1,3,r64,register,"CMPNBXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-369,CMPNBXADD,2,3,r64,register,"CMPNBXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-370,CMPNLEXADD,0,3,m32,memory,"CMPNLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-370,CMPNLEXADD,1,3,r32,register,"CMPNLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-370,CMPNLEXADD,2,3,r32,register,"CMPNLEXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-371,CMPNLEXADD,0,3,m64,memory,"CMPNLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-371,CMPNLEXADD,1,3,r64,register,"CMPNLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-371,CMPNLEXADD,2,3,r64,register,"CMPNLEXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-372,CMPNLXADD,0,3,m32,memory,"CMPNLXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-372,CMPNLXADD,1,3,r32,register,"CMPNLXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-372,CMPNLXADD,2,3,r32,register,"CMPNLXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-373,CMPNLXADD,0,3,m64,memory,"CMPNLXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-373,CMPNLXADD,1,3,r64,register,"CMPNLXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-373,CMPNLXADD,2,3,r64,register,"CMPNLXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-374,CMPNOXADD,0,3,m32,memory,"CMPNOXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-374,CMPNOXADD,1,3,r32,register,"CMPNOXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-374,CMPNOXADD,2,3,r32,register,"CMPNOXADD m32, r32, r32",A,N.E.,CMPCCXADD,282
-375,CMPNOXADD,0,3,m64,memory,"CMPNOXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-375,CMPNOXADD,1,3,r64,register,"CMPNOXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-375,CMPNOXADD,2,3,r64,register,"CMPNOXADD m64, r64, r64",A,N.E.,CMPCCXADD,282
-376,CMPNPXADD,0,3,m32,memory,"CMPNPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-376,CMPNPXADD,1,3,r32,register,"CMPNPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-376,CMPNPXADD,2,3,r32,register,"CMPNPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-377,CMPNPXADD,0,3,m64,memory,"CMPNPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-377,CMPNPXADD,1,3,r64,register,"CMPNPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-377,CMPNPXADD,2,3,r64,register,"CMPNPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-378,CMPNSXADD,0,3,m32,memory,"CMPNSXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-378,CMPNSXADD,1,3,r32,register,"CMPNSXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-378,CMPNSXADD,2,3,r32,register,"CMPNSXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-379,CMPNSXADD,0,3,m64,memory,"CMPNSXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-379,CMPNSXADD,1,3,r64,register,"CMPNSXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-379,CMPNSXADD,2,3,r64,register,"CMPNSXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-380,CMPNZXADD,0,3,m32,memory,"CMPNZXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-380,CMPNZXADD,1,3,r32,register,"CMPNZXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-380,CMPNZXADD,2,3,r32,register,"CMPNZXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-381,CMPNZXADD,0,3,m64,memory,"CMPNZXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-381,CMPNZXADD,1,3,r64,register,"CMPNZXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-381,CMPNZXADD,2,3,r64,register,"CMPNZXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-382,CMPOXADD,0,3,m32,memory,"CMPOXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-382,CMPOXADD,1,3,r32,register,"CMPOXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-382,CMPOXADD,2,3,r32,register,"CMPOXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-383,CMPOXADD,0,3,m64,memory,"CMPOXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-383,CMPOXADD,1,3,r64,register,"CMPOXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-383,CMPOXADD,2,3,r64,register,"CMPOXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-384,CMPPXADD,0,3,m32,memory,"CMPPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-384,CMPPXADD,1,3,r32,register,"CMPPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-384,CMPPXADD,2,3,r32,register,"CMPPXADD m32, r32, r32",A,N.E.,CMPCCXADD,283
-385,CMPPXADD,0,3,m64,memory,"CMPPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-385,CMPPXADD,1,3,r64,register,"CMPPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-385,CMPPXADD,2,3,r64,register,"CMPPXADD m64, r64, r64",A,N.E.,CMPCCXADD,283
-386,CMPSXADD,0,3,m32,memory,"CMPSXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-386,CMPSXADD,1,3,r32,register,"CMPSXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-386,CMPSXADD,2,3,r32,register,"CMPSXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-387,CMPSXADD,0,3,m64,memory,"CMPSXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
-387,CMPSXADD,1,3,r64,register,"CMPSXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
-387,CMPSXADD,2,3,r64,register,"CMPSXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
-388,CMPZXADD,0,3,m32,memory,"CMPZXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-388,CMPZXADD,1,3,r32,register,"CMPZXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-388,CMPZXADD,2,3,r32,register,"CMPZXADD m32, r32, r32",A,N.E.,CMPCCXADD,284
-389,CMPZXADD,0,3,m64,memory,"CMPZXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
-389,CMPZXADD,1,3,r64,register,"CMPZXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
-389,CMPZXADD,2,3,r64,register,"CMPZXADD m64, r64, r64",A,N.E.,CMPCCXADD,284
+358,CMPBEXADD,0,3,m32,memory,"CMPBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+358,CMPBEXADD,1,3,r32,register,"CMPBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+358,CMPBEXADD,2,3,r32,register,"CMPBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+359,CMPBEXADD,0,3,m64,memory,"CMPBEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+359,CMPBEXADD,1,3,r64,register,"CMPBEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+359,CMPBEXADD,2,3,r64,register,"CMPBEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+360,CMPBXADD,0,3,m32,memory,"CMPBXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+360,CMPBXADD,1,3,r32,register,"CMPBXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+360,CMPBXADD,2,3,r32,register,"CMPBXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+361,CMPBXADD,0,3,m64,memory,"CMPBXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+361,CMPBXADD,1,3,r64,register,"CMPBXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+361,CMPBXADD,2,3,r64,register,"CMPBXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+362,CMPLEXADD,0,3,m32,memory,"CMPLEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+362,CMPLEXADD,1,3,r32,register,"CMPLEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+362,CMPLEXADD,2,3,r32,register,"CMPLEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+363,CMPLEXADD,0,3,m64,memory,"CMPLEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+363,CMPLEXADD,1,3,r64,register,"CMPLEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+363,CMPLEXADD,2,3,r64,register,"CMPLEXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+364,CMPLXADD,0,3,m32,memory,"CMPLXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+364,CMPLXADD,1,3,r32,register,"CMPLXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+364,CMPLXADD,2,3,r32,register,"CMPLXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+365,CMPLXADD,0,3,m64,memory,"CMPLXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+365,CMPLXADD,1,3,r64,register,"CMPLXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+365,CMPLXADD,2,3,r64,register,"CMPLXADD m64, r64, r64",A,Valid,CMPCCXADD,281
+366,CMPNBEXADD,0,3,m32,memory,"CMPNBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+366,CMPNBEXADD,1,3,r32,register,"CMPNBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+366,CMPNBEXADD,2,3,r32,register,"CMPNBEXADD m32, r32, r32",A,Valid,CMPCCXADD,281
+367,CMPNBEXADD,0,3,m64,memory,"CMPNBEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+367,CMPNBEXADD,1,3,r64,register,"CMPNBEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+367,CMPNBEXADD,2,3,r64,register,"CMPNBEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+368,CMPNBXADD,0,3,m32,memory,"CMPNBXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+368,CMPNBXADD,1,3,r32,register,"CMPNBXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+368,CMPNBXADD,2,3,r32,register,"CMPNBXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+369,CMPNBXADD,0,3,m64,memory,"CMPNBXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+369,CMPNBXADD,1,3,r64,register,"CMPNBXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+369,CMPNBXADD,2,3,r64,register,"CMPNBXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+370,CMPNLEXADD,0,3,m32,memory,"CMPNLEXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+370,CMPNLEXADD,1,3,r32,register,"CMPNLEXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+370,CMPNLEXADD,2,3,r32,register,"CMPNLEXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+371,CMPNLEXADD,0,3,m64,memory,"CMPNLEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+371,CMPNLEXADD,1,3,r64,register,"CMPNLEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+371,CMPNLEXADD,2,3,r64,register,"CMPNLEXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+372,CMPNLXADD,0,3,m32,memory,"CMPNLXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+372,CMPNLXADD,1,3,r32,register,"CMPNLXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+372,CMPNLXADD,2,3,r32,register,"CMPNLXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+373,CMPNLXADD,0,3,m64,memory,"CMPNLXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+373,CMPNLXADD,1,3,r64,register,"CMPNLXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+373,CMPNLXADD,2,3,r64,register,"CMPNLXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+374,CMPNOXADD,0,3,m32,memory,"CMPNOXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+374,CMPNOXADD,1,3,r32,register,"CMPNOXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+374,CMPNOXADD,2,3,r32,register,"CMPNOXADD m32, r32, r32",A,Valid,CMPCCXADD,282
+375,CMPNOXADD,0,3,m64,memory,"CMPNOXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+375,CMPNOXADD,1,3,r64,register,"CMPNOXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+375,CMPNOXADD,2,3,r64,register,"CMPNOXADD m64, r64, r64",A,Valid,CMPCCXADD,282
+376,CMPNPXADD,0,3,m32,memory,"CMPNPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+376,CMPNPXADD,1,3,r32,register,"CMPNPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+376,CMPNPXADD,2,3,r32,register,"CMPNPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+377,CMPNPXADD,0,3,m64,memory,"CMPNPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+377,CMPNPXADD,1,3,r64,register,"CMPNPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+377,CMPNPXADD,2,3,r64,register,"CMPNPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+378,CMPNSXADD,0,3,m32,memory,"CMPNSXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+378,CMPNSXADD,1,3,r32,register,"CMPNSXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+378,CMPNSXADD,2,3,r32,register,"CMPNSXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+379,CMPNSXADD,0,3,m64,memory,"CMPNSXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+379,CMPNSXADD,1,3,r64,register,"CMPNSXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+379,CMPNSXADD,2,3,r64,register,"CMPNSXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+380,CMPNZXADD,0,3,m32,memory,"CMPNZXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+380,CMPNZXADD,1,3,r32,register,"CMPNZXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+380,CMPNZXADD,2,3,r32,register,"CMPNZXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+381,CMPNZXADD,0,3,m64,memory,"CMPNZXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+381,CMPNZXADD,1,3,r64,register,"CMPNZXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+381,CMPNZXADD,2,3,r64,register,"CMPNZXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+382,CMPOXADD,0,3,m32,memory,"CMPOXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+382,CMPOXADD,1,3,r32,register,"CMPOXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+382,CMPOXADD,2,3,r32,register,"CMPOXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+383,CMPOXADD,0,3,m64,memory,"CMPOXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+383,CMPOXADD,1,3,r64,register,"CMPOXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+383,CMPOXADD,2,3,r64,register,"CMPOXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+384,CMPPXADD,0,3,m32,memory,"CMPPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+384,CMPPXADD,1,3,r32,register,"CMPPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+384,CMPPXADD,2,3,r32,register,"CMPPXADD m32, r32, r32",A,Valid,CMPCCXADD,283
+385,CMPPXADD,0,3,m64,memory,"CMPPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+385,CMPPXADD,1,3,r64,register,"CMPPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+385,CMPPXADD,2,3,r64,register,"CMPPXADD m64, r64, r64",A,Valid,CMPCCXADD,283
+386,CMPSXADD,0,3,m32,memory,"CMPSXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+386,CMPSXADD,1,3,r32,register,"CMPSXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+386,CMPSXADD,2,3,r32,register,"CMPSXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+387,CMPSXADD,0,3,m64,memory,"CMPSXADD m64, r64, r64",A,Valid,CMPCCXADD,284
+387,CMPSXADD,1,3,r64,register,"CMPSXADD m64, r64, r64",A,Valid,CMPCCXADD,284
+387,CMPSXADD,2,3,r64,register,"CMPSXADD m64, r64, r64",A,Valid,CMPCCXADD,284
+388,CMPZXADD,0,3,m32,memory,"CMPZXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+388,CMPZXADD,1,3,r32,register,"CMPZXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+388,CMPZXADD,2,3,r32,register,"CMPZXADD m32, r32, r32",A,Valid,CMPCCXADD,284
+389,CMPZXADD,0,3,m64,memory,"CMPZXADD m64, r64, r64",A,Valid,CMPCCXADD,284
+389,CMPZXADD,1,3,r64,register,"CMPZXADD m64, r64, r64",A,Valid,CMPCCXADD,284
+389,CMPZXADD,2,3,r64,register,"CMPZXADD m64, r64, r64",A,Valid,CMPCCXADD,284
 390,CMPPD,0,3,xmm1,register,"CMPPD xmm1, xmm2/m128, imm8",A,Valid,SSE2,286
 390,CMPPD,1,3,xmm2/m128,reg_or_mem,"CMPPD xmm1, xmm2/m128, imm8",A,Valid,SSE2,286
 390,CMPPD,2,3,imm8,immediate,"CMPPD xmm1, xmm2/m128, imm8",A,Valid,SSE2,286
@@ -1059,16 +1059,16 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 473,CVTPS2PI,1,2,xmm/m64,reg_or_mem,"CVTPS2PI mm, xmm/m64",RM,Valid,,349
 474,CVTSD2SI,0,2,r32,register,"CVTSD2SI r32, xmm1/m64",A,Valid,SSE2,350
 474,CVTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTSD2SI r32, xmm1/m64",A,Valid,SSE2,350
-475,CVTSD2SI,0,2,r64,register,"CVTSD2SI r64, xmm1/m64",A,N.E.,SSE2,350
-475,CVTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTSD2SI r64, xmm1/m64",A,N.E.,SSE2,350
+475,CVTSD2SI,0,2,r64,register,"CVTSD2SI r64, xmm1/m64",A,Valid,SSE2,350
+475,CVTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTSD2SI r64, xmm1/m64",A,Valid,SSE2,350
 476,VCVTSD2SI,0,2,r32,register,"VCVTSD2SI r32, xmm1/m64",A,Valid,AVX,350
 476,VCVTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTSD2SI r32, xmm1/m64",A,Valid,AVX,350
-477,VCVTSD2SI,0,2,r64,register,"VCVTSD2SI r64, xmm1/m64",A,N.E.,AVX,350
-477,VCVTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTSD2SI r64, xmm1/m64",A,N.E.,AVX,350
+477,VCVTSD2SI,0,2,r64,register,"VCVTSD2SI r64, xmm1/m64",A,Valid,AVX,350
+477,VCVTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTSD2SI r64, xmm1/m64",A,Valid,AVX,350
 478,VCVTSD2SI,0,2,r32,register,"VCVTSD2SI r32, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,350
 478,VCVTSD2SI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2SI r32, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,350
-479,VCVTSD2SI,0,2,r64,register,"VCVTSD2SI r64, xmm1/m64{er}",B,N.E.,AVX512F OR AVX10.1,350
-479,VCVTSD2SI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2SI r64, xmm1/m64{er}",B,N.E.,AVX512F OR AVX10.1,350
+479,VCVTSD2SI,0,2,r64,register,"VCVTSD2SI r64, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,350
+479,VCVTSD2SI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2SI r64, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,350
 480,CVTSD2SS,0,2,xmm1,register,"CVTSD2SS xmm1, xmm2/m64",A,Valid,SSE2,352
 480,CVTSD2SS,1,2,xmm2/m64,reg_or_mem,"CVTSD2SS xmm1, xmm2/m64",A,Valid,SSE2,352
 481,VCVTSD2SS,0,3,xmm1,register,"VCVTSD2SS xmm1,xmm2, xmm3/m64",B,Valid,AVX,352
@@ -1079,36 +1079,36 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 482,VCVTSD2SS,2,3,xmm3/m64{er},reg_or_mem,"VCVTSD2SS xmm1 {k1}{z}, xmm2, xmm3/m64{er}",C,Valid,AVX512F OR AVX10.1,352
 483,CVTSI2SD,0,2,xmm1,register,"CVTSI2SD xmm1, r32/m32",A,Valid,SSE2,354
 483,CVTSI2SD,1,2,r32/m32,reg_or_mem,"CVTSI2SD xmm1, r32/m32",A,Valid,SSE2,354
-484,CVTSI2SD,0,2,xmm1,register,"CVTSI2SD xmm1, r/m64",A,N.E.,SSE2,354
-484,CVTSI2SD,1,2,r/m64,reg_or_mem,"CVTSI2SD xmm1, r/m64",A,N.E.,SSE2,354
+484,CVTSI2SD,0,2,xmm1,register,"CVTSI2SD xmm1, r/m64",A,Valid,SSE2,354
+484,CVTSI2SD,1,2,r/m64,reg_or_mem,"CVTSI2SD xmm1, r/m64",A,Valid,SSE2,354
 485,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m32",B,Valid,AVX,354
 485,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m32",B,Valid,AVX,354
 485,VCVTSI2SD,2,3,r/m32,reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m32",B,Valid,AVX,354
-486,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m64",B,N.E.,AVX,354
-486,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m64",B,N.E.,AVX,354
-486,VCVTSI2SD,2,3,r/m64,reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m64",B,N.E.,AVX,354
+486,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m64",B,Valid,AVX,354
+486,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m64",B,Valid,AVX,354
+486,VCVTSI2SD,2,3,r/m64,reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m64",B,Valid,AVX,354
 487,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m32",C,Valid,AVX512F OR AVX10.1,354
 487,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m32",C,Valid,AVX512F OR AVX10.1,354
 487,VCVTSI2SD,2,3,r/m32,reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m32",C,Valid,AVX512F OR AVX10.1,354
-488,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,354
-488,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,354
-488,VCVTSI2SD,2,3,r/m64{er},reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,354
+488,VCVTSI2SD,0,3,xmm1,register,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,354
+488,VCVTSI2SD,1,3,xmm2,register,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,354
+488,VCVTSI2SD,2,3,r/m64{er},reg_or_mem,"VCVTSI2SD xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,354
 489,CVTSI2SS,0,2,xmm1,register,"CVTSI2SS xmm1, r/m32",A,Valid,SSE,356
 489,CVTSI2SS,1,2,r/m32,reg_or_mem,"CVTSI2SS xmm1, r/m32",A,Valid,SSE,356
-490,CVTSI2SS,0,2,xmm1,register,"CVTSI2SS xmm1, r/m64",A,N.E.,SSE,356
-490,CVTSI2SS,1,2,r/m64,reg_or_mem,"CVTSI2SS xmm1, r/m64",A,N.E.,SSE,356
+490,CVTSI2SS,0,2,xmm1,register,"CVTSI2SS xmm1, r/m64",A,Valid,SSE,356
+490,CVTSI2SS,1,2,r/m64,reg_or_mem,"CVTSI2SS xmm1, r/m64",A,Valid,SSE,356
 491,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m32",B,Valid,AVX,356
 491,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m32",B,Valid,AVX,356
 491,VCVTSI2SS,2,3,r/m32,reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m32",B,Valid,AVX,356
-492,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m64",B,N.E.,AVX,356
-492,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m64",B,N.E.,AVX,356
-492,VCVTSI2SS,2,3,r/m64,reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m64",B,N.E.,AVX,356
+492,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m64",B,Valid,AVX,356
+492,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m64",B,Valid,AVX,356
+492,VCVTSI2SS,2,3,r/m64,reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m64",B,Valid,AVX,356
 493,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m32{er}",C,Valid,AVX512F OR AVX10.1,356
 493,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m32{er}",C,Valid,AVX512F OR AVX10.1,356
 493,VCVTSI2SS,2,3,r/m32{er},reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m32{er}",C,Valid,AVX512F OR AVX10.1,356
-494,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,356
-494,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,356
-494,VCVTSI2SS,2,3,r/m64{er},reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,356
+494,VCVTSI2SS,0,3,xmm1,register,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,356
+494,VCVTSI2SS,1,3,xmm2,register,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,356
+494,VCVTSI2SS,2,3,r/m64{er},reg_or_mem,"VCVTSI2SS xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,356
 495,CVTSS2SD,0,2,xmm1,register,"CVTSS2SD xmm1, xmm2/m32",A,Valid,SSE2,358
 495,CVTSS2SD,1,2,xmm2/m32,reg_or_mem,"CVTSS2SD xmm1, xmm2/m32",A,Valid,SSE2,358
 496,VCVTSS2SD,0,3,xmm1,register,"VCVTSS2SD xmm1, xmm2, xmm3/m32",B,Valid,AVX,358
@@ -1119,16 +1119,16 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 497,VCVTSS2SD,2,3,xmm3/m32{sae},reg_or_mem,"VCVTSS2SD xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",C,Valid,AVX512F OR AVX10.1,358
 498,CVTSS2SI,0,2,r32,register,"CVTSS2SI r32, xmm1/m32",A,Valid,SSE,360
 498,CVTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTSS2SI r32, xmm1/m32",A,Valid,SSE,360
-499,CVTSS2SI,0,2,r64,register,"CVTSS2SI r64, xmm1/m32",A,N.E.,SSE,360
-499,CVTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTSS2SI r64, xmm1/m32",A,N.E.,SSE,360
+499,CVTSS2SI,0,2,r64,register,"CVTSS2SI r64, xmm1/m32",A,Valid,SSE,360
+499,CVTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTSS2SI r64, xmm1/m32",A,Valid,SSE,360
 500,VCVTSS2SI,0,2,r32,register,"VCVTSS2SI r32, xmm1/m32",A,Valid,AVX,360
 500,VCVTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTSS2SI r32, xmm1/m32",A,Valid,AVX,360
-501,VCVTSS2SI,0,2,r64,register,"VCVTSS2SI r64, xmm1/m32",A,N.E.,AVX,360
-501,VCVTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTSS2SI r64, xmm1/m32",A,N.E.,AVX,360
+501,VCVTSS2SI,0,2,r64,register,"VCVTSS2SI r64, xmm1/m32",A,Valid,AVX,360
+501,VCVTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTSS2SI r64, xmm1/m32",A,Valid,AVX,360
 502,VCVTSS2SI,0,2,r32,register,"VCVTSS2SI r32, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,360
 502,VCVTSS2SI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2SI r32, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,360
-503,VCVTSS2SI,0,2,r64,register,"VCVTSS2SI r64, xmm1/m32{er}",B,N.E.,AVX512F OR AVX10.1,360
-503,VCVTSS2SI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2SI r64, xmm1/m32{er}",B,N.E.,AVX512F OR AVX10.1,360
+503,VCVTSS2SI,0,2,r64,register,"VCVTSS2SI r64, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,360
+503,VCVTSS2SI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2SI r64, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,360
 504,CVTTPD2DQ,0,2,xmm1,register,"CVTTPD2DQ xmm1, xmm2/m128",A,Valid,SSE2,362
 504,CVTTPD2DQ,1,2,xmm2/m128,reg_or_mem,"CVTTPD2DQ xmm1, xmm2/m128",A,Valid,SSE2,362
 505,VCVTTPD2DQ,0,2,xmm1,register,"VCVTTPD2DQ xmm1, xmm2/m128",A,Valid,AVX,362
@@ -1159,28 +1159,28 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 517,CVTTPS2PI,1,2,xmm/m64,reg_or_mem,"CVTTPS2PI mm, xmm/m64",RM,Valid,,370
 518,CVTTSD2SI,0,2,r32,register,"CVTTSD2SI r32, xmm1/m64",A,Valid,SSE2,371
 518,CVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTTSD2SI r32, xmm1/m64",A,Valid,SSE2,371
-519,CVTTSD2SI,0,2,r64,register,"CVTTSD2SI r64, xmm1/m64",A,N.E.,SSE2,371
-519,CVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTTSD2SI r64, xmm1/m64",A,N.E.,SSE2,371
+519,CVTTSD2SI,0,2,r64,register,"CVTTSD2SI r64, xmm1/m64",A,Valid,SSE2,371
+519,CVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"CVTTSD2SI r64, xmm1/m64",A,Valid,SSE2,371
 520,VCVTTSD2SI,0,2,r32,register,"VCVTTSD2SI r32, xmm1/m64",A,Valid,AVX,371
 520,VCVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTTSD2SI r32, xmm1/m64",A,Valid,AVX,371
-521,VCVTTSD2SI,0,2,r64,register,"VCVTTSD2SI r64, xmm1/m64",B,N.E.,AVX,371
-521,VCVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTTSD2SI r64, xmm1/m64",B,N.E.,AVX,371
+521,VCVTTSD2SI,0,2,r64,register,"VCVTTSD2SI r64, xmm1/m64",B,Valid,AVX,371
+521,VCVTTSD2SI,1,2,xmm1/m64,reg_or_mem,"VCVTTSD2SI r64, xmm1/m64",B,Valid,AVX,371
 522,VCVTTSD2SI,0,2,r32,register,"VCVTTSD2SI r32, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,371
 522,VCVTTSD2SI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2SI r32, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,371
-523,VCVTTSD2SI,0,2,r64,register,"VCVTTSD2SI r64, xmm1/m64{sae}",B,N.E.,AVX512F OR AVX10.1,371
-523,VCVTTSD2SI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2SI r64, xmm1/m64{sae}",B,N.E.,AVX512F OR AVX10.1,371
+523,VCVTTSD2SI,0,2,r64,register,"VCVTTSD2SI r64, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,371
+523,VCVTTSD2SI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2SI r64, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,371
 524,CVTTSS2SI,0,2,r32,register,"CVTTSS2SI r32, xmm1/m32",A,Valid,SSE,373
 524,CVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTTSS2SI r32, xmm1/m32",A,Valid,SSE,373
-525,CVTTSS2SI,0,2,r64,register,"CVTTSS2SI r64, xmm1/m32",A,N.E.,SSE,373
-525,CVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTTSS2SI r64, xmm1/m32",A,N.E.,SSE,373
+525,CVTTSS2SI,0,2,r64,register,"CVTTSS2SI r64, xmm1/m32",A,Valid,SSE,373
+525,CVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"CVTTSS2SI r64, xmm1/m32",A,Valid,SSE,373
 526,VCVTTSS2SI,0,2,r32,register,"VCVTTSS2SI r32, xmm1/m32",A,Valid,AVX,373
 526,VCVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTTSS2SI r32, xmm1/m32",A,Valid,AVX,373
-527,VCVTTSS2SI,0,2,r64,register,"VCVTTSS2SI r64, xmm1/m32",A,N.E.,AVX,373
-527,VCVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTTSS2SI r64, xmm1/m32",A,N.E.,AVX,373
+527,VCVTTSS2SI,0,2,r64,register,"VCVTTSS2SI r64, xmm1/m32",A,Valid,AVX,373
+527,VCVTTSS2SI,1,2,xmm1/m32,reg_or_mem,"VCVTTSS2SI r64, xmm1/m32",A,Valid,AVX,373
 528,VCVTTSS2SI,0,2,r32,register,"VCVTTSS2SI r32, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,373
 528,VCVTTSS2SI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2SI r32, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,373
-529,VCVTTSS2SI,0,2,r64,register,"VCVTTSS2SI r64, xmm1/m32{sae}",B,N.E.,AVX512F OR AVX10.1,373
-529,VCVTTSS2SI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2SI r64, xmm1/m32{sae}",B,N.E.,AVX512F OR AVX10.1,373
+529,VCVTTSS2SI,0,2,r64,register,"VCVTTSS2SI r64, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,373
+529,VCVTTSS2SI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2SI r64, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,373
 530,CWD,,0,,none,CWD,ZO,Valid,,375
 531,CDQ,,0,,none,CDQ,ZO,Valid,,375
 532,CQO,,0,,none,CQO,ZO,Valid,,375
@@ -1627,7 +1627,7 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 796,INC,0,1,r16,register,INC r16,O,N.E.,,575
 797,INC,0,1,r32,register,INC r32,O,N.E.,,575
 798,INCSSPD,0,1,r32,register,INCSSPD r32,R,Valid,CET_SS,577
-799,INCSSPQ,0,1,r64,register,INCSSPQ r64,R,N.E.,CET_SS,577
+799,INCSSPQ,0,1,r64,register,INCSSPQ r64,R,Valid,CET_SS,577
 800,INSERTPS,0,3,xmm1,register,"INSERTPS xmm1, xmm2/m32, imm8",A,Valid,SSE4_1,579
 800,INSERTPS,1,3,xmm2/m32,reg_or_mem,"INSERTPS xmm1, xmm2/m32, imm8",A,Valid,SSE4_1,579
 800,INSERTPS,2,3,imm8,immediate,"INSERTPS xmm1, xmm2/m32, imm8",A,Valid,SSE4_1,579
@@ -1656,8 +1656,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 814,INVLPG,0,1,m,memory,INVLPG m,M,Valid,,603
 815,INVPCID,0,2,r32,register,"INVPCID r32, m128",RM,N.E.,INVPCID,605
 815,INVPCID,1,2,m128,memory,"INVPCID r32, m128",RM,N.E.,INVPCID,605
-816,INVPCID,0,2,r64,register,"INVPCID r64, m128",RM,N.E.,INVPCID,605
-816,INVPCID,1,2,m128,memory,"INVPCID r64, m128",RM,N.E.,INVPCID,605
+816,INVPCID,0,2,r64,register,"INVPCID r64, m128",RM,Valid,INVPCID,605
+816,INVPCID,1,2,m128,memory,"INVPCID r64, m128",RM,Valid,INVPCID,605
 817,IRET,,0,,none,IRET,ZO,Valid,,608
 818,IRETD,,0,,none,IRETD,ZO,Valid,,608
 819,IRETQ,,0,,none,IRETQ,ZO,Valid,,608
@@ -1969,7 +1969,7 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1009,LGS,1,2,m16:32,memory,"LGS r32,m16:32",RM,Valid,,658
 1010,LGS,0,2,r64,register,"LGS r64,m16:64",RM,Valid,,658
 1010,LGS,1,2,m16:64,memory,"LGS r64,m16:64",RM,Valid,,658
-1011,LDTILECFG,0,1,m512,memory,LDTILECFG m512,A,N.E.,AMX_TILE,662
+1011,LDTILECFG,0,1,m512,memory,LDTILECFG m512,A,Valid,AMX_TILE,662
 1012,LEA,0,2,r16,register,"LEA r16,m",RM,Valid,,665
 1012,LEA,1,2,m,memory,"LEA r16,m",RM,Valid,,665
 1013,LEA,0,2,r32,register,"LEA r32,m",RM,Valid,,665
@@ -2014,8 +2014,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1043,LZCNT,1,2,r/m16,reg_or_mem,"LZCNT r16, r/m16",RM,Valid,LZCNT,696
 1044,LZCNT,0,2,r32,register,"LZCNT r32, r/m32",RM,Valid,LZCNT,696
 1044,LZCNT,1,2,r/m32,reg_or_mem,"LZCNT r32, r/m32",RM,Valid,LZCNT,696
-1045,LZCNT,0,2,r64,register,"LZCNT r64, r/m64",RM,N.E.,LZCNT,696
-1045,LZCNT,1,2,r/m64,reg_or_mem,"LZCNT r64, r/m64",RM,N.E.,LZCNT,696
+1045,LZCNT,0,2,r64,register,"LZCNT r64, r/m64",RM,Valid,LZCNT,696
+1045,LZCNT,1,2,r/m64,reg_or_mem,"LZCNT r64, r/m64",RM,Valid,LZCNT,696
 1046,MASKMOVDQU,0,2,xmm1,register,"MASKMOVDQU xmm1, xmm2",RM,Valid,SSE2,704
 1046,MASKMOVDQU,1,2,xmm2,register,"MASKMOVDQU xmm1, xmm2",RM,Valid,SSE2,704
 1047,VMASKMOVDQU,0,2,xmm1,register,"VMASKMOVDQU xmm1, xmm2",RM,Valid,AVX,704
@@ -2258,14 +2258,14 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1152,MOVBE,1,2,m16,memory,"MOVBE r16, m16",RM,Valid,MOVBE,748
 1153,MOVBE,0,2,r32,register,"MOVBE r32, m32",RM,Valid,MOVBE,748
 1153,MOVBE,1,2,m32,memory,"MOVBE r32, m32",RM,Valid,MOVBE,748
-1154,MOVBE,0,2,r64,register,"MOVBE r64, m64",RM,N.E.,MOVBE,748
-1154,MOVBE,1,2,m64,memory,"MOVBE r64, m64",RM,N.E.,MOVBE,748
+1154,MOVBE,0,2,r64,register,"MOVBE r64, m64",RM,Valid,MOVBE,748
+1154,MOVBE,1,2,m64,memory,"MOVBE r64, m64",RM,Valid,MOVBE,748
 1155,MOVBE,0,2,m16,memory,"MOVBE m16, r16",MR,Valid,MOVBE,748
 1155,MOVBE,1,2,r16,register,"MOVBE m16, r16",MR,Valid,MOVBE,748
 1156,MOVBE,0,2,m32,memory,"MOVBE m32, r32",MR,Valid,MOVBE,748
 1156,MOVBE,1,2,r32,register,"MOVBE m32, r32",MR,Valid,MOVBE,748
-1157,MOVBE,0,2,m64,memory,"MOVBE m64, r64",MR,N.E.,MOVBE,748
-1157,MOVBE,1,2,r64,register,"MOVBE m64, r64",MR,N.E.,MOVBE,748
+1157,MOVBE,0,2,m64,memory,"MOVBE m64, r64",MR,Valid,MOVBE,748
+1157,MOVBE,1,2,r64,register,"MOVBE m64, r64",MR,Valid,MOVBE,748
 1158,MOVDDUP,0,2,xmm1,register,"MOVDDUP xmm1, xmm2/m64",A,Valid,SSE3,751
 1158,MOVDDUP,1,2,xmm2/m64,reg_or_mem,"MOVDDUP xmm1, xmm2/m64",A,Valid,SSE3,751
 1159,VMOVDDUP,0,2,xmm1,register,"VMOVDDUP xmm1, xmm2/m64",A,Valid,AVX,751
@@ -2282,40 +2282,40 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1164,MOVDIR64B,1,2,m512,memory,"MOVDIR64B r16/r32/r64, m512",A,Valid,MOVDIR64B,754
 1165,MOVDIRI,0,2,m32,memory,"MOVDIRI m32, r32",A,Valid,MOVDIRI,756
 1165,MOVDIRI,1,2,r32,register,"MOVDIRI m32, r32",A,Valid,MOVDIRI,756
-1166,MOVDIRI,0,2,m64,memory,"MOVDIRI m64, r64",A,N.E.,MOVDIRI,756
-1166,MOVDIRI,1,2,r64,register,"MOVDIRI m64, r64",A,N.E.,MOVDIRI,756
+1166,MOVDIRI,0,2,m64,memory,"MOVDIRI m64, r64",A,Valid,MOVDIRI,756
+1166,MOVDIRI,1,2,r64,register,"MOVDIRI m64, r64",A,Valid,MOVDIRI,756
 1167,MOVD,0,2,mm,register,"MOVD mm, r/m32",A,Valid,MMX,758
 1167,MOVD,1,2,r/m32,reg_or_mem,"MOVD mm, r/m32",A,Valid,MMX,758
-1168,MOVQ,0,2,mm,register,"MOVQ mm, r/m64",A,N.E.,MMX,758
-1168,MOVQ,1,2,r/m64,reg_or_mem,"MOVQ mm, r/m64",A,N.E.,MMX,758
+1168,MOVQ,0,2,mm,register,"MOVQ mm, r/m64",A,Valid,MMX,758
+1168,MOVQ,1,2,r/m64,reg_or_mem,"MOVQ mm, r/m64",A,Valid,MMX,758
 1169,MOVD,0,2,r/m32,reg_or_mem,"MOVD r/m32, mm",B,Valid,MMX,758
 1169,MOVD,1,2,mm,register,"MOVD r/m32, mm",B,Valid,MMX,758
-1170,MOVQ,0,2,r/m64,reg_or_mem,"MOVQ r/m64, mm",B,N.E.,MMX,758
-1170,MOVQ,1,2,mm,register,"MOVQ r/m64, mm",B,N.E.,MMX,758
+1170,MOVQ,0,2,r/m64,reg_or_mem,"MOVQ r/m64, mm",B,Valid,MMX,758
+1170,MOVQ,1,2,mm,register,"MOVQ r/m64, mm",B,Valid,MMX,758
 1171,MOVD,0,2,xmm,register,"MOVD xmm, r/m32",A,Valid,SSE2,758
 1171,MOVD,1,2,r/m32,reg_or_mem,"MOVD xmm, r/m32",A,Valid,SSE2,758
-1172,MOVQ,0,2,xmm,register,"MOVQ xmm, r/m64",A,N.E.,SSE2,758
-1172,MOVQ,1,2,r/m64,reg_or_mem,"MOVQ xmm, r/m64",A,N.E.,SSE2,758
+1172,MOVQ,0,2,xmm,register,"MOVQ xmm, r/m64",A,Valid,SSE2,758
+1172,MOVQ,1,2,r/m64,reg_or_mem,"MOVQ xmm, r/m64",A,Valid,SSE2,758
 1173,MOVD,0,2,r/m32,reg_or_mem,"MOVD r/m32, xmm",B,Valid,SSE2,758
 1173,MOVD,1,2,xmm,register,"MOVD r/m32, xmm",B,Valid,SSE2,758
-1174,MOVQ,0,2,r/m64,reg_or_mem,"MOVQ r/m64, xmm",B,N.E.,SSE2,758
-1174,MOVQ,1,2,xmm,register,"MOVQ r/m64, xmm",B,N.E.,SSE2,758
+1174,MOVQ,0,2,r/m64,reg_or_mem,"MOVQ r/m64, xmm",B,Valid,SSE2,758
+1174,MOVQ,1,2,xmm,register,"MOVQ r/m64, xmm",B,Valid,SSE2,758
 1175,VMOVD,0,2,xmm1,register,"VMOVD xmm1, r32/m32",A,Valid,AVX,758
 1175,VMOVD,1,2,r32/m32,reg_or_mem,"VMOVD xmm1, r32/m32",A,Valid,AVX,758
-1176,VMOVQ,0,2,xmm1,register,"VMOVQ xmm1, r64/m64",A,N.E.,AVX,758
-1176,VMOVQ,1,2,r64/m64,reg_or_mem,"VMOVQ xmm1, r64/m64",A,N.E.,AVX,758
+1176,VMOVQ,0,2,xmm1,register,"VMOVQ xmm1, r64/m64",A,Valid,AVX,758
+1176,VMOVQ,1,2,r64/m64,reg_or_mem,"VMOVQ xmm1, r64/m64",A,Valid,AVX,758
 1177,VMOVD,0,2,r32/m32,reg_or_mem,"VMOVD r32/m32, xmm1",B,Valid,AVX,758
 1177,VMOVD,1,2,xmm1,register,"VMOVD r32/m32, xmm1",B,Valid,AVX,758
-1178,VMOVQ,0,2,r64/m64,reg_or_mem,"VMOVQ r64/m64, xmm1",B,N.E.,AVX,758
-1178,VMOVQ,1,2,xmm1,register,"VMOVQ r64/m64, xmm1",B,N.E.,AVX,758
+1178,VMOVQ,0,2,r64/m64,reg_or_mem,"VMOVQ r64/m64, xmm1",B,Valid,AVX,758
+1178,VMOVQ,1,2,xmm1,register,"VMOVQ r64/m64, xmm1",B,Valid,AVX,758
 1179,VMOVD,0,2,xmm1,register,"VMOVD xmm1, r32/m32",C,Valid,AVX512F OR AVX10.1,758
 1179,VMOVD,1,2,r32/m32,reg_or_mem,"VMOVD xmm1, r32/m32",C,Valid,AVX512F OR AVX10.1,758
-1180,VMOVQ,0,2,xmm1,register,"VMOVQ xmm1, r64/m64",C,N.E.,AVX512F OR AVX10.1,758
-1180,VMOVQ,1,2,r64/m64,reg_or_mem,"VMOVQ xmm1, r64/m64",C,N.E.,AVX512F OR AVX10.1,758
+1180,VMOVQ,0,2,xmm1,register,"VMOVQ xmm1, r64/m64",C,Valid,AVX512F OR AVX10.1,758
+1180,VMOVQ,1,2,r64/m64,reg_or_mem,"VMOVQ xmm1, r64/m64",C,Valid,AVX512F OR AVX10.1,758
 1181,VMOVD,0,2,r32/m32,reg_or_mem,"VMOVD r32/m32, xmm1",D,Valid,AVX512F OR AVX10.1,758
 1181,VMOVD,1,2,xmm1,register,"VMOVD r32/m32, xmm1",D,Valid,AVX512F OR AVX10.1,758
-1182,VMOVQ,0,2,r64/m64,reg_or_mem,"VMOVQ r64/m64, xmm1",D,N.E.,AVX512F OR AVX10.1,758
-1182,VMOVQ,1,2,xmm1,register,"VMOVQ r64/m64, xmm1",D,N.E.,AVX512F OR AVX10.1,758
+1182,VMOVQ,0,2,r64/m64,reg_or_mem,"VMOVQ r64/m64, xmm1",D,Valid,AVX512F OR AVX10.1,758
+1182,VMOVQ,1,2,xmm1,register,"VMOVQ r64/m64, xmm1",D,Valid,AVX512F OR AVX10.1,758
 1183,MOVDQ2Q,0,2,mm,register,"MOVDQ2Q mm, xmm",RM,Valid,,762
 1183,MOVDQ2Q,1,2,xmm,register,"MOVDQ2Q mm, xmm",RM,Valid,,762
 1184,MOVDQA,0,2,xmm1,register,"MOVDQA xmm1, xmm2/m128",A,Valid,SSE2,763
@@ -2524,8 +2524,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1279,VMOVNTDQA,1,2,m512,memory,"VMOVNTDQA zmm1, m512",B,Valid,AVX512F OR AVX10.1,794
 1280,MOVNTI,0,2,m32,memory,"MOVNTI m32, r32",MR,Valid,SSE2,796
 1280,MOVNTI,1,2,r32,register,"MOVNTI m32, r32",MR,Valid,SSE2,796
-1281,MOVNTI,0,2,m64,memory,"MOVNTI m64, r64",MR,N.E.,SSE2,796
-1281,MOVNTI,1,2,r64,register,"MOVNTI m64, r64",MR,N.E.,SSE2,796
+1281,MOVNTI,0,2,m64,memory,"MOVNTI m64, r64",MR,Valid,SSE2,796
+1281,MOVNTI,1,2,r64,register,"MOVNTI m64, r64",MR,Valid,SSE2,796
 1282,MOVNTPD,0,2,m128,memory,"MOVNTPD m128, xmm1",A,Valid,SSE2,798
 1282,MOVNTPD,1,2,xmm1,register,"MOVNTPD m128, xmm1",A,Valid,SSE2,798
 1283,VMOVNTPD,0,2,m128,memory,"VMOVNTPD m128, xmm1",A,Valid,AVX,798
@@ -2800,9 +2800,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1408,MULX,0,3,r32a,register,"MULX r32a, r32b, r/m32",RVM,Valid,BMI2,856
 1408,MULX,1,3,r32b,register,"MULX r32a, r32b, r/m32",RVM,Valid,BMI2,856
 1408,MULX,2,3,r/m32,reg_or_mem,"MULX r32a, r32b, r/m32",RVM,Valid,BMI2,856
-1409,MULX,0,3,r64a,register,"MULX r64a, r64b, r/m64",RVM,N.E.,BMI2,856
-1409,MULX,1,3,r64b,register,"MULX r64a, r64b, r/m64",RVM,N.E.,BMI2,856
-1409,MULX,2,3,r/m64,reg_or_mem,"MULX r64a, r64b, r/m64",RVM,N.E.,BMI2,856
+1409,MULX,0,3,r64a,register,"MULX r64a, r64b, r/m64",RVM,Valid,BMI2,856
+1409,MULX,1,3,r64b,register,"MULX r64a, r64b, r/m64",RVM,Valid,BMI2,856
+1409,MULX,2,3,r/m64,reg_or_mem,"MULX r64a, r64b, r/m64",RVM,Valid,BMI2,856
 1410,MWAIT,,0,,none,MWAIT,ZO,Valid,,858
 1411,NEG,0,1,r/m8,reg_or_mem,NEG r/m8,M,Valid,,861
 1412,NEG,0,1,r/m16,reg_or_mem,NEG r/m16,M,Valid,,861
@@ -3525,24 +3525,24 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1690,PDEP,0,3,r32a,register,"PDEP r32a, r32b, r/m32",RVM,Valid,BMI2,985
 1690,PDEP,1,3,r32b,register,"PDEP r32a, r32b, r/m32",RVM,Valid,BMI2,985
 1690,PDEP,2,3,r/m32,reg_or_mem,"PDEP r32a, r32b, r/m32",RVM,Valid,BMI2,985
-1691,PDEP,0,3,r64a,register,"PDEP r64a, r64b, r/m64",RVM,N.E.,BMI2,985
-1691,PDEP,1,3,r64b,register,"PDEP r64a, r64b, r/m64",RVM,N.E.,BMI2,985
-1691,PDEP,2,3,r/m64,reg_or_mem,"PDEP r64a, r64b, r/m64",RVM,N.E.,BMI2,985
+1691,PDEP,0,3,r64a,register,"PDEP r64a, r64b, r/m64",RVM,Valid,BMI2,985
+1691,PDEP,1,3,r64b,register,"PDEP r64a, r64b, r/m64",RVM,Valid,BMI2,985
+1691,PDEP,2,3,r/m64,reg_or_mem,"PDEP r64a, r64b, r/m64",RVM,Valid,BMI2,985
 1692,PEXT,0,3,r32a,register,"PEXT r32a, r32b, r/m32",RVM,Valid,BMI2,987
 1692,PEXT,1,3,r32b,register,"PEXT r32a, r32b, r/m32",RVM,Valid,BMI2,987
 1692,PEXT,2,3,r/m32,reg_or_mem,"PEXT r32a, r32b, r/m32",RVM,Valid,BMI2,987
-1693,PEXT,0,3,r64a,register,"PEXT r64a, r64b, r/m64",RVM,N.E.,BMI2,987
-1693,PEXT,1,3,r64b,register,"PEXT r64a, r64b, r/m64",RVM,N.E.,BMI2,987
-1693,PEXT,2,3,r/m64,reg_or_mem,"PEXT r64a, r64b, r/m64",RVM,N.E.,BMI2,987
+1693,PEXT,0,3,r64a,register,"PEXT r64a, r64b, r/m64",RVM,Valid,BMI2,987
+1693,PEXT,1,3,r64b,register,"PEXT r64a, r64b, r/m64",RVM,Valid,BMI2,987
+1693,PEXT,2,3,r/m64,reg_or_mem,"PEXT r64a, r64b, r/m64",RVM,Valid,BMI2,987
 1694,PEXTRB,0,3,reg/m8,reg_or_mem,"PEXTRB reg/m8, xmm2, imm8",A,Valid,SSE4_1,989
 1694,PEXTRB,1,3,xmm2,register,"PEXTRB reg/m8, xmm2, imm8",A,Valid,SSE4_1,989
 1694,PEXTRB,2,3,imm8,immediate,"PEXTRB reg/m8, xmm2, imm8",A,Valid,SSE4_1,989
 1695,PEXTRD,0,3,r/m32,reg_or_mem,"PEXTRD r/m32, xmm2, imm8",A,Valid,SSE4_1,989
 1695,PEXTRD,1,3,xmm2,register,"PEXTRD r/m32, xmm2, imm8",A,Valid,SSE4_1,989
 1695,PEXTRD,2,3,imm8,immediate,"PEXTRD r/m32, xmm2, imm8",A,Valid,SSE4_1,989
-1696,PEXTRQ,0,3,r/m64,reg_or_mem,"PEXTRQ r/m64, xmm2, imm8",A,N.E.,SSE4_1,989
-1696,PEXTRQ,1,3,xmm2,register,"PEXTRQ r/m64, xmm2, imm8",A,N.E.,SSE4_1,989
-1696,PEXTRQ,2,3,imm8,immediate,"PEXTRQ r/m64, xmm2, imm8",A,N.E.,SSE4_1,989
+1696,PEXTRQ,0,3,r/m64,reg_or_mem,"PEXTRQ r/m64, xmm2, imm8",A,Valid,SSE4_1,989
+1696,PEXTRQ,1,3,xmm2,register,"PEXTRQ r/m64, xmm2, imm8",A,Valid,SSE4_1,989
+1696,PEXTRQ,2,3,imm8,immediate,"PEXTRQ r/m64, xmm2, imm8",A,Valid,SSE4_1,989
 1697,VPEXTRB,0,3,reg/m8,reg_or_mem,"VPEXTRB reg/m8, xmm2, imm8",A,Valid,AVX,989
 1697,VPEXTRB,1,3,xmm2,register,"VPEXTRB reg/m8, xmm2, imm8",A,Valid,AVX,989
 1697,VPEXTRB,2,3,imm8,immediate,"VPEXTRB reg/m8, xmm2, imm8",A,Valid,AVX,989
@@ -3558,9 +3558,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1701,VPEXTRD,0,3,r32/m32,reg_or_mem,"VPEXTRD r32/m32, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
 1701,VPEXTRD,1,3,xmm2,register,"VPEXTRD r32/m32, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
 1701,VPEXTRD,2,3,imm8,immediate,"VPEXTRD r32/m32, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
-1702,VPEXTRQ,0,3,r64/m64,reg_or_mem,"VPEXTRQ r64/m64, xmm2, imm8",B,N.E.,AVX512DQ OR AVX10.1,989
-1702,VPEXTRQ,1,3,xmm2,register,"VPEXTRQ r64/m64, xmm2, imm8",B,N.E.,AVX512DQ OR AVX10.1,989
-1702,VPEXTRQ,2,3,imm8,immediate,"VPEXTRQ r64/m64, xmm2, imm8",B,N.E.,AVX512DQ OR AVX10.1,989
+1702,VPEXTRQ,0,3,r64/m64,reg_or_mem,"VPEXTRQ r64/m64, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
+1702,VPEXTRQ,1,3,xmm2,register,"VPEXTRQ r64/m64, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
+1702,VPEXTRQ,2,3,imm8,immediate,"VPEXTRQ r64/m64, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,989
 1703,PEXTRW,0,3,reg,register,"PEXTRW reg, mm, imm8",A,Valid,SSE,992
 1703,PEXTRW,1,3,mm,register,"PEXTRW reg, mm, imm8",A,Valid,SSE,992
 1703,PEXTRW,2,3,imm8,immediate,"PEXTRW reg, mm, imm8",A,Valid,SSE,992
@@ -3652,9 +3652,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1737,PINSRD,0,3,xmm1,register,"PINSRD xmm1, r/m32, imm8",A,Valid,SSE4_1,1008
 1737,PINSRD,1,3,r/m32,reg_or_mem,"PINSRD xmm1, r/m32, imm8",A,Valid,SSE4_1,1008
 1737,PINSRD,2,3,imm8,immediate,"PINSRD xmm1, r/m32, imm8",A,Valid,SSE4_1,1008
-1738,PINSRQ,0,3,xmm1,register,"PINSRQ xmm1, r/m64, imm8",A,N.E.,SSE4_1,1008
-1738,PINSRQ,1,3,r/m64,reg_or_mem,"PINSRQ xmm1, r/m64, imm8",A,N.E.,SSE4_1,1008
-1738,PINSRQ,2,3,imm8,immediate,"PINSRQ xmm1, r/m64, imm8",A,N.E.,SSE4_1,1008
+1738,PINSRQ,0,3,xmm1,register,"PINSRQ xmm1, r/m64, imm8",A,Valid,SSE4_1,1008
+1738,PINSRQ,1,3,r/m64,reg_or_mem,"PINSRQ xmm1, r/m64, imm8",A,Valid,SSE4_1,1008
+1738,PINSRQ,2,3,imm8,immediate,"PINSRQ xmm1, r/m64, imm8",A,Valid,SSE4_1,1008
 1739,VPINSRB,0,4,xmm1,register,"VPINSRB xmm1, xmm2, r32/m8, imm8",B,Valid,AVX,1008
 1739,VPINSRB,1,4,xmm2,register,"VPINSRB xmm1, xmm2, r32/m8, imm8",B,Valid,AVX,1008
 1739,VPINSRB,2,4,r32/m8,reg_or_mem,"VPINSRB xmm1, xmm2, r32/m8, imm8",B,Valid,AVX,1008
@@ -3675,10 +3675,10 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 1743,VPINSRD,1,4,xmm2,register,"VPINSRD xmm1, xmm2, r32/m32, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
 1743,VPINSRD,2,4,r32/m32,reg_or_mem,"VPINSRD xmm1, xmm2, r32/m32, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
 1743,VPINSRD,3,4,imm8,immediate,"VPINSRD xmm1, xmm2, r32/m32, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
-1744,VPINSRQ,0,4,xmm1,register,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,N.E.,AVX512DQ OR AVX10.1,1008
-1744,VPINSRQ,1,4,xmm2,register,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,N.E.,AVX512DQ OR AVX10.1,1008
-1744,VPINSRQ,2,4,r64/m64,reg_or_mem,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,N.E.,AVX512DQ OR AVX10.1,1008
-1744,VPINSRQ,3,4,imm8,immediate,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,N.E.,AVX512DQ OR AVX10.1,1008
+1744,VPINSRQ,0,4,xmm1,register,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
+1744,VPINSRQ,1,4,xmm2,register,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
+1744,VPINSRQ,2,4,r64/m64,reg_or_mem,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
+1744,VPINSRQ,3,4,imm8,immediate,"VPINSRQ xmm1, xmm2, r64/m64, imm8",C,Valid,AVX512DQ OR AVX10.1,1008
 1745,PINSRW,0,3,mm,register,"PINSRW mm, r32/m16, imm8",A,Valid,SSE,1011
 1745,PINSRW,1,3,r32/m16,reg_or_mem,"PINSRW mm, r32/m16, imm8",A,Valid,SSE,1011
 1745,PINSRW,2,3,imm8,immediate,"PINSRW mm, r32/m16, imm8",A,Valid,SSE,1011
@@ -5279,9 +5279,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2392,RDGSBASE,0,1,r32,register,RDGSBASE r32,M,Valid,FSGSBASE,1245
 2393,RDGSBASE,0,1,r64,register,RDGSBASE r64,M,Valid,FSGSBASE,1245
 2394,RDMSR,,0,,none,RDMSR,ZO,Valid,,1247
-2395,RDMSRLIST,,0,,none,RDMSRLIST,ZO,N.E.,MSRLIST,1249
+2395,RDMSRLIST,,0,,none,RDMSRLIST,ZO,Valid,MSRLIST,1249
 2396,RDPID,0,1,r32,register,RDPID r32,R,N.E.,RDPID,1251
-2397,RDPID,0,1,r64,register,RDPID r64,R,N.E.,RDPID,1251
+2397,RDPID,0,1,r64,register,RDPID r64,R,Valid,RDPID,1251
 2398,RDPKRU,,0,,none,RDPKRU,ZO,Valid,OSPKE,1252
 2399,RDPMC,,0,,none,RDPMC,ZO,Valid,,1254
 2400,RDRAND,0,1,r16,register,RDRAND r16,M,Valid,RDRAND,1257
@@ -5291,7 +5291,7 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2404,RDSEED,0,1,r32,register,RDSEED r32,M,Valid,RDSEED,1259
 2405,RDSEED,0,1,r64,register,RDSEED r64,M,Valid,RDSEED,1259
 2406,RDSSPD,0,1,r32,register,RDSSPD r32,R,Valid,CET_SS,1261
-2407,RDSSPQ,0,1,r64,register,RDSSPQ r64,R,N.E.,CET_SS,1261
+2407,RDSSPQ,0,1,r64,register,RDSSPQ r64,R,Valid,CET_SS,1261
 2408,RDTSC,,0,,none,RDTSC,ZO,Valid,,1262
 2409,RDTSCP,,0,,none,RDTSCP,ZO,Valid,,1264
 2410,REP INS,0,2,m8,memory,"REP INS m8, DX",ZO,Valid,,1266
@@ -5353,9 +5353,9 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2448,RORX,0,3,r32,register,"RORX r32, r/m32, imm8",RMI,Valid,BMI2,1285
 2448,RORX,1,3,r/m32,reg_or_mem,"RORX r32, r/m32, imm8",RMI,Valid,BMI2,1285
 2448,RORX,2,3,imm8,immediate,"RORX r32, r/m32, imm8",RMI,Valid,BMI2,1285
-2449,RORX,0,3,r64,register,"RORX r64, r/m64, imm8",RMI,N.E.,BMI2,1285
-2449,RORX,1,3,r/m64,reg_or_mem,"RORX r64, r/m64, imm8",RMI,N.E.,BMI2,1285
-2449,RORX,2,3,imm8,immediate,"RORX r64, r/m64, imm8",RMI,N.E.,BMI2,1285
+2449,RORX,0,3,r64,register,"RORX r64, r/m64, imm8",RMI,Valid,BMI2,1285
+2449,RORX,1,3,r/m64,reg_or_mem,"RORX r64, r/m64, imm8",RMI,Valid,BMI2,1285
+2449,RORX,2,3,imm8,immediate,"RORX r64, r/m64, imm8",RMI,Valid,BMI2,1285
 2450,ROUNDPD,0,3,xmm1,register,"ROUNDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,1286
 2450,ROUNDPD,1,3,xmm2/m128,reg_or_mem,"ROUNDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,1286
 2450,ROUNDPD,2,3,imm8,immediate,"ROUNDPD xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,1286
@@ -5507,15 +5507,15 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2518,SHRX,0,3,r32a,register,"SHRX r32a, r/m32, r32b",RMV,Valid,BMI2,1311
 2518,SHRX,1,3,r/m32,reg_or_mem,"SHRX r32a, r/m32, r32b",RMV,Valid,BMI2,1311
 2518,SHRX,2,3,r32b,register,"SHRX r32a, r/m32, r32b",RMV,Valid,BMI2,1311
-2519,SARX,0,3,r64a,register,"SARX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2519,SARX,1,3,r/m64,reg_or_mem,"SARX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2519,SARX,2,3,r64b,register,"SARX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2520,SHLX,0,3,r64a,register,"SHLX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2520,SHLX,1,3,r/m64,reg_or_mem,"SHLX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2520,SHLX,2,3,r64b,register,"SHLX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2521,SHRX,0,3,r64a,register,"SHRX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2521,SHRX,1,3,r/m64,reg_or_mem,"SHRX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
-2521,SHRX,2,3,r64b,register,"SHRX r64a, r/m64, r64b",RMV,N.E.,BMI2,1311
+2519,SARX,0,3,r64a,register,"SARX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2519,SARX,1,3,r/m64,reg_or_mem,"SARX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2519,SARX,2,3,r64b,register,"SARX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2520,SHLX,0,3,r64a,register,"SHLX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2520,SHLX,1,3,r/m64,reg_or_mem,"SHLX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2520,SHLX,2,3,r64b,register,"SHLX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2521,SHRX,0,3,r64a,register,"SHRX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2521,SHRX,1,3,r/m64,reg_or_mem,"SHRX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
+2521,SHRX,2,3,r64b,register,"SHRX r64a, r/m64, r64b",RMV,Valid,BMI2,1311
 2522,SAVEPREVSSP,,0,,none,SAVEPREVSSP,ZO,Valid,CET_SS,1313
 2523,SBB,0,2,AL,register,"SBB AL, imm8",I,Valid,,1315
 2523,SBB,1,2,imm8,immediate,"SBB AL, imm8",I,Valid,,1315
@@ -5756,7 +5756,7 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2651,STOSD,,0,,none,STOSD,ZO,Valid,,1379
 2652,STOSQ,,0,,none,STOSQ,ZO,Valid,,1379
 2653,STR,0,1,r/m16,reg_or_mem,STR r/m16,M,Valid,,1382
-2654,STTILECFG,0,1,m512,memory,STTILECFG m512,A,N.E.,AMX_TILE,1384
+2654,STTILECFG,0,1,m512,memory,STTILECFG m512,A,Valid,AMX_TILE,1384
 2655,STUI,,0,,none,STUI,ZO,Valid,UINTR,1386
 2656,SUB,0,2,AL,register,"SUB AL, imm8",I,Valid,,1387
 2656,SUB,1,2,imm8,immediate,"SUB AL, imm8",I,Valid,,1387
@@ -5853,24 +5853,24 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2697,SYSEXIT,,0,,none,SYSEXIT,ZO,Valid,,1408
 2698,SYSRET,,0,,none,SYSRET,ZO,Valid,,1411
 2699,SYSRET,,0,,none,SYSRET,ZO,Valid,,1411
-2700,TDPBF16PS,0,3,tmm1,register,"TDPBF16PS tmm1, tmm2, tmm3",A,N.E.,AMX_BF16,1414
-2700,TDPBF16PS,1,3,tmm2,register,"TDPBF16PS tmm1, tmm2, tmm3",A,N.E.,AMX_BF16,1414
-2700,TDPBF16PS,2,3,tmm3,register,"TDPBF16PS tmm1, tmm2, tmm3",A,N.E.,AMX_BF16,1414
-2701,TDPBSSD,0,3,tmm1,register,"TDPBSSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2701,TDPBSSD,1,3,tmm2,register,"TDPBSSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2701,TDPBSSD,2,3,tmm3,register,"TDPBSSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2702,TDPBSUD,0,3,tmm1,register,"TDPBSUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2702,TDPBSUD,1,3,tmm2,register,"TDPBSUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2702,TDPBSUD,2,3,tmm3,register,"TDPBSUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2703,TDPBUSD,0,3,tmm1,register,"TDPBUSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2703,TDPBUSD,1,3,tmm2,register,"TDPBUSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2703,TDPBUSD,2,3,tmm3,register,"TDPBUSD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2704,TDPBUUD,0,3,tmm1,register,"TDPBUUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2704,TDPBUUD,1,3,tmm2,register,"TDPBUUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2704,TDPBUUD,2,3,tmm3,register,"TDPBUUD tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,1416
-2705,TDPFP16PS,0,3,tmm1,register,"TDPFP16PS tmm1, tmm2, tmm3",A,N.E.,AMX_FP16,1418
-2705,TDPFP16PS,1,3,tmm2,register,"TDPFP16PS tmm1, tmm2, tmm3",A,N.E.,AMX_FP16,1418
-2705,TDPFP16PS,2,3,tmm3,register,"TDPFP16PS tmm1, tmm2, tmm3",A,N.E.,AMX_FP16,1418
+2700,TDPBF16PS,0,3,tmm1,register,"TDPBF16PS tmm1, tmm2, tmm3",A,Valid,AMX_BF16,1414
+2700,TDPBF16PS,1,3,tmm2,register,"TDPBF16PS tmm1, tmm2, tmm3",A,Valid,AMX_BF16,1414
+2700,TDPBF16PS,2,3,tmm3,register,"TDPBF16PS tmm1, tmm2, tmm3",A,Valid,AMX_BF16,1414
+2701,TDPBSSD,0,3,tmm1,register,"TDPBSSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2701,TDPBSSD,1,3,tmm2,register,"TDPBSSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2701,TDPBSSD,2,3,tmm3,register,"TDPBSSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2702,TDPBSUD,0,3,tmm1,register,"TDPBSUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2702,TDPBSUD,1,3,tmm2,register,"TDPBSUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2702,TDPBSUD,2,3,tmm3,register,"TDPBSUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2703,TDPBUSD,0,3,tmm1,register,"TDPBUSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2703,TDPBUSD,1,3,tmm2,register,"TDPBUSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2703,TDPBUSD,2,3,tmm3,register,"TDPBUSD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2704,TDPBUUD,0,3,tmm1,register,"TDPBUUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2704,TDPBUUD,1,3,tmm2,register,"TDPBUUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2704,TDPBUUD,2,3,tmm3,register,"TDPBUUD tmm1, tmm2, tmm3",A,Valid,AMX_INT8,1416
+2705,TDPFP16PS,0,3,tmm1,register,"TDPFP16PS tmm1, tmm2, tmm3",A,Valid,AMX_FP16,1418
+2705,TDPFP16PS,1,3,tmm2,register,"TDPFP16PS tmm1, tmm2, tmm3",A,Valid,AMX_FP16,1418
+2705,TDPFP16PS,2,3,tmm3,register,"TDPFP16PS tmm1, tmm2, tmm3",A,Valid,AMX_FP16,1418
 2706,TEST,0,2,AL,register,"TEST AL, imm8",I,Valid,,1420
 2706,TEST,1,2,imm8,immediate,"TEST AL, imm8",I,Valid,,1420
 2707,TEST,0,2,AX,register,"TEST AX, imm16",I,Valid,,1420
@@ -5896,14 +5896,14 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2717,TEST,0,2,r/m64,reg_or_mem,"TEST r/m64, r64",MR,Valid,,1420
 2717,TEST,1,2,r64,register,"TEST r/m64, r64",MR,Valid,,1420
 2718,TESTUI,,0,,none,TESTUI,ZO,Valid,UINTR,1422
-2719,TILELOADD,0,2,tmm1,register,"TILELOADD tmm1, sibmem",A,N.E.,AMX_TILE,1423
-2719,TILELOADD,1,2,sibmem,memory,"TILELOADD tmm1, sibmem",A,N.E.,AMX_TILE,1423
-2720,TILELOADDT1,0,2,tmm1,register,"TILELOADDT1 tmm1, sibmem",A,N.E.,AMX_TILE,1423
-2720,TILELOADDT1,1,2,sibmem,memory,"TILELOADDT1 tmm1, sibmem",A,N.E.,AMX_TILE,1423
-2721,TILERELEASE,,0,,none,TILERELEASE,A,N.E.,AMX_TILE,1425
-2722,TILESTORED,0,2,sibmem,memory,"TILESTORED sibmem, tmm1",A,N.E.,AMX_TILE,1426
-2722,TILESTORED,1,2,tmm1,register,"TILESTORED sibmem, tmm1",A,N.E.,AMX_TILE,1426
-2723,TILEZERO,0,1,tmm1,register,TILEZERO tmm1,A,N.E.,AMX_TILE,1427
+2719,TILELOADD,0,2,tmm1,register,"TILELOADD tmm1, sibmem",A,Valid,AMX_TILE,1423
+2719,TILELOADD,1,2,sibmem,memory,"TILELOADD tmm1, sibmem",A,Valid,AMX_TILE,1423
+2720,TILELOADDT1,0,2,tmm1,register,"TILELOADDT1 tmm1, sibmem",A,Valid,AMX_TILE,1423
+2720,TILELOADDT1,1,2,sibmem,memory,"TILELOADDT1 tmm1, sibmem",A,Valid,AMX_TILE,1423
+2721,TILERELEASE,,0,,none,TILERELEASE,A,Valid,AMX_TILE,1425
+2722,TILESTORED,0,2,sibmem,memory,"TILESTORED sibmem, tmm1",A,Valid,AMX_TILE,1426
+2722,TILESTORED,1,2,tmm1,register,"TILESTORED sibmem, tmm1",A,Valid,AMX_TILE,1426
+2723,TILEZERO,0,1,tmm1,register,TILEZERO tmm1,A,Valid,AMX_TILE,1427
 2724,TPAUSE,0,3,r32,register,"TPAUSE r32, <edx>, <eax>",A,Valid,WAITPKG,1428
 2724,TPAUSE,1,3,<edx>,implicit,"TPAUSE r32, <edx>, <eax>",A,Valid,WAITPKG,1428
 2724,TPAUSE,2,3,<eax>,implicit,"TPAUSE r32, <edx>, <eax>",A,Valid,WAITPKG,1428
@@ -5911,8 +5911,8 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2725,TZCNT,1,2,r/m16,reg_or_mem,"TZCNT r16, r/m16",A,Valid,BMI1,1430
 2726,TZCNT,0,2,r32,register,"TZCNT r32, r/m32",A,Valid,BMI1,1430
 2726,TZCNT,1,2,r/m32,reg_or_mem,"TZCNT r32, r/m32",A,Valid,BMI1,1430
-2727,TZCNT,0,2,r64,register,"TZCNT r64, r/m64",A,N.E.,BMI1,1430
-2727,TZCNT,1,2,r/m64,reg_or_mem,"TZCNT r64, r/m64",A,N.E.,BMI1,1430
+2727,TZCNT,0,2,r64,register,"TZCNT r64, r/m64",A,Valid,BMI1,1430
+2727,TZCNT,1,2,r/m64,reg_or_mem,"TZCNT r64, r/m64",A,Valid,BMI1,1430
 2728,UCOMISD,0,2,xmm1,register,"UCOMISD xmm1, xmm2/m64",A,Valid,SSE2,1432
 2728,UCOMISD,1,2,xmm2/m64,reg_or_mem,"UCOMISD xmm1, xmm2/m64",A,Valid,SSE2,1432
 2729,VUCOMISD,0,2,xmm1,register,"VUCOMISD xmm1, xmm2/m64",A,Valid,AVX,1432
@@ -6321,35 +6321,35 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2902,VCVTSD2SH,2,3,xmm3/m64 {er},reg_or_mem,"VCVTSD2SH xmm1{k1}{z}, xmm2, xmm3/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1549
 2903,VCVTSD2USI,0,2,r32,register,"VCVTSD2USI r32, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,1550
 2903,VCVTSD2USI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2USI r32, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,1550
-2904,VCVTSD2USI,0,2,r64,register,"VCVTSD2USI r64, xmm1/m64{er}",A,N.E.,AVX512F OR AVX10.1,1550
-2904,VCVTSD2USI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2USI r64, xmm1/m64{er}",A,N.E.,AVX512F OR AVX10.1,1550
+2904,VCVTSD2USI,0,2,r64,register,"VCVTSD2USI r64, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,1550
+2904,VCVTSD2USI,1,2,xmm1/m64{er},reg_or_mem,"VCVTSD2USI r64, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,1550
 2905,VCVTSH2SD,0,3,xmm1{k1}{z},register,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1552
 2905,VCVTSH2SD,1,3,xmm2,register,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1552
 2905,VCVTSH2SD,2,3,xmm3/m16 {sae},reg_or_mem,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1552
 2906,VCVTSH2SI,0,2,r32,register,"VCVTSH2SI r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1553
 2906,VCVTSH2SI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2SI r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1553
-2907,VCVTSH2SI,0,2,r64,register,"VCVTSH2SI r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1553
-2907,VCVTSH2SI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2SI r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1553
+2907,VCVTSH2SI,0,2,r64,register,"VCVTSH2SI r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1553
+2907,VCVTSH2SI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2SI r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1553
 2908,VCVTSH2SS,0,3,xmm1{k1}{z},register,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1555
 2908,VCVTSH2SS,1,3,xmm2,register,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1555
 2908,VCVTSH2SS,2,3,xmm3/m16 {sae},reg_or_mem,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1555
 2909,VCVTSH2USI,0,2,r32,register,"VCVTSH2USI r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1556
 2909,VCVTSH2USI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2USI r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1556
-2910,VCVTSH2USI,0,2,r64,register,"VCVTSH2USI r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1556
-2910,VCVTSH2USI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2USI r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1556
+2910,VCVTSH2USI,0,2,r64,register,"VCVTSH2USI r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1556
+2910,VCVTSH2USI,1,2,xmm1/m16 {er},reg_or_mem,"VCVTSH2USI r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1556
 2911,VCVTSI2SH,0,3,xmm1,register,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
 2911,VCVTSI2SH,1,3,xmm2,register,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
 2911,VCVTSI2SH,2,3,r32/m32 {er},reg_or_mem,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
-2912,VCVTSI2SH,0,3,xmm1,register,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1558
-2912,VCVTSI2SH,1,3,xmm2,register,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1558
-2912,VCVTSI2SH,2,3,r64/m64 {er},reg_or_mem,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,1558
+2912,VCVTSI2SH,0,3,xmm1,register,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
+2912,VCVTSI2SH,1,3,xmm2,register,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
+2912,VCVTSI2SH,2,3,r64/m64 {er},reg_or_mem,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1558
 2913,VCVTSS2SH,0,3,xmm1{k1}{z},register,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1560
 2913,VCVTSS2SH,1,3,xmm2,register,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1560
 2913,VCVTSS2SH,2,3,xmm3/m32 {er},reg_or_mem,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,1560
 2914,VCVTSS2USI,0,2,r32,register,"VCVTSS2USI r32, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,1561
 2914,VCVTSS2USI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2USI r32, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,1561
-2915,VCVTSS2USI,0,2,r64,register,"VCVTSS2USI r64, xmm1/m32{er}",A,N.E.,AVX512F OR AVX10.1,1561
-2915,VCVTSS2USI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2USI r64, xmm1/m32{er}",A,N.E.,AVX512F OR AVX10.1,1561
+2915,VCVTSS2USI,0,2,r64,register,"VCVTSS2USI r64, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,1561
+2915,VCVTSS2USI,1,2,xmm1/m32{er},reg_or_mem,"VCVTSS2USI r64, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,1561
 2916,VCVTTPD2QQ,0,2,xmm1 {k1}{z},register,"VCVTTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,1563
 2916,VCVTTPD2QQ,1,2,xmm2/m128/m64bcst,reg_or_mem,"VCVTTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,1563
 2917,VCVTTPD2QQ,0,2,ymm1 {k1}{z},register,"VCVTTPD2QQ ymm1 {k1}{z}, ymm2/m256/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,1563
@@ -6424,20 +6424,20 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2951,VCVTTPS2UQQ,1,2,ymm2/m256/m32bcst {sae},reg_or_mem,"VCVTTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",A,Valid,AVX512DQ OR AVX10.1,1585
 2952,VCVTTSD2USI,0,2,r32,register,"VCVTTSD2USI r32, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,1587
 2952,VCVTTSD2USI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2USI r32, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,1587
-2953,VCVTTSD2USI,0,2,r64,register,"VCVTTSD2USI r64, xmm1/m64{sae}",A,N.E.,AVX512F OR AVX10.1,1587
-2953,VCVTTSD2USI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2USI r64, xmm1/m64{sae}",A,N.E.,AVX512F OR AVX10.1,1587
+2953,VCVTTSD2USI,0,2,r64,register,"VCVTTSD2USI r64, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,1587
+2953,VCVTTSD2USI,1,2,xmm1/m64{sae},reg_or_mem,"VCVTTSD2USI r64, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,1587
 2954,VCVTTSH2SI,0,2,r32,register,"VCVTTSH2SI r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1589
 2954,VCVTTSH2SI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2SI r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1589
-2955,VCVTTSH2SI,0,2,r64,register,"VCVTTSH2SI r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,1589
-2955,VCVTTSH2SI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2SI r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,1589
+2955,VCVTTSH2SI,0,2,r64,register,"VCVTTSH2SI r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1589
+2955,VCVTTSH2SI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2SI r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1589
 2956,VCVTTSH2USI,0,2,r32,register,"VCVTTSH2USI r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1590
 2956,VCVTTSH2USI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2USI r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1590
-2957,VCVTTSH2USI,0,2,r64,register,"VCVTTSH2USI r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,1590
-2957,VCVTTSH2USI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2USI r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,1590
+2957,VCVTTSH2USI,0,2,r64,register,"VCVTTSH2USI r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1590
+2957,VCVTTSH2USI,1,2,xmm1/m16 {sae},reg_or_mem,"VCVTTSH2USI r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,1590
 2958,VCVTTSS2USI,0,2,r32,register,"VCVTTSS2USI r32, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,1591
 2958,VCVTTSS2USI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2USI r32, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,1591
-2959,VCVTTSS2USI,0,2,r64,register,"VCVTTSS2USI r64, xmm1/m32{sae}",A,N.E.,AVX512F OR AVX10.1,1591
-2959,VCVTTSS2USI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2USI r64, xmm1/m32{sae}",A,N.E.,AVX512F OR AVX10.1,1591
+2959,VCVTTSS2USI,0,2,r64,register,"VCVTTSS2USI r64, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,1591
+2959,VCVTTSS2USI,1,2,xmm1/m32{sae},reg_or_mem,"VCVTTSS2USI r64, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,1591
 2960,VCVTUDQ2PD,0,2,xmm1 {k1}{z},register,"VCVTUDQ2PD xmm1 {k1}{z}, xmm2/m64/m32bcst",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1593
 2960,VCVTUDQ2PD,1,2,xmm2/m64/m32bcst,reg_or_mem,"VCVTUDQ2PD xmm1 {k1}{z}, xmm2/m64/m32bcst",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1593
 2961,VCVTUDQ2PD,0,2,ymm1 {k1}{z},register,"VCVTUDQ2PD ymm1 {k1}{z}, xmm2/m128/m32bcst",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1593
@@ -6477,21 +6477,21 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 2978,VCVTUSI2SD,0,3,xmm1,register,"VCVTUSI2SD xmm1, xmm2, r/m32",A,Valid,AVX512F OR AVX10.1,1606
 2978,VCVTUSI2SD,1,3,xmm2,register,"VCVTUSI2SD xmm1, xmm2, r/m32",A,Valid,AVX512F OR AVX10.1,1606
 2978,VCVTUSI2SD,2,3,r/m32,reg_or_mem,"VCVTUSI2SD xmm1, xmm2, r/m32",A,Valid,AVX512F OR AVX10.1,1606
-2979,VCVTUSI2SD,0,3,xmm1,register,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1606
-2979,VCVTUSI2SD,1,3,xmm2,register,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1606
-2979,VCVTUSI2SD,2,3,r/m64{er},reg_or_mem,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1606
+2979,VCVTUSI2SD,0,3,xmm1,register,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1606
+2979,VCVTUSI2SD,1,3,xmm2,register,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1606
+2979,VCVTUSI2SD,2,3,r/m64{er},reg_or_mem,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1606
 2980,VCVTUSI2SH,0,3,xmm1,register,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16,1608
 2980,VCVTUSI2SH,1,3,xmm2,register,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16,1608
 2980,VCVTUSI2SH,2,3,r32/m32 {er},reg_or_mem,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16,1608
-2981,VCVTUSI2SH,0,3,xmm1,register,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16,1608
-2981,VCVTUSI2SH,1,3,xmm2,register,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16,1608
-2981,VCVTUSI2SH,2,3,r64/m64 {er},reg_or_mem,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16,1608
+2981,VCVTUSI2SH,0,3,xmm1,register,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16,1608
+2981,VCVTUSI2SH,1,3,xmm2,register,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16,1608
+2981,VCVTUSI2SH,2,3,r64/m64 {er},reg_or_mem,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16,1608
 2982,VCVTUSI2SS,0,3,xmm1,register,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",A,Valid,AVX512F OR AVX10.1,1610
 2982,VCVTUSI2SS,1,3,xmm2,register,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",A,Valid,AVX512F OR AVX10.1,1610
 2982,VCVTUSI2SS,2,3,r/m32{er},reg_or_mem,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",A,Valid,AVX512F OR AVX10.1,1610
-2983,VCVTUSI2SS,0,3,xmm1,register,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1610
-2983,VCVTUSI2SS,1,3,xmm2,register,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1610
-2983,VCVTUSI2SS,2,3,r/m64{er},reg_or_mem,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,1610
+2983,VCVTUSI2SS,0,3,xmm1,register,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1610
+2983,VCVTUSI2SS,1,3,xmm2,register,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1610
+2983,VCVTUSI2SS,2,3,r/m64{er},reg_or_mem,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,1610
 2984,VCVTUW2PH,0,2,xmm1{k1}{z},register,"VCVTUW2PH xmm1{k1}{z}, xmm2/m128/m16bcst",A,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,1612
 2984,VCVTUW2PH,1,2,xmm2/m128/m16bcst,reg_or_mem,"VCVTUW2PH xmm1{k1}{z}, xmm2/m128/m16bcst",A,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,1612
 2985,VCVTUW2PH,0,2,ymm1{k1}{z},register,"VCVTUW2PH ymm1{k1}{z}, ymm2/m256/m16bcst",A,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,1612
@@ -7975,12 +7975,12 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 3493,VPBROADCASTD,1,2,r32,register,"VPBROADCASTD ymm1 {k1}{z}, r32",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1913
 3494,VPBROADCASTD,0,2,zmm1 {k1}{z},register,"VPBROADCASTD zmm1 {k1}{z}, r32",A,Valid,AVX512F OR AVX10.1,1913
 3494,VPBROADCASTD,1,2,r32,register,"VPBROADCASTD zmm1 {k1}{z}, r32",A,Valid,AVX512F OR AVX10.1,1913
-3495,VPBROADCASTQ,0,2,xmm1 {k1}{z},register,"VPBROADCASTQ xmm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,1913
-3495,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ xmm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,1913
-3496,VPBROADCASTQ,0,2,ymm1 {k1}{z},register,"VPBROADCASTQ ymm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,1913
-3496,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ ymm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,1913
-3497,VPBROADCASTQ,0,2,zmm1 {k1}{z},register,"VPBROADCASTQ zmm1 {k1}{z}, r64",A,N.E.,AVX512F OR AVX10.1,1913
-3497,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ zmm1 {k1}{z}, r64",A,N.E.,AVX512F OR AVX10.1,1913
+3495,VPBROADCASTQ,0,2,xmm1 {k1}{z},register,"VPBROADCASTQ xmm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1913
+3495,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ xmm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1913
+3496,VPBROADCASTQ,0,2,ymm1 {k1}{z},register,"VPBROADCASTQ ymm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1913
+3496,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ ymm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,1913
+3497,VPBROADCASTQ,0,2,zmm1 {k1}{z},register,"VPBROADCASTQ zmm1 {k1}{z}, r64",A,Valid,AVX512F OR AVX10.1,1913
+3497,VPBROADCASTQ,1,2,r64,register,"VPBROADCASTQ zmm1 {k1}{z}, r64",A,Valid,AVX512F OR AVX10.1,1913
 3498,VPBROADCASTMB2Q,0,2,xmm1,register,"VPBROADCASTMB2Q xmm1, k1",RM,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,1916
 3498,VPBROADCASTMB2Q,1,2,k1,register,"VPBROADCASTMB2Q xmm1, k1",RM,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,1916
 3499,VPBROADCASTMB2Q,0,2,ymm1,register,"VPBROADCASTMB2Q ymm1, k1",RM,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,1916
@@ -9615,17 +9615,17 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 4092,WRGSBASE,0,1,r32,register,WRGSBASE r32,M,Valid,FSGSBASE,2245
 4093,WRGSBASE,0,1,r64,register,WRGSBASE r64,M,Valid,FSGSBASE,2245
 4094,WRMSR,,0,,none,WRMSR,ZO,Valid,,2247
-4095,WRMSRLIST,,0,,none,WRMSRLIST,ZO,N.E.,MSRLIST,2249
+4095,WRMSRLIST,,0,,none,WRMSRLIST,ZO,Valid,MSRLIST,2249
 4096,WRMSRNS,,0,,none,WRMSRNS,ZO,Valid,WRMSRNS,2251
 4097,WRPKRU,,0,,none,WRPKRU,ZO,Valid,OSPKE,2253
 4098,WRSSD,0,2,m32,memory,"WRSSD m32, r32",MR,Valid,CET_SS,2255
 4098,WRSSD,1,2,r32,register,"WRSSD m32, r32",MR,Valid,CET_SS,2255
-4099,WRSSQ,0,2,m64,memory,"WRSSQ m64, r64",MR,N.E.,CET_SS,2255
-4099,WRSSQ,1,2,r64,register,"WRSSQ m64, r64",MR,N.E.,CET_SS,2255
+4099,WRSSQ,0,2,m64,memory,"WRSSQ m64, r64",MR,Valid,CET_SS,2255
+4099,WRSSQ,1,2,r64,register,"WRSSQ m64, r64",MR,Valid,CET_SS,2255
 4100,WRUSSD,0,2,m32,memory,"WRUSSD m32, r32",MR,Valid,CET_SS,2257
 4100,WRUSSD,1,2,r32,register,"WRUSSD m32, r32",MR,Valid,CET_SS,2257
-4101,WRUSSQ,0,2,m64,memory,"WRUSSQ m64, r64",MR,N.E.,CET_SS,2257
-4101,WRUSSQ,1,2,r64,register,"WRUSSQ m64, r64",MR,N.E.,CET_SS,2257
+4101,WRUSSQ,0,2,m64,memory,"WRUSSQ m64, r64",MR,Valid,CET_SS,2257
+4101,WRUSSQ,1,2,r64,register,"WRUSSQ m64, r64",MR,Valid,CET_SS,2257
 4102,XABORT,0,1,imm8,immediate,XABORT imm8,A,Valid,RTM,2259
 4103,XACQUIRE,,0,,none,XACQUIRE,,Valid,HLE,2261
 4104,XRELEASE,,0,,none,XRELEASE,,Valid,HLE,2261
@@ -9746,17 +9746,17 @@ row_id,mnemonic,operand_index,operand_count,operand_token,operand_kind,raw_instr
 4160,VXORPS,2,3,zmm3/m512/m32bcst,reg_or_mem,"VXORPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst",C,Valid,AVX512DQ OR AVX10.1,2283
 4161,XRESLDTRK,,0,,none,XRESLDTRK,ZO,Valid,TSXLDTRK,2286
 4162,XRSTOR,0,1,mem,memory,XRSTOR mem,M,Valid,XSAVE,2287
-4163,XRSTOR64,0,1,mem,memory,XRSTOR64 mem,M,N.E.,XSAVE,2287
+4163,XRSTOR64,0,1,mem,memory,XRSTOR64 mem,M,Valid,XSAVE,2287
 4164,XRSTORS,0,1,mem,memory,XRSTORS mem,M,Valid,XSS,2292
-4165,XRSTORS64,0,1,mem,memory,XRSTORS64 mem,M,N.E.,XSS,2292
+4165,XRSTORS64,0,1,mem,memory,XRSTORS64 mem,M,Valid,XSS,2292
 4166,XSAVE,0,1,mem,memory,XSAVE mem,M,Valid,XSAVE,2296
-4167,XSAVE64,0,1,mem,memory,XSAVE64 mem,M,N.E.,XSAVE,2296
+4167,XSAVE64,0,1,mem,memory,XSAVE64 mem,M,Valid,XSAVE,2296
 4168,XSAVEC,0,1,mem,memory,XSAVEC mem,M,Valid,XSAVEC,2299
-4169,XSAVEC64,0,1,mem,memory,XSAVEC64 mem,M,N.E.,XSAVEC,2299
+4169,XSAVEC64,0,1,mem,memory,XSAVEC64 mem,M,Valid,XSAVEC,2299
 4170,XSAVEOPT,0,1,mem,memory,XSAVEOPT mem,M,Valid,XSAVEOPT,2302
 4171,XSAVEOPT64,0,1,mem,memory,XSAVEOPT64 mem,M,Valid,XSAVEOPT,2302
 4172,XSAVES,0,1,mem,memory,XSAVES mem,M,Valid,XSS,2305
-4173,XSAVES64,0,1,mem,memory,XSAVES64 mem,M,N.E.,XSS,2305
+4173,XSAVES64,0,1,mem,memory,XSAVES64 mem,M,Valid,XSS,2305
 4174,XSETBV,,0,,none,XSETBV,ZO,Valid,,2308
 4175,XSUSLDTRK,,0,,none,XSUSLDTRK,ZO,Valid,TSXLDTRK,2310
 4176,XTEST,,0,,none,XTEST,ZO,Valid,HLE or RTM,2311

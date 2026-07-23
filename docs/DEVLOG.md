@@ -60,3 +60,10 @@
 - 왜: 위 assembler(5단계) 검증에서 발견된 버그 그대로 — 약어 `V`가 정규식에 안 걸려서 `V/N.E.` 같은 결합 표기의 앞쪽이 사라지는 문제. 최종적으로 슬래시 중 어느 쪽(64비트 모드)을 쓸지는 `normalize_mode()`가 이미 `token.split("/")[0]`으로 담당하므로 `tidy_mode_text`는 원문 구조 보존까지만 책임지도록 역할을 명확히 함.
 - verifier: **pass** — `tidy_mode_text('V/N.E.')`가 이제 `'V/N.E.'`를 보존하고 `normalize_mode(...)`가 최종 `'Valid'`를 반환함을 도구로 직접 실행 확인. 수정 전 REX.W/.W1+N.E. 패턴 92건이 수정 후 0건(전부 정정)으로 재계산. `git diff` 전수 파싱 결과 총 131건 변경 중 92건 외 39건(BNDCL/RDPID/INVPCID 등 F3/F2/66/VEX.W0 계열)도 동일 버그 클래스로 추가 발견·정정되어 92+39=131이 diff와 정확히 일치. PDF 원문 대조 2건(RDPID p.1251, BNDCL p.208) 완전 일치. 131개 변경 행 전부 `mode_support` 컬럼만 바뀌었고 방향은 전부 `N.E.→Valid`(반대 방향 0건), 변경된 mnemonic 99종에 MOV/ADD/PUSH 없어 정답지 무영향 확인.
 - 남은 것: 이 수정이 `tokens.csv`/`combos.csv`/`out/tests.s`/`out/asm_result.csv`에 아직 반영 안 됨(전부 수정 이전 시각에 생성) — tokenizer부터 재실행해 하위 단계에 전파 필요.
+
+## 2026-07-23  [tokenizer/combiner/generator/assembler]  Stage 1 수정 하위 전파 — 코드 변경 없이 데이터만 재생성
+- 무엇을: `m1_extract.py` 수정 후 코드는 그대로 두고 `m2_tokenize.py`→`m3_combine.py`→`m4_generate.py`→`m5_assemble.py`를 순서대로 재실행. `tokens.csv`(9,820행)/`combos.csv`(7,277행)/`out/tests.s`(7,276줄)는 행 수 동일 유지, `out/asm_result.csv`의 mismatch가 **416건 → 248건**으로 감소(순감소 168 = True→False 182건 - False→True 14건, 전수 재계산으로 정확히 일치 확인).
+- 왜: mode_support 값만 바뀌었으니 tokens.csv/combos.csv의 구조(operand 조합)는 안 바뀌어야 정상 — 그걸 확인하는 게 이번 검증의 핵심.
+- verifier: **pass** — tokens.csv는 `mode_support` 컬럼 309행, combos.csv는 `expected_valid`+`mode_support` 2개 컬럼 196행만 변경(다른 컬럼 변경 0건, 구조적 회귀 없음) 확인. ADCX/MOVBE REX.W 폼이 실제로 `mismatch=False`로 바뀜을 직접 확인. mov/add/push 정답지 범위는 이번 라운드에 변경 0건(회귀 없음, 기존 무관한 이슈 6건은 그대로 존재). row_id 570 스킵 유지.
+- 새로 드러난 것: mode_support가 정확해지면서 새로 mismatch로 잡힌 14건(BNDCL/BNDCU/BNDCN/BNDMK/BNDMOV×2/LDTILECFG/STTILECFG/TDPB*류) — 회귀가 아니라 combiner가 "같은 레지스터를 여러 슬롯에 재사용"하거나 addr32 프리픽스를 안 넣는 기존 한계가 데이터 정확도가 올라가면서 드러난 것. triage 단계에서 combiner 개선 후보로 다룰 것.
+- 남은 것: roundtrip(`pipeline/m6_roundtrip.py`) 구현 시작.
