@@ -1,0 +1,7 @@
+id,operand_form,intel_asm,expect_assemble,expect_bytes,expect_disasm,note
+push_r64,"r64 (64비트 모드 기본 크기)",,,,,
+push_r16,"r16 (operand-size prefix)",,,,,
+push_m64,"m64",,,,,
+push_imm8,"imm8 (부호확장)",,,,,
+push_imm32,"imm32 (부호확장)",,,,,
+push_r32_invalid,"r32 (64비트 모드에서 무효해야 함)",,error,,,64비트 모드에서 32비트 push는 SDM상 정의되지 않음 — 매뉴얼 기준 확인용
