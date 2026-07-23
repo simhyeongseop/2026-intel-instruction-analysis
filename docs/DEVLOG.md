@@ -41,3 +41,10 @@
 - verifier: **pass** (1차 통과 — 정답지 mov/add/push 전체 대조, reg_or_mem 폭발 없음 확인(1~2개 조합만), 메모리 사이즈 매핑 스팟체크, expected_valid/mode_support 7,277행 전수 일관성, 회귀 검사 전부 실측 확인)
 - 알려진 이슈: ENCODEKEY256(row_id 570) 1건 — tokenizer 입력 자체에 콤마 누락(`"r32, r32 <XMM0-6>"`)이 있어 combiner가 구체값을 만들어도 SDM 기준으로는 틀린 조합(`ecx, xmm0`)이 나옴. 전체 9,820개 토큰 중 이 패턴은 이 1건뿐이라 국소적 이슈로 기록만 하고 넘어감 — generator 단계에서 이 row는 스킵하거나 예외 처리 권장.
 - 남은 것: `tests/answer_keys/*.csv`의 `intel_asm`/`expect_bytes`/`expect_disasm` 칸을 형섭이 채워야 generator/assembler 단계부터 바이트 단위 정밀 검증 가능. generator(`pipeline/m4_generate.py`) 구현 시작.
+
+## 2026-07-23  [generator]  Stage 4 구현 — combos.csv를 Intel-syntax .s 파일로
+- 무엇을: `pipeline/m4_generate.py` 작성. `data/db/combos.csv`(7,277행, row_id 570 ENCODEKEY256은 알려진 이슈로 스킵)를 순서대로 전부 어셈블리 줄로 변환해 `out/tests.s`(7,284줄) 생성. 각 줄에 `combo_id/row_id/mnemonic/expected_valid/mode_support` 등을 주석으로 붙여 이후 단계(assembler/roundtrip/triage)가 원본으로 역추적 가능하게 함. 파일 맨 위 `.intel_syntax noprefix` 지시어, `rel8/16/32` 오퍼랜드가 참조할 `.Ltarget:` 라벨 선언. `expected_valid=False`(Invalid/N.E./N.S.) 조합도 버리지 않고 그대로 생성(매뉴얼상 무효인 form을 어셈블러가 실제로 거부하는지 확인하는 게 이 프로젝트의 핵심 목적이므로).
+- 왜: combos.csv에 이미 완성된 대표 조합이 있으니 generator는 "조립 + 역추적 주석"이 핵심 작업. 조합을 하나만 고르지 않고 전량 채택한 이유는 "다양하게 커버하는 게 낫다"는 프로젝트 취지(v1 스코프) 때문.
+- verifier: **pass** (1차 통과 — `.intel_syntax noprefix`/`.Ltarget` 라벨 위치, 정답지 대조, row_id 570 스킵, 줄 수 정합성 7,276건, 주석 역추적 15건 스팟체크, 회귀 검사 전부 실측 확인)
+- 추가: `tests/answer_keys/mov.csv`, `add.csv`, `push.csv`의 `intel_asm`/`expect_assemble` 칸을 LLM이 SDM 기준 초안으로 채움(형섭 요청, 검토 후 확정 필요 — `note`에 "LLM 초안 — 검토 필요"로 표시해둠). `expect_bytes`/`expect_disasm`은 비워둠(README 규칙대로 이후 objdump로 채울 수 있음).
+- 남은 것: assembler(`pipeline/m5_assemble.py`) 구현 시작. 이 환경(Windows)엔 GNU as/objdump가 없어서 실행 환경을 WSL Ubuntu로 옮길지 검토 필요.

@@ -1,9 +1,9 @@
 id,operand_form,intel_asm,expect_assemble,expect_bytes,expect_disasm,note
-mov_r8_r8,"r8, r8",,,,,
-mov_r32_r32,"r32, r32",,,,,
-mov_r64_r64,"r64, r64",,,,,
-mov_r32_imm32,"r32, imm32",,,,,
-mov_r64_imm64,"r64, imm64",,,,,
-mov_r32_m32,"r32, m32",,,,,
-mov_m32_r32,"m32, r32",,,,,
-mov_m32_imm32,"m32, imm32",,,,,
+mov_r8_r8,"r8, r8","mov cl, dl",ok,,,LLM 초안 — 검토 필요
+mov_r32_r32,"r32, r32","mov ecx, edx",ok,,,LLM 초안 — 검토 필요
+mov_r64_r64,"r64, r64","mov rcx, rdx",ok,,,LLM 초안 — 검토 필요
+mov_r32_imm32,"r32, imm32","mov ecx, 0x12345678",ok,,,LLM 초안 — 검토 필요
+mov_r64_imm64,"r64, imm64","mov rcx, 0x123456789abcdef0",ok,,,LLM 초안 — 검토 필요
+mov_r32_m32,"r32, m32","mov ecx, dword ptr [rax]",ok,,,LLM 초안 — 검토 필요
+mov_m32_r32,"m32, r32","mov dword ptr [rax], ecx",ok,,,LLM 초안 — 검토 필요
+mov_m32_imm32,"m32, imm32","mov dword ptr [rax], 0x12345678",ok,,,LLM 초안 — 검토 필요
