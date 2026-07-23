@@ -48,3 +48,15 @@
 - verifier: **pass** (1차 통과 — `.intel_syntax noprefix`/`.Ltarget` 라벨 위치, 정답지 대조, row_id 570 스킵, 줄 수 정합성 7,276건, 주석 역추적 15건 스팟체크, 회귀 검사 전부 실측 확인)
 - 추가: `tests/answer_keys/mov.csv`, `add.csv`, `push.csv`의 `intel_asm`/`expect_assemble` 칸을 LLM이 SDM 기준 초안으로 채움(형섭 요청, 검토 후 확정 필요 — `note`에 "LLM 초안 — 검토 필요"로 표시해둠). `expect_bytes`/`expect_disasm`은 비워둠(README 규칙대로 이후 objdump로 채울 수 있음).
 - 남은 것: assembler(`pipeline/m5_assemble.py`) 구현 시작. 이 환경(Windows)엔 GNU as/objdump가 없어서 실행 환경을 WSL Ubuntu로 옮길지 검토 필요.
+
+## 2026-07-23  [assembler]  Stage 5 구현 — GNU as로 한 줄씩 개별 어셈블
+- 무엇을: `pipeline/m5_assemble.py` 작성. 실행 환경을 WSL Ubuntu로 옮겨 GNU `as`/`objdump` 확보. `out/tests.s`(7,276개 명령어 줄)를 통째로 어셈블하지 않고 한 줄씩 임시 `.s`로 잘라 개별적으로 `as --64 -mintel64`에 넘겨, 어떤 줄이 되고 안 되는지 정확히 기록. 결과를 `out/asm_result.csv`에 저장하고 성공한 줄은 `out/objects/combo_<id>.o`로 보존, `expected_valid`(매뉴얼 기대) vs `actual_result`(as 실제 결과)가 다른 `mismatch` 컬럼도 계산.
+- 왜: CLAUDE.md 1절 "매뉴얼대로 작성했는데 어셈블러가 처리 못 하는 경우"를 찾으려면 실패한 줄 하나 때문에 나머지 7,000여 줄이 전부 실패로 뜨면 안 됨 → 줄 단위 개별 어셈블로 설계.
+- verifier: fail(1차 — mismatch 재계산 검증 중 상위 단계 데이터 문제 발견) → assembler 모듈 자체는 **pass**, 단 **extractor(1단계)의 신규 버그 발견**: `mode_support`가 `V/N.E.`처럼 슬래시로 결합된 SDM 원문 표기에서 `tidy_mode_text()`가 약어 `V`를 인식하지 못해 앞쪽 64비트 모드 값(`V`=Valid)을 통째로 날리고 뒤쪽 `N.E.`만 남기는 버그(ADCX/MOVBE 등 REX.W·VEX.W1 64비트 확장 레지스터 폭 변형 92개 후보 니모닉 영향, PDF p.130/p.748 직접 대조로 확인) → mismatch 416건 중 상당수가 실제 버그가 아니라 이 상위 단계 오류 때문으로 판명.
+- 남은 것: extractor로 피드백을 돌려 `tidy_mode_text` 수정 (아래 항목).
+
+## 2026-07-23  [extractor]  Stage 1 버그 수정 — mode_support 슬래시 결합 표기 파싱
+- 무엇을: `pipeline/m1_extract.py`의 `tidy_mode_text()`를 `re.search`(문자열에서 첫 매치 하나만 찾아 그 조각만 반환) 방식에서 `re.sub` + 헬퍼 `_tidy_one_mode_value()`(문자열 안의 모든 모드 표기 조각을 제자리에서 통일, 슬래시 구조는 보존) 방식으로 재작성. `data/db/isa_db.csv` 재생성.
+- 왜: 위 assembler(5단계) 검증에서 발견된 버그 그대로 — 약어 `V`가 정규식에 안 걸려서 `V/N.E.` 같은 결합 표기의 앞쪽이 사라지는 문제. 최종적으로 슬래시 중 어느 쪽(64비트 모드)을 쓸지는 `normalize_mode()`가 이미 `token.split("/")[0]`으로 담당하므로 `tidy_mode_text`는 원문 구조 보존까지만 책임지도록 역할을 명확히 함.
+- verifier: **pass** — `tidy_mode_text('V/N.E.')`가 이제 `'V/N.E.'`를 보존하고 `normalize_mode(...)`가 최종 `'Valid'`를 반환함을 도구로 직접 실행 확인. 수정 전 REX.W/.W1+N.E. 패턴 92건이 수정 후 0건(전부 정정)으로 재계산. `git diff` 전수 파싱 결과 총 131건 변경 중 92건 외 39건(BNDCL/RDPID/INVPCID 등 F3/F2/66/VEX.W0 계열)도 동일 버그 클래스로 추가 발견·정정되어 92+39=131이 diff와 정확히 일치. PDF 원문 대조 2건(RDPID p.1251, BNDCL p.208) 완전 일치. 131개 변경 행 전부 `mode_support` 컬럼만 바뀌었고 방향은 전부 `N.E.→Valid`(반대 방향 0건), 변경된 mnemonic 99종에 MOV/ADD/PUSH 없어 정답지 무영향 확인.
+- 남은 것: 이 수정이 `tokens.csv`/`combos.csv`/`out/tests.s`/`out/asm_result.csv`에 아직 반영 안 됨(전부 수정 이전 시각에 생성) — tokenizer부터 재실행해 하위 단계에 전파 필요.

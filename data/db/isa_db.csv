@@ -25,7 +25,7 @@ REX.W + 11 /r,"ADC r/m64, r64",ADC,"r/m64, r64",MR,Valid,,Add with CF r64 to r/m
 13 /r,"ADC r32, r/m32",ADC,"r32, r/m32",RM,Valid,,Add with CF r/m32 to r32.,127
 REX.W + 13 /r,"ADC r64, r/m64",ADC,"r64, r/m64",RM,Valid,,Add with CF r/m64 to r64.,127
 66 0F 38 F6 /r,"ADCX r32, r/m32",ADCX,"r32, r/m32",RM,Valid,ADX,"Unsigned addition of r32 with CF, r/m32 to r32, writes CF.",130
-66 REX.w 0F 38 F6 /r,"ADCX r64, r/m64",ADCX,"r64, r/m64",RM,N.E.,ADX,"Unsigned addition of r64 with CF, r/m64 to r64, writes CF.",130
+66 REX.w 0F 38 F6 /r,"ADCX r64, r/m64",ADCX,"r64, r/m64",RM,Valid,ADX,"Unsigned addition of r64 with CF, r/m64 to r64, writes CF.",130
 04 ib,"ADD AL, imm8",ADD,"AL, imm8",I,Valid,,Add imm8 to AL.,132
 05 iw,"ADD AX, imm16",ADD,"AX, imm16",I,Valid,,Add imm16 to AX.,132
 05 id,"ADD EAX, imm32",ADD,"EAX, imm32",I,Valid,,Add imm32 to EAX.,132
@@ -70,7 +70,7 @@ F2 0F D0 /r,"ADDSUBPS xmm1, xmm2/m128",ADDSUBPS,"xmm1, xmm2/m128",RM,Valid,SSE3,
 VEX.128.F2.0F.WIG D0 /r,"VADDSUBPS xmm1, xmm2, xmm3/m128",VADDSUBPS,"xmm1, xmm2, xmm3/m128",RVM,Valid,AVX,Add/subtract single precision floating-point values from xmm3/mem to xmm2 and stores result in xmm1.,146
 VEX.256.F2.0F.WIG D0 /r,"VADDSUBPS ymm1, ymm2, ymm3/m256",VADDSUBPS,"ymm1, ymm2, ymm3/m256",RVM,Valid,AVX,Add / subtract single precision floating-point values from ymm3/mem to ymm2 and stores result in ymm1.,146
 F3 0F 38 F6 /r,"ADOX r32, r/m32",ADOX,"r32, r/m32",RM,Valid,ADX,"Unsigned addition of r32 with OF, r/m32 to r32, writes OF.",149
-F3 REX.w 0F 38 F6 /r,"ADOX r64, r/m64",ADOX,"r64, r/m64",RM,N.E.,ADX,"Unsigned addition of r64 with OF, r/m64 to r64, writes OF.",149
+F3 REX.w 0F 38 F6 /r,"ADOX r64, r/m64",ADOX,"r64, r/m64",RM,Valid,ADX,"Unsigned addition of r64 with OF, r/m64 to r64, writes OF.",149
 66 0F 38 DE /r,"AESDEC xmm1, xmm2/m128",AESDEC,"xmm1, xmm2/m128",A,Valid,AES,"Perform one round of an AES decryption flow, using the Equivalent Inverse Cipher, using one 128-bit data (state) from xmm1 with one 128-bit round key from xmm2/m128.",151
 VEX.128.66.0F38.WIG DE /r,"VAESDEC xmm1, xmm2, xmm3/m128",VAESDEC,"xmm1, xmm2, xmm3/m128",B,Valid,AES AVX,"Perform one round of an AES decryption flow, using the Equivalent Inverse Cipher, using one 128-bit data (state) from xmm2 with one 128-bit round key from xmm3/m128; store the result in xmm1.",151
 VEX.256.66.0F38.WIG DE /r,"VAESDEC ymm1, ymm2, ymm3/m256",VAESDEC,"ymm1, ymm2, ymm3/m256",B,Valid,VAES,"Perform one round of an AES decryption flow, using the Equivalent Inverse Cipher, using two 128-bit data (state) from ymm2 with two 128-bit round keys from ymm3/m256; store the result in ymm1.",151
@@ -127,7 +127,7 @@ REX.W + 21 /r,"AND r/m64, r64",AND,"r/m64, r64",MR,Valid,,r/m64 AND r64.,178
 23 /r,"AND r32, r/m32",AND,"r32, r/m32",RM,Valid,,r32 AND r/m32.,178
 REX.W + 23 /r,"AND r64, r/m64",AND,"r64, r/m64",RM,Valid,,r64 AND r/m64.,178
 VEX.LZ.0F38.W0 F2 /r,"ANDN r32a, r32b, r/m32",ANDN,"r32a, r32b, r/m32",RVM,Valid,BMI1,"Bitwise AND of inverted r32b with r/m32, store result in r32a.",180
-VEX.LZ. 0F38.W1 F2 /r,"ANDN r64a, r64b, r/m64",ANDN,"r64a, r64b, r/m64",RVM,N.E.,BMI1,"Bitwise AND of inverted r64b with r/m64, store result in r64a.",180
+VEX.LZ. 0F38.W1 F2 /r,"ANDN r64a, r64b, r/m64",ANDN,"r64a, r64b, r/m64",RVM,Valid,BMI1,"Bitwise AND of inverted r64b with r/m64, store result in r64a.",180
 66 0F 55 /r,"ANDNPD xmm1, xmm2/m128",ANDNPD,"xmm1, xmm2/m128",A,Valid,SSE2,Return the bitwise logical AND NOT of packed double precision floating-point values in xmm1 and xmm2/mem.,181
 VEX.128.66.0F 55 /r,"VANDNPD xmm1, xmm2, xmm3/m128",VANDNPD,"xmm1, xmm2, xmm3/m128",B,Valid,AVX,Return the bitwise logical AND NOT of packed double precision floating-point values in xmm2 and xmm3/mem.,181
 VEX.256.66.0F 55/r,"VANDNPD ymm1, ymm2, ymm3/m256",VANDNPD,"ymm1, ymm2, ymm3/m256",B,Valid,AVX,Return the bitwise logical AND NOT of packed double precision floating-point values in ymm2 and ymm3/mem.,181
@@ -154,7 +154,7 @@ EVEX.256.0F.W0 54 /r,"VANDPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",VANDPS,"ymm1
 EVEX.512.0F.W0 54 /r,"VANDPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst",VANDPS,"zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst",C,Valid,AVX512DQ OR AVX10.1,Return the bitwise logical AND of packed single precision floating-point values in zmm2 and zmm3/m512/m32bcst subject to writemask k1.,190
 63 /r,"ARPL r/m16, r16",ARPL,"r/m16, r16",MR,N.E.,,Adjust RPL of r/m16 to not less than RPL of r16.,193
 VEX.LZ.0F38.W0 F7 /r,"BEXTR r32a, r/m32, r32b",BEXTR,"r32a, r/m32, r32b",RMV,Valid,BMI1,Contiguous bitwise extract from r/m32 using r32b as control; store result in r32a.,195
-VEX.LZ.0F38.W1 F7 /r,"BEXTR r64a, r/m64, r64b",BEXTR,"r64a, r/m64, r64b",RMV,N.E.,BMI1,Contiguous bitwise extract from r/m64 using r64b as control; store result in r64a.,195
+VEX.LZ.0F38.W1 F7 /r,"BEXTR r64a, r/m64, r64b",BEXTR,"r64a, r/m64, r64b",RMV,Valid,BMI1,Contiguous bitwise extract from r/m64 using r64b as control; store result in r64a.,195
 66 0F 3A 0D /r ib,"BLENDPD xmm1, xmm2/m128, imm8",BLENDPD,"xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,Select packed double precision floating-point values from xmm1 and xmm2/m128 from mask specified in imm8 and store the values into xmm1.,196
 VEX.128.66.0F3A.WIG 0D /r ib,"VBLENDPD xmm1, xmm2, xmm3/m128, imm8",VBLENDPD,"xmm1, xmm2, xmm3/m128, imm8",RVMI,Valid,AVX,Select packed double precision floating-point Values from xmm2 and xmm3/m128 from mask in imm8 and store the values in xmm1.,196
 VEX.256.66.0F3A.WIG 0D /r ib,"VBLENDPD ymm1, ymm2, ymm3/m256, imm8",VBLENDPD,"ymm1, ymm2, ymm3/m256, imm8",RVMI,Valid,AVX,Select packed double precision floating-point Values from ymm2 and ymm3/m256 from mask in imm8 and store the values in ymm1.,196
@@ -168,24 +168,24 @@ VEX.256.66.0F3A.W0 4B /r /is4,"VBLENDVPD ymm1, ymm2, ymm3/m256, ymm4",VBLENDVPD,
 VEX.128.66.0F3A.W0 4A /r /is4,"VBLENDVPS xmm1, xmm2, xmm3/m128, xmm4",VBLENDVPS,"xmm1, xmm2, xmm3/m128, xmm4",RVMR,Valid,AVX,"Conditionally copy single precision floating-point values from xmm2 or xmm3/m128 to xmm1, based on mask bits in the specified mask operand, xmm4.",202
 VEX.256.66.0F3A.W0 4A /r /is4,"VBLENDVPS ymm1, ymm2, ymm3/m256, ymm4",VBLENDVPS,"ymm1, ymm2, ymm3/m256, ymm4",RVMR,Valid,AVX,"Conditionally copy single precision floating-point values from ymm2 or ymm3/m256 to ymm1, based on mask bits in the specified mask register, ymm4.",202
 VEX.LZ.0F38.W0 F3 /3,"BLSI r32, r/m32",BLSI,"r32, r/m32",VM,Valid,BMI1,Extract lowest set bit from r/m32 and set that bit in r32.,205
-VEX.LZ.0F38.W1 F3 /3,"BLSI r64, r/m64",BLSI,"r64, r/m64",VM,N.E.,BMI1,"Extract lowest set bit from r/m64, and set that bit in r64.",205
+VEX.LZ.0F38.W1 F3 /3,"BLSI r64, r/m64",BLSI,"r64, r/m64",VM,Valid,BMI1,"Extract lowest set bit from r/m64, and set that bit in r64.",205
 VEX.LZ.0F38.W0 F3 /2,"BLSMSK r32, r/m32",BLSMSK,"r32, r/m32",VM,Valid,BMI1,Set all lower bits in r32 to “1” starting from bit 0 to lowest set bit in r/m32.,206
-VEX.LZ.0F38.W1 F3 /2,"BLSMSK r64, r/m64",BLSMSK,"r64, r/m64",VM,N.E.,BMI1,Set all lower bits in r64 to “1” starting from bit 0 to lowest set bit in r/m64.,206
+VEX.LZ.0F38.W1 F3 /2,"BLSMSK r64, r/m64",BLSMSK,"r64, r/m64",VM,Valid,BMI1,Set all lower bits in r64 to “1” starting from bit 0 to lowest set bit in r/m64.,206
 VEX.LZ.0F38.W0 F3 /1,"BLSR r32, r/m32",BLSR,"r32, r/m32",VM,Valid,BMI1,"Reset lowest set bit of r/m32, keep all other bits of r/m32 and write result to r32.",207
-VEX.LZ.0F38.W1 F3 /1,"BLSR r64, r/m64",BLSR,"r64, r/m64",VM,N.E.,BMI1,"Reset lowest set bit of r/m64, keep all other bits of r/m64 and write result to r64.",207
+VEX.LZ.0F38.W1 F3 /1,"BLSR r64, r/m64",BLSR,"r64, r/m64",VM,Valid,BMI1,"Reset lowest set bit of r/m64, keep all other bits of r/m64 and write result to r64.",207
 F3 0F 1A /r,"BNDCL bnd, r/m32",BNDCL,"bnd, r/m32",RM,N.E.,MPX,Generate a #BR if the address in r/m32 is lower than the lower bound in bnd.LB.,208
-F3 0F 1A /r,"BNDCL bnd, r/m64",BNDCL,"bnd, r/m64",RM,N.E.,MPX,Generate a #BR if the address in r/m64 is lower than the lower bound in bnd.LB.,208
+F3 0F 1A /r,"BNDCL bnd, r/m64",BNDCL,"bnd, r/m64",RM,Valid,MPX,Generate a #BR if the address in r/m64 is lower than the lower bound in bnd.LB.,208
 F2 0F 1A /r,"BNDCU bnd, r/m32",BNDCU,"bnd, r/m32",RM,N.E.,MPX,Generate a #BR if the address in r/m32 is higher than the upper bound in bnd.UB (bnb.UB in 1's complement form).,210
-F2 0F 1A /r,"BNDCU bnd, r/m64",BNDCU,"bnd, r/m64",RM,N.E.,MPX,Generate a #BR if the address in r/m64 is higher than the upper bound in bnd.UB (bnb.UB in 1's complement form).,210
+F2 0F 1A /r,"BNDCU bnd, r/m64",BNDCU,"bnd, r/m64",RM,Valid,MPX,Generate a #BR if the address in r/m64 is higher than the upper bound in bnd.UB (bnb.UB in 1's complement form).,210
 F2 0F 1B /r,"BNDCN bnd, r/m32",BNDCN,"bnd, r/m32",RM,N.E.,MPX,Generate a #BR if the address in r/m32 is higher than the upper bound in bnd.UB (bnb.UB not in 1's complement form).,210
-F2 0F 1B /r,"BNDCN bnd, r/m64",BNDCN,"bnd, r/m64",RM,N.E.,MPX,Generate a #BR if the address in r/m64 is higher than the upper bound in bnd.UB (bnb.UB not in 1's complement form).,210
+F2 0F 1B /r,"BNDCN bnd, r/m64",BNDCN,"bnd, r/m64",RM,Valid,MPX,Generate a #BR if the address in r/m64 is higher than the upper bound in bnd.UB (bnb.UB not in 1's complement form).,210
 NP 0F 1A /r,"BNDLDX bnd, mib",BNDLDX,"bnd, mib",RM,Valid,MPX,Load the bounds stored in a bound table entry (BTE) into bnd with address translation using the base of mib and conditional on the index of mib matching the pointer value in the BTE.,212
 F3 0F 1B /r,"BNDMK bnd, m32",BNDMK,"bnd, m32",RM,N.E.,MPX,Make lower and upper bounds from m32 and store them in bnd.,215
-F3 0F 1B /r,"BNDMK bnd, m64",BNDMK,"bnd, m64",RM,N.E.,MPX,Make lower and upper bounds from m64 and store them in bnd.,215
+F3 0F 1B /r,"BNDMK bnd, m64",BNDMK,"bnd, m64",RM,Valid,MPX,Make lower and upper bounds from m64 and store them in bnd.,215
 66 0F 1A /r,"BNDMOV bnd1, bnd2/m64",BNDMOV,"bnd1, bnd2/m64",RM,N.E.,MPX,Move lower and upper bound from bnd2/m64 to bound register bnd1.,217
-66 0F 1A /r,"BNDMOV bnd1, bnd2/m128",BNDMOV,"bnd1, bnd2/m128",RM,N.E.,MPX,Move lower and upper bound from bnd2/m128 to bound register bnd1.,217
+66 0F 1A /r,"BNDMOV bnd1, bnd2/m128",BNDMOV,"bnd1, bnd2/m128",RM,Valid,MPX,Move lower and upper bound from bnd2/m128 to bound register bnd1.,217
 66 0F 1B /r,"BNDMOV bnd1/m64, bnd2",BNDMOV,"bnd1/m64, bnd2",MR,N.E.,MPX,Move lower and upper bound from bnd2 to bnd1/m64.,217
-66 0F 1B /r,"BNDMOV bnd1/m128, bnd2",BNDMOV,"bnd1/m128, bnd2",MR,N.E.,MPX,Move lower and upper bound from bnd2 to bound register bnd1/m128.,217
+66 0F 1B /r,"BNDMOV bnd1/m128, bnd2",BNDMOV,"bnd1/m128, bnd2",MR,Valid,MPX,Move lower and upper bound from bnd2 to bound register bnd1/m128.,217
 NP 0F 1B /r,"BNDSTX mib, bnd",BNDSTX,"mib, bnd",MR,Valid,MPX,Store the bounds in bnd and the pointer value in the index register of mib to a bound table entry (BTE) with address translation using the base of mib.,220
 62 /r,"BOUND r16, m16&16",BOUND,"r16, m16&16",RM,Invalid,,Check if r16 (array index) is within bounds specified by m16&16.,223
 62 /r,"BOUND r32, m32&32",BOUND,"r32, m32&32",RM,Invalid,,Check if r32 (array index) is within bounds specified by m32&32.,223
@@ -222,7 +222,7 @@ REX.W + 0F AB /r,"BTS r/m64, r64",BTS,"r/m64, r64",MR,Valid,,Store selected bit 
 0F BA /5 ib,"BTS r/m32, imm8",BTS,"r/m32, imm8",MI,Valid,,Store selected bit in CF flag and set.,236
 REX.W + 0F BA /5 ib,"BTS r/m64, imm8",BTS,"r/m64, imm8",MI,Valid,,Store selected bit in CF flag and set.,236
 VEX.LZ.0F38.W0 F5 /r,"BZHI r32a, r/m32, r32b",BZHI,"r32a, r/m32, r32b",RMV,Valid,BMI2,"Zero bits in r/m32 starting with the position in r32b, write result to r32a.",238
-VEX.LZ.0F38.W1 F5 /r,"BZHI r64a, r/m64, r64b",BZHI,"r64a, r/m64, r64b",RMV,N.E.,BMI2,"Zero bits in r/m64 starting with the position in r64b, write result to r64a.",238
+VEX.LZ.0F38.W1 F5 /r,"BZHI r64a, r/m64, r64b",BZHI,"r64a, r/m64, r64b",RMV,Valid,BMI2,"Zero bits in r/m64 starting with the position in r64b, write result to r64a.",238
 E8 cw,CALL rel16,CALL,rel16,D,N.S.,,"Call near, relative, displacement relative to next instruction.",239
 E8 cd,CALL rel32,CALL,rel32,D,Valid,,"Call near, relative, displacement relative to next instruction. 32-bit displacement sign extended to 64-bits in 64-bit mode.",239
 FF /2,CALL r/m16,CALL,r/m16,M,N.E.,,"Call near, absolute indirect, address given in r/m16.",239
@@ -268,7 +268,7 @@ REX.W + 0F 42 /r,"CMOVC r64, r/m64",CMOVC,"r64, r/m64",RM,Valid,,Move if carry (
 REX.W + 0F 44 /r,"CMOVE r64, r/m64",CMOVE,"r64, r/m64",RM,Valid,,Move if equal (ZF=1).,275
 0F 4F /r,"CMOVG r16, r/m16",CMOVG,"r16, r/m16",RM,Valid,,Move if greater (ZF=0 and SF=OF).,275
 0F 4F /r,"CMOVG r32, r/m32",CMOVG,"r32, r/m32",RM,Valid,,Move if greater (ZF=0 and SF=OF).,275
-REX.W + 0F 4F /r,"CMOVG r64, r/m64",CMOVG,"r64, r/m64",RM,N.E.,,Move if greater (ZF=0 and SF=OF).,275
+REX.W + 0F 4F /r,"CMOVG r64, r/m64",CMOVG,"r64, r/m64",RM,Valid,,Move if greater (ZF=0 and SF=OF).,275
 0F 4D /r,"CMOVGE r16, r/m16",CMOVGE,"r16, r/m16",RM,Valid,,Move if greater or equal (SF=OF).,275
 0F 4D /r,"CMOVGE r32, r/m32",CMOVGE,"r32, r/m32",RM,Valid,,Move if greater or equal (SF=OF).,275
 REX.W + 0F 4D /r,"CMOVGE r64, r/m64",CMOVGE,"r64, r/m64",RM,Valid,,Move if greater or equal (SF=OF).,275
@@ -357,38 +357,38 @@ REX.W + 39 /r,"CMP r/m64,r64",CMP,"r/m64,r64",MR,Valid,,Compare r64 with r/m64.,
 3B /r,"CMP r16, r/m16",CMP,"r16, r/m16",RM,Valid,,Compare r/m16 with r16.,279
 3B /r,"CMP r32, r/m32",CMP,"r32, r/m32",RM,Valid,,Compare r/m32 with r32.,279
 REX.W + 3B /r,"CMP r64, r/m64",CMP,"r64, r/m64",RM,Valid,,Compare r/m64 with r64.,279
-VEX.128.66.0F38.W0 E6 !(11):rrr:bbb,"CMPBEXADD m32, r32, r32",CMPBEXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If below or equal (CF=1 or ZF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
-VEX.128.66.0F38.W1 E6 !(11):rrr:bbb,"CMPBEXADD m64, r64, r64",CMPBEXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If below or equal (CF=1 or ZF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
-VEX.128.66.0F38.W0 E2 !(11):rrr:bbb,"CMPBXADD m32, r32, r32",CMPBXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If below (CF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
-VEX.128.66.0F38.W1 E2 !(11):rrr:bbb,"CMPBXADD m64, r64, r64",CMPBXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If below (CF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
-VEX.128.66.0F38.W0 EE !(11):rrr:bbb,"CMPLEXADD m32, r32, r32",CMPLEXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If less or equal (ZF=1 or SF≠OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
-VEX.128.66.0F38.W1 EE !(11):rrr:bbb,"CMPLEXADD m64, r64, r64",CMPLEXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If less or equal (ZF=1 or SF≠OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
-VEX.128.66.0F38.W0 EC !(11):rrr:bbb,"CMPLXADD m32, r32, r32",CMPLXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If less (SF≠OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
-VEX.128.66.0F38.W1 EC !(11):rrr:bbb,"CMPLXADD m64, r64, r64",CMPLXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If less (SF≠OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
-VEX.128.66.0F38.W0 E7 !(11):rrr:bbb,"CMPNBEXADD m32, r32, r32",CMPNBEXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not below or equal (CF=0 and ZF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
-VEX.128.66.0F38.W1 E7 !(11):rrr:bbb,"CMPNBEXADD m64, r64, r64",CMPNBEXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not below or equal (CF=0 and ZF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
-VEX.128.66.0F38.W0 E3 !(11):rrr:bbb,"CMPNBXADD m32, r32, r32",CMPNBXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not below (CF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
-VEX.128.66.0F38.W1 E3 !(11):rrr:bbb,"CMPNBXADD m64, r64, r64",CMPNBXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not below (CF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
-VEX.128.66.0F38.W0 EF !(11):rrr:bbb,"CMPNLEXADD m32, r32, r32",CMPNLEXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not less or equal (ZF=0 and SF=OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
-VEX.128.66.0F38.W1 EF !(11):rrr:bbb,"CMPNLEXADD m64, r64, r64",CMPNLEXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not less or equal (ZF=0 and SF=OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
-VEX.128.66.0F38.W0 ED !(11):rrr:bbb,"CMPNLXADD m32, r32, r32",CMPNLXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not less (SF=OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
-VEX.128.66.0F38.W1 ED !(11):rrr:bbb,"CMPNLXADD m64, r64, r64",CMPNLXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not less (SF=OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
-VEX.128.66.0F38.W0 E1 !(11):rrr:bbb,"CMPNOXADD m32, r32, r32",CMPNOXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not overflow (OF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
-VEX.128.66.0F38.W1 E1 !(11):rrr:bbb,"CMPNOXADD m64, r64, r64",CMPNOXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not overflow (OF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
-VEX.128.66.0F38.W0 EB !(11):rrr:bbb,"CMPNPXADD m32, r32, r32",CMPNPXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not parity (PF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
-VEX.128.66.0F38.W1 EB !(11):rrr:bbb,"CMPNPXADD m64, r64, r64",CMPNPXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not parity (PF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
-VEX.128.66.0F38.W0 E9 !(11):rrr:bbb,"CMPNSXADD m32, r32, r32",CMPNSXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not sign (SF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
-VEX.128.66.0F38.W1 E9 !(11):rrr:bbb,"CMPNSXADD m64, r64, r64",CMPNSXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not sign (SF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
-VEX.128.66.0F38.W0 E5 !(11):rrr:bbb,"CMPNZXADD m32, r32, r32",CMPNZXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not zero (ZF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
-VEX.128.66.0F38.W1 E5 !(11):rrr:bbb,"CMPNZXADD m64, r64, r64",CMPNZXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not zero (ZF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
-VEX.128.66.0F38.W0 E0 !(11):rrr:bbb,"CMPOXADD m32, r32, r32",CMPOXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If overflow (OF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
-VEX.128.66.0F38.W1 E0 !(11):rrr:bbb,"CMPOXADD m64, r64, r64",CMPOXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If overflow (OF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
-VEX.128.66.0F38.W0 EA !(11):rrr:bbb,"CMPPXADD m32, r32, r32",CMPPXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If parity (PF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
-VEX.128.66.0F38.W1 EA !(11):rrr:bbb,"CMPPXADD m64, r64, r64",CMPPXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If parity (PF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
-VEX.128.66.0F38.W0 E8 !(11):rrr:bbb,"CMPSXADD m32, r32, r32",CMPSXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If sign (SF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",284
-VEX.128.66.0F38.W1 E8 !(11):rrr:bbb,"CMPSXADD m64, r64, r64",CMPSXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If sign (SF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",284
-VEX.128.66.0F38.W0 E4 !(11):rrr:bbb,"CMPZXADD m32, r32, r32",CMPZXADD,"m32, r32, r32",A,N.E.,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If zero (ZF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",284
-VEX.128.66.0F38.W1 E4 !(11):rrr:bbb,"CMPZXADD m64, r64, r64",CMPZXADD,"m64, r64, r64",A,N.E.,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If zero (ZF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",284
+VEX.128.66.0F38.W0 E6 !(11):rrr:bbb,"CMPBEXADD m32, r32, r32",CMPBEXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If below or equal (CF=1 or ZF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
+VEX.128.66.0F38.W1 E6 !(11):rrr:bbb,"CMPBEXADD m64, r64, r64",CMPBEXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If below or equal (CF=1 or ZF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
+VEX.128.66.0F38.W0 E2 !(11):rrr:bbb,"CMPBXADD m32, r32, r32",CMPBXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If below (CF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
+VEX.128.66.0F38.W1 E2 !(11):rrr:bbb,"CMPBXADD m64, r64, r64",CMPBXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If below (CF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
+VEX.128.66.0F38.W0 EE !(11):rrr:bbb,"CMPLEXADD m32, r32, r32",CMPLEXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If less or equal (ZF=1 or SF≠OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
+VEX.128.66.0F38.W1 EE !(11):rrr:bbb,"CMPLEXADD m64, r64, r64",CMPLEXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If less or equal (ZF=1 or SF≠OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
+VEX.128.66.0F38.W0 EC !(11):rrr:bbb,"CMPLXADD m32, r32, r32",CMPLXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If less (SF≠OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
+VEX.128.66.0F38.W1 EC !(11):rrr:bbb,"CMPLXADD m64, r64, r64",CMPLXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If less (SF≠OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",281
+VEX.128.66.0F38.W0 E7 !(11):rrr:bbb,"CMPNBEXADD m32, r32, r32",CMPNBEXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not below or equal (CF=0 and ZF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",281
+VEX.128.66.0F38.W1 E7 !(11):rrr:bbb,"CMPNBEXADD m64, r64, r64",CMPNBEXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not below or equal (CF=0 and ZF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
+VEX.128.66.0F38.W0 E3 !(11):rrr:bbb,"CMPNBXADD m32, r32, r32",CMPNBXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not below (CF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
+VEX.128.66.0F38.W1 E3 !(11):rrr:bbb,"CMPNBXADD m64, r64, r64",CMPNBXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not below (CF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
+VEX.128.66.0F38.W0 EF !(11):rrr:bbb,"CMPNLEXADD m32, r32, r32",CMPNLEXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not less or equal (ZF=0 and SF=OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
+VEX.128.66.0F38.W1 EF !(11):rrr:bbb,"CMPNLEXADD m64, r64, r64",CMPNLEXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not less or equal (ZF=0 and SF=OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
+VEX.128.66.0F38.W0 ED !(11):rrr:bbb,"CMPNLXADD m32, r32, r32",CMPNLXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not less (SF=OF), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
+VEX.128.66.0F38.W1 ED !(11):rrr:bbb,"CMPNLXADD m64, r64, r64",CMPNLXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not less (SF=OF), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
+VEX.128.66.0F38.W0 E1 !(11):rrr:bbb,"CMPNOXADD m32, r32, r32",CMPNOXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not overflow (OF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",282
+VEX.128.66.0F38.W1 E1 !(11):rrr:bbb,"CMPNOXADD m64, r64, r64",CMPNOXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not overflow (OF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",282
+VEX.128.66.0F38.W0 EB !(11):rrr:bbb,"CMPNPXADD m32, r32, r32",CMPNPXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not parity (PF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
+VEX.128.66.0F38.W1 EB !(11):rrr:bbb,"CMPNPXADD m64, r64, r64",CMPNPXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not parity (PF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
+VEX.128.66.0F38.W0 E9 !(11):rrr:bbb,"CMPNSXADD m32, r32, r32",CMPNSXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not sign (SF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
+VEX.128.66.0F38.W1 E9 !(11):rrr:bbb,"CMPNSXADD m64, r64, r64",CMPNSXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not sign (SF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
+VEX.128.66.0F38.W0 E5 !(11):rrr:bbb,"CMPNZXADD m32, r32, r32",CMPNZXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If not zero (ZF=0), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
+VEX.128.66.0F38.W1 E5 !(11):rrr:bbb,"CMPNZXADD m64, r64, r64",CMPNZXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If not zero (ZF=0), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
+VEX.128.66.0F38.W0 E0 !(11):rrr:bbb,"CMPOXADD m32, r32, r32",CMPOXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If overflow (OF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
+VEX.128.66.0F38.W1 E0 !(11):rrr:bbb,"CMPOXADD m64, r64, r64",CMPOXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If overflow (OF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
+VEX.128.66.0F38.W0 EA !(11):rrr:bbb,"CMPPXADD m32, r32, r32",CMPPXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If parity (PF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",283
+VEX.128.66.0F38.W1 EA !(11):rrr:bbb,"CMPPXADD m64, r64, r64",CMPPXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If parity (PF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",283
+VEX.128.66.0F38.W0 E8 !(11):rrr:bbb,"CMPSXADD m32, r32, r32",CMPSXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If sign (SF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",284
+VEX.128.66.0F38.W1 E8 !(11):rrr:bbb,"CMPSXADD m64, r64, r64",CMPSXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If sign (SF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",284
+VEX.128.66.0F38.W0 E4 !(11):rrr:bbb,"CMPZXADD m32, r32, r32",CMPZXADD,"m32, r32, r32",A,Valid,CMPCCXADD,"Compare value in r32 (second operand) with value in m32. If zero (ZF=1), add value from r32 (third operand) to m32 and write new value in m32. The second operand is always updated with the original value from m32.",284
+VEX.128.66.0F38.W1 E4 !(11):rrr:bbb,"CMPZXADD m64, r64, r64",CMPZXADD,"m64, r64, r64",A,Valid,CMPCCXADD,"Compare value in r64 (second operand) with value in m64. If zero (ZF=1), add value from r64 (third operand) to m64 and write new value in m64. The second operand is always updated with the original value from m64.",284
 66 0F C2 /r ib,"CMPPD xmm1, xmm2/m128, imm8",CMPPD,"xmm1, xmm2/m128, imm8",A,Valid,SSE2,Compare packed double precision floating-point values in xmm2/m128 and xmm1 using bits 2:0 of imm8 as a comparison predicate.,286
 VEX.128.66.0F.WIG C2 /r ib,"VCMPPD xmm1, xmm2, xmm3/m128, imm8",VCMPPD,"xmm1, xmm2, xmm3/m128, imm8",B,Valid,AVX,Compare packed double precision floating-point values in xmm3/m128 and xmm2 using bits 4:0 of imm8 as a comparison predicate.,286
 VEX.256.66.0F.WIG C2 /r ib,"VCMPPD ymm1, ymm2, ymm3/m256, imm8",VCMPPD,"ymm1, ymm2, ymm3/m256, imm8",B,Valid,AVX,Compare packed double precision floating-point values in ymm3/m256 and ymm2 using bits 4:0 of imm8 as a comparison predicate.,286
@@ -474,35 +474,35 @@ EVEX.256.0F.W0 5A /r,"VCVTPS2PD ymm1 {k1}{z}, xmm2/m128/m32bcst",VCVTPS2PD,"ymm1
 EVEX.512.0F.W0 5A /r,"VCVTPS2PD zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",VCVTPS2PD,"zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",B,Valid,AVX512F OR AVX10.1,Convert eight packed single precision floating-point values in ymm2/m256/b32bcst to eight packed double precision floating-point values in zmm1 with writemask k1.,346
 NP 0F 2D /r,"CVTPS2PI mm, xmm/m64",CVTPS2PI,"mm, xmm/m64",RM,Valid,,Convert two packed single precision floating-point values from xmm/m64 to two packed signed doubleword integers in mm.,349
 F2 0F 2D /r,"CVTSD2SI r32, xmm1/m64",CVTSD2SI,"r32, xmm1/m64",A,Valid,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer r32.,350
-F2 REX.W 0F 2D /r,"CVTSD2SI r64, xmm1/m64",CVTSD2SI,"r64, xmm1/m64",A,N.E.,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
+F2 REX.W 0F 2D /r,"CVTSD2SI r64, xmm1/m64",CVTSD2SI,"r64, xmm1/m64",A,Valid,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
 VEX.LIG.F2.0F.W0 2D /r,"VCVTSD2SI r32, xmm1/m64",VCVTSD2SI,"r32, xmm1/m64",A,Valid,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer r32.,350
-VEX.LIG.F2.0F.W1 2D /r,"VCVTSD2SI r64, xmm1/m64",VCVTSD2SI,"r64, xmm1/m64",A,N.E.,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
+VEX.LIG.F2.0F.W1 2D /r,"VCVTSD2SI r64, xmm1/m64",VCVTSD2SI,"r64, xmm1/m64",A,Valid,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
 EVEX.LLIG.F2.0F.W0 2D /r,"VCVTSD2SI r32, xmm1/m64{er}",VCVTSD2SI,"r32, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer r32.,350
-EVEX.LLIG.F2.0F.W1 2D /r,"VCVTSD2SI r64, xmm1/m64{er}",VCVTSD2SI,"r64, xmm1/m64{er}",B,N.E.,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
+EVEX.LLIG.F2.0F.W1 2D /r,"VCVTSD2SI r64, xmm1/m64{er}",VCVTSD2SI,"r64, xmm1/m64{er}",B,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer sign-extended into r64.,350
 F2 0F 5A /r,"CVTSD2SS xmm1, xmm2/m64",CVTSD2SS,"xmm1, xmm2/m64",A,Valid,SSE2,Convert one double precision floating-point value in xmm2/m64 to one single precision floating-point value in xmm1.,352
 VEX.LIG.F2.0F.WIG 5A /r,"VCVTSD2SS xmm1,xmm2, xmm3/m64",VCVTSD2SS,"xmm1,xmm2, xmm3/m64",B,Valid,AVX,Convert one double precision floating-point value in xmm3/m64 to one single precision floating-point value and merge with high bits in xmm2.,352
 EVEX.LLIG.F2.0F.W1 5A /r,"VCVTSD2SS xmm1 {k1}{z}, xmm2, xmm3/m64{er}",VCVTSD2SS,"xmm1 {k1}{z}, xmm2, xmm3/m64{er}",C,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value in xmm3/m64 to one single precision floating-point value and merge with high bits in xmm2 under writemask k1.,352
 F2 0F 2A /r,"CVTSI2SD xmm1, r32/m32",CVTSI2SD,"xmm1, r32/m32",A,Valid,SSE2,Convert one signed doubleword integer from r32/m32 to one double precision floating-point value in xmm1.,354
-F2 REX.W 0F 2A /r,"CVTSI2SD xmm1, r/m64",CVTSI2SD,"xmm1, r/m64",A,N.E.,SSE2,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
+F2 REX.W 0F 2A /r,"CVTSI2SD xmm1, r/m64",CVTSI2SD,"xmm1, r/m64",A,Valid,SSE2,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
 VEX.LIG.F2.0F.W0 2A /r,"VCVTSI2SD xmm1, xmm2, r/m32",VCVTSI2SD,"xmm1, xmm2, r/m32",B,Valid,AVX,Convert one signed doubleword integer from r/m32 to one double precision floating-point value in xmm1.,354
-VEX.LIG.F2.0F.W1 2A /r,"VCVTSI2SD xmm1, xmm2, r/m64",VCVTSI2SD,"xmm1, xmm2, r/m64",B,N.E.,AVX,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
+VEX.LIG.F2.0F.W1 2A /r,"VCVTSI2SD xmm1, xmm2, r/m64",VCVTSI2SD,"xmm1, xmm2, r/m64",B,Valid,AVX,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
 EVEX.LLIG.F2.0F.W0 2A /r,"VCVTSI2SD xmm1, xmm2, r/m32",VCVTSI2SD,"xmm1, xmm2, r/m32",C,Valid,AVX512F OR AVX10.1,Convert one signed doubleword integer from r/m32 to one double precision floating-point value in xmm1.,354
-EVEX.LLIG.F2.0F.W1 2A /r,"VCVTSI2SD xmm1, xmm2, r/m64{er}",VCVTSI2SD,"xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
+EVEX.LLIG.F2.0F.W1 2A /r,"VCVTSI2SD xmm1, xmm2, r/m64{er}",VCVTSI2SD,"xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,Convert one signed quadword integer from r/m64 to one double precision floating-point value in xmm1.,354
 F3 0F 2A /r,"CVTSI2SS xmm1, r/m32",CVTSI2SS,"xmm1, r/m32",A,Valid,SSE,Convert one signed doubleword integer from r/m32 to one single precision floating-point value in xmm1.,356
-F3 REX.W 0F 2A /r,"CVTSI2SS xmm1, r/m64",CVTSI2SS,"xmm1, r/m64",A,N.E.,SSE,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
+F3 REX.W 0F 2A /r,"CVTSI2SS xmm1, r/m64",CVTSI2SS,"xmm1, r/m64",A,Valid,SSE,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
 VEX.LIG.F3.0F.W0 2A /r,"VCVTSI2SS xmm1, xmm2, r/m32",VCVTSI2SS,"xmm1, xmm2, r/m32",B,Valid,AVX,Convert one signed doubleword integer from r/m32 to one single precision floating-point value in xmm1.,356
-VEX.LIG.F3.0F.W1 2A /r,"VCVTSI2SS xmm1, xmm2, r/m64",VCVTSI2SS,"xmm1, xmm2, r/m64",B,N.E.,AVX,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
+VEX.LIG.F3.0F.W1 2A /r,"VCVTSI2SS xmm1, xmm2, r/m64",VCVTSI2SS,"xmm1, xmm2, r/m64",B,Valid,AVX,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
 EVEX.LLIG.F3.0F.W0 2A /r,"VCVTSI2SS xmm1, xmm2, r/m32{er}",VCVTSI2SS,"xmm1, xmm2, r/m32{er}",C,Valid,AVX512F OR AVX10.1,Convert one signed doubleword integer from r/m32 to one single precision floating-point value in xmm1.,356
-EVEX.LLIG.F3.0F.W1 2A /r,"VCVTSI2SS xmm1, xmm2, r/m64{er}",VCVTSI2SS,"xmm1, xmm2, r/m64{er}",C,N.E.,AVX512F OR AVX10.1,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
+EVEX.LLIG.F3.0F.W1 2A /r,"VCVTSI2SS xmm1, xmm2, r/m64{er}",VCVTSI2SS,"xmm1, xmm2, r/m64{er}",C,Valid,AVX512F OR AVX10.1,Convert one signed quadword integer from r/m64 to one single precision floating-point value in xmm1.,356
 F3 0F 5A /r,"CVTSS2SD xmm1, xmm2/m32",CVTSS2SD,"xmm1, xmm2/m32",A,Valid,SSE2,Convert one single precision floating-point value in xmm2/m32 to one double precision floating-point value in xmm1.,358
 VEX.LIG.F3.0F.WIG 5A /r,"VCVTSS2SD xmm1, xmm2, xmm3/m32",VCVTSS2SD,"xmm1, xmm2, xmm3/m32",B,Valid,AVX,Convert one single precision floating-point value in xmm3/m32 to one double precision floating-point value and merge with high bits of xmm2.,358
 EVEX.LLIG.F3.0F.W0 5A /r,"VCVTSS2SD xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",VCVTSS2SD,"xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",C,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value in xmm3/m32 to one double precision floating-point value and merge with high bits of xmm2 under writemask k1.,358
 F3 0F 2D /r,"CVTSS2SI r32, xmm1/m32",CVTSS2SI,"r32, xmm1/m32",A,Valid,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.,360
-F3 REX.W 0F 2D /r,"CVTSS2SI r64, xmm1/m32",CVTSS2SI,"r64, xmm1/m32",A,N.E.,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
+F3 REX.W 0F 2D /r,"CVTSS2SI r64, xmm1/m32",CVTSS2SI,"r64, xmm1/m32",A,Valid,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
 VEX.LIG.F3.0F.W0 2D /r,"VCVTSS2SI r32, xmm1/m32",VCVTSS2SI,"r32, xmm1/m32",A,Valid,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.,360
-VEX.LIG.F3.0F.W1 2D /r,"VCVTSS2SI r64, xmm1/m32",VCVTSS2SI,"r64, xmm1/m32",A,N.E.,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
+VEX.LIG.F3.0F.W1 2D /r,"VCVTSS2SI r64, xmm1/m32",VCVTSS2SI,"r64, xmm1/m32",A,Valid,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
 EVEX.LLIG.F3.0F.W0 2D /r,"VCVTSS2SI r32, xmm1/m32{er}",VCVTSS2SI,"r32, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.,360
-EVEX.LLIG.F3.0F.W1 2D /r,"VCVTSS2SI r64, xmm1/m32{er}",VCVTSS2SI,"r64, xmm1/m32{er}",B,N.E.,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
+EVEX.LLIG.F3.0F.W1 2D /r,"VCVTSS2SI r64, xmm1/m32{er}",VCVTSS2SI,"r64, xmm1/m32{er}",B,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64.,360
 66 0F E6 /r,"CVTTPD2DQ xmm1, xmm2/m128",CVTTPD2DQ,"xmm1, xmm2/m128",A,Valid,SSE2,Convert two packed double precision floating-point values in xmm2/mem to two signed doubleword integers in xmm1 using truncation.,362
 VEX.128.66.0F.WIG E6 /r,"VCVTTPD2DQ xmm1, xmm2/m128",VCVTTPD2DQ,"xmm1, xmm2/m128",A,Valid,AVX,Convert two packed double precision floating-point values in xmm2/mem to two signed doubleword integers in xmm1 using truncation.,362
 VEX.256.66.0F.WIG E6 /r,"VCVTTPD2DQ xmm1, ymm2/m256",VCVTTPD2DQ,"xmm1, ymm2/m256",A,Valid,AVX,Convert four packed double precision floating-point values in ymm2/mem to four signed doubleword integers in xmm1 using truncation.,362
@@ -518,17 +518,17 @@ EVEX.256.F3.0F.W0 5B /r,"VCVTTPS2DQ ymm1 {k1}{z}, ymm2/m256/m32bcst",VCVTTPS2DQ,
 EVEX.512.F3.0F.W0 5B /r,"VCVTTPS2DQ zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",VCVTTPS2DQ,"zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",B,Valid,AVX512F,Convert sixteen packed single precision floating-point values from zmm2/m512/m32bcst to sixteen packed signed doubleword values in zmm1 using truncation subject to writemask k1.,367
 NP 0F 2C /r,"CVTTPS2PI mm, xmm/m64",CVTTPS2PI,"mm, xmm/m64",RM,Valid,,Convert two single precision floating-point values from xmm/m64 to two signed doubleword signed integers in mm using truncation.,370
 F2 0F 2C /r,"CVTTSD2SI r32, xmm1/m64",CVTTSD2SI,"r32, xmm1/m64",A,Valid,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer in r32 using truncation.,371
-F2 REX.W 0F 2C /r,"CVTTSD2SI r64, xmm1/m64",CVTTSD2SI,"r64, xmm1/m64",A,N.E.,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
+F2 REX.W 0F 2C /r,"CVTTSD2SI r64, xmm1/m64",CVTTSD2SI,"r64, xmm1/m64",A,Valid,SSE2,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
 VEX.LIG.F2.0F.W0 2C /r,"VCVTTSD2SI r32, xmm1/m64",VCVTTSD2SI,"r32, xmm1/m64",A,Valid,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer in r32 using truncation.,371
-VEX.LIG.F2.0F.W1 2C /r,"VCVTTSD2SI r64, xmm1/m64",VCVTTSD2SI,"r64, xmm1/m64",B,N.E.,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
+VEX.LIG.F2.0F.W1 2C /r,"VCVTTSD2SI r64, xmm1/m64",VCVTTSD2SI,"r64, xmm1/m64",B,Valid,AVX,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
 EVEX.LLIG.F2.0F.W0 2C /r,"VCVTTSD2SI r32, xmm1/m64{sae}",VCVTTSD2SI,"r32, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed doubleword integer in r32 using truncation.,371
-EVEX.LLIG.F2.0F.W1 2C /r,"VCVTTSD2SI r64, xmm1/m64{sae}",VCVTTSD2SI,"r64, xmm1/m64{sae}",B,N.E.,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
+EVEX.LLIG.F2.0F.W1 2C /r,"VCVTTSD2SI r64, xmm1/m64{sae}",VCVTTSD2SI,"r64, xmm1/m64{sae}",B,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one signed quadword integer in r64 using truncation.,371
 F3 0F 2C /r,"CVTTSS2SI r32, xmm1/m32",CVTTSS2SI,"r32, xmm1/m32",A,Valid,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32 using truncation.,373
-F3 REX.W 0F 2C /r,"CVTTSS2SI r64, xmm1/m32",CVTTSS2SI,"r64, xmm1/m32",A,N.E.,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
+F3 REX.W 0F 2C /r,"CVTTSS2SI r64, xmm1/m32",CVTTSS2SI,"r64, xmm1/m32",A,Valid,SSE,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
 VEX.LIG.F3.0F.W0 2C /r,"VCVTTSS2SI r32, xmm1/m32",VCVTTSS2SI,"r32, xmm1/m32",A,Valid,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32 using truncation.,373
-VEX.LIG.F3.0F.W1 2C /r,"VCVTTSS2SI r64, xmm1/m32",VCVTTSS2SI,"r64, xmm1/m32",A,N.E.,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
+VEX.LIG.F3.0F.W1 2C /r,"VCVTTSS2SI r64, xmm1/m32",VCVTTSS2SI,"r64, xmm1/m32",A,Valid,AVX,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
 EVEX.LLIG.F3.0F.W0 2C /r,"VCVTTSS2SI r32, xmm1/m32{sae}",VCVTTSS2SI,"r32, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed doubleword integer in r32 using truncation.,373
-EVEX.LLIG.F3.0F.W1 2C /r,"VCVTTSS2SI r64, xmm1/m32{sae}",VCVTTSS2SI,"r64, xmm1/m32{sae}",B,N.E.,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
+EVEX.LLIG.F3.0F.W1 2C /r,"VCVTTSS2SI r64, xmm1/m32{sae}",VCVTTSS2SI,"r64, xmm1/m32{sae}",B,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one signed quadword integer in r64 using truncation.,373
 99,CWD,CWD,,ZO,Valid,,DX:AX := sign-extend of AX.,375
 99,CDQ,CDQ,,ZO,Valid,,EDX:EAX := sign-extend of EAX.,375
 REX.W + 99,CQO,CQO,,ZO,Valid,,RDX:RAX:= sign-extend of RAX.,375
@@ -798,7 +798,7 @@ REX.W + FF /0,INC r/m64,INC,r/m64,M,Valid,,Increment r/m quadword by 1.,575
 40+ rw,INC r16,INC,r16,O,N.E.,,Increment word register by 1.,575
 40+ rd,INC r32,INC,r32,O,N.E.,,Increment doubleword register by 1.,575
 F3 0F AE /5,INCSSPD r32,INCSSPD,r32,R,Valid,CET_SS,Increment SSP by 4 * r32[7:0].,577
-F3 REX.W 0F AE /5,INCSSPQ r64,INCSSPQ,r64,R,N.E.,CET_SS,Increment SSP by 8 * r64[7:0].,577
+F3 REX.W 0F AE /5,INCSSPQ r64,INCSSPQ,r64,R,Valid,CET_SS,Increment SSP by 8 * r64[7:0].,577
 66 0F 3A 21 /r ib,"INSERTPS xmm1, xmm2/m32, imm8",INSERTPS,"xmm1, xmm2/m32, imm8",A,Valid,SSE4_1,Insert a single precision floating-point value selected by imm8 from xmm2/m32 into xmm1 at the specified destination element specified by imm8 and zero out destination elements in xmm1 as indicated in imm8.,579
 VEX.128.66.0F3A.WIG 21 /r ib,"VINSERTPS xmm1, xmm2, xmm3/m32, imm8",VINSERTPS,"xmm1, xmm2, xmm3/m32, imm8",B,Valid,AVX,Insert a single precision floating-point value selected by imm8 from xmm3/m32 and merge with values in xmm2 at the specified destination element specified by imm8 and write out the result and zero out destination elements in xmm1 as indicated in imm8.,579
 EVEX.128.66.0F3A.W0 21 /r ib,"VINSERTPS xmm1, xmm2, xmm3/m32, imm8",VINSERTPS,"xmm1, xmm2, xmm3/m32, imm8",C,Valid,AVX512F OR AVX10.1,Insert a single precision floating-point value selected by imm8 from xmm3/m32 and merge with values in xmm2 at the specified destination element specified by imm8 and write out the result and zero out destination elements in xmm1 as indicated in imm8.,579
@@ -815,7 +815,7 @@ F1,INT1,INT1,,ZO,Valid,,Generate debug trap.,585
 0F 08,INVD,INVD,,ZO,Valid,,Flush internal caches; initiate flushing of external caches.,601
 0F 01/7,INVLPG m,INVLPG,m,M,Valid,,Invalidate TLB entries for page containing m.,603
 66 0F 38 82 /r,"INVPCID r32, m128",INVPCID,"r32, m128",RM,N.E.,INVPCID,Invalidates entries in the TLBs and paging-structure caches based on invalidation type in r32 and descrip-tor in m128.,605
-66 0F 38 82 /r,"INVPCID r64, m128",INVPCID,"r64, m128",RM,N.E.,INVPCID,Invalidates entries in the TLBs and paging-structure caches based on invalidation type in r64 and descrip-tor in m128.,605
+66 0F 38 82 /r,"INVPCID r64, m128",INVPCID,"r64, m128",RM,Valid,INVPCID,Invalidates entries in the TLBs and paging-structure caches based on invalidation type in r64 and descrip-tor in m128.,605
 CF,IRET,IRET,,ZO,Valid,,Interrupt return (16-bit operand size).,608
 CF,IRETD,IRETD,,ZO,Valid,,Interrupt return (32-bit operand size).,608
 REX.W + CF,IRETQ,IRETQ,,ZO,Valid,,Interrupt return (64-bit operand size).,608
@@ -1010,7 +1010,7 @@ REX.W + 0F B4 /r,"LFS r64,m16:64",LFS,"r64,m16:64",RM,Valid,,Load FS:r64 with fa
 0F B5 /r,"LGS r16,m16:16",LGS,"r16,m16:16",RM,Valid,,Load GS:r16 with far pointer from memory.,658
 0F B5 /r,"LGS r32,m16:32",LGS,"r32,m16:32",RM,Valid,,Load GS:r32 with far pointer from memory.,658
 REX.W + 0F B5 /r,"LGS r64,m16:64",LGS,"r64,m16:64",RM,Valid,,Load GS:r64 with far pointer from memory.,658
-VEX.128.NP.0F38.W0 49 !(11):000:bbb,LDTILECFG m512,LDTILECFG,m512,A,N.E.,AMX_TILE,Load tile configuration as specified in m512.,662
+VEX.128.NP.0F38.W0 49 !(11):000:bbb,LDTILECFG m512,LDTILECFG,m512,A,Valid,AMX_TILE,Load tile configuration as specified in m512.,662
 8D /r,"LEA r16,m",LEA,"r16,m",RM,Valid,,Store effective address for m in register r16.,665
 8D /r,"LEA r32,m",LEA,"r32,m",RM,Valid,,Store effective address for m in register r32.,665
 REX.W + 8D /r,"LEA r64,m",LEA,"r64,m",RM,Valid,,Store effective address for m in register r64.,665
@@ -1044,7 +1044,7 @@ REX.W + 0F 03 /r,"LSL r64, r32/m16",LSL,"r64, r32/m16",RM,Valid,,Load segment li
 0F 00 /3,LTR r/m16,LTR,r/m16,M,Valid,,Load r/m16 into task register.,694
 F3 0F BD /r,"LZCNT r16, r/m16",LZCNT,"r16, r/m16",RM,Valid,LZCNT,"Count the number of leading zero bits in r/m16, return result in r16.",696
 F3 0F BD /r,"LZCNT r32, r/m32",LZCNT,"r32, r/m32",RM,Valid,LZCNT,"Count the number of leading zero bits in r/m32, return result in r32.",696
-F3 REX.W 0F BD /r,"LZCNT r64, r/m64",LZCNT,"r64, r/m64",RM,N.E.,LZCNT,"Count the number of leading zero bits in r/m64, return result in r64.",696
+F3 REX.W 0F BD /r,"LZCNT r64, r/m64",LZCNT,"r64, r/m64",RM,Valid,LZCNT,"Count the number of leading zero bits in r/m64, return result in r64.",696
 66 0F F7 /r,"MASKMOVDQU xmm1, xmm2",MASKMOVDQU,"xmm1, xmm2",RM,Valid,SSE2,Selectively write bytes from xmm1 to memory location using the byte mask in xmm2. The default memory location is specified by DS:DI/EDI/RDI.,704
 VEX.128.66.0F.WIG F7 /r,"VMASKMOVDQU xmm1, xmm2",VMASKMOVDQU,"xmm1, xmm2",RM,Valid,AVX,Selectively write bytes from xmm1 to memory location using the byte mask in xmm2. The default memory location is specified by DS:DI/EDI/RDI.,704
 NP 0F F7 /r,"MASKMOVQ mm1, mm2",MASKMOVQ,"mm1, mm2",RM,Valid,,Selectively write bytes from mm1 to memory location using the byte mask in mm2. The default memory location is specified by DS:DI/EDI/RDI.,706
@@ -1153,10 +1153,10 @@ EVEX.256.0F.W0 29 /r,"VMOVAPS ymm2/m256 {k1}{z}, ymm1",VMOVAPS,"ymm2/m256 {k1}{z
 EVEX.512.0F.W0 29 /r,"VMOVAPS zmm2/m512 {k1}{z}, zmm1",VMOVAPS,"zmm2/m512 {k1}{z}, zmm1",D,Valid,AVX512F OR AVX10.1,Move aligned packed single precision floating-point values from zmm1 to zmm2/m512 using writemask k1.,744
 0F 38 F0 /r,"MOVBE r16, m16",MOVBE,"r16, m16",RM,Valid,MOVBE,Reverse byte order in m16 and move to r16.,748
 0F 38 F0 /r,"MOVBE r32, m32",MOVBE,"r32, m32",RM,Valid,MOVBE,Reverse byte order in m32 and move to r32.,748
-REX.W + 0F 38 F0 /r,"MOVBE r64, m64",MOVBE,"r64, m64",RM,N.E.,MOVBE,Reverse byte order in m64 and move to r64.,748
+REX.W + 0F 38 F0 /r,"MOVBE r64, m64",MOVBE,"r64, m64",RM,Valid,MOVBE,Reverse byte order in m64 and move to r64.,748
 0F 38 F1 /r,"MOVBE m16, r16",MOVBE,"m16, r16",MR,Valid,MOVBE,Reverse byte order in r16 and move to m16.,748
 0F 38 F1 /r,"MOVBE m32, r32",MOVBE,"m32, r32",MR,Valid,MOVBE,Reverse byte order in r32 and move to m32.,748
-REX.W + 0F 38 F1 /r,"MOVBE m64, r64",MOVBE,"m64, r64",MR,N.E.,MOVBE,Reverse byte order in r64 and move to m64.,748
+REX.W + 0F 38 F1 /r,"MOVBE m64, r64",MOVBE,"m64, r64",MR,Valid,MOVBE,Reverse byte order in r64 and move to m64.,748
 F2 0F 12 /r,"MOVDDUP xmm1, xmm2/m64",MOVDDUP,"xmm1, xmm2/m64",A,Valid,SSE3,Move double precision floating-point value from xmm2/m64 and duplicate into xmm1.,751
 VEX.128.F2.0F.WIG 12 /r,"VMOVDDUP xmm1, xmm2/m64",VMOVDDUP,"xmm1, xmm2/m64",A,Valid,AVX,Move double precision floating-point value from xmm2/m64 and duplicate into xmm1.,751
 VEX.256.F2.0F.WIG 12 /r,"VMOVDDUP ymm1, ymm2/m256",VMOVDDUP,"ymm1, ymm2/m256",A,Valid,AVX,Move even index double precision floating-point values from ymm2/mem and duplicate each element into ymm1.,751
@@ -1165,23 +1165,23 @@ EVEX.256.F2.0F.W1 12 /r,"VMOVDDUP ymm1 {k1}{z}, ymm2/m256",VMOVDDUP,"ymm1 {k1}{z
 EVEX.512.F2.0F.W1 12 /r,"VMOVDDUP zmm1 {k1}{z}, zmm2/m512",VMOVDDUP,"zmm1 {k1}{z}, zmm2/m512",B,Valid,AVX512F OR AVX10.1,Move even index double precision floating-point values from zmm2/m512 and duplicate each element into zmm1 subject to writemask k1.,751
 66 0F 38 F8 /r,"MOVDIR64B r16/r32/r64, m512",MOVDIR64B,"r16/r32/r64, m512",A,Valid,MOVDIR64B,Move 64-bytes as direct-store with guaranteed 64-byte write atomicity from the source memory operand address to destination memory address specified as offset to ES segment in the register operand.,754
 NP 0F 38 F9 /r,"MOVDIRI m32, r32",MOVDIRI,"m32, r32",A,Valid,MOVDIRI,Move doubleword from r32 to m32 using direct store.,756
-NP REX.W + 0F 38 F9 /r,"MOVDIRI m64, r64",MOVDIRI,"m64, r64",A,N.E.,MOVDIRI,Move quadword from r64 to m64 using direct store.,756
+NP REX.W + 0F 38 F9 /r,"MOVDIRI m64, r64",MOVDIRI,"m64, r64",A,Valid,MOVDIRI,Move quadword from r64 to m64 using direct store.,756
 NP 0F 6E /r,"MOVD mm, r/m32",MOVD,"mm, r/m32",A,Valid,MMX,Move doubleword from r/m32 to mm.,758
-NP REX.W + 0F 6E /r,"MOVQ mm, r/m64",MOVQ,"mm, r/m64",A,N.E.,MMX,Move quadword from r/m64 to mm.,758
+NP REX.W + 0F 6E /r,"MOVQ mm, r/m64",MOVQ,"mm, r/m64",A,Valid,MMX,Move quadword from r/m64 to mm.,758
 NP 0F 7E /r,"MOVD r/m32, mm",MOVD,"r/m32, mm",B,Valid,MMX,Move doubleword from mm to r/m32.,758
-NP REX.W + 0F 7E /r,"MOVQ r/m64, mm",MOVQ,"r/m64, mm",B,N.E.,MMX,Move quadword from mm to r/m64.,758
+NP REX.W + 0F 7E /r,"MOVQ r/m64, mm",MOVQ,"r/m64, mm",B,Valid,MMX,Move quadword from mm to r/m64.,758
 66 0F 6E /r,"MOVD xmm, r/m32",MOVD,"xmm, r/m32",A,Valid,SSE2,Move doubleword from r/m32 to xmm.,758
-66 REX.W 0F 6E /r,"MOVQ xmm, r/m64",MOVQ,"xmm, r/m64",A,N.E.,SSE2,Move quadword from r/m64 to xmm.,758
+66 REX.W 0F 6E /r,"MOVQ xmm, r/m64",MOVQ,"xmm, r/m64",A,Valid,SSE2,Move quadword from r/m64 to xmm.,758
 66 0F 7E /r,"MOVD r/m32, xmm",MOVD,"r/m32, xmm",B,Valid,SSE2,Move doubleword from xmm register to r/m32.,758
-66 REX.W 0F 7E /r,"MOVQ r/m64, xmm",MOVQ,"r/m64, xmm",B,N.E.,SSE2,Move quadword from xmm register to r/m64.,758
+66 REX.W 0F 7E /r,"MOVQ r/m64, xmm",MOVQ,"r/m64, xmm",B,Valid,SSE2,Move quadword from xmm register to r/m64.,758
 VEX.128.66.0F.W0 6E /,"VMOVD xmm1, r32/m32",VMOVD,"xmm1, r32/m32",A,Valid,AVX,Move doubleword from r/m32 to xmm1.,758
-VEX.128.66.0F.W1 6E /r,"VMOVQ xmm1, r64/m64",VMOVQ,"xmm1, r64/m64",A,N.E.,AVX,Move quadword from r/m64 to xmm1.,758
+VEX.128.66.0F.W1 6E /r,"VMOVQ xmm1, r64/m64",VMOVQ,"xmm1, r64/m64",A,Valid,AVX,Move quadword from r/m64 to xmm1.,758
 VEX.128.66.0F.W0 7E /r,"VMOVD r32/m32, xmm1",VMOVD,"r32/m32, xmm1",B,Valid,AVX,Move doubleword from xmm1 register to r/m32.,758
-VEX.128.66.0F.W1 7E /r,"VMOVQ r64/m64, xmm1",VMOVQ,"r64/m64, xmm1",B,N.E.,AVX,Move quadword from xmm1 register to r/m64.,758
+VEX.128.66.0F.W1 7E /r,"VMOVQ r64/m64, xmm1",VMOVQ,"r64/m64, xmm1",B,Valid,AVX,Move quadword from xmm1 register to r/m64.,758
 EVEX.128.66.0F.W0 6E /r,"VMOVD xmm1, r32/m32",VMOVD,"xmm1, r32/m32",C,Valid,AVX512F OR AVX10.1,Move doubleword from r/m32 to xmm1.,758
-EVEX.128.66.0F.W1 6E /r,"VMOVQ xmm1, r64/m64",VMOVQ,"xmm1, r64/m64",C,N.E.,AVX512F OR AVX10.1,Move quadword from r/m64 to xmm1.,758
+EVEX.128.66.0F.W1 6E /r,"VMOVQ xmm1, r64/m64",VMOVQ,"xmm1, r64/m64",C,Valid,AVX512F OR AVX10.1,Move quadword from r/m64 to xmm1.,758
 EVEX.128.66.0F.W0 7E /r,"VMOVD r32/m32, xmm1",VMOVD,"r32/m32, xmm1",D,Valid,AVX512F OR AVX10.1,Move doubleword from xmm1 register to r/m32.,758
-EVEX.128.66.0F.W1 7E /r,"VMOVQ r64/m64, xmm1",VMOVQ,"r64/m64, xmm1",D,N.E.,AVX512F OR AVX10.1,Move quadword from xmm1 register to r/m64.,758
+EVEX.128.66.0F.W1 7E /r,"VMOVQ r64/m64, xmm1",VMOVQ,"r64/m64, xmm1",D,Valid,AVX512F OR AVX10.1,Move quadword from xmm1 register to r/m64.,758
 F2 0F D6 /r,"MOVDQ2Q mm, xmm",MOVDQ2Q,"mm, xmm",RM,Valid,,Move low quadword from xmm to mmx register.,762
 66 0F 6F /r,"MOVDQA xmm1, xmm2/m128",MOVDQA,"xmm1, xmm2/m128",A,Valid,SSE2,Move aligned packed integer values from xmm2/mem to xmm1.,763
 66 0F 7F /r,"MOVDQA xmm2/m128, xmm1",MOVDQA,"xmm2/m128, xmm1",B,Valid,SSE2,Move aligned packed integer values from xmm1 to xmm2/mem.,763
@@ -1280,7 +1280,7 @@ EVEX.128.66.0F38.W0 2A /r,"VMOVNTDQA xmm1, m128",VMOVNTDQA,"xmm1, m128",B,Valid,
 EVEX.256.66.0F38.W0 2A /r,"VMOVNTDQA ymm1, m256",VMOVNTDQA,"ymm1, m256",B,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Move 256-bit data from m256 to ymm1 using non-temporal hint if WC memory type.,794
 EVEX.512.66.0F38.W0 2A /r,"VMOVNTDQA zmm1, m512",VMOVNTDQA,"zmm1, m512",B,Valid,AVX512F OR AVX10.1,Move 512-bit data from m512 to zmm1 using non-temporal hint if WC memory type.,794
 NP 0F C3 /r,"MOVNTI m32, r32",MOVNTI,"m32, r32",MR,Valid,SSE2,Move doubleword from r32 to m32 using non-temporal hint.,796
-NP REX.W + 0F C3 /r,"MOVNTI m64, r64",MOVNTI,"m64, r64",MR,N.E.,SSE2,Move quadword from r64 to m64 using non-temporal hint.,796
+NP REX.W + 0F C3 /r,"MOVNTI m64, r64",MOVNTI,"m64, r64",MR,Valid,SSE2,Move quadword from r64 to m64 using non-temporal hint.,796
 66 0F 2B /r,"MOVNTPD m128, xmm1",MOVNTPD,"m128, xmm1",A,Valid,SSE2,Move packed double precision values in xmm1 to m128 using non-temporal hint.,798
 VEX.128.66.0F.WIG 2B /r,"VMOVNTPD m128, xmm1",VMOVNTPD,"m128, xmm1",A,Valid,AVX,Move packed double precision values in xmm1 to m128 using non-temporal hint.,798
 VEX.256.66.0F.WIG 2B /r,"VMOVNTPD m256, ymm1",VMOVNTPD,"m256, ymm1",A,Valid,AVX,Move packed double precision values in ymm1 to m256 using non-temporal hint.,798
@@ -1408,7 +1408,7 @@ F3 0F 59 /r,"MULSS xmm1,xmm2/m32",MULSS,"xmm1,xmm2/m32",A,Valid,SSE,Multiply the
 VEX.LIG.F3.0F.WIG 59 /r,"VMULSS xmm1,xmm2, xmm3/m32",VMULSS,"xmm1,xmm2, xmm3/m32",B,Valid,AVX,Multiply the low single precision floating-point value in xmm3/m32 by the low single precision floating-point value in xmm2.,854
 EVEX.LLIG.F3.0F.W0 59 /r,"VMULSS xmm1 {k1}{z}, xmm2, xmm3/m32 {er}",VMULSS,"xmm1 {k1}{z}, xmm2, xmm3/m32 {er}",C,Valid,AVX512F OR AVX10.1,Multiply the low single precision floating-point value in xmm3/m32 by the low single precision floating-point value in xmm2.,854
 VEX.LZ.F2.0F38.W0 F6 /r,"MULX r32a, r32b, r/m32",MULX,"r32a, r32b, r/m32",RVM,Valid,BMI2,Unsigned multiply of r/m32 with EDX without affecting arithmetic flags.,856
-VEX.LZ.F2.0F38.W1 F6 /r,"MULX r64a, r64b, r/m64",MULX,"r64a, r64b, r/m64",RVM,N.E.,BMI2,Unsigned multiply of r/m64 with RDX without affecting arithmetic flags.,856
+VEX.LZ.F2.0F38.W1 F6 /r,"MULX r64a, r64b, r/m64",MULX,"r64a, r64b, r/m64",RVM,Valid,BMI2,Unsigned multiply of r/m64 with RDX without affecting arithmetic flags.,856
 0F 01 C9,MWAIT,MWAIT,,ZO,Valid,,A hint that allows the processor to stop instruction execution and enter an implementation-dependent optimized state until occurrence of a class of events.,858
 F6 /3,NEG r/m8,NEG,r/m8,M,Valid,,Two's complement negate r/m8.,861
 F7 /3,NEG r/m16,NEG,r/m16,M,Valid,,Two's complement negate r/m16.,861
@@ -1690,18 +1690,18 @@ VEX.128.66.0F3A.WIG 63 /r ib,"VPCMPISTRI xmm1, xmm2/m128, imm8",VPCMPISTRI,"xmm1
 VEX.128.66.0F3A.WIG 62 /r ib,"VPCMPISTRM xmm1, xmm2/m128, imm8",VPCMPISTRM,"xmm1, xmm2/m128, imm8",RM,Valid,AVX,"Perform a packed comparison of string data with implicit lengths, generating a Mask, and storing the result in XMM0.",972
 NP 0F 01 C5,PCONFIG,PCONFIG,,A,Valid,PCONFIG,This instruction is used to execute functions for configuring platform features.,974
 VEX.LZ.F2.0F38.W0 F5 /r,"PDEP r32a, r32b, r/m32",PDEP,"r32a, r32b, r/m32",RVM,Valid,BMI2,"Parallel deposit of bits from r32b using mask in r/m32, result is written to r32a.",985
-VEX.LZ.F2.0F38.W1 F5 /r,"PDEP r64a, r64b, r/m64",PDEP,"r64a, r64b, r/m64",RVM,N.E.,BMI2,"Parallel deposit of bits from r64b using mask in r/m64, result is written to r64a.",985
+VEX.LZ.F2.0F38.W1 F5 /r,"PDEP r64a, r64b, r/m64",PDEP,"r64a, r64b, r/m64",RVM,Valid,BMI2,"Parallel deposit of bits from r64b using mask in r/m64, result is written to r64a.",985
 VEX.LZ.F3.0F38.W0 F5 /r,"PEXT r32a, r32b, r/m32",PEXT,"r32a, r32b, r/m32",RVM,Valid,BMI2,"Parallel extract of bits from r32b using mask in r/m32, result is written to r32a.",987
-VEX.LZ.F3.0F38.W1 F5 /r,"PEXT r64a, r64b, r/m64",PEXT,"r64a, r64b, r/m64",RVM,N.E.,BMI2,"Parallel extract of bits from r64b using mask in r/m64, result is written to r64a.",987
+VEX.LZ.F3.0F38.W1 F5 /r,"PEXT r64a, r64b, r/m64",PEXT,"r64a, r64b, r/m64",RVM,Valid,BMI2,"Parallel extract of bits from r64b using mask in r/m64, result is written to r64a.",987
 66 0F 3A 14 /r ib,"PEXTRB reg/m8, xmm2, imm8",PEXTRB,"reg/m8, xmm2, imm8",A,Valid,SSE4_1,Extract a byte integer value from xmm2 at the source byte offset specified by imm8 into reg or m8. The upper bits of r32 or r64 are zeroed.,989
 66 0F 3A 16 /r ib,"PEXTRD r/m32, xmm2, imm8",PEXTRD,"r/m32, xmm2, imm8",A,Valid,SSE4_1,Extract a dword integer value from xmm2 at the source dword offset specified by imm8 into r/m32.,989
-66 REX.W 0F 3A 16 /r ib,"PEXTRQ r/m64, xmm2, imm8",PEXTRQ,"r/m64, xmm2, imm8",A,N.E.,SSE4_1,Extract a qword integer value from xmm2 at the source qword offset specified by imm8 into r/m64.,989
+66 REX.W 0F 3A 16 /r ib,"PEXTRQ r/m64, xmm2, imm8",PEXTRQ,"r/m64, xmm2, imm8",A,Valid,SSE4_1,Extract a qword integer value from xmm2 at the source qword offset specified by imm8 into r/m64.,989
 VEX.128.66.0F3A.W0 14 /r ib,"VPEXTRB reg/m8, xmm2, imm8",VPEXTRB,"reg/m8, xmm2, imm8",A,Valid,AVX,Extract a byte integer value from xmm2 at the source byte offset specified by imm8 into reg or m8. The upper bits of r64/r32 is filled with zeros.,989
 VEX.128.66.0F3A.W0 16 /r ib,"VPEXTRD r32/m32, xmm2, imm8",VPEXTRD,"r32/m32, xmm2, imm8",A,Valid,AVX,Extract a dword integer value from xmm2 at the source dword offset specified by imm8 into r32/m32.,989
 VEX.128.66.0F3A.W1 16 /r ib,"VPEXTRQ r64/m64, xmm2, imm8",VPEXTRQ,"r64/m64, xmm2, imm8",A,Valid,AVX,Extract a qword integer value from xmm2 at the source dword offset specified by imm8 into r64/m64.,989
 EVEX.128.66.0F3A.WIG 14 /r ib,"VPEXTRB reg/m8, xmm2, imm8",VPEXTRB,"reg/m8, xmm2, imm8",B,Valid,AVX512BW OR AVX10.1,Extract a byte integer value from xmm2 at the source byte offset specified by imm8 into reg or m8. The upper bits of r64/r32 is filled with zeros.,989
 EVEX.128.66.0F3A.W0 16 /r ib,"VPEXTRD r32/m32, xmm2, imm8",VPEXTRD,"r32/m32, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,Extract a dword integer value from xmm2 at the source dword offset specified by imm8 into r32/m32.,989
-EVEX.128.66.0F3A.W1 16 /r ib,"VPEXTRQ r64/m64, xmm2, imm8",VPEXTRQ,"r64/m64, xmm2, imm8",B,N.E.,AVX512DQ OR AVX10.1,Extract a qword integer value from xmm2 at the source dword offset specified by imm8 into r64/m64.,989
+EVEX.128.66.0F3A.W1 16 /r ib,"VPEXTRQ r64/m64, xmm2, imm8",VPEXTRQ,"r64/m64, xmm2, imm8",B,Valid,AVX512DQ OR AVX10.1,Extract a qword integer value from xmm2 at the source dword offset specified by imm8 into r64/m64.,989
 NP 0F C5 /r ib,"PEXTRW reg, mm, imm8",PEXTRW,"reg, mm, imm8",A,Valid,SSE,"Extract the word specified by imm8 from mm and move it to reg, bits 15-0. The upper bits of r32 or r64 is zeroed.",992
 66 0F C5 /r ib,"PEXTRW reg, xmm, imm8",PEXTRW,"reg, xmm, imm8",A,Valid,SSE2,"Extract the word specified by imm8 from xmm and move it to reg, bits 15-0. The upper bits of r32 or r64 is zeroed.",992
 66 0F 3A 15 /r ib,"PEXTRW reg/m16, xmm, imm8",PEXTRW,"reg/m16, xmm, imm8",B,Valid,SSE4_1,"Extract the word specified by imm8 from xmm and copy it to lowest 16 bits of reg or m16. Zero-extend the result in the destination, r32 or r64.",992
@@ -1737,13 +1737,13 @@ VEX.256.66.0F38.WIG 05 /r,"VPHSUBW ymm1, ymm2, ymm3/m256",VPHSUBW,"ymm1, ymm2, y
 VEX.256.66.0F38.WIG 06 /r,"VPHSUBD ymm1, ymm2, ymm3/m256",VPHSUBD,"ymm1, ymm2, ymm3/m256",RVM,Valid,AVX2,"Subtract 32-bit signed integers horizontally, pack to ymm1.",1005
 66 0F 3A 20 /r ib,"PINSRB xmm1, r32/m8, imm8",PINSRB,"xmm1, r32/m8, imm8",A,Valid,SSE4_1,Insert a byte integer value from r32/m8 into xmm1 at the destination element in xmm1 specified by imm8.,1008
 66 0F 3A 22 /r ib,"PINSRD xmm1, r/m32, imm8",PINSRD,"xmm1, r/m32, imm8",A,Valid,SSE4_1,Insert a dword integer value from r/m32 into the xmm1 at the destination element specified by imm8.,1008
-66 REX.W 0F 3A 22 /r ib,"PINSRQ xmm1, r/m64, imm8",PINSRQ,"xmm1, r/m64, imm8",A,N.E.,SSE4_1,Insert a qword integer value from r/m64 into the xmm1 at the destination element specified by imm8.,1008
+66 REX.W 0F 3A 22 /r ib,"PINSRQ xmm1, r/m64, imm8",PINSRQ,"xmm1, r/m64, imm8",A,Valid,SSE4_1,Insert a qword integer value from r/m64 into the xmm1 at the destination element specified by imm8.,1008
 VEX.128.66.0F3A.W0 20 /r ib,"VPINSRB xmm1, xmm2, r32/m8, imm8",VPINSRB,"xmm1, xmm2, r32/m8, imm8",B,Valid,AVX,Merge a byte integer value from r32/m8 and rest from xmm2 into xmm1 at the byte offset in imm8.,1008
 VEX.128.66.0F3A.W0 22 /r ib,"VPINSRD xmm1, xmm2, r/m32, imm8",VPINSRD,"xmm1, xmm2, r/m32, imm8",B,Valid,AVX,Insert a dword integer value from r32/m32 and rest from xmm2 into xmm1 at the dword offset in imm8.,1008
 VEX.128.66.0F3A.W1 22 /r ib,"VPINSRQ xmm1, xmm2, r/m64, imm8",VPINSRQ,"xmm1, xmm2, r/m64, imm8",B,Valid,AVX,Insert a qword integer value from r64/m64 and rest from xmm2 into xmm1 at the qword offset in imm8.,1008
 EVEX.128.66.0F3A.WIG 20 /r ib,"VPINSRB xmm1, xmm2, r32/m8, imm8",VPINSRB,"xmm1, xmm2, r32/m8, imm8",C,Valid,AVX512BW OR AVX10.1,Merge a byte integer value from r32/m8 and rest from xmm2 into xmm1 at the byte offset in imm8.,1008
 EVEX.128.66.0F3A.W0 22 /r ib,"VPINSRD xmm1, xmm2, r32/m32, imm8",VPINSRD,"xmm1, xmm2, r32/m32, imm8",C,Valid,AVX512DQ OR AVX10.1,Insert a dword integer value from r32/m32 and rest from xmm2 into xmm1 at the dword offset in imm8.,1008
-EVEX.128.66.0F3A.W1 22 /r ib,"VPINSRQ xmm1, xmm2, r64/m64, imm8",VPINSRQ,"xmm1, xmm2, r64/m64, imm8",C,N.E.,AVX512DQ OR AVX10.1,Insert a qword integer value from r64/m64 and rest from xmm2 into xmm1 at the qword offset in imm8.,1008
+EVEX.128.66.0F3A.W1 22 /r ib,"VPINSRQ xmm1, xmm2, r64/m64, imm8",VPINSRQ,"xmm1, xmm2, r64/m64, imm8",C,Valid,AVX512DQ OR AVX10.1,Insert a qword integer value from r64/m64 and rest from xmm2 into xmm1 at the qword offset in imm8.,1008
 NP 0F C4 /r ib,"PINSRW mm, r32/m16, imm8",PINSRW,"mm, r32/m16, imm8",A,Valid,SSE,Insert the low word from r32 or from m16 into mm at the word position specified by imm8.,1011
 66 0F C4 /r ib,"PINSRW xmm, r32/m16, imm8",PINSRW,"xmm, r32/m16, imm8",A,Valid,SSE2,Move the low word of r32 or from m16 into xmm at the word position specified by imm8.,1011
 VEX.128.66.0F.W0 C4 /r ib,"VPINSRW xmm1, xmm2, r32/m16, imm8",VPINSRW,"xmm1, xmm2, r32/m16, imm8",B,Valid,AVX,Insert the word from r32/m16 at the offset indicated by imm8 into the value from xmm2 and store result in xmm1.,1011
@@ -2394,9 +2394,9 @@ F3 REX.W 0F AE /0,RDFSBASE r64,RDFSBASE,r64,M,Valid,FSGSBASE,Load the 64-bit des
 F3 0F AE /1,RDGSBASE r32,RDGSBASE,r32,M,Valid,FSGSBASE,Load the 32-bit destination register with the GS base address.,1245
 F3 REX.W 0F AE /1,RDGSBASE r64,RDGSBASE,r64,M,Valid,FSGSBASE,Load the 64-bit destination register with the GS base address.,1245
 0F 32,RDMSR,RDMSR,,ZO,Valid,,Read MSR specified by ECX into EDX:EAX.,1247
-F2 0F 01 C6,RDMSRLIST,RDMSRLIST,,ZO,N.E.,MSRLIST,"Read the requested list of MSRs, and store the read values to memory.",1249
+F2 0F 01 C6,RDMSRLIST,RDMSRLIST,,ZO,Valid,MSRLIST,"Read the requested list of MSRs, and store the read values to memory.",1249
 F3 0F C7 /7,RDPID r32,RDPID,r32,R,N.E.,RDPID,Read IA32_TSC_AUX into r32.,1251
-F3 0F C7 /7,RDPID r64,RDPID,r64,R,N.E.,RDPID,Read IA32_TSC_AUX into r64.,1251
+F3 0F C7 /7,RDPID r64,RDPID,r64,R,Valid,RDPID,Read IA32_TSC_AUX into r64.,1251
 NP 0F 01 EE,RDPKRU,RDPKRU,,ZO,Valid,OSPKE,Reads PKRU into EAX.,1252
 0F 33,RDPMC,RDPMC,,ZO,Valid,,Read performance-monitoring counter specified by ECX into EDX:EAX.,1254
 NFx 0F C7 /6,RDRAND r16,RDRAND,r16,M,Valid,RDRAND,Read a 16-bit random number and store in the destination register.,1257
@@ -2406,7 +2406,7 @@ NFx 0F C7 /7,RDSEED r16,RDSEED,r16,M,Valid,RDSEED,Read a 16-bit NIST SP800-90B &
 NFx 0F C7 /7,RDSEED r32,RDSEED,r32,M,Valid,RDSEED,Read a 32-bit NIST SP800-90B & C compliant random value and store in the destination register.,1259
 NFx REX.W + 0F C7 /7,RDSEED r64,RDSEED,r64,M,Valid,RDSEED,Read a 64-bit NIST SP800-90B & C compliant random value and store in the destination register.,1259
 F3 0F 1E /1 (mod=11),RDSSPD r32,RDSSPD,r32,R,Valid,CET_SS,Copy low 32 bits of shadow stack pointer (SSP) to r32.,1261
-F3 REX.W 0F 1E /1 (mod=11),RDSSPQ r64,RDSSPQ,r64,R,N.E.,CET_SS,Copies shadow stack pointer (SSP) to r64.,1261
+F3 REX.W 0F 1E /1 (mod=11),RDSSPQ r64,RDSSPQ,r64,R,Valid,CET_SS,Copies shadow stack pointer (SSP) to r64.,1261
 0F 31,RDTSC,RDTSC,,ZO,Valid,,Read time-stamp counter into EDX:EAX.,1262
 0F 01 F9,RDTSCP,RDTSCP,,ZO,Valid,,Read 64-bit time-stamp counter and IA32_TSC_AUX value into EDX:EAX and ECX.,1264
 F3 6C,"REP INS m8, DX",REP,"INS m8, DX",ZO,Valid,,Input (count) bytes from port DX to (dest).,1266
@@ -2448,7 +2448,7 @@ CB,RET,RET,,ZO,Valid,,Far return to calling procedure.,1272
 C2 iw,RET imm16,RET,imm16,I,Valid,,Near return to calling procedure and pop imm16 bytes from stack.,1272
 CA iw,RET imm16,RET,imm16,I,Valid,,Far return to calling procedure and pop imm16 bytes from stack.,1272
 VEX.LZ.F2.0F3A.W0 F0 /r ib,"RORX r32, r/m32, imm8",RORX,"r32, r/m32, imm8",RMI,Valid,BMI2,Rotate 32-bit r/m32 right imm8 times without affecting arithmetic flags.,1285
-VEX.LZ.F2.0F3A.W1 F0 /r ib,"RORX r64, r/m64, imm8",RORX,"r64, r/m64, imm8",RMI,N.E.,BMI2,Rotate 64-bit r/m64 right imm8 times without affecting arithmetic flags.,1285
+VEX.LZ.F2.0F3A.W1 F0 /r ib,"RORX r64, r/m64, imm8",RORX,"r64, r/m64, imm8",RMI,Valid,BMI2,Rotate 64-bit r/m64 right imm8 times without affecting arithmetic flags.,1285
 66 0F 3A 09 /r ib,"ROUNDPD xmm1, xmm2/m128, imm8",ROUNDPD,"xmm1, xmm2/m128, imm8",RMI,Valid,SSE4_1,Round packed double precision floating-point values in xmm2/m128 and place the result in xmm1. The rounding mode is determined by imm8.,1286
 VEX.128.66.0F3A.WIG 09 /r ib,"VROUNDPD xmm1, xmm2/m128, imm8",VROUNDPD,"xmm1, xmm2/m128, imm8",RMI,Valid,AVX,Round packed double precision floating-point values in xmm2/m128 and place the result in xmm1. The rounding mode is determined by imm8.,1286
 VEX.256.66.0F3A.WIG 09 /r ib,"VROUNDPD ymm1, ymm2/m256, imm8",VROUNDPD,"ymm1, ymm2/m256, imm8",RMI,Valid,AVX,Round packed double precision floating-point values in ymm2/m256 and place the result in ymm1. The rounding mode is determined by imm8.,1286
@@ -2518,9 +2518,9 @@ REX.W + C1 /5 ib,"SHR r/m64, imm8",SHR,"r/m64, imm8",MI,Valid,,"Unsigned divide 
 VEX.LZ.F3.0F38.W0 F7 /r,"SARX r32a, r/m32, r32b",SARX,"r32a, r/m32, r32b",RMV,Valid,BMI2,Shift r/m32 arithmetically right with count specified in r32b.,1311
 VEX.LZ.66.0F38.W0 F7 /r,"SHLX r32a, r/m32, r32b",SHLX,"r32a, r/m32, r32b",RMV,Valid,BMI2,Shift r/m32 logically left with count specified in r32b.,1311
 VEX.LZ.F2.0F38.W0 F7 /r,"SHRX r32a, r/m32, r32b",SHRX,"r32a, r/m32, r32b",RMV,Valid,BMI2,Shift r/m32 logically right with count specified in r32b.,1311
-VEX.LZ.F3.0F38.W1 F7 /r,"SARX r64a, r/m64, r64b",SARX,"r64a, r/m64, r64b",RMV,N.E.,BMI2,Shift r/m64 arithmetically right with count specified in r64b.,1311
-VEX.LZ.66.0F38.W1 F7 /r,"SHLX r64a, r/m64, r64b",SHLX,"r64a, r/m64, r64b",RMV,N.E.,BMI2,Shift r/m64 logically left with count specified in r64b.,1311
-VEX.LZ.F2.0F38.W1 F7 /r,"SHRX r64a, r/m64, r64b",SHRX,"r64a, r/m64, r64b",RMV,N.E.,BMI2,Shift r/m64 logically right with count specified in r64b.,1311
+VEX.LZ.F3.0F38.W1 F7 /r,"SARX r64a, r/m64, r64b",SARX,"r64a, r/m64, r64b",RMV,Valid,BMI2,Shift r/m64 arithmetically right with count specified in r64b.,1311
+VEX.LZ.66.0F38.W1 F7 /r,"SHLX r64a, r/m64, r64b",SHLX,"r64a, r/m64, r64b",RMV,Valid,BMI2,Shift r/m64 logically left with count specified in r64b.,1311
+VEX.LZ.F2.0F38.W1 F7 /r,"SHRX r64a, r/m64, r64b",SHRX,"r64a, r/m64, r64b",RMV,Valid,BMI2,Shift r/m64 logically right with count specified in r64b.,1311
 F3 0F 01 EA,SAVEPREVSSP,SAVEPREVSSP,,ZO,Valid,CET_SS,Save a restore-shadow-stack token on previous shadow stack.,1313
 1C ib,"SBB AL, imm8",SBB,"AL, imm8",I,Valid,,Subtract with borrow imm8 from AL.,1315
 1D iw,"SBB AX, imm16",SBB,"AX, imm16",I,Valid,,Subtract with borrow imm16 from AX.,1315
@@ -2653,7 +2653,7 @@ AB,STOSW,STOSW,,ZO,Valid,,"For legacy mode, store AX at address ES:(E)DI; For 64
 AB,STOSD,STOSD,,ZO,Valid,,"For legacy mode, store EAX at address ES:(E)DI; For 64-bit mode store EAX at address RDI or EDI.",1379
 REX.W + AB,STOSQ,STOSQ,,ZO,Valid,,Store RAX at address RDI or EDI.,1379
 0F 00 /1,STR r/m16,STR,r/m16,M,Valid,,Stores segment selector from TR in r/m16.,1382
-VEX.128.66.0F38.W0 49 !(11):000:bbb,STTILECFG m512,STTILECFG,m512,A,N.E.,AMX_TILE,Store tile configuration in m512.,1384
+VEX.128.66.0F38.W0 49 !(11):000:bbb,STTILECFG m512,STTILECFG,m512,A,Valid,AMX_TILE,Store tile configuration in m512.,1384
 F3 0F 01 EF,STUI,STUI,,ZO,Valid,UINTR,Set user interrupt flag.,1386
 2C ib,"SUB AL, imm8",SUB,"AL, imm8",I,Valid,,Subtract imm8 from AL.,1387
 2D iw,"SUB AX, imm16",SUB,"AX, imm16",I,Valid,,Subtract imm16 from AX.,1387
@@ -2699,12 +2699,12 @@ EVEX.LLIG.F3.0F.W0 5C /r,"VSUBSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",VSUBSS,"xmm1 
 REX.W + 0F 35,SYSEXIT,SYSEXIT,,ZO,Valid,,Fast return to 64-bit mode privilege level 3 user code.,1408
 0F 07,SYSRET,SYSRET,,ZO,Valid,,Return to compatibility mode from fast system call.,1411
 REX.W + 0F 07,SYSRET,SYSRET,,ZO,Valid,,Return to 64-bit mode from fast system call.,1411
-VEX.128.F3.0F38.W0 5C 11:rrr:bbb,"TDPBF16PS tmm1, tmm2, tmm3",TDPBF16PS,"tmm1, tmm2, tmm3",A,N.E.,AMX_BF16,"Matrix multiply BF16 elements from tmm2 and tmm3, and accumulate the packed single precision elements in tmm1.",1414
-VEX.128.F2.0F38.W0 5E 11:rrr:bbb,"TDPBSSD tmm1, tmm2, tmm3",TDPBSSD,"tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,Matrix multiply signed byte elements from tmm2 by signed byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
-VEX.128.F3.0F38.W0 5E 11:rrr:bbb,"TDPBSUD tmm1, tmm2, tmm3",TDPBSUD,"tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,Matrix multiply signed byte elements from tmm2 by unsigned byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
-VEX.128.66.0F38.W0 5E 11:rrr:bbb,"TDPBUSD tmm1, tmm2, tmm3",TDPBUSD,"tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,Matrix multiply unsigned byte elements from tmm2 by signed byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
-VEX.128.NP.0F38.W0 5E 11:rrr:bbb,"TDPBUUD tmm1, tmm2, tmm3",TDPBUUD,"tmm1, tmm2, tmm3",A,N.E.,AMX_INT8,Matrix multiply unsigned byte elements from tmm2 by unsigned byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
-VEX.128.F2.0F38.W0 5C 11:rrr:bbb,"TDPFP16PS tmm1, tmm2, tmm3",TDPFP16PS,"tmm1, tmm2, tmm3",A,N.E.,AMX_FP16,"Matrix multiply FP16 elements from tmm2 and tmm3, and accumulate the packed single precision elements in tmm1.",1418
+VEX.128.F3.0F38.W0 5C 11:rrr:bbb,"TDPBF16PS tmm1, tmm2, tmm3",TDPBF16PS,"tmm1, tmm2, tmm3",A,Valid,AMX_BF16,"Matrix multiply BF16 elements from tmm2 and tmm3, and accumulate the packed single precision elements in tmm1.",1414
+VEX.128.F2.0F38.W0 5E 11:rrr:bbb,"TDPBSSD tmm1, tmm2, tmm3",TDPBSSD,"tmm1, tmm2, tmm3",A,Valid,AMX_INT8,Matrix multiply signed byte elements from tmm2 by signed byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
+VEX.128.F3.0F38.W0 5E 11:rrr:bbb,"TDPBSUD tmm1, tmm2, tmm3",TDPBSUD,"tmm1, tmm2, tmm3",A,Valid,AMX_INT8,Matrix multiply signed byte elements from tmm2 by unsigned byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
+VEX.128.66.0F38.W0 5E 11:rrr:bbb,"TDPBUSD tmm1, tmm2, tmm3",TDPBUSD,"tmm1, tmm2, tmm3",A,Valid,AMX_INT8,Matrix multiply unsigned byte elements from tmm2 by signed byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
+VEX.128.NP.0F38.W0 5E 11:rrr:bbb,"TDPBUUD tmm1, tmm2, tmm3",TDPBUUD,"tmm1, tmm2, tmm3",A,Valid,AMX_INT8,Matrix multiply unsigned byte elements from tmm2 by unsigned byte elements from tmm3 and accumulate the dword elements in tmm1.,1416
+VEX.128.F2.0F38.W0 5C 11:rrr:bbb,"TDPFP16PS tmm1, tmm2, tmm3",TDPFP16PS,"tmm1, tmm2, tmm3",A,Valid,AMX_FP16,"Matrix multiply FP16 elements from tmm2 and tmm3, and accumulate the packed single precision elements in tmm1.",1418
 A8 ib,"TEST AL, imm8",TEST,"AL, imm8",I,Valid,,"AND imm8 with AL; set SF, ZF, PF according to result.",1420
 A9 iw,"TEST AX, imm16",TEST,"AX, imm16",I,Valid,,"AND imm16 with AX; set SF, ZF, PF according to result.",1420
 A9 id,"TEST EAX, imm32",TEST,"EAX, imm32",I,Valid,,"AND imm32 with EAX; set SF, ZF, PF according to result.",1420
@@ -2718,15 +2718,15 @@ REX.W + F7 /0 id,"TEST r/m64, imm32",TEST,"r/m64, imm32",MI,Valid,,"AND imm32 si
 85 /r,"TEST r/m32, r32",TEST,"r/m32, r32",MR,Valid,,"AND r32 with r/m32; set SF, ZF, PF according to result.",1420
 REX.W + 85 /r,"TEST r/m64, r64",TEST,"r/m64, r64",MR,Valid,,"AND r64 with r/m64; set SF, ZF, PF according to result.",1420
 F3 0F 01 ED,TESTUI,TESTUI,,ZO,Valid,UINTR,Copies the current value of UIF into EFLAGS.CF.,1422
-VEX.128.F2.0F38.W0 4B !(11):rrr:100,"TILELOADD tmm1, sibmem",TILELOADD,"tmm1, sibmem",A,N.E.,AMX_TILE,Load data into tmm1 as specified by information in sibmem.,1423
-VEX.128.66.0F38.W0 4B !(11):rrr:100,"TILELOADDT1 tmm1, sibmem",TILELOADDT1,"tmm1, sibmem",A,N.E.,AMX_TILE,Load data into tmm1 as specified by information in sibmem with hint to optimize data caching.,1423
-VEX.128.NP.0F38.W0 49 C0,TILERELEASE,TILERELEASE,,A,N.E.,AMX_TILE,Initialize TILECFG and TILEDATA.,1425
-VEX.128.F3.0F38.W0 4B !(11):rrr:100,"TILESTORED sibmem, tmm1",TILESTORED,"sibmem, tmm1",A,N.E.,AMX_TILE,Store a tile in sibmem as specified in tmm1.,1426
-VEX.128.F2.0F38.W0 49 11:rrr:000,TILEZERO tmm1,TILEZERO,tmm1,A,N.E.,AMX_TILE,Zero the destination tile.,1427
+VEX.128.F2.0F38.W0 4B !(11):rrr:100,"TILELOADD tmm1, sibmem",TILELOADD,"tmm1, sibmem",A,Valid,AMX_TILE,Load data into tmm1 as specified by information in sibmem.,1423
+VEX.128.66.0F38.W0 4B !(11):rrr:100,"TILELOADDT1 tmm1, sibmem",TILELOADDT1,"tmm1, sibmem",A,Valid,AMX_TILE,Load data into tmm1 as specified by information in sibmem with hint to optimize data caching.,1423
+VEX.128.NP.0F38.W0 49 C0,TILERELEASE,TILERELEASE,,A,Valid,AMX_TILE,Initialize TILECFG and TILEDATA.,1425
+VEX.128.F3.0F38.W0 4B !(11):rrr:100,"TILESTORED sibmem, tmm1",TILESTORED,"sibmem, tmm1",A,Valid,AMX_TILE,Store a tile in sibmem as specified in tmm1.,1426
+VEX.128.F2.0F38.W0 49 11:rrr:000,TILEZERO tmm1,TILEZERO,tmm1,A,Valid,AMX_TILE,Zero the destination tile.,1427
 66 0F AE /6,"TPAUSE r32, <edx>, <eax>",TPAUSE,"r32, <edx>, <eax>",A,Valid,WAITPKG,Directs the processor to enter an implementation-dependent optimized state until the TSC reaches the value in EDX:EAX.,1428
 F3 0F BC /r,"TZCNT r16, r/m16",TZCNT,"r16, r/m16",A,Valid,BMI1,"Count the number of trailing zero bits in r/m16, return result in r16.",1430
 F3 0F BC /r,"TZCNT r32, r/m32",TZCNT,"r32, r/m32",A,Valid,BMI1,"Count the number of trailing zero bits in r/m32, return result in r32.",1430
-F3 REX.W 0F BC /r,"TZCNT r64, r/m64",TZCNT,"r64, r/m64",A,N.E.,BMI1,"Count the number of trailing zero bits in r/m64, return result in r64.",1430
+F3 REX.W 0F BC /r,"TZCNT r64, r/m64",TZCNT,"r64, r/m64",A,Valid,BMI1,"Count the number of trailing zero bits in r/m64, return result in r64.",1430
 66 0F 2E /r,"UCOMISD xmm1, xmm2/m64",UCOMISD,"xmm1, xmm2/m64",A,Valid,SSE2,Compare low double precision floating-point values in xmm1 and xmm2/mem64 and set the EFLAGS flags accordingly.,1432
 VEX.LIG.66.0F.WIG 2E /r,"VUCOMISD xmm1, xmm2/m64",VUCOMISD,"xmm1, xmm2/m64",A,Valid,AVX,Compare low double precision floating-point values in xmm1 and xmm2/mem64 and set the EFLAGS flags accordingly.,1432
 EVEX.LLIG.66.0F.W1 2E /r,"VUCOMISD xmm1, xmm2/m64{sae}",VUCOMISD,"xmm1, xmm2/m64{sae}",B,Valid,AVX512F OR AVX10.1,Compare low double precision floating-point values in xmm1 and xmm2/m64 and set the EFLAGS flags accordingly.,1432
@@ -2903,18 +2903,18 @@ EVEX.256.0F.W1 5B /r,"VCVTQQ2PS xmm1 {k1}{z}, ymm2/m256/m64bcst",VCVTQQ2PS,"xmm1
 EVEX.512.0F.W1 5B /r,"VCVTQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",VCVTQQ2PS,"ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",A,Valid,AVX512DQ OR AVX10.1,Convert eight packed quadword integers from zmm2/mem to eight packed single precision floating-point values in ymm1 with writemask k1.,1547
 EVEX.LLIG.F2.MAP5.W1 5A /r,"VCVTSD2SH xmm1{k1}{z}, xmm2, xmm3/m64 {er}",VCVTSD2SH,"xmm1{k1}{z}, xmm2, xmm3/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP64 value in xmm3/m64 to an FP16 value and store the result in the low element of xmm1 subject to writemask k1. Bits 127:16 of xmm2 are copied to xmm1[127:16].,1549
 EVEX.LLIG.F2.0F.W0 79 /r,"VCVTSD2USI r32, xmm1/m64{er}",VCVTSD2USI,"r32, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned doubleword integer r32.,1550
-EVEX.LLIG.F2.0F.W1 79 /r,"VCVTSD2USI r64, xmm1/m64{er}",VCVTSD2USI,"r64, xmm1/m64{er}",A,N.E.,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned quadword integer zero-extended into r64.,1550
+EVEX.LLIG.F2.0F.W1 79 /r,"VCVTSD2USI r64, xmm1/m64{er}",VCVTSD2USI,"r64, xmm1/m64{er}",A,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned quadword integer zero-extended into r64.,1550
 EVEX.LLIG.F3.MAP5.W0 5A /r,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",VCVTSH2SD,"xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 value in xmm3/m16 to an FP64 value and store the result in the low element of xmm1 subject to writemask k1. Bits 127:64 of xmm2 are copied to xmm1[127:64].,1552
 EVEX.LLIG.F3.MAP5.W0 2D /r,"VCVTSH2SI r32, xmm1/m16 {er}",VCVTSH2SI,"r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to a signed doubleword integer and store the result in r32.,1553
-EVEX.LLIG.F3.MAP5.W1 2D /r,"VCVTSH2SI r64, xmm1/m16 {er}",VCVTSH2SI,"r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to a signed quadword integer and store the result in r64.,1553
+EVEX.LLIG.F3.MAP5.W1 2D /r,"VCVTSH2SI r64, xmm1/m16 {er}",VCVTSH2SI,"r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to a signed quadword integer and store the result in r64.,1553
 EVEX.LLIG.NP.MAP6.W0 13 /r,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",VCVTSH2SS,"xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm3/m16 to an FP32 value and store in the low element of xmm1 subject to writemask k1. Bits 127:32 of xmm2 are copied to xmm1[127:32].,1555
 EVEX.LLIG.F3.MAP5.W0 79 /r,"VCVTSH2USI r32, xmm1/m16 {er}",VCVTSH2USI,"r32, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to an unsigned doubleword integer and store the result in r32.,1556
-EVEX.LLIG.F3.MAP5.W1 79 /r,"VCVTSH2USI r64, xmm1/m16 {er}",VCVTSH2USI,"r64, xmm1/m16 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to an unsigned quadword integer and store the result in r64.,1556
+EVEX.LLIG.F3.MAP5.W1 79 /r,"VCVTSH2USI r64, xmm1/m16 {er}",VCVTSH2USI,"r64, xmm1/m16 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the low FP16 element in xmm1/m16 to an unsigned quadword integer and store the result in r64.,1556
 EVEX.LLIG.F3.MAP5.W0 2A /r,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",VCVTSI2SH,"xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the signed doubleword integer in r32/m32 to an FP16 value and store the result in xmm1. Bits 127:16 of xmm2 are copied to xmm1[127:16].,1558
-EVEX.LLIG.F3.MAP5.W1 2A /r,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",VCVTSI2SH,"xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16 OR AVX10.1,Convert the signed quadword integer in r64/m64 to an FP16 value and store the result in xmm1. Bits 127:16 of xmm2 are copied to xmm1[127:16].,1558
+EVEX.LLIG.F3.MAP5.W1 2A /r,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",VCVTSI2SH,"xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert the signed quadword integer in r64/m64 to an FP16 value and store the result in xmm1. Bits 127:16 of xmm2 are copied to xmm1[127:16].,1558
 EVEX.LLIG.NP.MAP5.W0 1D /r,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",VCVTSS2SH,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}",A,Valid,AVX512_FP16 OR AVX10.1,Convert low FP32 value in xmm3/m32 to an FP16 value and store in the low element of xmm1 subject to writemask k1. Bits 127:16 from xmm2 are copied to xmm1[127:16].,1560
 EVEX.LLIG.F3.0F.W0 79 /r,"VCVTSS2USI r32, xmm1/m32{er}",VCVTSS2USI,"r32, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned doubleword integer in r32.,1561
-EVEX.LLIG.F3.0F.W1 79 /r,"VCVTSS2USI r64, xmm1/m32{er}",VCVTSS2USI,"r64, xmm1/m32{er}",A,N.E.,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned quadword integer in r64.,1561
+EVEX.LLIG.F3.0F.W1 79 /r,"VCVTSS2USI r64, xmm1/m32{er}",VCVTSS2USI,"r64, xmm1/m32{er}",A,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned quadword integer in r64.,1561
 EVEX.128.66.0F.W1 7A /r,"VCVTTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst",VCVTTPD2QQ,"xmm1 {k1}{z}, xmm2/m128/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,Convert two packed double precision floating-point values from zmm2/m128/m64bcst to two packed signed quadword integers in zmm1 using truncation with writemask k1.,1563
 EVEX.256.66.0F.W1 7A /r,"VCVTTPD2QQ ymm1 {k1}{z}, ymm2/m256/m64bcst",VCVTTPD2QQ,"ymm1 {k1}{z}, ymm2/m256/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,Convert four packed double precision floating-point values from ymm2/m256/m64bcst to four packed signed quadword integers in ymm1 using truncation with writemask k1.,1563
 EVEX.512.66.0F.W1 7A /r,"VCVTTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",VCVTTPD2QQ,"zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",A,Valid,AVX512DQ OR AVX10.1,Convert eight packed double precision floating-point values from zmm2/m512 to eight packed signed quadword integers in zmm1 using truncation with writemask k1.,1563
@@ -2952,13 +2952,13 @@ EVEX.128.66.0F.W0 78 /r,"VCVTTPS2UQQ xmm1 {k1}{z}, xmm2/m64/m32bcst",VCVTTPS2UQQ
 EVEX.256.66.0F.W0 78 /r,"VCVTTPS2UQQ ymm1 {k1}{z}, xmm2/m128/m32bcst",VCVTTPS2UQQ,"ymm1 {k1}{z}, xmm2/m128/m32bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,Convert four packed single precision floating-point values from xmm2/m128/m32bcst to four packed unsigned quadword values in ymm1 using truncation subject to writemask k1.,1585
 EVEX.512.66.0F.W0 78 /r,"VCVTTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",VCVTTPS2UQQ,"zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",A,Valid,AVX512DQ OR AVX10.1,Convert eight packed single precision floating-point values from ymm2/m256/m32bcst to eight packed unsigned quadword values in zmm1 using truncation subject to writemask k1.,1585
 EVEX.LLIG.F2.0F.W0 78 /r,"VCVTTSD2USI r32, xmm1/m64{sae}",VCVTTSD2USI,"r32, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned doubleword integer r32 using truncation.,1587
-EVEX.LLIG.F2.0F.W1 78 /r,"VCVTTSD2USI r64, xmm1/m64{sae}",VCVTTSD2USI,"r64, xmm1/m64{sae}",A,N.E.,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned quadword integer zero-extended into r64 using truncation.,1587
+EVEX.LLIG.F2.0F.W1 78 /r,"VCVTTSD2USI r64, xmm1/m64{sae}",VCVTTSD2USI,"r64, xmm1/m64{sae}",A,Valid,AVX512F OR AVX10.1,Convert one double precision floating-point value from xmm1/m64 to one unsigned quadword integer zero-extended into r64 using truncation.,1587
 EVEX.LLIG.F3.MAP5.W0 2C /r,"VCVTTSH2SI r32, xmm1/m16 {sae}",VCVTTSH2SI,"r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to a signed doubleword integer and store the result in r32 using truncation.,1589
-EVEX.LLIG.F3.MAP5.W1 2C /r,"VCVTTSH2SI r64, xmm1/m16 {sae}",VCVTTSH2SI,"r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to a signed quadword integer and store the result in r64 using truncation.,1589
+EVEX.LLIG.F3.MAP5.W1 2C /r,"VCVTTSH2SI r64, xmm1/m16 {sae}",VCVTTSH2SI,"r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to a signed quadword integer and store the result in r64 using truncation.,1589
 EVEX.LLIG.F3.MAP5.W0 78 /r,"VCVTTSH2USI r32, xmm1/m16 {sae}",VCVTTSH2USI,"r32, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to an unsigned doubleword integer and store the result in r32 using truncation.,1590
-EVEX.LLIG.F3.MAP5.W1 78 /r,"VCVTTSH2USI r64, xmm1/m16 {sae}",VCVTTSH2USI,"r64, xmm1/m16 {sae}",A,N.E.,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to an unsigned quadword integer and store the result in r64 using truncation.,1590
+EVEX.LLIG.F3.MAP5.W1 78 /r,"VCVTTSH2USI r64, xmm1/m16 {sae}",VCVTTSH2USI,"r64, xmm1/m16 {sae}",A,Valid,AVX512_FP16 OR AVX10.1,Convert FP16 value in the low element of xmm1/m16 to an unsigned quadword integer and store the result in r64 using truncation.,1590
 EVEX.LLIG.F3.0F.W0 78 /r,"VCVTTSS2USI r32, xmm1/m32{sae}",VCVTTSS2USI,"r32, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned doubleword integer in r32 using truncation.,1591
-EVEX.LLIG.F3.0F.W1 78 /r,"VCVTTSS2USI r64, xmm1/m32{sae}",VCVTTSS2USI,"r64, xmm1/m32{sae}",A,N.E.,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned quadword integer in r64 using truncation.,1591
+EVEX.LLIG.F3.0F.W1 78 /r,"VCVTTSS2USI r64, xmm1/m32{sae}",VCVTTSS2USI,"r64, xmm1/m32{sae}",A,Valid,AVX512F OR AVX10.1,Convert one single precision floating-point value from xmm1/m32 to one unsigned quadword integer in r64 using truncation.,1591
 EVEX.128.F3.0F.W0 7A /r,"VCVTUDQ2PD xmm1 {k1}{z}, xmm2/m64/m32bcst",VCVTUDQ2PD,"xmm1 {k1}{z}, xmm2/m64/m32bcst",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Convert two packed unsigned doubleword integers from xmm2/m64/m32bcst to packed double precision floating-point values in xmm1 with writemask k1.,1593
 EVEX.256.F3.0F.W0 7A /r,"VCVTUDQ2PD ymm1 {k1}{z}, xmm2/m128/m32bcst",VCVTUDQ2PD,"ymm1 {k1}{z}, xmm2/m128/m32bcst",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Convert four packed unsigned doubleword integers from xmm2/m128/m32bcst to packed double precision floating-point values in ymm1 with writemask k1.,1593
 EVEX.512.F3.0F.W0 7A /r,"VCVTUDQ2PD zmm1 {k1}{z}, ymm2/m256/m32bcst",VCVTUDQ2PD,"zmm1 {k1}{z}, ymm2/m256/m32bcst",A,Valid,AVX512F OR AVX10.1,Convert eight packed unsigned doubleword integers from ymm2/m256/m32bcst to eight packed double precision floating-point values in zmm1 with writemask k1.,1593
@@ -2978,11 +2978,11 @@ EVEX.128.F2.0F.W1 7A /r,"VCVTUQQ2PS xmm1 {k1}{z}, xmm2/m128/m64bcst",VCVTUQQ2PS,
 EVEX.256.F2.0F.W1 7A /r,"VCVTUQQ2PS xmm1 {k1}{z}, ymm2/m256/m64bcst",VCVTUQQ2PS,"xmm1 {k1}{z}, ymm2/m256/m64bcst",A,Valid,(AVX512VL AND AVX512DQ) OR AVX10.1,Convert four packed unsigned quadword integers from ymm2/m256/m64bcst to packed single precision floating-point values in xmm1 with writemask k1.,1604
 EVEX.512.F2.0F.W1 7A /r,"VCVTUQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",VCVTUQQ2PS,"ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",A,Valid,AVX512DQ OR AVX10.1,Convert eight packed unsigned quadword integers from zmm2/m512/m64bcst to eight packed single precision floating-point values in ymm1 with writemask k1.,1604
 EVEX.LLIG.F2.0F.W0 7B /r,"VCVTUSI2SD xmm1, xmm2, r/m32",VCVTUSI2SD,"xmm1, xmm2, r/m32",A,Valid,AVX512F OR AVX10.1,Convert one unsigned doubleword integer from r/m32 to one double precision floating-point value in xmm1.,1606
-EVEX.LLIG.F2.0F.W1 7B /r,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",VCVTUSI2SD,"xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,Convert one unsigned quadword integer from r/m64 to one double precision floating-point value in xmm1.,1606
+EVEX.LLIG.F2.0F.W1 7B /r,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",VCVTUSI2SD,"xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,Convert one unsigned quadword integer from r/m64 to one double precision floating-point value in xmm1.,1606
 EVEX.LLIG.F3.MAP5.W0 7B /r,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",VCVTUSI2SH,"xmm1, xmm2, r32/m32 {er}",A,Valid,AVX512_FP16,"Convert an unsigned doubleword integer from r32/m32 to an FP16 value, and store the result in xmm1. Bits 127:16 from xmm2 are copied to xmm1[127:16].",1608
-EVEX.LLIG.F3.MAP5.W1 7B /r,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",VCVTUSI2SH,"xmm1, xmm2, r64/m64 {er}",A,N.E.,AVX512_FP16,"Convert an unsigned quadword integer from r64/m64 to an FP16 value, and store the result in xmm1. Bits 127:16 from xmm2 are copied to xmm1[127:16].",1608
+EVEX.LLIG.F3.MAP5.W1 7B /r,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",VCVTUSI2SH,"xmm1, xmm2, r64/m64 {er}",A,Valid,AVX512_FP16,"Convert an unsigned quadword integer from r64/m64 to an FP16 value, and store the result in xmm1. Bits 127:16 from xmm2 are copied to xmm1[127:16].",1608
 EVEX.LLIG.F3.0F.W0 7B /r,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",VCVTUSI2SS,"xmm1, xmm2, r/m32{er}",A,Valid,AVX512F OR AVX10.1,Convert one unsigned doubleword integer from r/m32 to one single precision floating-point value in xmm1.,1610
-EVEX.LLIG.F3.0F.W1 7B /r,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",VCVTUSI2SS,"xmm1, xmm2, r/m64{er}",A,N.E.,AVX512F OR AVX10.1,Convert one unsigned quadword integer from r/m64 to one single precision floating-point value in xmm1.,1610
+EVEX.LLIG.F3.0F.W1 7B /r,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",VCVTUSI2SS,"xmm1, xmm2, r/m64{er}",A,Valid,AVX512F OR AVX10.1,Convert one unsigned quadword integer from r/m64 to one single precision floating-point value in xmm1.,1610
 EVEX.128.F2.MAP5.W0 7D /r,"VCVTUW2PH xmm1{k1}{z}, xmm2/m128/m16bcst",VCVTUW2PH,"xmm1{k1}{z}, xmm2/m128/m16bcst",A,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,"Convert eight packed unsigned word integers from xmm2/m128/m16bcst to FP16 values, and store the result in xmm1 subject to writemask k1.",1612
 EVEX.256.F2.MAP5.W0 7D /r,"VCVTUW2PH ymm1{k1}{z}, ymm2/m256/m16bcst",VCVTUW2PH,"ymm1{k1}{z}, ymm2/m256/m16bcst",A,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,"Convert sixteen packed unsigned word integers from ymm2/m256/m16bcst to FP16 values, and store the result in ymm1 subject to writemask k1.",1612
 EVEX.512.F2.MAP5.W0 7D /r,"VCVTUW2PH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",VCVTUW2PH,"zmm1{k1}{z}, zmm2/m512/m16bcst {er}",A,Valid,AVX512_FP16 OR AVX10.1,"Convert thirty-two packed unsigned word integers from zmm2/m512/m16bcst to FP16 values, and store the result in zmm1 subject to writemask k1.",1612
@@ -3494,9 +3494,9 @@ EVEX.512.66.0F38.W0 7B /r,"VPBROADCASTW zmm1 {k1}{z}, reg",VPBROADCASTW,"zmm1 {k
 EVEX.128.66.0F38.W0 7C /r,"VPBROADCASTD xmm1 {k1}{z}, r32",VPBROADCASTD,"xmm1 {k1}{z}, r32",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 32-bit value from a GPR to all doublewords in the 128-bit destination subject to writemask k1.,1913
 EVEX.256.66.0F38.W0 7C /r,"VPBROADCASTD ymm1 {k1}{z}, r32",VPBROADCASTD,"ymm1 {k1}{z}, r32",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 32-bit value from a GPR to all doublewords in the 256-bit destination subject to writemask k1.,1913
 EVEX.512.66.0F38.W0 7C /r,"VPBROADCASTD zmm1 {k1}{z}, r32",VPBROADCASTD,"zmm1 {k1}{z}, r32",A,Valid,AVX512F OR AVX10.1,Broadcast a 32-bit value from a GPR to all doublewords in the 512-bit destination subject to writemask k1.,1913
-EVEX.128.66.0F38.W1 7C /r,"VPBROADCASTQ xmm1 {k1}{z}, r64",VPBROADCASTQ,"xmm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 128-bit destination subject to writemask k1.,1913
-EVEX.256.66.0F38.W1 7C /r,"VPBROADCASTQ ymm1 {k1}{z}, r64",VPBROADCASTQ,"ymm1 {k1}{z}, r64",A,N.E.,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 256-bit destination subject to writemask k1.,1913
-EVEX.512.66.0F38.W1 7C /r,"VPBROADCASTQ zmm1 {k1}{z}, r64",VPBROADCASTQ,"zmm1 {k1}{z}, r64",A,N.E.,AVX512F OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 512-bit destination subject to writemask k1.,1913
+EVEX.128.66.0F38.W1 7C /r,"VPBROADCASTQ xmm1 {k1}{z}, r64",VPBROADCASTQ,"xmm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 128-bit destination subject to writemask k1.,1913
+EVEX.256.66.0F38.W1 7C /r,"VPBROADCASTQ ymm1 {k1}{z}, r64",VPBROADCASTQ,"ymm1 {k1}{z}, r64",A,Valid,(AVX512VL AND AVX512F) OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 256-bit destination subject to writemask k1.,1913
+EVEX.512.66.0F38.W1 7C /r,"VPBROADCASTQ zmm1 {k1}{z}, r64",VPBROADCASTQ,"zmm1 {k1}{z}, r64",A,Valid,AVX512F OR AVX10.1,Broadcast a 64-bit value from a GPR to all quadwords in the 512-bit destination subject to writemask k1.,1913
 EVEX.128.F3.0F38.W1 2A /r,"VPBROADCASTMB2Q xmm1, k1",VPBROADCASTMB2Q,"xmm1, k1",RM,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,Broadcast low byte value in k1 to two locations in xmm1.,1916
 EVEX.256.F3.0F38.W1 2A /r,"VPBROADCASTMB2Q ymm1, k1",VPBROADCASTMB2Q,"ymm1, k1",RM,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,Broadcast low byte value in k1 to four locations in ymm1.,1916
 EVEX.512.F3.0F38.W1 2A /r,"VPBROADCASTMB2Q zmm1, k1",VPBROADCASTMB2Q,"zmm1, k1",RM,Valid,AVX512CD OR AVX10.1,Broadcast low byte value in k1 to eight locations in zmm1.,1916
@@ -4094,13 +4094,13 @@ F3 REX.W 0F AE /2,WRFSBASE r64,WRFSBASE,r64,M,Valid,FSGSBASE,Load the FS base ad
 F3 0F AE /3,WRGSBASE r32,WRGSBASE,r32,M,Valid,FSGSBASE,Load the GS base address with the 32-bit value in the source register.,2245
 F3 REX.W 0F AE /3,WRGSBASE r64,WRGSBASE,r64,M,Valid,FSGSBASE,Load the GS base address with the 64-bit value in the source register.,2245
 0F 30,WRMSR,WRMSR,,ZO,Valid,,Write the value in EDX:EAX to MSR specified by ECX.,2247
-F3 0F 01 C6,WRMSRLIST,WRMSRLIST,,ZO,N.E.,MSRLIST,Write requested list of MSRs with the values specified in memory.,2249
+F3 0F 01 C6,WRMSRLIST,WRMSRLIST,,ZO,Valid,MSRLIST,Write requested list of MSRs with the values specified in memory.,2249
 NP 0F 01 C6,WRMSRNS,WRMSRNS,,ZO,Valid,WRMSRNS,Write the value in EDX:EAX to MSR specified by ECX.,2251
 NP 0F 01 EF,WRPKRU,WRPKRU,,ZO,Valid,OSPKE,Writes EAX into PKRU.,2253
 0F 38 F6 !(11):rrr:bbb,"WRSSD m32, r32",WRSSD,"m32, r32",MR,Valid,CET_SS,Write 4 bytes to shadow stack.,2255
-REX.W 0F 38 F6 !(11):rrr:bbb,"WRSSQ m64, r64",WRSSQ,"m64, r64",MR,N.E.,CET_SS,Write 8 bytes to shadow stack.,2255
+REX.W 0F 38 F6 !(11):rrr:bbb,"WRSSQ m64, r64",WRSSQ,"m64, r64",MR,Valid,CET_SS,Write 8 bytes to shadow stack.,2255
 66 0F 38 F5 !(11):rrr:bbb,"WRUSSD m32, r32",WRUSSD,"m32, r32",MR,Valid,CET_SS,Write 4 bytes to shadow stack.,2257
-66 REX.W 0F 38 F5 !(11):rrr:bbb,"WRUSSQ m64, r64",WRUSSQ,"m64, r64",MR,N.E.,CET_SS,Write 8 bytes to shadow stack.,2257
+66 REX.W 0F 38 F5 !(11):rrr:bbb,"WRUSSQ m64, r64",WRUSSQ,"m64, r64",MR,Valid,CET_SS,Write 8 bytes to shadow stack.,2257
 C6 F8 ib,XABORT imm8,XABORT,imm8,A,Valid,RTM,Causes an RTM abort if in RTM execution.,2259
 F2,XACQUIRE,XACQUIRE,,,Valid,HLE,A hint used with an “XACQUIRE-enabled“ instruction to start lock elision on the instruction memory operand address.,2261
 F3,XRELEASE,XRELEASE,,,Valid,HLE,A hint used with an “XRELEASE-enabled“ instruction to end lock elision on the instruction memory operand address.,2261
@@ -4162,17 +4162,17 @@ EVEX.256.0F.W0 57 /r,"VXORPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",VXORPS,"ymm1
 EVEX.512.0F.W0 57 /r,"VXORPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst",VXORPS,"zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst",C,Valid,AVX512DQ OR AVX10.1,Return the bitwise logical XOR of packed single-precision floating-point values in zmm2 and zmm3/m512/m32bcst subject to writemask k1.,2283
 F2 0F 01 E9,XRESLDTRK,XRESLDTRK,,ZO,Valid,TSXLDTRK,Specifies the end of an Intel TSX suspend read address tracking region.,2286
 NP 0F AE /5,XRSTOR mem,XRSTOR,mem,M,Valid,XSAVE,Restore state components specified by EDX:EAX from mem.,2287
-NP REX.W + 0F AE /5,XRSTOR64 mem,XRSTOR64,mem,M,N.E.,XSAVE,Restore state components specified by EDX:EAX from mem.,2287
+NP REX.W + 0F AE /5,XRSTOR64 mem,XRSTOR64,mem,M,Valid,XSAVE,Restore state components specified by EDX:EAX from mem.,2287
 NP 0F C7 /3,XRSTORS mem,XRSTORS,mem,M,Valid,XSS,Restore state components specified by EDX:EAX from mem.,2292
-NP REX.W + 0F C7 /3,XRSTORS64 mem,XRSTORS64,mem,M,N.E.,XSS,Restore state components specified by EDX:EAX from mem.,2292
+NP REX.W + 0F C7 /3,XRSTORS64 mem,XRSTORS64,mem,M,Valid,XSS,Restore state components specified by EDX:EAX from mem.,2292
 NP 0F AE /4,XSAVE mem,XSAVE,mem,M,Valid,XSAVE,Save state components specified by EDX:EAX to mem.,2296
-NP REX.W + 0F AE /4,XSAVE64 mem,XSAVE64,mem,M,N.E.,XSAVE,Save state components specified by EDX:EAX to mem.,2296
+NP REX.W + 0F AE /4,XSAVE64 mem,XSAVE64,mem,M,Valid,XSAVE,Save state components specified by EDX:EAX to mem.,2296
 NP 0F C7 /4,XSAVEC mem,XSAVEC,mem,M,Valid,XSAVEC,Save state components specified by EDX:EAX to mem with compaction.,2299
-NP REX.W + 0F C7 /4,XSAVEC64 mem,XSAVEC64,mem,M,N.E.,XSAVEC,Save state components specified by EDX:EAX to mem with compaction.,2299
+NP REX.W + 0F C7 /4,XSAVEC64 mem,XSAVEC64,mem,M,Valid,XSAVEC,Save state components specified by EDX:EAX to mem with compaction.,2299
 NP 0F AE /6,XSAVEOPT mem,XSAVEOPT,mem,M,Valid,XSAVEOPT,"Save state components specified by EDX:EAX to mem, optimizing if possible.",2302
 NP REX.W + 0F AE /6,XSAVEOPT64 mem,XSAVEOPT64,mem,M,Valid,XSAVEOPT,"Save state components specified by EDX:EAX to mem, optimizing if possible.",2302
 NP 0F C7 /5,XSAVES mem,XSAVES,mem,M,Valid,XSS,"Save state components specified by EDX:EAX to mem with compaction, optimizing if possible.",2305
-NP REX.W + 0F C7 /5,XSAVES64 mem,XSAVES64,mem,M,N.E.,XSS,"Save state components specified by EDX:EAX to mem with compaction, optimizing if possible.",2305
+NP REX.W + 0F C7 /5,XSAVES64 mem,XSAVES64,mem,M,Valid,XSS,"Save state components specified by EDX:EAX to mem with compaction, optimizing if possible.",2305
 NP 0F 01 D1,XSETBV,XSETBV,,ZO,Valid,,Write the value in EDX:EAX to the XCR specified by ECX.,2308
 F2 0F 01 E8,XSUSLDTRK,XSUSLDTRK,,ZO,Valid,TSXLDTRK,Specifies the start of an Intel TSX suspend read address tracking region.,2310
 NP 0F 01 D6,XTEST,XTEST,,ZO,Valid,HLE or RTM,Test if executing in a transactional region.,2311

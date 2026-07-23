@@ -148,15 +148,28 @@ def normalize_mode(token):
 MODE_VALUE_RE = re.compile(r"(Valid|Invalid|N\.\s*E\.|N\.\s*S\.)", re.IGNORECASE)
 
 
-def tidy_mode_text(text):
-    """'N. E.' -> 'N.E.', 'Invalid*' -> 'Invalid' 처럼 공백/각주 기호가 섞인 모드 표기를 통일."""
-    if not text:
-        return ""
-    m = MODE_VALUE_RE.search(text)
-    if not m:
-        return text.strip()
+def _tidy_one_mode_value(m):
+    """MODE_VALUE_RE 에 매치된 조각 하나(예: 'N. E.')만 공백 제거 + 첫 글자 대문자로."""
     value = re.sub(r"\s+", "", m.group(1))
     return value[0].upper() + value[1:]
+
+
+def tidy_mode_text(text):
+    """'N. E.' -> 'N.E.', 'Invalid*' -> 'Invalid' 처럼 공백/각주 기호가 섞인 모드 표기를 통일.
+
+    실제 사고: SDM 인코딩 표의 64비트 모드 칸은 종종 'V/N.E.' 처럼 값 두 개가
+    슬래시로 합쳐져 나온다(앞: 64비트 모드 값, 뒤: Compat/Legacy 모드 값. ADCX/MOVBE 의
+    REX.W 폼 등에서 PDF 원문으로 직접 확인). 이전 버전은 re.search 로 문자열 전체에서
+    딱 한 군데만 찾아 그 매치된 조각만 돌려줬는데, 약어 'V'/'I' 는 이 정규식(Valid/Invalid/
+    N.E./N.S. 풀어쓴 표기만 인식)에 안 걸리다 보니 'V/N.E.' 에서 앞쪽 'V'는 통째로
+    사라지고 뒤쪽 'N.E.'만 남아버렸다. 그 결과 64비트 모드에서 유효한(Valid) 명령어가
+    N.E.(무효)로 잘못 기록됐다. 그래서 지금은 re.sub 로 문자열에 있는 모든 표기를
+    "제자리에서" 통일하고 슬래시 구조는 그대로 보존한다. 슬래시로 나뉜 값 중 어느 쪽
+    (64비트 모드)을 최종으로 쓸지는 이 함수의 몫이 아니라 normalize_mode() 가
+    'token.split("/")[0]' 로 이미 담당한다."""
+    if not text:
+        return ""
+    return MODE_VALUE_RE.sub(_tidy_one_mode_value, text).strip()
 
 
 def header_key(header_row):
