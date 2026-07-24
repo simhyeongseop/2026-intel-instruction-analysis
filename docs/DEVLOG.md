@@ -92,3 +92,17 @@
 - 왜: CLAUDE.md 1절 "판정은 도구가 한다" 원칙대로, 형섭이 LLM 설명만 보고 믿는 게 아니라 직접 `python3 tests/manual_bug_check.py` 한 번으로 13건을 눈으로 확인할 수 있게 하기 위함. pipeline/ 소속이 아니라 파이프라인과 독립된 수동 확인 도구라 tests/ 밑에 둠.
 - 확인: 13/13건 전부 보고된 그대로 재현됨(직접 실행 확인).
 - 발견: `generator_moffs_missing_brackets`(1689-1693)로 분류했던 moffs 괄호 누락 버그는 실제로는 `pipeline/m4_generate.py`가 아니라 **`pipeline/m3_combine.py`의 `expand_token`(moffs 분기, 169행)이 combos.csv에 이미 괄호 없는 `"0x1000"`을 써넣는 것**이 원인이었다(generator는 combos.csv 값을 그대로 옮기기만 함). 카테고리 이름의 "generator" 귀책은 오분류이며, 다음 combiner 수정 라운드에서 바로잡을 것.
+
+## 2026-07-24  [combiner]  triage가 찾은 combiner 코드 한계 6가지 수정 + 하위 전파
+- 무엇을: `pipeline/m3_combine.py`에 남아있던 combiner 한계 6가지를 수정했다.
+  1. far-ptr collapse: `MEM_SIZE_RE`보다 먼저 매치하는 `FAR_PTR_ATOM_RE`(m16:16/32/64 전용)를 추가해 CALL/JMP는 `far ptr [eax]`, LSS/LFS/LGS는 크기별(dword/fword/tbyte ptr)로 분기. 같은 정규식 버그의 피해자였던 LGDT/LIDT(`m16&64`, `DESCRIPTOR_ATOM_RE`)도 함께 수정.
+  2. moffs 괄호 누락: `expand_token`의 moffs 분기를 `"0x1000"` → `"[0x1000]"`로 수정.
+  3. 레지스터 재사용: `register_candidate(atom, occurrence)` + `bump_counter`를 추가해 슬롯 순서대로 순번(`tmm0,tmm1,tmm2` 등)을 매기되, `as` 에러로 실제 확인된 `DISTINCT_REG_MNEMONICS` 집합(TDPB*/TDPFP16PS, VF*CADDCPH/VF*MULCPH 계열)에만 적용(BNDMOV는 distinct 제약이 실제로 없어 as가 `bnd0,bnd0`도 받아줘서 제외).
+  4. VSIB 인덱스 누락: `memory_candidate`에 `VSIB_ATOM_RE`(vm32x/y/z, vm64x/y/z)를 추가해 `[eax + xmm1]`/`[eax + ymm1]`/`[eax + zmm1]`을 붙임.
+  5. MPX addr32 누락: `MPX_MNEMONICS` 집합(BNDCL/BNDCN/BNDCU/BNDMK/BNDMOV/BNDLDX/BNDSTX)일 때 대표 주소를 `[rax]`(64비트)로 전환.
+  6. AVX512 gather/scatter 기본 마스크: `is_gather_scatter(mnemonic)`일 때만 `{k1}`~`{k7}` 마스크를 살려서 붙임(`{z}`/`{er}`/`{sae}`는 계속 제거).
+  수정 후 `combos.csv`(7277행, 폭발 없음) 중 165개 combo의 operands 값이 바뀌었고, 이어서 코드 변경 없이 `pipeline/run.py generator`로 4~7단계를 재실행해 `out/tests.s`/`out/asm_result.csv`/`out/roundtrip.csv`/`out/triage.csv`를 갱신했다.
+- 왜: 이 6가지는 SDM vs GNU as의 진짜 불일치가 아니라 **우리 자신의 테스트 생성기(combiner)가 대표값을 잘못 골라서** 매뉴얼상 멀쩡한 명령어를 실패로 만들던 것들이다. 고쳐서 이 명령어들이 실제로 제대로 테스트되게 하는 게 목적이며, 어떤 것도 "새로 찾은 버그"가 아니다(형섭이 이 구분을 확인함 — 진짜 버그 7건은 이미 `out/triage_report.md`에 보고 완료된 상태로 그대로 둠).
+- verifier: **조건부 pass**(1차 — combiner 코드 6가지 전부 타당, combos.csv 165건 변경 diff 정확, 6개 카테고리 대표 케이스 `as`로 재현 성공, 회귀 없음. 단 combiner 에이전트가 VSCATTERDPD ymm/zmm 2건(combo 7035/7036) 잔여 실패를 "tokens.csv 추출 오류"로 잘못 진단한 것을 verifier가 SDM PDF(p.2202 vs p.1824) 직접 대조로 반박 — 실제로는 SDM 원문 자체가 GATHER/SCATTER 사이에 vm32x/vm32y로 비대칭 표기돼 있어서 combiner 스코프 문제가 아니라 진짜 SDM-vs-as 불일치 후보) → triage 에이전트가 이 2건을 `ERROR_COMBO_OVERRIDES`에 추가해 새 카테고리 `sdm_gather_scatter_vsib_width_asymmetry`(verdict=unsure, 오탈자인지 의도인지는 형섭이 SDM 정오표로 직접 확인 필요)로 재분류 → **최종 pass**(bug 7건 회귀 없음, 옛 combiner 카테고리 6개 전부 0건으로 소멸, mov/add/push 정답지 21줄 전수 재확인, m1/m2/m4/m5/m6 코드 미변경, 전체 수치 정합성 재계산 일치).
+- 결과: triage 전체 대상 1630건 → **1585건**(combiner가 고친 만큼 대상에서 빠짐). verdict 분포 `bug=7(그대로), false_alarm=1552, unsure=26`(구 unsure 중 41건 오분류 수정분은 이전 라운드에 이미 반영됐고, 이번엔 VSCATTERDPD 2건이 새로 unsure에 추가).
+- 남은 것: VSCATTERDPD ymm/zmm 표기가 SDM 오탈자인지 GNU as 미구현인지 Intel 공식 정오표로 형섭이 직접 확인. `tests/test_modules.py`(정식 회귀 테스트 하네스)는 여전히 부재.

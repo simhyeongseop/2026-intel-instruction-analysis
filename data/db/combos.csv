@@ -322,29 +322,29 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 320,BLSR,173,0,"r64, r/m64","rcx, rcx",2,True,Valid,BMI1,,"BLSR r64, r/m64",207
 321,BLSR,173,1,"r64, r/m64","rcx, qword ptr [eax]",2,True,Valid,BMI1,,"BLSR r64, r/m64",207
 322,BNDCL,174,0,"bnd, r/m32","bnd0, ecx",2,False,N.E.,MPX,,"BNDCL bnd, r/m32",208
-323,BNDCL,174,1,"bnd, r/m32","bnd0, dword ptr [eax]",2,False,N.E.,MPX,,"BNDCL bnd, r/m32",208
+323,BNDCL,174,1,"bnd, r/m32","bnd0, dword ptr [rax]",2,False,N.E.,MPX,,"BNDCL bnd, r/m32",208
 324,BNDCL,175,0,"bnd, r/m64","bnd0, rcx",2,True,Valid,MPX,,"BNDCL bnd, r/m64",208
-325,BNDCL,175,1,"bnd, r/m64","bnd0, qword ptr [eax]",2,True,Valid,MPX,,"BNDCL bnd, r/m64",208
+325,BNDCL,175,1,"bnd, r/m64","bnd0, qword ptr [rax]",2,True,Valid,MPX,,"BNDCL bnd, r/m64",208
 326,BNDCU,176,0,"bnd, r/m32","bnd0, ecx",2,False,N.E.,MPX,,"BNDCU bnd, r/m32",210
-327,BNDCU,176,1,"bnd, r/m32","bnd0, dword ptr [eax]",2,False,N.E.,MPX,,"BNDCU bnd, r/m32",210
+327,BNDCU,176,1,"bnd, r/m32","bnd0, dword ptr [rax]",2,False,N.E.,MPX,,"BNDCU bnd, r/m32",210
 328,BNDCU,177,0,"bnd, r/m64","bnd0, rcx",2,True,Valid,MPX,,"BNDCU bnd, r/m64",210
-329,BNDCU,177,1,"bnd, r/m64","bnd0, qword ptr [eax]",2,True,Valid,MPX,,"BNDCU bnd, r/m64",210
+329,BNDCU,177,1,"bnd, r/m64","bnd0, qword ptr [rax]",2,True,Valid,MPX,,"BNDCU bnd, r/m64",210
 330,BNDCN,178,0,"bnd, r/m32","bnd0, ecx",2,False,N.E.,MPX,,"BNDCN bnd, r/m32",210
-331,BNDCN,178,1,"bnd, r/m32","bnd0, dword ptr [eax]",2,False,N.E.,MPX,,"BNDCN bnd, r/m32",210
+331,BNDCN,178,1,"bnd, r/m32","bnd0, dword ptr [rax]",2,False,N.E.,MPX,,"BNDCN bnd, r/m32",210
 332,BNDCN,179,0,"bnd, r/m64","bnd0, rcx",2,True,Valid,MPX,,"BNDCN bnd, r/m64",210
-333,BNDCN,179,1,"bnd, r/m64","bnd0, qword ptr [eax]",2,True,Valid,MPX,,"BNDCN bnd, r/m64",210
-334,BNDLDX,180,0,"bnd, mib","bnd0, [eax]",2,True,Valid,MPX,,"BNDLDX bnd, mib",212
-335,BNDMK,181,0,"bnd, m32","bnd0, dword ptr [eax]",2,False,N.E.,MPX,,"BNDMK bnd, m32",215
-336,BNDMK,182,0,"bnd, m64","bnd0, qword ptr [eax]",2,True,Valid,MPX,,"BNDMK bnd, m64",215
+333,BNDCN,179,1,"bnd, r/m64","bnd0, qword ptr [rax]",2,True,Valid,MPX,,"BNDCN bnd, r/m64",210
+334,BNDLDX,180,0,"bnd, mib","bnd0, [rax]",2,True,Valid,MPX,,"BNDLDX bnd, mib",212
+335,BNDMK,181,0,"bnd, m32","bnd0, dword ptr [rax]",2,False,N.E.,MPX,,"BNDMK bnd, m32",215
+336,BNDMK,182,0,"bnd, m64","bnd0, qword ptr [rax]",2,True,Valid,MPX,,"BNDMK bnd, m64",215
 337,BNDMOV,183,0,"bnd1, bnd2/m64","bnd0, bnd0",2,False,N.E.,MPX,,"BNDMOV bnd1, bnd2/m64",217
-338,BNDMOV,183,1,"bnd1, bnd2/m64","bnd0, qword ptr [eax]",2,False,N.E.,MPX,,"BNDMOV bnd1, bnd2/m64",217
+338,BNDMOV,183,1,"bnd1, bnd2/m64","bnd0, qword ptr [rax]",2,False,N.E.,MPX,,"BNDMOV bnd1, bnd2/m64",217
 339,BNDMOV,184,0,"bnd1, bnd2/m128","bnd0, bnd0",2,True,Valid,MPX,,"BNDMOV bnd1, bnd2/m128",217
-340,BNDMOV,184,1,"bnd1, bnd2/m128","bnd0, xmmword ptr [eax]",2,True,Valid,MPX,,"BNDMOV bnd1, bnd2/m128",217
+340,BNDMOV,184,1,"bnd1, bnd2/m128","bnd0, xmmword ptr [rax]",2,True,Valid,MPX,,"BNDMOV bnd1, bnd2/m128",217
 341,BNDMOV,185,0,"bnd1/m64, bnd2","bnd0, bnd0",2,False,N.E.,MPX,,"BNDMOV bnd1/m64, bnd2",217
-342,BNDMOV,185,1,"bnd1/m64, bnd2","qword ptr [eax], bnd0",2,False,N.E.,MPX,,"BNDMOV bnd1/m64, bnd2",217
+342,BNDMOV,185,1,"bnd1/m64, bnd2","qword ptr [rax], bnd0",2,False,N.E.,MPX,,"BNDMOV bnd1/m64, bnd2",217
 343,BNDMOV,186,0,"bnd1/m128, bnd2","bnd0, bnd0",2,True,Valid,MPX,,"BNDMOV bnd1/m128, bnd2",217
-344,BNDMOV,186,1,"bnd1/m128, bnd2","xmmword ptr [eax], bnd0",2,True,Valid,MPX,,"BNDMOV bnd1/m128, bnd2",217
-345,BNDSTX,187,0,"mib, bnd","[eax], bnd0",2,True,Valid,MPX,,"BNDSTX mib, bnd",220
+344,BNDMOV,186,1,"bnd1/m128, bnd2","xmmword ptr [rax], bnd0",2,True,Valid,MPX,,"BNDMOV bnd1/m128, bnd2",217
+345,BNDSTX,187,0,"mib, bnd","[rax], bnd0",2,True,Valid,MPX,,"BNDSTX mib, bnd",220
 346,BOUND,188,0,"r16, m16&16","cx, word ptr [eax]",2,False,Invalid,,,"BOUND r16, m16&16",223
 347,BOUND,189,0,"r32, m32&32","ecx, dword ptr [eax]",2,False,Invalid,,,"BOUND r32, m32&32",223
 348,BSF,190,0,"r16, r/m16","cx, cx",2,True,Valid,,,"BSF r16, r/m16",225
@@ -423,9 +423,9 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 421,CALL,228,1,r/m64,qword ptr [eax],1,True,Valid,,,CALL r/m64,239
 422,CALL,229,0,ptr16:16,0x10:0x1234,1,False,Invalid,,,CALL ptr16:16,239
 423,CALL,230,0,ptr16:32,0x10:0x12345678,1,False,Invalid,,,CALL ptr16:32,239
-424,CALL,231,0,m16:16,word ptr [eax],1,True,Valid,,,CALL m16:16,239
-425,CALL,232,0,m16:32,word ptr [eax],1,True,Valid,,,CALL m16:32,239
-426,CALL,233,0,m16:64,word ptr [eax],1,True,Valid,,,CALL m16:64,239
+424,CALL,231,0,m16:16,far ptr [eax],1,True,Valid,,,CALL m16:16,239
+425,CALL,232,0,m16:32,far ptr [eax],1,True,Valid,,,CALL m16:32,239
+426,CALL,233,0,m16:64,far ptr [eax],1,True,Valid,,,CALL m16:64,239
 427,CBW,234,0,,,0,True,Valid,,,CBW,256
 428,CWDE,235,0,,,0,True,Valid,,,CWDE,256
 429,CDQE,236,0,,,0,True,Valid,,,CDQE,256
@@ -1440,9 +1440,9 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 1438,JMP,920,1,r/m64,qword ptr [eax],1,True,Valid,,,JMP r/m64,622
 1439,JMP,921,0,ptr16:16,0x10:0x1234,1,False,Invalid,,,JMP ptr16:16,622
 1440,JMP,922,0,ptr16:32,0x10:0x12345678,1,False,Invalid,,,JMP ptr16:32,622
-1441,JMP,923,0,m16:16,word ptr [eax],1,True,Valid,,,JMP m16:16,622
-1442,JMP,924,0,m16:32,word ptr [eax],1,True,Valid,,,JMP m16:32,622
-1443,JMP,925,0,m16:64,word ptr [eax],1,True,Valid,,,JMP m16:64,622
+1441,JMP,923,0,m16:16,far ptr [eax],1,True,Valid,,,JMP m16:16,622
+1442,JMP,924,0,m16:32,far ptr [eax],1,True,Valid,,,JMP m16:32,622
+1443,JMP,925,0,m16:64,far ptr [eax],1,True,Valid,,,JMP m16:64,622
 1444,KADDW,926,0,"k1, k2, k3","k1, k1, k1",3,True,Valid,AVX512DQ OR AVX10.1,,"KADDW k1, k2, k3",631
 1445,KADDB,927,0,"k1, k2, k3","k1, k1, k1",3,True,Valid,AVX512DQ OR AVX10.1,,"KADDB k1, k2, k3",631
 1446,KADDQ,928,0,"k1, k2, k3","k1, k1, k1",3,True,Valid,AVX512BW OR AVX10.1,,"KADDQ k1, k2, k3",631
@@ -1522,19 +1522,19 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 1520,VLDDQU,995,0,"ymm1, m256","ymm0, ymmword ptr [eax]",2,True,Valid,AVX,,"VLDDQU ymm1, m256",655
 1521,LDMXCSR,996,0,m32,dword ptr [eax],1,True,Valid,SSE,,LDMXCSR m32,657
 1522,VLDMXCSR,997,0,m32,dword ptr [eax],1,True,Valid,AVX,,VLDMXCSR m32,657
-1523,LDS,998,0,"r16, m16:16","cx, word ptr [eax]",2,False,Invalid,,,"LDS r16,m16:16",658
-1524,LDS,999,0,"r32, m16:32","ecx, word ptr [eax]",2,False,Invalid,,,"LDS r32,m16:32",658
-1525,LSS,1000,0,"r16, m16:16","cx, word ptr [eax]",2,True,Valid,,,"LSS r16,m16:16",658
-1526,LSS,1001,0,"r32, m16:32","ecx, word ptr [eax]",2,True,Valid,,,"LSS r32,m16:32",658
-1527,LSS,1002,0,"r64, m16:64","rcx, word ptr [eax]",2,True,Valid,,,"LSS r64,m16:64",658
-1528,LES,1003,0,"r16, m16:16","cx, word ptr [eax]",2,False,Invalid,,,"LES r16,m16:16",658
-1529,LES,1004,0,"r32, m16:32","ecx, word ptr [eax]",2,False,Invalid,,,"LES r32,m16:32",658
-1530,LFS,1005,0,"r16, m16:16","cx, word ptr [eax]",2,True,Valid,,,"LFS r16,m16:16",658
-1531,LFS,1006,0,"r32, m16:32","ecx, word ptr [eax]",2,True,Valid,,,"LFS r32,m16:32",658
-1532,LFS,1007,0,"r64, m16:64","rcx, word ptr [eax]",2,True,Valid,,,"LFS r64,m16:64",658
-1533,LGS,1008,0,"r16, m16:16","cx, word ptr [eax]",2,True,Valid,,,"LGS r16,m16:16",658
-1534,LGS,1009,0,"r32, m16:32","ecx, word ptr [eax]",2,True,Valid,,,"LGS r32,m16:32",658
-1535,LGS,1010,0,"r64, m16:64","rcx, word ptr [eax]",2,True,Valid,,,"LGS r64,m16:64",658
+1523,LDS,998,0,"r16, m16:16","cx, dword ptr [eax]",2,False,Invalid,,,"LDS r16,m16:16",658
+1524,LDS,999,0,"r32, m16:32","ecx, fword ptr [eax]",2,False,Invalid,,,"LDS r32,m16:32",658
+1525,LSS,1000,0,"r16, m16:16","cx, dword ptr [eax]",2,True,Valid,,,"LSS r16,m16:16",658
+1526,LSS,1001,0,"r32, m16:32","ecx, fword ptr [eax]",2,True,Valid,,,"LSS r32,m16:32",658
+1527,LSS,1002,0,"r64, m16:64","rcx, tbyte ptr [eax]",2,True,Valid,,,"LSS r64,m16:64",658
+1528,LES,1003,0,"r16, m16:16","cx, dword ptr [eax]",2,False,Invalid,,,"LES r16,m16:16",658
+1529,LES,1004,0,"r32, m16:32","ecx, fword ptr [eax]",2,False,Invalid,,,"LES r32,m16:32",658
+1530,LFS,1005,0,"r16, m16:16","cx, dword ptr [eax]",2,True,Valid,,,"LFS r16,m16:16",658
+1531,LFS,1006,0,"r32, m16:32","ecx, fword ptr [eax]",2,True,Valid,,,"LFS r32,m16:32",658
+1532,LFS,1007,0,"r64, m16:64","rcx, tbyte ptr [eax]",2,True,Valid,,,"LFS r64,m16:64",658
+1533,LGS,1008,0,"r16, m16:16","cx, dword ptr [eax]",2,True,Valid,,,"LGS r16,m16:16",658
+1534,LGS,1009,0,"r32, m16:32","ecx, fword ptr [eax]",2,True,Valid,,,"LGS r32,m16:32",658
+1535,LGS,1010,0,"r64, m16:64","rcx, tbyte ptr [eax]",2,True,Valid,,,"LGS r64,m16:64",658
 1536,LDTILECFG,1011,0,m512,zmmword ptr [eax],1,True,Valid,AMX_TILE,,LDTILECFG m512,662
 1537,LEA,1012,0,"r16, m","cx, [eax]",2,True,Valid,,,"LEA r16,m",665
 1538,LEA,1013,0,"r32, m","ecx, [eax]",2,True,Valid,,,"LEA r32,m",665
@@ -1543,10 +1543,10 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 1541,LEAVE,1016,0,,,0,False,N.E.,,,LEAVE,668
 1542,LEAVE,1017,0,,,0,True,Valid,,,LEAVE,668
 1543,LFENCE,1018,0,,,0,True,Valid,SSE2,,LFENCE,670
-1544,LGDT,1019,0,m16&32,word ptr [eax],1,False,N.E.,,,LGDT m16&32,671
-1545,LIDT,1020,0,m16&32,word ptr [eax],1,False,N.E.,,,LIDT m16&32,671
-1546,LGDT,1021,0,m16&64,word ptr [eax],1,True,Valid,,,LGDT m16&64,671
-1547,LIDT,1022,0,m16&64,word ptr [eax],1,True,Valid,,,LIDT m16&64,671
+1544,LGDT,1019,0,m16&32,[eax],1,False,N.E.,,,LGDT m16&32,671
+1545,LIDT,1020,0,m16&32,[eax],1,False,N.E.,,,LIDT m16&32,671
+1546,LGDT,1021,0,m16&64,[eax],1,True,Valid,,,LGDT m16&64,671
+1547,LIDT,1022,0,m16&64,[eax],1,True,Valid,,,LIDT m16&64,671
 1548,LKGS,1023,0,r/m16,cx,1,True,Valid,,,LKGS r/m16,674
 1549,LKGS,1023,1,r/m16,word ptr [eax],1,True,Valid,,,LKGS r/m16,674
 1550,LLDT,1024,0,r/m16,cx,1,True,Valid,,,LLDT r/m16,676
@@ -1683,16 +1683,16 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 1681,MOV,1098,1,"Sreg, r/m16","ds, word ptr [eax]",2,True,Valid,,,"MOV Sreg, r/m16",731
 1682,MOV,1099,0,"Sreg, r/m64","ds, rcx",2,True,Valid,,,"MOV Sreg, r/m64",731
 1683,MOV,1099,1,"Sreg, r/m64","ds, qword ptr [eax]",2,True,Valid,,,"MOV Sreg, r/m64",731
-1684,MOV,1100,0,"AL, moffs8","al, 0x1000",2,True,Valid,,,"MOV AL, moffs8",731
-1685,MOV,1101,0,"AL, moffs8","al, 0x1000",2,True,Valid,,,"MOV AL, moffs8",731
-1686,MOV,1102,0,"AX, moffs16","ax, 0x1000",2,True,Valid,,,"MOV AX, moffs16",731
-1687,MOV,1103,0,"EAX, moffs32","eax, 0x1000",2,True,Valid,,,"MOV EAX, moffs32",731
-1688,MOV,1104,0,"RAX, moffs64","rax, 0x1000",2,True,Valid,,,"MOV RAX, moffs64",731
-1689,MOV,1105,0,"moffs8, AL","0x1000, al",2,True,Valid,,,"MOV moffs8, AL",731
-1690,MOV,1106,0,"moffs8, AL","0x1000, al",2,True,Valid,,,"MOV moffs8, AL",731
-1691,MOV,1107,0,"moffs16, AX","0x1000, ax",2,True,Valid,,,"MOV moffs16, AX",731
-1692,MOV,1108,0,"moffs32, EAX","0x1000, eax",2,True,Valid,,,"MOV moffs32, EAX",731
-1693,MOV,1109,0,"moffs64, RAX","0x1000, rax",2,True,Valid,,,"MOV moffs64, RAX",731
+1684,MOV,1100,0,"AL, moffs8","al, [0x1000]",2,True,Valid,,,"MOV AL, moffs8",731
+1685,MOV,1101,0,"AL, moffs8","al, [0x1000]",2,True,Valid,,,"MOV AL, moffs8",731
+1686,MOV,1102,0,"AX, moffs16","ax, [0x1000]",2,True,Valid,,,"MOV AX, moffs16",731
+1687,MOV,1103,0,"EAX, moffs32","eax, [0x1000]",2,True,Valid,,,"MOV EAX, moffs32",731
+1688,MOV,1104,0,"RAX, moffs64","rax, [0x1000]",2,True,Valid,,,"MOV RAX, moffs64",731
+1689,MOV,1105,0,"moffs8, AL","[0x1000], al",2,True,Valid,,,"MOV moffs8, AL",731
+1690,MOV,1106,0,"moffs8, AL","[0x1000], al",2,True,Valid,,,"MOV moffs8, AL",731
+1691,MOV,1107,0,"moffs16, AX","[0x1000], ax",2,True,Valid,,,"MOV moffs16, AX",731
+1692,MOV,1108,0,"moffs32, EAX","[0x1000], eax",2,True,Valid,,,"MOV moffs32, EAX",731
+1693,MOV,1109,0,"moffs64, RAX","[0x1000], rax",2,True,Valid,,,"MOV moffs64, RAX",731
 1694,MOV,1110,0,"r8, imm8","cl, 1",2,True,Valid,,,"MOV r8, imm8",731
 1695,MOV,1111,0,"r16, imm16","cx, 0x100",2,True,Valid,,,"MOV r16, imm16",731
 1696,MOV,1112,0,"r32, imm32","ecx, 0x10000",2,True,Valid,,,"MOV r32, imm32",731
@@ -4540,12 +4540,12 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 4538,SYSEXIT,2697,0,,,0,True,Valid,,,SYSEXIT,1408
 4539,SYSRET,2698,0,,,0,True,Valid,,,SYSRET,1411
 4540,SYSRET,2699,0,,,0,True,Valid,,,SYSRET,1411
-4541,TDPBF16PS,2700,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_BF16,,"TDPBF16PS tmm1, tmm2, tmm3",1414
-4542,TDPBSSD,2701,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_INT8,,"TDPBSSD tmm1, tmm2, tmm3",1416
-4543,TDPBSUD,2702,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_INT8,,"TDPBSUD tmm1, tmm2, tmm3",1416
-4544,TDPBUSD,2703,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_INT8,,"TDPBUSD tmm1, tmm2, tmm3",1416
-4545,TDPBUUD,2704,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_INT8,,"TDPBUUD tmm1, tmm2, tmm3",1416
-4546,TDPFP16PS,2705,0,"tmm1, tmm2, tmm3","tmm0, tmm0, tmm0",3,True,Valid,AMX_FP16,,"TDPFP16PS tmm1, tmm2, tmm3",1418
+4541,TDPBF16PS,2700,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_BF16,,"TDPBF16PS tmm1, tmm2, tmm3",1414
+4542,TDPBSSD,2701,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_INT8,,"TDPBSSD tmm1, tmm2, tmm3",1416
+4543,TDPBSUD,2702,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_INT8,,"TDPBSUD tmm1, tmm2, tmm3",1416
+4544,TDPBUSD,2703,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_INT8,,"TDPBUSD tmm1, tmm2, tmm3",1416
+4545,TDPBUUD,2704,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_INT8,,"TDPBUUD tmm1, tmm2, tmm3",1416
+4546,TDPFP16PS,2705,0,"tmm1, tmm2, tmm3","tmm0, tmm1, tmm2",3,True,Valid,AMX_FP16,,"TDPFP16PS tmm1, tmm2, tmm3",1418
 4547,TEST,2706,0,"AL, imm8","al, 1",2,True,Valid,,,"TEST AL, imm8",1420
 4548,TEST,2707,0,"AX, imm16","ax, 0x100",2,True,Valid,,,"TEST AX, imm16",1420
 4549,TEST,2708,0,"EAX, imm32","eax, 0x10000",2,True,Valid,,,"TEST EAX, imm32",1420
@@ -5137,38 +5137,38 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 5135,VEXTRACTI32X8,3020,1,"ymm1/m256 {k1}{z}, zmm2, imm8","ymmword ptr [eax], zmm0, 1",3,True,Valid,AVX512DQ OR AVX10.1,,"VEXTRACTI32X8 ymm1/m256 {k1}{z}, zmm2, imm8",1636
 5136,VEXTRACTI64x4,3021,0,"ymm1/m256 {k1}{z}, zmm2, imm8","ymm0, zmm0, 1",3,True,Valid,AVX512F OR AVX10.1,,"VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8",1636
 5137,VEXTRACTI64x4,3021,1,"ymm1/m256 {k1}{z}, zmm2, imm8","ymmword ptr [eax], zmm0, 1",3,True,Valid,AVX512F OR AVX10.1,,"VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8",1636
-5138,VFCMADDCPH,3022,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
-5139,VFCMADDCPH,3022,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
-5140,VFCMADDCPH,3023,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
-5141,VFCMADDCPH,3023,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
-5142,VFCMADDCPH,3024,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
-5143,VFCMADDCPH,3024,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
-5144,VFMADDCPH,3025,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
-5145,VFMADDCPH,3025,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
-5146,VFMADDCPH,3026,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
-5147,VFMADDCPH,3026,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
-5148,VFMADDCPH,3027,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
-5149,VFMADDCPH,3027,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
-5150,VFCMADDCSH,3028,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, xmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
-5151,VFCMADDCSH,3028,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
-5152,VFMADDCSH,3029,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, xmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
-5153,VFMADDCSH,3029,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
-5154,VFCMULCPH,3030,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
-5155,VFCMULCPH,3030,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
-5156,VFCMULCPH,3031,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
-5157,VFCMULCPH,3031,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
-5158,VFCMULCPH,3032,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
-5159,VFCMULCPH,3032,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
-5160,VFMULCPH,3033,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
-5161,VFMULCPH,3033,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm0, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
-5162,VFMULCPH,3034,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymm0",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
-5163,VFMULCPH,3034,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm0, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
-5164,VFMULCPH,3035,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
-5165,VFMULCPH,3035,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm0, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
-5166,VFCMULCSH,3036,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, xmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
-5167,VFCMULCSH,3036,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
-5168,VFMULCSH,3037,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, xmm0",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
-5169,VFMULCSH,3037,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
+5138,VFCMADDCPH,3022,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
+5139,VFCMADDCPH,3022,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
+5140,VFCMADDCPH,3023,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
+5141,VFCMADDCPH,3023,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
+5142,VFCMADDCPH,3024,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
+5143,VFCMADDCPH,3024,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
+5144,VFMADDCPH,3025,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
+5145,VFMADDCPH,3025,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1642
+5146,VFMADDCPH,3026,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
+5147,VFMADDCPH,3026,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1642
+5148,VFMADDCPH,3027,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
+5149,VFMADDCPH,3027,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1642
+5150,VFCMADDCSH,3028,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, xmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
+5151,VFCMADDCSH,3028,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
+5152,VFMADDCSH,3029,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, xmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
+5153,VFMADDCSH,3029,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1645
+5154,VFCMULCPH,3030,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
+5155,VFCMULCPH,3030,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
+5156,VFCMULCPH,3031,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
+5157,VFCMULCPH,3031,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFCMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
+5158,VFCMULCPH,3032,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
+5159,VFCMULCPH,3032,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
+5160,VFMULCPH,3033,0,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
+5161,VFMULCPH,3033,1,"xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst","xmm0, xmm1, xmmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",1647
+5162,VFMULCPH,3034,0,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymm2",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
+5163,VFMULCPH,3034,1,"ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst","ymm0, ymm1, ymmword ptr [eax]",3,True,Valid,(AVX512_FP16 AND AVX512VL) OR AVX10.1,,"VFMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",1647
+5164,VFMULCPH,3035,0,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
+5165,VFMULCPH,3035,1,"zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}","zmm0, zmm1, zmmword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",1647
+5166,VFCMULCSH,3036,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, xmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
+5167,VFCMULCSH,3036,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
+5168,VFMULCSH,3037,0,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, xmm2",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
+5169,VFMULCSH,3037,1,"xmm1{k1}{z}, xmm2, xmm3/m32 {er}","xmm0, xmm1, dword ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",1651
 5170,VFIXUPIMMPD,3038,0,"xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8","xmm0, xmm0, xmm0, 1",4,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VFIXUPIMMPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8",1653
 5171,VFIXUPIMMPD,3038,1,"xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8","xmm0, xmm0, xmmword ptr [eax], 1",4,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VFIXUPIMMPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8",1653
 5172,VFIXUPIMMPD,3039,0,"ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8","ymm0, ymm0, ymm0, 1",4,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VFIXUPIMMPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8",1653
@@ -5797,26 +5797,26 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 5795,VFPCLASSSH,3350,1,"k1{k2}, xmm1/m16, imm8","k1, word ptr [eax], 1",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VFPCLASSSH k1{k2}, xmm1/m16, imm8",1817
 5796,VFPCLASSSS,3351,0,"k2 {k1}, xmm2/m32, imm8","k1, xmm0, 1",3,True,Valid,AVX512DQ OR AVX10.1,,"VFPCLASSSS k2 {k1}, xmm2/m32, imm8",1818
 5797,VFPCLASSSS,3351,1,"k2 {k1}, xmm2/m32, imm8","k1, dword ptr [eax], 1",3,True,Valid,AVX512DQ OR AVX10.1,,"VFPCLASSSS k2 {k1}, xmm2/m32, imm8",1818
-5798,VGATHERDPD,3352,0,"xmm1, vm32x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VGATHERDPD xmm1, vm32x, xmm2",1820
-5799,VGATHERQPD,3353,0,"xmm1, vm64x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VGATHERQPD xmm1, vm64x, xmm2",1820
-5800,VGATHERDPD,3354,0,"ymm1, vm32x, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VGATHERDPD ymm1, vm32x, ymm2",1820
-5801,VGATHERQPD,3355,0,"ymm1, vm64y, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VGATHERQPD ymm1, vm64y, ymm2",1820
-5802,VGATHERDPS,3356,0,"xmm1 {k1}, vm32x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPS xmm1 {k1}, vm32x",1824
-5803,VGATHERDPS,3357,0,"ymm1 {k1}, vm32y","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPS ymm1 {k1}, vm32y",1824
-5804,VGATHERDPS,3358,0,"zmm1 {k1}, vm32z","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERDPS zmm1 {k1}, vm32z",1824
-5805,VGATHERDPD,3359,0,"xmm1 {k1}, vm32x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) R AVX10.1,,"VGATHERDPD xmm1 {k1}, vm32x",1824
-5806,VGATHERDPD,3360,0,"ymm1 {k1}, vm32x","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPD ymm1 {k1}, vm32x",1824
-5807,VGATHERDPD,3361,0,"zmm1 {k1}, vm32y","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERDPD zmm1 {k1}, vm32y",1824
-5808,VGATHERDPS,3362,0,"xmm1, vm32x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VGATHERDPS xmm1, vm32x, xmm2",1827
-5809,VGATHERQPS,3363,0,"xmm1, vm64x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VGATHERQPS xmm1, vm64x, xmm2",1827
-5810,VGATHERDPS,3364,0,"ymm1, vm32y, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VGATHERDPS ymm1, vm32y, ymm2",1827
-5811,VGATHERQPS,3365,0,"xmm1, vm64y, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VGATHERQPS xmm1, vm64y, xmm2",1827
-5812,VGATHERQPS,3366,0,"xmm1 {k1}, vm64x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPS xmm1 {k1}, vm64x",1831
-5813,VGATHERQPS,3367,0,"xmm1 {k1}, vm64y","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPS xmm1 {k1}, vm64y",1831
-5814,VGATHERQPS,3368,0,"ymm1 {k1}, vm64z","ymm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERQPS ymm1 {k1}, vm64z",1831
-5815,VGATHERQPD,3369,0,"xmm1 {k1}, vm64x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPD xmm1 {k1}, vm64x",1831
-5816,VGATHERQPD,3370,0,"ymm1 {k1}, vm64y","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPD ymm1 {k1}, vm64y",1831
-5817,VGATHERQPD,3371,0,"zmm1 {k1}, vm64z","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERQPD zmm1 {k1}, vm64z",1831
+5798,VGATHERDPD,3352,0,"xmm1, vm32x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VGATHERDPD xmm1, vm32x, xmm2",1820
+5799,VGATHERQPD,3353,0,"xmm1, vm64x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VGATHERQPD xmm1, vm64x, xmm2",1820
+5800,VGATHERDPD,3354,0,"ymm1, vm32x, ymm2","ymm0, [eax + xmm1], ymm0",3,True,Valid,AVX2,,"VGATHERDPD ymm1, vm32x, ymm2",1820
+5801,VGATHERQPD,3355,0,"ymm1, vm64y, ymm2","ymm0, [eax + ymm1], ymm0",3,True,Valid,AVX2,,"VGATHERQPD ymm1, vm64y, ymm2",1820
+5802,VGATHERDPS,3356,0,"xmm1 {k1}, vm32x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPS xmm1 {k1}, vm32x",1824
+5803,VGATHERDPS,3357,0,"ymm1 {k1}, vm32y","ymm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPS ymm1 {k1}, vm32y",1824
+5804,VGATHERDPS,3358,0,"zmm1 {k1}, vm32z","zmm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERDPS zmm1 {k1}, vm32z",1824
+5805,VGATHERDPD,3359,0,"xmm1 {k1}, vm32x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) R AVX10.1,,"VGATHERDPD xmm1 {k1}, vm32x",1824
+5806,VGATHERDPD,3360,0,"ymm1 {k1}, vm32x","ymm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERDPD ymm1 {k1}, vm32x",1824
+5807,VGATHERDPD,3361,0,"zmm1 {k1}, vm32y","zmm0 {k1}, [eax + ymm1]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERDPD zmm1 {k1}, vm32y",1824
+5808,VGATHERDPS,3362,0,"xmm1, vm32x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VGATHERDPS xmm1, vm32x, xmm2",1827
+5809,VGATHERQPS,3363,0,"xmm1, vm64x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VGATHERQPS xmm1, vm64x, xmm2",1827
+5810,VGATHERDPS,3364,0,"ymm1, vm32y, ymm2","ymm0, [eax + ymm1], ymm0",3,True,Valid,AVX2,,"VGATHERDPS ymm1, vm32y, ymm2",1827
+5811,VGATHERQPS,3365,0,"xmm1, vm64y, xmm2","xmm0, [eax + ymm1], xmm0",3,True,Valid,AVX2,,"VGATHERQPS xmm1, vm64y, xmm2",1827
+5812,VGATHERQPS,3366,0,"xmm1 {k1}, vm64x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPS xmm1 {k1}, vm64x",1831
+5813,VGATHERQPS,3367,0,"xmm1 {k1}, vm64y","xmm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPS xmm1 {k1}, vm64y",1831
+5814,VGATHERQPS,3368,0,"ymm1 {k1}, vm64z","ymm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERQPS ymm1 {k1}, vm64z",1831
+5815,VGATHERQPD,3369,0,"xmm1 {k1}, vm64x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPD xmm1 {k1}, vm64x",1831
+5816,VGATHERQPD,3370,0,"ymm1 {k1}, vm64y","ymm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGATHERQPD ymm1 {k1}, vm64y",1831
+5817,VGATHERQPD,3371,0,"zmm1 {k1}, vm64z","zmm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VGATHERQPD zmm1 {k1}, vm64z",1831
 5818,VGETEXPPD,3372,0,"xmm1 {k1}{z}, xmm2/m128/m64bcst","xmm0, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGETEXPPD xmm1 {k1}{z}, xmm2/m128/m64bcst",1834
 5819,VGETEXPPD,3372,1,"xmm1 {k1}{z}, xmm2/m128/m64bcst","xmm0, xmmword ptr [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGETEXPPD xmm1 {k1}{z}, xmm2/m128/m64bcst",1834
 5820,VGETEXPPD,3373,0,"ymm1 {k1}{z}, ymm2/m256/m64bcst","ymm0, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VGETEXPPD ymm1 {k1}{z}, ymm2/m256/m64bcst",1834
@@ -6400,26 +6400,26 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 6398,VPEXPANDQ,3692,1,"ymm1 {k1}{z}, ymm2/m256","ymm0, ymmword ptr [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPEXPANDQ ymm1 {k1}{z}, ymm2/m256",2008
 6399,VPEXPANDQ,3693,0,"zmm1 {k1}{z}, zmm2/m512","zmm0, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPEXPANDQ zmm1 {k1}{z}, zmm2/m512",2008
 6400,VPEXPANDQ,3693,1,"zmm1 {k1}{z}, zmm2/m512","zmm0, zmmword ptr [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VPEXPANDQ zmm1 {k1}{z}, zmm2/m512",2008
-6401,VPGATHERDD,3694,0,"xmm1 {k1}, vm32x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDD xmm1 {k1}, vm32x",2010
-6402,VPGATHERDD,3695,0,"ymm1 {k1}, vm32y","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDD ymm1 {k1}, vm32y",2010
-6403,VPGATHERDD,3696,0,"zmm1 {k1}, vm32z","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERDD zmm1 {k1}, vm32z",2010
-6404,VPGATHERDQ,3697,0,"xmm1 {k1}, vm32x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDQ xmm1 {k1}, vm32x",2010
-6405,VPGATHERDQ,3698,0,"ymm1 {k1}, vm32x","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDQ ymm1 {k1}, vm32x",2010
-6406,VPGATHERDQ,3699,0,"zmm1 {k1}, vm32y","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERDQ zmm1 {k1}, vm32y",2010
-6407,VPGATHERDD,3700,0,"xmm1, vm32x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VPGATHERDD xmm1, vm32x, xmm2",2013
-6408,VPGATHERQD,3701,0,"xmm1, vm64x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VPGATHERQD xmm1, vm64x, xmm2",2013
-6409,VPGATHERDD,3702,0,"ymm1, vm32y, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VPGATHERDD ymm1, vm32y, ymm2",2013
-6410,VPGATHERQD,3703,0,"xmm1, vm64y, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VPGATHERQD xmm1, vm64y, xmm2",2013
-6411,VPGATHERDQ,3704,0,"xmm1, vm32x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VPGATHERDQ xmm1, vm32x, xmm2",2017
-6412,VPGATHERQQ,3705,0,"xmm1, vm64x, xmm2","xmm0, [eax], xmm0",3,True,Valid,AVX2,,"VPGATHERQQ xmm1, vm64x, xmm2",2017
-6413,VPGATHERDQ,3706,0,"ymm1, vm32x, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VPGATHERDQ ymm1, vm32x, ymm2",2017
-6414,VPGATHERQQ,3707,0,"ymm1, vm64y, ymm2","ymm0, [eax], ymm0",3,True,Valid,AVX2,,"VPGATHERQQ ymm1, vm64y, ymm2",2017
-6415,VPGATHERQD,3708,0,"xmm1 {k1}, vm64x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQD xmm1 {k1}, vm64x",2021
-6416,VPGATHERQD,3709,0,"xmm1 {k1}, vm64y","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQD xmm1 {k1}, vm64y",2021
-6417,VPGATHERQD,3710,0,"ymm1 {k1}, vm64z","ymm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERQD ymm1 {k1}, vm64z",2021
-6418,VPGATHERQQ,3711,0,"xmm1 {k1}, vm64x","xmm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQQ xmm1 {k1}, vm64x",2021
-6419,VPGATHERQQ,3712,0,"ymm1 {k1}, vm64y","ymm0, [eax]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQQ ymm1 {k1}, vm64y",2021
-6420,VPGATHERQQ,3713,0,"zmm1 {k1}, vm64z","zmm0, [eax]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERQQ zmm1 {k1}, vm64z",2021
+6401,VPGATHERDD,3694,0,"xmm1 {k1}, vm32x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDD xmm1 {k1}, vm32x",2010
+6402,VPGATHERDD,3695,0,"ymm1 {k1}, vm32y","ymm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDD ymm1 {k1}, vm32y",2010
+6403,VPGATHERDD,3696,0,"zmm1 {k1}, vm32z","zmm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERDD zmm1 {k1}, vm32z",2010
+6404,VPGATHERDQ,3697,0,"xmm1 {k1}, vm32x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDQ xmm1 {k1}, vm32x",2010
+6405,VPGATHERDQ,3698,0,"ymm1 {k1}, vm32x","ymm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERDQ ymm1 {k1}, vm32x",2010
+6406,VPGATHERDQ,3699,0,"zmm1 {k1}, vm32y","zmm0 {k1}, [eax + ymm1]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERDQ zmm1 {k1}, vm32y",2010
+6407,VPGATHERDD,3700,0,"xmm1, vm32x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VPGATHERDD xmm1, vm32x, xmm2",2013
+6408,VPGATHERQD,3701,0,"xmm1, vm64x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VPGATHERQD xmm1, vm64x, xmm2",2013
+6409,VPGATHERDD,3702,0,"ymm1, vm32y, ymm2","ymm0, [eax + ymm1], ymm0",3,True,Valid,AVX2,,"VPGATHERDD ymm1, vm32y, ymm2",2013
+6410,VPGATHERQD,3703,0,"xmm1, vm64y, xmm2","xmm0, [eax + ymm1], xmm0",3,True,Valid,AVX2,,"VPGATHERQD xmm1, vm64y, xmm2",2013
+6411,VPGATHERDQ,3704,0,"xmm1, vm32x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VPGATHERDQ xmm1, vm32x, xmm2",2017
+6412,VPGATHERQQ,3705,0,"xmm1, vm64x, xmm2","xmm0, [eax + xmm1], xmm0",3,True,Valid,AVX2,,"VPGATHERQQ xmm1, vm64x, xmm2",2017
+6413,VPGATHERDQ,3706,0,"ymm1, vm32x, ymm2","ymm0, [eax + xmm1], ymm0",3,True,Valid,AVX2,,"VPGATHERDQ ymm1, vm32x, ymm2",2017
+6414,VPGATHERQQ,3707,0,"ymm1, vm64y, ymm2","ymm0, [eax + ymm1], ymm0",3,True,Valid,AVX2,,"VPGATHERQQ ymm1, vm64y, ymm2",2017
+6415,VPGATHERQD,3708,0,"xmm1 {k1}, vm64x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQD xmm1 {k1}, vm64x",2021
+6416,VPGATHERQD,3709,0,"xmm1 {k1}, vm64y","xmm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQD xmm1 {k1}, vm64y",2021
+6417,VPGATHERQD,3710,0,"ymm1 {k1}, vm64z","ymm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERQD ymm1 {k1}, vm64z",2021
+6418,VPGATHERQQ,3711,0,"xmm1 {k1}, vm64x","xmm0 {k1}, [eax + xmm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQQ xmm1 {k1}, vm64x",2021
+6419,VPGATHERQQ,3712,0,"ymm1 {k1}, vm64y","ymm0 {k1}, [eax + ymm1]",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPGATHERQQ ymm1 {k1}, vm64y",2021
+6420,VPGATHERQQ,3713,0,"zmm1 {k1}, vm64z","zmm0 {k1}, [eax + zmm1]",2,True,Valid,AVX512F OR AVX10.1,,"VPGATHERQQ zmm1 {k1}, vm64z",2021
 6421,VPLZCNTD,3714,0,"xmm1 {k1}{z}, xmm2/m128/m32bcst","xmm0, xmm0",2,True,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,,"VPLZCNTD xmm1 {k1}{z}, xmm2/m128/m32bcst",2024
 6422,VPLZCNTD,3714,1,"xmm1 {k1}{z}, xmm2/m128/m32bcst","xmm0, xmmword ptr [eax]",2,True,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,,"VPLZCNTD xmm1 {k1}{z}, xmm2/m128/m32bcst",2024
 6423,VPLZCNTD,3715,0,"ymm1 {k1}{z}, ymm2/m256/m32bcst","ymm0, ymm0",2,True,Valid,(AVX512VL AND AVX512CD) OR AVX10.1,,"VPLZCNTD ymm1 {k1}{z}, ymm2/m256/m32bcst",2024
@@ -6670,18 +6670,18 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 6668,VPRORVQ,3853,1,"zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst","zmm0, zmm0, zmmword ptr [eax]",3,True,Valid,AVX512F OR AVX10.1,,"VPRORVQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst",2076
 6669,VPRORQ,3854,0,"zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8","zmm0, zmm0, 1",3,True,Valid,AVX512F OR AVX10.1,,"VPRORQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8",2076
 6670,VPRORQ,3854,1,"zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8","zmm0, zmmword ptr [eax], 1",3,True,Valid,AVX512F OR AVX10.1,,"VPRORQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8",2076
-6671,VPSCATTERDD,3855,0,"vm32x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDD vm32x {k1}, xmm1",2080
-6672,VPSCATTERDD,3856,0,"vm32y {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDD vm32y {k1}, ymm1",2080
-6673,VPSCATTERDD,3857,0,"vm32z {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERDD vm32z {k1}, zmm1",2080
-6674,VPSCATTERDQ,3858,0,"vm32x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDQ vm32x {k1}, xmm1",2080
-6675,VPSCATTERDQ,3859,0,"vm32x {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDQ vm32x {k1}, ymm1",2080
-6676,VPSCATTERDQ,3860,0,"vm32y {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERDQ vm32y {k1}, zmm1",2080
-6677,VPSCATTERQD,3861,0,"vm64x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQD vm64x {k1}, xmm1",2080
-6678,VPSCATTERQD,3862,0,"vm64y {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQD vm64y {k1}, xmm1",2080
-6679,VPSCATTERQD,3863,0,"vm64z {k1}, ymm1","[eax], ymm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERQD vm64z {k1}, ymm1",2080
-6680,VPSCATTERQQ,3864,0,"vm64x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQQ vm64x {k1}, xmm1",2080
-6681,VPSCATTERQQ,3865,0,"vm64y {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQQ vm64y {k1}, ymm1",2080
-6682,VPSCATTERQQ,3866,0,"vm64z {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERQQ vm64z {k1}, zmm1",2080
+6671,VPSCATTERDD,3855,0,"vm32x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDD vm32x {k1}, xmm1",2080
+6672,VPSCATTERDD,3856,0,"vm32y {k1}, ymm1","[eax + ymm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDD vm32y {k1}, ymm1",2080
+6673,VPSCATTERDD,3857,0,"vm32z {k1}, zmm1","[eax + zmm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERDD vm32z {k1}, zmm1",2080
+6674,VPSCATTERDQ,3858,0,"vm32x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDQ vm32x {k1}, xmm1",2080
+6675,VPSCATTERDQ,3859,0,"vm32x {k1}, ymm1","[eax + xmm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERDQ vm32x {k1}, ymm1",2080
+6676,VPSCATTERDQ,3860,0,"vm32y {k1}, zmm1","[eax + ymm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERDQ vm32y {k1}, zmm1",2080
+6677,VPSCATTERQD,3861,0,"vm64x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQD vm64x {k1}, xmm1",2080
+6678,VPSCATTERQD,3862,0,"vm64y {k1}, xmm1","[eax + ymm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQD vm64y {k1}, xmm1",2080
+6679,VPSCATTERQD,3863,0,"vm64z {k1}, ymm1","[eax + zmm1] {k1}, ymm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERQD vm64z {k1}, ymm1",2080
+6680,VPSCATTERQQ,3864,0,"vm64x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQQ vm64x {k1}, xmm1",2080
+6681,VPSCATTERQQ,3865,0,"vm64y {k1}, ymm1","[eax + ymm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VPSCATTERQQ vm64y {k1}, ymm1",2080
+6682,VPSCATTERQQ,3866,0,"vm64z {k1}, zmm1","[eax + zmm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VPSCATTERQQ vm64z {k1}, zmm1",2080
 6683,VPSHLDW,3867,0,"xmm1{k1}{z}, xmm2, xmm3/m128, imm8","xmm0, xmm0, xmm0, 1",4,True,Valid,(AVX512_VBMI2 AND AVX512VL) OR AVX10.1,,"VPSHLDW xmm1{k1}{z}, xmm2, xmm3/m128, imm8",2084
 6684,VPSHLDW,3867,1,"xmm1{k1}{z}, xmm2, xmm3/m128, imm8","xmm0, xmm0, xmmword ptr [eax], 1",4,True,Valid,(AVX512_VBMI2 AND AVX512VL) OR AVX10.1,,"VPSHLDW xmm1{k1}{z}, xmm2, xmm3/m128, imm8",2084
 6685,VPSHLDW,3868,0,"ymm1{k1}{z}, ymm2, ymm3/m256, imm8","ymm0, ymm0, ymm0, 1",4,True,Valid,(AVX512_VBMI2 AND AVX512VL) OR AVX10.1,,"VPSHLDW ymm1{k1}{z}, ymm2, ymm3/m256, imm8",2084
@@ -7030,18 +7030,18 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 7028,VSCALEFSH,4039,1,"xmm1{k1}{z}, xmm2, xmm3/m16 {er}","xmm0, xmm0, word ptr [eax]",3,True,Valid,AVX512_FP16 OR AVX10.1,,"VSCALEFSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",2198
 7029,VSCALEFSS,4040,0,"xmm1 {k1}{z}, xmm2, xmm3/m32{er}","xmm0, xmm0, xmm0",3,True,Valid,AVX512F OR AVX10.1,,"VSCALEFSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",2200
 7030,VSCALEFSS,4040,1,"xmm1 {k1}{z}, xmm2, xmm3/m32{er}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512F OR AVX10.1,,"VSCALEFSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",2200
-7031,VSCATTERDPS,4041,0,"vm32x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPS vm32x {k1}, xmm1",2202
-7032,VSCATTERDPS,4042,0,"vm32y {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPS vm32y {k1}, ymm1",2202
-7033,VSCATTERDPS,4043,0,"vm32z {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERDPS vm32z {k1}, zmm1",2202
-7034,VSCATTERDPD,4044,0,"vm32x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPD vm32x {k1}, xmm1",2202
-7035,VSCATTERDPD,4045,0,"vm32y {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPD vm32y {k1}, ymm1",2202
-7036,VSCATTERDPD,4046,0,"vm32z {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERDPD vm32z {k1}, zmm1",2202
-7037,VSCATTERQPS,4047,0,"vm64x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPS vm64x {k1}, xmm1",2202
-7038,VSCATTERQPS,4048,0,"vm64y {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPS vm64y {k1}, xmm1",2202
-7039,VSCATTERQPS,4049,0,"vm64z {k1}, ymm1","[eax], ymm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERQPS vm64z {k1}, ymm1",2202
-7040,VSCATTERQPD,4050,0,"vm64x {k1}, xmm1","[eax], xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPD vm64x {k1}, xmm1",2202
-7041,VSCATTERQPD,4051,0,"vm64y {k1}, ymm1","[eax], ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPD vm64y {k1}, ymm1",2202
-7042,VSCATTERQPD,4052,0,"vm64z {k1}, zmm1","[eax], zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERQPD vm64z {k1}, zmm1",2202
+7031,VSCATTERDPS,4041,0,"vm32x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPS vm32x {k1}, xmm1",2202
+7032,VSCATTERDPS,4042,0,"vm32y {k1}, ymm1","[eax + ymm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPS vm32y {k1}, ymm1",2202
+7033,VSCATTERDPS,4043,0,"vm32z {k1}, zmm1","[eax + zmm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERDPS vm32z {k1}, zmm1",2202
+7034,VSCATTERDPD,4044,0,"vm32x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPD vm32x {k1}, xmm1",2202
+7035,VSCATTERDPD,4045,0,"vm32y {k1}, ymm1","[eax + ymm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERDPD vm32y {k1}, ymm1",2202
+7036,VSCATTERDPD,4046,0,"vm32z {k1}, zmm1","[eax + zmm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERDPD vm32z {k1}, zmm1",2202
+7037,VSCATTERQPS,4047,0,"vm64x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPS vm64x {k1}, xmm1",2202
+7038,VSCATTERQPS,4048,0,"vm64y {k1}, xmm1","[eax + ymm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPS vm64y {k1}, xmm1",2202
+7039,VSCATTERQPS,4049,0,"vm64z {k1}, ymm1","[eax + zmm1] {k1}, ymm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERQPS vm64z {k1}, ymm1",2202
+7040,VSCATTERQPD,4050,0,"vm64x {k1}, xmm1","[eax + xmm1] {k1}, xmm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPD vm64x {k1}, xmm1",2202
+7041,VSCATTERQPD,4051,0,"vm64y {k1}, ymm1","[eax + ymm1] {k1}, ymm0",2,True,Valid,(AVX512VL AND AVX512F) OR AVX10.1,,"VSCATTERQPD vm64y {k1}, ymm1",2202
+7042,VSCATTERQPD,4052,0,"vm64z {k1}, zmm1","[eax + zmm1] {k1}, zmm0",2,True,Valid,AVX512F OR AVX10.1,,"VSCATTERQPD vm64z {k1}, zmm1",2202
 7043,VSHA512MSG1,4053,0,"ymm1, xmm2","ymm0, xmm0",2,True,Valid,AVX SHA512,,"VSHA512MSG1 ymm1, xmm2",2206
 7044,VSHA512MSG2,4054,0,"ymm1, ymm2","ymm0, ymm0",2,True,Valid,AVX SHA512,,"VSHA512MSG2 ymm1, ymm2",2208
 7045,VSHA512RNDS2,4055,0,"ymm1, ymm2, xmm3","ymm0, ymm0, xmm0",3,True,Valid,AVX SHA512,,"VSHA512RNDS2 ymm1, ymm2, xmm3",2210
@@ -7242,14 +7242,14 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 7240,VEXP2PD,4182,1,"zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}","zmm0, zmmword ptr [eax]",2,True,Valid,AVX512ER,,"VEXP2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",2362
 7241,VEXP2PS,4183,0,"zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}","zmm0, zmm0",2,True,Valid,AVX512ER,,"VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",2364
 7242,VEXP2PS,4183,1,"zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}","zmm0, zmmword ptr [eax]",2,True,Valid,AVX512ER,,"VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",2364
-7243,VGATHERPF0DPS,4184,0,vm32z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF0DPS vm32z {k1},2366
-7244,VGATHERPF0QPS,4185,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF0QPS vm64z {k1},2366
-7245,VGATHERPF0DPD,4186,0,vm32y {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF0DPD vm32y {k1},2366
-7246,VGATHERPF0QPD,4187,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF0QPD vm64z {k1},2366
-7247,VGATHERPF1DPS,4188,0,vm32z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF1DPS vm32z {k1},2368
-7248,VGATHERPF1QPS,4189,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF1QPS vm64z {k1},2368
-7249,VGATHERPF1DPD,4190,0,vm32y {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF1DPD vm32y {k1},2368
-7250,VGATHERPF1QPD,4191,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VGATHERPF1QPD vm64z {k1},2368
+7243,VGATHERPF0DPS,4184,0,vm32z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF0DPS vm32z {k1},2366
+7244,VGATHERPF0QPS,4185,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF0QPS vm64z {k1},2366
+7245,VGATHERPF0DPD,4186,0,vm32y {k1},[eax + ymm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF0DPD vm32y {k1},2366
+7246,VGATHERPF0QPD,4187,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF0QPD vm64z {k1},2366
+7247,VGATHERPF1DPS,4188,0,vm32z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF1DPS vm32z {k1},2368
+7248,VGATHERPF1QPS,4189,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF1QPS vm64z {k1},2368
+7249,VGATHERPF1DPD,4190,0,vm32y {k1},[eax + ymm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF1DPD vm32y {k1},2368
+7250,VGATHERPF1QPD,4191,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VGATHERPF1QPD vm64z {k1},2368
 7251,VP4DPWSSDS,4192,0,"zmm1{k1}{z}, zmm2+3, m128","zmm0, zmm2+3, xmmword ptr [eax]",3,True,Valid,AVX512_4VNNIW,op1:other_kept_raw,"VP4DPWSSDS zmm1{k1}{z}, zmm2+3, m128",2370
 7252,VP4DPWSSD,4193,0,"zmm1{k1}{z}, zmm2+3, m128","zmm0, zmm2+3, xmmword ptr [eax]",3,True,Valid,AVX512_4VNNIW,op1:other_kept_raw,"VP4DPWSSD zmm1{k1}{z}, zmm2+3, m128",2372
 7253,VRCP28PD,4194,0,"zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}","zmm0, zmm0",2,True,Valid,AVX512ER,,"VRCP28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",2374
@@ -7268,11 +7268,11 @@ combo_id,mnemonic,row_id,combo_index,operand_types,operands,operand_count,expect
 7266,VRSQRT28PS,4200,1,"zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}","zmm0, zmmword ptr [eax]",2,True,Valid,AVX512ER,,"VRSQRT28PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",2386
 7267,VRSQRT28SS,4201,0,"xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}","xmm0, xmm0, xmm0",3,True,Valid,AVX512ER,,"VRSQRT28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",2388
 7268,VRSQRT28SS,4201,1,"xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}","xmm0, xmm0, dword ptr [eax]",3,True,Valid,AVX512ER,,"VRSQRT28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",2388
-7269,VSCATTERPF0DPS,4202,0,vm32z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF0DPS vm32z {k1},2390
-7270,VSCATTERPF0QPS,4203,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF0QPS vm64z {k1},2390
-7271,VSCATTERPF0DPD,4204,0,vm32y {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF0DPD vm32y {k1},2390
-7272,VSCATTERPF0QPD,4205,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF0QPD vm64z {k1},2390
-7273,VSCATTERPF1DPS,4206,0,vm32z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF1DPS vm32z {k1},2392
-7274,VSCATTERPF1QPS,4207,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF1QPS vm64z {k1},2392
-7275,VSCATTERPF1DPD,4208,0,vm32y {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF1DPD vm32y {k1},2392
-7276,VSCATTERPF1QPD,4209,0,vm64z {k1},[eax],1,True,Valid,AVX512PF,,VSCATTERPF1QPD vm64z {k1},2392
+7269,VSCATTERPF0DPS,4202,0,vm32z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF0DPS vm32z {k1},2390
+7270,VSCATTERPF0QPS,4203,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF0QPS vm64z {k1},2390
+7271,VSCATTERPF0DPD,4204,0,vm32y {k1},[eax + ymm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF0DPD vm32y {k1},2390
+7272,VSCATTERPF0QPD,4205,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF0QPD vm64z {k1},2390
+7273,VSCATTERPF1DPS,4206,0,vm32z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF1DPS vm32z {k1},2392
+7274,VSCATTERPF1QPS,4207,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF1QPS vm64z {k1},2392
+7275,VSCATTERPF1DPD,4208,0,vm32y {k1},[eax + ymm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF1DPD vm32y {k1},2392
+7276,VSCATTERPF1QPD,4209,0,vm64z {k1},[eax + zmm1] {k1},1,True,Valid,AVX512PF,,VSCATTERPF1QPD vm64z {k1},2392

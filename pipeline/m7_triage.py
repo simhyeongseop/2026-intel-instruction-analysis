@@ -172,6 +172,25 @@ ERROR_COMBO_OVERRIDES = {
              "없이 `mov ds, eax`와 동일한 2바이트 인코딩(8e d8)만 나온다(combo 1682, "
              "register_width/name_changed로 별도 확인됨) - LAR/LSL(combo 1516/1571)과 정확히 같은 "
              "유형으로, GNU as가 REX.W+8E/r의 r/m64 메모리 인코딩 경로를 구현하지 않은 것으로 보임."),
+    "7035": ("sdm_gather_scatter_vsib_width_asymmetry", "unsure",
+             "SDM PDF p.2202(325383-090-sdm-vol-2abcd.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
+             "ymm 폼이 실제로 'vm32y {k1}, ymm1'로 인쇄돼 있다 - combiner가 vm32x를 vm32y로 잘못 "
+             "뽑은 추출 오류가 아니라 PDF 원문 자체가 vm32y다. `as`로 직접 재현: "
+             "`vscatterdpd [eax + xmm1] {k1}, xmm0`(combo 7034)는 성공하지만 이 combo의 "
+             "`[eax + ymm1] {k1}, ymm0`은 'invalid VSIB address'로 실패한다. 한편 유사 명령 "
+             "VGATHERDPD(PDF p.1824)는 ymm 데이터인데도 SDM이 vm32x를 그대로 유지해서 "
+             "GATHER는 vm32x 유지, SCATTER는 vm32y로 확장하는 비대칭 표기를 보인다 - 이 비대칭이 "
+             "SDM의 의도적 설계인지 오탈자인지 도구(as/objdump)만으로는 판단할 수 없어 unsure로 "
+             "둔다. 형섭이 PDF 원문과 인텔 공식 정오표를 직접 확인해서 SDM 오탈자인지, as가 SDM에 "
+             "명시된 폼을 구현하지 않은 버그인지 확정해야 한다."),
+    "7036": ("sdm_gather_scatter_vsib_width_asymmetry", "unsure",
+             "SDM PDF p.2202(325383-090-sdm-vol-2abcd.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
+             "zmm 폼이 실제로 'vm32z {k1}, zmm1'로 인쇄돼 있다 - combiner 추출 오류가 아니라 PDF "
+             "원문 자체가 vm32z다. `as`로 직접 재현: `vscatterdpd [eax + xmm1] {k1}, xmm0`"
+             "(combo 7034)는 성공하지만 이 combo의 `[eax + zmm1] {k1}, zmm0`은 'invalid VSIB "
+             "address'로 실패한다. 유사 명령 VGATHERDPD(PDF p.1824)는 zmm 데이터에도 SDM이 vm32x를 "
+             "유지해서(GATHER/SCATTER 표기 비대칭) - 의도적 설계인지 오탈자인지 도구만으로는 판단 "
+             "불가, unsure로 둔다. 형섭이 PDF 원문과 인텔 정오표를 직접 확인해야 확정된다."),
 }
 
 # far-ptr(m16:16/m16:32/m16:64) collapse: pipeline/m3_combine.py의
