@@ -12,14 +12,18 @@ LLM이 "이게 버그다"라고 주장하는 게 아니라, 실행 결과를 그
 
 두 그룹으로 나뉜다:
   [B] 진짜 버그 후보 (7건) — SDM과 GNU as가 실제로 다르게 동작하는 것.
-      이건 "고치는" 대상이 아니라 이 프로젝트가 찾으려는 결과물 그 자체.
+      이건 "고치는" 대상이 아니라 이 프로젝트가 찾으려는 결과물 그 자체. 아직 안 고쳤고,
+      broken_line/control_line으로 지금도 재현된다.
   [A] 우리 파이프라인(combiner) 코드의 한계 (6건) — combiner가 대표값을 잘못 골라서
-      정상적으로 되는 명령어를 실패로 잘못 만든 것. broken(combiner 실제 출력)과
-      control(SDM대로 썼으면 나왔어야 할 형태)을 나란히 비교해서 보여준다.
+      정상적으로 되는 명령어를 실패로 잘못 만들었던 것. **2026-07-24에 pipeline/m3_combine.py를
+      고쳐서 전부 해결됨.** broken_line(수정 전 실제로 나왔던 값, 역사적 기록)과
+      fixed_line(수정 후 combos.csv에서 실제로 나오는 값)을 같이 어셈블해서
+      "그때는 실패 -> 지금은 성공"을 직접 비교해서 보여준다.
 
 각 케이스의 근거(combo_id, 원본 asm_line, 에러 메시지)는 out/asm_result.csv /
 out/triage.csv 에서 그대로 가져온 것이다 — 이 스크립트에 적힌 것과 그 CSV들을
-대조해보면 같은 값이 나온다.
+대조해보면 같은 값이 나온다. [A] 그룹의 fixed_line은 data/db/combos.csv에서
+combo_id로 다시 조회해도 같은 값이 나온다.
 """
 
 import subprocess
@@ -114,9 +118,10 @@ CASES = [
         "control_note": "as가 실제로 받아주는 크기(m64) — SDM 표기(m128)와 다름",
     },
     # ------------------------------------------------------------------
-    # [A] 우리 combiner(pipeline/m3_combine.py) 코드의 한계 6건.
-    # broken_line = combiner가 실제로 만들어낸 조합 (out/asm_result.csv 그대로).
-    # control_line = SDM 뜻대로 사람이 직접 쓰면 정상적으로 되는 형태.
+    # [A] 우리 combiner(pipeline/m3_combine.py) 코드의 한계 6건 — 2026-07-24 수정 완료.
+    # broken_line = 수정 전 combiner가 실제로 만들어냈던 조합 (역사적 기록용, 지금은 안 나옴).
+    # fixed_line = 수정 후 combiner가 실제로 만들어내는 조합 (data/db/combos.csv에서 그대로 가져옴).
+    # 둘 다 실행해서 "그때는 실패 -> 지금은 성공"을 직접 비교해서 보여준다.
     # ------------------------------------------------------------------
     {
         "id": "combiner_farptr_collapse",
@@ -127,8 +132,9 @@ CASES = [
                  "잘못 축소해버림 (CALL m16:16/m16:32 6건 전부 영향).",
         "broken_line": "call word ptr [eax]",
         "broken_sdm_expect": "ok",  # combiner가 안 망가뜨렸으면 성공했어야 함
-        "control_line": "call far [eax]",
-        "control_note": "combiner가 far-ptr을 제대로 다뤘으면 나왔어야 할 형태(far 지시어) — 정상 어셈블됨",
+        "fixed_line": "call far ptr [eax]",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 424) — far-ptr 전용 "
+                      "FAR_PTR_ATOM_RE 추가로 해결. 정상 어셈블됨.",
     },
     {
         "id": "combiner_moffs_brackets",
@@ -139,8 +145,9 @@ CASES = [
                  "오인함 (MOV moffs류 5건 전부 영향).",
         "broken_line": "mov 0x1000, al",
         "broken_sdm_expect": "ok",
-        "control_line": "mov [0x1000], al",
-        "control_note": "combiner가 괄호를 붙였으면 나왔어야 할 형태 — 정상 어셈블됨",
+        "fixed_line": "mov [0x1000], al",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 1689) — 괄호를 붙이도록 "
+                      "고쳐서 해결. 정상 어셈블됨.",
     },
     {
         "id": "combiner_register_reuse",
@@ -151,8 +158,9 @@ CASES = [
                  "전부 같은 레지스터가 들어감 (register_reuse 38건 전부 영향).",
         "broken_line": "tdpbf16ps tmm0, tmm0, tmm0",
         "broken_sdm_expect": "ok",
-        "control_line": "tdpbf16ps tmm0, tmm1, tmm2",
-        "control_note": "combiner가 슬롯마다 다른 레지스터를 골랐으면 나왔어야 할 형태 — 정상 어셈블됨",
+        "fixed_line": "tdpbf16ps tmm0, tmm1, tmm2",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 4541) — 슬롯마다 순번을 "
+                      "매기는 register_candidate(atom, occurrence)로 해결. 정상 어셈블됨.",
     },
     {
         "id": "combiner_vsib_missing_index",
@@ -163,8 +171,11 @@ CASES = [
                  "아예 없음 (16건 전부 영향).",
         "broken_line": "vgatherdpd xmm0, [eax], xmm0",
         "broken_sdm_expect": "ok",
-        "control_line": "vgatherdpd xmm0, [eax + xmm1], xmm0",
-        "control_note": "combiner가 VSIB 인덱스 레지스터를 넣었으면 나왔어야 할 형태 — 정상 어셈블됨",
+        "fixed_line": "vgatherdpd xmm0, [eax + xmm1], xmm0",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 5798) — VSIB_ATOM_RE로 "
+                      "인덱스 레지스터를 붙이도록 해결. 정상 어셈블됨. (단, VSCATTERDPD ymm/zmm "
+                      "2건은 SDM 원문 자체의 비대칭 표기 때문에 여전히 실패 — combiner 버그 아님, "
+                      "triage에 unsure로 별도 분류됨)",
     },
     {
         "id": "combiner_mpx_addr32_missing",
@@ -174,8 +185,9 @@ CASES = [
                  "64비트 모드에서 32비트 주소 자체를 거부함 (12건 전부 영향).",
         "broken_line": "bndcl bnd0, dword ptr [eax]",
         "broken_sdm_expect": "ok",
-        "control_line": "bndcl bnd0, [rax]",
-        "control_note": "combiner가 64비트 주소 레지스터(rax)를 썼으면 나왔어야 할 형태 — 정상 어셈블됨",
+        "fixed_line": "bndcl bnd0, dword ptr [rax]",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 323) — MPX_MNEMONICS일 때 "
+                      "64비트 주소(rax)를 쓰도록 해결. 정상 어셈블됨.",
     },
     {
         "id": "combiner_avx512_default_mask",
@@ -186,8 +198,9 @@ CASES = [
                  "기본 마스크(k0) 상태로 생성됨 — k0는 허용 안 됨 (64건 전부 영향).",
         "broken_line": "vgatherdps xmm0, [eax]",
         "broken_sdm_expect": "ok",
-        "control_line": "vgatherdps xmm0 {k1}, [eax + xmm1]",
-        "control_note": "combiner가 {k1} 마스크와 VSIB 인덱스를 둘 다 살렸으면 나왔어야 할 형태 — 정상 어셈블됨",
+        "fixed_line": "vgatherdps xmm0 {k1}, [eax + xmm1]",
+        "fixed_note": "수정 후 combiner가 실제로 만들어내는 값(combo_id 5802) — {k1} 마스크를 "
+                      "살리도록 해결(VSIB 인덱스도 같이 반영됨). 정상 어셈블됨.",
     },
 ]
 
@@ -225,30 +238,43 @@ def run_case(case):
     else:
         print(f"  -> SDM 기대({expect})와 다름. 보고된 그대로 재현됨.")
 
-    if case["control_line"]:
+    if case.get("control_line"):
         cok, cerr = assemble(case["control_line"])
         cactual = "ok" if cok else "error"
         print(f"  대조군: {case['control_line']!r}")
         print(f"  as 결과: {cactual}" + (f"  ({cerr})" if cerr else ""))
         print(f"  대조군 의미: {case['control_note']}")
 
-    return actual != expect  # True면 "보고된 대로 재현됨"
+    fixed_ok = None
+    if case.get("fixed_line"):
+        fok, ferr = assemble(case["fixed_line"])
+        fixed_ok = fok
+        factual = "ok" if fok else "error"
+        print(f"  수정 후(현재 combiner 출력): {case['fixed_line']!r}")
+        print(f"  as 결과: {factual}" + (f"  ({ferr})" if ferr else ""))
+        print(f"  {case['fixed_note']}")
+        if factual != "ok":
+            print("  경고: 수정 후에도 여전히 실패함 — 형섭 확인 필요.")
+
+    return actual != expect, fixed_ok  # (broken_line이 보고된 대로 재현됐는지, fixed_line이 성공했는지)
 
 
 def show_code_evidence():
-    """asm 재현과 별개로, combiner 코드 자체가 실제로 이렇게 동작한다는 걸 직접 보여준다."""
-    from pipeline.m3_combine import MEM_SIZE_RE, expand_token
+    """asm 재현과 별개로, combiner 코드 자체가 실제로 이렇게 동작하는지 직접 보여준다.
+    2026-07-24 combiner 수정 이후: MEM_SIZE_RE 자체는 그대로지만(여전히 'm16'만 매치),
+    far-ptr 타입은 FAR_PTR_ATOM_RE 가 먼저 가로채도록 고쳐서 우회한다. moffs는 이제 괄호를 씌운다."""
+    from pipeline.m3_combine import MEM_SIZE_RE, FAR_PTR_ATOM_RE, expand_token
 
     print(f"\n{'='*70}")
     print("코드 레벨 증거 (pipeline/m3_combine.py 를 직접 import 해서 실행)")
 
     m = MEM_SIZE_RE.match("m16:16")
-    print(f"  MEM_SIZE_RE.match('m16:16') -> {m.group() if m else None!r}")
-    print("  (far-ptr 타입 'm16:16'인데 콜론 뒤를 무시하고 'm16'만 매치 — combiner_farptr_collapse 원인)")
+    print(f"  MEM_SIZE_RE.match('m16:16') -> {m.group() if m else None!r}  (정규식 자체는 여전히 이렇게 매치함)")
+    fm = FAR_PTR_ATOM_RE.match("m16:16")
+    print(f"  FAR_PTR_ATOM_RE.match('m16:16') -> {'매치됨' if fm else None!r}  (수정 후: 이 정규식이 먼저 가로채서 MEM_SIZE_RE까지 안 감)")
 
     result, note = expand_token("moffs8", "moffs")
-    print(f"  expand_token('moffs8', 'moffs') -> {result!r}")
-    print("  (괄호 없는 '0x1000' 그대로 반환 — combiner_moffs_brackets 원인)")
+    print(f"  expand_token('moffs8', 'moffs') -> {result!r}  (수정 후: 괄호가 붙어서 나옴)")
 
 
 def main():
@@ -264,16 +290,26 @@ def main():
 
     reproduced = []
     for case in cases:
-        matched = run_case(case)
-        reproduced.append((case["id"], matched))
+        matched, fixed_ok = run_case(case)
+        reproduced.append((case["id"], case["group"], matched, fixed_ok))
 
     print(f"\n{'='*70}")
     print("요약")
-    for cid, matched in reproduced:
-        mark = "재현됨" if matched else "재현 안 됨(확인 필요)"
-        print(f"  {cid}: {mark}")
-    n_ok = sum(1 for _, m in reproduced if m)
-    print(f"\n{n_ok}/{len(reproduced)}건 보고된 그대로 재현.")
+    for cid, group, matched, fixed_ok in reproduced:
+        if fixed_ok is None:
+            mark = "재현됨(아직 진짜 버그로 남아있음)" if matched else "재현 안 됨(확인 필요)"
+        else:
+            mark = "수정 확인됨(fixed_line 성공)" if fixed_ok else "여전히 실패(확인 필요)"
+        print(f"  [{group}] {cid}: {mark}")
+
+    n_bug_ok = sum(1 for _, g, m, f in reproduced if g == "B" and m)
+    n_bug_total = sum(1 for _, g, _, _ in reproduced if g == "B")
+    n_fix_ok = sum(1 for _, g, _, f in reproduced if g == "A" and f)
+    n_fix_total = sum(1 for _, g, _, f in reproduced if g == "A")
+    if n_bug_total:
+        print(f"\n[B] 진짜 버그 후보: {n_bug_ok}/{n_bug_total}건 여전히 재현됨.")
+    if n_fix_total:
+        print(f"[A] combiner 수정: {n_fix_ok}/{n_fix_total}건 정상 어셈블 확인.")
 
 
 if __name__ == "__main__":

@@ -106,3 +106,8 @@
 - verifier: **조건부 pass**(1차 — combiner 코드 6가지 전부 타당, combos.csv 165건 변경 diff 정확, 6개 카테고리 대표 케이스 `as`로 재현 성공, 회귀 없음. 단 combiner 에이전트가 VSCATTERDPD ymm/zmm 2건(combo 7035/7036) 잔여 실패를 "tokens.csv 추출 오류"로 잘못 진단한 것을 verifier가 SDM PDF(p.2202 vs p.1824) 직접 대조로 반박 — 실제로는 SDM 원문 자체가 GATHER/SCATTER 사이에 vm32x/vm32y로 비대칭 표기돼 있어서 combiner 스코프 문제가 아니라 진짜 SDM-vs-as 불일치 후보) → triage 에이전트가 이 2건을 `ERROR_COMBO_OVERRIDES`에 추가해 새 카테고리 `sdm_gather_scatter_vsib_width_asymmetry`(verdict=unsure, 오탈자인지 의도인지는 형섭이 SDM 정오표로 직접 확인 필요)로 재분류 → **최종 pass**(bug 7건 회귀 없음, 옛 combiner 카테고리 6개 전부 0건으로 소멸, mov/add/push 정답지 21줄 전수 재확인, m1/m2/m4/m5/m6 코드 미변경, 전체 수치 정합성 재계산 일치).
 - 결과: triage 전체 대상 1630건 → **1585건**(combiner가 고친 만큼 대상에서 빠짐). verdict 분포 `bug=7(그대로), false_alarm=1552, unsure=26`(구 unsure 중 41건 오분류 수정분은 이전 라운드에 이미 반영됐고, 이번엔 VSCATTERDPD 2건이 새로 unsure에 추가).
 - 남은 것: VSCATTERDPD ymm/zmm 표기가 SDM 오탈자인지 GNU as 미구현인지 Intel 공식 정오표로 형섭이 직접 확인. `tests/test_modules.py`(정식 회귀 테스트 하네스)는 여전히 부재.
+
+## 2026-07-24  [tests]  manual_bug_check.py를 combiner 수정 이후 상태로 갱신
+- 무엇을: `tests/manual_bug_check.py`의 [A] combiner 6건 케이스를 "수정 전(`broken_line`, 역사적 기록) vs 수정 후(`fixed_line`, `data/db/combos.csv`에서 다시 조회한 실제 현재 값)"를 나란히 어셈블해서 비교하도록 갱신했다. `show_code_evidence()`도 `FAR_PTR_ATOM_RE`가 `MEM_SIZE_RE`보다 먼저 가로채는 것과 moffs가 이제 괄호를 붙이는 것을 보여주도록 갱신. 요약 출력도 [B](진짜 버그, 아직 재현되는지)와 [A](combiner 수정, fixed_line이 성공하는지)를 분리해서 표시.
+- 왜: combiner를 고친 뒤 스크립트를 그대로 재실행하면 예전에 하드코딩해둔 `broken_line`만 여전히 실패로 보여서, 마치 아무것도 안 고쳐진 것처럼 오해할 수 있었다. 지금 combiner가 실제로 무엇을 만들어내는지(`fixed_line`)까지 같이 보여줘야 "수정이 실제로 반영됐다"를 형섭이 직접 확인할 수 있다.
+- 확인: 재실행 결과 [B] 진짜 버그 후보 7/7건 여전히 재현(안 고침, 의도된 상태), [A] combiner 수정 6/6건 `fixed_line`이 전부 `as` 성공(수정 확인).
