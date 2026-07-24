@@ -86,3 +86,9 @@
   - `MOV Sreg, r/m64`(combo 1683): SDM은 `REX.W + 8E /r`을 64비트 모드 Valid로 명시하는데 `as`가 메모리 r/m64 인코딩 경로를 구현 안 함(LAR/LSL과 같은 유형) — 진짜 버그로 `ERROR_COMBO_OVERRIDES`에 추가해 bug 승격.
 - 결과: 전체 1,630건 중 verdict 분포 `bug=7, false_alarm=1608, unsure=15`. bug 7건: CALL(N.E. 인코딩인데 as 허용), JMP(동일), LAR/LSL(SDM은 r64/r32 소스 허용하는데 as 거부), MOV Sreg,r/m64(신규), UDB(SDM엔 있는데 as가 니모닉 자체를 모름), VPMOVQD(매뉴얼은 xmm1/m128인데 as는 qword ptr만 허용).
 - 남은 것: v1 스코프(CLAUDE.md 6절)의 마지막 파이프라인 단계 완료. 이번 triage에서 문서화만 하고 안 고친 combiner/generator 개선 후보(far-ptr collapse, moffs 괄호, register reuse, imm truncation 등)를 실제로 고칠지는 형섭이 판단해 다음 라운드로 넘길 것. `tests/test_modules.py`(정식 회귀 테스트 하네스)는 여전히 부재 — verifier가 매번 CSV 직접 비교로 대체 검증 중.
+
+## 2026-07-24  [tests]  형섭 직접 확인용 수동 검증 스크립트 작성
+- 무엇을: `tests/manual_bug_check.py` 작성. triage가 찾은 13건(진짜 버그 후보 7건 + combiner 코드 한계 6건)을 각각 실제 `as --64 -mintel64`에 넣어 그 자리에서 성공/실패를 확인하고, SDM 근거·대조군(정상 형태)까지 나란히 출력한다. combiner 쪽 2건(far-ptr collapse, moffs 괄호)은 `pipeline/m3_combine.py`를 직접 import해서 `MEM_SIZE_RE`/`expand_token`이 실제로 잘못 매치·반환하는 것도 코드 레벨로 보여준다.
+- 왜: CLAUDE.md 1절 "판정은 도구가 한다" 원칙대로, 형섭이 LLM 설명만 보고 믿는 게 아니라 직접 `python3 tests/manual_bug_check.py` 한 번으로 13건을 눈으로 확인할 수 있게 하기 위함. pipeline/ 소속이 아니라 파이프라인과 독립된 수동 확인 도구라 tests/ 밑에 둠.
+- 확인: 13/13건 전부 보고된 그대로 재현됨(직접 실행 확인).
+- 발견: `generator_moffs_missing_brackets`(1689-1693)로 분류했던 moffs 괄호 누락 버그는 실제로는 `pipeline/m4_generate.py`가 아니라 **`pipeline/m3_combine.py`의 `expand_token`(moffs 분기, 169행)이 combos.csv에 이미 괄호 없는 `"0x1000"`을 써넣는 것**이 원인이었다(generator는 combos.csv 값을 그대로 옮기기만 함). 카테고리 이름의 "generator" 귀책은 오분류이며, 다음 combiner 수정 라운드에서 바로잡을 것.
