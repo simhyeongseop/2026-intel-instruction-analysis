@@ -75,3 +75,14 @@
 - 결과: 대상 7,010건 중 same 5,659건 / different 1,351건.
 - 새로 드러난 이슈(generator 4단계 개선 후보, 이번 라운드에서는 안 고침): `combo_id=1684`(`mov al, 0x1000`) 등 imm 즉시값을 목적지 오퍼랜드 크기(8/16/32/64비트)에 맞추지 않고 고정값을 그대로 써서 `as`가 조용히 잘라 인코딩(truncate)하는 케이스 다수(`0x1000` 패턴만 75건) — roundtrip은 이를 정확히 different로 잡아내지만, 원래 의도한 "정상 크기 imm 테스트"가 안 되고 있는 것. triage 단계에서 다룰 것.
 - 남은 것: triage(`pipeline/m7_triage.py`) 구현 시작 — roundtrip의 different 1,351건 + assembler의 mismatch 248건을 유형별로 그룹핑하고 alias/false alarm과 실제 버그 후보를 구분.
+
+## 2026-07-24  [triage]  Stage 7 구현 — 컴파일 에러·roundtrip 차이 유형별 그룹핑
+- 무엇을: `pipeline/m7_triage.py` 작성. `out/asm_result.csv`(컴파일 에러 266건 + mismatch 46건) + `out/roundtrip.csv`(different 1,351건)를 combo_id 기준 합집합(중복 제거)으로 모아 총 1,630건을 대상으로 패턴 매칭 기반 카테고리로 분류하고 `out/triage.csv` + `out/triage_report.md` 생성. 각 카테고리마다 verdict(bug/false_alarm/unsure)를 부여하되, LLM 추측이 아니라 `as`/`objdump` 직접 재실행 + SDM PDF 원문 대조로 근거를 확인한 것만 `bug`로 표시(CLAUDE.md 7절 원칙).
+- 왜: numeric_repr(10진→16진 표기 차이), mnemonic_alias(jc/jnz 등 동일 opcode의 다른 이름), implicit_operand_display(문자열 명령어 암묵 오퍼랜드), fpu_stack_register_display 등 roundtrip/assembler가 잡아낸 "차이"의 대부분은 alias·표기 관례일 뿐 버그가 아니므로, 사람이 이해할 수 있게 유형별로 묶어 진짜 버그 후보만 걸러내는 게 이 단계의 목적.
+- verifier: fail(1차 — `classify_compile_error()`의 최종 fallback이 `is_mismatch`를 확인 안 해서, SDM도 이미 Invalid/N.E.로 규정해 `as`가 정상 거부한 케이스 41건이 근거 없이 `unsure`로 오분류됨) → 수정 후 **pass**(2차 — fallback에 `is_mismatch` 분기 추가, 카운트/재현/회귀 전부 도구로 재확인).
+- 1차 검증에서 새로 발견된 근본 원인 3가지도 반영:
+  - `combiner_farptr_collapse`(6건, CALL/JMP m16:16/32/64): `m3_combine.py`의 `MEM_SIZE_RE` 정규식이 `:`를 무시하고 매치해 far-ptr을 `word ptr`로 뭉갠 combiner 버그 — false_alarm 처리, combiner 개선 후보로 문서화(이번 라운드엔 m3 코드 미수정).
+  - `generator_moffs_missing_brackets`(5건, MOV moffs): generator가 괄호 없이 `mov 0x1000, al` 형태로 생성해 `as`가 거부하는 포맷팅 버그 — false_alarm 처리, generator 개선 후보로 문서화(이번 라운드엔 m4 코드 미수정).
+  - `MOV Sreg, r/m64`(combo 1683): SDM은 `REX.W + 8E /r`을 64비트 모드 Valid로 명시하는데 `as`가 메모리 r/m64 인코딩 경로를 구현 안 함(LAR/LSL과 같은 유형) — 진짜 버그로 `ERROR_COMBO_OVERRIDES`에 추가해 bug 승격.
+- 결과: 전체 1,630건 중 verdict 분포 `bug=7, false_alarm=1608, unsure=15`. bug 7건: CALL(N.E. 인코딩인데 as 허용), JMP(동일), LAR/LSL(SDM은 r64/r32 소스 허용하는데 as 거부), MOV Sreg,r/m64(신규), UDB(SDM엔 있는데 as가 니모닉 자체를 모름), VPMOVQD(매뉴얼은 xmm1/m128인데 as는 qword ptr만 허용).
+- 남은 것: v1 스코프(CLAUDE.md 6절)의 마지막 파이프라인 단계 완료. 이번 triage에서 문서화만 하고 안 고친 combiner/generator 개선 후보(far-ptr collapse, moffs 괄호, register reuse, imm truncation 등)를 실제로 고칠지는 형섭이 판단해 다음 라운드로 넘길 것. `tests/test_modules.py`(정식 회귀 테스트 하네스)는 여전히 부재 — verifier가 매번 CSV 직접 비교로 대체 검증 중.
