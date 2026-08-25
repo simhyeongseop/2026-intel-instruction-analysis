@@ -286,11 +286,24 @@ for _cid in ["414", "1431"] + [str(i) for i in range(1368, 1429, 2)]:
 
 for _cid in ["419", "1436"]:
     PERMISSIVE_MISMATCH_OVERRIDES[_cid] = (
-        "assembler_encodes_documented_invalid_form",
-        "SDM은 64비트 모드에서 CALL/JMP r/m32(FF /2, FF /4)를 N.E.(인코딩 불가)로 명시하는데, "
-        "`as`는 addr32(0x67)+opsize(0x66) 프리픽스를 붙여 실제로 인코딩한다(직접 objdump 확인: "
-        "67 66 ff 18 -> 'call DWORD PTR [eax]'). 경고 없이 조용히 받아줌.",
-        "bug",
+        "ambiguous_syntax_resolved_to_valid_far_form",
+        "2026-08-25 정정(8단계 clang_compare + codex 교차검증으로 발견): 원래 이 항목은 "
+        "'SDM이 N.E.로 명시한 CALL/JMP r/m32(FF /2, FF /4)를 as가 조용히 받아준다'는 bug로 "
+        "기록돼 있었으나, ModRM 바이트를 직접 디코딩해보니 틀린 진단이었다. combo 419 "
+        "(`call dword ptr [eax]` -> `67 66 ff 18`)의 ModRM=0x18=0b00_011_000, reg=3 -> "
+        "FF /3(far call, m16:16/m16:32)이지 FF /2(near call r/m32)가 아니다. combo 1436도 "
+        "동일 패턴(ModRM=0x28, reg=5 -> FF /5 far jmp, FF /4 near jmp 아님). isa_db.csv 확인 "
+        "결과 FF /3 CALL m16:16/m16:32 / FF /5 JMP m16:16/m16:32는 SDM상 64비트 모드 Valid다 "
+        "(64비트 모드에서 인코딩 안 되는 건 근접 r/m32 폼뿐 - CALL FF/2 r/m32는 N.E., JMP "
+        "FF/4 r/m32는 N.S.로 표기가 다르지만 둘 다 인코딩 불가라는 실질은 같다). 즉 `as`는 "
+        "인코딩 불가 폼을 만든 게 아니라, 모호한 Intel 문법 'call/jmp dword ptr [mem]'을 "
+        "66 프리픽스로 far m16:16(4바이트, 'dword ptr' 표기와 크기가 정확히 맞음)으로 유효하게 "
+        "해석한 것이다. clang은 66 프리픽스 없이 far m16:32(6바이트, FWORD)로 가서 오히려 "
+        "'dword ptr' 표기와는 크기가 안 맞지만, 그래도 근접(N.E./N.S.) 폼은 아니다 - SDM 위반이 "
+        "아니라 generator가 만든 모호한 테스트 케이스가 의도(근접 r/m32)와 다른(그러나 둘 다 "
+        "유효한) far 폼으로 해석된 것이다. as/clang 모두 근접 N.E./N.S. 폼을 만들지 않는다는 "
+        "점에서 일치.",
+        "false_alarm",
     )
 
 for _cid in ["1511", "4122"]:
@@ -376,6 +389,25 @@ def _cc_alias(a, b):
         return True
     return False
 
+
+# combo_id 단위로 패턴 분류를 덮어쓰는 예외 (개별 확인을 거친 것만).
+# 튜플 순서는 classify_roundtrip_diff()의 반환 순서와 맞춰 (category, cause, verdict)여야 한다.
+ROUNDTRIP_COMBO_OVERRIDES = {
+    "1527": ("objdump_farptr_size_ignores_rexw",
+             "2026-08-25 확인(10단계 reassemble_check + codex 교차검증): 이전엔 "
+             "register_width/name_changed로 unsure 처리돼 있었다. `lss rcx, m16:64`(REX.W + "
+             "0F B2 /r)를 as가 SDM 그대로 정확히 인코딩(67 48 0f b2 08, ModRM reg=1=rcx)했는데 "
+             "objdump가 메모리 크기를 REX.W 유무와 무관하게 항상 FWORD PTR(6바이트, m16:32 크기)로 "
+             "표시한다 - m16:64는 10바이트라 TBYTE PTR이어야 한다. 그 표시 텍스트를 그대로 다시 "
+             "어셈블하면 as가 \"incorrect register `rcx' used with `l' suffix\"로 거부하는 것이 "
+             "간접 증거(as 자신은 rcx엔 FWORD(l)가 아니라 TBYTE가 맞다고 알고 있음). as의 "
+             "인코딩이 아니라 objdump의 디스어셈블 표시 결함.",
+             "bug"),
+    "1532": ("objdump_farptr_size_ignores_rexw",
+             "combo 1527(LSS)과 동일 패턴, LFS(REX.W + 0F B4 /r).", "bug"),
+    "1535": ("objdump_farptr_size_ignores_rexw",
+             "combo 1527(LSS)과 동일 패턴, LGS(REX.W + 0F B5 /r).", "bug"),
+}
 
 ROUNDTRIP_CAUSES = {
     "implicit_operand_display":
@@ -511,6 +543,9 @@ def _roundtrip_category(asm_line, objdump_line):
 
 
 def classify_roundtrip_diff(row):
+    combo_id = row["combo_id"]
+    if combo_id in ROUNDTRIP_COMBO_OVERRIDES:
+        return ROUNDTRIP_COMBO_OVERRIDES[combo_id]
     category = _roundtrip_category(row["asm_line"], row["objdump_line"])
     cause = ROUNDTRIP_CAUSES[category]
     verdict = ROUNDTRIP_VERDICT[category]

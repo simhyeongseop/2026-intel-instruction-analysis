@@ -25,6 +25,10 @@ STAGES = [
     ("assembler", "pipeline/m5_assemble.py"),
     ("roundtrip", "pipeline/m6_roundtrip.py"),
     ("triage", "pipeline/m7_triage.py"),
+    ("clang_assemble", "pipeline/m8_clang_assemble.py"),
+    ("clang_compare", "pipeline/m9_clang_compare.py"),
+    ("reassemble_check", "pipeline/m10_reassemble_check.py"),
+    ("execute", "pipeline/m11_execute.py"),
 ]
 
 

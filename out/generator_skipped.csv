@@ -1,0 +1,2 @@
+combo_id,row_id,mnemonic,operands,reason
+1028,570,ENCODEKEY256,"ecx, xmm0","ENCODEKEY256: tokenizer 콤마 누락으로 combos.csv operands(ecx, xmm0)가 SDM 기준 오조합 (이전 verifier 피드백)"
