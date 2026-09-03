@@ -1,5 +1,5 @@
 """
-triage(7단계) + clang 비교(8~9단계) + 재어셈블 검증(10단계)이 찾아낸 "진짜 버그 8건"을
+triage(7단계) + clang 비교(8~9단계) + 재어셈블 검증(10단계)이 찾아낸 "진짜 버그 4건"을
 누구나 직접 눈으로 재현할 수 있게 만든 PoC(Proof of Concept) 스크립트.
 
 이 파일은 파이프라인의 일부가 아니다 (pipeline/ 밑에 안 두는 이유).
@@ -10,12 +10,12 @@ LLM이 "이게 버그다"라고 주장하는 게 아니라, 실행 결과를 그
 실행 환경: WSL(Ubuntu) 등 Linux, GNU binutils(`as`/`objdump`) 필요. Windows에는 없음.
 
 사용법:
-    python3 tests/manual_bug_check.py              # 전체(8건 진짜 버그 + 6건 combiner 이력)
-    python3 tests/manual_bug_check.py lar_r64_source   # id로 하나만
+    python3 tests/manual_bug_check.py              # 전체(4건 진짜 버그 + 6건 combiner 이력)
+    python3 tests/manual_bug_check.py udb_mnemonic   # id로 하나만
 
 세 그룹으로 나뉜다:
-  [B] GNU as 버그 5건 — SDM이 허용하는 문법을 as가 거부(파서/인코딩 문제).
-      LAR/LSL/MOV Sreg/UDB/VPMOVQD. as 자체는 아직 안 고쳤고 지금도 재현된다.
+  [B] GNU as 버그 1건 — SDM이 허용하는 문법을 as가 거부(파서/인코딩 문제). UDB.
+      as 자체는 아직 안 고쳤고 지금도 재현된다.
   [C] objdump 버그 3건 — as는 SDM대로 정확히 인코딩하는데, objdump가 그 결과를
       잘못된 메모리 크기로 잘못 표시한다(LSS/LFS/LGS). "원본 어셈블 -> objdump로
       역어셈블 -> 그 텍스트를 다시 어셈블"까지 3단계로 보여준다 - 마지막 단계에서 as는
@@ -32,6 +32,14 @@ isa_db.csv 확인) 2건이 더 있었으나, Clang 비교
 호출이 아니라 SDM이 허용하는 원거리(far) 호출이었음을 확인해 false_alarm으로 철회했다
 (`docs/DEVLOG.md` 2026-08-25 항목, `out/clang_compare_evidence_raw.md` 참고). 대신 이
 라운드에서 새로 확인한 LSS/LFS/LGS(objdump 버그) 3건이 [C]로 추가됐다.
+
+2026-09-03 정정 이력: [B]에 있던 LAR/LSL/VPMOVQD 3건과 MOV Sreg,r/m64 1건, 총 4건이 더
+철회/하향됐다. codex + 최신 clang(19.1.1/20.1.2) 교차검증 결과 LAR/LSL/VPMOVQD는
+SDM 오피코드 표 자체의 오탈자·각주 오귀속으로 밝혀져 false_alarm으로 철회했고
+(CALL/JMP와 같은 "문법으로 구분 안 되는 SDM 표 행" 패턴), MOV Sreg,r/m64 메모리형은
+clang도 as와 동일하게 거부함이 새로 확인돼 unsure로 낮췄다(결정적 반증은 없어 완전한
+철회는 아님). 상세: `docs/DEVLOG.md` 2026-09-03 항목, `pipeline/m7_triage.py`의
+`ERROR_COMBO_OVERRIDES`(combo 6540/1516/1571/1683). [B]는 이제 UDB 1건만 남는다.
 
 각 케이스의 근거(combo_id, 원본 asm_line, 에러 메시지)는 out/asm_result.csv /
 out/triage.csv / out/clang_compare.csv / out/reassemble_check.csv 에서 그대로
@@ -51,45 +59,9 @@ OBJDUMP_CMD = ["objdump", "-d", "-M", "intel"]
 
 CASES = [
     # ------------------------------------------------------------------
-    # [B] GNU as 버그 5건 — SDM이 허용하는 문법을 as가 거부.
+    # [B] GNU as 버그 1건 — SDM이 허용하는 문법을 as가 거부.
+    # (2026-09-03: LAR/LSL/MOV Sreg/VPMOVQD 4건은 아래 DOWNGRADED_CASES로 이동)
     # ------------------------------------------------------------------
-    {
-        "id": "lar_r64_source",
-        "group": "B",
-        "combo_id": 1516,
-        "claim": "SDM p.651 'LAR r32, r64/m16'가 r64 소스를 명시적으로 허용 "
-                 "(주석1: 오퍼랜드 크기와 무관하게 소스 레지스터 하위 16비트만 사용). "
-                 "as: r64는 거부하고 r16만 받음. clang은 받아줌(독립 어셈블러로 교차 확인, "
-                 "8~9단계).",
-        "broken_line": "lar ecx, rcx",
-        "broken_sdm_expect": "ok",   # SDM대로면 성공해야 함
-        "control_line": "lar ecx, cx",
-        "control_note": "as가 실제로 받아주는 형태(r16) — SDM이 명시한 r64와는 다름",
-    },
-    {
-        "id": "lsl_r32_source",
-        "group": "B",
-        "combo_id": 1571,
-        "claim": "SDM p.691 'LSL r64, r32/m16'가 r32 소스를 명시적으로 허용. "
-                 "as: r32는 거부하고 r16만 받음. clang은 받아줌(교차 확인).",
-        "broken_line": "lsl rcx, ecx",
-        "broken_sdm_expect": "ok",
-        "control_line": "lsl rcx, cx",
-        "control_note": "as가 실제로 받아주는 형태(r16) — SDM이 명시한 r32와는 다름",
-    },
-    {
-        "id": "mov_sreg_rm64",
-        "group": "B",
-        "combo_id": 1683,
-        "claim": "isa_db.csv: 'REX.W + 8E /r MOV Sreg, r/m64'가 Valid로 명시. "
-                 "as: r/m64 메모리 폼을 거부하고(operand type mismatch) r/m16만 받음. "
-                 "clang도 이 메모리 폼은 거부함(both_reject) — 메모리 형태 자체는 "
-                 "교차 확인 안 됨, as 단독 관찰로 유지.",
-        "broken_line": "mov ds, qword ptr [eax]",
-        "broken_sdm_expect": "ok",
-        "control_line": "mov ds, word ptr [eax]",
-        "control_note": "as가 실제로 받아주는 형태(m16) — SDM이 명시한 r/m64 인코딩 경로가 as에 없음",
-    },
     {
         "id": "udb_mnemonic",
         "group": "B",
@@ -101,16 +73,47 @@ CASES = [
         "control_line": "ud2",
         "control_note": "같은 계열(UD0/UD1/UD2) 중 as가 아는 것 — udb만 니모닉이 없음",
     },
+]
+
+# 2026-09-03 codex + 최신 clang(19.1.1/20.1.2) 교차검증으로 철회/하향된 4건.
+# 더 이상 CASES로 재현하지 않고, 왜 철회됐는지만 기록으로 남긴다(show_retracted_note() 참고).
+DOWNGRADED_CASES = [
     {
-        "id": "vpmovqd_memsize",
-        "group": "B",
-        "combo_id": 6540,
-        "claim": "SDM p.2054: VPMOVQD(EVEX.128 truncate) 대상 메모리를 'xmm1/m128'로 명시. "
-                 "as: xmmword ptr(m128)는 거부하고 qword ptr(m64)만 받음.",
-        "broken_line": "vpmovqd xmmword ptr [eax], xmm0",
-        "broken_sdm_expect": "ok",
-        "control_line": "vpmovqd qword ptr [eax], xmm0",
-        "control_note": "as가 실제로 받아주는 크기(m64) — SDM 표기(m128)와 다름",
+        "id": "lar_r64_source", "combo_id": 1516, "mnemonic": "LAR",
+        "from_to": "bug -> false_alarm",
+        "reason": "SDM 표의 각주 '1'은 PDF 문자 단위 폰트크기 분석 결과 실제로는 2번째 행"
+                  "(r32,r32/m16)에 붙어있고 REX.W 행(r32,r64/m16)엔 각주가 없었다(isa_db.csv 추출"
+                  " 오류로 오귀속됨). 더 결정적으로 `lar ecx,rcx`를 clang 18/19/20에 줘도 실제 "
+                  "인코딩은 REX.W 없는 `0f 02 c9`(rcx를 조용히 ecx로 축소) - clang도 SDM 표 "
+                  "그대로의 비대칭 폭을 안 만든다. 대칭 폼(`lar rcx,rcx`)은 clang이 REX.W로 정확히 "
+                  "인코딩하는데 as는 AT&T `larq %rcx,%rcx`로도 REX.W를 전혀 안 만든다 - SDM 표의 "
+                  "비대칭 표기 자체가 REX.W 인코딩 구조상 실현 불가능한 폼으로 보임(CALL/JMP류와 "
+                  "동일 패턴).",
+    },
+    {
+        "id": "lsl_r32_source", "combo_id": 1571, "mnemonic": "LSL",
+        "from_to": "bug -> false_alarm",
+        "reason": "LAR과 동일 패턴. `lsl rcx,ecx`를 clang에 줘도 실제 인코딩은 `48 0f 03 c9`"
+                  "(ecx를 조용히 rcx로 확장) - SDM 표 그대로의 비대칭 폭이 아니다. 대칭 폼은 clang만"
+                  " REX.W로 구현하고 as는 AT&T `lslq`로도 REX.W를 안 만든다.",
+    },
+    {
+        "id": "vpmovqd_memsize", "combo_id": 6540, "mnemonic": "VPMOVQD",
+        "from_to": "bug -> false_alarm",
+        "reason": "SDM p.2054 오피코드 표에서 VPMOVQD EVEX.128 행만 'xmm1/m128'로 잘못 적혀있다"
+                  "(형제 명령어 VPMOVSQD/VPMOVUSQD의 EVEX.128 행은 둘 다 정확히 'xmm1/m64', "
+                  "Description·Operation pseudocode도 64비트라고 함 - SDM 표 오탈자). "
+                  "as/clang 18/19/20 네 어셈블러 전부 qword ptr(m64)만 성공, xmmword ptr(m128)은 "
+                  "전부 거부로 일치.",
+    },
+    {
+        "id": "mov_sreg_rm64", "combo_id": 1683, "mnemonic": "MOV",
+        "from_to": "bug -> unsure",
+        "reason": "clang 18/19/20도 as와 동일하게 `mov ds, qword ptr [eax]`를 거부함을 새로 확인"
+                  "(word ptr만 성공, 4개 어셈블러 일치) - \"as만 매뉴얼보다 엄격하다\"는 원래 근거가"
+                  " 약해졌다. 다만 LAR/LSL/VPMOVQD처럼 SDM 내부 모순의 결정적 증거는 없어 "
+                  "false_alarm까지는 안 내리고 unsure로만 낮춤(실기 페이지경계 실행 검증 전까지 "
+                  "보류) - codex 권고.",
     },
 ]
 
@@ -391,6 +394,13 @@ def show_retracted_note():
     print("  2026-08-25: Clang 비교(8~9단계) 중 ModRM 바이트를 직접 디코딩해보니, as가 만든 "
           "건 SDM이 금지한 근접(near) 호출이 아니라 SDM이 허용하는 원거리(far) 호출이었음을 "
           "확인해 false_alarm으로 철회함. 상세: docs/DEVLOG.md, out/clang_compare_evidence_raw.md")
+
+    print(f"\n{'='*70}")
+    print("철회/하향된 항목 (2026-09-03 codex + 최신 clang 19/20 교차검증, 재현 대상 아님)")
+    for item in DOWNGRADED_CASES:
+        print(f"  - {item['id']}  (combo_id={item['combo_id']}, {item['mnemonic']})  [{item['from_to']}]")
+        print(f"    이유: {item['reason']}")
+    print("  상세: docs/DEVLOG.md 2026-09-03 항목, pipeline/m7_triage.py의 ERROR_COMBO_OVERRIDES")
 
 
 def show_code_evidence():
