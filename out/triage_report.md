@@ -1,31 +1,31 @@
 # Triage 리포트 (7단계)
 
 - 전체 대상: 1585건 (컴파일 에러 + mismatch + roundtrip 차이, combo_id 기준 중복 제거)
-- verdict 분포: bug=4, false_alarm=1557, unsure=24
+- verdict 분포: bug=3, false_alarm=1558, unsure=24
 
 ## 진짜 의심되는 버그 후보 (verdict=bug)
 
-도구(as/objdump) 직접 재현 + SDM PDF 원문 대조까지 마친 것만 bug로 표시했다.
-
-### UDB (source 4605/4597)
-- 분류: gas_missing_mnemonic
-- objdump/error: line.s: Assembler messages: | line.s:3: Error: no such instruction: `udb'
-- 원인: SDM p.1436에 'D6 UDB' 오피코드가 64비트 모드 Valid로 명시돼 있으나(UD0/UD1/UD2와 같은 계열) GNU as는 'udb'라는 니모닉 자체를 모른다('no such instruction: udb'). 2026-09-03 codex 재검증에서도 CONFIRMED(SDM Exceptions 섹션에도 'UDB does so only in 64-bit mode'로 UDB를 직접 언급 - 오탈자 아님).
+2026-09-14 재심 기준을 적용했다. legacy_* 열은 이전 판정 기록이다. review_status=not_reassessed 항목은 새 기준으로 재심하지 않았다.
+이번 재심에서 확인한 표시 결함은 한 유형의 3개 사례이며, 독립적인 근본 원인 3개라는 뜻이 아니다.
+근거: [사례 재심](../docs/CASE_REVIEW_2026-09-14.md). 전체 ISA 검증 완료를 뜻하지 않는다.
 
 ### LSS (source 1535/1527)
-- 분류: objdump_farptr_size_ignores_rexw
+- 분류: far_pointer_display
+- 유형/상태: disassembly_defect / confirmed
 - objdump/error: lss    rcx,FWORD PTR [eax]
-- 원인: 2026-08-25 확인(10단계 reassemble_check + codex 교차검증), 2026-09-03 정밀도 정정(codex 재검토): 이전엔 register_width/name_changed로 unsure 처리돼 있었다. `lss rcx, m16:64`(REX.W + 0F B2 /r)를 as가 SDM 그대로 정확히 인코딩(67 48 0f b2 08, ModRM reg=1=rcx)했는데 objdump가 메모리 크기를 REX.W로 승격된 r64 폼에서만 항상 FWORD PTR(6바이트, m16:32 크기)로 표시한다 - m16:64는 10바이트라 TBYTE PTR이어야 한다(r16/r32 폼은 각각 DWORD/FWORD로 정확히 표시됨, REX.W 유무와 무관하게 항상 틀린 게 아니라 REX.W 승격 폼에서만 오표기됨). 그 표시 텍스트를 그대로 다시 어셈블하면 as가 "incorrect register `rcx' used with `l' suffix"로 거부하는 것이 간접 증거(as 자신은 rcx엔 FWORD(l)가 아니라 TBYTE가 맞다고 알고 있음). 추가 증거: LLVM 19.1.1의 llvm-objdump는 같은 바이트를 Intel 모드에서 크기 키워드 없이 `lss rcx, [eax]`로, AT&T 모드는 `lssq (%eax), %rcx`(64비트 폭을 접미사로 암시)로 표시해 이 오표기를 하지 않음 - 독립된 2번째 디스어셈블러도 안 하는 GNU objdump만의 결함. as의 인코딩이 아니라 objdump의 디스어셈블 표시 결함.
+- 원인: GNU objdump 2.42: REX.W + 0F B2 /r의 80비트 포인터를 FWORD PTR(48비트)로 표시. SDM PDF 658 본문·바이트 해독·r16/r32 대조 및 재어셈블 거부로 확인. CPU 오동작 주장이 아님.
 
 ### LFS (source 1540/1532)
-- 분류: objdump_farptr_size_ignores_rexw
+- 분류: far_pointer_display
+- 유형/상태: disassembly_defect / confirmed
 - objdump/error: lfs    rcx,FWORD PTR [eax]
-- 원인: combo 1527(LSS)과 동일 패턴, LFS(REX.W + 0F B4 /r).
+- 원인: GNU objdump 2.42: REX.W + 0F B4 /r의 80비트 포인터를 FWORD PTR로 표시. LSS와 같은 표시 결함 유형.
 
 ### LGS (source 1543/1535)
-- 분류: objdump_farptr_size_ignores_rexw
+- 분류: far_pointer_display
+- 유형/상태: disassembly_defect / confirmed
 - objdump/error: lgs    rcx,FWORD PTR [eax]
-- 원인: combo 1527(LSS)과 동일 패턴, LGS(REX.W + 0F B5 /r).
+- 원인: GNU objdump 2.42: REX.W + 0F B5 /r의 80비트 포인터를 FWORD PTR로 표시. LSS와 같은 표시 결함 유형.
 
 ## 그룹별 건수
 
@@ -50,16 +50,16 @@
 | operand_count/order_changed | 7 | false_alarm=7 |
 | mismatch_assembler_more_permissive | 6 | unsure=6 |
 | gas_ambiguous_bare_mnemonic | 4 | unsure=4 |
-| objdump_farptr_size_ignores_rexw | 3 | bug=3 |
+| far_pointer_display | 3 | bug=3 |
 | sib_addressing_display | 3 | false_alarm=3 |
 | ambiguous_syntax_resolved_to_valid_far_form | 2 | false_alarm=2 |
 | cpuid_conditional_availability_not_captured | 2 | false_alarm=2 |
-| ambiguous_syntax_resolved_to_valid_symmetric_form | 2 | false_alarm=2 |
+| lar_lsl_notation | 2 | false_alarm=2 |
 | extractor_artifact_stray_text | 2 | false_alarm=2 |
 | sdm_gather_scatter_vsib_width_asymmetry | 2 | unsure=2 |
 | encoding_falls_back_to_nop | 2 | false_alarm=2 |
-| gas_register_width_stricter_than_manual | 1 | unsure=1 |
-| gas_missing_mnemonic | 1 | bug=1 |
+| mov_sreg_memory | 1 | false_alarm=1 |
+| udb_support | 1 | unsure=1 |
 | combiner_mode_invalid_register_choice | 1 | false_alarm=1 |
 | sdm_table_typo_memory_size | 1 | false_alarm=1 |
 | size_directive_name_changed | 1 | false_alarm=1 |
@@ -218,13 +218,13 @@
 
 원인: SYSEXIT/SYSRET을 매뉴얼 그대로(오퍼랜드 없이) 써도 as가 크기를 못 정해 거부함 - 'rex64 sysexit' 같은 프리픽스 트릭을 쓰면 성공(직접 확인). 매뉴얼 문법 그대로는 실패라서 판단보류.
 
-### objdump_farptr_size_ignores_rexw (3건)
+### far_pointer_display (3건)
 
 - `LSS` (source 1535/1527, verdict=bug): lss    rcx,FWORD PTR [eax]
 - `LFS` (source 1540/1532, verdict=bug): lfs    rcx,FWORD PTR [eax]
 - `LGS` (source 1543/1535, verdict=bug): lgs    rcx,FWORD PTR [eax]
 
-원인: 2026-08-25 확인(10단계 reassemble_check + codex 교차검증), 2026-09-03 정밀도 정정(codex 재검토): 이전엔 register_width/name_changed로 unsure 처리돼 있었다. `lss rcx, m16:64`(REX.W + 0F B2 /r)를 as가 SDM 그대로 정확히 인코딩(67 48 0f b2 08, ModRM reg=1=rcx)했는데 objdump가 메모리 크기를 REX.W로 승격된 r64 폼에서만 항상 FWORD PTR(6바이트, m16:32 크기)로 표시한다 - m16:64는 10바이트라 TBYTE PTR이어야 한다(r16/r32 폼은 각각 DWORD/FWORD로 정확히 표시됨, REX.W 유무와 무관하게 항상 틀린 게 아니라 REX.W 승격 폼에서만 오표기됨). 그 표시 텍스트를 그대로 다시 어셈블하면 as가 "incorrect register `rcx' used with `l' suffix"로 거부하는 것이 간접 증거(as 자신은 rcx엔 FWORD(l)가 아니라 TBYTE가 맞다고 알고 있음). 추가 증거: LLVM 19.1.1의 llvm-objdump는 같은 바이트를 Intel 모드에서 크기 키워드 없이 `lss rcx, [eax]`로, AT&T 모드는 `lssq (%eax), %rcx`(64비트 폭을 접미사로 암시)로 표시해 이 오표기를 하지 않음 - 독립된 2번째 디스어셈블러도 안 하는 GNU objdump만의 결함. as의 인코딩이 아니라 objdump의 디스어셈블 표시 결함.
+원인: GNU objdump 2.42: REX.W + 0F B2 /r의 80비트 포인터를 FWORD PTR(48비트)로 표시. SDM PDF 658 본문·바이트 해독·r16/r32 대조 및 재어셈블 거부로 확인. CPU 오동작 주장이 아님.
 
 ### sib_addressing_display (3건)
 
@@ -248,12 +248,12 @@
 
 원인: SDM p.650/p.1304: LAHF/SAHF는 64비트 모드 열에 'Invalid'라고 적혀 있지만 각주와 설명문에 'CPUID.80000001H:ECX.LAHF_SAHF_64[0]=1이면 64비트 모드에서도 Valid'라고 명시돼 있음(현대 CPU/as는 이 플래그를 사실상 항상 지원) - mode_support 컬럼이 조건부 허용 각주를 반영하지 못해 생긴 불일치, 실제 as 동작은 매뉴얼의 조건부 허용과 일치.
 
-### ambiguous_syntax_resolved_to_valid_symmetric_form (2건)
+### lar_lsl_notation (2건)
 
 - `LAR` (source 1524/1516, verdict=false_alarm): line.s: Assembler messages: | line.s:3: Error: register type mismatch for `lar'
 - `LSL` (source 1579/1571, verdict=false_alarm): line.s: Assembler messages: | line.s:3: Error: register type mismatch for `lsl'
 
-원인: 2026-09-03 정정(codex + 최신 clang 19/20 교차검증 재검토): 원래 'SDM p.651 LAR r32, r64/m16(각주1)로 r64 소스를 명시 허용하는데 `lar ecx, rcx`를 as가 거부'라는 bug로 기록돼 있었으나 재검토 결과 근거가 잘못됐다. (1) PDF 문자 단위 폰트크기로 각주 위치를 정밀 확인한 결과 각주 '1'은 실제로 2번째 행(LAR r32, r32/m16)에 붙어있고 3번째 행(REX.W 행)에는 원래 각주가 없다 - isa_db.csv가 각주 숫자를 3번째 행 텍스트 끝에 잘못 붙여 'r64/m161'로 저장한 추출 오류. (2) 바이트 레벨 재현: `lar ecx, rcx`(SDM 문자 그대로 dest=r32/source=r64)를 clang 18/19/20에 줘도 실제 인코딩은 `0f 02 c9`(REX.W 없음) → objdump가 `lar ecx,ecx`로 역어셈블 - clang도 요청받은 rcx를 조용히 ecx로 깎아 인코딩할 뿐, SDM 표 그대로의 비대칭 폼을 실제로 만들지 않는다. (3) `lar rcx, rcx`(양쪽 다 r64로 대칭)는 clang이 REX.W를 포함해 `48 0f 02 c9`(`lar rcx,rcx`)로 정확히 인코딩하지만, as는 AT&T `larq %rcx,%rcx`까지 포함해 어떤 문법으로도 REX.W를 만들지 않는다(`0f 02 c9`만 나옴). 즉 실제로 존재 가능한 폼은 'LAR r64, r64/m16'(대칭)이고, SDM 표의 'LAR r32, r64/m16'(비대칭, dest만 r32) 표기는 REX.W가 두 GPR 오퍼랜드 폭을 독립적으로 지정할 수 없다는 인코딩 구조상 애초에 as/clang 어느 쪽으로도 실현 불가능한 폼으로 보인다(p.651 Description 'zero-extended to 64 bits and loaded into the destination operand'도 dest가 사실은 r64라는 뜻이라 표의 'r32'와 모순 - VPMOVQD와 같은 SDM 오탈자 패턴). CALL/JMP·DEC/INC·LEAVE·LGDT/LIDT·BNDCL에 이어 이 프로젝트가 이미 확인한 '문법으로 구분 안 되는 SDM 표 행을 그대로 테스트해서 엉뚱한 걸 검증하게 됨' 패턴의 7번째 사례. codex 교차검증도 동일 결론(false_alarm)에 동의. **신규 발견(별도 combo 없음, 향후 추가 후보)**: as는 LAR에 REX.W 폼 자체를(대칭 `lar rcx,rcx`까지 포함) 전혀 구현하지 않는다 - 이건 clang과 다른 진짜 as 한계일 수 있으나 현재 combos.csv엔 이 대칭 폼을 테스트하는 combo가 없어 이번 라운드에선 판정하지 않음.
+원인: 기존 비대칭 문법 거부가 구현 버그라는 주장을 철회한 상태를 유지. SDM PDF 651 본문은 32/64비트 동작이 동일하다고 명시하며 source는 하위16비트만 사용. 대칭 r64 소스의 REX.W 생략도 동작 오류 근거가 아님. 과거의 REX.W 단일 비트 논증과 각주 위치 설명은 정정.
 
 ### extractor_artifact_stray_text (2건)
 
@@ -267,7 +267,7 @@
 - `VSCATTERDPD` (source 7043/7035, verdict=unsure): line.s: Assembler messages: | line.s:3: Error: invalid VSIB address for `vscatterdpd'
 - `VSCATTERDPD` (source 7044/7036, verdict=unsure): line.s: Assembler messages: | line.s:3: Error: invalid VSIB address for `vscatterdpd'
 
-원인: SDM PDF p.2202(325383-090-sdm-vol-2abcd.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 ymm 폼이 실제로 'vm32y {k1}, ymm1'로 인쇄돼 있다 - combiner가 vm32x를 vm32y로 잘못 뽑은 추출 오류가 아니라 PDF 원문 자체가 vm32y다. `as`로 직접 재현: `vscatterdpd [eax + xmm1] {k1}, xmm0`(combo 7034)는 성공하지만 이 combo의 `[eax + ymm1] {k1}, ymm0`은 'invalid VSIB address'로 실패한다. 한편 유사 명령 VGATHERDPD(PDF p.1824)는 ymm 데이터인데도 SDM이 vm32x를 그대로 유지해서 GATHER는 vm32x 유지, SCATTER는 vm32y로 확장하는 비대칭 표기를 보인다 - 이 비대칭이 SDM의 의도적 설계인지 오탈자인지 도구(as/objdump)만으로는 판단할 수 없어 unsure로 둔다. 형섭이 PDF 원문과 인텔 공식 정오표를 직접 확인해서 SDM 오탈자인지, as가 SDM에 명시된 폼을 구현하지 않은 버그인지 확정해야 한다.
+원인: SDM PDF p.2202(intel_manual.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 ymm 폼이 실제로 'vm32y {k1}, ymm1'로 인쇄돼 있다 - combiner가 vm32x를 vm32y로 잘못 뽑은 추출 오류가 아니라 PDF 원문 자체가 vm32y다. `as`로 직접 재현: `vscatterdpd [eax + xmm1] {k1}, xmm0`(combo 7034)는 성공하지만 이 combo의 `[eax + ymm1] {k1}, ymm0`은 'invalid VSIB address'로 실패한다. 한편 유사 명령 VGATHERDPD(PDF p.1824)는 ymm 데이터인데도 SDM이 vm32x를 그대로 유지해서 GATHER는 vm32x 유지, SCATTER는 vm32y로 확장하는 비대칭 표기를 보인다 - 이 비대칭이 SDM의 의도적 설계인지 오탈자인지 도구(as/objdump)만으로는 판단할 수 없어 unsure로 둔다. 형섭이 PDF 원문과 인텔 공식 정오표를 직접 확인해서 SDM 오탈자인지, as가 SDM에 명시된 폼을 구현하지 않은 버그인지 확정해야 한다.
 
 ### encoding_falls_back_to_nop (2건)
 
@@ -276,17 +276,17 @@
 
 원인: PREFETCHIT0/1은 SDM상 RIP-relative 메모리만 유효하고, 그 외 주소 형식이면 NOP로 취급된다고 명시돼 있음. generator가 RIP-relative가 아닌 [eax]를 써서 objdump가 'nop'으로 보여주는 것은 SDM에 문서화된 정상 동작(generator가 올바른 폼을 테스트 못한 것) - 버그 아님.
 
-### gas_register_width_stricter_than_manual (1건)
+### mov_sreg_memory (1건)
 
-- `MOV` (source 1691/1683, verdict=unsure): line.s: Assembler messages: | line.s:3: Error: operand type mismatch for `mov'
+- `MOV` (source 1691/1683, verdict=false_alarm): line.s: Assembler messages: | line.s:3: Error: operand type mismatch for `mov'
 
-원인: 2026-09-03 재검토(codex 교차검증, 형섭 요청으로 최신 clang 19/20 포함): 원래 'SDM REX.W+8E/r MOV Sreg,r/m64가 메모리도 Valid로 명시하는데 as가 qword ptr을 거부'라는 bug로 기록돼 있었으나, clang 18.1.3/19.1.1/20.1.2 넷 다 `mov ds, qword ptr [eax]`를 'invalid operand for instruction'으로 똑같이 거부함을 확인(word ptr만 성공, as와 완전히 동일). 레지스터 폼(`mov ds, rax`)은 clang이 REX.W를 포함해 정확히 구현하는데(`48 8e d8`) as는 REX.W를 조용히 버려서(`8e d8`, combo 1682) 이 부분은 as만의 진짜 한계로 보이지만, 메모리 폼(이 combo 1683)은 as/clang(사실상 GNU binutils와 LLVM, 독립 구현 2종) 양쪽 다 거부해서 원래 판정의 근거('as만 매뉴얼보다 엄격')가 흔들린다. 다만 codex는 'clang 3버전은 전부 LLVM 계열이라 독립성이 약하고, SDM 정의상 r/m64는 명시적으로 64비트 메모리를 포함하며 반대방향 행(REX.W+8C/r MOV r64/m16,Sreg)은 이미 표기에서 레지스터/메모리 폭을 r64/m16으로 명확히 구분해뒀으니 8E/r 행의 r/m64가 단순 축약 오탈자라 보기엔 근거가 약하다'고 지적 - 실제 페이지 경계 매핑을 이용한 실기 실행 검증(11/12단계 방식) 전까지는 unsure가 안전하다는 의견. LAR/LSL/VPMOVQD와 달리 SDM 내부 모순(각주 오귀속, 형제행 비교, Description 불일치)같은 결정적 증거가 없어 bug 유지도 과하지만 false_alarm 확정도 이르다고 판단해 unsure로 낮춘다.
+원인: qword ptr 거부는 양 도구에서 재현되나 구현 결함의 근거가 되지 않는다. 실제 CPU에서 8E/66+8E/48+8E 모두 읽기 가능한 2바이트로 DS 로드에 성공, 1바이트면 보호 페이지 접근으로 실패. 이 환경의 접근 범위는 2바이트이며 SDM r/m64 표기만으로 8바이트 읽기 요구를 추론한 주장을 철회. 매뉴얼의 8C/8E 표기 차이 자체와 모든 CPU의 동작까지 해결했다고 주장하지 않음.
 
-### gas_missing_mnemonic (1건)
+### udb_support (1건)
 
-- `UDB` (source 4605/4597, verdict=bug): line.s: Assembler messages: | line.s:3: Error: no such instruction: `udb'
+- `UDB` (source 4605/4597, verdict=unsure): line.s: Assembler messages: | line.s:3: Error: no such instruction: `udb'
 
-원인: SDM p.1436에 'D6 UDB' 오피코드가 64비트 모드 Valid로 명시돼 있으나(UD0/UD1/UD2와 같은 계열) GNU as는 'udb'라는 니모닉 자체를 모른다('no such instruction: udb'). 2026-09-03 codex 재검증에서도 CONFIRMED(SDM Exceptions 섹션에도 'UDB does so only in 64-bit mode'로 UDB를 직접 언급 - 오탈자 아님).
+원인: SDM PDF 1436은 UDB를 D6 opcode·Operation #UD로 명시한다. GNU as 2.42와 Clang 18.1.3의 니모닉 거부는 재현됨. 해당 버전의 지원 약속 위반 근거가 없어 구현 버그로 합산하지 않음.
 
 ### combiner_mode_invalid_register_choice (1건)
 

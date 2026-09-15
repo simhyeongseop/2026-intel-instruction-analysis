@@ -28,6 +28,7 @@ artifact 카테고리가 그 예). Stage 8/9(clang 비교)에서 CALL/JMP 오판
 의미가 없어짐).
 """
 
+import argparse
 import csv
 import os
 import re
@@ -37,6 +38,7 @@ import tempfile
 ROUNDTRIP_CSV = "out/roundtrip.csv"
 OUT_CSV = "out/reassemble_check.csv"
 OUT_REPORT = "out/reassemble_check_report.md"
+BATCH_SIZE = 500
 
 ASM_HEADER = ".intel_syntax noprefix\n.Ltarget:\n"
 AS_CMD = ["as", "--64", "-mintel64"]
@@ -113,15 +115,51 @@ def parse_objdump_bytes(text):
 def run_objdump(object_paths):
     if not object_paths:
         return {}
-    result = subprocess.run(
-        ["objdump", "-d", "-M", "intel"] + object_paths,
-        capture_output=True, text=True, timeout=180,
-    )
-    return parse_objdump_bytes(result.stdout)
+    bytes_by_path = {}
+    for start in range(0, len(object_paths), BATCH_SIZE):
+        batch = object_paths[start:start + BATCH_SIZE]
+        result = subprocess.run(
+            ["objdump", "-d", "-M", "intel"] + batch,
+            capture_output=True, text=True, timeout=180,
+        )
+        bytes_by_path.update(parse_objdump_bytes(result.stdout))
+    return bytes_by_path
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--display-syntax', choices=('intel', 'att'), default='intel')
+    parser.add_argument('--output', type=str)
+    parser.add_argument('--report', type=str)
+    args = parser.parse_args()
     rows = read_different_rows(ROUNDTRIP_CSV)
+
+    if args.display_syntax == 'att':
+        out_rows = [{**row, 'category': 'display_not_checked', 'orig_bytes': '',
+                     'reassembled_bytes': '',
+                     'note': 'AT&T 표시 왕복은 현재 구현 범위 밖; 입력 Intel 관측과 raw bytes만 보존.',
+                     'display_syntax': 'att'} for row in rows]
+        output = args.output or OUT_CSV.replace('.csv', '_att.csv')
+        os.makedirs(os.path.dirname(output) or '.', exist_ok=True)
+        with open(output, 'w', encoding='utf-8', newline='') as stream:
+            fieldnames = list(out_rows[0]) if out_rows else ['display_syntax']
+            writer = csv.DictWriter(stream, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(out_rows)
+        report_output = args.report or OUT_REPORT.replace('.md', '_att.md')
+        os.makedirs(os.path.dirname(report_output) or '.', exist_ok=True)
+        with open(report_output, 'w', encoding='utf-8') as stream:
+            stream.write(
+                '# Reassemble display-syntax probe\n\n'
+                'display_syntax=att is recorded as display_not_checked. '
+                'AT&T input rendering is outside the current implementation scope; '
+                'this probe does not reassemble AT&T text.\n\n'
+                f'- input different rows: {len(rows)}\n'
+                '- category: display_not_checked\n'
+            )
+        print(f"AT&T 표시 왕복 미구현을 명시적으로 기록: {len(rows)}건")
+        print(f"출력: {output}, {report_output}")
+        return
 
     reassembled_paths = {}  # combo_id -> path
     reassemble_error = {}   # combo_id -> error message
@@ -194,27 +232,32 @@ def main():
                 "orig_bytes": orig_b,
                 "reassembled_bytes": reasm_b,
                 "note": note,
+                "display_syntax": args.display_syntax,
             }
             out_rows.append(out_row)
             if category == "byte_roundtrip_diff" and len(diff_examples) < 50:
                 diff_examples.append(out_row)
 
     fieldnames = ["combo_id", "row_id", "mnemonic", "asm_line", "objdump_line",
-                  "category", "orig_bytes", "reassembled_bytes", "note"]
-    with open(OUT_CSV, "w", encoding="utf-8", newline="") as f:
+                  "category", "orig_bytes", "reassembled_bytes", "note", "display_syntax"]
+    output = args.output or OUT_CSV
+    os.makedirs(os.path.dirname(output) or '.', exist_ok=True)
+    with open(output, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(out_rows)
 
-    write_report(counts, diff_examples, len(rows))
+    report_output = args.report or OUT_REPORT
+    os.makedirs(os.path.dirname(report_output) or '.', exist_ok=True)
+    write_report(counts, diff_examples, len(rows), report_output)
 
     print(f"roundtrip 'different' 대상: {len(rows)}건")
     for key, value in counts.items():
         print(f"  {key}: {value}")
-    print(f"출력: {OUT_CSV}, {OUT_REPORT}")
+    print(f"출력: {output}, {report_output}")
 
 
-def write_report(counts, diff_examples, total):
+def write_report(counts, diff_examples, total, output_report=OUT_REPORT):
     lines = []
     lines.append("# 바이트 라운드트립 검증 (10단계 reassemble_check)\n")
     lines.append("roundtrip(6단계)에서 'different'로 나온 각 줄에 대해, objdump가 보여준")
@@ -223,7 +266,7 @@ def write_report(counts, diff_examples, total):
     lines.append("| 카테고리 | 건수 | 의미 |")
     lines.append("|---|---|---|")
     meaning = {
-        "byte_roundtrip_same": "재어셈블 바이트가 원본과 동일 - triage의 false_alarm(표기 차이) 판정을 도구로 재확인",
+        "byte_roundtrip_same": "재어셈블 바이트가 원본과 동일 - 바이트 보존 관측. 원본 의미/false_alarm 확정과는 구분",
         "byte_roundtrip_diff": "재어셈블 바이트가 원본과 다름 - 진짜 의미 차이일 가능성, 개별 확인 필요",
         "relative_target_reassembly_artifact": "상대분기 라벨->절대주소 표시를 재어셈블하면 relocation이 생겨 바이트가 달라짐 - 이 방법으로는 디스어셈블러 버그 여부 판정 불가",
         "reassemble_failed": "objdump 텍스트를 그대로 다시 어셈블 못 함(예: {evex} 태그, 세그먼트 접두어 등)",
@@ -240,7 +283,7 @@ def write_report(counts, diff_examples, total):
                       f"`{row['objdump_line']}` | `{row['orig_bytes']}` | `{row['reassembled_bytes']}` |")
     lines.append("")
 
-    with open(OUT_REPORT, "w", encoding="utf-8") as f:
+    with open(output_report, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
 
 

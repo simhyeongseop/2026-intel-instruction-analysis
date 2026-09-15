@@ -17,14 +17,25 @@
 """
 
 import csv
+from pathlib import Path
 import re
+import sys
 
-IN_CSV = "data/db/isa_db.csv"
-OUT_CSV = "data/db/tokens.csv"
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from pipeline.input_quality import (apply_known_operand_correction, blocking_issues,
+                                    gate_exit_code, validate_operand_list,
+                                    validate_operand_token, write_issues)
+
+IN_CSV = ROOT / "data/db/isa_db.csv"
+OUT_CSV = ROOT / "data/db/tokens.csv"
+ISSUES_CSV = ROOT / "data/db/extraction_issues.csv"
 
 OUT_COLUMNS = [
     "row_id", "mnemonic", "operand_index", "operand_count",
-    "operand_token", "operand_kind", "raw_instruction",
+    "operand_token", "raw_operand_token", "normalized_operand_token",
+    "operand_kind", "implicit_operands", "validation_status", "validation_codes",
+    "raw_instruction",
     "op_en", "mode_support", "cpuid_flag", "source_page",
 ]
 
@@ -146,10 +157,13 @@ def classify_operand(token):
     return "other"
 
 
-def tokenize_row(row, row_id):
+def tokenize_row(row, row_id, token_row_start=0):
     """isa_db.csv 한 행 -> tokens.csv 여러 행(오퍼랜드 없으면 한 행)."""
-    mnemonic, operands = fix_repeat_prefix_mnemonic(row["mnemonic"], row["operands"])
+    mnemonic, raw_operands = fix_repeat_prefix_mnemonic(row["mnemonic"], row["operands"])
+    operands, implicit_operands, correction_issues = apply_known_operand_correction(
+        mnemonic, row["source_page"], raw_operands, row_id)
     operand_tokens = split_operands(operands)
+    raw_operand_tokens = split_operands(raw_operands)
     common = {
         "row_id": row_id,
         "mnemonic": mnemonic,
@@ -160,13 +174,42 @@ def tokenize_row(row, row_id):
         "source_page": row["source_page"],
     }
     if not operand_tokens:
+        checked = validate_operand_token("", row_id, token_row_start)
         return [dict(common, operand_index="", operand_count=0,
-                     operand_token="", operand_kind="none")]
+                     operand_token="", raw_operand_token="",
+                     normalized_operand_token="", operand_kind="none", implicit_operands="",
+                     validation_status=checked["validation_status"],
+                     validation_codes=checked["validation_codes"])], checked["issues"]
     out = []
+    issues = list(correction_issues)
+    if not correction_issues:
+        issues.extend(validate_operand_list(raw_operands, row_id))
+    correction_codes = [item["rule"] for item in correction_issues]
     for idx, token in enumerate(operand_tokens):
+        checked = validate_operand_token(token, row_id, token_row_start + idx)
+        raw_token = raw_operand_tokens[idx] if idx < len(raw_operand_tokens) else token
+        token_correction_codes = correction_codes if raw_token != token else []
+        codes = token_correction_codes + [code for code in checked["validation_codes"].split(";") if code]
+        status = ("normalized" if token_correction_codes and checked["validation_status"] == "valid"
+                  else checked["validation_status"])
         out.append(dict(common, operand_index=idx, operand_count=len(operand_tokens),
-                         operand_token=token, operand_kind=classify_operand(token)))
-    return out
+                         operand_token=checked["normalized"], raw_operand_token=raw_token,
+                         normalized_operand_token=checked["normalized"],
+                         operand_kind=classify_operand(checked["normalized"]),
+                         implicit_operands=implicit_operands if token_correction_codes else "",
+                         validation_status=status,
+                         validation_codes=";".join(dict.fromkeys(codes))))
+        issues.extend(checked["issues"])
+    if any(item["disposition"] == "extraction_suspect" for item in issues):
+        for token_row in out:
+            codes = [code for code in token_row["validation_codes"].split(";") if code]
+            for item in issues:
+                if item["rule"] == "missing_operand_delimiter" and item["rule"] not in codes:
+                    codes.append(item["rule"])
+            if "missing_operand_delimiter" in codes:
+                token_row["validation_status"] = "extraction_suspect"
+                token_row["validation_codes"] = ";".join(codes)
+    return out, issues
 
 
 def read_isa_db(path):
@@ -186,12 +229,20 @@ def main():
     isa_rows = read_isa_db(IN_CSV)
     print(f"입력 행 수: {len(isa_rows)}")
     out_rows = []
+    issues = []
     for row_id, row in enumerate(isa_rows):
-        out_rows.extend(tokenize_row(row, row_id))
+        token_rows, row_issues = tokenize_row(row, row_id, len(out_rows))
+        out_rows.extend(token_rows)
+        issues.extend(row_issues)
     write_tokens(out_rows, OUT_CSV)
+    write_issues(ISSUES_CSV, issues)
     print(f"출력 행 수(오퍼랜드 단위): {len(out_rows)}")
     print(f"CSV 저장: {OUT_CSV}")
+    print(f"입력 품질 기록: {ISSUES_CSV} ({len(issues)}건, 차단 {len(blocking_issues(issues))}건)")
+    if blocking_issues(issues):
+        print("추출 의심 입력이 있어 다음 단계를 중단합니다.")
+    return gate_exit_code(issues)
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

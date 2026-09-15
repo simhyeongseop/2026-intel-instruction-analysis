@@ -15,8 +15,7 @@
 원칙(CLAUDE.md, 작업 지시):
 - 정답 기준은 인텔 매뉴얼. combos.csv operands 값을 손대지 않고 그대로 쓴다
   (여기서 "받아줄지 추측해서" 값을 바꾸지 않는다 — 그 판정은 5단계 assembler/6단계 roundtrip이 한다).
-- row_id 570 (ENCODEKEY256)은 알려진 tokenizer 버그(콤마 누락)로 combos.csv 값이 SDM과
-  다르다(틀린 조합) -> 스킵하고 out/generator_skipped.csv 에 이유를 남긴다.
+- R0에서 원문과 교정 근거를 검증한 조합만 입력으로 받는다.
 - expected_valid=False(Invalid/N.E./N.S.) 조합도 그대로 생성한다. 다만 주석에
   expected_valid=False 라고 표시해서 나중 단계가 "이건 에러가 정상"이라고 구분할 수 있게 한다.
 """
@@ -27,11 +26,7 @@ IN_CSV = "data/db/combos.csv"
 OUT_ASM = "out/tests.s"
 OUT_SKIPPED = "out/generator_skipped.csv"
 
-# 알려진 이슈: row_id 570 (ENCODEKEY256)은 tokenizer 단계 콤마 누락으로
-# combos.csv 값(ecx, xmm0)이 SDM 기준 틀린 조합이다 -> 스킵.
-SKIP_ROW_IDS = {
-    "570": "ENCODEKEY256: tokenizer 콤마 누락으로 combos.csv operands(ecx, xmm0)가 SDM 기준 오조합 (이전 verifier 피드백)",
-}
+SKIP_ROW_IDS = {}
 
 # CALL/Jcc/LOOP/XBEGIN 등 rel8/rel16/rel32 오퍼랜드는 combiner가 ".Ltarget" 이라는
 # 더미 라벨 텍스트를 넣어뒀다. GNU as가 이 줄을 파싱하려면 그 라벨이 파일 어딘가에
@@ -46,10 +41,30 @@ def read_combos(path):
         return list(reader)
 
 
-def build_line(row):
-    """combos.csv 한 행 -> 어셈블리 한 줄 + 역추적용 주석."""
-    mnemonic = row["mnemonic"].lower()
-    operands = row["operands"]
+def combo_to_ir(row):
+    """combo 한 행을 렌더러가 소비하는 중간 표현으로 보존한다.
+
+    현재 IR은 Intel 토큰을 재해석하지 않는다. 원문 오퍼랜드와 슬롯 순서를
+    보존해 이후 문법 렌더러가 생겨도 기존 combo를 다시 생성하지 않도록 한다.
+    """
+    return {
+        "mnemonic": row["mnemonic"].lower(),
+        "operands_text": row["operands"],
+        "combo_id": row["combo_id"],
+        "row_id": row["row_id"],
+        "combo_index": row["combo_index"],
+        "expected_valid": row["expected_valid"],
+        "mode_support": row["mode_support"],
+        "cpuid": row["cpuid_flag"],
+        "note": row["note"],
+        "source_syntax": "intel",
+    }
+
+
+def render_intel(ir):
+    """현재 지원하는 Intel 렌더러. 반환값은 명령어 본문과 추적 주석이다."""
+    mnemonic = ir["mnemonic"]
+    operands = ir["operands_text"]
 
     if operands:
         code = f"{mnemonic} {operands}"
@@ -57,16 +72,21 @@ def build_line(row):
         code = mnemonic  # 오퍼랜드 없는 명령어 (예: aaa, cpuid)
 
     tag = (
-        f"combo_id={row['combo_id']} row_id={row['row_id']} "
-        f"combo_index={row['combo_index']} mnemonic={row['mnemonic']} "
-        f"expected_valid={row['expected_valid']} mode_support={row['mode_support']}"
+        f"combo_id={ir['combo_id']} row_id={ir['row_id']} "
+        f"combo_index={ir['combo_index']} mnemonic={ir['mnemonic']} "
+        f"expected_valid={ir['expected_valid']} mode_support={ir['mode_support']}"
     )
-    if row["cpuid_flag"]:
-        tag += f" cpuid={row['cpuid_flag']}"
-    if row["note"]:
-        tag += f" note={row['note']}"
+    if ir["cpuid"]:
+        tag += f" cpuid={ir['cpuid']}"
+    if ir["note"]:
+        tag += f" note={ir['note']}"
 
     return f"{code}  # {tag}"
+
+
+def build_line(row):
+    """combo 행 → 중간 표현 → Intel 렌더러."""
+    return render_intel(combo_to_ir(row))
 
 
 def write_asm(rows, skipped, out_path):

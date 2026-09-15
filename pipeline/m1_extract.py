@@ -43,7 +43,7 @@ import re
 import pdfplumber
 from pdfplumber.utils import extract_text as chars_to_text
 
-PDF_PATH = "325383-090-sdm-vol-2abcd.pdf"
+PDF_PATH = "intel_manual.pdf"
 OUT_CSV = "data/db/isa_db.csv"
 COVERAGE_REPORT = "data/db/coverage_report.md"
 
@@ -519,7 +519,7 @@ def write_coverage_report(toc_names, cc_family, extracted_mnemonics, row_count, 
     lines.append(", ".join(cc_missing) if cc_missing else "(없음)")
     lines.append("")
     lines.append("## 실제 누락 의심 목록 (0 이어야 함)")
-    lines.append(", ".join(real_missing) if real_missing else "(없음 - 커버리지 100%)")
+    lines.append(", ".join(real_missing) if real_missing else "(목차 이름 대조상 누락 없음; ISA 의미/인코딩 커버리지와 다름)")
     lines.append("")
     lines.append("## 알려진 제한사항 (수동 확인 결과, 실제 파이프라인 버그 아님)")
     lines.append(

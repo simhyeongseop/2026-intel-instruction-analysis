@@ -21,11 +21,17 @@
 """
 
 import csv
+from pathlib import Path
 import re
 from itertools import zip_longest
+import sys
 
-IN_CSV = "data/db/tokens.csv"
-OUT_CSV = "data/db/combos.csv"
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from pipeline.input_quality import require_validated_tokens
+
+IN_CSV = ROOT / "data/db/tokens.csv"
+OUT_CSV = ROOT / "data/db/combos.csv"
 
 OUT_COLUMNS = [
     "combo_id", "mnemonic", "row_id", "combo_index",
@@ -352,18 +358,39 @@ def build_combos_for_row(operand_rows):
     return combos
 
 
+def assign_stable_combo_ids(rows, prior_rows):
+    """Keep existing row/variant IDs and allocate only genuinely new IDs."""
+    prior = {(row["row_id"], row["combo_index"]): int(row["combo_id"])
+             for row in prior_rows if row.get("combo_id", "").isdigit()}
+    used = set(prior.values())
+    next_id = max(used, default=-1) + 1
+    assigned = []
+    emitted = set()
+    for row in rows:
+        key = (str(row["row_id"]), str(row["combo_index"]))
+        combo_id = prior.get(key)
+        if combo_id is None or combo_id in emitted:
+            while next_id in used or next_id in emitted:
+                next_id += 1
+            combo_id = next_id
+            next_id += 1
+        emitted.add(combo_id)
+        assigned.append(dict(row, combo_id=combo_id))
+    return assigned
+
+
 def main():
     token_rows = read_tokens(IN_CSV)
+    require_validated_tokens(token_rows)
     print(f"입력 행 수(오퍼랜드 단위): {len(token_rows)}")
 
+    prior_rows = read_tokens(OUT_CSV) if OUT_CSV.is_file() else []
     out_rows = []
-    combo_id = 0
     for row_id, operand_rows in group_by_row(token_rows):
         common = operand_rows[0]
         combos = build_combos_for_row(operand_rows)
         for idx, combo in enumerate(combos):
             out_rows.append({
-                "combo_id": combo_id,
                 "mnemonic": common["mnemonic"],
                 "row_id": row_id,
                 "combo_index": idx,
@@ -377,7 +404,7 @@ def main():
                 "raw_instruction": common["raw_instruction"],
                 "source_page": common["source_page"],
             })
-            combo_id += 1
+    out_rows = assign_stable_combo_ids(out_rows, prior_rows)
 
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=OUT_COLUMNS)

@@ -1,0 +1,8 @@
+case_id,asm_line,expected_opcode,purpose
+lar_r64_symmetric,"lar rcx, rcx",REX.W + 0F 02 /r,동작 동등성과 의도한 REX.W 인코딩 선택을 구분
+lsl_r64_symmetric,"lsl rcx, rcx",REX.W + 0F 03 /r,동작 동등성과 의도한 REX.W 인코딩 선택을 구분
+far_pointer_display_lss,"lss rcx, tbyte ptr [eax]",REX.W + 0F B2 /r,80비트 메모리 포인터 표시 대조
+far_pointer_display_lfs,"lfs rcx, tbyte ptr [eax]",REX.W + 0F B4 /r,80비트 메모리 포인터 표시 대조
+far_pointer_display_lgs,"lgs rcx, tbyte ptr [eax]",REX.W + 0F B5 /r,80비트 메모리 포인터 표시 대조
+udb_mnemonic,udb,D6,니모닉 지원 여부 관측
+mov_sreg_memory,"mov ds, qword ptr [eax]",REX.W + 8E /r,SDM 표기와 도구 메모리 문법 구분

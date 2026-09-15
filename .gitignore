@@ -46,6 +46,10 @@ Thumbs.db
 *.xlsx
 *.xls
 *.json
+!out/review/*.json
+!out/lint/manifest.json
+!out/runs/*.json
+!data/*.json
 *.log
 
 # Temporary files
@@ -53,6 +57,10 @@ Thumbs.db
 *.bak
 *.backup
 *.temp
+tmp/
+out/lint/observations.jsonl
+out/ubuntu-tests/
+out/spec_probe/
 
 # OS
 .DS_Store

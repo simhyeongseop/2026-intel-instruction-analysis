@@ -193,3 +193,39 @@
 결론: **VPMOVQD 담당 fork의 판정(false_alarm)이 맞았다.** 로컬로 소스 빌드한 최신 binutils **2.47**(`scratchpad/binutils_build`, root 불필요, `./configure --prefix=... && make -j8 && make install`)로도 동일하게 재현해, "구버전 as에서만 나는 문제"가 아님도 함께 확인했다.
 - 교훈: fork를 병렬로 돌릴 때 서로 겹치는 영역(LAR/LSL)을 다른 fork가 임의로 재검토하면 상충하는 결론이 나올 수 있다 — 최종 판정은 오케스트레이터가 원시 데이터를 직접 재현해서 확정해야 한다. 또한 fork에게 "파일 수정 금지, 검증만"이라고 명시해도 그 지시를 어기고 triage.csv 등을 직접 고칠 수 있으므로, fork 종료 후 `git diff`로 실제 변경 범위를 항상 확인할 것.
 - 부가 조치: LSS/LFS/LGS 담당 fork가 권고한 정밀도 수정("REX.W 유무와 무관하게 항상 FWORD로 오표시" → "REX.W로 승격된 r64 폼에서만 오표시", r16/r32 폼은 정상 표시됨)과 llvm-objdump 비교 증거(같은 바이트를 llvm-objdump는 이 오표기 없이 보여줌 → GNU objdump만의 결함이라는 근거 보강)를 `pipeline/m7_triage.py`/9회 보고서에 반영, `python3 pipeline/m7_triage.py` 재실행(verdict 분포는 bug=4로 불변, 문구만 정밀화).
+
+## 2026-09-14 [연구 기준] 결과의 유효 범위와 버그 판정 기준 정리
+
+- 무엇을: `docs/RESULT_VALIDITY_AND_BUG_CRITERIA.md`에 실험 범위, 수치의 의미, 도구 결함과 지원 차이의 구분, 확정 근거, 현재 사례별 보고 표현을 정리했다. README의 bug 8건을 실제 CSV의 기존 레이블 4건으로 바로잡고 새 보고 기준을 연결했다. CLAUDE.md에도 기준을 연결하고 HANDOFF의 오래된 미커밋 상태에 보충을 달았다.
+- 왜: 사용자 요청("이미 얻은 결과가 어떤 범위에서 유효한지와 무엇을 버그로 부를지를 명확히 정리하자"). 매뉴얼 행 생성 비율을 ISA 검증 커버리지로, 바이트 왕복을 원본 의미의 정확성으로, 미지원을 곧바로 구현 버그로 확대하는 일을 막기 위한 정리다.
+- 확인: CSV 재집계 결과 조합은 DB 4,210행을 포함하지만 실제 어셈블 입력은 4,209행·7,276개이며, 고유 소스는 6,024개다. 재어셈블 바이트 동일 1,326개를 기존 triage와 연결하면 false_alarm 1,313개와 unsure 13개다. 예상과 실제 수용 여부가 다른 108개는 True/error 56개와 False/ok 52개다.
+- 판정: 기존 `bug` 4행은 표시 결함 한 유형의 세 사례(LSS/LFS/LGS, 근거 있음·재심 중)와 니모닉 미지원 한 사례(UDB, 구현 버그 여부 보류)로 나눠 보고한다. 새 기준의 최종 확정 수는 전량 재심 전까지 산정하지 않는다. MOV Sreg와 LAR/LSL의 별도 인코딩 후보도 미결 범위를 명시했다.
+- 검증 범위: 저장된 CSV·코드·증거 문서 대조, 수치·파일 해시 재계산, Markdown 로컬 링크와 diff 검사. 전체 파이프라인·CPU 실험·SDM 개별 사안 재검증은 하지 않았다. 별도 verifier 에이전트를 실행한 작업이 아니다.
+- 남은 것: `spec.md`의 세 사안 재심, LAR/LSL 명확한 r64 소스의 별도 사례화, 새 기준의 판정 필드 반영. 이번에는 판정 코드·CSV·린터를 수정하지 않았다.
+
+## 2026-09-14 [도구·정리] 현재 파이프라인과 입력 검사 도구 완성
+
+- `pipeline/instruction_check.py`, `pipeline/operand_forms.py`, `scripts/asm_linter.py`를 추가해 한 줄 또는 파일 단위로 매뉴얼 후보, GNU/Clang 조립, 실제 바이트, `objdump` 표기, 재조립 결과를 한 번에 확인하도록 했다. 검사 결과는 text/JSON/JSONL로 출력하며, 분석하지 못한 입력은 `incomplete`로 보존한다.
+- `pipeline/m13_lint.py`를 13번째 단계로 등록해 기존 조합 7,276개와 보충 사례 7개를 일괄 검사했다. 현재 결과는 `accepted` 4,401, `needs_review` 2,763, `rejected` 116, `incomplete` 3이며 상세 원본은 `out/lint/`에 있다.
+- `pipeline/review_verdicts.py`와 `m7_triage.py`에 재심 필드(`legacy_*`, `review_status`, `evidence`)를 추가했다. 현재 triage 분포는 `bug` 3, `false_alarm` 1,558, `unsure` 24다. 세 bug 행은 LSS/LFS/LGS의 GNU `objdump` far-pointer 표시 결함 한 유형이다.
+- `scripts/review_cases.py`와 `tests/review_cpu_cases.c`로 MOV Sreg, LAR/LSL 등 경계 사례를 재현하고 `out/review/cases.json`에 환경·바이트·실행 결과를 저장했다. WSL에서 CPU 사례는 모두 기대한 결과를 보였다.
+- `pipeline/run.py`를 13단계 실행기와 실행 기록(`out/runs/*.json`)을 남기는 형태로 정리했다. 오래된 중간 산출물과 실험 스크립트 63개는 삭제하지 않고 `archive/`에 원본 해시와 함께 이동했다. 현재 사용 순서는 `README.md`와 `docs/PIPELINE.md`를 따른다.
+- Ubuntu에서 남은 검증을 재현할 수 있도록 `scripts/run_ubuntu_tests.sh`를 추가했다. 필수 도구·입력 확인, 회귀 테스트, CLI smoke, 재심 CPU, 11~12단계 실행, 13단계 lint와 산출물 검사를 순서대로 수행하고 `out/ubuntu-tests/<UTC timestamp>/summary.txt`에 종료 상태를 기록한다.
+- 검증: Windows 테스트 20개 통과·도구 미설치 7개 건너뜀, WSL 테스트 20개 통과. 다음 변경부터는 새 입력을 `data/cases.csv`에 등록하고 13단계 lint와 triage를 함께 재실행한다.
+- 최신 Ubuntu 전체 실행(2026-09-14 15:02:11 UTC): `out/ubuntu-tests/20260914T150211Z/summary.txt`의 `failures=0`을 확인했다. 회귀·CLI·재심·CPU 11~12단계·13단계 lint와 manifest 검사가 모두 통과했다.
+
+## 2026-09-15 [문서·정리] 현재 기준 문서 재정렬
+
+- README를 목적, 결과 해석 순서(원본·SDM 행·수용·바이트·objdump·roundtrip·CPU), Ubuntu 실행법, 1~13단계, 주요 산출물, 범위 제한 중심으로 다시 작성했다.
+- 실행 기록을 재생성할 때 사용하는 현재 PDF 이름을 활성 `pipeline/m7_triage.py`의 문서·근거 문자열에도 반영했다. triage를 재실행해 분포 `bug=3 / false_alarm=1558 / unsure=24`를 확인했다.
+- 회의록은 과거 스냅샷으로 보존하고 [회의록 안내](MEETING_NOTES/README.md)를 추가했다. 마지막 Ubuntu 전체 검증은 [최신 검증 기록](LATEST_TEST_RUN.md)으로 고정해 무시되는 실행 로그에 의존하지 않도록 했다.
+- 확인: Markdown 로컬 링크, `git diff --check`, Python compileall, Windows 회귀 테스트 20개를 통과했다. Windows에서는 Linux 도구가 없어 live 테스트 7개를 건너뛰며, 전체 Linux 검증은 2026-09-14 Ubuntu 실행 기록을 기준으로 한다.
+
+## 2026-09-15 [퍼징 연구 감사] 도구의 연구 사용성 비판 검토
+
+- 무엇을: 현재 코드·산출물·회의록·재심 기록을 퍼징 연구에 사용하는 관점에서 다시 검토하고, [비판적 검토와 보완 계획](FUZZING_RESEARCH_REVIEW_2026-09-15.md)과 [감사 원시 결과](../out/review/fuzzing_audit_2026-09-15.json)를 남겼다.
+- 핵심 판정: 현재 도구는 명령어·인코딩·역어셈블러 차이를 조사하고 결과를 주석화하는 연구용 프로토타입으로는 유용하다. 자동 통과·폐기 필터 또는 퍼징 효과를 입증하는 도구로 설명하기에는 판정 신뢰성과 연구 효과 측정이 부족하다.
+- 확인한 우선 결함: 신호 종료가 일반 `rejected`로 축약됨, 지정 opcode 불일치가 전량 lint의 최종 상태에 반영되지 않음, 검사기 실패를 주입해도 배치가 성공할 수 있음. 대표값 중심 생성, 단일 디코더 의존, 버전·증거 연결, 실행 격리, throughput/precision/recall 측정도 보완 대상으로 분류했다.
+- 근거 수치: lint 7,283건 중 `accepted` 4,401·`needs_review` 2,763·`rejected` 116·`incomplete` 3; 생성 입력의 opcode 필드 미검사 5,002건; accepted 중 지정 opcode 불일치 118건; SDM 형태 비교 incomplete 2,688건; triage 미재심 1,578/1,585건.
+- 검토 한계: 실제 대상 도구의 새 크래시를 주장한 것이 아니며, 실패 주입은 판정 전달 경로를 확인하기 위한 인위적 실험이다. 전체 PDF 재추출·모든 기존 판정 재심·최신 upstream 버전 비교는 후속 과제다.
+- 재현: Ubuntu 루트에서 `python3 docs/review_artifacts/fuzzing_audit_2026-09-15.py`를 실행하면 동일한 감사 항목을 다시 계산할 수 있다.

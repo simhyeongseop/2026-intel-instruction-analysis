@@ -8,12 +8,17 @@
 - LLM 추정만으로 "bug"라고 결론 내지 않는다. 확신이 없으면 unsure로 남겨서 형섭이 검토한다.
 
 이 파일의 분류 규칙들은 out/asm_result.csv·out/roundtrip.csv를 실제로 열어 패턴을 찾고,
-의심스러운 것은 `as --64 -mintel64`로 재현하거나 325383-090-sdm-vol-2abcd.pdf 원문을
-직접 대조해서 얻은 결론이다. bug로 표시한 항목은 전부 도구 재현 + SDM 원문 대조를 마쳤다.
+의심스러운 것은 `as --64 -mintel64`로 재현하거나 `intel_manual.pdf` 원문을
+직접 대조해서 얻은 과거 분류다. 현재 재심은 review_verdicts.py에서 적용하고 이전 값은 legacy_*에 보존한다.
 """
 
 import csv
 import re
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from pipeline.review_verdicts import apply_review
 
 ASM_CSV = "out/asm_result.csv"
 RT_CSV = "out/roundtrip.csv"
@@ -224,7 +229,7 @@ ERROR_COMBO_OVERRIDES = {
              "달리 SDM 내부 모순(각주 오귀속, 형제행 비교, Description 불일치)같은 결정적 증거가 "
              "없어 bug 유지도 과하지만 false_alarm 확정도 이르다고 판단해 unsure로 낮춘다."),
     "7035": ("sdm_gather_scatter_vsib_width_asymmetry", "unsure",
-             "SDM PDF p.2202(325383-090-sdm-vol-2abcd.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
+             "SDM PDF p.2202(intel_manual.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
              "ymm 폼이 실제로 'vm32y {k1}, ymm1'로 인쇄돼 있다 - combiner가 vm32x를 vm32y로 잘못 "
              "뽑은 추출 오류가 아니라 PDF 원문 자체가 vm32y다. `as`로 직접 재현: "
              "`vscatterdpd [eax + xmm1] {k1}, xmm0`(combo 7034)는 성공하지만 이 combo의 "
@@ -235,7 +240,7 @@ ERROR_COMBO_OVERRIDES = {
              "둔다. 형섭이 PDF 원문과 인텔 공식 정오표를 직접 확인해서 SDM 오탈자인지, as가 SDM에 "
              "명시된 폼을 구현하지 않은 버그인지 확정해야 한다."),
     "7036": ("sdm_gather_scatter_vsib_width_asymmetry", "unsure",
-             "SDM PDF p.2202(325383-090-sdm-vol-2abcd.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
+             "SDM PDF p.2202(intel_manual.pdf, 200dpi 렌더링 대조)에 VSCATTERDPD의 "
              "zmm 폼이 실제로 'vm32z {k1}, zmm1'로 인쇄돼 있다 - combiner 추출 오류가 아니라 PDF "
              "원문 자체가 vm32z다. `as`로 직접 재현: `vscatterdpd [eax + xmm1] {k1}, xmm0`"
              "(combo 7034)는 성공하지만 이 combo의 `[eax + zmm1] {k1}, zmm0`은 'invalid VSIB "
@@ -668,7 +673,7 @@ def build_triage_rows(asm_rows, rt_rows):
         })
         seen_combo_ids.add(combo_id)
 
-    return triaged
+    return apply_review(triaged, asm_rows)
 
 
 # ===========================================================================
@@ -677,7 +682,8 @@ def build_triage_rows(asm_rows, rt_rows):
 
 def write_csv(rows, path):
     fieldnames = ["category", "mnemonic", "source", "objdump_or_error",
-                  "compile_result", "diff_cause", "verdict"]
+                  "compile_result", "diff_cause", "verdict", "legacy_category", "legacy_verdict",
+                  "legacy_diff_cause", "finding_type", "review_status", "case_id", "evidence"]
     with open(path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -709,11 +715,15 @@ def write_report(rows, path):
 
     lines.append("## 진짜 의심되는 버그 후보 (verdict=bug)")
     lines.append("")
-    lines.append("도구(as/objdump) 직접 재현 + SDM PDF 원문 대조까지 마친 것만 bug로 표시했다.")
+    lines.append("2026-09-14 재심 기준을 적용했다. legacy_* 열은 이전 판정 기록이다. "
+                 "review_status=not_reassessed 항목은 새 기준으로 재심하지 않았다.")
+    lines.append("이번 재심에서 확인한 표시 결함은 한 유형의 3개 사례이며, 독립적인 근본 원인 3개라는 뜻이 아니다.")
+    lines.append("근거: [사례 재심](../docs/CASE_REVIEW_2026-09-14.md). 전체 ISA 검증 완료를 뜻하지 않는다.")
     lines.append("")
     for r in bug_rows:
         lines.append(f"### {r['mnemonic']} (source {r['source']})")
         lines.append(f"- 분류: {r['category']}")
+        lines.append(f"- 유형/상태: {r['finding_type']} / {r['review_status']}")
         lines.append(f"- objdump/error: {r['objdump_or_error']}")
         lines.append(f"- 원인: {r['diff_cause']}")
         lines.append("")

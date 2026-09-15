@@ -17,7 +17,9 @@ objdump는 원본 어셈블리 텍스트를 복원하는 도구가 아니다. �
 가려낸다. 왜 다른지 원인 분석과 오탐(false alarm) 판단은 7단계 triage가 한다.
 """
 
+import argparse
 import csv
+import os
 import re
 import subprocess
 
@@ -27,6 +29,7 @@ OUT_CSV = "out/roundtrip.csv"
 # objdump가 여러 파일을 한 번에 받으면 파일마다 이 줄로 구분해서 출력한다.
 # 예: "out/objects/combo_42.o:     file format elf64-x86-64"
 FILE_HEADER_RE = re.compile(r"^(.+):\s+file format")
+BATCH_SIZE = 500
 
 
 def read_ok_rows(path):
@@ -63,17 +66,21 @@ def parse_objdump_output(text):
     return disasm_by_path
 
 
-def run_objdump(object_paths):
+def run_objdump(object_paths, display_syntax='intel'):
     """objdump -d -M intel 을 한 번에 실행한다.
 
     파일 하나씩 7천 번 따로 실행하는 것보다, 경로를 한꺼번에 넘기고 출력을
     나눠 읽는 쪽이 훨씬 빠르다 (objdump는 여러 파일을 인자로 받을 수 있음).
     """
-    result = subprocess.run(
-        ["objdump", "-d", "-M", "intel"] + object_paths,
-        capture_output=True, text=True, timeout=180,
-    )
-    return parse_objdump_output(result.stdout)
+    disasm_by_path = {}
+    for start in range(0, len(object_paths), BATCH_SIZE):
+        batch = object_paths[start:start + BATCH_SIZE]
+        result = subprocess.run(
+            ["objdump", "-d", "-M", display_syntax] + batch,
+            capture_output=True, text=True, timeout=180,
+        )
+        disasm_by_path.update(parse_objdump_output(result.stdout))
+    return disasm_by_path
 
 
 def normalize(text):
@@ -90,9 +97,13 @@ def normalize(text):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--display-syntax', choices=('intel', 'att'), default='intel')
+    parser.add_argument('--output', type=str)
+    args = parser.parse_args()
     rows = read_ok_rows(IN_CSV)
     object_paths = [row["object_file_path"] for row in rows]
-    disasm_by_path = run_objdump(object_paths)
+    disasm_by_path = run_objdump(object_paths, args.display_syntax)
 
     out_rows = []
     same_count = 0
@@ -122,13 +133,17 @@ def main():
             "result": result,
             "mismatch": row["mismatch"],
             "object_file_path": path,
+            "display_syntax": args.display_syntax,
         })
 
     fieldnames = [
         "combo_id", "row_id", "mnemonic", "source_line", "asm_line",
-        "objdump_line", "result", "mismatch", "object_file_path",
+        "objdump_line", "result", "mismatch", "object_file_path", "display_syntax",
     ]
-    with open(OUT_CSV, "w", encoding="utf-8", newline="") as f:
+    output = args.output or (OUT_CSV if args.display_syntax == 'intel' else
+                             OUT_CSV.replace('.csv', '_%s.csv' % args.display_syntax))
+    os.makedirs(os.path.dirname(output) or '.', exist_ok=True)
+    with open(output, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(out_rows)
@@ -137,7 +152,7 @@ def main():
     print(f"same: {same_count}  different: {diff_count}")
     if missing_count:
         print(f"경고: objdump 출력에서 역어셈블 줄을 못 찾은 파일 {missing_count}개")
-    print(f"출력: {OUT_CSV}")
+    print(f"출력: {output}")
 
 
 if __name__ == "__main__":

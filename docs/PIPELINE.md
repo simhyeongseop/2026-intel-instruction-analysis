@@ -1,0 +1,73 @@
+# 현재 파이프라인과 파일 안내
+
+기준: 2026-09-15. 이 표의 단계 번호가 현행 기준이다. `archive/legacy/`의 옛 1~6단계와 구분한다.
+
+| 단계 | 하는 일 | 구현 | 입력 | 결과 |
+|---|---|---|---|---|
+| 1 extractor | PDF 인코딩 표 추출 | `pipeline/m1_extract.py` | `intel_manual.pdf` | `data/db/isa_db.csv`, `data/db/coverage_report.md` |
+| 2 tokenizer | 오퍼랜드 표기 분해 | `pipeline/m2_tokenize.py` | `isa_db.csv` | `data/db/tokens.csv` |
+| 3 combiner | 대표 오퍼랜드 조합 | `pipeline/m3_combine.py` | `tokens.csv` | `data/db/combos.csv` |
+| 4 generator | 조합을 소스로 작성 | `pipeline/m4_generate.py` | `combos.csv` | `out/tests.s`, `out/generator_skipped.csv` |
+| 5 assembler | GNU as 수용 여부 | `pipeline/m5_assemble.py` | `tests.s` | `out/asm_result.csv`, `out/objects/*.o` |
+| 6 roundtrip | objdump 텍스트 비교 | `pipeline/m6_roundtrip.py` | 5단계 CSV·오브젝트 | `out/roundtrip.csv` |
+| 7 triage | 차이 분류와 재심 반영 | `pipeline/m7_triage.py` | 5·6단계 CSV | `out/triage.csv`, `out/triage_report.md` |
+| 8 clang_assemble | Clang 수용 여부 | `pipeline/m8_clang_assemble.py` | `tests.s` | `out/clang_result.csv`, `out/clang_objects/*.o` |
+| 9 clang_compare | GNU/Clang 바이트 비교 | `pipeline/m9_clang_compare.py` | 5·8단계 CSV·오브젝트 | `out/clang_compare.csv`, `out/clang_compare_report.md` |
+| 10 reassemble_check | objdump 출력 바이트 왕복 | `pipeline/m10_reassemble_check.py` | 6단계 CSV·오브젝트 | `out/reassemble_check.csv`, `out/reassemble_check_report.md` |
+| 11 execute | 고정 주소 6개 CPU 시나리오 | `pipeline/m11_execute.py` | 코드 내 고정 시나리오 | `out/address_test_result.csv` |
+| 12 execute_edge_cases | 선별된 경계 사례 실행 | `pipeline/m12_execute_edge_cases.py` | 5단계 CSV | `out/edge_case_execution.csv`, `out/edge_case_execution_report.md` |
+| 13 lint | 새 도구로 입력 전량 재검사 | `pipeline/m13_lint.py` | 5단계 CSV·ISA DB·`data/cases.csv` | `out/lint/results.csv`, `report.md`, `manifest.json`, `observations.jsonl` |
+
+11·12단계는 CPU에서 실제 실행한다. 실행기는 `--execute`가 있을 때 이 단계를 포함한다.
+13단계는 오브젝트를 다시 만들어 조사하므로 기존 `.o`가 없어도 실행할 수 있다.
+5·8단계 오브젝트는 Git에 저장하지 않는다. 6·9·10단계를 다시 실행하려면 해당 오브젝트부터 재생성해야 한다.
+
+## 단계 선택
+
+```bash
+python3 pipeline/run.py --list
+python3 pipeline/run.py --only triage
+python3 pipeline/run.py --only lint
+python3 pipeline/run.py generator --until reassemble_check
+python3 pipeline/run.py execute --until execute_edge_cases --execute
+bash scripts/run_ubuntu_tests.sh
+```
+
+Ubuntu에서 남은 검증을 한 번에 실행하려면 `run_ubuntu_tests.sh`를 사용한다. 각 단계 로그와
+최종 요약은 `out/ubuntu-tests/<UTC timestamp>/`에 저장된다. 시간이 오래 걸리는 CPU·lint를
+생략하려면 `--skip-execute`, `--skip-lint`를 붙인다.
+
+현재 저장된 마지막 전체 실행은 [최신 검증 기록](LATEST_TEST_RUN.md)에 요약돼 있다.
+
+입력 누락 또는 단계 실패 시 중단한다. 어느 단계가 실행/생략/실패했는지는 `out/runs/*.json`을 본다.
+외부 디렉터리에서 실행기를 절대 경로로 호출해도 단계의 작업 디렉터리는 프로젝트 루트로 고정된다.
+단계를 직접 호출할 때는 프로젝트 루트에서 실행한다(13단계는 자체 경로 해석을 지원).
+
+## 추가 사례와 재심
+
+`data/cases.csv`는 사람이 이름을 붙인 추가 사례다. 기존 `combo_id`를 밀거나 바꾸지 않고 13단계에서 함께 검사한다.
+LAR/LSL 대칭 r64 사례도 여기에 포함한다. 원래 생성기 사례 수와 추가 사례 수를 따로 집계한다.
+
+재심용 `scripts/review_cases.py`는 고정된 27개 소스의 as/Clang 결과와 20개 CPU 대조 관측을 남긴다.
+`--skip-cpu`를 주면 어셈블·역어셈블만 수행한다. CPU 테스트 소스는 `tests/review_cpu_cases.c`다.
+이 실험은 11·12단계의 일반 실행과 독립적인, 가설을 구분하기 위한 대조 실험이다.
+
+`out/*_evidence*.md`는 과거 분석의 원시 기록이며 작성 당시 결론이 포함돼 있다.
+현재 결론은 [재심 보고서](CASE_REVIEW_2026-09-14.md)와 `pipeline/review_verdicts.py`를 따른다.
+`triage.csv`의 `legacy_category`, `legacy_verdict`, `legacy_diff_cause`는 이전 기록을 보존한다.
+
+## 수치와 재현 범위
+
+DB 4,210행 중 생성 입력에 포함된 행은 4,209개다. `ENCODEKEY256` 한 행은 알려진 토큰 문제로 제외된다.
+7,276개 생성 테스트는 6,024개의 고유 소스를 포함한다. 같은 소스가 여러 매뉴얼 행에 대응할 수 있다.
+DB 행 생성률, 바이트 필드 일치율, 실제 의미 검증 범위를 같은 커버리지 수치로 합치지 않는다.
+
+현재 전체 의미 검증 커버리지는 산출하지 않는다. 13단계는 검사한 필드와 미지원 템플릿을 명시한다.
+1단계 PDF 전체 재추출은 이번 도구 검증에서 수행하지 않았다. 기반 CSV와 기존 실험 결과의 수치·관계를 검증했다.
+
+## 정리한 파일
+
+현재 실행 코드가 참조하지 않는 구 `src/`, `data/stage1~6`, `data/instruction_db`, 옛 scripts/experiments 및 설계 문서는
+`archive/legacy/`로 옮겼다. 63개 파일의 이동 내역과 해시는 `archive/MOVED_FILES.csv`에 있다.
+이전 지침·린터·PoC는 `archive/prototypes/`, 루트 `test.s`의 사례는 `examples/far_pointer.s`에 있다.
+회의록과 DEVLOG는 이력 자료로 남긴다. 회의록의 읽는 순서와 현재 문서 링크는 [회의록 안내](MEETING_NOTES/README.md)를 따른다.
