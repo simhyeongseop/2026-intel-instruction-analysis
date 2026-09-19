@@ -266,19 +266,10 @@ _FARPTR_CAUSE = (
 for _cid in ["424", "425", "426", "1441", "1442", "1443"]:
     ERROR_COMBO_OVERRIDES[_cid] = ("combiner_farptr_collapse", "false_alarm", _FARPTR_CAUSE)
 
-# MOV moffs 괄호 누락: tokens.csv row_id 1105-1109 = MOV moffs8/16/32/64, AL/AX/EAX/RAX.
-# generator가 "mov 0x1000, al"처럼 대괄호 없는 bare 즉시값을 그대로 방출하는데, as Intel syntax의
-# moffs 오퍼랜드는 "mov [0x1000], al" 또는 "mov ds:0x1000, al"처럼 대괄호/세그먼트 표기가 필요하다.
-# combo_id 1689-1693. 근본 원인은 generator(4단계) - 이번 라운드는 문서화만, 코드는 고치지 않는다.
-_MOFFS_CAUSE = (
-    "generator가 moffs 오퍼랜드를 'mov 0x1000, al'처럼 대괄호 없이 방출하는데, as Intel syntax의 "
-    "moffs 오퍼랜드는 'mov [0x1000], al' 또는 'mov ds:0x1000, al'처럼 대괄호/세그먼트 표기가 필요함 "
-    "- 직접 재현: 대괄호를 씌우면 성공, 'mov 0x1000, al'만 실패. 근본 원인은 generator(4단계)가 "
-    "moffs 후보값 포맷팅에 대괄호를 안 씌우는 것 - 다음 라운드에 4단계가 고칠 후보(이번 triage "
-    "라운드는 generator 코드 수정 스코프 밖)."
-)
-for _cid in ["1689", "1690", "1691", "1692", "1693"]:
-    ERROR_COMBO_OVERRIDES[_cid] = ("generator_moffs_missing_brackets", "false_alarm", _MOFFS_CAUSE)
+# MOV moffs: 2026-09-19 라운드에서 근본 원인을 3단계(combiner)에서 고쳤다.
+# 이제 moffs 오퍼랜드는 "ds:0x123456789abcdef0" 형태로 생성되어 매뉴얼의 moffs 행(A0/A1)을
+# 실제로 때린다. 옛 combo_id 1689-1693 오버라이드는 더 이상 해당 입력이 없으므로 제거했다.
+# (수정 근거: docs/GENERATOR_FIX_SCOPE_2026-09-19.md, tests/expectations/)
 
 
 def classify_compile_error(row):
@@ -417,6 +408,23 @@ def _numeric_normalize(s):
     return NUM_RE.sub(lambda m: f"#{_to_num(m.group(0))}#", s)
 
 
+def _strip_objdump_comment(s):
+    """objdump 가 줄 끝에 붙이는 주석(rip 상대 주소의 '# 0x17' 등)을 뗀다.
+
+    이 주석은 objdump 의 부가 설명이지 명령어 표기가 아니다. 떼지 않으면
+    rip 상대 주소를 쓴 줄이 전부 "설명할 수 없는 차이"로 남는다.
+    """
+    return re.sub(r"\s*#.*$", "", s).strip()
+
+
+def _norm_decorations(s):
+    """AVX-512 장식 앞의 공백을 없앤다 ('zmm0 {k1}{z}' -> 'zmm0{k1}{z}').
+
+    소스는 매뉴얼 표기를 따라 공백을 두고, objdump 는 붙여서 출력한다.
+    """
+    return re.sub(r"\s+\{", "{", s)
+
+
 def _norm_ws(s):
     s = re.sub(r"\s*,\s*", ",", s)
     return re.sub(r"\s+", " ", s).strip()
@@ -481,6 +489,9 @@ ROUNDTRIP_CAUSES = {
         "버그 아님.",
     "numeric_repr":
         "즉시값 표기가 10진(1)->16진(0x1)으로 바뀐 것뿐, 값 자체는 동일 - 버그 아님.",
+    "broadcast_display":
+        "AVX-512 브로드캐스트를 소스는 'qword ptr [eax]{1to8}'로 쓰고 objdump는 "
+        "'QWORD BCST [eax]'로 보여줌 - 같은 인코딩의 다른 표기, 버그 아님.",
     "relative_target_absolute_display":
         "상대 분기 대상이 소스에서는 라벨(.Ltarget)이었는데 objdump는 절대주소(0x0 등)로 "
         "보여줌 - objdump가 라벨을 복원할 방법이 없어서 생기는 표기 차이, 버그 아님.",
@@ -527,6 +538,7 @@ ROUNDTRIP_VERDICT = {
     "implicit_operand_display": "false_alarm",
     "mnemonic_alias": "false_alarm",
     "numeric_repr": "false_alarm",
+    "broadcast_display": "false_alarm",
     "relative_target_absolute_display": "false_alarm",
     "fpu_stack_register_display": "false_alarm",
     "encoding_form_annotation": "false_alarm",
@@ -543,8 +555,8 @@ ROUNDTRIP_VERDICT = {
 
 def _roundtrip_category(asm_line, objdump_line):
     """asm_line(소스)과 objdump_line(역어셈블)을 비교해서 차이 원인 그룹을 고른다."""
-    a, b = asm_line.strip(), objdump_line.strip()
-    al, bl = a.lower(), _strip_evex_tag(b.lower())
+    a, b = asm_line.strip(), _strip_objdump_comment(objdump_line)
+    al, bl = _norm_decorations(a.lower()), _norm_decorations(_strip_evex_tag(b.lower()))
     has_evex = bl != b.lower()
     aw, bw = _first_word(al), _first_word(bl)
 
@@ -565,6 +577,9 @@ def _roundtrip_category(asm_line, objdump_line):
     b_num = _norm_ws(_numeric_normalize(bl))
     if a_num == b_num:
         return "encoding_form_annotation" if has_evex else "numeric_repr"
+
+    if "{1to" in al and "bcst" in bl:
+        return "broadcast_display"
 
     if ".ltarget" in al and re.search(r"0x[0-9a-f]+", bl):
         return "relative_target_absolute_display"
@@ -617,6 +632,10 @@ def classify_roundtrip_diff(row):
 # 4. 전체 조합 - combo_id 기준으로 유니크하게 합친다
 # ===========================================================================
 
+# 5단계가 진단 거부(error)와 구분해서 기록하는 도구 쪽 사건.
+PROCESS_FAILURE_RESULTS = {"crashed", "timeout"}
+
+
 def build_triage_rows(asm_rows, rt_rows):
     """asm_result.csv의 에러/mismatch, roundtrip.csv의 different를 combo_id로 묶어서
     triage.csv 한 행씩(중복 없이) 만든다."""
@@ -627,12 +646,21 @@ def build_triage_rows(asm_rows, rt_rows):
     for row in asm_rows:
         combo_id = row["combo_id"]
         is_error = row["actual_result"] == "error"
+        is_process_failure = row["actual_result"] in PROCESS_FAILURE_RESULTS
         is_permissive_mismatch = row["mismatch"] == "True" and row["actual_result"] == "ok"
 
-        if not is_error and not is_permissive_mismatch:
+        if not is_error and not is_permissive_mismatch and not is_process_failure:
             continue  # 정상 통과 + 정상 mismatch 없음 -> triage 대상 아님
 
-        if is_error:
+        if is_process_failure:
+            # 도구가 죽거나 끝나지 않은 사건. 입력이 틀렸다는 근거가 없으므로
+            # false_alarm 으로 내리지 않고 사람이 보도록 unsure 로 남긴다.
+            category = "tool_process_failure"
+            cause = (f"as가 진단 거부가 아니라 {row['actual_result']} 로 끝났다. "
+                     "입력 결함이라는 근거가 없으므로 판정을 내리지 않는다 - 사람이 확인할 것.")
+            verdict = "unsure"
+            objdump_or_error = row["error_message"]
+        elif is_error:
             category, cause, verdict = classify_compile_error(row)
             objdump_or_error = row["error_message"]
         else:
