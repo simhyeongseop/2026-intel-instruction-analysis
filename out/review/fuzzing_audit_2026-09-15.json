@@ -1,0 +1,4823 @@
+{
+  "created_utc": "2026-09-15T06:16:54.127308+00:00",
+  "scope": "read-only saved-data audit, bounded assembly probes, injected reporting failures",
+  "environment": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "tools": {
+      "as": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-as",
+        "version": [
+          "GNU assembler (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "7a2ef948033b05ad0c5dcb0d5be059bc68562b5d45713d91aee21df2b4bf4e92",
+        "probe": {
+          "command": [
+            "/usr/bin/as",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU assembler (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-linux-gnu'.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "clang": {
+        "available": true,
+        "path": "/usr/lib/llvm-18/bin/clang",
+        "version": [
+          "Ubuntu clang version 18.1.3 (1ubuntu1)"
+        ],
+        "sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+        "probe": {
+          "command": [
+            "/usr/bin/clang",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objdump": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objdump",
+        "version": [
+          "GNU objdump (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "d0041e7511460b9ebfd95ce4f9d93c7ffea398ffc1cb2c316a220dd8e533db3d",
+        "probe": {
+          "command": [
+            "/usr/bin/objdump",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objdump (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objcopy": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objcopy",
+        "version": [
+          "GNU objcopy (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "b22f4f909bff115ee2a37cd21ff76f5e0b8c65cd58f98edbce7b59f129980d67",
+        "probe": {
+          "command": [
+            "/usr/bin/objcopy",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objcopy (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "readelf": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-readelf",
+        "version": [
+          "GNU readelf (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+        "probe": {
+          "command": [
+            "/usr/bin/readelf",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "cpu": {
+      "vendor_id": "GenuineIntel",
+      "model name": "Intel(R) Core(TM) Ultra 5 226V",
+      "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+    }
+  },
+  "git_head": "d64b2d3583805583b51d1a964889431ac15e8612",
+  "working_tree_note": "HEAD alone does not identify the reviewed working tree; see file hashes.",
+  "file_hashes": {
+    "pipeline/instruction_check.py": "4e6806bcd2131fab982e0eea310d739f80c35a825a10a832c39bea3e5c617fe2",
+    "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776",
+    "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "scripts/review_cases.py": "b0d14d569d924465b755b863e5a1ddb51754fb717fb9c41f97a795fd9910c67c",
+    "scripts/run_ubuntu_tests.sh": "48988b878d0b8ef986471fe03bf66d39c8cf09cf7dfb7f273e5fdffc4bf23176",
+    "data/db/isa_db.csv": "71a32be092b212a11fb3cba8798aaadfe7a713fdcbf8f09e25f7dbbf8ac08be5",
+    "data/db/combos.csv": "800a1352811f9fe1c5952f841aaf4f83a57ed9597e50c9cee55e66ffd15566a9",
+    "out/asm_result.csv": "b5c7ea59accd937f59ae055055de031474f3163b643956c54bcddeea6ee92895",
+    "out/triage.csv": "f46cf7997a33297967da66606a5c80a4198dad1b19d05edd4c07973c3c9b3f7c",
+    "out/lint/results.csv": "e7b90d87912cff2c2cf39ee7e00af5172b70c932a79467c18b72664d98fdac56",
+    "out/lint/manifest.json": "bf696866839cffe65cd2e01f563542ed6a7f8bc64a5bfa225ef7adad8c8cb1eb",
+    "docs/review_artifacts/fuzzing_audit_2026-09-15.py": "58baecd94d8ab241c85f98bce515713f4fdbbf3ee74df96ae1b6b4246c937a83"
+  },
+  "counts": {
+    "db_rows": 4210,
+    "combo_rows": 7277,
+    "assembly_rows": 7276,
+    "represented_db_rows": 4209,
+    "assembly_unique_sources": 6024,
+    "lint_rows": 7283,
+    "lint_unique_sources": 6026,
+    "lint_status": {
+      "rejected": 116,
+      "accepted": 4401,
+      "needs_review": 2763,
+      "incomplete": 3
+    },
+    "lint_sdm_form": {
+      "form_match": 4540,
+      "no_form_match": 52,
+      "incomplete": 2688,
+      "not_checked": 3
+    },
+    "generated_opcode_fields": {
+      "not_checked": 5002,
+      "fields_match": 2058,
+      "different_encoding": 216
+    },
+    "accepted_opcode_fields": {
+      "fields_match": 1768,
+      "different_encoding": 118,
+      "not_checked": 2515
+    },
+    "partial_sdm_final_status": {
+      "needs_review": 2635,
+      "rejected": 53
+    },
+    "triage_verdict": {
+      "false_alarm": 1558,
+      "unsure": 24,
+      "bug": 3
+    },
+    "triage_review_status": {
+      "not_reassessed": 1578,
+      "resolved_observation": 3,
+      "observed": 1,
+      "confirmed": 3
+    }
+  },
+  "accepted_different_encoding": [
+    {
+      "case_id": "combo_34",
+      "group": "generated",
+      "row_id": "22",
+      "asm_line": "adc cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6611c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6611c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "13 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_36",
+      "group": "generated",
+      "row_id": "23",
+      "asm_line": "adc ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "11c9",
+      "clang_status": "accepted",
+      "clang_bytes": "11c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "13 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_38",
+      "group": "generated",
+      "row_id": "24",
+      "asm_line": "adc rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4811c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4811c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 13 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_72",
+      "group": "generated",
+      "row_id": "43",
+      "asm_line": "add cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6601c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6601c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "03 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_74",
+      "group": "generated",
+      "row_id": "44",
+      "asm_line": "add ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "01c9",
+      "clang_status": "accepted",
+      "clang_bytes": "01c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "03 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_76",
+      "group": "generated",
+      "row_id": "45",
+      "asm_line": "add rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4801c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4801c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 03 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_222",
+      "group": "generated",
+      "row_id": "124",
+      "asm_line": "and cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6621c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6621c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "23 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_224",
+      "group": "generated",
+      "row_id": "125",
+      "asm_line": "and ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "21c9",
+      "clang_status": "accepted",
+      "clang_bytes": "21c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "23 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_226",
+      "group": "generated",
+      "row_id": "126",
+      "asm_line": "and rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4821c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4821c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 23 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_650",
+      "group": "generated",
+      "row_id": "355",
+      "asm_line": "cmp cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6639c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6639c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "3B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_652",
+      "group": "generated",
+      "row_id": "356",
+      "asm_line": "cmp ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "39c9",
+      "clang_status": "accepted",
+      "clang_bytes": "39c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "3B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_654",
+      "group": "generated",
+      "row_id": "357",
+      "asm_line": "cmp rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4839c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4839c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 3B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1034",
+      "group": "generated",
+      "row_id": "576",
+      "asm_line": "enter 0x100, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "c8000101",
+      "clang_status": "accepted",
+      "clang_bytes": "c8000101",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C8 iw 01",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1668",
+      "group": "generated",
+      "row_id": "1092",
+      "asm_line": "mov cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6689c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6689c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "8B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1670",
+      "group": "generated",
+      "row_id": "1093",
+      "asm_line": "mov ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "89c9",
+      "clang_status": "accepted",
+      "clang_bytes": "89c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "8B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1672",
+      "group": "generated",
+      "row_id": "1094",
+      "asm_line": "mov rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4889c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4889c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 8B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1679",
+      "group": "generated",
+      "row_id": "1097",
+      "asm_line": "mov word ptr [eax], ds",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "678c18",
+      "clang_status": "accepted",
+      "clang_bytes": "678c18",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 8C /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1698",
+      "group": "generated",
+      "row_id": "1114",
+      "asm_line": "mov cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "b101",
+      "clang_status": "accepted",
+      "clang_bytes": "b101",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C6 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1700",
+      "group": "generated",
+      "row_id": "1115",
+      "asm_line": "mov cx, 0x100",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66b90001",
+      "clang_status": "accepted",
+      "clang_bytes": "66b90001",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C7 /0 iw",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1702",
+      "group": "generated",
+      "row_id": "1116",
+      "asm_line": "mov ecx, 0x10000",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "b900000100",
+      "clang_status": "accepted",
+      "clang_bytes": "b900000100",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C7 /0 id",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1718",
+      "group": "generated",
+      "row_id": "1129",
+      "asm_line": "movapd xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "660f28c0",
+      "clang_status": "accepted",
+      "clang_bytes": "660f28c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 0F 29 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1742",
+      "group": "generated",
+      "row_id": "1141",
+      "asm_line": "movaps xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "0f28c0",
+      "clang_status": "accepted",
+      "clang_bytes": "0f28c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "NP 0F 29 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1788",
+      "group": "generated",
+      "row_id": "1168",
+      "asm_line": "movq mm0, qword ptr [eax]",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "670f6f00",
+      "clang_status": "accepted",
+      "clang_bytes": "670f6f00",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "NP REX.W + 0F 6E /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1792",
+      "group": "generated",
+      "row_id": "1170",
+      "asm_line": "movq qword ptr [eax], mm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "670f7f00",
+      "clang_status": "accepted",
+      "clang_bytes": "670f7f00",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "NP REX.W + 0F 7E /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1796",
+      "group": "generated",
+      "row_id": "1172",
+      "asm_line": "movq xmm0, qword ptr [eax]",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67f30f7e00",
+      "clang_status": "accepted",
+      "clang_bytes": "67f30f7e00",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 REX.W 0F 6E /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1800",
+      "group": "generated",
+      "row_id": "1174",
+      "asm_line": "movq qword ptr [eax], xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67660fd600",
+      "clang_status": "accepted",
+      "clang_bytes": "67660fd600",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 REX.W 0F 7E /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1820",
+      "group": "generated",
+      "row_id": "1185",
+      "asm_line": "movdqa xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "660f6fc0",
+      "clang_status": "accepted",
+      "clang_bytes": "660f6fc0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 0F 7F /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1856",
+      "group": "generated",
+      "row_id": "1203",
+      "asm_line": "movdqu xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "f30f6fc0",
+      "clang_status": "accepted",
+      "clang_bytes": "f30f6fc0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "F3 0F 7F /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1978",
+      "group": "generated",
+      "row_id": "1296",
+      "asm_line": "movq mm0, mm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "0f6fc0",
+      "clang_status": "accepted",
+      "clang_bytes": "0f6fc0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "NP 0F 7F /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_1986",
+      "group": "generated",
+      "row_id": "1300",
+      "asm_line": "movq xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "f30f7ec0",
+      "clang_status": "accepted",
+      "clang_bytes": "f30f7ec0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 0F D6 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2003",
+      "group": "generated",
+      "row_id": "1314",
+      "asm_line": "movsd xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "f20f10c0",
+      "clang_status": "accepted",
+      "clang_bytes": "f20f10c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "F2 0F 11 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2041",
+      "group": "generated",
+      "row_id": "1339",
+      "asm_line": "movss xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "f30f10c0",
+      "clang_status": "accepted",
+      "clang_bytes": "f30f10c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "F3 0F 11 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2067",
+      "group": "generated",
+      "row_id": "1355",
+      "asm_line": "movupd xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "660f10c0",
+      "clang_status": "accepted",
+      "clang_bytes": "660f10c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "66 0F 11 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "mandatory_prefix;opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2091",
+      "group": "generated",
+      "row_id": "1367",
+      "asm_line": "movups xmm0, xmm0",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "0f10c0",
+      "clang_status": "accepted",
+      "clang_bytes": "0f10c0",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "NP 0F 11 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2227",
+      "group": "generated",
+      "row_id": "1438",
+      "asm_line": "or cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6609c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6609c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "0B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2229",
+      "group": "generated",
+      "row_id": "1439",
+      "asm_line": "or ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "09c9",
+      "clang_status": "accepted",
+      "clang_bytes": "09c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "0B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_2231",
+      "group": "generated",
+      "row_id": "1440",
+      "asm_line": "or rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4809c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4809c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 0B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3281",
+      "group": "generated",
+      "row_id": "1977",
+      "asm_line": "pop cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6659",
+      "clang_status": "accepted",
+      "clang_bytes": "6659",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "8F /0",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3285",
+      "group": "generated",
+      "row_id": "1979",
+      "asm_line": "pop rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "59",
+      "clang_status": "accepted",
+      "clang_bytes": "59",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "8F /0",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3879",
+      "group": "generated",
+      "row_id": "2307",
+      "asm_line": "push cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6651",
+      "clang_status": "accepted",
+      "clang_bytes": "6651",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "FF /6",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3883",
+      "group": "generated",
+      "row_id": "2309",
+      "asm_line": "push rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "51",
+      "clang_status": "accepted",
+      "clang_bytes": "51",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "FF /6",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3926",
+      "group": "generated",
+      "row_id": "2339",
+      "asm_line": "rcl cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0d1",
+      "clang_status": "accepted",
+      "clang_bytes": "d0d1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3927",
+      "group": "generated",
+      "row_id": "2339",
+      "asm_line": "rcl byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d010",
+      "clang_status": "accepted",
+      "clang_bytes": "67d010",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3932",
+      "group": "generated",
+      "row_id": "2342",
+      "asm_line": "rcl cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1d1",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1d1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3933",
+      "group": "generated",
+      "row_id": "2342",
+      "asm_line": "rcl word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d110",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d110",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3942",
+      "group": "generated",
+      "row_id": "2347",
+      "asm_line": "rcl ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1d1",
+      "clang_status": "accepted",
+      "clang_bytes": "d1d1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3943",
+      "group": "generated",
+      "row_id": "2347",
+      "asm_line": "rcl dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d110",
+      "clang_status": "accepted",
+      "clang_bytes": "67d110",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3944",
+      "group": "generated",
+      "row_id": "2348",
+      "asm_line": "rcl rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1d1",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1d1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3945",
+      "group": "generated",
+      "row_id": "2348",
+      "asm_line": "rcl qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d110",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d110",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /2 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3950",
+      "group": "generated",
+      "row_id": "2351",
+      "asm_line": "rcr cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0d9",
+      "clang_status": "accepted",
+      "clang_bytes": "d0d9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3951",
+      "group": "generated",
+      "row_id": "2351",
+      "asm_line": "rcr byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d018",
+      "clang_status": "accepted",
+      "clang_bytes": "67d018",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3956",
+      "group": "generated",
+      "row_id": "2354",
+      "asm_line": "rcr cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1d9",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1d9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3957",
+      "group": "generated",
+      "row_id": "2354",
+      "asm_line": "rcr word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d118",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d118",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3966",
+      "group": "generated",
+      "row_id": "2359",
+      "asm_line": "rcr ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1d9",
+      "clang_status": "accepted",
+      "clang_bytes": "d1d9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3967",
+      "group": "generated",
+      "row_id": "2359",
+      "asm_line": "rcr dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d118",
+      "clang_status": "accepted",
+      "clang_bytes": "67d118",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3968",
+      "group": "generated",
+      "row_id": "2360",
+      "asm_line": "rcr rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1d9",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1d9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3969",
+      "group": "generated",
+      "row_id": "2360",
+      "asm_line": "rcr qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d118",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d118",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /3 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3974",
+      "group": "generated",
+      "row_id": "2363",
+      "asm_line": "rol cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0c1",
+      "clang_status": "accepted",
+      "clang_bytes": "d0c1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3975",
+      "group": "generated",
+      "row_id": "2363",
+      "asm_line": "rol byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d000",
+      "clang_status": "accepted",
+      "clang_bytes": "67d000",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3980",
+      "group": "generated",
+      "row_id": "2366",
+      "asm_line": "rol cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1c1",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1c1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3981",
+      "group": "generated",
+      "row_id": "2366",
+      "asm_line": "rol word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d100",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d100",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3990",
+      "group": "generated",
+      "row_id": "2371",
+      "asm_line": "rol ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1c1",
+      "clang_status": "accepted",
+      "clang_bytes": "d1c1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3991",
+      "group": "generated",
+      "row_id": "2371",
+      "asm_line": "rol dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d100",
+      "clang_status": "accepted",
+      "clang_bytes": "67d100",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3992",
+      "group": "generated",
+      "row_id": "2372",
+      "asm_line": "rol rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1c1",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1c1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3993",
+      "group": "generated",
+      "row_id": "2372",
+      "asm_line": "rol qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d100",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d100",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /0 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3998",
+      "group": "generated",
+      "row_id": "2375",
+      "asm_line": "ror cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0c9",
+      "clang_status": "accepted",
+      "clang_bytes": "d0c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_3999",
+      "group": "generated",
+      "row_id": "2375",
+      "asm_line": "ror byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d008",
+      "clang_status": "accepted",
+      "clang_bytes": "67d008",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4004",
+      "group": "generated",
+      "row_id": "2378",
+      "asm_line": "ror cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1c9",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4005",
+      "group": "generated",
+      "row_id": "2378",
+      "asm_line": "ror word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d108",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d108",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4014",
+      "group": "generated",
+      "row_id": "2383",
+      "asm_line": "ror ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1c9",
+      "clang_status": "accepted",
+      "clang_bytes": "d1c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4015",
+      "group": "generated",
+      "row_id": "2383",
+      "asm_line": "ror dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d108",
+      "clang_status": "accepted",
+      "clang_bytes": "67d108",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4016",
+      "group": "generated",
+      "row_id": "2384",
+      "asm_line": "ror rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1c9",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4017",
+      "group": "generated",
+      "row_id": "2384",
+      "asm_line": "ror qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d108",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d108",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /1 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4083",
+      "group": "generated",
+      "row_id": "2445",
+      "asm_line": "ret",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "c3",
+      "clang_status": "accepted",
+      "clang_bytes": "c3",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "CB",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4085",
+      "group": "generated",
+      "row_id": "2447",
+      "asm_line": "ret 0x100",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "c20001",
+      "clang_status": "accepted",
+      "clang_bytes": "c20001",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "CA iw",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4127",
+      "group": "generated",
+      "row_id": "2470",
+      "asm_line": "sal cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0e1",
+      "clang_status": "accepted",
+      "clang_bytes": "d0e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4128",
+      "group": "generated",
+      "row_id": "2470",
+      "asm_line": "sal byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d020",
+      "clang_status": "accepted",
+      "clang_bytes": "67d020",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4133",
+      "group": "generated",
+      "row_id": "2473",
+      "asm_line": "sal cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4134",
+      "group": "generated",
+      "row_id": "2473",
+      "asm_line": "sal word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d120",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4143",
+      "group": "generated",
+      "row_id": "2478",
+      "asm_line": "sal ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4144",
+      "group": "generated",
+      "row_id": "2478",
+      "asm_line": "sal dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d120",
+      "clang_status": "accepted",
+      "clang_bytes": "67d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4145",
+      "group": "generated",
+      "row_id": "2479",
+      "asm_line": "sal rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4146",
+      "group": "generated",
+      "row_id": "2479",
+      "asm_line": "sal qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d120",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4151",
+      "group": "generated",
+      "row_id": "2482",
+      "asm_line": "sar cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0f9",
+      "clang_status": "accepted",
+      "clang_bytes": "d0f9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4152",
+      "group": "generated",
+      "row_id": "2482",
+      "asm_line": "sar byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d038",
+      "clang_status": "accepted",
+      "clang_bytes": "67d038",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4157",
+      "group": "generated",
+      "row_id": "2485",
+      "asm_line": "sar cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1f9",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1f9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4158",
+      "group": "generated",
+      "row_id": "2485",
+      "asm_line": "sar word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d138",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d138",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4167",
+      "group": "generated",
+      "row_id": "2490",
+      "asm_line": "sar ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1f9",
+      "clang_status": "accepted",
+      "clang_bytes": "d1f9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4168",
+      "group": "generated",
+      "row_id": "2490",
+      "asm_line": "sar dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d138",
+      "clang_status": "accepted",
+      "clang_bytes": "67d138",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4169",
+      "group": "generated",
+      "row_id": "2491",
+      "asm_line": "sar rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1f9",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1f9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4170",
+      "group": "generated",
+      "row_id": "2491",
+      "asm_line": "sar qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d138",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d138",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /7 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4175",
+      "group": "generated",
+      "row_id": "2494",
+      "asm_line": "shl cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0e1",
+      "clang_status": "accepted",
+      "clang_bytes": "d0e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4176",
+      "group": "generated",
+      "row_id": "2494",
+      "asm_line": "shl byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d020",
+      "clang_status": "accepted",
+      "clang_bytes": "67d020",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4181",
+      "group": "generated",
+      "row_id": "2497",
+      "asm_line": "shl cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4182",
+      "group": "generated",
+      "row_id": "2497",
+      "asm_line": "shl word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d120",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4191",
+      "group": "generated",
+      "row_id": "2502",
+      "asm_line": "shl ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4192",
+      "group": "generated",
+      "row_id": "2502",
+      "asm_line": "shl dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d120",
+      "clang_status": "accepted",
+      "clang_bytes": "67d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4193",
+      "group": "generated",
+      "row_id": "2503",
+      "asm_line": "shl rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1e1",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1e1",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4194",
+      "group": "generated",
+      "row_id": "2503",
+      "asm_line": "shl qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d120",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /4 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4199",
+      "group": "generated",
+      "row_id": "2506",
+      "asm_line": "shr cl, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d0e9",
+      "clang_status": "accepted",
+      "clang_bytes": "d0e9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4200",
+      "group": "generated",
+      "row_id": "2506",
+      "asm_line": "shr byte ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d028",
+      "clang_status": "accepted",
+      "clang_bytes": "67d028",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C0 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4205",
+      "group": "generated",
+      "row_id": "2509",
+      "asm_line": "shr cx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "66d1e9",
+      "clang_status": "accepted",
+      "clang_bytes": "66d1e9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4206",
+      "group": "generated",
+      "row_id": "2509",
+      "asm_line": "shr word ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6766d128",
+      "clang_status": "accepted",
+      "clang_bytes": "6766d128",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4215",
+      "group": "generated",
+      "row_id": "2514",
+      "asm_line": "shr ecx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d1e9",
+      "clang_status": "accepted",
+      "clang_bytes": "d1e9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4216",
+      "group": "generated",
+      "row_id": "2514",
+      "asm_line": "shr dword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "67d128",
+      "clang_status": "accepted",
+      "clang_bytes": "67d128",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4217",
+      "group": "generated",
+      "row_id": "2515",
+      "asm_line": "shr rcx, 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "48d1e9",
+      "clang_status": "accepted",
+      "clang_bytes": "48d1e9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4218",
+      "group": "generated",
+      "row_id": "2515",
+      "asm_line": "shr qword ptr [eax], 1",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6748d128",
+      "clang_status": "accepted",
+      "clang_bytes": "6748d128",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + C1 /5 ib",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4260",
+      "group": "generated",
+      "row_id": "2539",
+      "asm_line": "sbb cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6619c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6619c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "1B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4262",
+      "group": "generated",
+      "row_id": "2540",
+      "asm_line": "sbb ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "19c9",
+      "clang_status": "accepted",
+      "clang_bytes": "19c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "1B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4264",
+      "group": "generated",
+      "row_id": "2541",
+      "asm_line": "sbb rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4819c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4819c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 1B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4409",
+      "group": "generated",
+      "row_id": "2620",
+      "asm_line": "smsw word ptr [eax]",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "670f0120",
+      "clang_status": "accepted",
+      "clang_bytes": "670f0120",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 0F 01 /4",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W;ModRM.reg",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4492",
+      "group": "generated",
+      "row_id": "2672",
+      "asm_line": "sub cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6629c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6629c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "2B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4494",
+      "group": "generated",
+      "row_id": "2673",
+      "asm_line": "sub ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "29c9",
+      "clang_status": "accepted",
+      "clang_bytes": "29c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "2B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_4496",
+      "group": "generated",
+      "row_id": "2674",
+      "asm_line": "sub rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4829c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4829c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 2B /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_7159",
+      "group": "generated",
+      "row_id": "4129",
+      "asm_line": "xlatb",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "d7",
+      "clang_status": "accepted",
+      "clang_bytes": "d7",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + D7",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_7188",
+      "group": "generated",
+      "row_id": "4146",
+      "asm_line": "xor cx, cx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "6631c9",
+      "clang_status": "accepted",
+      "clang_bytes": "6631c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "33 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_7190",
+      "group": "generated",
+      "row_id": "4147",
+      "asm_line": "xor ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "31c9",
+      "clang_status": "accepted",
+      "clang_bytes": "31c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "33 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    {
+      "case_id": "combo_7192",
+      "group": "generated",
+      "row_id": "4148",
+      "asm_line": "xor rcx, rcx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "4831c9",
+      "clang_status": "accepted",
+      "clang_bytes": "4831c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "REX.W + 33 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes;REX.W",
+      "findings": "",
+      "semantic_status": "not_verified"
+    }
+  ],
+  "live_expected_row_probe": {
+    "saved_batch": {
+      "case_id": "combo_74",
+      "group": "generated",
+      "row_id": "44",
+      "asm_line": "add ecx, ecx",
+      "status": "accepted",
+      "sdm_form": "form_match",
+      "as_status": "accepted",
+      "as_bytes": "01c9",
+      "clang_status": "accepted",
+      "clang_bytes": "01c9",
+      "comparison": "same_bytes",
+      "roundtrip": "same_bytes",
+      "expected_opcode": "03 /r",
+      "opcode_fields": "different_encoding",
+      "opcode_checked_fields": "opcode_bytes",
+      "findings": "",
+      "semantic_status": "not_verified"
+    },
+    "without_expected_row": {
+      "source": "add ecx, ecx",
+      "status": "accepted",
+      "findings": [],
+      "semantic_status": "not_verified",
+      "syntax": "intel",
+      "display_syntax": "intel",
+      "validation_status": "checked",
+      "observation_id": "433c8c27d5c4775559d704b17a8224141e47f6e5cc429b65184d36fda5e28dc3",
+      "parsed": {
+        "mnemonic": "add",
+        "prefixes": [],
+        "operands": [
+          {
+            "text": "ecx",
+            "kind": "reg",
+            "bits": 32,
+            "family": "gpr",
+            "decorations": []
+          },
+          {
+            "text": "ecx",
+            "kind": "reg",
+            "bits": 32,
+            "family": "gpr",
+            "decorations": []
+          }
+        ]
+      },
+      "sdm": {
+        "status": "form_match",
+        "matches": [
+          {
+            "row_id": "40",
+            "instruction": "ADD r/m32, r32",
+            "opcode": "01 /r",
+            "mode_support": "Valid",
+            "source_page": "132"
+          },
+          {
+            "row_id": "44",
+            "instruction": "ADD r32, r/m32",
+            "opcode": "03 /r",
+            "mode_support": "Valid",
+            "source_page": "132"
+          }
+        ],
+        "partial_matches": [],
+        "meaning_verified": false,
+        "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+      },
+      "gnu_as": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "clang": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "clang",
+            "-target",
+            "x86_64-linux-gnu",
+            "-c",
+            "-x",
+            "assembler",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "comparison": "same_bytes",
+      "roundtrip": {
+        "status": "same_bytes",
+        "result": {
+          "status": "accepted",
+          "observation_status": "accepted",
+          "assembly": {
+            "command": [
+              "as",
+              "--64",
+              "-mintel64",
+              "-o",
+              "input.o",
+              "input.s"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd    ecx,ecx\n",
+          "bytes": "01c9",
+          "instructions": [
+            {
+              "offset": 0,
+              "bytes": "01c9",
+              "text": "add    ecx,ecx"
+            }
+          ],
+          "relocations": false,
+          "inspection_complete": true,
+          "validation_status": "checked",
+          "display_syntax": "intel",
+          "inspection": {
+            "objcopy": {
+              "command": [
+                "objcopy",
+                "-O",
+                "binary",
+                "--only-section=.text",
+                "input.o",
+                "text.bin"
+              ],
+              "returncode": 0,
+              "stdout": "",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "objdump": {
+              "command": [
+                "objdump",
+                "-d",
+                "-w",
+                "-M",
+                "intel",
+                "--insn-width=16",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "readelf": {
+              "command": [
+                "readelf",
+                "-rW",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\nThere are no relocations in this file.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          }
+        },
+        "meaning_verified": false
+      },
+      "option_comparison": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      }
+    },
+    "with_expected_row": {
+      "source": "add ecx, ecx",
+      "status": "needs_review",
+      "findings": [
+        {
+          "code": "target_encoding_not_exercised",
+          "type": "encoding_selection",
+          "confidence": "observed",
+          "message": "지정한 SDM 행과 다른 인코딩을 관측했습니다. 의미 동등성은 별도 근거가 필요합니다."
+        }
+      ],
+      "semantic_status": "not_verified",
+      "syntax": "intel",
+      "display_syntax": "intel",
+      "validation_status": "checked",
+      "observation_id": "433c8c27d5c4775559d704b17a8224141e47f6e5cc429b65184d36fda5e28dc3",
+      "parsed": {
+        "mnemonic": "add",
+        "prefixes": [],
+        "operands": [
+          {
+            "text": "ecx",
+            "kind": "reg",
+            "bits": 32,
+            "family": "gpr",
+            "decorations": []
+          },
+          {
+            "text": "ecx",
+            "kind": "reg",
+            "bits": 32,
+            "family": "gpr",
+            "decorations": []
+          }
+        ]
+      },
+      "sdm": {
+        "status": "form_match",
+        "matches": [
+          {
+            "row_id": "40",
+            "instruction": "ADD r/m32, r32",
+            "opcode": "01 /r",
+            "mode_support": "Valid",
+            "source_page": "132"
+          },
+          {
+            "row_id": "44",
+            "instruction": "ADD r32, r/m32",
+            "opcode": "03 /r",
+            "mode_support": "Valid",
+            "source_page": "132"
+          }
+        ],
+        "partial_matches": [],
+        "meaning_verified": false,
+        "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+      },
+      "gnu_as": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "clang": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "clang",
+            "-target",
+            "x86_64-linux-gnu",
+            "-c",
+            "-x",
+            "assembler",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "comparison": "same_bytes",
+      "roundtrip": {
+        "status": "same_bytes",
+        "result": {
+          "status": "accepted",
+          "observation_status": "accepted",
+          "assembly": {
+            "command": [
+              "as",
+              "--64",
+              "-mintel64",
+              "-o",
+              "input.o",
+              "input.s"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd    ecx,ecx\n",
+          "bytes": "01c9",
+          "instructions": [
+            {
+              "offset": 0,
+              "bytes": "01c9",
+              "text": "add    ecx,ecx"
+            }
+          ],
+          "relocations": false,
+          "inspection_complete": true,
+          "validation_status": "checked",
+          "display_syntax": "intel",
+          "inspection": {
+            "objcopy": {
+              "command": [
+                "objcopy",
+                "-O",
+                "binary",
+                "--only-section=.text",
+                "input.o",
+                "text.bin"
+              ],
+              "returncode": 0,
+              "stdout": "",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "objdump": {
+              "command": [
+                "objdump",
+                "-d",
+                "-w",
+                "-M",
+                "intel",
+                "--insn-width=16",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "readelf": {
+              "command": [
+                "readelf",
+                "-rW",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\nThere are no relocations in this file.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          }
+        },
+        "meaning_verified": false
+      },
+      "option_comparison": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nadd ecx, ecx\n",
+        "bytes": "01c9",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "01c9",
+            "text": "add    ecx,ecx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t01 c9                                           \tadd    ecx,ecx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "expected_encoding": {
+        "row_id": "44",
+        "expected": "03 /r",
+        "status": "different_encoding",
+        "checked_fields": [
+          "opcode_bytes"
+        ],
+        "meaning_verified": false,
+        "reason": "미확인: 오퍼랜드 제약, 모드, /r 필드, 즉시값·주소·CPUID·동작"
+      },
+      "encoding_target_match": "different_encoding",
+      "policy_decision": "review",
+      "encoding_policy": "allow_equivalent"
+    }
+  },
+  "live_partial_probes": [
+    {
+      "source": "rep nop",
+      "status": "needs_review",
+      "findings": [],
+      "semantic_status": "not_verified",
+      "syntax": "intel",
+      "display_syntax": "intel",
+      "validation_status": "checked",
+      "observation_id": "97e07619afd9eedfeecd8b95cf4306bbfc0276901420d3963cf2965e71228128",
+      "parsed": {
+        "mnemonic": "nop",
+        "prefixes": [
+          "rep"
+        ],
+        "operands": []
+      },
+      "sdm": {
+        "status": "incomplete",
+        "matches": [
+          {
+            "row_id": "1415",
+            "instruction": "NOP",
+            "opcode": "NP 90",
+            "mode_support": "Valid",
+            "source_page": "863"
+          }
+        ],
+        "partial_matches": [],
+        "meaning_verified": false,
+        "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+      },
+      "gnu_as": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nrep nop\n",
+        "bytes": "f390",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "f390",
+            "text": "pause"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\tf3 90                                           \tpause\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "clang": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "clang",
+            "-target",
+            "x86_64-linux-gnu",
+            "-c",
+            "-x",
+            "assembler",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nrep nop\n",
+        "bytes": "f390",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "f390",
+            "text": "pause"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\tf3 90                                           \tpause\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "comparison": "same_bytes",
+      "roundtrip": {
+        "status": "same_bytes",
+        "result": {
+          "status": "accepted",
+          "observation_status": "accepted",
+          "assembly": {
+            "command": [
+              "as",
+              "--64",
+              "-mintel64",
+              "-o",
+              "input.o",
+              "input.s"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\npause\n",
+          "bytes": "f390",
+          "instructions": [
+            {
+              "offset": 0,
+              "bytes": "f390",
+              "text": "pause"
+            }
+          ],
+          "relocations": false,
+          "inspection_complete": true,
+          "validation_status": "checked",
+          "display_syntax": "intel",
+          "inspection": {
+            "objcopy": {
+              "command": [
+                "objcopy",
+                "-O",
+                "binary",
+                "--only-section=.text",
+                "input.o",
+                "text.bin"
+              ],
+              "returncode": 0,
+              "stdout": "",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "objdump": {
+              "command": [
+                "objdump",
+                "-d",
+                "-w",
+                "-M",
+                "intel",
+                "--insn-width=16",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\tf3 90                                           \tpause\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "readelf": {
+              "command": [
+                "readelf",
+                "-rW",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\nThere are no relocations in this file.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          }
+        },
+        "meaning_verified": false
+      },
+      "option_comparison": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nrep nop\n",
+        "bytes": "f390",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "f390",
+            "text": "pause"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\tf3 90                                           \tpause\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      }
+    },
+    {
+      "source": "mov eax, dword ptr [rax]",
+      "status": "accepted",
+      "findings": [],
+      "semantic_status": "not_verified",
+      "syntax": "intel",
+      "display_syntax": "intel",
+      "validation_status": "checked",
+      "observation_id": "3865cde7b8d6f107062f390761dd9f3917fa5f1e115301d1252c3292b21d0c8d",
+      "parsed": {
+        "mnemonic": "mov",
+        "prefixes": [],
+        "operands": [
+          {
+            "text": "eax",
+            "kind": "reg",
+            "bits": 32,
+            "family": "gpr",
+            "decorations": []
+          },
+          {
+            "text": "dword ptr [rax]",
+            "kind": "mem",
+            "bits": 32,
+            "family": null,
+            "decorations": [],
+            "address_registers": [
+              "rax"
+            ]
+          }
+        ]
+      },
+      "sdm": {
+        "status": "form_match",
+        "matches": [
+          {
+            "row_id": "1093",
+            "instruction": "MOV r32, r/m32",
+            "opcode": "8B /r",
+            "mode_support": "Valid",
+            "source_page": "731"
+          }
+        ],
+        "partial_matches": [
+          {
+            "row_id": "1103",
+            "instruction": "MOV EAX, moffs32",
+            "opcode": "A1",
+            "mode_support": "Valid",
+            "source_page": "731"
+          },
+          {
+            "row_id": "1118",
+            "instruction": "MOV r32, CR0–CR7",
+            "opcode": "0F 20/r",
+            "mode_support": "N.E.",
+            "source_page": "735"
+          },
+          {
+            "row_id": "1124",
+            "instruction": "MOV r32, DR0–DR7",
+            "opcode": "0F 21/r",
+            "mode_support": "N.E.",
+            "source_page": "738"
+          }
+        ],
+        "meaning_verified": false,
+        "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+      },
+      "gnu_as": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, dword ptr [rax]\n",
+        "bytes": "8b00",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "8b00",
+            "text": "mov    eax,DWORD PTR [rax]"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t8b 00                                           \tmov    eax,DWORD PTR [rax]\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "clang": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "clang",
+            "-target",
+            "x86_64-linux-gnu",
+            "-c",
+            "-x",
+            "assembler",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, dword ptr [rax]\n",
+        "bytes": "8b00",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "8b00",
+            "text": "mov    eax,DWORD PTR [rax]"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t8b 00                                           \tmov    eax,DWORD PTR [rax]\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "comparison": "same_bytes",
+      "roundtrip": {
+        "status": "same_bytes",
+        "result": {
+          "status": "accepted",
+          "observation_status": "accepted",
+          "assembly": {
+            "command": [
+              "as",
+              "--64",
+              "-mintel64",
+              "-o",
+              "input.o",
+              "input.s"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov    eax,DWORD PTR [rax]\n",
+          "bytes": "8b00",
+          "instructions": [
+            {
+              "offset": 0,
+              "bytes": "8b00",
+              "text": "mov    eax,DWORD PTR [rax]"
+            }
+          ],
+          "relocations": false,
+          "inspection_complete": true,
+          "validation_status": "checked",
+          "display_syntax": "intel",
+          "inspection": {
+            "objcopy": {
+              "command": [
+                "objcopy",
+                "-O",
+                "binary",
+                "--only-section=.text",
+                "input.o",
+                "text.bin"
+              ],
+              "returncode": 0,
+              "stdout": "",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "objdump": {
+              "command": [
+                "objdump",
+                "-d",
+                "-w",
+                "-M",
+                "intel",
+                "--insn-width=16",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t8b 00                                           \tmov    eax,DWORD PTR [rax]\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            },
+            "readelf": {
+              "command": [
+                "readelf",
+                "-rW",
+                "input.o"
+              ],
+              "returncode": 0,
+              "stdout": "\nThere are no relocations in this file.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          }
+        },
+        "meaning_verified": false
+      },
+      "option_comparison": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, dword ptr [rax]\n",
+        "bytes": "8b00",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "8b00",
+            "text": "mov    eax,DWORD PTR [rax]"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t8b 00                                           \tmov    eax,DWORD PTR [rax]\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      }
+    }
+  ],
+  "injected_assembler_results": [
+    {
+      "injected_returncode": -11,
+      "result": {
+        "source": "mov eax, ebx",
+        "status": "process_crash",
+        "findings": [],
+        "semantic_status": "not_verified",
+        "syntax": "intel",
+        "display_syntax": "intel",
+        "validation_status": "process_crash",
+        "observation_id": "f1ea81c0459bb376fc82e3d3388ec6a01d9de48a0b0042b1738e43b364d21f33",
+        "parsed": {
+          "mnemonic": "mov",
+          "prefixes": [],
+          "operands": [
+            {
+              "text": "eax",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            },
+            {
+              "text": "ebx",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            }
+          ]
+        },
+        "sdm": {
+          "status": "form_match",
+          "matches": [
+            {
+              "row_id": "1089",
+              "instruction": "MOV r/m32, r32",
+              "opcode": "89 /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1093",
+              "instruction": "MOV r32, r/m32",
+              "opcode": "8B /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            }
+          ],
+          "partial_matches": [
+            {
+              "row_id": "1103",
+              "instruction": "MOV EAX, moffs32",
+              "opcode": "A1",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1118",
+              "instruction": "MOV r32, CR0–CR7",
+              "opcode": "0F 20/r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1121",
+              "instruction": "MOV CR0–CR7, r32",
+              "opcode": "0F 22 /r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1124",
+              "instruction": "MOV r32, DR0–DR7",
+              "opcode": "0F 21/r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            },
+            {
+              "row_id": "1126",
+              "instruction": "MOV DR0–DR7, r32",
+              "opcode": "0F 23 /r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            }
+          ],
+          "meaning_verified": false,
+          "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+        },
+        "gnu_as": {
+          "status": "process_crash",
+          "observation_status": "process_crash",
+          "assembly": {
+            "command": [
+              "as"
+            ],
+            "returncode": -11,
+            "stdout": "",
+            "stderr": "injected SIGSEGV",
+            "failure": null
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+          "bytes": "",
+          "instructions": [],
+          "relocations": null,
+          "inspection_complete": false,
+          "validation_status": "not_requested",
+          "display_syntax": "intel"
+        }
+      }
+    },
+    {
+      "injected_returncode": -6,
+      "result": {
+        "source": "mov eax, ebx",
+        "status": "process_crash",
+        "findings": [],
+        "semantic_status": "not_verified",
+        "syntax": "intel",
+        "display_syntax": "intel",
+        "validation_status": "process_crash",
+        "observation_id": "f1ea81c0459bb376fc82e3d3388ec6a01d9de48a0b0042b1738e43b364d21f33",
+        "parsed": {
+          "mnemonic": "mov",
+          "prefixes": [],
+          "operands": [
+            {
+              "text": "eax",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            },
+            {
+              "text": "ebx",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            }
+          ]
+        },
+        "sdm": {
+          "status": "form_match",
+          "matches": [
+            {
+              "row_id": "1089",
+              "instruction": "MOV r/m32, r32",
+              "opcode": "89 /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1093",
+              "instruction": "MOV r32, r/m32",
+              "opcode": "8B /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            }
+          ],
+          "partial_matches": [
+            {
+              "row_id": "1103",
+              "instruction": "MOV EAX, moffs32",
+              "opcode": "A1",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1118",
+              "instruction": "MOV r32, CR0–CR7",
+              "opcode": "0F 20/r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1121",
+              "instruction": "MOV CR0–CR7, r32",
+              "opcode": "0F 22 /r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1124",
+              "instruction": "MOV r32, DR0–DR7",
+              "opcode": "0F 21/r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            },
+            {
+              "row_id": "1126",
+              "instruction": "MOV DR0–DR7, r32",
+              "opcode": "0F 23 /r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            }
+          ],
+          "meaning_verified": false,
+          "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+        },
+        "gnu_as": {
+          "status": "process_crash",
+          "observation_status": "process_crash",
+          "assembly": {
+            "command": [
+              "as"
+            ],
+            "returncode": -6,
+            "stdout": "",
+            "stderr": "injected SIGABRT",
+            "failure": null
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+          "bytes": "",
+          "instructions": [],
+          "relocations": null,
+          "inspection_complete": false,
+          "validation_status": "not_requested",
+          "display_syntax": "intel"
+        }
+      }
+    },
+    {
+      "injected_returncode": 1,
+      "result": {
+        "source": "mov eax, ebx",
+        "status": "rejected",
+        "findings": [],
+        "semantic_status": "not_verified",
+        "syntax": "intel",
+        "display_syntax": "intel",
+        "validation_status": "rejected",
+        "observation_id": "f1ea81c0459bb376fc82e3d3388ec6a01d9de48a0b0042b1738e43b364d21f33",
+        "parsed": {
+          "mnemonic": "mov",
+          "prefixes": [],
+          "operands": [
+            {
+              "text": "eax",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            },
+            {
+              "text": "ebx",
+              "kind": "reg",
+              "bits": 32,
+              "family": "gpr",
+              "decorations": []
+            }
+          ]
+        },
+        "sdm": {
+          "status": "form_match",
+          "matches": [
+            {
+              "row_id": "1089",
+              "instruction": "MOV r/m32, r32",
+              "opcode": "89 /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1093",
+              "instruction": "MOV r32, r/m32",
+              "opcode": "8B /r",
+              "mode_support": "Valid",
+              "source_page": "731"
+            }
+          ],
+          "partial_matches": [
+            {
+              "row_id": "1103",
+              "instruction": "MOV EAX, moffs32",
+              "opcode": "A1",
+              "mode_support": "Valid",
+              "source_page": "731"
+            },
+            {
+              "row_id": "1118",
+              "instruction": "MOV r32, CR0–CR7",
+              "opcode": "0F 20/r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1121",
+              "instruction": "MOV CR0–CR7, r32",
+              "opcode": "0F 22 /r",
+              "mode_support": "N.E.",
+              "source_page": "735"
+            },
+            {
+              "row_id": "1124",
+              "instruction": "MOV r32, DR0–DR7",
+              "opcode": "0F 21/r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            },
+            {
+              "row_id": "1126",
+              "instruction": "MOV DR0–DR7, r32",
+              "opcode": "0F 23 /r",
+              "mode_support": "N.E.",
+              "source_page": "738"
+            }
+          ],
+          "meaning_verified": false,
+          "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+        },
+        "gnu_as": {
+          "status": "rejected",
+          "observation_status": "diagnostic_rejection",
+          "assembly": {
+            "command": [
+              "as"
+            ],
+            "returncode": 1,
+            "stdout": "",
+            "stderr": "input syntax diagnostic",
+            "failure": null
+          },
+          "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+          "bytes": "",
+          "instructions": [],
+          "relocations": null,
+          "inspection_complete": false,
+          "validation_status": "not_requested",
+          "display_syntax": "intel"
+        }
+      }
+    }
+  ],
+  "injected_timeout": {
+    "command": [
+      "as"
+    ],
+    "returncode": null,
+    "stdout": "",
+    "stderr": "partial diagnostic",
+    "stdout_partial": "partial output",
+    "failure": "timeout",
+    "status": "timeout"
+  },
+  "injected_option_inspection": {
+    "source": "mov eax, ebx",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "f1ea81c0459bb376fc82e3d3388ec6a01d9de48a0b0042b1738e43b364d21f33",
+    "parsed": {
+      "mnemonic": "mov",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "eax",
+          "kind": "reg",
+          "bits": 32,
+          "family": "gpr",
+          "decorations": []
+        },
+        {
+          "text": "ebx",
+          "kind": "reg",
+          "bits": 32,
+          "family": "gpr",
+          "decorations": []
+        }
+      ]
+    },
+    "sdm": {
+      "status": "form_match",
+      "matches": [
+        {
+          "row_id": "1089",
+          "instruction": "MOV r/m32, r32",
+          "opcode": "89 /r",
+          "mode_support": "Valid",
+          "source_page": "731"
+        },
+        {
+          "row_id": "1093",
+          "instruction": "MOV r32, r/m32",
+          "opcode": "8B /r",
+          "mode_support": "Valid",
+          "source_page": "731"
+        }
+      ],
+      "partial_matches": [
+        {
+          "row_id": "1103",
+          "instruction": "MOV EAX, moffs32",
+          "opcode": "A1",
+          "mode_support": "Valid",
+          "source_page": "731"
+        },
+        {
+          "row_id": "1118",
+          "instruction": "MOV r32, CR0–CR7",
+          "opcode": "0F 20/r",
+          "mode_support": "N.E.",
+          "source_page": "735"
+        },
+        {
+          "row_id": "1121",
+          "instruction": "MOV CR0–CR7, r32",
+          "opcode": "0F 22 /r",
+          "mode_support": "N.E.",
+          "source_page": "735"
+        },
+        {
+          "row_id": "1124",
+          "instruction": "MOV r32, DR0–DR7",
+          "opcode": "0F 21/r",
+          "mode_support": "N.E.",
+          "source_page": "738"
+        },
+        {
+          "row_id": "1126",
+          "instruction": "MOV DR0–DR7, r32",
+          "opcode": "0F 23 /r",
+          "mode_support": "N.E.",
+          "source_page": "738"
+        }
+      ],
+      "meaning_verified": false,
+      "note": "DB 표의 오퍼랜드 형태만 비교. 모드·접두어·별칭·즉시값 확장·CPU 조건은 별도 확인."
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+      "bytes": "89d8",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "89d8",
+          "text": "mov    eax,ebx"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t89 d8                                           \tmov    eax,ebx\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+      "bytes": "89d8",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "89d8",
+          "text": "mov    eax,ebx"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t89 d8                                           \tmov    eax,ebx\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "comparison": "same_bytes",
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov    eax,ebx\n",
+        "bytes": "89d8",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "89d8",
+            "text": "mov    eax,ebx"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t89 d8                                           \tmov    eax,ebx\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nmov eax, ebx\n",
+      "bytes": "89d8",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "89d8",
+          "text": "mov    eax,ebx"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": false,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 1,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t89 d8                                           \tmov    eax,ebx\n",
+          "stderr": "injected decode failure",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  "injected_batch_inspection_failure": {
+    "exit_code": 0,
+    "manifest": {
+      "schema_version": 2,
+      "created_utc": "2026-09-15T06:16:58.841448+00:00",
+      "environment": {
+        "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "machine": "x86_64",
+        "python": "3.12.3",
+        "tools": {
+          "as": {
+            "available": true,
+            "path": "/usr/bin/x86_64-linux-gnu-as",
+            "version": [
+              "GNU assembler (GNU Binutils for Ubuntu) 2.42"
+            ],
+            "sha256": "7a2ef948033b05ad0c5dcb0d5be059bc68562b5d45713d91aee21df2b4bf4e92",
+            "probe": {
+              "command": [
+                "/usr/bin/as",
+                "--version"
+              ],
+              "returncode": 0,
+              "stdout": "GNU assembler (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-linux-gnu'.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          },
+          "clang": {
+            "available": true,
+            "path": "/usr/lib/llvm-18/bin/clang",
+            "version": [
+              "Ubuntu clang version 18.1.3 (1ubuntu1)"
+            ],
+            "sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+            "probe": {
+              "command": [
+                "/usr/bin/clang",
+                "--version"
+              ],
+              "returncode": 0,
+              "stdout": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          },
+          "objdump": {
+            "available": true,
+            "path": "/usr/bin/x86_64-linux-gnu-objdump",
+            "version": [
+              "GNU objdump (GNU Binutils for Ubuntu) 2.42"
+            ],
+            "sha256": "d0041e7511460b9ebfd95ce4f9d93c7ffea398ffc1cb2c316a220dd8e533db3d",
+            "probe": {
+              "command": [
+                "/usr/bin/objdump",
+                "--version"
+              ],
+              "returncode": 0,
+              "stdout": "GNU objdump (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          },
+          "objcopy": {
+            "available": true,
+            "path": "/usr/bin/x86_64-linux-gnu-objcopy",
+            "version": [
+              "GNU objcopy (GNU Binutils for Ubuntu) 2.42"
+            ],
+            "sha256": "b22f4f909bff115ee2a37cd21ff76f5e0b8c65cd58f98edbce7b59f129980d67",
+            "probe": {
+              "command": [
+                "/usr/bin/objcopy",
+                "--version"
+              ],
+              "returncode": 0,
+              "stdout": "GNU objcopy (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          },
+          "readelf": {
+            "available": true,
+            "path": "/usr/bin/x86_64-linux-gnu-readelf",
+            "version": [
+              "GNU readelf (GNU Binutils for Ubuntu) 2.42"
+            ],
+            "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+            "probe": {
+              "command": [
+                "/usr/bin/readelf",
+                "--version"
+              ],
+              "returncode": 0,
+              "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+              "stderr": "",
+              "failure": null,
+              "status": "completed"
+            }
+          }
+        },
+        "cpu": {
+          "vendor_id": "GenuineIntel",
+          "model name": "Intel(R) Core(TM) Ultra 5 226V",
+          "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+        }
+      },
+      "input_hashes": {
+        "data/db/isa_db.csv": "71a32be092b212a11fb3cba8798aaadfe7a713fdcbf8f09e25f7dbbf8ac08be5",
+        "out/asm_result.csv": "b5c7ea59accd937f59ae055055de031474f3163b643956c54bcddeea6ee92895",
+        "data/cases.csv": "70c0585b12c1a27cacfe687bc0a7015fcb4daad017d42b6ebae5762618a28f9b"
+      },
+      "code_hashes": {
+        "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
+        "pipeline/instruction_check.py": "4e6806bcd2131fab982e0eea310d739f80c35a825a10a832c39bea3e5c617fe2",
+        "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776"
+      },
+      "generated_cases": 7276,
+      "supplemental_cases": 7,
+      "unique_sources": 6026,
+      "truncated": false,
+      "status_counts": {
+        "incomplete": 7283
+      },
+      "opcode_field_counts": {
+        "different_encoding": 2346,
+        "not_checked": 4926,
+        "fields_match": 4
+      },
+      "encoding_policy": "allow_equivalent",
+      "syntax": "intel",
+      "display_syntax": "intel",
+      "validation_failures": {},
+      "semantic_coverage": "not_measured",
+      "tool_error": false,
+      "output_hashes": {
+        "results.csv": "52220f3f17bf8c004532d3591b07c8ef78b4cdc029ef660647ee580efa6223cf",
+        "observations.jsonl": "0ed0ea67586c40403b339726088c5c9f4242ee1a3e9fa5b7ef705b4e7b7cfec9"
+      }
+    },
+    "current_shell_checks_pass": true
+  }
+}
