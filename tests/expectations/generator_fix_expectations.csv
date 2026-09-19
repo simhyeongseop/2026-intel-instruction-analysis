@@ -1,0 +1,31 @@
+family,kind,base_combo_id,mnemonic,mode_support,before,as_before,after,as_after,bytes_after,clang_after,근거
+m512_size_prefix,fix,143,AESDEC256KL,Valid,"aesdec256kl xmm0, zmmword ptr [eax]",rejected,"aesdec256kl xmm0, [eax]",accepted,67 f3 0f 38 df 00,accepted,SDM의 m512는 512바이트 블록이고 zmm 레지스터 크기 지시자가 아니다.
+m512_size_prefix,fix,1031,ENQCMD,Valid,"enqcmd ecx, zmmword ptr [eax]",rejected,"enqcmd ecx, [eax]",accepted,67 f2 0f 38 f8 08,accepted,ENQCMD 목적지는 64바이트 큐 항목. 크기 지시자를 쓰지 않는다.
+m512_size_prefix,fix,1193,FXSAVE,Valid,fxsave zmmword ptr [eax],rejected,fxsave [eax],accepted,67 0f ae 00,accepted,m512byte(512바이트 저장 영역)에는 대응하는 Intel 크기 키워드가 없다.
+m512_size_prefix,fix,1536,LDTILECFG,Valid,ldtilecfg zmmword ptr [eax],rejected,ldtilecfg [eax],accepted,67 c4 e2 78 49 00,accepted,AMX 타일 설정 영역 64바이트. 크기 지시자를 쓰지 않는다.
+mode_register_width,fix,1782,MOVDIR64B,Valid,"movdir64b cx, zmmword ptr [eax]",rejected,"movdir64b ecx, [eax]",accepted,67 66 0f 38 f8 08,accepted,64비트 모드에서 16비트 주소 레지스터는 쓸 수 없다. 주소 폭과 레지스터 폭을 맞춘다.
+mode_register_width,fix,4599,UMONITOR,Valid,umonitor cx,rejected,umonitor ecx,accepted,67 f3 0f ae f1,accepted,r16/r32/r64 중 64비트 모드에서 유효한 폭을 고른다(16비트 주소 불가).
+mode_register_width,fix,4274,SENDUIPI,Valid,senduipi ecx,rejected,senduipi rcx,accepted,f3 0f c7 f1,accepted,SENDUIPI reg 는 64비트 모드에서 r64.
+implicit_operand,fix,156,AESDECWIDE128KL,Valid,"aesdecwide128kl [eax], xmm0",rejected,aesdecwide128kl [eax],accepted,67 f3 0f 38 d8 08,accepted,<XMM0-7>은 암묵 오퍼랜드 표기이므로 소스에 적지 않는다.
+implicit_operand,fix,157,AESDECWIDE256KL,Valid,"aesdecwide256kl zmmword ptr [eax], xmm0",rejected,aesdecwide256kl [eax],accepted,67 f3 0f 38 d8 18,accepted,<XMM0-7> 제거 + m512 크기 지시자 제거.
+implicit_operand,fix,1247,HRESET,Valid,"hreset 1, eax",rejected,hreset 1,accepted,f3 0f 3a f0 c0 01,accepted,<EAX>는 암묵 오퍼랜드.
+implicit_operand,fix,1027,ENCODEKEY128,Valid,"encodekey128 ecx, ecx, xmm0, xmm4",rejected,"encodekey128 ecx, ecx",accepted,f3 0f 38 fa c9,accepted,"<XMM0-2>, <XMM4-6>은 암묵 오퍼랜드."
+implicit_operand,fix,1554,LOADIWKEY,Valid,"loadiwkey xmm0, xmm0, eax, xmm0",rejected,"loadiwkey xmm0, xmm0",accepted,f3 0f 38 dc c0,accepted,"<EAX>, <XMM0>은 암묵 오퍼랜드."
+implicit_operand,fix,4573,TPAUSE,Valid,"tpause ecx, edx, eax",accepted,tpause ecx,accepted,66 0f ae f1,accepted,"<edx>, <eax>는 암묵 오퍼랜드. 현재 줄은 as가 받아주지만 Clang은 거부한다."
+raw_notation,fix,5934,VP2INTERSECTD,Valid,"vp2intersectd k1+1, xmm0, xmm0",rejected,"vp2intersectd k1, xmm0, xmm0",accepted,62 f2 7f 08 68 c8,accepted,k1+1은 마스크 쌍 표기이지 덧셈식이 아니다. 쌍의 첫 레지스터를 적는다.
+raw_notation,fix,7235,V4FMADDPS,Valid,"v4fmaddps zmm0, zmm2+3, xmmword ptr [eax]",rejected,"v4fmaddps zmm0, zmm2, xmmword ptr [eax]",accepted,67 62 f2 6f 48 9a 00,accepted,zmm2+3은 연속 레지스터 블록 표기. 블록의 첫 레지스터를 적는다.
+raw_notation,fix,6953,VREDUCESD,Valid,"vreducesd xmm0, xmm0, xmm0, imm8/r",rejected,"vreducesd xmm0, xmm0, xmm0, 1",accepted,62 f3 fd 08 57 c0 01,accepted,imm8/r 은 추출 단계에서 남은 표기. 즉시값으로 취급한다.
+moffs_encoding,fix,1684,MOV,Valid,"mov al, [0x1000]",accepted,"mov al, ds:0x123456789abcdef0",accepted,a0 f0 de bc 9a 78 56 34 12,accepted,moffs 행(A0)은 64비트 절대 주소를 요구한다. [0x1000]은 ModRM 인코딩(8A)으로 간다.
+moffs_encoding,fix,1686,MOV,Valid,"mov ax, [0x1000]",accepted,"mov ax, ds:0x123456789abcdef0",accepted,66 a1 f0 de bc 9a 78 56 34 12,accepted,moffs16 행(66 A1) 타격. 현재 값은 ModRM 인코딩으로 간다.
+string_accumulator,fix,4051,REP LODS,Valid,rep lods al,rejected,rep lods byte ptr [rsi],accepted,f3 ac,accepted,SDM은 'REP LODS AL'로 적지만 as는 읽어올 메모리 오퍼랜드를 요구한다. 같은 인코딩(AC)의 다른 표기.
+variant_memory_paired,variant,1031,ENQCMD,Valid,"enqcmd ecx, zmmword ptr [eax]",rejected,"enqcmd rcx, [rax+rbx*4+0x10]",accepted,f2 0f 38 f8 4c 98 10,accepted,ENQCMD는 레지스터 폭과 주소 폭이 같아야 한다. 주소만 64비트로 바꾸면 as가 거부한다.
+expected_rejection,keep,322,BNDCL,N.E.,"bndcl bnd0, ecx",rejected,"bndcl bnd0, ecx",rejected,operand size mismatch for `bndcl',rejected,"BNDCL bnd, r/m32 은 64비트 모드 N.E. as의 거부가 매뉴얼 기대와 일치한다."
+expected_rejection,keep,1330,INVPCID,N.E.,"invpcid ecx, xmmword ptr [eax]",rejected,"invpcid ecx, xmmword ptr [eax]",rejected,operand size mismatch for `invpcid',rejected,"INVPCID r32, m128 은 64비트 모드 N.E."
+expected_rejection,keep,4034,RDPID,N.E.,rdpid ecx,rejected,rdpid ecx,rejected,operand size mismatch for `rdpid',rejected,RDPID r32 는 64비트 모드 N.E.
+rel16_not_targetable,keep,414,CALL,N.S.,call .Ltarget,accepted,call .Ltarget,accepted,e8 fb ff ff ff,accepted,CALL rel16 은 N.S. 현재 입력은 rel32로 어셈블되므로 그 행을 시험한 것이 아니다.
+rel16_not_targetable,variant,414,CALL,N.S.,call .Ltarget,accepted,data16 call .Ltarget,accepted,66 e8 fa ff ff ff,accepted,data16 접두어로 rel16 을 시도한 관측용 변형. 결과 바이트를 기록만 한다.
+variant_memory_sib,variant,75,ADD,Valid,"add ecx, dword ptr [eax]",accepted,"add ecx, dword ptr [rax+rbx*4+0x10]",accepted,03 4c 98 10,accepted,base+index*scale+disp 형태. 현재는 [eax] 한 종류뿐이다.
+variant_memory_rip,variant,75,ADD,Valid,"add ecx, dword ptr [eax]",accepted,"add ecx, dword ptr [rip+0x10]",accepted,03 0d 10 00 00 00,accepted,rip 상대 주소. 현재 생성 입력에 0건이다.
+variant_imm_max,variant,8,ADC,Valid,"adc eax, 0x10000",accepted,"adc eax, 0x7fffffff",accepted,15 ff ff ff 7f,accepted,해당 폭의 최대 양수. 0xffffffff 는 as가 부호확장 imm8(83 /2)로 줄이므로 쓰지 않는다. 0x7fffffff 는 축약되지 않아 의도한 imm32 인코딩 행을 그대로 때린다.
+variant_avx512_mask,variant,88,VADDPD,Valid,"vaddpd zmm0, zmm0, zmm0",accepted,"vaddpd zmm0 {k1}{z}, zmm0, zmm0",accepted,62 f1 fd c9 58 c0,accepted,{k1}{z} 표기. 현재는 장식을 지워서 마스크 있는 행을 시험하지 못한다.
+variant_avx512_bcst,variant,89,VADDPD,Valid,"vaddpd zmm0, zmm0, zmmword ptr [eax]",accepted,"vaddpd zmm0, zmm0, qword ptr [eax]{1to8}",accepted,67 62 f1 fd 58 58 00,accepted,m64bcst 브로드캐스트 표기.

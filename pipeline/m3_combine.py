@@ -82,10 +82,51 @@ MEM_SIZE_TO_PTR = {
     "80": "tbyte ptr", "128": "xmmword ptr", "256": "ymmword ptr", "512": "zmmword ptr",
     "384": None,  # 딱 맞는 Intel 키워드가 없음 -> 크기 접두어 없이 기본 주소만 사용
 }
+# 메모리 오퍼랜드가 "레지스터 폭"이 아니라 고정 크기 블록(키 핸들, 저장 영역, 큐 항목,
+# 타일 설정)인 명령어들. Intel 크기 지시자를 붙이면 as 가 거부한다.
+# (as 확인: "fxsave zmmword ptr [eax]" 거부 / "fxsave [eax]" 수용,
+#           "aesdec128kl xmm0, xmmword ptr [eax]" 거부 / "aesdec128kl xmm0, [eax]" 수용)
+# 같은 m512 표기라도 VMOVNTDQ/VPCOMPRESS*/VPEXPAND* 는 zmmword ptr 를 붙여도 같은 바이트가
+# 나오므로 여기에 넣지 않는다(기존 생성 값을 그대로 둔다).
+FIXED_BLOCK_MNEMONICS = {
+    "AESDEC128KL", "AESDEC256KL", "AESDECWIDE128KL", "AESDECWIDE256KL",
+    "AESENC128KL", "AESENC256KL", "AESENCWIDE128KL", "AESENCWIDE256KL",
+    "ENQCMD", "ENQCMDS", "FXRSTOR", "FXRSTOR64", "FXSAVE", "FXSAVE64",
+    "LDTILECFG", "STTILECFG", "MOVDIR64B",
+}
+
+# 표기만으로는 알 수 없어서 명시하는 레지스터 폭. 64비트 모드에서 as 가 받아주는 폭이 정해져 있다.
+# (as 확인: "umonitor cx" 거부 / "umonitor ecx" 수용, "senduipi ecx" 거부 / "senduipi rcx" 수용,
+#           "movdir64b cx, [eax]" 거부 / "movdir64b ecx, [eax]" 수용 - 주소 폭과 맞춰야 한다)
+MODE_REGISTER_OVERRIDE = {"UMONITOR": "ecx", "MOVDIR64B": "ecx", "SENDUIPI": "rcx"}
+
+# 매뉴얼 표기를 그대로 옮기면 as 가 식(expression)으로 읽어서 거부하는 것들.
+# k1+1 은 마스크 쌍, zmm2+3 은 연속 레지스터 블록 표기이므로 블록의 첫 레지스터를 쓴다.
+# imm8/r 은 1단계 추출에서 남은 잔여 텍스트다.
+# (as 확인: "vp2intersectd k1+1, ..." 거부 / "vp2intersectd k1, ..." 수용)
+RAW_NOTATION_FIX = {"k1+1": "k1", "zmm2+3": "zmm2", "xmm2+3": "xmm2", "imm8/r": "1"}
+
+# SDM 은 "REP LODS AL" 처럼 누산기 이름으로 적지만, as 는 읽어올 메모리 오퍼랜드를 요구한다.
+# 같은 인코딩(AC/AD)을 가리키는 다른 표기다.
+# (as 확인: "rep lods al" 거부 / "rep lods byte ptr [rsi]" 수용 -> f3 ac)
+STRING_LOAD_MNEMONICS = {"REP LODS"}
+STRING_ACCUMULATOR_MEM = {"AL": "byte ptr [rsi]", "AX": "word ptr [rsi]",
+                          "EAX": "dword ptr [rsi]", "RAX": "qword ptr [rsi]"}
+
+# 메모리 주소를 64비트 형태로 바꾸면 짝이 되는 레지스터 폭도 같이 바꿔야 하는 명령어.
+# (as 확인: "enqcmd ecx, [rax+rbx*4+0x10]" 거부 / "enqcmd rcx, [rax+rbx*4+0x10]" 수용)
+ADDRESS_PAIRED_REGISTER = {"ENQCMD": ("ecx", "rcx"), "ENQCMDS": ("ecx", "rcx"),
+                           "MOVDIR64B": ("ecx", "rcx")}
+
 MEM_DEFAULT = "[eax]"
 MEM_DEFAULT_64 = "[rax]"  # MPX(BND 계열) 전용: 64비트 모드는 32비트 주소(addr32)를 거부한다.
 
 IMM_MAP = {"imm8": "1", "imm16": "0x100", "imm32": "0x10000", "imm64": "0x100000000"}
+
+# moffs(절대 주소) 오퍼랜드. [0x1000] 처럼 쓰면 as 가 ModRM 인코딩(8A)으로 가버려서
+# 매뉴얼의 moffs 행(A0/A1)을 시험하지 못한다.
+# (as 확인: "mov al, [0x1000]" -> 8a 04 25, "mov al, ds:0x123456789abcdef0" -> a0 ...)
+MOFFS_ADDRESS = "ds:0x123456789abcdef0"
 LITERAL_NUM_RE = re.compile(r"^-?\d+$")
 
 FAR_PTR_MAP = {"ptr16:16": "0x10:0x1234", "ptr16:32": "0x10:0x12345678"}
@@ -129,6 +170,32 @@ DISTINCT_REG_MNEMONICS = {
     "VFCMADDCPH", "VFCMADDCSH", "VFCMULCPH", "VFCMULCSH",
     "VFMADDCPH", "VFMADDCSH", "VFMULCPH", "VFMULCSH",
 }
+
+
+# ---------- 변형 생성 (교수님 4·5회 요청: 메모리 형태·즉시값·마스크 다양화) ----------
+# combo_index 0 은 기존 대표값 그대로 두고, 아래 변형을 "뒤에" 덧붙인다.
+# 그래야 assign_stable_combo_ids 가 기존 combo_id 를 그대로 보존한다.
+VARIANT_MEM_SIB = "[rax+rbx*4+0x10]"   # base+index*scale+disp
+VARIANT_MEM_RIP = "[rip+0x10]"         # rip 상대 주소
+
+# 즉시값은 "해당 폭의 최대값"을 쓰되 부호 있는 최대값을 쓴다.
+# 0xffffffff 처럼 쓰면 as 가 부호확장 imm8(83 /2)로 줄여서 의도한 imm32 행을 못 때린다.
+# (as 확인: "adc eax, 0xffffffff" -> 83 d0 ff, "adc eax, 0x7fffffff" -> 15 ff ff ff 7f)
+IMM_MAX_MAP = {"imm8": "0x7f", "imm16": "0x7fff",
+               "imm32": "0x7fffffff", "imm64": "0x7fffffffffffffff"}
+
+# AVX-512 브로드캐스트 원소 수는 매뉴얼 표기 안에서 계산할 수 있다.
+# 같은 토큰의 일반 메모리 대안 크기 / 브로드캐스트 원소 폭 = 원소 수.
+#   zmm3/m512/m64bcst -> 512/64 = {1to8}
+#   xmm3/m64/m16bcst  -> 64/16  = {1to4}   (VCVTPH2PD: 소스와 목적지 원소 폭이 다른 변환 계열)
+# 목적지 벡터 폭으로 계산하면 변환 계열에서 틀린다
+# (as 확인: "vcvtph2pd ymm0, word ptr [eax]{1to16}" 거부 / "{1to4}" 수용).
+BCST_PTR = {"16": "word ptr", "32": "dword ptr", "64": "qword ptr"}
+BCST_RE = re.compile(r"m(16|32|64)bcst")
+# "zmm3" 안의 m3 에 걸리지 않도록 토큰 시작이나 슬래시 뒤에서만 찾는다.
+PLAIN_MEM_RE = re.compile(r"(?:^|/)m(\d+)(?!\d|bcst)")
+MASK_OR_ZERO_RE = re.compile(r"\{(?:k[0-7]|z)\}")
+VSIB_IN_OPERAND_RE = re.compile(r"\[eax \+ (?:xmm|ymm|zmm)")
 
 
 def strip_decorations(token):
@@ -179,6 +246,9 @@ def memory_candidate(atom, mnemonic=""):
     - VSIB(vm32x 등): 인덱스 레지스터를 반드시 붙여야 한다.
     - MPX(BND 계열): 64비트 모드에서 32비트 주소(eax)를 거부하므로 rax 를 쓴다."""
     base = MEM_DEFAULT_64 if mnemonic in MPX_MNEMONICS else MEM_DEFAULT
+
+    if mnemonic in FIXED_BLOCK_MNEMONICS:
+        return base  # 고정 크기 블록: 크기 접두어를 붙이면 as 가 거부한다
 
     far_m = FAR_PTR_ATOM_RE.match(atom)
     if far_m:
@@ -266,19 +336,24 @@ def expand_token(token, kind, mnemonic="", counters=None):
         return [".Ltarget"], ""
 
     if kind == "moffs":
-        return ["[0x1000]"], ""  # moffs 는 메모리 오퍼랜드이므로 괄호가 꼭 있어야 한다
+        return [MOFFS_ADDRESS], ""  # 절대 주소 형태라야 moffs 인코딩 행(A0/A1)을 시험한다
 
     if kind == "far_ptr":
         return [FAR_PTR_MAP.get(clean, "0x10:0x1234")], ""
 
     if kind == "implicit":
-        return expand_implicit(token)
+        # <EAX>, <XMM0-7> 은 소스에 적지 않는 암묵 오퍼랜드다. 명시하면 as 가
+        # "number of operands mismatch" 로 거부한다. 슬롯 자체를 뺀다.
+        return [], "implicit_dropped"
 
     if kind == "register":
+        if mnemonic in STRING_LOAD_MNEMONICS and clean in STRING_ACCUMULATOR_MEM:
+            return [STRING_ACCUMULATOR_MEM[clean]], f"string_accumulator_as_memory:{clean}"
+
         # r16/r32/r64, xmm2/mm128 처럼 순수 레지스터 대안이면 첫 후보만 대표로 쓴다.
         first = clean.split("/")[0].strip()
         occurrence = bump_counter(counters, first)
-        value = register_candidate(first, occurrence)
+        value = MODE_REGISTER_OVERRIDE.get(mnemonic) or register_candidate(first, occurrence)
         if is_gather_scatter(mnemonic):
             mask = extract_mask(token)  # gather/scatter 는 마스크가 필수라서 지우면 안 된다
             if mask:
@@ -296,8 +371,131 @@ def expand_token(token, kind, mnemonic="", counters=None):
     if kind == "reg_or_mem":
         return expand_reg_or_mem(clean, mnemonic, counters), ""
 
-    # kind == "other" (k1+1, xmm2+3, imm8/r 등): 무리해서 펼치지 않고 원문 그대로 남긴다.
+    # kind == "other" (k1+1, xmm2+3, imm8/r 등)
+    if clean in RAW_NOTATION_FIX:
+        return [RAW_NOTATION_FIX[clean]], f"other_normalized:{clean}"
     return [token], "other_kept_raw"
+
+
+def can_vary_memory(operands):
+    """메모리 형태를 바꿔도 되는 조합인지 본다.
+
+    바꾸면 안 되는 것: VSIB(인덱스 레지스터가 필수라 SIB 로 바꾸면 거부),
+    far ptr, moffs(절대 주소). MPX 는 [rax] 를 쓰므로 애초에 걸리지 않는다.
+    (as 확인: "vgatherdps xmm1 {k1}, dword ptr [rax+rbx*4+0x10]" -> invalid VSIB address)
+    """
+    text = ", ".join(operands)
+    if MEM_DEFAULT not in text:
+        return False
+    if "far ptr" in text or "ds:" in text:
+        return False
+    return not VSIB_IN_OPERAND_RE.search(text)
+
+
+def vary_memory(operands, new_memory, mnemonic=""):
+    """대표 메모리 주소 [eax] 를 다른 주소 형태로 바꾼 오퍼랜드 목록.
+
+    주소가 64비트 형태가 되면 짝이 되는 레지스터 폭도 함께 바꾼다
+    (ENQCMD 계열은 레지스터 폭과 주소 폭이 같아야 한다).
+    """
+    out = [op.replace(MEM_DEFAULT, new_memory) for op in operands]
+    pair = ADDRESS_PAIRED_REGISTER.get(mnemonic)
+    if pair:
+        narrow, wide = pair
+        out = [wide if op == narrow else op for op in out]
+    return out
+
+
+def vary_immediate(operands, operand_types):
+    """즉시값 자리를 해당 폭의 최대 양수로 바꾼다. 바꿀 자리가 없으면 None."""
+    out = list(operands)
+    changed = False
+    for i, token in enumerate(operand_types):
+        key = strip_decorations(token)
+        if key in IMM_MAX_MAP and i < len(out):
+            out[i] = IMM_MAX_MAP[key]
+            changed = True
+    return out if changed else None
+
+
+def vary_mask(operands, operand_types):
+    """{k1}{z} 마스크 표기를 지우지 않고 살린 변형. 없으면 None.
+
+    기존 조합은 strip_decorations 로 장식을 지우기 때문에, 마스크 표기가 있는
+    1,640행 중 실제로 마스크를 쓴 줄이 64개뿐이었다.
+    """
+    out = list(operands)
+    changed = False
+    for i, token in enumerate(operand_types):
+        if i >= len(out) or "{" in out[i]:
+            continue  # 이미 장식이 붙어 있는 자리(gather/scatter 등)는 건드리지 않는다
+        decoration = "".join(MASK_OR_ZERO_RE.findall(token))
+        if "[" in out[i]:
+            # 메모리 목적지에는 zeroing({z})을 쓸 수 없다
+            # (as 확인: "vmovdqu32 xmmword ptr [eax] {k1}{z}, xmm0" -> unsupported masking)
+            decoration = decoration.replace("{z}", "")
+        if decoration:
+            out[i] = f"{out[i]} {decoration}"
+            changed = True
+    return out if changed else None
+
+
+def broadcast_count(token):
+    """'zmm3/m512/m64bcst' 같은 토큰에서 브로드캐스트 원소 수를 계산한다."""
+    bcst = BCST_RE.search(token)
+    plain = PLAIN_MEM_RE.search(token)
+    if not bcst or not plain:
+        return None
+    element = int(bcst.group(1))
+    total = int(plain.group(1))
+    if total % element:
+        return None
+    return f"1to{total // element}"
+
+
+def vary_broadcast(operands, operand_types):
+    """m32bcst/m64bcst 자리를 실제 브로드캐스트 표기로 바꾼다. 없으면 None."""
+    out = list(operands)
+    changed = False
+    for i, token in enumerate(operand_types):
+        match = BCST_RE.search(token)
+        if not match or i >= len(out) or "[" not in out[i]:
+            continue  # 메모리 자리에만 붙인다(레지스터 조합까지 바꾸면 변형이 중복된다)
+        count = broadcast_count(token)
+        if not count:
+            continue
+        out[i] = f"{BCST_PTR[match.group(1)]} {MEM_DEFAULT}{{{count}}}"
+        changed = True
+    return out if changed else None
+
+
+def build_variants(combos, mnemonic=""):
+    """기본 combo 뒤에 붙일 변형 목록. 규칙을 늘리려면 이 함수만 보면 된다."""
+    extra = []
+    seen = [combo["operands"] for combo in combos]
+    for combo in combos:
+        operands = combo["operands"]
+        types = combo["operand_types"]
+        candidates = []
+        if can_vary_memory(operands):
+            candidates.append(("memory_sib", vary_memory(operands, VARIANT_MEM_SIB, mnemonic)))
+            # AMX 의 sibmem 오퍼랜드는 SIB 주소가 필수라 rip 상대를 쓸 수 없다
+            # (as 확인: "tileloadd tmm0, [rip+0x10]" -> cannot be used here).
+            if not any("sibmem" in token for token in types):
+                candidates.append(("memory_rip", vary_memory(operands, VARIANT_MEM_RIP, mnemonic)))
+        candidates.append(("imm_max", vary_immediate(operands, types)))
+        candidates.append(("avx512_mask", vary_mask(operands, types)))
+        candidates.append(("avx512_bcst", vary_broadcast(operands, types)))
+
+        for kind, new_operands in candidates:
+            if not new_operands or new_operands == operands:
+                continue
+            if new_operands in seen:
+                continue  # 이미 같은 값의 조합이 있다
+            seen.append(new_operands)
+            note = "; ".join(x for x in [combo["note"], f"variant:{kind}"] if x)
+            extra.append({"operand_types": types, "operands": new_operands, "note": note})
+    return extra
 
 
 def expected_valid(mode_support):
@@ -339,13 +537,19 @@ def build_combos_for_row(operand_rows):
     notes = []
     for row in operand_rows:
         candidates, note = expand_token(row["operand_token"], row["operand_kind"], mnemonic, counters)
-        per_position_candidates.append(candidates)
-        operand_types.append(row["operand_token"])
         if note:
             notes.append(f"op{row['operand_index']}:{note}")
+        if not candidates:
+            continue  # 암묵 오퍼랜드: 자리 자체를 만들지 않는다
+        per_position_candidates.append(candidates)
+        operand_types.append(row["operand_token"])
 
     # 자리마다 후보 개수가 다르면(reg_or_mem=2개, 나머지=1개), 짧은 자리는 첫 후보를
     # 반복해서 채운다(broadcast). 이러면 전수 곱집합 없이 "대표 조합 몇 개"만 생긴다.
+    if not per_position_candidates:
+        # 모든 오퍼랜드가 암묵 표기였던 경우 -> 오퍼랜드 없는 명령어 한 줄
+        return [{"operand_types": [], "operands": [], "note": "; ".join(notes)}]
+
     max_len = max(len(c) for c in per_position_candidates)
     combos = []
     for i in range(max_len):
@@ -355,7 +559,7 @@ def build_combos_for_row(operand_rows):
             "operands": operands,
             "note": "; ".join(notes),
         })
-    return combos
+    return combos + build_variants(combos, mnemonic)
 
 
 def assign_stable_combo_ids(rows, prior_rows):
