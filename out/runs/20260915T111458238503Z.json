@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-09-15T11:14:58.238503+00:00",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "python": "3.12.10",
+    "tools": {
+      "as": {
+        "available": false,
+        "name": "as"
+      },
+      "clang": {
+        "available": false,
+        "name": "clang"
+      },
+      "objdump": {
+        "available": false,
+        "name": "objdump"
+      },
+      "objcopy": {
+        "available": false,
+        "name": "objcopy"
+      },
+      "readelf": {
+        "available": false,
+        "name": "readelf"
+      }
+    }
+  },
+  "code_hashes": {
+    "pipeline/input_quality.py": "1ef02fbfa1cce1f864d69fd72a6fa45ec0ac08af1a8480695eba20a1869e7419",
+    "pipeline/instruction_check.py": "4e6806bcd2131fab982e0eea310d739f80c35a825a10a832c39bea3e5c617fe2",
+    "pipeline/m10_reassemble_check.py": "c494e3baf4a2c233fa8c122fec70399d213d36db6212ae5e406e2011dde07ac8",
+    "pipeline/m11_execute.py": "ea22cc19caecfaad3cfdd5191307b9c142da941ac9a0806331c53f8c8c4361f6",
+    "pipeline/m12_execute_edge_cases.py": "2ea6528296e18d1c834d2f7254154ad0492ddd15ca76037766f84334d2ec82c9",
+    "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
+    "pipeline/m1_extract.py": "a50815dca4e1561c52f3598e6f213c322d4c6c1216015cb9acb56391920578e6",
+    "pipeline/m2_tokenize.py": "f80d667e89d605e8dbbdb310e6c14ddf899c7194b5f3599c3eb7a044c0e946b3",
+    "pipeline/m3_combine.py": "c6168abe9e6f1f244d1c5597ecb2a6a24bef73a92185b3b2fa645262c5fd31ba",
+    "pipeline/m4_generate.py": "398f34b18ab0a21584a5304930d9a430308a5cda3a4fa8256fb15eb6ea9e415f",
+    "pipeline/m5_assemble.py": "7c8f4f77242ebd8283ffbc1031eee7c604078597d131aa8ba0b4b3074cf185aa",
+    "pipeline/m6_roundtrip.py": "863945f9f0099d652b8955d098f0d7eeaedf2a28d25eb85f221c103c684050b2",
+    "pipeline/m7_triage.py": "73bf6d373038032d798786fefcbd93c30c7720f03328f1574a78796e64978377",
+    "pipeline/m8_clang_assemble.py": "389e29c2360ae22e1357e0d9909cbed41113143fc9aa6e0e4c10b62cdc2076db",
+    "pipeline/m9_clang_compare.py": "20c3deac135b0f0c509485811dc7d99fd3e09556e260f879abe6d0a3a4aaf8c9",
+    "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "7fa209c55ffe1e1b803319ccd22056558039b2d3a81af14933ba89086a8ab27a"
+  },
+  "steps": [
+    {
+      "stage": "tokenizer",
+      "script": "pipeline/m2_tokenize.py",
+      "input_hashes": {
+        "data/db/isa_db.csv": "71a32be092b212a11fb3cba8798aaadfe7a713fdcbf8f09e25f7dbbf8ac08be5"
+      },
+      "command": [
+        "C:\\Users\\wltjq\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "pipeline/m2_tokenize.py"
+      ],
+      "returncode": 0,
+      "stdout": "입력 행 수: 4210\n출력 행 수(오퍼랜드 단위): 9820\nCSV 저장: C:\\Users\\wltjq\\OneDrive\\assembler-testing\\data\\db\\tokens.csv\n입력 품질 기록: C:\\Users\\wltjq\\OneDrive\\assembler-testing\\data\\db\\extraction_issues.csv (11건, 차단 0건)\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "data/db/tokens.csv": "c1c6c416d8efaee41b8a3796ef164201bc87c651493e21d7788796396c30aed8",
+        "data/db/extraction_issues.csv": "f0509a5289b25a23ab72c64d62729c2e967d52b11930f9cfed49893d7dd6341e"
+      }
+    },
+    {
+      "stage": "combiner",
+      "script": "pipeline/m3_combine.py",
+      "input_hashes": {
+        "data/db/tokens.csv": "c1c6c416d8efaee41b8a3796ef164201bc87c651493e21d7788796396c30aed8"
+      },
+      "command": [
+        "C:\\Users\\wltjq\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "pipeline/m3_combine.py"
+      ],
+      "returncode": 0,
+      "stdout": "입력 행 수(오퍼랜드 단위): 9820\n원본 명령어(row_id) 수: 4210\n출력 조합(combo) 수: 7278\nCSV 저장: C:\\Users\\wltjq\\OneDrive\\assembler-testing\\data\\db\\combos.csv\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "data/db/combos.csv": "3f817f741c3c68944d69fb7d560335f15d4b2825f5d3421d62d9ec76286de38c"
+      }
+    },
+    {
+      "stage": "generator",
+      "script": "pipeline/m4_generate.py",
+      "input_hashes": {
+        "data/db/combos.csv": "3f817f741c3c68944d69fb7d560335f15d4b2825f5d3421d62d9ec76286de38c"
+      },
+      "command": [
+        "C:\\Users\\wltjq\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "pipeline/m4_generate.py"
+      ],
+      "returncode": 0,
+      "stdout": "입력 combos.csv 행 수: 7278\n생성한 어셈블리 줄 수: 7278\n스킵한 행 수: 0\n출력: out/tests.s, out/generator_skipped.csv\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/tests.s": "6ef971096476f5ddfafca7cc513d8d38cce3c5a6e459060f24af5b8fa4cc660f",
+        "out/generator_skipped.csv": "a865a7ab68a741507acdfafc36d3ee095ce49761b218442b188e0941043f080e"
+      }
+    }
+  ],
+  "completed": true,
+  "finished_utc": "2026-09-15T11:14:58.779529+00:00"
+}

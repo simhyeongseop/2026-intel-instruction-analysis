@@ -56,10 +56,48 @@ LAR/LSL 대칭 r64 사례도 여기에 포함한다. 원래 생성기 사례 수
 현재 결론은 [재심 보고서](CASE_REVIEW_2026-09-14.md)와 `pipeline/review_verdicts.py`를 따른다.
 `triage.csv`의 `legacy_category`, `legacy_verdict`, `legacy_diff_cause`는 이전 기록을 보존한다.
 
+## 역할 블록 (2026-09-19 정리)
+
+13단계는 그대로 두고, 역할이 다른 네 블록으로 나눠 본다. 블록 사이에 "무엇을 넘기고 무엇은 넘기지
+않는가"를 정해 두지 않으면, 생성 단계의 결함이 뒤 단계에서 어셈블러 결함처럼 보인다.
+
+| 블록 | 단계 | 넘기는 것 | 넘기지 않는 것 |
+|---|---|---|---|
+| A 입력 구축 | 1~4 | 소스, 의도한 SDM 행, 매뉴얼 기대(mode_support), 생성 근거(note) | 맞다/틀리다는 판단 |
+| B 관측 | 5·6·8~12 | 수용/거부, 에러 원문, `.text` 바이트, objdump 출력, 도구 버전 | 버그 여부 |
+| C 판정 | 7·13 | 분류와 근거, 확정 상태 | 근거 없는 확정 |
+| D 점검 | 도구 4종 | 절차상 오류, 사람이 확인할 목록 | 자동 판정 |
+
+A의 원칙: **한 줄은 자기가 겨냥한 인코딩 행을 실제로 때려야 한다.** 예를 들어 `mov al, [0x1000]`은
+as가 받아주지만 `8a 04 25`(ModRM)로 가서 moffs 행(A0)을 시험하지 못한다. 수용 성공은 검증이 아니다.
+
+B의 원칙: 진단 거부와 도구 사건을 섞지 않는다. 5단계 `actual_result`는 `ok / error / crashed / timeout`
+네 값이며, `crashed`·`timeout`은 7단계에서 `tool_process_failure`·`unsure`로 남고 false_alarm이 되지 않는다.
+
+## 점검 도구 (D 블록)
+
+판정을 자동화하지 않는다. 사람이 확인해야 할 것을 모아 주거나, 사람이 세기 어려운 절차상 오류를 잡는다.
+
+| 도구 | 무엇을 보나 | 출력 |
+|---|---|---|
+| `scripts/check_pipeline_health.py` | 결과 파일이 같은 입력에서 나왔는지, ID가 이동했는지, 미판정이 얼마나 남았는지 | `out/review/health_report.md` (FAIL 있으면 종료 코드 1) |
+| `scripts/review_generated_input.py` | 생성된 줄을 매뉴얼 원문·PDF 쪽·바이트·재현 명령과 함께 | `out/review/input_review.md` (판단 기입란 포함) |
+| `scripts/audit_verdicts.py` | 기록된 판정 근거가 지금도 재현되는지 (강한 판정은 전수) | `out/review/verdict_audit.md` |
+| `scripts/compare_round.py` | 수정 전후 수용 상태 변화, 특히 수용→거부 | `out/review/round_diff.md` |
+
+```bash
+python3 scripts/check_pipeline_health.py
+python3 scripts/review_generated_input.py --changed
+python3 scripts/audit_verdicts.py --sample 40
+python3 scripts/compare_round.py
+```
+
 ## 수치와 재현 범위
 
-DB 4,210행 중 생성 입력에 포함된 행은 4,209개다. `ENCODEKEY256` 한 행은 알려진 토큰 문제로 제외된다.
-7,276개 생성 테스트는 6,024개의 고유 소스를 포함한다. 같은 소스가 여러 매뉴얼 행에 대응할 수 있다.
+DB 4,210행 전부가 생성 입력에 포함된다(2026-09-19 기준). 생성 입력은 19,120줄이며 16,675개의
+고유 소스를 포함한다. 같은 소스가 여러 매뉴얼 행에 대응할 수 있다.
+19,120줄 중 7,278줄은 기존 대표 조합이고, 11,842줄은 2026-09-19에 추가한 변형이다
+(memory_sib 3,435 / memory_rip 3,432 / avx512_mask 2,993 / imm_max 1,101 / avx512_bcst 881).
 DB 행 생성률, 바이트 필드 일치율, 실제 의미 검증 범위를 같은 커버리지 수치로 합치지 않는다.
 
 현재 전체 의미 검증 커버리지는 산출하지 않는다. 13단계는 검사한 필드와 미지원 템플릿을 명시한다.

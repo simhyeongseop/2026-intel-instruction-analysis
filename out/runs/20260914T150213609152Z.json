@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-09-14T15:02:13.609152+00:00",
+  "environment": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "tools": {
+      "as": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-as",
+        "version": [
+          "GNU assembler (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "7a2ef948033b05ad0c5dcb0d5be059bc68562b5d45713d91aee21df2b4bf4e92",
+        "probe": {
+          "command": [
+            "/usr/bin/as",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU assembler (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-linux-gnu'.\n",
+          "stderr": "",
+          "failure": null
+        }
+      },
+      "clang": {
+        "available": true,
+        "path": "/usr/lib/llvm-18/bin/clang",
+        "version": [
+          "Ubuntu clang version 18.1.3 (1ubuntu1)"
+        ],
+        "sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+        "probe": {
+          "command": [
+            "/usr/bin/clang",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+          "stderr": "",
+          "failure": null
+        }
+      },
+      "objdump": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objdump",
+        "version": [
+          "GNU objdump (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "d0041e7511460b9ebfd95ce4f9d93c7ffea398ffc1cb2c316a220dd8e533db3d",
+        "probe": {
+          "command": [
+            "/usr/bin/objdump",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objdump (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null
+        }
+      },
+      "objcopy": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objcopy",
+        "version": [
+          "GNU objcopy (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "b22f4f909bff115ee2a37cd21ff76f5e0b8c65cd58f98edbce7b59f129980d67",
+        "probe": {
+          "command": [
+            "/usr/bin/objcopy",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objcopy (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null
+        }
+      },
+      "readelf": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-readelf",
+        "version": [
+          "GNU readelf (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+        "probe": {
+          "command": [
+            "/usr/bin/readelf",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null
+        }
+      }
+    },
+    "cpu": {
+      "vendor_id": "GenuineIntel",
+      "model name": "Intel(R) Core(TM) Ultra 5 226V",
+      "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+    }
+  },
+  "code_hashes": {
+    "pipeline/instruction_check.py": "e0a837487c0569cdb69648e10a862711863923cc9176de42f892bb5d292a172f",
+    "pipeline/m10_reassemble_check.py": "a953754ac28999789a885d906dbd3bed6f3faa7cc3089348a6c67d231872b3bc",
+    "pipeline/m11_execute.py": "ea22cc19caecfaad3cfdd5191307b9c142da941ac9a0806331c53f8c8c4361f6",
+    "pipeline/m12_execute_edge_cases.py": "2ea6528296e18d1c834d2f7254154ad0492ddd15ca76037766f84334d2ec82c9",
+    "pipeline/m13_lint.py": "29aba03b8a1e5d4f83fddabcffc9db7ecea54e5b9017f0ce27cbb834ede3e762",
+    "pipeline/m1_extract.py": "a50815dca4e1561c52f3598e6f213c322d4c6c1216015cb9acb56391920578e6",
+    "pipeline/m2_tokenize.py": "57e148e66df144f0685ffdce986b316472215f78529baeb7e6c55af7f3a9c2ae",
+    "pipeline/m3_combine.py": "1f96a98805f80992dd6a6059f22d9fab0b2ba352b0e121b3d7c5540865fcfc13",
+    "pipeline/m4_generate.py": "4e0d9ac744dfe8750b4cb5d726964c5825b39502e979ea45d14ac10bedcbacbb",
+    "pipeline/m5_assemble.py": "7c8f4f77242ebd8283ffbc1031eee7c604078597d131aa8ba0b4b3074cf185aa",
+    "pipeline/m6_roundtrip.py": "68873fb7ca82007a70f3fbfe8edb96c8d318885fb9364bde085a827c8b742846",
+    "pipeline/m7_triage.py": "73bf6d373038032d798786fefcbd93c30c7720f03328f1574a78796e64978377",
+    "pipeline/m8_clang_assemble.py": "389e29c2360ae22e1357e0d9909cbed41113143fc9aa6e0e4c10b62cdc2076db",
+    "pipeline/m9_clang_compare.py": "6753ecd9edb0fc6c517bf13dc1c55e6b35c454d0e15b615875c414a3251012de",
+    "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "018ba92ebca17994c3cbbb39eac1761d04cfa1e2467fc30f6ead47d4d1255871"
+  },
+  "steps": [
+    {
+      "stage": "execute",
+      "script": "pipeline/m11_execute.py",
+      "input_hashes": {},
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m11_execute.py"
+      ],
+      "returncode": 0,
+      "stdout": "call_valid_function_ptr_64bit: expect=exit0 actual=exit0 OK\ncall_garbage_upper32_64bit: expect=sigsegv actual=SIGSEGV OK\ncall_via_32bit_register_truncated: expect=exit0 actual=exit0 OK\ntruncate_high_stack_address_to_32bit: expect=sigsegv actual=SIGSEGV OK\njmp_null_address: expect=sigsegv actual=SIGSEGV OK\ncall_misaligned_valid_range_address: expect=sigsegv actual=SIGSEGV OK\n\n총 6건, 불일치 0건\n출력: out/address_test_result.csv\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/address_test_result.csv": "6b71ff48ca9e8456143ab2d0f9c6025a2d28c9dcef4d7f41f0b3fb72c221bb8e"
+      }
+    },
+    {
+      "stage": "execute_edge_cases",
+      "script": "pipeline/m12_execute_edge_cases.py",
+      "input_hashes": {
+        "out/asm_result.csv": "b5c7ea59accd937f59ae055055de031474f3163b643956c54bcddeea6ee92895"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m12_execute_edge_cases.py"
+      ],
+      "returncode": 0,
+      "stdout": "323 BNDCL        bndcl bnd0, dword ptr [rax]         -> exit0\n327 BNDCU        bndcu bnd0, dword ptr [rax]         -> exit0\n331 BNDCN        bndcn bnd0, dword ptr [rax]         -> exit0\n335 BNDMK        bndmk bnd0, dword ptr [rax]         -> exit0\n337 BNDMOV       bndmov bnd0, bnd0                   -> exit0\n341 BNDMOV       bndmov bnd0, bnd0                   -> exit0\n419 CALL         call dword ptr [eax]                -> SIGSEGV\n970 DEC          dec cx                              -> exit0\n971 DEC          dec ecx                             -> exit0\n1308 INC          inc cx                              -> exit0\n1309 INC          inc ecx                             -> exit0\n1436 JMP          jmp dword ptr [eax]                 -> SIGSEGV\n1511 LAHF         lahf                                -> exit0\n1541 LEAVE        leave                               -> SIGSEGV\n1544 LGDT         lgdt [eax]                          -> SIGSEGV\n1545 LIDT         lidt [eax]                          -> SIGSEGV\n3294 POP          pop fs                              -> exit0\n3297 POP          pop gs                              -> exit0\n4122 SAHF         sahf                                -> exit0\n\n대상: 19건\n  exit0: 14\n  SIGSEGV: 5\n출력: out/edge_case_execution.csv, out/edge_case_execution_report.md\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/edge_case_execution.csv": "e36be9ab8ec7ec61f68905baddd955ff1f8e1a50d38bdd2fcdbb7a7d0b0ad539",
+        "out/edge_case_execution_report.md": "e283274d411f852d81742053129b7c549310dffe13fc273fe0d64bc180d04b46"
+      }
+    }
+  ],
+  "completed": true,
+  "finished_utc": "2026-09-14T15:02:14.055170+00:00"
+}
