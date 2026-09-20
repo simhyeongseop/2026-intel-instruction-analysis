@@ -27,5 +27,7 @@ rel16_not_targetable,variant,414,CALL,N.S.,call .Ltarget,accepted,data16 call .L
 variant_memory_sib,variant,75,ADD,Valid,"add ecx, dword ptr [eax]",accepted,"add ecx, dword ptr [rax+rbx*4+0x10]",accepted,03 4c 98 10,accepted,base+index*scale+disp 형태. 현재는 [eax] 한 종류뿐이다.
 variant_memory_rip,variant,75,ADD,Valid,"add ecx, dword ptr [eax]",accepted,"add ecx, dword ptr [rip+0x10]",accepted,03 0d 10 00 00 00,accepted,rip 상대 주소. 현재 생성 입력에 0건이다.
 variant_imm_max,variant,8,ADC,Valid,"adc eax, 0x10000",accepted,"adc eax, 0x7fffffff",accepted,15 ff ff ff 7f,accepted,해당 폭의 최대 양수. 0xffffffff 는 as가 부호확장 imm8(83 /2)로 줄이므로 쓰지 않는다. 0x7fffffff 는 축약되지 않아 의도한 imm32 인코딩 행을 그대로 때린다.
+variant_distinct_regs,variant,74,ADD,Valid,"add ecx, ecx",accepted,"add ecx, edx",accepted,01 d1,accepted,모든 자리에 같은 레지스터를 쓰면 도구가 오퍼랜드 순서를 바꿔도 결과가 같아 구분할 수 없다.
+variant_distinct_regs,variant,88,VADDPD,Valid,"vaddpd zmm0, zmm0, zmm0",accepted,"vaddpd zmm0, zmm1, zmm2",accepted,62 f1 f5 48 58 c2,accepted,AVX-512 3오퍼랜드도 자리마다 다른 레지스터를 쓴다. 매뉴얼이 지정한 고정 레지스터는 그대로 둔다.
 variant_avx512_mask,variant,88,VADDPD,Valid,"vaddpd zmm0, zmm0, zmm0",accepted,"vaddpd zmm0 {k1}{z}, zmm0, zmm0",accepted,62 f1 fd c9 58 c0,accepted,{k1}{z} 표기. 현재는 장식을 지워서 마스크 있는 행을 시험하지 못한다.
 variant_avx512_bcst,variant,89,VADDPD,Valid,"vaddpd zmm0, zmm0, zmmword ptr [eax]",accepted,"vaddpd zmm0, zmm0, qword ptr [eax]{1to8}",accepted,67 62 f1 fd 58 58 00,accepted,m64bcst 브로드캐스트 표기.

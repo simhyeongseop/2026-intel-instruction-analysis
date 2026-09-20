@@ -75,6 +75,25 @@ REG_RULES = [
 # 짝인 메모리 쪽 크기(m8/m16/m32/m64)를 보고 사이즈를 맞춰주기 위한 표.
 BARE_R_SIZE_TO_REG = {"8": "cl", "16": "cx", "32": "ecx", "64": "rcx"}
 
+# 슬롯마다 다른 레지스터를 쓰는 변형에서 쓰는 표.
+# 고정 이름 오퍼랜드(AL, DX, CS, ST(0), CR0 ...)는 매뉴얼이 그 레지스터를 지정한 것이므로
+# 절대 바꾸지 않는다. 바꾸면 다른 인코딩 행을 시험하게 된다
+# (예: "add al, 1"은 04 ib 행이지만 "add cl, 1"은 80 /0 ib 행이다).
+GENERIC_REG_RE = re.compile(
+    r"^(?:r8[ab]?|r16|r32[ab]?|r64[ab]?|reg|xmm\d*|ymm\d*|zmm\d*|mm\d*|k\d+|bnd\d*|tmm\d+"
+    r"|ST\(i\))$")
+# x87 의 ST(i)는 "0번이 아닌 스택 레지스터"를 뜻한다. 슬롯 구분 변형에서는 st(1)부터 쓴다.
+# 순서가 실제로 인코딩을 바꾸는 자리라 구분이 특히 중요하다
+# (as 확인: "fadd st(0), st(1)" -> d8 c1, "fadd st(1), st(0)" -> dc c1).
+ST_INDEXED_ATOM = "ST(i)"
+# 범용 레지스터는 번호를 붙일 수 없으므로 순서를 직접 적는다.
+GPR_SEQUENCE = {
+    "cl": ["cl", "dl", "bl"], "cx": ["cx", "dx", "bx"],
+    "ecx": ["ecx", "edx", "ebx"], "rcx": ["rcx", "rdx", "rbx"],
+}
+# 번호가 있는 계열의 최대 번호. k8, bnd4 같은 없는 레지스터를 만들지 않기 위한 상한.
+REG_FAMILY_LIMIT = {"xmm": 15, "ymm": 15, "zmm": 15, "mm": 7, "k": 7, "bnd": 3, "tmm": 7}
+
 # 메모리 오퍼랜드 크기(mN) -> Intel syntax 크기 접두어. 대표 주소는 항상 [eax] 하나로 고정.
 MEM_SIZE_RE = re.compile(r"^m(128|256|384|512|80|8|16|32|64)(?!\d)")
 MEM_SIZE_TO_PTR = {
@@ -214,24 +233,46 @@ def is_gather_scatter(mnemonic):
     return any(k in mnemonic for k in GATHER_SCATTER_KEYWORDS)
 
 
+def nth_register(value, occurrence):
+    """대표 레지스터 값의 occurrence 번째 것을 고른다.
+
+    'xmm0' -> xmm0, xmm1, xmm2 / 'k1' -> k1, k2, k3 / 'ecx' -> ecx, edx, ebx.
+    번호를 붙일 수 없는 고정 레지스터(al, dx, st(0) 등)는 그대로 둔다.
+    """
+    if not occurrence:
+        return value
+    if value in GPR_SEQUENCE:
+        sequence = GPR_SEQUENCE[value]
+        return sequence[min(occurrence, len(sequence) - 1)]
+    match = re.match(r"^([a-z]+)(\d+)$", value)
+    if not match:
+        return value
+    family, number = match.group(1), int(match.group(2))
+    limit = REG_FAMILY_LIMIT.get(family)
+    picked = number + occurrence
+    if limit is not None:
+        picked = min(picked, limit)
+    return f"{family}{picked}"
+
+
 def register_candidate(atom, occurrence=None):
     """레지스터 타입 이름(atom) 하나 -> 대표 레지스터 값. 모르면 원문 소문자로 fallback.
-    occurrence 가 주어지면(레지스터가 서로 달라야 하는 명령어) 대표값의 번호를
-    occurrence 로 바꿔치기해서 반환한다(예: xmm0 -> xmm2)."""
+    occurrence 가 주어지면 슬롯 순번에 맞는 다른 레지스터를 고른다(범용 표기일 때만)."""
+    if atom == ST_INDEXED_ATOM and occurrence is not None:
+        return f"st({occurrence + 1})"
     for pattern, value in REG_RULES:
         if pattern.match(atom):
-            if occurrence is None:
+            if occurrence is None or not GENERIC_REG_RE.match(atom):
                 return value
-            base = re.sub(r"\d+$", "", value)
-            return f"{base}{occurrence}"
+            return nth_register(value, occurrence)
     return atom.lower()
 
 
 def bump_counter(counters, atom):
     """counters(dict) 안에서 atom의 대표 레지스터 계열(xmm/tmm/bnd 등) 카운트를 하나
     올리고 그 전 값(이번에 쓸 순번)을 돌려준다. counters 가 None 이면 순번을 안 쓴다(None 반환)."""
-    if counters is None:
-        return None
+    if counters is None or not GENERIC_REG_RE.match(atom):
+        return None  # 매뉴얼이 지정한 고정 레지스터는 슬롯 순번을 세지 않는다
     base_value = register_candidate(atom)  # 순번 없이 대표값(예: 'xmm0')부터 구한다
     family = re.sub(r"\d+$", "", base_value)  # 'xmm0' -> 'xmm'
     n = counters.get(family, 0)
@@ -301,7 +342,8 @@ def expand_reg_or_mem(clean_token, mnemonic="", counters=None):
         # bare 'r' -> 짝인 메모리 크기에 맞춰 레지스터 사이즈를 고른다.
         size_match = re.match(r"^m(\d+)", mem_part)
         size = size_match.group(1) if size_match else None
-        reg_candidate = BARE_R_SIZE_TO_REG.get(size, "ecx")
+        value = BARE_R_SIZE_TO_REG.get(size, "ecx")
+        reg_candidate = nth_register(value, bump_counter(counters, f"r{size or 32}"))
     elif reg_part:
         occurrence = bump_counter(counters, reg_part)
         reg_candidate = register_candidate(reg_part, occurrence)
@@ -521,18 +563,12 @@ def group_by_row(token_rows):
     return [(rid, groups[rid]) for rid in order]
 
 
-def build_combos_for_row(operand_rows):
-    """한 row_id 의 오퍼랜드 행들 -> combo 리스트.
-    각 combo 는 {"operand_types": [...], "operands": [...], "note": "..."} 형태."""
-    first = operand_rows[0]
-    if first["operand_kind"] == "none":
-        return [{"operand_types": [], "operands": [], "note": ""}]
+def expand_operand_rows(operand_rows, mnemonic, counters):
+    """오퍼랜드 행들을 후보 값으로 펼친다.
 
-    mnemonic = first["mnemonic"]
-    # "레지스터가 서로 달라야 하는" 명령어만 슬롯별 순번 카운터를 켠다(그 외엔 기존처럼 대표값 1개 고정).
-    counters = {} if mnemonic in DISTINCT_REG_MNEMONICS else None
-
-    per_position_candidates = []  # 오퍼랜드 자리마다 후보 리스트
+    counters 를 주면 슬롯마다 다른 레지스터를 고른다(None 이면 기존처럼 대표값 하나).
+    """
+    per_position_candidates = []
     operand_types = []
     notes = []
     for row in operand_rows:
@@ -543,11 +579,17 @@ def build_combos_for_row(operand_rows):
             continue  # 암묵 오퍼랜드: 자리 자체를 만들지 않는다
         per_position_candidates.append(candidates)
         operand_types.append(row["operand_token"])
+    return per_position_candidates, operand_types, notes
 
-    # 자리마다 후보 개수가 다르면(reg_or_mem=2개, 나머지=1개), 짧은 자리는 첫 후보를
-    # 반복해서 채운다(broadcast). 이러면 전수 곱집합 없이 "대표 조합 몇 개"만 생긴다.
+
+def combos_from_candidates(per_position_candidates, operand_types, notes):
+    """자리별 후보 목록 -> combo 목록.
+
+    자리마다 후보 개수가 다르면(reg_or_mem=2개, 나머지=1개) 짧은 자리는 첫 후보를
+    반복해서 채운다. 전수 곱집합 없이 "대표 조합 몇 개"만 만든다.
+    """
     if not per_position_candidates:
-        # 모든 오퍼랜드가 암묵 표기였던 경우 -> 오퍼랜드 없는 명령어 한 줄
+        # 오퍼랜드가 없거나 전부 암묵 표기였던 경우 -> 오퍼랜드 없는 명령어 한 줄
         return [{"operand_types": [], "operands": [], "note": "; ".join(notes)}]
 
     max_len = max(len(c) for c in per_position_candidates)
@@ -559,7 +601,68 @@ def build_combos_for_row(operand_rows):
             "operands": operands,
             "note": "; ".join(notes),
         })
-    return combos + build_variants(combos, mnemonic)
+    return combos
+
+
+def seed_counters_with_fixed(operand_rows, counters):
+    """매뉴얼이 지정한 고정 레지스터와 겹치지 않게 시작 순번을 밀어 둔다.
+
+    예: "RCL r/m8, CL" 은 두 번째 자리가 CL 로 고정이라, 첫 자리도 대표값 cl 을 쓰면
+    'rcl cl, cl' 이 되어 자리를 구분할 수 없다. 고정 자리를 먼저 세어 두면 dl 이 나온다.
+    """
+    for row in operand_rows:
+        atom = strip_decorations(row["operand_token"])
+        if row["operand_kind"] != "register" or GENERIC_REG_RE.match(atom):
+            continue
+        family = re.sub(r"\d+$", "", register_candidate(atom))
+        counters[family] = counters.get(family, 0) + 1
+
+
+def distinct_register_combos(operand_rows, mnemonic, base_combos):
+    """슬롯마다 다른 레지스터를 쓰는 변형.
+
+    기본 조합은 모든 자리에 같은 대표값을 써서 'vaddpd zmm0, zmm0, zmm0' 같은 줄이
+    2,000개 넘게 나온다. 이러면 도구가 오퍼랜드 순서를 바꿔 처리해도 결과가 같아서
+    순서 오류를 구분할 수 없다(7회 미팅 "원인 구분이 가능한 입력").
+
+    매뉴얼이 레지스터를 지정한 자리(AL, DX, ST(0) 등)는 바꾸지 않는다.
+    """
+    counters = {}
+    seed_counters_with_fixed(operand_rows, counters)
+    candidates, operand_types, notes = expand_operand_rows(operand_rows, mnemonic, counters)
+    combos = combos_from_candidates(candidates, operand_types, notes)
+    seen = [combo["operands"] for combo in base_combos]
+    extra = []
+    for combo in combos:
+        if combo["operands"] in seen:
+            continue  # 바뀐 자리가 없으면 변형을 만들지 않는다
+        seen.append(combo["operands"])
+        note = "; ".join(x for x in [combo["note"], "variant:distinct_regs"] if x)
+        extra.append(dict(combo, note=note))
+    return extra
+
+
+def build_combos_for_row(operand_rows):
+    """한 row_id 의 오퍼랜드 행들 -> combo 리스트.
+    각 combo 는 {"operand_types": [...], "operands": [...], "note": "..."} 형태다.
+
+    순서: 기본 조합 -> 값 변형(메모리/즉시값/마스크) -> 슬롯별 레지스터 변형.
+    새 변형은 항상 뒤에 붙인다. assign_stable_combo_ids 가 (row_id, combo_index) 로
+    기존 ID를 보존하므로, 앞쪽 순서를 바꾸면 과거 판정의 ID가 어긋난다.
+    """
+    first = operand_rows[0]
+    if first["operand_kind"] == "none":
+        return [{"operand_types": [], "operands": [], "note": ""}]
+
+    mnemonic = first["mnemonic"]
+    # "레지스터가 서로 달라야 하는" 명령어는 기본 조합부터 슬롯 순번을 쓴다.
+    counters = {} if mnemonic in DISTINCT_REG_MNEMONICS else None
+    candidates, operand_types, notes = expand_operand_rows(operand_rows, mnemonic, counters)
+    combos = combos_from_candidates(candidates, operand_types, notes)
+
+    return (combos
+            + build_variants(combos, mnemonic)
+            + distinct_register_combos(operand_rows, mnemonic, combos))
 
 
 def assign_stable_combo_ids(rows, prior_rows):

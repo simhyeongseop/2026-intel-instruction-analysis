@@ -106,6 +106,11 @@ TARGETS = [
     ("variant_imm_max", "variant", "8", "adc eax, 0x7fffffff",
      "해당 폭의 최대 양수. 0xffffffff 는 as가 부호확장 imm8(83 /2)로 줄이므로 쓰지 않는다. "
      "0x7fffffff 는 축약되지 않아 의도한 imm32 인코딩 행을 그대로 때린다."),
+    # ---- variant: 슬롯마다 다른 레지스터 (오퍼랜드 순서 오류 구분용) ----
+    ("variant_distinct_regs", "variant", "74", "add ecx, edx",
+     "모든 자리에 같은 레지스터를 쓰면 도구가 오퍼랜드 순서를 바꿔도 결과가 같아 구분할 수 없다."),
+    ("variant_distinct_regs", "variant", "88", "vaddpd zmm0, zmm1, zmm2",
+     "AVX-512 3오퍼랜드도 자리마다 다른 레지스터를 쓴다. 매뉴얼이 지정한 고정 레지스터는 그대로 둔다."),
     # ---- variant: AVX-512 장식 ----
     ("variant_avx512_mask", "variant", "88", "vaddpd zmm0 {k1}{z}, zmm0, zmm0",
      "{k1}{z} 표기. 현재는 장식을 지워서 마스크 있는 행을 시험하지 못한다."),
