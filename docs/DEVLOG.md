@@ -394,3 +394,32 @@
 - `check_report_numbers.py`에 `expected_rejected`(87), false_alarm 유형별 집계, 왕복 same/different,
   재조립 동일 건수를 추가했다. 네 문서 114건 대조 불일치 0.
 - 검증: 회귀 테스트 59개 통과. 파이프라인은 다시 돌리지 않았다.
+
+## 2026-09-21 [예외 검증] 예외 사례를 도구 9종에서 재확인 — MPX 미스터리 해소, clang 새 관측
+
+- 무엇을: 형섭 요청으로 발표자료를 "목표 / 필요성 / 파이프라인 설계도 / 결과 / 예외 ①~⑥ / 예외 분석"
+  구조로 다시 쓰고, 예외 사례를 **직접 빌드한 binutils 4종(2.42·2.45·2.46.1·2.47) + Godbolt의
+  gas 2종 + clang 3종(18·23.1·24-trunk)** 에서 같은 입력으로 다시 관측했다.
+  관측 원본은 `docs/review_artifacts/verify_cases_2026-09-21.json`,
+  재현 스크립트는 같은 폴더의 `verify_cases_2026-09-21.py`·`godbolt_api_2026-09-21.py`다.
+- **예외 ⑤의 MPX 미스터리가 풀렸다.** `bndcl bnd0, dword ptr [rax]`는 as 2.42가 받아주고
+  (`f3 0f 1a 00`) **2.45·2.46.1·2.47은 거부한다**(`` `bndcl' is not supported on `x86_64' ``).
+  Godbolt도 2.42 수용 / 2.44 거부로 같다. clang은 세 버전 모두 거부.
+  Intel이 MPX를 폐기하면서 binutils가 지원을 뺀 것이다. "as가 매뉴얼 무효 행을 이상하게 관대하게
+  받아준다"고 unsure로 남겼던 16건 중 MPX 계열은 **도구 결함이 아니라 우리가 낡은 버전을 쓴 탓**이다.
+- **예외 ⑥이 더 정확해졌다.** objdump가 낸 `lss rcx,FWORD PTR [rax]`를 **clang은 받아준다**
+  (같은 바이트 `48 0f b2 08`). 문법적으로 불가능한 글자가 아니라 as가 FWORD+rcx 조합을 막는 것이다.
+  → "objdump가 틀렸다"보다 **"같은 binutils 안에서 objdump와 as가 서로 안 맞는다"**가 정확한 진술이다.
+- **새 관측(미확정): clang이 레지스터를 조용히 바꾼다.** as가 거부하는 `lar ecx, rcx`를 clang은
+  받아주는데 결과가 `lar ecx,ecx`(clang 18·24) / `lar ecx,cx`(clang 23.1)로 **버전마다 다르다.**
+  `lsl rcx, ecx`도 clang 18이 `lsl rcx,rcx`로 바꾼다. 경고가 없다.
+  근거가 더 필요해 예외 ⑤의 추적 항목으로 남긴다.
+- **Godbolt 라벨 주의사항을 기록했다.** Compiler Explorer의 "x86-64 binutils 2.45"와 "(trunk)"는
+  `api/compilers`가 보고하는 실제 버전이 **둘 다 2.44**다. 2.45 이상은 소스 빌드로만 확인했다.
+  또 Godbolt의 assembly 뷰는 어떤 어셈블러를 쓰든 출력을 objdump 형식으로 보여주므로,
+  "조립되는가"는 확인되지만 "어느 디스어셈블러가 뭐라고 쓰는가"는 로컬 도구로 봐야 한다.
+- 그 밖에 확인된 것: SYSEXIT은 as가 `ambiguous operand size`로 거부하는데 **clang은 `sysexitd`
+  (`0f 35`)로 조립한다**(32비트를 기본값으로 고름). VPMOVQD·MOV Sreg·VSCATTERDPD는 **도구 7종이
+  전부 같은 이유로 거부**해 매뉴얼 쪽 문제라는 근거가 강해졌다.
+- 검증: 발표자료 43건·대본 27건·요약 21건 수치 대조 불일치 0. 회귀 테스트 59개 통과.
+  파이프라인은 다시 돌리지 않았다.
