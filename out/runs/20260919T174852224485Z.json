@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-09-19T17:48:52.224485+00:00",
+  "environment": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "tools": {
+      "as": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-as",
+        "version": [
+          "GNU assembler (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "7a2ef948033b05ad0c5dcb0d5be059bc68562b5d45713d91aee21df2b4bf4e92",
+        "probe": {
+          "command": [
+            "/usr/bin/as",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU assembler (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-linux-gnu'.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "clang": {
+        "available": true,
+        "path": "/usr/lib/llvm-18/bin/clang",
+        "version": [
+          "Ubuntu clang version 18.1.3 (1ubuntu1)"
+        ],
+        "sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+        "probe": {
+          "command": [
+            "/usr/bin/clang",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objdump": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objdump",
+        "version": [
+          "GNU objdump (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "d0041e7511460b9ebfd95ce4f9d93c7ffea398ffc1cb2c316a220dd8e533db3d",
+        "probe": {
+          "command": [
+            "/usr/bin/objdump",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objdump (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objcopy": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objcopy",
+        "version": [
+          "GNU objcopy (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "b22f4f909bff115ee2a37cd21ff76f5e0b8c65cd58f98edbce7b59f129980d67",
+        "probe": {
+          "command": [
+            "/usr/bin/objcopy",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objcopy (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "readelf": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-readelf",
+        "version": [
+          "GNU readelf (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+        "probe": {
+          "command": [
+            "/usr/bin/readelf",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "cpu": {
+      "vendor_id": "GenuineIntel",
+      "model name": "Intel(R) Core(TM) Ultra 5 226V",
+      "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+    }
+  },
+  "code_hashes": {
+    "pipeline/input_quality.py": "1ef02fbfa1cce1f864d69fd72a6fa45ec0ac08af1a8480695eba20a1869e7419",
+    "pipeline/instruction_check.py": "4e6806bcd2131fab982e0eea310d739f80c35a825a10a832c39bea3e5c617fe2",
+    "pipeline/m10_reassemble_check.py": "7c58b48f2cafc018456e6eb67c2e033f1ca023e3c16d74d37b949067d1d67ae3",
+    "pipeline/m11_execute.py": "ea22cc19caecfaad3cfdd5191307b9c142da941ac9a0806331c53f8c8c4361f6",
+    "pipeline/m12_execute_edge_cases.py": "2ea6528296e18d1c834d2f7254154ad0492ddd15ca76037766f84334d2ec82c9",
+    "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
+    "pipeline/m1_extract.py": "a50815dca4e1561c52f3598e6f213c322d4c6c1216015cb9acb56391920578e6",
+    "pipeline/m2_tokenize.py": "5242a650d0a008b2e10c5bfa705a99f9a049cfce1535aa3624556fff89bbfbc5",
+    "pipeline/m3_combine.py": "fd965a264670b75ad2917cce7a73562ea2f52295607380373b7cee7844abdfe7",
+    "pipeline/m4_generate.py": "398f34b18ab0a21584a5304930d9a430308a5cda3a4fa8256fb15eb6ea9e415f",
+    "pipeline/m5_assemble.py": "9c8ef50d988328d940fae42610267c1343ddd77a60307fd39887cd3f2fed4ea8",
+    "pipeline/m6_roundtrip.py": "b50cbd35deeaf941c1aca3478005e5f705a9096caaabfdcb70980e0a841dee22",
+    "pipeline/m7_triage.py": "e5d3cd1438493b9af65951a6f087aeb6acc356c4e609829907f7c3cfbb98d833",
+    "pipeline/m8_clang_assemble.py": "389e29c2360ae22e1357e0d9909cbed41113143fc9aa6e0e4c10b62cdc2076db",
+    "pipeline/m9_clang_compare.py": "3f8e75d06b55087d2a9fcd565571190c7929b9f7d0bbebef22b99e206eab3bf1",
+    "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "7fa209c55ffe1e1b803319ccd22056558039b2d3a81af14933ba89086a8ab27a"
+  },
+  "steps": [
+    {
+      "stage": "assembler",
+      "script": "pipeline/m5_assemble.py",
+      "input_hashes": {
+        "out/tests.s": "ecf5b8ef057f4c65e76d5d858f5295ed409aa506b671fe8991932b06ac634300"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m5_assemble.py"
+      ],
+      "returncode": 0,
+      "stdout": "입력 명령어 줄 수: 23323\n성공(ok): 23219  거부(error): 104\nmismatch(기대와 다름): 79\n출력: out/asm_result.csv, 오브젝트 디렉터리: out/objects\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/asm_result.csv": "c3c9e3c7405093926f10739227cce8df36b45cb5b9cac41f8950340b569060b2"
+      }
+    },
+    {
+      "stage": "roundtrip",
+      "script": "pipeline/m6_roundtrip.py",
+      "input_hashes": {
+        "out/asm_result.csv": "c3c9e3c7405093926f10739227cce8df36b45cb5b9cac41f8950340b569060b2"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m6_roundtrip.py"
+      ],
+      "returncode": 0,
+      "stdout": "대상 명령어 수(ok): 23219\nsame: 13228  different: 9991\n출력: out/roundtrip.csv\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/roundtrip.csv": "b9c468a39865166aaf8fd8bdf2ed0f54c957ec37bd0f78f01272b603943ea3cb"
+      }
+    },
+    {
+      "stage": "triage",
+      "script": "pipeline/m7_triage.py",
+      "input_hashes": {
+        "out/asm_result.csv": "c3c9e3c7405093926f10739227cce8df36b45cb5b9cac41f8950340b569060b2",
+        "out/roundtrip.csv": "b9c468a39865166aaf8fd8bdf2ed0f54c957ec37bd0f78f01272b603943ea3cb"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m7_triage.py"
+      ],
+      "returncode": 0,
+      "stdout": "전체 triage 대상: 10116건\n  numeric_repr: 7736건\n  broadcast_display: 860건\n  mnemonic_alias: 729건\n  implicit_operand_display: 210건\n  size_directive_inferred/omitted: 118건\n  encoding_form_annotation: 86건\n  fpu_stack_register_display: 71건\n  compile_error_expected_rejection_unclassified: 63건\n  relative_target_absolute_display: 42건\n  operand_count/order_changed: 35건\n  generator_did_not_target_invalid_variant: 33건\n  compile_error_operand_size_mismatch: 28건\n  implicit_operand_added_by_generator: 28건\n  register_width/name_changed: 22건\n  mismatch_assembler_more_permissive: 16건\n  duplicate_encoding_row_same_syntax: 9건\n  gas_ambiguous_bare_mnemonic: 4건\n  encoding_falls_back_to_nop: 4건\n  size_directive_name_changed: 3건\n  far_pointer_display: 3건\n  sib_addressing_display: 3건\n  ambiguous_syntax_resolved_to_valid_far_form: 2건\n  cpuid_conditional_availability_not_captured: 2건\n  lar_lsl_notation: 2건\n  compile_error_unclassified: 2건\n  sdm_gather_scatter_vsib_width_asymmetry: 2건\n  mov_sreg_memory: 1건\n  udb_support: 1건\n  sdm_table_typo_memory_size: 1건\nverdict 분포: {'false_alarm': 10066, 'unsure': 47, 'bug': 3}\n출력: out/triage.csv, out/triage_report.md\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/triage.csv": "355a582c5ea646c973dc25a2598c228f7e341cbb78f2a2d43a58e63f0481b966",
+        "out/triage_report.md": "9b17a689237dc9a87ffb7b3142ebacf4001026e27916c0f34f0c9dd840d2c2c2"
+      }
+    },
+    {
+      "stage": "clang_assemble",
+      "script": "pipeline/m8_clang_assemble.py",
+      "input_hashes": {
+        "out/tests.s": "ecf5b8ef057f4c65e76d5d858f5295ed409aa506b671fe8991932b06ac634300"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m8_clang_assemble.py"
+      ],
+      "returncode": 0,
+      "stdout": "입력 명령어 줄 수: 23323\nclang 성공(ok): 23157  실패(error): 166\nmismatch(기대와 다름): 137\n출력: out/clang_result.csv, 오브젝트 디렉터리: out/clang_objects\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/clang_result.csv": "57028ce3905381a3d323c128209fca12f688d4712569d06b1a5d5cb8a513c4f2"
+      }
+    },
+    {
+      "stage": "clang_compare",
+      "script": "pipeline/m9_clang_compare.py",
+      "input_hashes": {
+        "out/asm_result.csv": "c3c9e3c7405093926f10739227cce8df36b45cb5b9cac41f8950340b569060b2",
+        "out/clang_result.csv": "57028ce3905381a3d323c128209fca12f688d4712569d06b1a5d5cb8a513c4f2"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m9_clang_compare.py"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/mnt/c/Users/wltjq/OneDrive/assembler-testing/pipeline/m9_clang_compare.py\", line 267, in <module>\n    main()\n  File \"/mnt/c/Users/wltjq/OneDrive/assembler-testing/pipeline/m9_clang_compare.py\", line 130, in main\n    clang_disasm, clang_bytes = run_objdump(clang_paths, args.display_syntax)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/c/Users/wltjq/OneDrive/assembler-testing/pipeline/m9_clang_compare.py\", line 90, in run_objdump\n    result = subprocess.run(\n             ^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 550, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 1209, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 2116, in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n  File \"/usr/lib/python3.12/subprocess.py\", line 1253, in _check_timeout\n    raise TimeoutExpired(\nsubprocess.TimeoutExpired: Command '['objdump', '-d', '-M', 'intel', 'out/clang_objects/combo_1566.o', 'out/clang_objects/combo_1567.o', 'out/clang_objects/combo_1568.o', 'out/clang_objects/combo_1569.o', 'out/clang_objects/combo_1570.o', 'out/clang_objects/combo_1572.o', 'out/clang_objects/combo_1573.o', 'out/clang_objects/combo_1574.o', 'out/clang_objects/combo_1575.o', 'out/clang_objects/combo_1576.o', 'out/clang_objects/combo_1577.o', 'out/clang_objects/combo_1578.o', 'out/clang_objects/combo_1579.o', 'out/clang_objects/combo_1580.o', 'out/clang_objects/combo_1581.o', 'out/clang_objects/combo_1582.o', 'out/clang_objects/combo_1583.o', 'out/clang_objects/combo_1584.o', 'out/clang_objects/combo_1585.o', 'out/clang_objects/combo_1586.o', 'out/clang_objects/combo_1587.o', 'out/clang_objects/combo_1588.o', 'out/clang_objects/combo_1589.o', 'out/clang_objects/combo_1590.o', 'out/clang_objects/combo_1591.o', 'out/clang_objects/combo_1592.o', 'out/clang_objects/combo_1593.o', 'out/clang_objects/combo_1594.o', 'out/clang_objects/combo_1595.o', 'out/clang_objects/combo_1596.o', 'out/clang_objects/combo_1597.o', 'out/clang_objects/combo_1598.o', 'out/clang_objects/combo_1599.o', 'out/clang_objects/combo_1600.o', 'out/clang_objects/combo_1601.o', 'out/clang_objects/combo_1602.o', 'out/clang_objects/combo_1603.o', 'out/clang_objects/combo_1604.o', 'out/clang_objects/combo_1605.o', 'out/clang_objects/combo_1606.o', 'out/clang_objects/combo_1607.o', 'out/clang_objects/combo_1608.o', 'out/clang_objects/combo_1609.o', 'out/clang_objects/combo_1610.o', 'out/clang_objects/combo_1611.o', 'out/clang_objects/combo_1612.o', 'out/clang_objects/combo_1613.o', 'out/clang_objects/combo_1614.o', 'out/clang_objects/combo_1615.o', 'out/clang_objects/combo_1616.o', 'out/clang_objects/combo_1617.o', 'out/clang_objects/combo_1618.o', 'out/clang_objects/combo_1619.o', 'out/clang_objects/combo_1620.o', 'out/clang_objects/combo_1621.o', 'out/clang_objects/combo_1622.o', 'out/clang_objects/combo_1623.o', 'out/clang_objects/combo_1624.o', 'out/clang_objects/combo_1625.o', 'out/clang_objects/combo_1626.o', 'out/clang_objects/combo_1627.o', 'out/clang_objects/combo_1628.o', 'out/clang_objects/combo_1629.o', 'out/clang_objects/combo_1630.o', 'out/clang_objects/combo_1631.o', 'out/clang_objects/combo_1632.o', 'out/clang_objects/combo_1633.o', 'out/clang_objects/combo_1634.o', 'out/clang_objects/combo_1635.o', 'out/clang_objects/combo_1636.o', 'out/clang_objects/combo_1637.o', 'out/clang_objects/combo_1638.o', 'out/clang_objects/combo_1639.o', 'out/clang_objects/combo_1640.o', 'out/clang_objects/combo_1641.o', 'out/clang_objects/combo_1642.o', 'out/clang_objects/combo_1643.o', 'out/clang_objects/combo_1644.o', 'out/clang_objects/combo_1645.o', 'out/clang_objects/combo_1646.o', 'out/clang_objects/combo_1647.o', 'out/clang_objects/combo_1648.o', 'out/clang_objects/combo_1649.o', 'out/clang_objects/combo_1650.o', 'out/clang_objects/combo_1651.o', 'out/clang_objects/combo_1652.o', 'out/clang_objects/combo_1653.o', 'out/clang_objects/combo_1654.o', 'out/clang_objects/combo_1655.o', 'out/clang_objects/combo_1656.o', 'out/clang_objects/combo_1657.o', 'out/clang_objects/combo_1658.o', 'out/clang_objects/combo_1659.o', 'out/clang_objects/combo_1660.o', 'out/clang_objects/combo_1661.o', 'out/clang_objects/combo_1662.o', 'out/clang_objects/combo_1663.o', 'out/clang_objects/combo_1664.o', 'out/clang_objects/combo_1665.o', 'out/clang_objects/combo_1666.o', 'out/clang_objects/combo_1667.o', 'out/clang_objects/combo_1668.o', 'out/clang_objects/combo_1669.o', 'out/clang_objects/combo_1670.o', 'out/clang_objects/combo_1671.o', 'out/clang_objects/combo_1672.o', 'out/clang_objects/combo_1673.o', 'out/clang_objects/combo_1674.o', 'out/clang_objects/combo_1675.o', 'out/clang_objects/combo_1676.o', 'out/clang_objects/combo_1677.o', 'out/clang_objects/combo_1678.o', 'out/clang_objects/combo_1679.o', 'out/clang_objects/combo_1680.o', 'out/clang_objects/combo_1681.o', 'out/clang_objects/combo_1682.o', 'out/clang_objects/combo_1684.o', 'out/clang_objects/combo_1685.o', 'out/clang_objects/combo_1686.o', 'out/clang_objects/combo_1687.o', 'out/clang_objects/combo_1688.o', 'out/clang_objects/combo_1689.o', 'out/clang_objects/combo_1690.o', 'out/clang_objects/combo_1691.o', 'out/clang_objects/combo_1692.o', 'out/clang_objects/combo_1693.o', 'out/clang_objects/combo_1694.o', 'out/clang_objects/combo_1695.o', 'out/clang_objects/combo_1696.o', 'out/clang_objects/combo_1697.o', 'out/clang_objects/combo_1698.o', 'out/clang_objects/combo_1699.o', 'out/clang_objects/combo_1700.o', 'out/clang_objects/combo_1701.o', 'out/clang_objects/combo_1702.o', 'out/clang_objects/combo_1703.o', 'out/clang_objects/combo_1704.o', 'out/clang_objects/combo_1705.o', 'out/clang_objects/combo_1707.o', 'out/clang_objects/combo_1708.o', 'out/clang_objects/combo_1710.o', 'out/clang_objects/combo_1711.o', 'out/clang_objects/combo_1713.o', 'out/clang_objects/combo_1715.o', 'out/clang_objects/combo_1716.o', 'out/clang_objects/combo_1717.o', 'out/clang_objects/combo_1718.o', 'out/clang_objects/combo_1719.o', 'out/clang_objects/combo_1720.o', 'out/clang_objects/combo_1721.o', 'out/clang_objects/combo_1722.o', 'out/clang_objects/combo_1723.o', 'out/clang_objects/combo_1724.o', 'out/clang_objects/combo_1725.o', 'out/clang_objects/combo_1726.o', 'out/clang_objects/combo_1727.o', 'out/clang_objects/combo_1728.o', 'out/clang_objects/combo_1729.o', 'out/clang_objects/combo_1730.o', 'out/clang_objects/combo_1731.o', 'out/clang_objects/combo_1732.o', 'out/clang_objects/combo_1733.o', 'out/clang_objects/combo_1734.o', 'out/clang_objects/combo_1735.o', 'out/clang_objects/combo_1736.o', 'out/clang_objects/combo_1737.o', 'out/clang_objects/combo_1738.o', 'out/clang_objects/combo_1739.o', 'out/clang_objects/combo_1740.o', 'out/clang_objects/combo_1741.o', 'out/clang_objects/combo_1742.o', 'out/clang_objects/combo_1743.o', 'out/clang_objects/combo_1744.o', 'out/clang_objects/combo_1745.o', 'out/clang_objects/combo_1746.o', 'out/clang_objects/combo_1747.o', 'out/clang_objects/combo_1748.o', 'out/clang_objects/combo_1749.o', 'out/clang_objects/combo_1750.o', 'out/clang_objects/combo_1751.o', 'out/clang_objects/combo_1752.o', 'out/clang_objects/combo_1753.o', 'out/clang_objects/combo_1754.o', 'out/clang_objects/combo_1755.o', 'out/clang_objects/combo_1756.o', 'out/clang_objects/combo_1757.o', 'out/clang_objects/combo_1758.o', 'out/clang_objects/combo_1759.o', 'out/clang_objects/combo_1760.o', 'out/clang_objects/combo_1761.o', 'out/clang_objects/combo_1762.o', 'out/clang_objects/combo_1763.o', 'out/clang_objects/combo_1764.o', 'out/clang_objects/combo_1765.o', 'out/clang_objects/combo_1766.o', 'out/clang_objects/combo_1767.o', 'out/clang_objects/combo_1768.o', 'out/clang_objects/combo_1769.o', 'out/clang_objects/combo_1770.o', 'out/clang_objects/combo_1771.o', 'out/clang_objects/combo_1772.o', 'out/clang_objects/combo_1773.o', 'out/clang_objects/combo_1774.o', 'out/clang_objects/combo_1775.o', 'out/clang_objects/combo_1776.o', 'out/clang_objects/combo_1777.o', 'out/clang_objects/combo_1778.o', 'out/clang_objects/combo_1779.o', 'out/clang_objects/combo_1780.o', 'out/clang_objects/combo_1781.o', 'out/clang_objects/combo_1782.o', 'out/clang_objects/combo_1783.o', 'out/clang_objects/combo_1784.o', 'out/clang_objects/combo_1785.o', 'out/clang_objects/combo_1786.o', 'out/clang_objects/combo_1787.o', 'out/clang_objects/combo_1788.o', 'out/clang_objects/combo_1789.o', 'out/clang_objects/combo_1790.o', 'out/clang_objects/combo_1791.o', 'out/clang_objects/combo_1792.o', 'out/clang_objects/combo_1793.o', 'out/clang_objects/combo_1794.o', 'out/clang_objects/combo_1795.o', 'out/clang_objects/combo_1796.o', 'out/clang_objects/combo_1797.o', 'out/clang_objects/combo_1798.o', 'out/clang_objects/combo_1799.o', 'out/clang_objects/combo_1800.o', 'out/clang_objects/combo_1801.o', 'out/clang_objects/combo_1802.o', 'out/clang_objects/combo_1803.o', 'out/clang_objects/combo_1804.o', 'out/clang_objects/combo_1805.o', 'out/clang_objects/combo_1806.o', 'out/clang_objects/combo_1807.o', 'out/clang_objects/combo_1808.o', 'out/clang_objects/combo_1809.o', 'out/clang_objects/combo_1810.o', 'out/clang_objects/combo_1811.o', 'out/clang_objects/combo_1812.o', 'out/clang_objects/combo_1813.o', 'out/clang_objects/combo_1814.o', 'out/clang_objects/combo_1815.o', 'out/clang_objects/combo_1816.o', 'out/clang_objects/combo_1817.o', 'out/clang_objects/combo_1818.o', 'out/clang_objects/combo_1819.o', 'out/clang_objects/combo_1820.o', 'out/clang_objects/combo_1821.o', 'out/clang_objects/combo_1822.o', 'out/clang_objects/combo_1823.o', 'out/clang_objects/combo_1824.o', 'out/clang_objects/combo_1825.o', 'out/clang_objects/combo_1826.o', 'out/clang_objects/combo_1827.o', 'out/clang_objects/combo_1828.o', 'out/clang_objects/combo_1829.o', 'out/clang_objects/combo_1830.o', 'out/clang_objects/combo_1831.o', 'out/clang_objects/combo_1832.o', 'out/clang_objects/combo_1833.o', 'out/clang_objects/combo_1834.o', 'out/clang_objects/combo_1835.o', 'out/clang_objects/combo_1836.o', 'out/clang_objects/combo_1837.o', 'out/clang_objects/combo_1838.o', 'out/clang_objects/combo_1839.o', 'out/clang_objects/combo_1840.o', 'out/clang_objects/combo_1841.o', 'out/clang_objects/combo_1842.o', 'out/clang_objects/combo_1843.o', 'out/clang_objects/combo_1844.o', 'out/clang_objects/combo_1845.o', 'out/clang_objects/combo_1846.o', 'out/clang_objects/combo_1847.o', 'out/clang_objects/combo_1848.o', 'out/clang_objects/combo_1849.o', 'out/clang_objects/combo_1850.o', 'out/clang_objects/combo_1851.o', 'out/clang_objects/combo_1852.o', 'out/clang_objects/combo_1853.o', 'out/clang_objects/combo_1854.o', 'out/clang_objects/combo_1855.o', 'out/clang_objects/combo_1856.o', 'out/clang_objects/combo_1857.o', 'out/clang_objects/combo_1858.o', 'out/clang_objects/combo_1859.o', 'out/clang_objects/combo_1860.o', 'out/clang_objects/combo_1861.o', 'out/clang_objects/combo_1862.o', 'out/clang_objects/combo_1863.o', 'out/clang_objects/combo_1864.o', 'out/clang_objects/combo_1865.o', 'out/clang_objects/combo_1866.o', 'out/clang_objects/combo_1867.o', 'out/clang_objects/combo_1868.o', 'out/clang_objects/combo_1869.o', 'out/clang_objects/combo_1870.o', 'out/clang_objects/combo_1871.o', 'out/clang_objects/combo_1872.o', 'out/clang_objects/combo_1873.o', 'out/clang_objects/combo_1874.o', 'out/clang_objects/combo_1875.o', 'out/clang_objects/combo_1876.o', 'out/clang_objects/combo_1877.o', 'out/clang_objects/combo_1878.o', 'out/clang_objects/combo_1879.o', 'out/clang_objects/combo_1880.o', 'out/clang_objects/combo_1881.o', 'out/clang_objects/combo_1882.o', 'out/clang_objects/combo_1883.o', 'out/clang_objects/combo_1884.o', 'out/clang_objects/combo_1885.o', 'out/clang_objects/combo_1886.o', 'out/clang_objects/combo_1887.o', 'out/clang_objects/combo_1888.o', 'out/clang_objects/combo_1889.o', 'out/clang_objects/combo_1890.o', 'out/clang_objects/combo_1891.o', 'out/clang_objects/combo_1892.o', 'out/clang_objects/combo_1893.o', 'out/clang_objects/combo_1894.o', 'out/clang_objects/combo_1895.o', 'out/clang_objects/combo_1896.o', 'out/clang_objects/combo_1897.o', 'out/clang_objects/combo_1898.o', 'out/clang_objects/combo_1899.o', 'out/clang_objects/combo_1900.o', 'out/clang_objects/combo_1901.o', 'out/clang_objects/combo_1902.o', 'out/clang_objects/combo_1903.o', 'out/clang_objects/combo_1904.o', 'out/clang_objects/combo_1905.o', 'out/clang_objects/combo_1906.o', 'out/clang_objects/combo_1907.o', 'out/clang_objects/combo_1908.o', 'out/clang_objects/combo_1909.o', 'out/clang_objects/combo_1910.o', 'out/clang_objects/combo_1911.o', 'out/clang_objects/combo_1912.o', 'out/clang_objects/combo_1913.o', 'out/clang_objects/combo_1914.o', 'out/clang_objects/combo_1915.o', 'out/clang_objects/combo_1916.o', 'out/clang_objects/combo_1917.o', 'out/clang_objects/combo_1918.o', 'out/clang_objects/combo_1919.o', 'out/clang_objects/combo_1920.o', 'out/clang_objects/combo_1921.o', 'out/clang_objects/combo_1922.o', 'out/clang_objects/combo_1923.o', 'out/clang_objects/combo_1924.o', 'out/clang_objects/combo_1925.o', 'out/clang_objects/combo_1926.o', 'out/clang_objects/combo_1927.o', 'out/clang_objects/combo_1928.o', 'out/clang_objects/combo_1929.o', 'out/clang_objects/combo_1930.o', 'out/clang_objects/combo_1931.o', 'out/clang_objects/combo_1932.o', 'out/clang_objects/combo_1933.o', 'out/clang_objects/combo_1934.o', 'out/clang_objects/combo_1935.o', 'out/clang_objects/combo_1936.o', 'out/clang_objects/combo_1937.o', 'out/clang_objects/combo_1938.o', 'out/clang_objects/combo_1939.o', 'out/clang_objects/combo_1940.o', 'out/clang_objects/combo_1941.o', 'out/clang_objects/combo_1942.o', 'out/clang_objects/combo_1943.o', 'out/clang_objects/combo_1944.o', 'out/clang_objects/combo_1945.o', 'out/clang_objects/combo_1946.o', 'out/clang_objects/combo_1947.o', 'out/clang_objects/combo_1948.o', 'out/clang_objects/combo_1949.o', 'out/clang_objects/combo_1950.o', 'out/clang_objects/combo_1951.o', 'out/clang_objects/combo_1952.o', 'out/clang_objects/combo_1953.o', 'out/clang_objects/combo_1954.o', 'out/clang_objects/combo_1955.o', 'out/clang_objects/combo_1956.o', 'out/clang_objects/combo_1957.o', 'out/clang_objects/combo_1958.o', 'out/clang_objects/combo_1959.o', 'out/clang_objects/combo_1960.o', 'out/clang_objects/combo_1961.o', 'out/clang_objects/combo_1962.o', 'out/clang_objects/combo_1963.o', 'out/clang_objects/combo_1964.o', 'out/clang_objects/combo_1965.o', 'out/clang_objects/combo_1966.o', 'out/clang_objects/combo_1967.o', 'out/clang_objects/combo_1968.o', 'out/clang_objects/combo_1969.o', 'out/clang_objects/combo_1970.o', 'out/clang_objects/combo_1971.o', 'out/clang_objects/combo_1972.o', 'out/clang_objects/combo_1973.o', 'out/clang_objects/combo_1974.o', 'out/clang_objects/combo_1975.o', 'out/clang_objects/combo_1976.o', 'out/clang_objects/combo_1977.o', 'out/clang_objects/combo_1978.o', 'out/clang_objects/combo_1979.o', 'out/clang_objects/combo_1980.o', 'out/clang_objects/combo_1981.o', 'out/clang_objects/combo_1982.o', 'out/clang_objects/combo_1983.o', 'out/clang_objects/combo_1984.o', 'out/clang_objects/combo_1985.o', 'out/clang_objects/combo_1986.o', 'out/clang_objects/combo_1987.o', 'out/clang_objects/combo_1988.o', 'out/clang_objects/combo_1989.o', 'out/clang_objects/combo_1990.o', 'out/clang_objects/combo_1991.o', 'out/clang_objects/combo_1992.o', 'out/clang_objects/combo_1993.o', 'out/clang_objects/combo_1994.o', 'out/clang_objects/combo_1995.o', 'out/clang_objects/combo_1996.o', 'out/clang_objects/combo_1997.o', 'out/clang_objects/combo_1998.o', 'out/clang_objects/combo_1999.o', 'out/clang_objects/combo_2000.o', 'out/clang_objects/combo_2001.o', 'out/clang_objects/combo_2002.o', 'out/clang_objects/combo_2003.o', 'out/clang_objects/combo_2004.o', 'out/clang_objects/combo_2005.o', 'out/clang_objects/combo_2006.o', 'out/clang_objects/combo_2007.o', 'out/clang_objects/combo_2008.o', 'out/clang_objects/combo_2009.o', 'out/clang_objects/combo_2010.o', 'out/clang_objects/combo_2011.o', 'out/clang_objects/combo_2012.o', 'out/clang_objects/combo_2013.o', 'out/clang_objects/combo_2014.o', 'out/clang_objects/combo_2015.o', 'out/clang_objects/combo_2016.o', 'out/clang_objects/combo_2017.o', 'out/clang_objects/combo_2018.o', 'out/clang_objects/combo_2019.o', 'out/clang_objects/combo_2020.o', 'out/clang_objects/combo_2021.o', 'out/clang_objects/combo_2022.o', 'out/clang_objects/combo_2023.o', 'out/clang_objects/combo_2024.o', 'out/clang_objects/combo_2025.o', 'out/clang_objects/combo_2026.o', 'out/clang_objects/combo_2027.o', 'out/clang_objects/combo_2028.o', 'out/clang_objects/combo_2029.o', 'out/clang_objects/combo_2030.o', 'out/clang_objects/combo_2031.o', 'out/clang_objects/combo_2032.o', 'out/clang_objects/combo_2033.o', 'out/clang_objects/combo_2034.o', 'out/clang_objects/combo_2035.o', 'out/clang_objects/combo_2036.o', 'out/clang_objects/combo_2037.o', 'out/clang_objects/combo_2038.o', 'out/clang_objects/combo_2039.o', 'out/clang_objects/combo_2040.o', 'out/clang_objects/combo_2041.o', 'out/clang_objects/combo_2042.o', 'out/clang_objects/combo_2043.o', 'out/clang_objects/combo_2044.o', 'out/clang_objects/combo_2045.o', 'out/clang_objects/combo_2046.o', 'out/clang_objects/combo_2047.o', 'out/clang_objects/combo_2048.o', 'out/clang_objects/combo_2049.o', 'out/clang_objects/combo_2050.o', 'out/clang_objects/combo_2051.o', 'out/clang_objects/combo_2052.o', 'out/clang_objects/combo_2053.o', 'out/clang_objects/combo_2054.o', 'out/clang_objects/combo_2055.o', 'out/clang_objects/combo_2056.o', 'out/clang_objects/combo_2057.o', 'out/clang_objects/combo_2058.o', 'out/clang_objects/combo_2063.o', 'out/clang_objects/combo_2064.o', 'out/clang_objects/combo_2065.o', 'out/clang_objects/combo_2066.o', 'out/clang_objects/combo_2067.o', 'out/clang_objects/combo_2068.o', 'out/clang_objects/combo_2069.o', 'out/clang_objects/combo_2070.o', 'out/clang_objects/combo_2071.o', 'out/clang_objects/combo_2072.o', 'out/clang_objects/combo_2073.o', 'out/clang_objects/combo_2074.o', 'out/clang_objects/combo_2075.o']' timed out after 180 seconds\n",
+      "status": "failed",
+      "output_hashes": {
+        "out/clang_compare.csv": "cadb3fd051124a9a232b7a8c5d858f68436ad77738519b39b7be2ae173de982b",
+        "out/clang_compare_report.md": "7c5ac3d3f1f4c576da7b0b9b981d27605b1cbf89e2ff56cc16a028f9ca4ebfcb"
+      }
+    }
+  ],
+  "completed": false,
+  "finished_utc": "2026-09-20T05:42:05.521896+00:00"
+}

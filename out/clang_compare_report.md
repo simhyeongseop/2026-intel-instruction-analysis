@@ -10,11 +10,11 @@ SDM 위반 여부 판단은 별도로 원문 대조가 필요하다.
 
 | 카테고리 | 건수 | 의미 |
 |---|---|---|
-| both_ok_same_bytes | 18843 | 둘 다 성공, 바이트(hex) 인코딩이 완전히 같음 |
-| both_ok_diff_bytes | 111 | 둘 다 성공, 바이트 인코딩이 다름 |
-| as_only | 66 | as만 성공, clang은 거부 |
+| both_ok_same_bytes | 23020 | 둘 다 성공, 바이트(hex) 인코딩이 완전히 같음 |
+| both_ok_diff_bytes | 125 | 둘 다 성공, 바이트 인코딩이 다름 |
+| as_only | 74 | as만 성공, clang은 거부 |
 | clang_only | 12 | clang만 성공, as는 거부 |
-| both_reject | 88 | as/clang 둘 다 거부 |
+| both_reject | 92 | as/clang 둘 다 거부 |
 | parse_error | 0 | 둘 다 성공했다고 나왔는데 objdump가 바이트를 못 뽑음 (조사 필요) |
 
 ## both_ok_diff_bytes 사례 (최대 30건)

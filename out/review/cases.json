@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-09-15T10:25:50.708428+00:00",
+  "created_utc": "2026-09-20T05:52:04.581442+00:00",
   "environment": {
     "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
     "machine": "x86_64",
@@ -4434,7 +4434,7 @@
       "-Werror",
       "/mnt/c/Users/wltjq/OneDrive/assembler-testing/tests/review_cpu_cases.c",
       "-o",
-      "/tmp/asm_review_cpu_kislz15a/review"
+      "/tmp/asm_review_cpu_4ap0ycnw/review"
     ],
     "returncode": 0,
     "stdout": "",
@@ -4444,7 +4444,7 @@
   },
   "cpu_run": {
     "command": [
-      "/tmp/asm_review_cpu_kislz15a/review"
+      "/tmp/asm_review_cpu_4ap0ycnw/review"
     ],
     "returncode": 0,
     "stdout": "{\"case\":\"mov_sreg_boundary\",\"variant\":0,\"bytes_before_guard\":1,\"exit\":139,\"signal\":11,\"si_code\":2,\"fault_at_guard\":true,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":0,\"bytes_before_guard\":2,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":0,\"bytes_before_guard\":8,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":1,\"bytes_before_guard\":1,\"exit\":139,\"signal\":11,\"si_code\":2,\"fault_at_guard\":true,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":1,\"bytes_before_guard\":2,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":1,\"bytes_before_guard\":8,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":2,\"bytes_before_guard\":1,\"exit\":139,\"signal\":11,\"si_code\":2,\"fault_at_guard\":true,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":2,\"bytes_before_guard\":2,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":2,\"bytes_before_guard\":8,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":3,\"bytes_before_guard\":1,\"exit\":139,\"signal\":11,\"si_code\":2,\"fault_at_guard\":true,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":3,\"bytes_before_guard\":2,\"exit\":139,\"signal\":11,\"si_code\":2,\"fault_at_guard\":true,\"pass\":true}\n{\"case\":\"mov_sreg_boundary\",\"variant\":3,\"bytes_before_guard\":8,\"exit\":0,\"signal\":0,\"si_code\":0,\"fault_at_guard\":false,\"pass\":true}\n{\"case\":\"lar_width\",\"selector\":0,\"r32_result\":\"123456789abcdef0\",\"r64_result\":\"123456789abcdef0\",\"zf32\":0,\"zf64\":0,\"pass\":true}\n{\"case\":\"lar_width\",\"selector\":51,\"r32_result\":\"0000000000affb00\",\"r64_result\":\"0000000000affb00\",\"zf32\":1,\"zf64\":1,\"pass\":true}\n{\"case\":\"lar_width\",\"selector\":43,\"r32_result\":\"0000000000cff300\",\"r64_result\":\"0000000000cff300\",\"zf32\":1,\"zf64\":1,\"pass\":true}\n{\"case\":\"lar_width\",\"selector\":65532,\"r32_result\":\"123456789abcdef0\",\"r64_result\":\"123456789abcdef0\",\"zf32\":0,\"zf64\":0,\"pass\":true}\n{\"case\":\"lsl_width\",\"selector\":0,\"r32_result\":\"123456789abcdef0\",\"r64_result\":\"123456789abcdef0\",\"zf32\":0,\"zf64\":0,\"pass\":true}\n{\"case\":\"lsl_width\",\"selector\":51,\"r32_result\":\"00000000ffffffff\",\"r64_result\":\"00000000ffffffff\",\"zf32\":1,\"zf64\":1,\"pass\":true}\n{\"case\":\"lsl_width\",\"selector\":43,\"r32_result\":\"00000000ffffffff\",\"r64_result\":\"00000000ffffffff\",\"zf32\":1,\"zf64\":1,\"pass\":true}\n{\"case\":\"lsl_width\",\"selector\":65532,\"r32_result\":\"123456789abcdef0\",\"r64_result\":\"123456789abcdef0\",\"zf32\":0,\"zf64\":0,\"pass\":true}\n",
