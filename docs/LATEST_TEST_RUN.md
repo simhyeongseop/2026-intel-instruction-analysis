@@ -17,7 +17,7 @@ bash scripts/run_ubuntu_tests.sh
 | 고정 재심 사례 + CPU 대조 | 통과 |
 | 11단계 주소 실행 | 6건, 기대값 일치 |
 | 12단계 경계 실행 | 29건, 도구 오류 없음 |
-| 13단계 lint | 생성 23,323 + 추가 7건, manifest 검사 통과 |
+| 13단계 lint | 생성 23,323 + 추가 14건, manifest 검사 통과 |
 
 파이프라인 5~10단계 (입력 23,323줄, 고유 소스 19,984):
 
@@ -30,10 +30,10 @@ bash scripts/run_ubuntu_tests.sh
 | 8단계 clang | 수용 23,157 / 거부 166 |
 | 9단계 바이트 비교 | 같음 23,020 / 다름 125 / as만 74 / clang만 12 / 둘 다 거부 92 |
 | 10단계 재어셈블 | 바이트 동일 9,834 / 다름 7 / 실패 51 / 라벨 artifact 99 |
-| 13단계 상태 | accepted 4,295 / needs_review 18,926 / rejected 106 / incomplete 3 |
+| 13단계 상태 | accepted 4,295 / needs_review 18,933 / rejected 106 / incomplete 3 |
 | 점검 도구 | 건전성 FAIL 0 · 수용→거부 회귀 0 · 판정 감사 어긋남 0 |
 
-`needs_review` 18,926건은 버그 수가 아니다. 대부분(17,847건)은 지정한 SDM 행의 legacy opcode
+`needs_review` 18,933건은 버그 수가 아니다. 대부분(17,847건)은 지정한 SDM 행의 legacy opcode
 필드를 대조할 수 없는 행(VEX/EVEX 등)이라 `not_checked`로 남은 것이다. 이 중 349건은 실제로
 지정 행과 다른 인코딩이 나온 것(`different_encoding`)이고, 344건은 의도한 인코딩을 시험하지
 못한 것(`target_encoding_not_exercised`)으로 표시된다.

@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_utc": "2026-09-20T06:06:03.631549+00:00",
+  "created_utc": "2026-09-20T23:52:25.903494+00:00",
   "environment": {
     "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
     "machine": "x86_64",
@@ -109,9 +109,9 @@
     }
   },
   "input_hashes": {
-    "data/db/isa_db.csv": "71a32be092b212a11fb3cba8798aaadfe7a713fdcbf8f09e25f7dbbf8ac08be5",
+    "data/db/isa_db.csv": "e36b9c6c72f9ba3b76f4d84073a4f0b28b01ea37da3dea70087d5d33699e7f8f",
     "out/asm_result.csv": "c3c9e3c7405093926f10739227cce8df36b45cb5b9cac41f8950340b569060b2",
-    "data/cases.csv": "70c0585b12c1a27cacfe687bc0a7015fcb4daad017d42b6ebae5762618a28f9b"
+    "data/cases.csv": "3e4d0ffec6b4ee0e480da354364b5918e3b54ccded7cc9996a009ab1d31b031b"
   },
   "code_hashes": {
     "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
@@ -119,13 +119,13 @@
     "pipeline/operand_forms.py": "99220e0bed49c612d8422da1c03bcfe10dd524914307560672a4fcc85e316776"
   },
   "generated_cases": 23323,
-  "supplemental_cases": 7,
-  "unique_sources": 19986,
+  "supplemental_cases": 14,
+  "unique_sources": 19991,
   "truncated": false,
   "status_counts": {
     "rejected": 106,
     "accepted": 4295,
-    "needs_review": 18926,
+    "needs_review": 18933,
     "incomplete": 3
   },
   "opcode_field_counts": {
@@ -143,7 +143,7 @@
   "semantic_coverage": "not_measured",
   "tool_error": false,
   "output_hashes": {
-    "results.csv": "61d098ad6c7029a8bef1085ed4a137ffaf22aec256a3fffa2965e3683a7ae2f3",
-    "observations.jsonl": "72c0c37fe4ff123288b7cd177e416a6b2d90c7c89d6622655b099527a46f8495"
+    "results.csv": "204208e0b73acc2fb2a9044e3c62e893b06ae07deebc68d9ee5ff1383ee7055c",
+    "observations.jsonl": "f2e95c597864cef24884bec5a19581cd0aeb62739cd6449b761319f93de274f3"
   }
 }
