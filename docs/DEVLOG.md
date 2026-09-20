@@ -531,3 +531,28 @@
 - 다음 과제: (1) `data/cases.csv`에 `lar rcx, rcx`·`lsl rcx, rcx`를 등록해 파이프라인이 상시
   감시하게 한다 (2) 두 인코딩의 실행 결과를 11단계 CPU 실험으로 대조한다
   (3) 대칭형 변형을 생성기에 추가한다.
+
+## 2026-09-21 [사례 등록] 오늘 확정한 형태를 cases.csv에 등록 + 왕복 관측 회귀 테스트
+
+- 형섭 요청으로 대칭형을 `data/cases.csv`에 등록하려다 **이미 등록돼 있는 것을 확인했다.**
+  `lar_r64_symmetric`(`lar rcx, rcx`)·`lsl_r64_symmetric`(`lsl rcx, rcx`)는 처음부터 있었고,
+  13단계가 이미 `as=0f02c9 / clang=480f02c9 / different_encoding`으로 보고하고 있었다.
+  `instruction_check.py:197`에 `lar_lsl_rex_selection` 판정까지 있어 "REX.W 형식 자체를 시험하려
+  했다면 검사되지 않았다"고 적고 있었다. **도구는 이미 잡고 있었고 우리가 해석하지 않았을 뿐이다.**
+- 새로 등록한 7건: `vpmovqd_evex128_half_mem`, `vpmovqd_evex256_manual_form`,
+  `vscatterdpd_evex256_half_index`, `vpscatterdq_evex256_control`, `sysexit_rexw_suffix`,
+  `sysexit_no_rexw_suffix`, `sysret_rexw_suffix`. 오늘 확정한 "매뉴얼의 다른 열로 고쳐 쓴 형태"와
+  그 대조군이다. 보충 사례 7 → 14건.
+- 등록하면서 나온 관측: **비REX.W SYSEXIT 행에는 두 도구가 공통으로 받는 표기가 없다.**
+  `sysexit`은 as 거부·clang 수용(`0f 35`), `sysexitd`는 as 수용(`0f 35`)·clang 거부.
+  REX.W 행은 `sysexitq`로 공통이다. SYSRET도 같다. 차등 테스트의 "같은 입력을 두 도구에" 전제가
+  이 행에서는 성립하지 않는다.
+- `tests/test_manual_notation_cases.py`(10개) 추가. 오늘 관측을 바이트 단위로 고정한다 —
+  VPMOVQD Half Mem, 형제 행, VSCATTERDPD 절반 인덱스, SYSEXIT 접미사와 이식성,
+  as의 REX.W 소실(Intel·AT&T·접미사 모두), **`48 0f 02 c9` → objdump → as 왕복에서 바이트가
+  달라지는 것**, 그리고 대비군으로 LSS의 시끄러운 왕복 실패. 이 테스트가 깨지면 버그가 아니라
+  도구 동작이 바뀐 것이므로 관측을 다시 기록하라고 파일 상단에 적었다.
+- 반례 확인: 왕복이 성공한다고 기대를 바꾸면 2건 실패, as가 REX.W를 낸다고 바꾸면 1건 실패,
+  VPMOVQD가 m128로도 된다고 바꾸면 1건 실패. 정상 상태에서는 0건.
+- 13단계는 cases.csv 변경 후 재실행 중이다. 완료되면 보충 사례 수와 상태 분포가 7건만큼 바뀌므로
+  문서 수치를 다시 대조해야 한다.
