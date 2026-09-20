@@ -6,6 +6,7 @@
 
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -63,3 +64,42 @@ class ProcessFailureTriage(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class ObjdumpBatchRetry(unittest.TestCase):
+    """objdump 배치가 일시적으로 느려졌을 때 단계 전체가 죽지 않아야 한다.
+
+    2026-09-20에 8단계가 오브젝트 23,157개를 막 쓴 직후 9단계의 배치 하나가 180초를
+    넘겨 단계가 실패했다. 같은 배치를 나중에 재보면 2.8초였다(파일시스템 일시 지연).
+    """
+
+    def setUp(self):
+        from pipeline import m9_clang_compare
+        self.module = m9_clang_compare
+        self.real_run = subprocess.run
+        self.calls = []
+
+    def tearDown(self):
+        subprocess.run = self.real_run
+
+    def fake_run(self, limit):
+        def run(args, **kwargs):
+            size = len(args) - 1
+            self.calls.append(size)
+            if size > limit:
+                raise subprocess.TimeoutExpired(args, kwargs.get("timeout"))
+            return subprocess.CompletedProcess(args, 0, stdout=f"[{size}]", stderr="")
+        return run
+
+    def test_slow_batch_is_split_and_merged(self):
+        subprocess.run = self.fake_run(limit=2)
+        result = self.module.run_objdump_batch(["objdump"], [f"f{i}" for i in range(8)])
+        self.assertEqual(self.calls[0], 8)          # 먼저 통째로 시도하고
+        self.assertEqual(max(self.calls[1:]), 4)    # 반씩 갈라 다시 시도한다
+        self.assertEqual(result.stdout, "[2][2][2][2]")  # 출력은 순서대로 합쳐진다
+
+    def test_single_file_timeout_still_fails(self):
+        """반례: 파일 하나가 정말 안 끝나면 조용히 넘어가면 안 된다."""
+        subprocess.run = self.fake_run(limit=0)
+        with self.assertRaises(subprocess.TimeoutExpired):
+            self.module.run_objdump_batch(["objdump"], ["only.o"])

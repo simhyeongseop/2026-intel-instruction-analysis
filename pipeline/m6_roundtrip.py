@@ -30,6 +30,7 @@ OUT_CSV = "out/roundtrip.csv"
 # 예: "out/objects/combo_42.o:     file format elf64-x86-64"
 FILE_HEADER_RE = re.compile(r"^(.+):\s+file format")
 BATCH_SIZE = 500
+OBJDUMP_TIMEOUT = 600  # 초. 배치가 넘기면 반으로 갈라 재시도한다
 
 
 def read_ok_rows(path):
@@ -66,6 +67,25 @@ def parse_objdump_output(text):
     return disasm_by_path
 
 
+def run_objdump_batch(args, batch, timeout=OBJDUMP_TIMEOUT):
+    """objdump 한 배치를 실행한다. 일시적으로 느려지면 배치를 반으로 갈라 다시 시도한다.
+
+    오브젝트 수만 개를 막 만든 직후에는 파일시스템이 느려져 배치 하나가 제한 시간을
+    넘길 수 있다(2026-09-20 관측: 같은 배치가 평소 3초, 그때는 180초 초과).
+    단계 전체를 죽이는 대신 잘라서 다시 시도하고, 그래도 안 되면 그때 실패시킨다.
+    """
+    try:
+        return subprocess.run(args + batch, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        if len(batch) == 1:
+            raise
+        half = len(batch) // 2
+        first = run_objdump_batch(args, batch[:half], timeout)
+        second = run_objdump_batch(args, batch[half:], timeout)
+        first.stdout += second.stdout
+        return first
+
+
 def run_objdump(object_paths, display_syntax='intel'):
     """objdump -d -M intel 을 한 번에 실행한다.
 
@@ -75,10 +95,7 @@ def run_objdump(object_paths, display_syntax='intel'):
     disasm_by_path = {}
     for start in range(0, len(object_paths), BATCH_SIZE):
         batch = object_paths[start:start + BATCH_SIZE]
-        result = subprocess.run(
-            ["objdump", "-d", "-M", display_syntax] + batch,
-            capture_output=True, text=True, timeout=180,
-        )
+        result = run_objdump_batch(["objdump", "-d", "-M", display_syntax], batch)
         disasm_by_path.update(parse_objdump_output(result.stdout))
     return disasm_by_path
 
