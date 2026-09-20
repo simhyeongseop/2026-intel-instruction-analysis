@@ -67,6 +67,7 @@ def count_assemble():
         'crashed': result['crashed'],
         'timeout': result['timeout'],
         'valid_rejected': len(valid_rejected),
+        'expected_rejected': result['error'] - len(valid_rejected),
         'valid_rejected_mnemonics': sorted({row['mnemonic'] for row in valid_rejected}),
     }
 
@@ -75,8 +76,11 @@ def count_triage():
     rows = read_rows(ROOT / 'out/triage.csv')
     unsure = collections.Counter(
         row['category'] for row in rows if row['verdict'] == 'unsure')
+    false_alarm = collections.Counter(
+        row['category'] for row in rows if row['verdict'] == 'false_alarm')
     return {
         'rows': len(rows),
+        'false_alarm_categories': dict(false_alarm),
         'verdict': dict(count_field(rows, 'verdict')),
         'review_status': dict(count_field(rows, 'review_status')),
         'unsure_categories': dict(unsure),
@@ -195,8 +199,8 @@ DOC_KEYS = {
     'clang거부': 'clang.clang_result.error',
     '바이트같음': 'clang.category.both_ok_same_bytes',
     '바이트다름': 'clang.category.both_ok_diff_bytes',
-    'as만거부': 'clang.category.as_only',
-    'clang만거부': 'clang.category.clang_only',
+    'as만수용': 'clang.category.as_only',
+    'clang만수용': 'clang.category.clang_only',
     '둘다거부': 'clang.category.both_reject',
     'bug': 'triage.verdict.bug',
     'false_alarm': 'triage.verdict.false_alarm',
@@ -217,6 +221,14 @@ DOC_KEYS = {
     '미타격_대칭행': 'encoding_causes.causes.same_syntax_other_row',
     '미타격_분기축약': 'encoding_causes.causes.branch_displacement_shortened',
     '미타격_rexw': 'encoding_causes.causes.rex_w_not_emitted',
+    '기대된거부': 'assemble.expected_rejected',
+    '왕복같음': 'roundtrip.compare.same',
+    '왕복다름': 'roundtrip.compare.different',
+    '재조립동일': 'roundtrip.reassemble.byte_roundtrip_same',
+    '표기_숫자': 'triage.false_alarm_categories.numeric_repr',
+    '표기_별명': 'triage.false_alarm_categories.mnemonic_alias',
+    '표기_브로드캐스트': 'triage.false_alarm_categories.broadcast_display',
+    '표기_숨은오퍼랜드': 'triage.false_alarm_categories.implicit_operand_display',
 }
 
 
