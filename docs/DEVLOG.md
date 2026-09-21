@@ -651,3 +651,31 @@ GNU as LAR/LSL REX.W 누락이 반례이고, 미재심 10,109건·unsure 47건�
 `verify_cases_2026-09-21.py`가 LLVM에 GNU 전용 옵션 `-mintel64`를 넘겨
 "clang trunk 전부 거부"라는 잘못된 원시 관측을 만들었다. JSON과 스크립트 상단에 정정 주석을 넣었다.
 clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
+
+## 2026-09-21 [신규 결함] 5단계가 as의 경고를 기록하지 않고 버린다
+
+- 계기: 발표자료에서 예외 ②의 157건(바이트 다름 7 / 재조립 실패 51 / 라벨 artifact 99)을
+  하나씩 갈라 보라는 요청을 받아 `out/reassemble_check.csv`를 원인별로 집계했다.
+- **재조립 실패 51건의 내역** (오류 메시지 기준):
+  - 32건 `invalid use of register` — gather 계열 8종(vgatherdpd/qpd/dps/qps, vpgatherdd/qd/dq/qq) × 4
+  - 9건 `incorrect register 'rcx' used with 'l' suffix` — LSS/LFS/LGS 각 3개 주소 변형 (예외 ⑥)
+  - 5건 `operand size mismatch for 'movsxd'` — objdump가 `movsxd cx,ecx`라는 비대칭 폭을 출력
+  - 5건 jecxz/jrcxz/loop/loope/loopne
+- **바이트 다름 7건**: PREFETCHIT0/1 4건(구 objdump가 `nop DWORD PTR`로 해독) + AMX tile 계열 3건
+  (재조립 시 불필요한 disp32 추가).
+- **라벨 artifact 99건**: 상대분기 `call/jcc .Ltarget`. 라벨 이름이 바이트에 남지 않아 objdump가
+  `0x0`으로 표시한다. 구조적 한계이지 도구 결함이 아니다.
+- **여기서 파이프라인 결함을 찾았다.** gather 32건을 직접 돌려 보니
+  `vgatherdpd xmm0, [eax + xmm1], xmm0`에 as가 경고를 낸다 —
+  `Warning: mask, index, and destination registers should be distinct`.
+  목적지와 마스크에 같은 레지스터를 쓴 **우리 입력 오류**이고, objdump가 `xmm0/(bad)`를 출력하는 것은
+  그 인코딩이 실제로 무효라는 표시다(objdump 2.42·2.45·2.46.1·2.47 동일, llvm-objdump는 그냥 출력한다).
+  문제는 그 다음이다 — **`m5_assemble.py`는 returncode가 0이 아닐 때만 stderr를 기록한다**(101행).
+  경고만 나고 성공한 경우 메시지를 버린다. 실제로 `asm_result.csv`에서 `actual_result=ok`이면서
+  `error_message`가 있는 행은 **0건**이다. **as가 경고한 입력이 전부 깨끗한 성공으로 집계돼 왔다.**
+- 영향: 슬롯별 레지스터 변형(9/20)이 "자리마다 다른 레지스터"를 넣었지만 gather 계열의
+  "목적지·인덱스·마스크가 서로 달라야 한다"는 제약은 반영하지 못했다. 경고를 버리고 있었으므로
+  이 결함이 드러나지 않았다.
+- 후속 과제(미수정): (1) 5·8단계가 성공 시에도 stderr를 보존하고 `ok_with_warning` 같은 상태로
+  구분한다 (2) gather/scatter 계열의 레지스터 상이 제약을 3단계 조합 규칙에 넣는다
+  (3) 경고가 난 입력이 전체에서 몇 건인지 재실행으로 센다.
