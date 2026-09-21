@@ -582,3 +582,72 @@
   Godbolt API. Godbolt 함정 2가지를 명시했다 — 라벨 "2.45"·"(trunk)"가 실제로는 둘 다 2.44인 것,
   그리고 assembly 뷰가 어떤 어셈블러를 쓰든 objdump로 렌더링하므로 **디스어셈블러 표시 검증에는
   쓸 수 없다**는 것.
+
+## 2026-09-21 [외부 검토 반영] Codex 재검증 결과로 판정 4건 정정
+
+외부 검토(Codex)가 우리 결론 여러 개를 반박했고, **직접 돌려 본 결과 반박이 맞았다.**
+
+### 정정 1 — "349건 중 264건은 원리상 구분 불가능"은 틀렸다
+
+GAS에는 인코딩을 강제하는 의사 프리픽스가 있고, 세 유형 전부 강제된다(as 2.42에서 직접 확인).
+
+```
+adc cl, dl            -> 10 d1              {load} adc cl, dl   -> 12 ca
+ja .Ltarget           -> 77 fe              {disp32} ja .Ltarget -> 0f 87 fa ff ff ff
+lar rcx, rcx          -> 0f 02 c9           rex64 lar rcx, rcx  -> 48 0f 02 c9
+```
+
+349건은 ISA 커버리지 실패가 아니라 **생성기가 GAS 인코딩 제어 문법을 쓰지 않은 결과**다.
+현재 이 지표는 "기본 렌더러가 지정 opcode를 우연히 맞췄는가"를 재고 있다.
+회귀 테스트 `EncodingControlPrefixTests` 추가.
+
+### 정정 2 — "as는 어떤 문법으로도 REX.W LAR/LSL을 만들 수 없다"는 내 주장이 틀렸다
+
+`rex64 lar rcx, rcx` -> `48 0f 02 c9`. Intel 기본 렌더링·AT&T·크기 접미사에서만 빠진다.
+**이 사실은 결론을 강화한다** - ISA 표현력의 한계가 아니라 **기본 인코딩 선택 문제**임이 확정된다.
+또한 **이미 보고된 결함**이다: binutils bug gas/32813 "Missing REX prefix for LSL"
+(보고자: 이전 gas 버전은 REX를 붙였고 nasm·XED도 붙인다). 원인은 2022년 커밋
+"x86: correct handling of LAR and LSL"이 만든 회귀다. 우리가 처음 찾은 것이 아니라,
+**우리 파이프라인이 알려진 결함을 독립적으로 재현한 사례**로 기술해야 한다.
+테스트 파일의 잘못된 기대(`test_att_syntax_and_suffix_also_drop_rex_w`)를 고치고
+`test_rex64_prefix_does_produce_rex_w`를 추가했다.
+
+### 정정 3 — "왕복 차이 9,991건은 전부 표기 차이"는 과장
+
+재조립 결과가 이미 저장돼 있다: 동일 9,834 / 다름 7 / 실패 51 / 라벨 artifact 99.
+정확한 진술은 **"9,834건은 바이트를 보존하는 표기 변환, 나머지 157건은 별도 판정 필요"**.
+실패 51건에는 LSS/LFS/LGS 9건, MOVSXD 5건이 들어 있다.
+
+### 정정 4 — "as·clang 바이트 차이 125건은 프리픽스 정책 차이"는 틀렸다
+
+의미가 같은 것과 다른 것이 섞여 있다. 직접 확인한 의미 차이:
+
+| 입력 | as | clang |
+|---|---|---|
+| `mov al, ds:0x123456789abcdef0` | `movabs`, 주소 유지 | **`0xffffffff9abcdef0`으로 잘림. 경고 없음, 종료코드 0** |
+| `iret` | `cf` = IRETD(32비트) | `66 cf` = IRETW(16비트) |
+| `push fs` | `0f a0`(64비트 스택) | `66 0f a0` = pushw(16비트) |
+| `mov rcx, ds` | `8c d9`(REX.W 없음) | `48 8c d9` |
+
+**clang이 64비트 절대주소를 조용히 잘라 다른 주소를 만든다**는 것이 이번 검토에서 가장 큰 발견이다.
+우리는 이 데이터를 갖고 있었으면서 "프리픽스 차이"로 묶어 놓쳤다.
+
+### 정정 5 — "확정 어셈블러 버그 0건" 진술 철회
+
+말할 수 있는 것은 "기존 triage가 확정 표시한 어셈블러 버그가 0건"까지다.
+GNU as LAR/LSL REX.W 누락이 반례이고, 미재심 10,109건·unsure 47건이 남아 있다.
+
+### 검토가 지적한 코드 결함(확인함, 미수정)
+
+- `m6_roundtrip.py`: objdump returncode를 검사하지 않는다. 출력 누락이 도구 실패가 아니라
+  빈 문자열 -> different로 전달된다.
+- `m8_clang_assemble.py`: `returncode == 0`만 본다. TimeoutExpired·시그널 종료를 구분하지 않아
+  R1이 clang 경로에서 미해결이다.
+- `m7_triage.py`: 10,109건이 `not_reassessed`인데 10,066건을 false_alarm으로 집계한다.
+- 11·12단계의 "격리"는 timeout을 둔 자식 프로세스일 뿐이다. namespace/seccomp/권한 강등이 없다.
+
+### 내 관측 스크립트 오류
+
+`verify_cases_2026-09-21.py`가 LLVM에 GNU 전용 옵션 `-mintel64`를 넘겨
+"clang trunk 전부 거부"라는 잘못된 원시 관측을 만들었다. JSON과 스크립트 상단에 정정 주석을 넣었다.
+clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.

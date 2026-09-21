@@ -105,7 +105,11 @@ class ManualNotationTests(unittest.TestCase):
 
 @unittest.skipUnless(TOOLS, 'as/clang/objdump 필요')
 class LarLslRexWTests(unittest.TestCase):
-    """as가 REX.W LAR/LSL을 만들지 못해 왕복이 조용히 깨지는 관측을 고정한다."""
+    """as의 기본 인코딩 선택이 REX.W를 빠뜨려 왕복이 깨지는 관측을 고정한다.
+
+    `rex64` 의사 프리픽스로는 REX.W 형식을 만들 수 있으므로 ISA 표현력의 한계가 아니다.
+    이미 보고된 결함이다 - binutils bug gas/32813 "Missing REX prefix for LSL".
+    """
 
     def test_as_drops_rex_w_silently(self):
         # rcx로 썼는데 32비트 인코딩이 나온다. 오류도 경고도 없다.
@@ -119,8 +123,18 @@ class LarLslRexWTests(unittest.TestCase):
         self.assertEqual(assemble('lar rcx, rcx', 'clang'), (True, '480f02c9'))
         self.assertEqual(assemble('lsl rcx, rcx', 'clang'), (True, '480f03c9'))
 
+    def test_rex64_prefix_does_produce_rex_w(self):
+        """`rex64` 의사 프리픽스를 쓰면 as도 REX.W 형식을 만든다.
+
+        2026-09-21 최초 기록에서 "as는 어떤 문법으로도 REX.W LAR/LSL을 만들 수 없다"고 적었으나
+        틀렸다. Intel 문법 기본 렌더링·AT&T·크기 접미사에서만 REX.W가 빠지고, `rex64`로는 나온다.
+        따라서 이것은 ISA 표현력의 한계가 아니라 **기본 인코딩 선택의 문제**다.
+        """
+        self.assertEqual(assemble('rex64 lar rcx, rcx'), (True, '480f02c9'))
+        self.assertEqual(assemble('rex64 lsl rcx, rcx'), (True, '480f03c9'))
+
     def test_att_syntax_and_suffix_also_drop_rex_w(self):
-        # AT&T로도, 크기 접미사를 붙여도 REX.W가 나오지 않는다.
+        # 의사 프리픽스 없이는 AT&T로도, 크기 접미사를 붙여도 REX.W가 나오지 않는다.
         for code in ('lar %rcx, %rcx', 'larq %rcx, %rcx'):
             with tempfile.TemporaryDirectory() as directory:
                 source = Path(directory) / 'a.s'
@@ -132,7 +146,11 @@ class LarLslRexWTests(unittest.TestCase):
                     self.assertEqual(text_bytes(obj), '0f02c9')
 
     def test_rex_w_bytes_do_not_round_trip_through_as(self):
-        """48 0f 02 c9 → objdump → as 를 거치면 바이트가 달라진다 (조용한 왕복 실패)."""
+        """48 0f 02 c9 → objdump → as 를 거치면 바이트가 달라진다.
+
+        objdump 표시(`lar rcx,rcx`)는 올바르다. 그 문자열을 as가 받아들이면서 REX.W 없는
+        다른 인코딩을 내보내므로 왕복이 깨진다. 오류도 경고도 나오지 않는다.
+        """
         for original, shown, narrowed in (('480f02c9', 'lar rcx,rcx', '0f02c9'),
                                           ('480f03c9', 'lsl rcx,rcx', '0f03c9')):
             with self.subTest(original=original):
@@ -170,6 +188,33 @@ class FarPointerRoundTripTests(unittest.TestCase):
         # objdump 출력을 as에 다시 넣으면 거부된다. clang은 받아준다.
         self.assertEqual(assemble('lss rcx,FWORD PTR [rax]', 'as'), (False, ''))
         self.assertEqual(assemble('lss rcx,FWORD PTR [rax]', 'clang'), (True, '480fb208'))
+
+
+
+@unittest.skipUnless(TOOLS, 'as/clang/objdump 필요')
+class EncodingControlPrefixTests(unittest.TestCase):
+    """GAS 의사 프리픽스로 특정 SDM 행을 강제할 수 있다는 것을 고정한다.
+
+    2026-09-21 최초 기록은 "같은 문법을 공유하는 두 행은 원리상 구분할 수 없다"고 적었으나
+    틀렸다. `{load}`/`{store}`/`{disp32}`/`rex64`로 강제할 수 있다.
+    """
+
+    def test_load_store_prefix_selects_direction(self):
+        # 기본 렌더링은 10 /r(store 방향)을 고른다.
+        self.assertEqual(assemble('adc cl, dl'), (True, '10d1'))
+        # 의사 프리픽스로 두 행을 각각 지정할 수 있다.
+        self.assertEqual(assemble('{load} adc cl, dl'), (True, '12ca'))
+        self.assertEqual(assemble('{store} adc cl, dl'), (True, '10d1'))
+
+    def test_disp32_prefix_forces_near_branch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'a.s'
+            obj = Path(directory) / 'a.o'
+            source.write_text(HEADER + '.Ltarget:\n{disp32} ja .Ltarget\n', encoding='utf-8')
+            subprocess.run(['as', '--64', '-mintel64', '-o', str(obj), str(source)],
+                           check=True, capture_output=True)
+            # 기본은 77 fe(rel8)지만 {disp32}는 0f 87 + rel32를 낸다.
+            self.assertTrue(text_bytes(obj).startswith('0f87'))
 
 
 if __name__ == '__main__':

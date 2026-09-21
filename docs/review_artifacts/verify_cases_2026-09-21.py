@@ -1,4 +1,8 @@
-"""예외 사례를 로컬 도구(as 2.42~2.47, clang 18)와 Godbolt(2.42/2.45/trunk, clang trunk)에서
+"""주의: GODBOLT 목록의 clang 항목에 -mintel64를 넘기면 안 된다(GNU 전용 옵션).
+최초 실행에서 이 오류로 "clang trunk 전부 거부"라는 잘못된 관측이 나왔다.
+clang 관측은 verify_clang_2026-09-21.json을 쓴다.
+
+예외 사례를 로컬 도구(as 2.42~2.47, clang 18)와 Godbolt(2.42/2.45/trunk, clang trunk)에서
 같은 입력으로 돌려 관측을 모은다. 판정하지 않고 관측만 기록한다."""
 import json, subprocess, sys, os, tempfile
 
