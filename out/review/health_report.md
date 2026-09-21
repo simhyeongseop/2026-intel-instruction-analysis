@@ -13,4 +13,4 @@
 | OK | out/clang_objects: 오브젝트 23,157개 |
 | WARN | triage 미재심 10,109건 / unsure 47건 (확정으로 보고하지 말 것) |
 | WARN | 체크리스트 판정 미기입 1,558/1,558행 |
-| OK | 마지막 실행 20260920T055205528980Z.json: execute(completed), execute_edge_cases(completed) |
+| OK | 마지막 실행 20260920T233325021698Z.json: lint(completed) |
