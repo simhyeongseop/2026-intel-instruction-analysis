@@ -1,0 +1,619 @@
+{
+ "_WARNING": "주의(2026-09-21 정정): 이 파일의 'GB clang trunk' 열은 LLVM에 GNU 전용 옵션 -mintel64를 넘겨 전부 거부로 기록됐다. 잘못된 관측이다. clang 결과는 verify_clang_2026-09-21.json을 쓴다.",
+ "1B-vpmovqd": {
+  "source": "vpmovqd xmmword ptr [eax], xmm0",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: operand size mismatch for `vpmovqd'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "1B-sysexit": {
+  "source": "sysexit",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: ambiguous operand size for `sysexit'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "1B-movds": {
+  "source": "mov ds, qword ptr [eax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: operand type mismatch for `mov'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "1B-lar": {
+  "source": "lar ecx, rcx",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: register type mismatch for `lar'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "1B-vscatter": {
+  "source": "vscatterdpd [eax + ymm1] {k1}, ymm0",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: invalid VSIB address for `vscatterdpd'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "1B-udb": {
+  "source": "udb",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: no such instruction: `udb'"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: no such instruction: `udb'"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "d6",
+    "text": "udb"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "d6",
+    "text": "udb"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: no such instruction: `udb'"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: no such instruction: `udb'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: no such instruction: `udb'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "4-adc": {
+  "source": "adc ecx, ecx",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "11 c9",
+    "text": "adc    ecx,ecx"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "11 c9",
+    "text": "adc    ecx,ecx"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "11 c9",
+    "text": "adc    ecx,ecx"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "11 c9",
+    "text": "adc    ecx,ecx"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "adc    ecx,ecx"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "adc    ecx,ecx"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "adc    ecx,ecx"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "4-ja": {
+  "source": "ja .Ltarget",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "77 fe",
+    "text": "ja     0x0"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "77 fe",
+    "text": "ja     0x0"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "77 fe",
+    "text": "ja     0x0"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "77 fe",
+    "text": "ja     0x0"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "ja     0x0"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "ja     0x0"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "ja     0x0"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "4-lar-mem": {
+  "source": "lar ecx, word ptr [eax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "67 0f 02 08",
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "67 0f 02 08",
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "67 0f 02 08",
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "67 0f 02 08",
+    "text": "lar    ecx,WORD PTR [eax]"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "lar    ecx,WORD PTR [eax]"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "5-lss-sib": {
+  "source": "lss rcx, tbyte ptr [rax+rbx*4+0x10]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "48 0f b2 4c 98 10",
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "48 0f b2 4c 98 10",
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "48 0f b2 4c 98 10",
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "48 0f b2 4c 98 10",
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax+rbx*4+0x10]"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "5-bndcl": {
+  "source": "bndcl bnd0, dword ptr [rax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "f3 0f 1a 00",
+    "text": "bndcl  bnd0,[rax]"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: `bndcl' is not supported on `x86_64'"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: `bndcl' is not supported on `x86_64'"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: `bndcl' is not supported on `x86_64'"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "bndcl  bnd0,[rax]"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: `bndcl' is not supported on `x86_64'"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: `bndcl' is not supported on `x86_64'"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "6-lss": {
+  "source": "lss rcx, tbyte ptr [rax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "48 0f b2 08",
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "48 0f b2 08",
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "48 0f b2 08",
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "48 0f b2 08",
+    "text": "lss    rcx,FWORD PTR [rax]"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "lss    rcx,FWORD PTR [rax]"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "6-lfs": {
+  "source": "lfs rcx, tbyte ptr [rax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "48 0f b4 08",
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "48 0f b4 08",
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "48 0f b4 08",
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "48 0f b4 08",
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "lfs    rcx,FWORD PTR [rax]"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "6-lgs": {
+  "source": "lgs rcx, tbyte ptr [rax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": true,
+    "bytes": "48 0f b5 08",
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.45": {
+    "ok": true,
+    "bytes": "48 0f b5 08",
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.46.1": {
+    "ok": true,
+    "bytes": "48 0f b5 08",
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "as 2.47": {
+    "ok": true,
+    "bytes": "48 0f b5 08",
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": true,
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "GB gas 2.45": {
+    "ok": true,
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "GB gas trunk": {
+    "ok": true,
+    "text": "lgs    rcx,FWORD PTR [rax]"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ },
+ "6-reasm": {
+  "source": "lss rcx,FWORD PTR [rax]",
+  "local": {
+   "as 2.42(시스템)": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "as 2.45": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "as 2.46.1": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "as 2.47": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   }
+  },
+  "godbolt": {
+   "GB gas 2.42": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "GB gas 2.45": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "GB gas trunk": {
+    "ok": false,
+    "err": "Error: incorrect register `rcx' used with `l' suffix"
+   },
+   "GB clang trunk": {
+    "ok": false,
+    "err": "거부"
+   }
+  }
+ }
+}

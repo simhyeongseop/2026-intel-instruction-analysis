@@ -50,6 +50,7 @@ Thumbs.db
 !out/lint/manifest.json
 !out/runs/*.json
 !data/*.json
+!docs/review_artifacts/*.json
 *.log
 
 # Temporary files
