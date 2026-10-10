@@ -11,37 +11,25 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from pipeline.instruction_check import environment, sha256
 
+# 현재 파이프라인(2026-10-11 생성기 재작성): 추출 -> 생성 -> 도구별 판정.
+# 예전 5~13단계(m5_assemble ... m13_lint)는 삭제한 생성기의 out/tests.s를 입력으로 쓰므로 여기서 뺐다.
 STAGES = [
-    ('extractor', 'pipeline/m1_extract.py'), ('tokenizer', 'pipeline/m2_tokenize.py'),
-    ('combiner', 'pipeline/m3_combine.py'), ('generator', 'pipeline/m4_generate.py'),
-    ('assembler', 'pipeline/m5_assemble.py'), ('roundtrip', 'pipeline/m6_roundtrip.py'),
-    ('triage', 'pipeline/m7_triage.py'), ('clang_assemble', 'pipeline/m8_clang_assemble.py'),
-    ('clang_compare', 'pipeline/m9_clang_compare.py'), ('reassemble_check', 'pipeline/m10_reassemble_check.py'),
-    ('execute', 'pipeline/m11_execute.py'), ('execute_edge_cases', 'pipeline/m12_execute_edge_cases.py'),
-    ('lint', 'pipeline/m13_lint.py'),
+    ('extractor', 'pipeline/m1_extract.py'), ('generator', 'pipeline/m2_generate.py'),
+    ('check', 'pipeline/m3_check.py'),
 ]
 INPUTS = {
-    'extractor': ['intel_manual.pdf'], 'tokenizer': ['data/db/isa_db.csv'],
-    'combiner': ['data/db/tokens.csv'], 'generator': ['data/db/combos.csv'],
-    'assembler': ['out/tests.s'], 'roundtrip': ['out/asm_result.csv'],
-    'triage': ['out/asm_result.csv', 'out/roundtrip.csv'],
-    'clang_assemble': ['out/tests.s'], 'clang_compare': ['out/asm_result.csv', 'out/clang_result.csv'],
-    'reassemble_check': ['out/roundtrip.csv'], 'execute': [],
-    'execute_edge_cases': ['out/asm_result.csv'], 'lint': ['out/asm_result.csv', 'data/db/isa_db.csv', 'data/cases.csv'],
+    'extractor': ['intel_manual.pdf'],
+    'generator': ['data/db/isa_db.csv', 'out/sdm_review_093/compare/rows_status.csv'],
+    'check': ['out/cases/cases.csv'],
 }
 OUTPUTS = {
     'extractor': ['data/db/isa_db.csv', 'data/db/coverage_report.md'],
-    'tokenizer': ['data/db/tokens.csv', 'data/db/extraction_issues.csv'],
-    'combiner': ['data/db/combos.csv'],
-    'generator': ['out/tests.s', 'out/generator_skipped.csv'], 'assembler': ['out/asm_result.csv'],
-    'roundtrip': ['out/roundtrip.csv'], 'triage': ['out/triage.csv', 'out/triage_report.md'],
-    'clang_assemble': ['out/clang_result.csv'], 'clang_compare': ['out/clang_compare.csv', 'out/clang_compare_report.md'],
-    'reassemble_check': ['out/reassemble_check.csv', 'out/reassemble_check_report.md'],
-    'execute': ['out/address_test_result.csv'],
-    'execute_edge_cases': ['out/edge_case_execution.csv', 'out/edge_case_execution_report.md'],
-    'lint': ['out/lint/results.csv', 'out/lint/report.md', 'out/lint/manifest.json'],
+    'generator': ['out/cases/cases.csv', 'out/cases/cases.s', 'out/cases/generate_summary.json'],
+    'check': ['out/cases/check_results.csv', 'out/cases/check_rows.csv', 'out/cases/check_summary.json'],
 }
-CPU_STAGES = {'execute', 'execute_edge_cases'}
+# --execute를 주면 이 단계에 그대로 넘긴다(레지스터 전용 케이스를 격리 실행).
+EXECUTE_OPTION_STAGES = {'check'}
+CPU_STAGES = set()
 
 
 def plan_stages(start='extractor', only=None, until=None, execute=False):
@@ -68,7 +56,7 @@ def main(argv=None):
     selection.add_argument('--only', choices=names)
     selection.add_argument('--until', choices=names)
     parser.add_argument('--list', action='store_true')
-    parser.add_argument('--execute', action='store_true', help='11/12단계 고정 CPU 실험도 실행')
+    parser.add_argument('--execute', action='store_true', help='판정 단계에서 레지스터 전용 케이스를 CPU로 격리 실행')
     parser.add_argument('--python', default=sys.executable, help='단계 실행용 Python (1단계는 pdfplumber 필요)')
     args = parser.parse_args(argv)
     if args.list:
@@ -98,7 +86,7 @@ def main(argv=None):
                 failed = 2
             else:
                 print('[%s] 시작' % name, flush=True)
-                step['command'] = [args.python, script]
+                step['command'] = [args.python, script] + (['--execute'] if args.execute and name in EXECUTE_OPTION_STAGES else [])
                 try:
                     run = subprocess.run(step['command'], cwd=ROOT, capture_output=True, text=True,
                                          env=dict(os.environ, PYTHONIOENCODING='utf-8', LC_ALL='C'),

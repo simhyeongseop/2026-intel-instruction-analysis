@@ -18,7 +18,14 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
   - 원문 없음·원문 충돌·추출 불완전은 모두 0행이다. 남은 것은 생성기 문제 95행(`compare/generator_issues.csv`)이며, 그중 `tool_unsupported` 3행(RDMSR·WRMSRNS imm32, UDB: GNU 2.42·clang 18 미지원)은 생성기 문제가 아니다.
   - MAP7 4행은 `source_conflict_cases.csv` MAP7-*로 처리했다. 사용자가 PDF를 보고 확인한 보정은 `data/rules/pdf_confirmed_corrections.csv`에 있다(UDB Op/En ZO, VGATHERDPD CPUID OR·Operand 2).
   - XSAVE 계열 mem은 완화 C(Vol.1 323·324쪽), FP16 m16bcst는 완화 D(VMAXPH 1889쪽 정의 문장), FSTCW/FNSTCW m2byte는 완화 A(Vol.1 213쪽)다.
-- **다음 작업**: 생성기 재작성. 설계 초안은 `docs/SDM_REGENERATION_PLAN.md` 마지막 절에 있다. 판정은 SDM 대 도구별로 하고 도구 간 비교는 쓰지 않는다(2026-10-11 결정).
+- **생성기 재작성 완료(10월 11일)**: `python3 pipeline/run.py generator --until check [--execute]`
+  - 생성 `pipeline/m2_generate.py`(규칙 `case_rules.py`) → `out/cases/cases.csv`. 판정 `pipeline/m3_check.py`(SDM 대 GNU, SDM 대 clang 따로).
+  - 19,425케이스 중 SDM 일치는 GNU 19,324, clang 19,108이다. 상세는 `out/cases/REPORT.md`.
+  - 예전 m2~m4 생성기는 삭제했고, 예전 5~13단계는 실행기에서 뺐다(파일 남음).
+- **다음 작업**:
+  - 남은 불일치 사례 확인. MPX r/m32와 CALL/JMP r/m32를 도구가 받는 것, clang의 data16 꼬리 4바이트, SYSRET 철자
+  - 역어셈블(objdump 왕복) 대조를 새 판정에 붙일지 결정
+  - 결정 6(Sol 단독 값 1,410줄)을 생성 값과 대조
 - 아래 '진행 중' 절의 수치 중 090판 기준(17,356 등)은 기록이다. 093판 현재 수치는 REPORT_093.md를 따른다.
 
 ## 이전 기준(090판까지의 경과)

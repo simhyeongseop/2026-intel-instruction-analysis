@@ -46,7 +46,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
-from audit_generator import code  # noqa: E402
 from pipeline import m11_execute as m11  # noqa: E402
 from pipeline.encoding_audit import check_encoding  # noqa: E402
 from pipeline.instruction_check import assemble  # noqa: E402
@@ -78,6 +77,13 @@ FLAG_NAMES = {"SSE4_1": "sse4_1", "SSE4_2": "sse4_2", "BMI1": "bmi1", "BMI2": "b
               "SSE": "sse", "SSE2": "sse2", "SSE3": "pni", "SSSE3": "ssse3", "AVX": "avx", "AVX2": "avx2",
               "MOVBE": "movbe", "PREFETCHW": "3dnowprefetch", "LAHF": "lahf_lm", "MMX": "mmx", "FMA": "fma",
               "F16C": "f16c", "POPCNT": "popcnt", "LZCNT": "abm", "VPCLMULQDQ": "vpclmulqdq"}
+
+
+def code(row):
+    """과거 생성 결과(combos.csv) 한 줄의 소스. 삭제한 m4_generate.build_line과 같은 철자(검토 기록 재현용)."""
+    mnemonic = row.get("asm_mnemonic") or row["mnemonic"].lower()
+    text = mnemonic + (" " + row["operands"] if row["operands"] else "")
+    return (row["asm_prefix"] + " " + text) if row.get("asm_prefix") else text
 
 
 def read_csv(path):

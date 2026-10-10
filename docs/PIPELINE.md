@@ -1,41 +1,29 @@
 # 현재 파이프라인과 파일 안내
 
-기준: 2026-09-15. 이 표의 단계 번호가 현행 기준이다. `archive/legacy/`의 옛 1~6단계와 구분한다.
+기준: 2026-10-11(생성기 재작성). 실행기 `pipeline/run.py`는 아래 세 단계를 돈다.
 
 | 단계 | 하는 일 | 구현 | 입력 | 결과 |
 |---|---|---|---|---|
 | 1 extractor | PDF 인코딩 표 추출 | `pipeline/m1_extract.py` | `intel_manual.pdf` | `data/db/isa_db.csv`, `data/db/coverage_report.md` |
-| 2 tokenizer | 오퍼랜드 표기 분해 | `pipeline/m2_tokenize.py` | `isa_db.csv` | `data/db/tokens.csv` |
-| 3 combiner | 대표 오퍼랜드 조합 | `pipeline/m3_combine.py` | `tokens.csv` | `data/db/combos.csv` |
-| 4 generator | 조합을 소스로 작성 | `pipeline/m4_generate.py` | `combos.csv` | `out/tests.s`, `out/generator_skipped.csv` |
-| 5 assembler | GNU as 수용 여부 | `pipeline/m5_assemble.py` | `tests.s` | `out/asm_result.csv`, `out/objects/*.o` |
-| 6 roundtrip | objdump 텍스트 비교 | `pipeline/m6_roundtrip.py` | 5단계 CSV·오브젝트 | `out/roundtrip.csv` |
-| 7 triage | 차이 분류와 재심 반영 | `pipeline/m7_triage.py` | 5·6단계 CSV | `out/triage.csv`, `out/triage_report.md` |
-| 8 clang_assemble | Clang 수용 여부 | `pipeline/m8_clang_assemble.py` | `tests.s` | `out/clang_result.csv`, `out/clang_objects/*.o` |
-| 9 clang_compare | GNU/Clang 바이트 비교 | `pipeline/m9_clang_compare.py` | 5·8단계 CSV·오브젝트 | `out/clang_compare.csv`, `out/clang_compare_report.md` |
-| 10 reassemble_check | objdump 출력 바이트 왕복 | `pipeline/m10_reassemble_check.py` | 6단계 CSV·오브젝트 | `out/reassemble_check.csv`, `out/reassemble_check_report.md` |
-| 11 execute | 고정 주소 6개 CPU 시나리오 | `pipeline/m11_execute.py` | 코드 내 고정 시나리오 | `out/address_test_result.csv` |
-| 12 execute_edge_cases | 선별된 경계 사례 실행 | `pipeline/m12_execute_edge_cases.py` | 5단계 CSV | `out/edge_case_execution.csv`, `out/edge_case_execution_report.md` |
-| 13 lint | 새 도구로 입력 전량 재검사 | `pipeline/m13_lint.py` | 5단계 CSV·ISA DB·`data/cases.csv` | `out/lint/results.csv`, `report.md`, `manifest.json`, `observations.jsonl` |
+| 2 generator | 표 행 + 원문 검토 → 케이스·소스 | `pipeline/m2_generate.py`(규칙 `pipeline/case_rules.py`) | `isa_db.csv`, `out/sdm_review_093/` | `out/cases/cases.csv`, `cases.s`, `generate_summary.json` |
+| 3 check | GNU as·clang을 따로 조립해 SDM 기대와 비교 | `pipeline/m3_check.py` | `out/cases/cases.csv` | `out/cases/check_results.csv`, `check_rows.csv`, `check_summary.json` |
 
-11·12단계는 CPU에서 실제 실행한다. 실행기는 `--execute`가 있을 때 이 단계를 포함한다.
-13단계는 오브젝트를 다시 만들어 조사하므로 기존 `.o`가 없어도 실행할 수 있다.
-5·8단계 오브젝트는 Git에 저장하지 않는다. 6·9·10단계를 다시 실행하려면 해당 오브젝트부터 재생성해야 한다.
+- 2단계: 값은 `case_rules.py`의 표(총론 SYM, Vol.1·Vol.2 쪽, 선택 규칙, 도구 철자)로만 고르고 케이스마다 근거를 남긴다.
+  SDM 기대 결과는 `reach`(이 표 행 인코딩), `reject`(64비트 무효), `alias_no_test`(무효 행인데 유효 행과 같은 문법)다.
+- 3단계: 판정은 SDM 대 GNU, SDM 대 clang을 따로 본다(2026-10-11 사용자 결정, 도구끼리는 비교하지 않음).
+  `--execute`를 주면 SDM 일치한 레지스터 전용 케이스를 이 CPU에서 격리 실행해 기록한다.
+- 예전 2~4단계(`m2_tokenize`, `m3_combine`, `m4_generate`)와 `data/db/tokens.csv`, `combos.csv`는 2026-10-11에 삭제했다(git 기록 75b35ef 이전).
+- 예전 5~13단계(`m5_assemble` ~ `m13_lint`)는 삭제한 생성기의 `out/tests.s`를 입력으로 쓰므로 실행기에서 뺐다.
+  파일과 과거 결과는 남아 있다. 역어셈블(objdump 왕복) 대조는 아직 새 판정에 다시 붙이지 않았다.
 
 ## 단계 선택
 
 ```bash
 python3 pipeline/run.py --list
-python3 pipeline/run.py --only triage
-python3 pipeline/run.py --only lint
-python3 pipeline/run.py generator --until reassemble_check
-python3 pipeline/run.py execute --until execute_edge_cases --execute
-bash scripts/run_ubuntu_tests.sh
+python3 pipeline/run.py generator --until check            # 생성 + 도구별 판정
+python3 pipeline/run.py --only check --execute             # 판정 + CPU 격리 실행
+python3 scripts/manual_lookup.py cases MOV --opcode "8A /r"  # 저장된 케이스와 판정 조회
 ```
-
-Ubuntu에서 남은 검증을 한 번에 실행하려면 `run_ubuntu_tests.sh`를 사용한다. 각 단계 로그와
-최종 요약은 `out/ubuntu-tests/<UTC timestamp>/`에 저장된다. 시간이 오래 걸리는 CPU·lint를
-생략하려면 `--skip-execute`, `--skip-lint`를 붙인다.
 
 현재 저장된 마지막 전체 실행은 [최신 검증 기록](LATEST_TEST_RUN.md)에 요약돼 있다.
 

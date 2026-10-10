@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-10-10T16:05:10.248706+00:00",
+  "environment": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "tools": {
+      "as": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-as",
+        "version": [
+          "GNU assembler (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "7a2ef948033b05ad0c5dcb0d5be059bc68562b5d45713d91aee21df2b4bf4e92",
+        "probe": {
+          "command": [
+            "/usr/bin/as",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU assembler (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-linux-gnu'.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "clang": {
+        "available": true,
+        "path": "/usr/lib/llvm-18/bin/clang",
+        "version": [
+          "Ubuntu clang version 18.1.3 (1ubuntu1)"
+        ],
+        "sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+        "probe": {
+          "command": [
+            "/usr/bin/clang",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objdump": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objdump",
+        "version": [
+          "GNU objdump (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "d0041e7511460b9ebfd95ce4f9d93c7ffea398ffc1cb2c316a220dd8e533db3d",
+        "probe": {
+          "command": [
+            "/usr/bin/objdump",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objdump (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objcopy": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-objcopy",
+        "version": [
+          "GNU objcopy (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "b22f4f909bff115ee2a37cd21ff76f5e0b8c65cd58f98edbce7b59f129980d67",
+        "probe": {
+          "command": [
+            "/usr/bin/objcopy",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objcopy (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "readelf": {
+        "available": true,
+        "path": "/usr/bin/x86_64-linux-gnu-readelf",
+        "version": [
+          "GNU readelf (GNU Binutils for Ubuntu) 2.42"
+        ],
+        "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+        "probe": {
+          "command": [
+            "/usr/bin/readelf",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "cpu": {
+      "vendor_id": "GenuineIntel",
+      "model name": "Intel(R) Core(TM) Ultra 5 226V",
+      "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+    }
+  },
+  "code_hashes": {
+    "pipeline/case_rules.py": "d661208ff2665e39d21f7a91b113c6a3e4bb2dc1b34e4021402700c9212d1039",
+    "pipeline/encoding_audit.py": "1d0a3af9cd96cce6b7e6850c686bc6adaa6a37e06bb50014505ec7b8e138327e",
+    "pipeline/instruction_check.py": "4e6806bcd2131fab982e0eea310d739f80c35a825a10a832c39bea3e5c617fe2",
+    "pipeline/m10_reassemble_check.py": "f46bf20cf9c2e5f1a349bf1828317ee3e85a12473fd50e47c3e73f1b170d4175",
+    "pipeline/m11_execute.py": "ea22cc19caecfaad3cfdd5191307b9c142da941ac9a0806331c53f8c8c4361f6",
+    "pipeline/m12_execute_edge_cases.py": "2ea6528296e18d1c834d2f7254154ad0492ddd15ca76037766f84334d2ec82c9",
+    "pipeline/m13_lint.py": "2c1d1e89708c16eec49e2e4af0cbec73a5c41da654acf70c75c2da9a39d5a6c3",
+    "pipeline/m1_extract.py": "7acf58a12417df8d193cc883f84cdfd0e81f347e2ee20e30e5c879347e63ce48",
+    "pipeline/m2_generate.py": "1510096b87b7253b2ca5ff910b27c20fe3e423e00167ec247036b21b0dad1dce",
+    "pipeline/m3_check.py": "a01f7f0d9a12a104a89a45a2bead3325fe08de3325b6de0c93b58cdb5a8f4e09",
+    "pipeline/m5_assemble.py": "b36b76caae0d882e1981bca1a460bb185217b8e860cac43f071fa507deb10d49",
+    "pipeline/m6_roundtrip.py": "67ec3fd0ec948c66b33f0cf57a8d60eb55c32f15f320be91c31c0119d58ee41d",
+    "pipeline/m7_triage.py": "e5d3cd1438493b9af65951a6f087aeb6acc356c4e609829907f7c3cfbb98d833",
+    "pipeline/m8_clang_assemble.py": "6b0764ecc0ab3bc912d0f7a3026389cd7743e5203fd604879b4110e31afb3ba6",
+    "pipeline/m9_clang_compare.py": "1c8093ed2c6733ad84203cd67610f1c3d70cb3b48761db38b9ae4aee06f5f3fa",
+    "pipeline/manual_index.py": "52995b9361f79f7fedc6248b67d656982f187c3a4bd5b9db65e6d950663327a4",
+    "pipeline/manual_lookup.py": "86d6661255d3ce6cc2f123f273b093c8bfa290a83c91bd8d61381a3a5b318b02",
+    "pipeline/operand_forms.py": "3dbf5fd93f276d0ba41845ce2a10eac7861acfd52c44b5ce57ac034e5c086cb0",
+    "pipeline/quote_check.py": "1d7ef8d6aa501e330ddf26d19b6fa5dd7f677dc8580b4c58b57ddd5671ecd33f",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "4d03c7382cb4819e57d462b7e6de554d8bcf6f6b8d447d64af951967ac1b8fa9",
+    "pipeline/sdm_evidence.py": "0f4825d06a18cc97a2128e1862f003de4b3b600626fdeec1d11a2242b040690b",
+    "pipeline/sdm_paths.py": "d13caf9d6774ea1c610b18b38516d303b54a238b30926134a88c6a19a3066a9f",
+    "pipeline/sdm_relaxation.py": "fb3a4ad21615d12a365e2d3c4244dc3c7e5a23fa3d73f9447d18fd519ba03b07",
+    "pipeline/sdm_review_compare.py": "6647830ccb48f4190d37d67f600301493ff0f9a3ad08404d4ecb86113be62910",
+    "pipeline/sdm_select.py": "f80ce5893169a19002464bcbb4548a12fb6e5ac6e638442957296ab5c9e9fb6d",
+    "pipeline/sdm_symbol_spec.py": "01ab569e8e7ffcb504cf5eb04a59ae6776ab631b76555733a9e85e85b4d07e87"
+  },
+  "steps": [
+    {
+      "stage": "generator",
+      "script": "pipeline/m2_generate.py",
+      "input_hashes": {
+        "data/db/isa_db.csv": "ff73fa082b12ac5d53a1eb03a1afe6f2476b6887e3e4f342a627ed696517d822",
+        "out/sdm_review_093/compare/rows_status.csv": "7df768dd2aa540cfa9e2cb2bbab061d268a5357c136ae2924bb789c10889a427"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m2_generate.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"cases\": 19425, \"rows\": 4219, \"expected\": {\"reject\": 106, \"reach\": 19271, \"alias_no_test\": 48}, \"spec_trusted\": 19425, \"variants\": {\"base\": 4857, \"imm_max\": 610, \"alt1\": 9205, \"alt2\": 884, \"mask\": 3869}}\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/cases/cases.csv": "4697d59f82cf3a02b19c4c6602c8a7f63319016a4ac9db20dc3f3a1976128c48",
+        "out/cases/cases.s": "8c3ee0aaf8e2735f2d6a53c24470a3e555239ffe348e5bc365599f95703bbaa4",
+        "out/cases/generate_summary.json": "8f58c2d5c8a54bbedbabed8bb0ad5774614ee262fb9e6c7947fda3300ab13d5e"
+      }
+    },
+    {
+      "stage": "check",
+      "script": "pipeline/m3_check.py",
+      "input_hashes": {
+        "out/cases/cases.csv": "4697d59f82cf3a02b19c4c6602c8a7f63319016a4ac9db20dc3f3a1976128c48"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m3_check.py",
+        "--execute"
+      ],
+      "returncode": 0,
+      "stdout": "{\n \"cases\": 19425,\n \"spec_trusted\": 19425,\n \"expected\": {\n  \"reject\": 106,\n  \"reach\": 19271,\n  \"alias_no_test\": 48\n },\n \"verdicts\": {\n  \"as\": {\n   \"SDM 일치(거부)\": 89,\n   \"SDM 일치\": 17090,\n   \"SDM 일치(강제 접두어)\": 2145,\n   \"SDM과 다름(수용)\": 17,\n   \"시험 불가(별칭)\": 48,\n   \"도달 불가(등록)\": 2,\n   \"거부\": 9,\n   \"별칭 행 도달\": 24,\n   \"모르는 명령\": 1\n  },\n  \"clang\": {\n   \"SDM 일치(거부)\": 94,\n   \"SDM 일치\": 17029,\n   \"별칭 행 도달\": 178,\n   \"SDM 일치(강제 접두어)\": 1985,\n   \"모르는 명령\": 38,\n   \"시험 불가(별칭)\": 48,\n   \"SDM과 다름(수용)\": 12,\n   \"거부\": 37,\n   \"도달 불가(등록)\": 1,\n   \"다른 인코딩\": 3\n  }\n },\n \"sdm_match\": {\n  \"as\": 19324,\n  \"clang\": 19108\n },\n \"spec_trusted_and_sdm_match\": {\n  \"as\": 19324,\n  \"clang\": 19108\n },\n \"run\": {\n  \"exit0\": 1954,\n  \"실행 안 함: 메모리·분기 형식\": 13561,\n  \"실행 안 함: CPUID 표기 대응 없음(ADX)\": 4,\n  \"실행 안 함: 이 CPU에 없는 기능\": 3453,\n  \"실행 안 함: CPUID 표기 대응 없음(AES)\": 11,\n  \"실행 안 함: CPUID 표기 대응 없음(VAES)\": 4,\n  \"실행 안 함: CPUID 표기 대응 없음(Both,AES,and,flags)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(MPX)\": 5,\n  \"SIGSEGV\": 89,\n  \"실행 안 함: CPUID 표기 대응 없음(SMAP)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(UINTR)\": 5,\n  \"SIGFPE\": 8,\n  \"실행 안 함: CPUID 표기 대응 없음(CET_IBT)\": 2,\n  \"SIGILL\": 10,\n  \"실행 안 함: CPUID 표기 대응 없음(GFNI)\": 15,\n  \"실행 안 함: CPUID 표기 대응 없음(CET_SS)\": 6,\n  \"SIGTRAP\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(KEY_LOCK,ER)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(PBNDKB)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(PCONFIG)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(PTWRITE)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(FSGSBASE)\": 8,\n  \"실행 안 함: CPUID 표기 대응 없음(MSRLIST)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(RDPID)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(OSPKE)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(RDRAND)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(RDSEED)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(SERIALIZE)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(SHA)\": 8,\n  \"실행 안 함: CPUID 표기 대응 없음(WAITPKG)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(USER_MSR)\": 6,\n  \"실행 안 함: CPUID 표기 대응 없음(AVX_NE_,CONVERT)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(AVX_VNNI_INT8)\": 12,\n  \"실행 안 함: CPUID 표기 대응 없음(AVX_VNNI)\": 8,\n  \"실행 안 함: CPUID 표기 대응 없음(AVX_VNNI_INT16)\": 12,\n  \"실행 안 함: CPUID 표기 대응 없음(AVX_IFMA)\": 4,\n  \"실행 안 함: CPUID 표기 대응 없음(SHA512)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(SM3)\": 4,\n  \"실행 안 함: CPUID 표기 대응 없음(SM4)\": 4,\n  \"실행 안 함: CPUID 표기 대응 없음(WBNOINVD)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(WRMSRNS)\": 1,\n  \"실행 안 함: CPUID 표기 대응 없음(RTM)\": 3,\n  \"실행 안 함: CPUID 표기 대응 없음(HLE)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(TSXLDTRK)\": 2,\n  \"실행 안 함: CPUID 표기 대응 없음(HLE,or,RTM)\": 1\n }\n}\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/cases/check_results.csv": "919c08806a197b7e0dab63fe0c84f0f8a37f81d22809b61f22b96feae6288294",
+        "out/cases/check_rows.csv": "1ba8e788a8cb00e02d3d41d01161a19fab1dc30f17d5d8c486ae87b76d3b9dbd",
+        "out/cases/check_summary.json": "6f9296eec92f907ab0adaf934d8c3cf27959c20315a9e90b0acfb269092f760b"
+      }
+    }
+  ],
+  "completed": true,
+  "finished_utc": "2026-10-10T16:09:23.030836+00:00"
+}

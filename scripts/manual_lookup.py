@@ -8,7 +8,7 @@
     python3 scripts/manual_lookup.py page 731              # 파일 쪽 원문
     python3 scripts/manual_lookup.py general [--tables]    # 총론 제목·표 목록
     python3 scripts/manual_lookup.py symbols [r/m8|SYM027] [--full]  # 총론 표기 정의(원문)
-    python3 scripts/manual_lookup.py cases MOV [--opcode "88 /r"]  # 생성 사례와 저장 관측
+    python3 scripts/manual_lookup.py cases MOV [--opcode "88 /r"]  # 생성 사례와 도구별 판정
 
 쪽 번호는 'PDF 파일 쪽 / 인쇄 쪽'을 함께 적는다. 원본 확인은 PDF 뷰어에서 파일 쪽으로 연다.
 색인이 없거나 PDF가 바뀌었으면 먼저 `~/pdftools_venv/bin/python scripts/build_manual_index.py`.
@@ -184,18 +184,21 @@ def cmd_symbols(data, args):
 
 def cmd_cases(data, args):
     cases = data.cases_for(args.mnemonic, args.opcode)
-    print("생성 사례: %s" % os.path.relpath(manual_lookup.CASES_SNAPSHOT, manual_lookup.ROOT))
-    print("저장 관측: %s (과거 실행 기록, 새 실행이 아니다)" % os.path.relpath(manual_lookup.OBSERVATION_SNAPSHOT, manual_lookup.ROOT))
+    print("생성 사례·판정: %s (저장된 결과, 새 실행이 아니다)" % os.path.relpath(manual_lookup.CASES_SNAPSHOT, manual_lookup.ROOT))
     print("%d개" % len(cases))
     if not cases:
         print("  생성 사례가 없다.")
     for c in cases:
-        print("\n  %s  %s | %s" % (c["combo_id"], c["opcode"], c["raw_instruction"]))
-        print("    소스: %s   입력 검사: %s %s" % (c["source"], c["input_status"], c["input_violations"]))
-        if not c["saved_observations"]:
-            print("    저장 관측 없음")
-        for o in c["saved_observations"]:
-            print("    %-5s %s %s %s" % (o["tool"], o["observation_status"], o["bytes"] or "-", o["encoding_status"]))
+        print("\n  %s  %s | %s" % (c["case_id"], c["opcode"], c["instruction"]))
+        print("    소스: %s   SDM 기대: %s" % (c["source"], c["expected"]))
+        print("    근거: %s" % c["evidence"])
+        check = c["check"]
+        if not check:
+            print("    판정 없음(python3 pipeline/m3_check.py)")
+            continue
+        for tool in ("as", "clang"):
+            print("    %-5s %s  %s %s" % (tool, check["verdict_" + tool], check["bytes_" + tool] or "-",
+                                       check["tested_source_" + tool] if check["tested_source_" + tool] != c["source"] else ""))
     return 0
 
 

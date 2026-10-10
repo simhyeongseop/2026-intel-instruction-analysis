@@ -10,17 +10,12 @@ from pipeline.m7_triage import build_triage_rows
 
 
 class PipelineTests(unittest.TestCase):
-    def test_stage12_registered_and_cpu_explicit(self):
-        plan = plan_stages('execute', until='lint')
-        self.assertEqual([(n, skipped) for n, _, skipped in plan],
-                         [('execute', True), ('execute_edge_cases', True), ('lint', False)])
-        self.assertFalse(plan_stages(only='execute_edge_cases', execute=True)[0][2])
-
-    def test_only_and_until(self):
-        self.assertEqual([x[0] for x in plan_stages(only='triage')], ['triage'])
-        self.assertEqual(len(plan_stages('tokenizer', until='generator')), 3)
+    def test_current_stages(self):
+        self.assertEqual([n for n, _, _ in plan_stages()], ['extractor', 'generator', 'check'])
+        self.assertEqual([x[0] for x in plan_stages(only='check')], ['check'])
+        self.assertEqual([x[0] for x in plan_stages('generator', until='check')], ['generator', 'check'])
         with self.assertRaises(ValueError):
-            plan_stages('lint', until='triage')
+            plan_stages('check', until='generator')
 
     def test_review_changes_preserve_history(self):
         with (ROOT / 'out/asm_result.csv').open(encoding='utf-8') as stream:

@@ -13,7 +13,6 @@ sys.path.insert(0, str(ROOT))
 from pipeline.instruction_check import (HEADER, assemble, check_instruction, command,
                                         decode_lines, evaluate_expected)
 from pipeline.operand_forms import check_opcode_template, load_db, match_token, operand, parse_instruction
-from pipeline.m4_generate import build_line, combo_to_ir, render_intel
 from scripts.asm_linter import exit_code, source_records
 
 LINUX_TOOLS = sys.platform == 'linux' and all(shutil.which(t) for t in ('as', 'clang', 'objdump', 'objcopy', 'readelf'))
@@ -107,15 +106,6 @@ class InputTests(unittest.TestCase):
         self.assertEqual(result['status'], 'incomplete')
         self.assertEqual(result['validation_status'], 'unsupported')
         self.assertEqual(result['syntax'], 'att')
-
-    def test_m4_ir_roundtrip_preserves_current_intel_line(self):
-        row = {'mnemonic': 'MOV', 'operands': 'eax, ebx', 'combo_id': '1', 'row_id': '2',
-               'combo_index': '0', 'expected_valid': 'True', 'mode_support': 'Valid',
-               'cpuid_flag': '', 'note': ''}
-        ir = combo_to_ir(row)
-        self.assertEqual(ir['source_syntax'], 'intel')
-        self.assertEqual(render_intel(ir), build_line(row))
-        self.assertIn('mov eax, ebx', build_line(row))
 
     def test_json_cli_other_working_directory(self):
         process = subprocess.run([sys.executable, str(ROOT / 'scripts/asm_linter.py'), '--static-only',

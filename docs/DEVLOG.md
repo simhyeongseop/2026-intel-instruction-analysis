@@ -1009,3 +1009,37 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - 사용자 결정: GNU와 clang을 서로 비교할 필요가 없다. 기준은 SDM이다.
 - 반영: `docs/SDM_REGENERATION_PLAN.md` '재작성 설계 초안'의 판정 기준. 생성기 재작성 때 `check_conflict_rows` 판정을 도구별 두 칸으로 바꾼다.
 - 기존 9단계 결과와 지금까지의 판정은 이력으로 보존한다(아직 코드 변경 없음).
+
+## 2026-10-11 [재작성] 생성기를 새로 쓰고 판정을 SDM 대 도구별로 바꿨다
+
+- 사용자 결정: 기존 생성기는 삭제한다(헷갈림 방지). 재작성 후 파이프라인을 한 번 돌린다. 직전 작업은 75b35ef로 커밋했다.
+- 삭제:
+  - `pipeline/m2_tokenize.py`, `m3_combine.py`, `m4_generate.py`, `generation_contract.py`, `input_quality.py`
+  - `scripts/audit_generator.py`, `build_fix_expectations.py`, `review_generated_input.py`
+  - 그 테스트 4개와 `data/db/tokens.csv`, `combos.csv`, `extraction_issues.csv`
+- 새로 쓴 것:
+  - `pipeline/case_rules.py`: 표기 → 대표값 표. 근거를 SDM(SYM·쪽), 선택 규칙, 도구 철자로 구분한다.
+    - 예전 생성기에서 관측으로 얻은 도구 철자(크기 키워드 거부 명령, 문자열 주소, far branch 접두어 등)는 근거와 함께 옮겼다.
+  - `pipeline/m2_generate.py`: 원문 검토의 표 기호 순서로 케이스를 만든다.
+    - 행 안에서 물리 레지스터를 겹치지 않게 고른다.
+    - SDM 기대(reach/reject/alias_no_test)와 같은 문법 행(alias_rows)을 적는다. 비교 열쇠 `shape`는 고른 레지스터 번호를 지운 모양이다.
+  - `pipeline/m3_check.py`: GNU와 clang을 따로 조립해 각각 SDM과 비교한다.
+    - 도구끼리는 비교하지 않는다.
+    - 각 도구의 의사 접두어로 표 행 도달을 시도한다.
+    - `unreachable_forms`, `encoding_check_overrides`를 반영한다. `--execute`로 CPU 격리 실행을 한다.
+  - `pipeline/run.py`는 extractor → generator → check만 돈다. 예전 5~13단계는 실행기에서 뺐고, 파일은 남겼다.
+  - `manual_lookup cases`는 새 케이스와 도구별 판정을 보여준다.
+- 첫 실행에서 생성 규칙을 고친 것:
+  - far RET → `retf`, PUSH imm16 → `data16 push`(clang은 `pushw`를 거부)
+  - ST(i)는 st(1)부터 고른다.
+  - mib와 BNDMK/BNDLDX/BNDSTX는 RIP 형태를 만들지 않는다(절 원문: #UD).
+  - SENDUIPI reg는 r64를 쓴다(명령 절: 64비트).
+  - 별칭 열쇠를 소문자로 먼저 바꿔 .Ltarget16을 놓치던 버그를 고쳤다.
+  - 대조 도구에 표 기호 대신 실제 오퍼랜드를 넘기게 했다(CR8, moffs 값 대조).
+- 결과(`out/cases/REPORT.md`):
+  - 19,425케이스 중 SDM 일치는 GNU 19,324, clang 19,108이다. 행 전체 일치는 GNU 4,197, clang 4,059 / 4,219행이다.
+  - 예전 도달 실패 95행 중 83행이 해결됐다.
+  - 남은 GNU 불일치: MPX r/m32와 CALL/JMP r/m32 수용, MOV Sreg r/m64, MSR_IMM, SYSRET/SYSEXIT 철자, MOVQ 별칭, UDB, LAR/LSL 등록 형식
+- 검증:
+  - 생성 규칙 테스트 `tests/test_m2_generate.py`: 기대값은 손으로 정했고 반례를 포함한다.
+  - 전체 회귀 통과. 실행 기록은 `out/runs/20261010T160510248706Z.json`이다.

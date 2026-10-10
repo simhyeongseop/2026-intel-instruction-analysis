@@ -25,13 +25,14 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 
 | 위치 | 역할 |
 |---|---|
-| `pipeline/m1_*.py` ~ `m13_*.py` | 현재 단계별 모듈 |
+| `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py` | 현재 단계(추출 → 생성 → 도구별 판정). 생성 규칙은 `pipeline/case_rules.py` |
+| `pipeline/m5_*.py` ~ `m13_*.py` | 예전 5~13단계(실행기에서 뺌, 과거 결과 근거용) |
 | `pipeline/run.py` | 단계 선택 실행, 실행 기록 |
 | `pipeline/instruction_check.py`, `operand_forms.py` | 검사 도구의 공통 API와 부분 오퍼랜드/opcode 대조 |
 | `pipeline/review_verdicts.py` | 날짜와 근거를 가진 재심 판정; 기존 판정 보존 |
 | `scripts/asm_linter.py` | 사용자용 CLI |
 | `scripts/review_cases.py` | 고정 재심 사례 및 제한된 CPU 대조 실험 |
-| `data/db/` | 기준 추출 DB·토큰·조합 |
+| `data/db/` | 기준 추출 DB(`isa_db.csv`) |
 | `data/cases.csv` | 이름이 고정된 추가 사례. 기존 combo ID와 구분 |
 | `tests/`, `examples/` | 회귀 검증·사용 예제 |
 | `out/` | 단계별 결과; `docs/PIPELINE.md`에서 매핑 |

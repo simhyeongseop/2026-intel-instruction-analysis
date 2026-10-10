@@ -189,9 +189,10 @@ class TerminalLookupTest(unittest.TestCase):
     def test_cases_show_saved_observation_not_new_run(self):
         code, text = self.run_cli("cases", "MOV", "--opcode", "8A /r")
         self.assertIn("새 실행이 아니다", text)
-        self.assertIn("5개", text)
+        self.assertIn("4개", text)      # 레지스터 1 + 메모리 주소 3형태(base, SIB, RIP)
         self.assertIn("mov cl, dl", text)
-        self.assertIn("88d1", text)   # 저장 관측: 8A 행 사례가 88로 조립됨
+        self.assertIn("{load} mov cl, dl", text)   # 저장 판정: GNU는 {load}로 8A 행에 도달
+        self.assertIn("88d1", text)                 # clang은 같은 소스를 88 행으로 조립(별칭 행 도달)
 
 
 if __name__ == "__main__":

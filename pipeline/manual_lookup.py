@@ -13,9 +13,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ISA_DB = os.path.join(ROOT, "data/db/isa_db.csv")
 # 총론 표기 정의(원문 그대로). 이전 해석 규칙(common_rules.csv)은 2026-10-09 사용자 결정으로 폐기했다.
 SYMBOLS_CSV = os.path.join(ROOT, "data/rules/sdm_symbols.csv")
-# 생성 사례와 저장된 도구 관측은 서로 다른 snapshot이다. 출력할 때 출처를 같이 보여준다.
-CASES_SNAPSHOT = os.path.join(ROOT, "out/generator_audit_2026-10-10_093")
-OBSERVATION_SNAPSHOT = os.path.join(ROOT, "out/generator_audit_2026-09-29_description_fix")
+# 생성 사례(2단계 m2_generate)와 도구별 판정(3단계 m3_check). 저장된 결과이며 조회할 때 새로 실행하지 않는다.
+CASES_SNAPSHOT = os.path.join(ROOT, "out/cases")
 
 
 def read_csv(path):
@@ -23,15 +22,6 @@ def read_csv(path):
         return []
     with open(path, encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
-
-
-def build_source_line(row):
-    """combos.csv 한 줄의 어셈블리 소스 문자열. m4_generate와 같은 규칙을 쓴다."""
-    prefix = (row.get("asm_prefix") or "").strip()
-    mnemonic = (row.get("asm_mnemonic") or "").strip() or row["mnemonic"].lower()
-    operands = row.get("operands", "")
-    line = ("%s %s" % (prefix, mnemonic)).strip()
-    return ("%s %s" % (line, operands)).strip() if operands else line
 
 
 def subsection_text(index, section, title):
@@ -61,7 +51,7 @@ def subsection_text(index, section, title):
 
 
 class ManualData:
-    """색인·추출 DB·규칙·생성 사례·저장 관측을 한 번만 읽어 둔다."""
+    """색인·추출 DB·규칙·생성 사례·저장 판정을 한 번만 읽어 둔다."""
 
     def __init__(self, index_dir=None, pdf_path=None):
         self.index_dir = index_dir or os.path.join(ROOT, manual_index.INDEX_DIR)
@@ -82,17 +72,14 @@ class ManualData:
     @property
     def cases(self):
         if self._cases is None:
-            self._cases = read_csv(os.path.join(CASES_SNAPSHOT, "combos.csv"))
+            self._cases = read_csv(os.path.join(CASES_SNAPSHOT, "cases.csv"))
         return self._cases
 
     @property
     def observations(self):
-        """저장된 과거 도구 관측. combo_id -> 기록 목록. 새 실행이 아니다."""
+        """저장된 도구별 판정. case_id -> 판정 행. 새 실행이 아니다."""
         if self._observations is None:
-            saved = {}
-            for row in read_csv(os.path.join(OBSERVATION_SNAPSHOT, "encoding_audit.csv")):
-                saved.setdefault(row["combo_id"], []).append(row)
-            self._observations = saved
+            self._observations = {row["case_id"]: row for row in read_csv(os.path.join(CASES_SNAPSHOT, "check_results.csv"))}
         return self._observations
 
     def symbols(self):
@@ -150,12 +137,8 @@ class ManualData:
             if opcode and row["opcode"] != opcode:
                 continue
             hits.append({
-                "combo_id": row["combo_id"],
-                "opcode": row["opcode"],
-                "raw_instruction": row["raw_instruction"],
-                "source": build_source_line(row),
-                "input_status": row["input_status"],
-                "input_violations": row["input_violations"],
-                "saved_observations": self.observations.get(row["combo_id"], []),
+                "case_id": row["case_id"], "opcode": row["opcode"], "instruction": row["instruction"],
+                "source": row["source"], "expected": row["expected"], "evidence": row["evidence"],
+                "check": self.observations.get(row["case_id"]),
             })
         return hits
