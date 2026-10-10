@@ -1043,3 +1043,23 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - 검증:
   - 생성 규칙 테스트 `tests/test_m2_generate.py`: 기대값은 손으로 정했고 반례를 포함한다.
   - 전체 회귀 통과. 실행 기록은 `out/runs/20261010T160510248706Z.json`이다.
+
+## 2026-10-11 [추가] 4단계 역어셈블 대조
+
+- 사용자 요청: 재작성을 커밋하고(687f68c) 역어셈블 대조를 붙인다.
+- `pipeline/m4_disasm.py`, `pipeline/disasm_rules.py`:
+  - 3단계에서 SDM 행 바이트와 일치한 케이스를 GNU objdump 2.42와 LLVM 18 MC 역어셈블러(llvm-mc)로 따로 푼다.
+  - 니모닉(같은 opcode의 SDM 표 행·SDM 의사 니모닉 표)과 오퍼랜드(생성 의도, 메모리는 원문 폭)를 SDM 기준으로 본다.
+- 처음 만든 기준 '다시 조립하면 같은 바이트'는 버렸다.
+  - 텍스트에 {evex}·방향 정보가 없어 같은 문법의 다른 인코딩이 나오는 것이 정상이었다(시험 384케이스 중 LLVM 45).
+  - 이 비교는 도구끼리 오간 결과일 뿐 SDM 비교가 아니다. 참고 칸으로만 남겼다.
+- SDM 근거로 같게 보는 것:
+  - 의사 니모닉 표(289쪽, Table 3-9, 5-19, 4-15)
+  - FWAIT 짝(506쪽), F2/F3 접두어 이름(31쪽)
+  - 암묵 오퍼랜드: <XMM0>, 문자열 누산기, 리터럴 1
+  - 같은 opcode에 순서만 뒤집힌 표 행(XCHG), m16:N 폭(SYM046), Description 보정 폭
+- 고친 비교 결함: REP 행 니모닉 추출, lock 단독 행, REP+REX.W opcode 열쇠, objdump moffs `ds:0x…` 읽기, LLVM의 따로 쓴 마스크
+- 결과(REPORT.md):
+  - 19,244케이스 중 SDM 일치 계열은 objdump 19,211, LLVM 19,182다.
+  - 차이: r/m16을 32비트 이름으로 출력, objdump m16:64 FWORD, LLVM MPX·LKGS·UD0·INT1 디코드 실패, ERETS/ERETU→clac, CLRSSBSY/RSTORSSP dword, 도구 관례 철자
+- 검증: `tests/test_m4_disasm.py`가 의사 니모닉 표 값을 원문 쪽에서 확인하고, 비교 함수 반례를 포함한다. 전체 회귀 통과.

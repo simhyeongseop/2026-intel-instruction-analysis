@@ -25,7 +25,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 
 | 위치 | 역할 |
 |---|---|
-| `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py` | 현재 단계(추출 → 생성 → 도구별 판정). 생성 규칙은 `pipeline/case_rules.py` |
+| `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py`, `m4_disasm.py` | 현재 단계(추출 → 생성 → 도구별 판정 → 역어셈블러별 대조). 규칙은 `case_rules.py`, `disasm_rules.py` |
 | `pipeline/m5_*.py` ~ `m13_*.py` | 예전 5~13단계(실행기에서 뺌, 과거 결과 근거용) |
 | `pipeline/run.py` | 단계 선택 실행, 실행 기록 |
 | `pipeline/instruction_check.py`, `operand_forms.py` | 검사 도구의 공통 API와 부분 오퍼랜드/opcode 대조 |

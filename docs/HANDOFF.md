@@ -22,9 +22,10 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
   - 생성 `pipeline/m2_generate.py`(규칙 `case_rules.py`) → `out/cases/cases.csv`. 판정 `pipeline/m3_check.py`(SDM 대 GNU, SDM 대 clang 따로).
   - 19,425케이스 중 SDM 일치는 GNU 19,324, clang 19,108이다. 상세는 `out/cases/REPORT.md`.
   - 예전 m2~m4 생성기는 삭제했고, 예전 5~13단계는 실행기에서 뺐다(파일 남음).
+  - 역어셈블 대조 4단계 `pipeline/m4_disasm.py`: SDM 일치 바이트 19,244개 중 SDM 일치는 objdump 19,211, LLVM 19,182(일치 계열 합계).
+    차이는 REPORT.md 마지막 절에 있다(r/m16을 32비트 이름으로 출력, objdump m16:64 FWORD, LLVM의 MPX 디코드 실패·ERETS→clac 등).
 - **다음 작업**:
   - 남은 불일치 사례 확인. MPX r/m32와 CALL/JMP r/m32를 도구가 받는 것, clang의 data16 꼬리 4바이트, SYSRET 철자
-  - 역어셈블(objdump 왕복) 대조를 새 판정에 붙일지 결정
   - 결정 6(Sol 단독 값 1,410줄)을 생성 값과 대조
 - 아래 '진행 중' 절의 수치 중 090판 기준(17,356 등)은 기록이다. 093판 현재 수치는 REPORT_093.md를 따른다.
 

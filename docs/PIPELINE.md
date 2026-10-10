@@ -7,6 +7,7 @@
 | 1 extractor | PDF 인코딩 표 추출 | `pipeline/m1_extract.py` | `intel_manual.pdf` | `data/db/isa_db.csv`, `data/db/coverage_report.md` |
 | 2 generator | 표 행 + 원문 검토 → 케이스·소스 | `pipeline/m2_generate.py`(규칙 `pipeline/case_rules.py`) | `isa_db.csv`, `out/sdm_review_093/` | `out/cases/cases.csv`, `cases.s`, `generate_summary.json` |
 | 3 check | GNU as·clang을 따로 조립해 SDM 기대와 비교 | `pipeline/m3_check.py` | `out/cases/cases.csv` | `out/cases/check_results.csv`, `check_rows.csv`, `check_summary.json` |
+| 4 disasm | SDM 일치 바이트를 objdump·LLVM으로 따로 풀어 SDM 행과 비교 | `pipeline/m4_disasm.py`(규칙 `pipeline/disasm_rules.py`) | `check_results.csv`, `cases.csv` | `out/cases/disasm_results.csv`, `disasm_summary.json` |
 
 - 2단계: 값은 `case_rules.py`의 표(총론 SYM, Vol.1·Vol.2 쪽, 선택 규칙, 도구 철자)로만 고르고 케이스마다 근거를 남긴다.
   SDM 기대 결과는 `reach`(이 표 행 인코딩), `reject`(64비트 무효), `alias_no_test`(무효 행인데 유효 행과 같은 문법)다.
@@ -14,13 +15,13 @@
   `--execute`를 주면 SDM 일치한 레지스터 전용 케이스를 이 CPU에서 격리 실행해 기록한다.
 - 예전 2~4단계(`m2_tokenize`, `m3_combine`, `m4_generate`)와 `data/db/tokens.csv`, `combos.csv`는 2026-10-11에 삭제했다(git 기록 75b35ef 이전).
 - 예전 5~13단계(`m5_assemble` ~ `m13_lint`)는 삭제한 생성기의 `out/tests.s`를 입력으로 쓰므로 실행기에서 뺐다.
-  파일과 과거 결과는 남아 있다. 역어셈블(objdump 왕복) 대조는 아직 새 판정에 다시 붙이지 않았다.
+  파일과 과거 결과는 남아 있다. 역어셈블 대조는 4단계로 새로 붙였다(예전 6·10단계의 텍스트·재조립 비교 대신 SDM 행 기준).
 
 ## 단계 선택
 
 ```bash
 python3 pipeline/run.py --list
-python3 pipeline/run.py generator --until check            # 생성 + 도구별 판정
+python3 pipeline/run.py generator --until disasm           # 생성 + 도구별 판정 + 역어셈블 대조
 python3 pipeline/run.py --only check --execute             # 판정 + CPU 격리 실행
 python3 scripts/manual_lookup.py cases MOV --opcode "8A /r"  # 저장된 케이스와 판정 조회
 ```

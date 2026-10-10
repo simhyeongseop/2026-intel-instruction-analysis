@@ -11,21 +11,23 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from pipeline.instruction_check import environment, sha256
 
-# 현재 파이프라인(2026-10-11 생성기 재작성): 추출 -> 생성 -> 도구별 판정.
+# 현재 파이프라인(2026-10-11 생성기 재작성): 추출 -> 생성 -> 도구별 판정 -> 역어셈블러별 대조.
 # 예전 5~13단계(m5_assemble ... m13_lint)는 삭제한 생성기의 out/tests.s를 입력으로 쓰므로 여기서 뺐다.
 STAGES = [
     ('extractor', 'pipeline/m1_extract.py'), ('generator', 'pipeline/m2_generate.py'),
-    ('check', 'pipeline/m3_check.py'),
+    ('check', 'pipeline/m3_check.py'), ('disasm', 'pipeline/m4_disasm.py'),
 ]
 INPUTS = {
     'extractor': ['intel_manual.pdf'],
     'generator': ['data/db/isa_db.csv', 'out/sdm_review_093/compare/rows_status.csv'],
     'check': ['out/cases/cases.csv'],
+    'disasm': ['out/cases/check_results.csv', 'out/cases/cases.csv'],
 }
 OUTPUTS = {
     'extractor': ['data/db/isa_db.csv', 'data/db/coverage_report.md'],
     'generator': ['out/cases/cases.csv', 'out/cases/cases.s', 'out/cases/generate_summary.json'],
     'check': ['out/cases/check_results.csv', 'out/cases/check_rows.csv', 'out/cases/check_summary.json'],
+    'disasm': ['out/cases/disasm_results.csv', 'out/cases/disasm_summary.json'],
 }
 # --execute를 주면 이 단계에 그대로 넘긴다(레지스터 전용 케이스를 격리 실행).
 EXECUTE_OPTION_STAGES = {'check'}
