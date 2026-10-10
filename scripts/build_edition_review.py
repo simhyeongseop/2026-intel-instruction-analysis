@@ -53,6 +53,8 @@ def main():
                 text = ref + ' "' + quote[:120] + '"'
                 if (part, ref, quote) in lost and text not in missing[int(line["row_id"])]:
                     missing[int(line["row_id"])].append(text)
+    rerun_path = "out/sdm_review_093/sol_rerun_093.csv"
+    rerun_rows = {int(r["row_id"]) for r in read_csv(rerun_path)} if os.path.exists(rerun_path) else set()
     diff = {int(r["new_row_id"]): r for r in read_csv(DIFF) if r["new_row_id"] != ""}
     targets = sorted({rid for rid, r in diff.items() if r["status"] == "changed"} | set(missing))
     out = []
@@ -63,7 +65,9 @@ def main():
             reasons.append("표 칸 변경: " + row["changed_fields"])
         if missing.get(row_id):
             reasons.append("Sol 인용이 093판에서 사라짐 %d개" % len(missing[row_id]))
-        if row_id in MANUAL:
+        if row_id in rerun_rows:
+            result, evidence = "재확인 완료(Sol 093 재추출)", "out/sdm_review_093/sol_rerun_093.csv"
+        elif row_id in MANUAL:
             result, evidence = MANUAL[row_id]
         elif missing.get(row_id):
             result, evidence = "재확인 필요", ""

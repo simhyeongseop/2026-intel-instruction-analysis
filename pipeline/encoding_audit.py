@@ -63,6 +63,8 @@ def normalize_template(template):
     text = re.sub(r'\s*(11|!\(11\)|mm):(rrr|[01]{3}):(bbb|[01]{3})', modrm, text)
     text = re.sub(r'\s*\((?:mod!=11|mod\s*!=\s*11)[^)]*\)', lambda m: conditions.update(mod='memory') or '', text)
     text = re.sub(r'\s*\(mod\s*=\s*11\)', lambda m: conditions.update(mod='register') or '', text)
+    # 'MAP7:W0.F6'(RDMSR·URDMSR·UWRMSR·WRMSRNS 표 칸): 맵·W 뒤에 opcode가 점으로 붙은 표기
+    text = re.sub(r'\.(MAP\d):(W[01])\.([0-9A-F]{2})\b', r'.\1.\2 \3', text)
     text = re.sub(r'\bNFx\b', 'NP', text)
     text = re.sub(r'\b(ib|iw|id)\s+[0-9A-F]{2}\b', r'\1 ib', text)
     text = re.sub(r',\s*/r', ' /r', text)
@@ -122,9 +124,11 @@ def _check_encoding(hex_bytes, row, relocations=False):
         for field in fields[1:]:
             if field in ('66', 'F3', 'F2'):
                 pp = {'66': 1, 'F3': 2, 'F2': 3}[field]
-            elif field in ('0F', '0F38', '0F3A', 'MAP5', 'MAP6'):
+            elif field in ('0F', '0F38', '0F3A', 'MAP5', 'MAP6', 'MAP7'):
                 # EVEX.mmm maps 1, 2, 3, 5, 6 (SDM 2.7, file page 68).
-                map_id = {'0F': 1, '0F38': 2, '0F3A': 3, 'MAP5': 5, 'MAP6': 6}[field]
+                # VEX MAP7: 093판 총론에는 정의가 없고(48쪽 Table 2-10은 00111B Reserved) 명령 표 칸에만 있다.
+                # 사용자 결정(2026-10-10): 표 표기를 따르고 map 필드 값 7로 대조한다(source_conflict_cases MAP7-*).
+                map_id = {'0F': 1, '0F38': 2, '0F3A': 3, 'MAP5': 5, 'MAP6': 6, 'MAP7': 7}[field]
             elif field == 'NP':
                 pp = 0  # SYM002: no 66/F2/F3 beyond the opcode
             elif field in ('NDS', 'NDD', 'DDS'):

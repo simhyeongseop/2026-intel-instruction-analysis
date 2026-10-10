@@ -45,7 +45,9 @@ def main():
     table_cells = load_table_cells()
     results = {}
     usage = collections.Counter()
-    for path in sorted(glob.glob(os.path.join(args.review_dir, "sol_part[0-9].csv"))):
+    paths = sorted(glob.glob(os.path.join(args.review_dir, "sol_part[0-9].csv")))
+    paths += [p for p in [os.path.join(args.review_dir, "sol_rerun_093.csv")] if os.path.exists(p)]
+    for path in paths:
         part = os.path.basename(path)[len("sol_"):-len(".csv")]
         with open(path, encoding="utf-8") as handle:
             for row in csv.DictReader(handle):

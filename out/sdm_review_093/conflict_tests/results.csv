@@ -76,5 +76,19 @@ EVEXD-21,2,3462,VPBLENDMQ,evex_desc,"vpblendmq ymm1{k1}{z}, ymm2, ymmword ptr [r
 EVEXD-21,3,3462,VPBLENDMQ,evex_desc,"vpblendmq ymm1{k1}{z}, ymm2, qword ptr [rax]{1to4}",62 f2 ed b9 64 08,62 f2 ed b9 64 08,예,,1,1,실행 안 함: CPU에 avx512f 없음,,,통과
 MODE-01,1,2468,SAHF,mode_validity,sahf,9e,9e,예,,,,exit0,,,
 MODE-02,1,989,LAHF,mode_validity,lahf,9f,9f,예,,,,exit0,,,
+MAP7-01,1,2395,RDMSR,map7,"rdmsr rcx, 0x10000","거부: /tmp/conflict_i4m4oxaj/MAP7_01_1_gnu.s: Assembler messages:
+/tmp/conflict_i4m4oxaj/MAP7_01_1_gnu.s:3: Error: number of operands mismatch for `rdmsr'","거부: /tmp/conflict_i4m4oxaj/MAP7_01_1_clang.s:3:1: error: invalid operand for instruction
+rdmsr rcx, 0x10000
+^",,,,,,,,
+MAP7-02,1,2770,URDMSR,map7,"urdmsr rcx, 0x10000",c4 e7 7b f8 c1 00 00 01 00,c4 e7 7b f8 c1 00 00 01 00,예,0,,,SIGILL,,,
+MAP7-03,1,2772,UWRMSR,map7,"uwrmsr 0x10000, rcx",c4 e7 7a f8 c1 00 00 01 00,c4 e7 7a f8 c1 00 00 01 00,예,0,,,SIGILL,,,
+MAP7-04,1,4105,WRMSRNS,map7,"wrmsrns 0x10000, rcx","거부: /tmp/conflict_i4m4oxaj/MAP7_04_1_gnu.s: Assembler messages:
+/tmp/conflict_i4m4oxaj/MAP7_04_1_gnu.s:3: Error: number of operands mismatch for `wrmsrns'","거부: /tmp/conflict_i4m4oxaj/MAP7_04_1_clang.s:3:1: error: invalid operand for instruction
+wrmsrns 0x10000, rcx
+^",,,,,,,,
+ZO-01,1,2741,UDB,table_typo,udb,"거부: /tmp/conflict_i4m4oxaj/ZO_01_1_gnu.s: Assembler messages:
+/tmp/conflict_i4m4oxaj/ZO_01_1_gnu.s:3: Error: no such instruction: `udb'","거부: /tmp/conflict_i4m4oxaj/ZO_01_1_clang.s:3:1: error: invalid instruction mnemonic 'udb'
+udb
+^~~",,,,,,,,
 CTRL-UD2,1,,UD2,control,ud2,0f 0b,0f 0b,예,,,,SIGILL,,,
 CTRL-AVX2,1,,VPADDW,control,"vpaddw ymm1, ymm2, ymm3",c5 ed fd cb,c5 ed fd cb,예,1,,,exit0,,,

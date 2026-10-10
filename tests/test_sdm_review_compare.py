@@ -74,8 +74,11 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(cmp.uniform_status(sol_line(status="원문 충돌", width="")), "원문 충돌")
 
     def test_lone_zmm_width_is_missing_by_decision_1(self):
-        self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm1 {k1}{z}", width="512")), "원문 없음")
-        self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm2", width="512")), "원문 없음")
+        # 결정 1(완화 전): 단독 zmm 폭은 원문 없음
+        self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm1 {k1}{z}", width="512"), relaxed=False), "원문 없음")
+        self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm2", width="512"), relaxed=False), "원문 없음")
+        # 완화 A: Vol.1 원문으로 512
+        self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm2", width="")), "원문 확정(완화 A: Vol.1)")
         # zmm/m512 복합 표기와 xmm은 이 규칙 대상이 아니다.
         self.assertEqual(cmp.uniform_status(sol_line(symbol="zmm3/m512", width="512")), "원문 확정")
         self.assertEqual(cmp.uniform_status(sol_line(symbol="xmm1", width="128")), "원문 확정")
@@ -85,7 +88,10 @@ class CompareTest(unittest.TestCase):
             self.assertEqual(cmp.uniform_status(sol_line(symbol=name, kind="literal", width="")), "원문 확정", name)
         # 종류가 없으면 고정 레지스터라도 원문 없음, 기호 표기(r8, Sreg, imm8)는 여전히 폭이 필요하다.
         self.assertEqual(cmp.uniform_status(sol_line(symbol="AL", kind="원문 없음", width="")), "원문 없음")
-        for name in ("r8", "Sreg", "imm8", "xmm1", "sibmem", "m8"):
+        for name in ("r8", "Sreg", "imm8", "sibmem", "m8"):
+            self.assertEqual(cmp.uniform_status(sol_line(symbol=name, width=""), relaxed=False), "원문 없음", name)
+        # 완화를 켜도 정의가 없는 표기는 원문 없음
+        for name in ("r8", "Sreg", "imm8", "m2byte", "xmm3/m128/m8bcst"):
             self.assertEqual(cmp.uniform_status(sol_line(symbol=name, width="")), "원문 없음", name)
 
 
@@ -94,6 +100,8 @@ class RowLevelTest(unittest.TestCase):
         self.assertEqual(cmp.row_status(["원문 확정", "원문 확정"], "원문 확정"), "원문 확정")
         self.assertEqual(cmp.row_status(["원문 확정", "원문 없음"], "원문 확정"), "원문 없음")
         self.assertEqual(cmp.row_status(["원문 확정"], "원문 충돌"), "원문 충돌")
+        self.assertEqual(cmp.row_status(["원문 확정", "원문 확정(완화 A: Vol.1)"], ""), "원문 확정(완화 A: Vol.1)")
+        self.assertEqual(cmp.row_status(["원문상 가변(완화 C)", "원문 없음"], ""), "원문 없음")
         # 오퍼랜드가 없는 행은 행 조건만 본다. 행 조건의 '원문 없음'은 오퍼랜드 판정에 쓰지 않는다.
         self.assertEqual(cmp.row_status([], "원문 확정"), "원문 확정")
 
@@ -107,6 +115,28 @@ class RowLevelTest(unittest.TestCase):
         self.assertEqual(cmp.extraction_defects(dict(base, op_en="A", operands="INS m8, DX")), ["operands에 니모닉"])
         self.assertEqual(cmp.extraction_defects(dict(base, op_en="A", operands="r32, r64/m161")), ["operands 각주 숫자"])
         self.assertEqual(cmp.extraction_defects(dict(base, op_en="A", operands="EAX, imm32")), [])
+
+
+class RerunOverlayTest(unittest.TestCase):
+    def test_rerun_replaces_whole_row(self):
+        import csv as _csv
+        import tempfile
+        fields = ["row_id", "operand_index", "table_symbol", "kind", "data_width", "status", "mnemonic", "source_level"]
+        def write(path, rows):
+            with open(path, "w", encoding="utf-8", newline="") as handle:
+                writer = _csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows(rows)
+        line = lambda r, i, w: dict(row_id=r, operand_index=i, table_symbol="x", kind="register", data_width=w,
+                                    status="원문 확정", mnemonic="X", source_level="총론")
+        with tempfile.TemporaryDirectory() as folder:
+            write(os.path.join(folder, "sol_part1.csv"), [line(1, 0, ""), line(1, 1, "8"), line(1, 2, "8"), line(2, 1, "16")])
+            write(os.path.join(folder, "sol_rerun_093.csv"), [line(1, 0, ""), line(1, 1, "32"), line(9, 1, "64")])
+            rows = cmp.load_sol(folder)
+        self.assertEqual(rows[(1, 1)]["data_width"], "32")
+        self.assertNotIn((1, 2), rows)                 # 재추출된 행의 옛 줄은 남기지 않는다
+        self.assertEqual(rows[(2, 1)]["part"], "part1")
+        self.assertEqual(rows[(9, 1)]["part"], "rerun093")
 
 
 if __name__ == "__main__":

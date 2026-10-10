@@ -49,7 +49,7 @@ row_id,mnemonic,opcode,instruction,mode_support,issue,fix_hint,failing_cases,exa
 1016,LEAVE,C9,LEAVE,N.E.,negative_source_alias,64비트 무효 인코딩의 음성 케이스가 같은 니모닉의 유효 행으로 조립됨. 니모닉 소스로 음성 시험을 만들 수 없음,1,leave,c9
 1019,LGDT,0F 01 /2,LGDT m16&32,N.E.,negative_source_alias,64비트 무효 인코딩의 음성 케이스가 같은 니모닉의 유효 행으로 조립됨. 니모닉 소스로 음성 시험을 만들 수 없음,3,lgdt [eax],670f0110
 1020,LIDT,0F 01 /3,LIDT m16&32,N.E.,negative_source_alias,64비트 무효 인코딩의 음성 케이스가 같은 니모닉의 유효 행으로 조립됨. 니모닉 소스로 음성 시험을 만들 수 없음,3,lidt [eax],670f0118
-1099,MOV,REX.W + 8E /r,"MOV Sreg, r/m64",Valid,known_tool_case,"기존에 기록한 도구 사례(MOV Sreg REX.W 메모리: 사용자 확인 대기, UDB: GNU 거부)",3,"mov ds, qword ptr [eax]",
+1099,MOV,REX.W + 8E /r,"MOV Sreg, r/m64",Valid,known_tool_case,기존에 기록한 도구 사례(MOV Sreg REX.W 메모리: 사용자 확인 대기),3,"mov ds, qword ptr [eax]",
 1299,VMOVQ,EVEX.128.F3.0F.W1 7E /r,"VMOVQ xmm1, xmm2/m64",Valid,evex_not_forced,EVEX 행인데 {evex}로도 표 행에 도달하지 못함. 형식별 강제 방법 확인 필요,3,"vmovq xmm0, qword ptr [eax]",67c5fa7e00
 1302,VMOVQ,EVEX.128.66.0F.W1 D6 /r,"VMOVQ xmm1/m64, xmm2",Valid,evex_not_forced,EVEX 행인데 {evex}로도 표 행에 도달하지 못함. 형식별 강제 방법 확인 필요,4,"vmovq qword ptr [eax], xmm0",67c5f9d600
 1987,POP,0F A1,POP FS,N.E.,negative_source_alias,64비트 무효 인코딩의 음성 케이스가 같은 니모닉의 유효 행으로 조립됨. 니모닉 소스로 음성 시험을 만들 수 없음,1,pop fs,0fa1
@@ -71,7 +71,7 @@ row_id,mnemonic,opcode,instruction,mode_support,issue,fix_hint,failing_cases,exa
 2378,ROR,C1 /1 ib,"ROR r/m16, imm8",Valid,imm1_shift_alias,C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름),4,"ror cx, 1",66d1c9
 2383,ROR,C1 /1 ib,"ROR r/m32, imm8",Valid,imm1_shift_alias,C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름),4,"ror ecx, 1",d1c9
 2384,ROR,REX.W + C1 /1 ib,"ROR r/m64, imm8",Valid,imm1_shift_alias,C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름),4,"ror rcx, 1",48d1c9
-2395,RDMSR,VEX.128.F2.MAP7:W0.F6 11:000:bbb,"RDMSR r64, imm32",Valid,other,개별 확인 필요,2,"rdmsr rcx, 0x10000",
+2395,RDMSR,VEX.128.F2.MAP7:W0.F6 11:000:bbb,"RDMSR r64, imm32",Valid,tool_unsupported,생성기 문제 아님: 표 기준으로 정했으나 GNU as 2.42·clang 18이 이 명령을 모름(source_conflict_cases '표 기준 생성(도구 미지원)'). 새 도구 버전으로 다시 대조,2,"rdmsr rcx, 0x10000",
 2446,RET,CB,RET,Valid,far_return,far RET(CB/CA)은 'ret'이 아니라 'retf/lret'으로 써야 함,1,ret,c3
 2448,RET,CA iw,RET imm16,Valid,far_return,far RET(CB/CA)은 'ret'이 아니라 'retf/lret'으로 써야 함,2,ret 0x100,c20001
 2471,SAL,C0 /4 ib,"SAL r/m8, imm8",Valid,imm1_shift_alias,C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름),4,"sal cl, 1",d0e1
@@ -92,7 +92,5 @@ row_id,mnemonic,opcode,instruction,mode_support,issue,fix_hint,failing_cases,exa
 2516,SHR,REX.W + C1 /5 ib,"SHR r/m64, imm8",Valid,imm1_shift_alias,C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름),4,"shr rcx, 1",48d1e9
 2702,TCMMIMFP16PS,VEX.128.66.0F38.W0 6C 11:rrr:bbb,"TCMMIMFP16PS tmm1, tmm2, tmm3",Valid,other,개별 확인 필요,1,"tcmmimfp16ps tmm0, tmm0, tmm0",
 2703,TCMMRLFP16PS,VEX.128.NP.0F38.W0 6C 11:rrr:bbb,"TCMMRLFP16PS tmm1, tmm2, tmm3",Valid,other,개별 확인 필요,1,"tcmmrlfp16ps tmm0, tmm0, tmm0",
-2741,UDB,D6,UDB,Valid,known_tool_case,"기존에 기록한 도구 사례(MOV Sreg REX.W 메모리: 사용자 확인 대기, UDB: GNU 거부)",1,udb,
-2770,URDMSR,VEX.128.F2.MAP7:W0.F8 11:000:bbb,"URDMSR r64, imm32",Valid,other,개별 확인 필요,2,"urdmsr rcx, 0x10000",c4e77bf8c100000100
-2772,UWRMSR,VEX.128.F3.MAP7:W0.F8 11:000:bbb,"UWRMSR imm32, r64",Valid,other,개별 확인 필요,2,"uwrmsr 0x10000, rcx",c4e77af8c100000100
-4105,WRMSRNS,VEX.128.F3.MAP7:W0.F6 11:000:bbb,"WRMSRNS imm32, r64",Valid,other,개별 확인 필요,2,"wrmsrns 0x10000, rcx",
+2741,UDB,D6,UDB,Valid,tool_unsupported,생성기 문제 아님: 표 기준으로 정했으나 GNU as 2.42·clang 18이 이 명령을 모름(source_conflict_cases '표 기준 생성(도구 미지원)'). 새 도구 버전으로 다시 대조,1,udb,
+4105,WRMSRNS,VEX.128.F3.MAP7:W0.F6 11:000:bbb,"WRMSRNS imm32, r64",Valid,tool_unsupported,생성기 문제 아님: 표 기준으로 정했으나 GNU as 2.42·clang 18이 이 명령을 모름(source_conflict_cases '표 기준 생성(도구 미지원)'). 새 도구 버전으로 다시 대조,2,"wrmsrns 0x10000, rcx",

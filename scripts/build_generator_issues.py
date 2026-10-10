@@ -21,9 +21,13 @@ FIX = {
     "operand_size_prefix": "16비트 즉시값 행(66 접두어 필요)을 니모닉 접미사(pushw 등)로 지정해야 함",
     "far_return": "far RET(CB/CA)은 'ret'이 아니라 'retf/lret'으로 써야 함",
     "negative_source_alias": "64비트 무효 인코딩의 음성 케이스가 같은 니모닉의 유효 행으로 조립됨. 니모닉 소스로 음성 시험을 만들 수 없음",
-    "known_tool_case": "기존에 기록한 도구 사례(MOV Sreg REX.W 메모리: 사용자 확인 대기, UDB: GNU 거부)",
+    "known_tool_case": "기존에 기록한 도구 사례(MOV Sreg REX.W 메모리: 사용자 확인 대기)",
+    "tool_unsupported": "생성기 문제 아님: 표 기준으로 정했으나 GNU as 2.42·clang 18이 이 명령을 모름"
+                        "(source_conflict_cases '표 기준 생성(도구 미지원)'). 새 도구 버전으로 다시 대조",
     "other": "개별 확인 필요",
 }
+TOOL_UNSUPPORTED_ROWS = {r["row_id"] for r in csv.DictReader(open("data/rules/source_conflict_cases.csv", encoding="utf-8"))
+                         if r["decision"] == "표 기준 생성(도구 미지원)"}
 
 
 def read_csv(path):
@@ -33,6 +37,9 @@ def read_csv(path):
 
 def classify(row, bad):
     opcode, source = row["opcode"], bad[0]["tested_source"]
+    if bad[0]["row_id"] in TOOL_UNSUPPORTED_ROWS and all(
+            r["gnu_status"] != "accepted" and r["clang_status"] != "accepted" for r in bad):
+        return "tool_unsupported"
     if re.match(r"(REX\.W \+ )?C[01] /[0-7] ib$", opcode) and re.search(r",\s*1$", source):
         return "imm1_shift_alias"
     if opcode.startswith("EVEX") and bad[0]["gnu_bytes"].startswith(("c4", "c5", "67c4", "67c5")):
@@ -43,7 +50,7 @@ def classify(row, bad):
         return "far_return"
     if all(r["test_kind"] == "negative" for r in bad):
         return "negative_source_alias"
-    if row["mnemonic"] in ("MOV", "UDB"):
+    if row["mnemonic"] == "MOV":
         return "known_tool_case"
     return "other"
 

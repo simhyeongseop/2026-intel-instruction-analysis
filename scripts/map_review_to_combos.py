@@ -43,6 +43,8 @@ CORRECTIONS = "data/rules/extraction_corrections.csv"
 REACH_RESULTS = "out/sdm_review_093/conflict_tests/all_results.csv"
 REACHED = ("통과", "통과(GNU 단독)", "도달 불가(별칭)", "도달 불가(문법)")
 DEFECT_CASES = "out/sdm_review_093/conflict_tests/defect_cases.csv"
+ALL_CASES = "out/sdm_review_093/conflict_tests/all_cases.csv"
+PDF_CONFIRMED = "data/rules/pdf_confirmed_corrections.csv"
 
 
 EDITION_DIFF = "out/sdm_093/edition_diff.csv"
@@ -72,6 +74,11 @@ def verified_defect_rows():
     passed = {int(c["row_id"]) for c in read_csv(DEFECT_CASES) if c["row_verdict"] in ROW_PASS}
     return {row_id for row_id, checks in corrections.items() if all(checks) and row_id in passed}
 RESOLVED = "예외 등록·실측 확인"
+# 표 기준으로 정했지만 두 도구가 아직 그 명령을 모른다(실측 대조 불가). 사양은 신뢰로 세고 도달은 세지 않는다.
+TOOL_UNSUPPORTED = "예외 등록·도구 미지원"
+# 사양 신뢰로 세는 행 상태. 완화(A·B)와 원문상 가변(C)은 근거 단계가 다르므로 행 상태 이름으로 구분해 센다.
+TRUSTED_STATUSES = ("원문 확정", RESOLVED, "원문 확정(완화 A: Vol.1)", "원문 확정(완화 B: 결합)", "원문상 가변(완화 C)",
+                    "원문 확정(완화 D: 타 명령 절 정의)", TOOL_UNSUPPORTED)
 
 
 def resolved_conflict_rows():
@@ -95,7 +102,26 @@ def resolved_conflict_rows():
             row = next((c for c in read_csv(ROW_CASES) if c["row_id"] == case["row_id"]), None)
             if row and "exit0" in row["row_verdict"]:
                 resolved[int(case["row_id"])] = case["case_id"]
+    # 사용자가 PDF를 보고 확인한 추출 보정 행(pdf_confirmed_corrections.csv): 전체 대조에서 행 판정이 통과일 때.
+    if os.path.exists(PDF_CONFIRMED) and os.path.exists(ALL_CASES):
+        confirmed = {int(r["row_id"]) for r in read_csv(PDF_CONFIRMED)}
+        for case in read_csv(ALL_CASES):
+            if int(case["row_id"]) in confirmed and case["row_verdict"] in ROW_PASS:
+                resolved.setdefault(int(case["row_id"]), "PDF 확인 보정")
     return resolved
+
+
+def tool_unsupported_rows():
+    """'표 기준 생성(도구 미지원)'으로 정한 행 중 모든 케이스를 GNU·clang이 둘 다 거부한 행 -> case_id."""
+    if not (os.path.exists(CONFLICT_CASES) and os.path.exists(REACH_RESULTS)):
+        return {}
+    decided = {int(r["row_id"]): r["case_id"] for r in read_csv(CONFLICT_CASES) if r["decision"] == "표 기준 생성(도구 미지원)"}
+    results = collections.defaultdict(list)
+    for result in read_csv(REACH_RESULTS):
+        if int(result["row_id"]) in decided:
+            results[int(result["row_id"])].append(result)
+    return {row_id: case_id for row_id, case_id in decided.items() if results[row_id] and
+            all(r["gnu_status"] != "accepted" and r["clang_status"] != "accepted" for r in results[row_id])}
 
 
 def main():
@@ -122,6 +148,7 @@ def main():
                 reasons[row_id].append("%d번 %s: %s" % (index, line["table_symbol"], status))
 
     resolved = resolved_conflict_rows()
+    unsupported = tool_unsupported_rows()
     defects_verified = verified_defect_rows()
     added_093, recheck_093 = edition_rows()
     sol_rows_seen = {row_id for row_id, _ in sol}  # operand_statuses는 defaultdict라 'in'으로 기록 여부를 볼 수 없다
@@ -129,18 +156,19 @@ def main():
     for row_id, isa_row in enumerate(isa):
         condition = row_condition.get(row_id, "")
         status = cmp.row_status(operand_statuses[row_id], condition)
-        if row_id in resolved and status == "원문 충돌":
-            # 등록·통과한 예외 행: 충돌(행 조건·오퍼랜드)만 해소로 보고, 원문 없음 같은 다른 상태는 그대로 둔다.
-            cleared = ["원문 확정" if s == "원문 충돌" else s for s in operand_statuses[row_id]]
-            remaining = cmp.row_status(cleared, "" if condition == "원문 충돌" else condition)
-            status = RESOLVED if remaining == "원문 확정" else remaining
+        if (row_id in resolved or row_id in unsupported) and status in ("원문 충돌", "추출 불완전"):
+            # 등록·통과한 예외 행: 충돌·추출 불완전만 해소로 보고, 원문 없음 같은 다른 상태는 그대로 둔다.
+            cleared = ["원문 확정" if s in ("원문 충돌", "추출 불완전") else s for s in operand_statuses[row_id]]
+            remaining = cmp.row_status(cleared, "" if condition in ("원문 충돌", "추출 불완전") else condition)
+            settled = RESOLVED if row_id in resolved else TOOL_UNSUPPORTED
+            status = settled if remaining == "원문 확정" else remaining
         if row_id in added_093 and row_id not in sol_rows_seen:
             status = UNREVIEWED  # Sol 기록이 없는 093 신규 행. 빈 상태 목록을 확정으로 세지 않는다.
         elif row_id in recheck_093:
             status = RECHECK
         rows.append({
             "row_id": row_id, "mnemonic": isa_row["mnemonic"], "instruction": isa_row["instruction"],
-            "row_status": status, "exception_case": resolved.get(row_id, ""),
+            "row_status": status, "exception_case": resolved.get(row_id, unsupported.get(row_id, "")),
             "extraction_defects": "; ".join(cmp.extraction_defects(isa_row)),
             "extraction_status": ("" if not cmp.extraction_defects(isa_row) else
                                   "보정·대조 확인" if row_id in defects_verified else "미보정"),
@@ -157,7 +185,7 @@ def main():
             "operands": combo["operands"], "test_kind": combo["test_kind"], "input_status": combo["input_status"],
             "row_status": row["row_status"], "extraction_defects": row["extraction_defects"],
             "extraction_status": row["extraction_status"],
-            "trusted_spec": "예" if row["row_status"] in ("원문 확정", RESOLVED)
+            "trusted_spec": "예" if row["row_status"] in TRUSTED_STATUSES
                             and row["extraction_status"] in ("", "보정·대조 확인") else "",
             "reach_verdict": reach.get(combo["combo_id"], {}).get("verdict", ""),
             "reach_ok": "예" if reach.get(combo["combo_id"]) and (

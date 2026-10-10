@@ -9,7 +9,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pipeline.encoding_audit import check_encoding  # noqa: E402
+from pipeline.encoding_audit import check_encoding, normalize_template  # noqa: E402
 
 
 def status(data, opcode):
@@ -95,6 +95,35 @@ class ModrmNotationTest(unittest.TestCase):
         self.assertEqual(status("6762f27d09920408", "EVEX.128.66.0F38.W0 92 /vsib"), "fields_match")
         self.assertEqual(status("67f30f0128", "F3 0F 01 /5 (mod!=11, /5, memory only)"), "fields_match")
         self.assertEqual(status("f30f01e8", "F3 0F 01 /5 (mod!=11, /5, memory only)"), "different_encoding")
+
+
+    def test_map7_notation(self):
+        # 'MAP7:W0.F8 11:000:bbb'(사용자 결정 2026-10-10, source_conflict_cases MAP7-*): 맵 7·W0·opcode F8, ModRM 11:000.
+        # 표 칸에 imm32 꼬리가 없으므로 꼬리 없는 바이트로 표기 해석만 본다(실제 케이스는 overrides의 byte_pattern).
+        self.assertEqual(normalize_template("VEX.128.F2.MAP7:W0.F8 11:000:bbb")[0], "VEX.128.F2.MAP7.W0 F8 /0")
+        self.assertEqual(status("c4e77bf8c1", "VEX.128.F2.MAP7:W0.F8 11:000:bbb"), "fields_match")
+        self.assertEqual(status("c4e17bf8c1", "VEX.128.F2.MAP7:W0.F8 11:000:bbb"), "different_encoding")  # map 1
+        self.assertEqual(status("c4e77af8c1", "VEX.128.F2.MAP7:W0.F8 11:000:bbb"), "different_encoding")  # pp=F3
+        self.assertEqual(status("c4e77bf801", "VEX.128.F2.MAP7:W0.F8 11:000:bbb"), "different_encoding")  # mod!=11
+
+
+class OverridePatternTest(unittest.TestCase):
+    """MAP7 행의 손 해석 바이트 패턴은 자기 형식에만 맞아야 한다(GNU 관측 c4 e7 7b f8 c1 imm32 = URDMSR rcx)."""
+
+    def test_map7_patterns_are_exclusive(self):
+        import csv
+        import re
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(os.path.join(root, "data/rules/encoding_check_overrides.csv"), encoding="utf-8") as handle:
+            patterns = {r["mnemonic"]: r["byte_pattern"] for r in csv.DictReader(handle) if "MAP7" in r["table_opcode"]}
+        forms = {"RDMSR": "c4e77bf6c100000100", "URDMSR": "c4e77bf8c100000100",
+                 "UWRMSR": "c4e77af8c100000100", "WRMSRNS": "c4e77af6c100000100"}
+        self.assertEqual(set(patterns), set(forms))
+        for name, pattern in patterns.items():
+            for other, data in forms.items():
+                self.assertEqual(bool(re.match(pattern, data)), name == other, (name, other))
+            self.assertFalse(re.match(pattern, forms[name][:-2]), name)          # imm32 1바이트 모자람
+            self.assertFalse(re.match(pattern, forms[name].replace("c4e7", "c4e1", 1)), name)  # map 1
 
 
 if __name__ == "__main__":

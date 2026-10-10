@@ -13,6 +13,8 @@ import glob
 import os
 import re
 
+from pipeline import sdm_relaxation
+
 FOOTNOTE = re.compile(r"\^\d+")
 
 # 사람이 확인해야 하는 분류. 이 밖의 분류는 두 기록이 일치하거나 비교 대상이 아니다.
@@ -41,6 +43,18 @@ def load_sol(review_dir):
             if key in rows:
                 raise ValueError("Sol 줄 중복: %s (%s, %s)" % (key, rows[key]["part"], part))
             row["part"] = part
+            rows[key] = row
+    # 093판 재추출(sol_rerun_093.csv)이 있으면 그 행의 기존 part 기록을 통째로 바꾼다.
+    rerun = os.path.join(review_dir, "sol_rerun_093.csv")
+    if os.path.exists(rerun):
+        lines = read_csv(rerun)
+        rerun_rows = {int(r["row_id"]) for r in lines}
+        rows = {k: v for k, v in rows.items() if k[0] not in rerun_rows}
+        for row in lines:
+            key = (int(row["row_id"]), int(row["operand_index"]))
+            if key in rows:
+                raise ValueError("Sol 재추출 줄 중복: %s" % (key,))
+            row["part"] = "rerun093"
             rows[key] = row
     return rows
 
@@ -97,23 +111,27 @@ def is_missing(value):
     return not value.strip() or "원문 없음" in value
 
 
-def uniform_status(sol):
+def uniform_status(sol, relaxed=True):
     """전 part 공통 기준: 종류와 폭 칸이 모두 원문으로 채워져야 원문 확정.
 
     사용자 결정(2026-10-10):
-    - 결정 1: 단독 zmm의 폭은 원문 없음이다(SYM070의 512는 메모리 쪽 폭으로 읽는다).
+    - 결정 1: 단독 zmm의 폭은 원문 없음이다(SYM070의 512는 메모리 쪽 폭으로 읽는다). -> 아래 완화 A로 대체
     - 결정 4: 표에 이름이 그대로 적힌 고정 레지스터(AL, DX, <XMM0> 등)와 고정 상수(1)는 폭 문장 없이 종류만 있으면 확정이다.
+    - 완화 A·B·C·D(sdm_relaxation): 원문 없음 줄에 Vol.1 레지스터 폭, 묶음 표기 결합, 원문상 가변, 타 명령 절 정의를 적용한다.
+      relaxed=False면 완화 전 판정(결정 1 기준)을 돌려준다.
     """
     if sol["status"] in ("원문 충돌", "추출 불완전"):
         return sol["status"]
-    if is_missing(sol["kind"]):
-        return "원문 없음"
     symbol = plain_symbol(sol["table_symbol"])
-    if LONE_ZMM.match(symbol):
-        return "원문 없음"
-    if is_missing(sol["data_width"]) and not FIXED_REGISTER.match(symbol):
-        return "원문 없음"
-    return "원문 확정"
+    missing = (is_missing(sol["kind"]) or LONE_ZMM.match(symbol)
+               or (is_missing(sol["data_width"]) and not FIXED_REGISTER.match(symbol)))
+    if not missing:
+        return "원문 확정"
+    if relaxed:
+        result = sdm_relaxation.relax(sol["table_symbol"], sol.get("mnemonic", ""))
+        if result:
+            return result[0]
+    return "원문 없음"
 
 
 def compare_line(key, main, sol):
@@ -149,7 +167,7 @@ def compare_line(key, main, sol):
         reasons.append("종류 " + out["kind_result"])
     if out["width_result"] in REVIEW_WIDTH:
         reasons.append("폭 불일치")
-    if out["uniform_status"] != "원문 확정":
+    if out["uniform_status"] in ("원문 없음", "원문 충돌", "추출 불완전"):
         reasons.append("공통 기준 " + out["uniform_status"])
     out["needs_review"] = "예" if reasons else ""
     out["review_reasons"] = "; ".join(reasons)
@@ -169,7 +187,8 @@ def row_level_review(sol_rows):
 
 # ---------------------------------------------------------------- 행 단위 상태와 생성 케이스 연결
 
-ROW_PRIORITY = ["원문 충돌", "추출 불완전", "원문 없음", "원문 확정"]
+ROW_PRIORITY = ["원문 충돌", "추출 불완전", "원문 없음", sdm_relaxation.VARIABLE_C, sdm_relaxation.RELAXED_D, sdm_relaxation.RELAXED_A,
+                sdm_relaxation.RELAXED_B, "원문 확정"]
 STRING_MNEMONICS = {"INS", "LODS", "MOVS", "OUTS", "STOS", "CMPS", "SCAS"}
 
 

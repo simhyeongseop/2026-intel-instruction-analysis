@@ -13,10 +13,12 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
   - 090판 기록: 커밋 dbf3732(브랜치 `sdm-review-093`), `manuals/vol2_090/`, `out/sdm_review_2026-10-09`, `out/sdm_evidence_2026-10-09`, `out/manual_index_090`.
   - 이전 보고: `out/sdm_review_093/compare/REPORT_093.md`.
   - 093 생성 snapshot: `out/generator_audit_2026-10-10_093`(23,216). 090 ID 대응표는 `out/sdm_093/combo_id_map.csv`.
-- **093판 남은 일**:
-  1. 재확인 필요 134행과 신규 9행을 093판 원문으로 다시 추출·판정한다(`data/rules/edition_093_review.csv`).
-  2. 원문 없음 기준 완화를 적용한다. 범위: Vol.1 레지스터 폭, 결합 규칙, 원문상 가변 분리(사용자 결정 대기 중인 세부 적용).
-  3. 생성기 재작성.
+- **093판 현재(10월 10일)**: 사양 신뢰 23,216/23,216, 신뢰+도달 23,000/23,216(REPORT_093.md 마지막 절).
+  - 093 재확인 143행 완료(Sol 재추출 `sol_rerun_093.csv`). 원문 없음 완화 A·B·C·D를 적용했다(`pipeline/sdm_relaxation.py`).
+  - 원문 없음·원문 충돌·추출 불완전은 모두 0행이다. 남은 것은 생성기 문제 95행(`compare/generator_issues.csv`)이며, 그중 `tool_unsupported` 3행(RDMSR·WRMSRNS imm32, UDB: GNU 2.42·clang 18 미지원)은 생성기 문제가 아니다.
+  - MAP7 4행은 `source_conflict_cases.csv` MAP7-*로 처리했다. 사용자가 PDF를 보고 확인한 보정은 `data/rules/pdf_confirmed_corrections.csv`에 있다(UDB Op/En ZO, VGATHERDPD CPUID OR·Operand 2).
+  - XSAVE 계열 mem은 완화 C(Vol.1 323·324쪽), FP16 m16bcst는 완화 D(VMAXPH 1889쪽 정의 문장), FSTCW/FNSTCW m2byte는 완화 A(Vol.1 213쪽)다.
+- **다음 작업**: 생성기 재작성. 설계 초안은 `docs/SDM_REGENERATION_PLAN.md` 마지막 절에 있다. 판정은 SDM 대 도구별로 하고 도구 간 비교는 쓰지 않는다(2026-10-11 결정).
 - 아래 '진행 중' 절의 수치 중 090판 기준(17,356 등)은 기록이다. 093판 현재 수치는 REPORT_093.md를 따른다.
 
 ## 이전 기준(090판까지의 경과)
