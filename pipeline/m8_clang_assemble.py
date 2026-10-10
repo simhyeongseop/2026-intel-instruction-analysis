@@ -17,50 +17,21 @@ asm_result.csv와 최대한 같은 컬럼 구조로 만든다 (m9_clang_compare.
 
 import csv
 import os
-import re
 import shutil
 import subprocess
+import sys
 import tempfile
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from pipeline.m5_assemble import ASM_HEADER, TAG_KEYS, parse_tag, read_instruction_lines
 
 IN_ASM = "out/tests.s"
 OUT_CSV = "out/clang_result.csv"
 OUT_OBJ_DIR = "out/clang_objects"
 
 # m5_assemble.py와 동일 (out/tests.s 태그 포맷 재사용).
-TAG_KEYS = ["combo_id", "row_id", "combo_index", "mnemonic",
-            "expected_valid", "mode_support", "cpuid", "note"]
-TAG_SPLIT_RE = re.compile(r"(?=(?:%s)=)" % "|".join(TAG_KEYS))
-
-ASM_HEADER = ".intel_syntax noprefix\n.Ltarget:\n"
-
 CLANG_CMD = ["clang", "--target=x86_64-pc-linux-gnu", "-c"]
-
-
-def parse_tag(tag_text):
-    """줄 끝 주석(# combo_id=... row_id=... ...)을 dict로 분해한다."""
-    fields = {key: "" for key in TAG_KEYS}
-    for chunk in TAG_SPLIT_RE.split(tag_text):
-        chunk = chunk.strip()
-        if not chunk or "=" not in chunk:
-            continue
-        key, _, value = chunk.partition("=")
-        if key in fields:
-            fields[key] = value.strip()
-    return fields
-
-
-def read_instruction_lines(path):
-    """out/tests.s에서 실제 명령어 줄만 골라낸다 (m5_assemble.py와 동일)."""
-    items = []
-    with open(path, encoding="utf-8") as f:
-        for line_no, raw_line in enumerate(f, start=1):
-            line = raw_line.rstrip("\n")
-            if "  # combo_id=" not in line:
-                continue
-            code, _, tag_text = line.partition("  # ")
-            tag = parse_tag(tag_text)
-            items.append({"line_no": line_no, "code": code, "tag": tag})
-    return items
 
 
 def assemble_one(code, tmp_dir):
@@ -81,12 +52,11 @@ def assemble_one(code, tmp_dir):
         capture_output=True, text=True, timeout=10,
     )
 
-    if result.returncode == 0 and os.path.exists(tmp_o):
-        return True, "", tmp_o
-
     error_message = (result.stderr or result.stdout or "").strip()
     error_message = " | ".join(line.strip() for line in error_message.splitlines() if line.strip())
     error_message = error_message.replace(tmp_s, "line.s")
+    if result.returncode == 0 and os.path.exists(tmp_o):
+        return True, error_message, tmp_o
     return False, error_message, None
 
 
@@ -141,6 +111,9 @@ def main():
                 "actual_result": actual_result,
                 "mismatch": mismatch,
                 "error_message": error_message,
+                "diagnostics": error_message,
+                "has_warning": ok and bool(error_message),
+                **{key: tag[key] for key in ('generator_revision', 'source_hash', 'form_hash', 'constraint_hash', 'input_status', 'test_kind')},
                 "object_file_path": object_path,
             })
 
@@ -148,6 +121,7 @@ def main():
         "combo_id", "row_id", "combo_index", "mnemonic", "cpuid", "note",
         "source_line", "asm_line", "expected_valid", "mode_support",
         "actual_result", "mismatch", "error_message", "object_file_path",
+        "diagnostics", "has_warning", "generator_revision", "source_hash", "form_hash", "constraint_hash", "input_status", "test_kind",
     ]
     with open(OUT_CSV, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)

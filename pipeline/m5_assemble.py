@@ -34,10 +34,12 @@ OUT_OBJ_DIR = "out/objects"
 # cpuid 값에는 공백이 들어갈 수 있어서("AVX512DQ OR AVX10.1") 단순 split(" ")으로는
 # 못 자르고, "키=" 앞에서만 끊어야 한다 -> lookahead 정규식으로 분리.
 TAG_KEYS = ["combo_id", "row_id", "combo_index", "mnemonic",
-            "expected_valid", "mode_support", "cpuid", "note"]
+            "expected_valid", "mode_support", "cpuid", "note", "generator_revision",
+            "source_hash", "form_hash", "constraint_hash", "input_status", "test_kind"]
 TAG_SPLIT_RE = re.compile(r"(?=(?:%s)=)" % "|".join(TAG_KEYS))
 
-ASM_HEADER = ".intel_syntax noprefix\n.Ltarget:\n"
+ASM_HEADER = ('.intel_syntax noprefix\n.Ltarget:\n'
+              '.set .Ltarget32, .Ltarget + 4096\n.set .Ltarget16, .Ltarget + 4096\n')
 
 
 def parse_tag(tag_text):
@@ -95,14 +97,13 @@ def assemble_one(code, tmp_dir):
         # 예전에는 이 예외를 잡지 않아서 한 줄 때문에 5단계 전체가 중단됐다.
         return "timeout", f"as가 {TIMEOUT_SECONDS}초 안에 끝나지 않음", None
 
-    if result.returncode == 0 and os.path.exists(tmp_o):
-        return "ok", "", tmp_o
-
     error_message = (result.stderr or result.stdout or "").strip()
     error_message = " | ".join(line.strip() for line in error_message.splitlines() if line.strip())
     # tmp_dir는 실행할 때마다 랜덤하게 바뀌므로, 재현 가능한 CSV를 위해
     # 절대경로를 지우고 파일명(line.s)만 남긴다 (CLAUDE.md "재현 가능" 원칙).
     error_message = error_message.replace(tmp_s, "line.s")
+    if result.returncode == 0 and os.path.exists(tmp_o):
+        return "ok", error_message, tmp_o
 
     if result.returncode < 0:
         # 음수 반환값 = 시그널 종료. 진단 거부와 구분해서 남긴다.
@@ -167,6 +168,9 @@ def main():
                 "actual_result": actual_result,
                 "mismatch": mismatch,
                 "error_message": error_message,
+                "diagnostics": error_message,
+                "has_warning": actual_result == 'ok' and bool(error_message),
+                **{key: tag[key] for key in ('generator_revision', 'source_hash', 'form_hash', 'constraint_hash', 'input_status', 'test_kind')},
                 "object_file_path": object_path,
             })
 
@@ -174,6 +178,7 @@ def main():
         "combo_id", "row_id", "combo_index", "mnemonic", "cpuid", "note",
         "source_line", "asm_line", "expected_valid", "mode_support",
         "actual_result", "mismatch", "error_message", "object_file_path",
+        "diagnostics", "has_warning", "generator_revision", "source_hash", "form_hash", "constraint_hash", "input_status", "test_kind",
     ]
     with open(OUT_CSV, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)

@@ -58,18 +58,28 @@ def combo_to_ir(row):
         "cpuid": row["cpuid_flag"],
         "note": row["note"],
         "source_syntax": "intel",
+        "asm_mnemonic": row.get('asm_mnemonic', ''),
+        "asm_prefix": row.get('asm_prefix', ''),
+        "generator_revision": row.get('generator_revision', ''),
+        "source_hash": row.get('source_hash', ''),
+        "form_hash": row.get('form_hash', ''),
+        "constraint_hash": row.get('constraint_hash', ''),
+        "input_status": row.get('input_status', 'unverified'),
+        "test_kind": row.get('test_kind', ''),
     }
 
 
 def render_intel(ir):
     """현재 지원하는 Intel 렌더러. 반환값은 명령어 본문과 추적 주석이다."""
-    mnemonic = ir["mnemonic"]
+    mnemonic = ir.get('asm_mnemonic') or ir["mnemonic"]
     operands = ir["operands_text"]
 
     if operands:
         code = f"{mnemonic} {operands}"
     else:
         code = mnemonic  # 오퍼랜드 없는 명령어 (예: aaa, cpuid)
+    if ir.get('asm_prefix'):
+        code = ir['asm_prefix'] + ' ' + code
 
     tag = (
         f"combo_id={ir['combo_id']} row_id={ir['row_id']} "
@@ -78,6 +88,9 @@ def render_intel(ir):
     )
     if ir["cpuid"]:
         tag += f" cpuid={ir['cpuid']}"
+    for key in ('generator_revision', 'source_hash', 'form_hash', 'constraint_hash', 'input_status', 'test_kind'):
+        if ir.get(key):
+            tag += f" {key}={ir[key]}"
     if ir["note"]:
         tag += f" note={ir['note']}"
 
@@ -100,6 +113,8 @@ def write_asm(rows, skipped, out_path):
     lines.append(".intel_syntax noprefix")
     lines.append("")
     lines.append(f"{JUMP_TARGET_LABEL}:  # rel8/rel16/rel32 오퍼랜드(CALL/Jcc/LOOP/XBEGIN 등)가 참조하는 더미 라벨")
+    lines.append('.set .Ltarget32, .Ltarget + 4096')
+    lines.append('.set .Ltarget16, .Ltarget + 4096')
     lines.append("")
 
     for row in rows:

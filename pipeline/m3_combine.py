@@ -21,6 +21,7 @@
 """
 
 import csv
+import json
 from pathlib import Path
 import re
 from itertools import zip_longest
@@ -29,6 +30,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from pipeline.input_quality import require_validated_tokens
+from pipeline.generation_contract import (REVISION, STRING_NAMES, digest,
+    require_generation_metadata, reviewed_generation_form, source_hash, validate_generated)
 
 IN_CSV = ROOT / "data/db/tokens.csv"
 OUT_CSV = ROOT / "data/db/combos.csv"
@@ -38,6 +41,10 @@ OUT_COLUMNS = [
     "operand_types", "operands", "operand_count",
     "expected_valid", "mode_support", "cpuid_flag",
     "note", "raw_instruction", "source_page",
+    "opcode", "description", "op_en", "generator_revision", "form_hash", "source_hash",
+    "constraint_hash", "input_status", "input_violations", "input_unverified",
+    "structured_operands", "asm_mnemonic", "asm_prefix",
+    "test_kind", "effective_operand_types", "generation_corrections",
 ]
 
 # ---------- 오퍼랜드 타입 -> 대표 후보 값 매핑 (형섭이 여기만 보고 고치면 됨) ----------
@@ -67,8 +74,8 @@ REG_RULES = [
     (re.compile(r"^bnd\d*$"), "bnd0"),
     (re.compile(r"^tmm\d+$"), "tmm0"),
     (re.compile(r"^ST(\(.*\))?$"), "st(0)"),
-    (re.compile(r"^CR\d+.*$"), "cr0"),
-    (re.compile(r"^DR\d+.*$"), "dr0"),
+    (re.compile(r"^CR0[-–]CR7$"), "cr0"),
+    (re.compile(r"^DR0[-–]DR7$"), "dr0"),
 ]
 
 # bare 'r' (예: "r/m32" 를 '/'로 나누면 register 쪽이 그냥 'r'만 남음) 를 만났을 때,
@@ -260,6 +267,8 @@ def register_candidate(atom, occurrence=None):
     occurrence 가 주어지면 슬롯 순번에 맞는 다른 레지스터를 고른다(범용 표기일 때만)."""
     if atom == ST_INDEXED_ATOM and occurrence is not None:
         return f"st({occurrence + 1})"
+    if re.fullmatch(r"(?:CR|DR)\d+", atom):
+        return atom.lower()
     for pattern, value in REG_RULES:
         if pattern.match(atom):
             if occurrence is None or not GENERIC_REG_RE.match(atom):
@@ -287,6 +296,10 @@ def memory_candidate(atom, mnemonic=""):
     - VSIB(vm32x 등): 인덱스 레지스터를 반드시 붙여야 한다.
     - MPX(BND 계열): 64비트 모드에서 32비트 주소(eax)를 거부하므로 rax 를 쓴다."""
     base = MEM_DEFAULT_64 if mnemonic in MPX_MNEMONICS else MEM_DEFAULT
+    if mnemonic in ('PREFETCHIT0', 'PREFETCHIT1'):
+        base = VARIANT_MEM_RIP
+    elif mnemonic == 'XLAT':
+        base = '[rbx]'
 
     if mnemonic in FIXED_BLOCK_MNEMONICS:
         return base  # 고정 크기 블록: 크기 접두어를 붙이면 as 가 거부한다
@@ -375,7 +388,7 @@ def expand_token(token, kind, mnemonic="", counters=None):
         return [IMM_MAP.get(clean, "1")], ""
 
     if kind == "relative":
-        return [".Ltarget"], ""
+        return [".Ltarget" if clean == "rel8" else ".Ltarget" + clean[3:]], ""
 
     if kind == "moffs":
         return [MOFFS_ADDRESS], ""  # 절대 주소 형태라야 moffs 인코딩 행(A0/A1)을 시험한다
@@ -419,7 +432,7 @@ def expand_token(token, kind, mnemonic="", counters=None):
     return [token], "other_kept_raw"
 
 
-def can_vary_memory(operands):
+def can_vary_memory(operands, mnemonic=""):
     """메모리 형태를 바꿔도 되는 조합인지 본다.
 
     바꾸면 안 되는 것: VSIB(인덱스 레지스터가 필수라 SIB 로 바꾸면 거부),
@@ -427,6 +440,8 @@ def can_vary_memory(operands):
     (as 확인: "vgatherdps xmm1 {k1}, dword ptr [rax+rbx*4+0x10]" -> invalid VSIB address)
     """
     text = ", ".join(operands)
+    if mnemonic and mnemonic.split()[-1].upper() in STRING_NAMES:
+        return False
     if MEM_DEFAULT not in text:
         return False
     if "far ptr" in text or "ds:" in text:
@@ -519,7 +534,7 @@ def build_variants(combos, mnemonic=""):
         operands = combo["operands"]
         types = combo["operand_types"]
         candidates = []
-        if can_vary_memory(operands):
+        if can_vary_memory(operands, mnemonic):
             candidates.append(("memory_sib", vary_memory(operands, VARIANT_MEM_SIB, mnemonic)))
             # AMX 의 sibmem 오퍼랜드는 SIB 주소가 필수라 rip 상대를 쓸 수 없다
             # (as 확인: "tileloadd tmm0, [rip+0x10]" -> cannot be used here).
@@ -647,12 +662,22 @@ def build_combos_for_row(operand_rows):
     각 combo 는 {"operand_types": [...], "operands": [...], "note": "..."} 형태다.
 
     순서: 기본 조합 -> 값 변형(메모리/즉시값/마스크) -> 슬롯별 레지스터 변형.
-    새 변형은 항상 뒤에 붙인다. assign_stable_combo_ids 가 (row_id, combo_index) 로
-    기존 ID를 보존하므로, 앞쪽 순서를 바꾸면 과거 판정의 ID가 어긋난다.
+    순번은 표시용이다. assign_stable_combo_ids는 소스와 검증 근거가 같은 경우에만
+    기존 ID를 보존하고, 수정된 입력에는 새 ID를 배정한다.
     """
     first = operand_rows[0]
+    raw_types = [row['operand_token'] for row in operand_rows
+                 if row['operand_kind'] not in ('none', 'implicit')]
+    correction = reviewed_generation_form(first['mnemonic'], first.get('opcode', ''), raw_types)
     if first["operand_kind"] == "none":
-        return [{"operand_types": [], "operands": [], "note": ""}]
+        result = [{"operand_types": [], "operands": [], "note": ""}]
+        return apply_reviewed_form(result, raw_types, correction)
+
+    if correction:
+        # Generate from the reviewed effective tokens, preserving the caller's
+        # raw SDM tokens/metadata and restoring raw operand_types in the output.
+        operand_rows = [dict(row, operand_token=token) for row, token in
+                        zip(operand_rows, correction['effective_types'])]
 
     mnemonic = first["mnemonic"]
     # "레지스터가 서로 달라야 하는" 명령어는 기본 조합부터 슬롯 순번을 쓴다.
@@ -660,22 +685,106 @@ def build_combos_for_row(operand_rows):
     candidates, operand_types, notes = expand_operand_rows(operand_rows, mnemonic, counters)
     combos = combos_from_candidates(candidates, operand_types, notes)
 
-    return (combos
+    result = (combos
             + build_variants(combos, mnemonic)
             + distinct_register_combos(operand_rows, mnemonic, combos))
+    name = mnemonic.split()[-1].upper()
+    if name == 'XBEGIN' and any(r['operand_token'] == 'rel16' for r in operand_rows):
+        # SDM XBEGIN is an exception: rel16 is valid in long mode. Record each
+        # assembler's actual tail width; accepting data16 does not prove it.
+        for combo in result:
+            combo['asm_prefix'] = 'data16'
+    if name in STRING_NAMES:
+        for combo in result:
+            addresses = iter(['rdi', 'rsi'] if name == 'MOVS' else ['rsi', 'rdi'] if name == 'CMPS'
+                             else ['rsi'] if name in ('LODS', 'OUTS') else ['rdi'])
+            combo['operands'] = [re.sub(r'\[[^]]+\]', '[' + next(addresses) + ']', op)
+                                 if '[' in op else op for op in combo['operands']]
+        # Correct base operands before generating variants: string opcodes encode no SIB/RIP.
+        result = [c for c in result if 'variant:memory_' not in c['note']]
+    for combo in result:
+        # AVX2 mask, VSIB index and destination share physical vector numbers.
+        indices = re.findall(r'\[.*?\b[xyz]mm(\d+)\]', ', '.join(combo['operands']))
+        if indices and 'GATHER' in mnemonic:
+            used = {int(n) for n in indices}
+            fixed = []
+            for op in combo['operands']:
+                reg = re.fullmatch(r'([xyz]mm)(\d+)', op)
+                if reg:
+                    number = int(reg.group(2))
+                    while number in used:
+                        number += 1
+                    used.add(number)
+                    op = reg.group(1) + str(number)
+                fixed.append(op)
+            combo['operands'] = fixed
+    if any(row['operand_kind'] == 'moffs' for row in operand_rows):
+        # Keep former source as an edge observation; canonical movabs is separate.
+        for combo in result:
+            combo['note'] = '; '.join(filter(None, [combo['note'], 'edge:legacy_moffs_spelling']))
+        for combo in list(result):
+            ops = list(combo['operands'])
+            for i, token in enumerate(combo['operand_types']):
+                match = re.fullmatch(r'moffs(8|16|32|64)', token)
+                if match:
+                    ops[i] = MEM_SIZE_TO_PTR[match.group(1)] + ' [0x100000000]'
+            result.append(dict(combo, operands=ops, asm_mnemonic='movabs',
+                # RAX already requests REX.W; an extra rex64 makes GNU reject
+                # the duplicated prefix. The AL/A0,A2 rows need it explicitly.
+                asm_prefix='rex64' if 'REX.W' in first.get('opcode', '') and 'RAX' not in combo['operand_types'] else '',
+                note='variant:canonical_moffs_movabs'))
+    # Repairing slots can collapse variants. They are not extra coverage.
+    unique = {}
+    for combo in result:
+        key = (tuple(combo['operands']), combo.get('asm_mnemonic', ''), combo.get('asm_prefix', ''))
+        unique.setdefault(key, combo)
+    return apply_reviewed_form(list(unique.values()), raw_types, correction)
+
+
+def apply_reviewed_form(combos, raw_types, correction):
+    """Keep SDM table types, effective types and explicit rendering reasons apart."""
+    if correction is None:
+        return combos
+    evidence = json.dumps({k: correction[k] for k in ('id', 'reason')},
+                          ensure_ascii=False, separators=(',', ':'))
+    for combo in combos:
+        combo['effective_operand_types'] = list(correction['effective_types'])
+        combo['operand_types'] = list(raw_types)
+        combo['generation_corrections'] = evidence
+        combo['note'] = '; '.join(filter(None, [combo['note'], 'sdm_description_correction:' + correction['id']]))
+        if correction['asm_prefix']:
+            combo['asm_prefix'] = correction['asm_prefix']
+        if correction['asm_mnemonic']:
+            combo['asm_mnemonic'] = correction['asm_mnemonic']
+        if correction['id'].startswith('far_branch'):
+            # Keep these as the original single memory candidate; generating
+            # ordinary SIB/RIP variants here would expand the approved scope.
+            base = '[rax]' if correction['id'] == 'far_branch64_size' else MEM_DEFAULT
+            combo['operands'] = ['fword ptr ' + base]
+    return combos
 
 
 def assign_stable_combo_ids(rows, prior_rows):
-    """Keep existing row/variant IDs and allocate only genuinely new IDs."""
-    prior = {(row["row_id"], row["combo_index"]): int(row["combo_id"])
-             for row in prior_rows if row.get("combo_id", "").isdigit()}
-    used = set(prior.values())
+    """Keep IDs only for the same source/form; slot order is not source identity."""
+    def identity(row):
+        if 'operands' not in row:  # compatibility for small callers without source data
+            return (str(row['row_id']), str(row['combo_index']))
+        return (str(row['row_id']), row.get('mnemonic', '').lower(), row['operands'],
+                row.get('asm_mnemonic', ''), row.get('asm_prefix', ''))
+    prior_by_key = {identity(row): row for row in prior_rows if str(row.get('combo_id', '')).isdigit()}
+    prior = {key: int(row['combo_id']) for key, row in prior_by_key.items()}
+    used = {int(row['combo_id']) for row in prior_rows if str(row.get('combo_id', '')).isdigit()}
     next_id = max(used, default=-1) + 1
     assigned = []
     emitted = set()
     for row in rows:
-        key = (str(row["row_id"]), str(row["combo_index"]))
+        key = identity(row)
         combo_id = prior.get(key)
+        previous = prior_by_key.get(key)
+        if previous and previous.get('form_hash') and previous['form_hash'] != row.get('form_hash'):
+            combo_id = None
+        if previous and previous.get('constraint_hash') and previous['constraint_hash'] != row.get('constraint_hash'):
+            combo_id = None
         if combo_id is None or combo_id in emitted:
             while next_id in used or next_id in emitted:
                 next_id += 1
@@ -686,32 +795,42 @@ def assign_stable_combo_ids(rows, prior_rows):
     return assigned
 
 
+def generate_combo_rows(token_rows, prior_rows=()):
+    require_validated_tokens(token_rows)
+    require_generation_metadata(token_rows)
+    out = []
+    for row_id, operand_rows in group_by_row(token_rows):
+        common = operand_rows[0]
+        for index, combo in enumerate(build_combos_for_row(operand_rows)):
+            checked = validate_generated(common['mnemonic'], combo['operand_types'], combo['operands'], common['mode_support'],
+                opcode=common['opcode'], asm_prefix=combo.get('asm_prefix', ''), asm_mnemonic=combo.get('asm_mnemonic', ''))
+            out.append(dict(mnemonic=common['mnemonic'], row_id=row_id, combo_index=index,
+                operand_types=', '.join(combo['operand_types']), operands=', '.join(combo['operands']),
+                operand_count=len(combo['operands']), expected_valid=expected_valid(common['mode_support']),
+                mode_support=common['mode_support'], cpuid_flag=common['cpuid_flag'], note=combo['note'],
+                raw_instruction=common['raw_instruction'], source_page=common['source_page'],
+                opcode=common['opcode'], description=common['description'], op_en=common['op_en'],
+                generator_revision=REVISION, form_hash=common['form_hash'],
+                source_hash=source_hash(combo.get('asm_mnemonic') or common['mnemonic'], combo['operands'], combo.get('asm_prefix', '')),
+                constraint_hash=digest(checked), input_status=checked['status'],
+                input_violations=';'.join(checked['violations']), input_unverified=';'.join(checked['unverified']),
+                structured_operands=json.dumps(checked['operands'], ensure_ascii=False, separators=(',', ':')),
+                asm_mnemonic=combo.get('asm_mnemonic', ''), asm_prefix=combo.get('asm_prefix', ''),
+                effective_operand_types=', '.join(combo.get('effective_operand_types', combo['operand_types'])),
+                generation_corrections=combo.get('generation_corrections', ''),
+                test_kind='edge' if 'edge:' in combo['note'] else 'negative' if common['mode_support'] != 'Valid'
+                    else 'generation_error' if checked['status'] == 'invalid'
+                    else 'encoding_directed' if combo.get('asm_prefix') or combo.get('asm_mnemonic') else 'normal'))
+    return assign_stable_combo_ids(out, prior_rows)
+
+
 def main():
     token_rows = read_tokens(IN_CSV)
     require_validated_tokens(token_rows)
     print(f"입력 행 수(오퍼랜드 단위): {len(token_rows)}")
 
     prior_rows = read_tokens(OUT_CSV) if OUT_CSV.is_file() else []
-    out_rows = []
-    for row_id, operand_rows in group_by_row(token_rows):
-        common = operand_rows[0]
-        combos = build_combos_for_row(operand_rows)
-        for idx, combo in enumerate(combos):
-            out_rows.append({
-                "mnemonic": common["mnemonic"],
-                "row_id": row_id,
-                "combo_index": idx,
-                "operand_types": ", ".join(combo["operand_types"]),
-                "operands": ", ".join(combo["operands"]),
-                "operand_count": len(combo["operands"]),
-                "expected_valid": expected_valid(common["mode_support"]),
-                "mode_support": common["mode_support"],
-                "cpuid_flag": common["cpuid_flag"],
-                "note": combo["note"],
-                "raw_instruction": common["raw_instruction"],
-                "source_page": common["source_page"],
-            })
-    out_rows = assign_stable_combo_ids(out_rows, prior_rows)
+    out_rows = generate_combo_rows(token_rows, prior_rows)
 
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=OUT_COLUMNS)

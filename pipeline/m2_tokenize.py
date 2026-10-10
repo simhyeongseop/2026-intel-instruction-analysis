@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT))
 from pipeline.input_quality import (apply_known_operand_correction, blocking_issues,
                                     gate_exit_code, validate_operand_list,
                                     validate_operand_token, write_issues)
+from pipeline.generation_contract import form_hash
 
 IN_CSV = ROOT / "data/db/isa_db.csv"
 OUT_CSV = ROOT / "data/db/tokens.csv"
@@ -37,6 +38,7 @@ OUT_COLUMNS = [
     "operand_kind", "implicit_operands", "validation_status", "validation_codes",
     "raw_instruction",
     "op_en", "mode_support", "cpuid_flag", "source_page",
+    "opcode", "description", "form_hash",
 ]
 
 # ---------- REP/REPE/REPNE 처럼 mnemonic 이 "접두사"이고, 진짜 니모닉(MOVS 등)이
@@ -172,6 +174,9 @@ def tokenize_row(row, row_id, token_row_start=0):
         "mode_support": row["mode_support"],
         "cpuid_flag": row["cpuid_flag"],
         "source_page": row["source_page"],
+        "opcode": row.get("opcode", ""),
+        "description": row.get("description", ""),
+        "form_hash": form_hash(row),
     }
     if not operand_tokens:
         checked = validate_operand_token("", row_id, token_row_start)

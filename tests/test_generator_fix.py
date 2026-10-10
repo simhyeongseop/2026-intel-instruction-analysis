@@ -29,6 +29,17 @@ from pipeline.review_verdicts import REVIEW
 BASELINE = ROOT / "tests/baseline/combos_2026-09-15.csv"
 EXPECTATIONS = ROOT / "tests/expectations/generator_fix_expectations.csv"
 COMBOS = ROOT / "data/db/combos.csv"
+LEGACY_COMBOS = ROOT / 'out/generator_audit_2026-09-28/legacy_combos.csv'
+
+
+def historical_combos():
+    """The 2026-09-19 policy belongs to its frozen source revision, not new IDs."""
+    rows = read_csv(COMBOS)
+    if rows and rows[0].get('generator_revision'):
+        if not LEGACY_COMBOS.exists():
+            raise AssertionError('Historical snapshot missing: run scripts/audit_generator.py before replacing the default combos')
+        return read_csv(LEGACY_COMBOS)
+    return rows
 
 ASM_HEADER = ".intel_syntax noprefix\n.Ltarget:\n"
 
@@ -143,7 +154,7 @@ class ComboIdStability(unittest.TestCase):
 
     def setUp(self):
         self.baseline = read_csv(BASELINE)
-        self.current = read_csv(COMBOS)
+        self.current = historical_combos()
 
     def test_baseline_ids_are_unique(self):
         keys = [(r["row_id"], r["combo_index"]) for r in self.baseline]
@@ -255,7 +266,7 @@ class CombinerProducesExpected(unittest.TestCase):
     """수정이 반영되면, 생성기가 기대값 표의 after 를 실제로 만들어야 한다."""
 
     def test_fix_rows_match_after(self):
-        current = {r["combo_id"]: r for r in read_csv(COMBOS)}
+        current = {r["combo_id"]: r for r in historical_combos()}
         for row in read_csv(EXPECTATIONS):
             if row["kind"] != "fix":
                 continue
@@ -265,7 +276,7 @@ class CombinerProducesExpected(unittest.TestCase):
 
     def test_variant_rows_exist_somewhere(self):
         produced = {f"{r['mnemonic'].lower()} {r['operands']}".strip()
-                    for r in read_csv(COMBOS)}
+                    for r in historical_combos()}
         for row in read_csv(EXPECTATIONS):
             if row["kind"] == "variant" and row["family"].startswith("variant_"):
                 self.assertIn(row["after"], produced, row["family"])

@@ -1,5 +1,40 @@
 # DEVLOG — 진행 기록
 
+## 2026-10-09 [입력 검사·인계] 지원 모드와 64비트 주소 충돌 표시
+
+- 모드가 Invalid/N.E./N.S.인 SDM 행의 64비트 메모리 주소를 입력 위반으로 표시한다.
+  소스는 부정 테스트로 보존하며 지원 모드의 정상 예제로 간주하지 않는다.
+- 전체 생성 결과에서 해당 입력 39개 확인. 기존 rel16 위반 33개와 합쳐 invalid 72개.
+  거부 입력 178개 검토에서 발견한 주소 문제 31개는 전체 생성 집합의 일부다.
+- 회귀 98개 PASS. 새 snapshot과 이전 snapshot의 소스/행 대응 전량 보존,
+  검증 근거 변경 39개만 새 ID, 나머지 23,160개 ID 보존을 별도 대조했다.
+- 새 결과: `out/generator_audit_2026-10-09_mode_address/`.
+  생성·정적 검사만 재실행했으며 새 조립 관측과 CPU 실행은 없다.
+  최신 전량 조립 관측은 9월 29일 snapshot에 있다.
+- HANDOFF를 짧은 최신 상태로 갱신하고 AGENTS/CLAUDE/README에서 진입 경로를 통일했다.
+  개별 검토 31개가 새 39개에 전부 포함되는 것도 확인했다. 추가 8개는
+  CALL/JMP r/m32와 LGDT/LIDT m16&32 각 2개이며, 다음 작업은 해당 도구 관측 검토다.
+
+## 2026-09-29 [독립 검증·재실행] Description 교정 13개
+
+- Sol 구현을 검토한 뒤 생성→GNU/Clang 조립·비교를 캐시 재사용 없이 전량 재실행했다.
+- 23,199개 중 예정한 13개만 소스 변경, 모두 양 도구 수용 및 의도한 폭 확인. 나머지 23,186개 소스/ID 보존.
+- 회귀 97개 PASS, 독립 검증 PASS. 한쪽 이상 거부 178→165개, GNU 104→95개, Clang 166→155개.
+- 원문 DB/기본 결과/이전 감사 결과의 해시 보존. 주소 문제 31개와 미확정 MOV 3개는 이번 수정 제외.
+- 상세 변경·재현·새 snapshot: [Description 교정 보고서](DESCRIPTION_FIX_2026-09-29.md).
+
+## 2026-09-28 [생성기·검증] SDM 입력 제약과 목표 인코딩 구분
+
+- CR8, SDM r8 타입 해석, 분기 폭, 문자열 고정 주소, gather 레지스터 충돌, moffs 인코딩 지정,
+  PREFETCHIT/XLAT 주소를 수정했다. XBEGIN rel16은 long mode에서도 유효하므로 일반 분기와 구분했다.
+- opcode/description/form hash와 구조화 오퍼랜드, 입력 검사 상태, test kind를 전달한다.
+  소스·검증 근거가 바뀌면 새 ID를 배정하고 기존 관측·판정을 보존한다. 성공 경고도 저장한다.
+- 전체 23,199 combo·39,852개 고유 도구/소스 관측을 별도 snapshot에서 검증했다.
+  회귀 92개와 독립 바이트·ID·과거 파일 해시 검증이 통과했다. 임의 CPU 실행은 하지 않았다.
+- Sol 구현을 독립 검토한 뒤 사용량 한도로 중단된 마지막 테스트·수정을 주 에이전트가 마무리했다.
+- 기본 DB/과거 out 결과는 미교체. 검증 범위·원시 결과·남은 경고·재현 방법은
+  [검증 보고서](GENERATOR_VALIDATION_2026-09-28.md)에 기록했다. 전체 ISA 적합성 완료를 주장하지 않는다.
+
 <!-- 교수님 지시: CLI에 다 맡기지 말고, 무엇을 왜 바꿨는지 여기에 남긴다.
      미팅 전, 형섭이 본인 말로 진행상황을 설명할 수 있게 정리하는 용도. -->
 
@@ -708,3 +743,183 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   (`adc cl, dl` → 지정 `12 /r`, 실제 `10 d1`). 원인은 "글자로 구분이 안 돼서"가 아니라
   **as가 두 방향 중 늘 한쪽(10/11 /r)을 고르기 때문**이다. 그래서 `13 /r` 계열 행은 기본 렌더링으로는
   영영 나오지 않는다. 슬라이드 설명에서 "자기 자신 대상 형태라서"라고 적었던 것을 정정했다.
+
+## 2026-09-29 [검토] 9월 28일 snapshot의 거부 입력 178개 SDM 오퍼랜드 대조
+
+- 사용자 요청에 따라 한 어셈블러라도 거부한 178개 고유 combo(ISA 104행)의 operand를
+  SDM Description, 표, 필요한 Operation과 대조했다. 생성 pipeline과 원본 snapshot은 수정하지 않았다.
+- [보고서](REJECTED_INPUT_REVIEW_2026-09-28.md)와
+  [개별 CSV](../out/rejected_input_review_2026-09-28/cases.csv)에 모드, literal 표기,
+  Description, register/memory/mask, 지원 모드와 주소의 관계를 나누어 기록했다.
+- 상호 배타적 결과: 정적 operand 형태 합치 129개(그중 62개는 64비트 모드 무효),
+  Description/주소 문제 44개(13+31), BOUND의 tool별 크기 표기 차이 2개,
+  MOV Sreg memory 폭 표기 미확인 3개. BOUND 전체 6개 중 주소 문제 4개는 44개에 포함된다.
+- BOUND의 GNU 전체 pair 폭/Clang 개별 경계값 폭 관례, far branch target 폭 지정,
+  CET m64 directive, MPX index 생략에 대해 조립만 하는 문법 대조 36개를 보존했다.
+  CPU 실행은 하지 않았고 assembler 수용을 ISA 증거로 대체하지 않았다.
+- 검증 범위: 178개 누락/중복 없음, 모든 원본 source/SDM metadata/양 tool 상태·진단 일치,
+  판정 총계 합계, 필요한 SDM page 원문 보존, 원본 파일 SHA-256 불변.
+  전체 ISA DB의 의미 검증이나 도구 구현 버그 확정은 이 검토 범위가 아니다.
+
+## 2026-09-29 [수정] 확인된 Description 불일치 13개 생성 교정
+
+- VPMOVQD EVEX.128의 memory destination 5개를 m64로, VSCATTERDPD YMM/ZMM의
+  index 2개를 XMM/YMM으로 교정했다. 정확한 mnemonic/opcode/operand form에만 규칙을 적용한다.
+- far CALL/JMP의 16비트 offset 2개는 `data16 ... fword ptr [eax]`, 64비트 offset 2개는
+  `rex64 ... fword ptr [rax]`로 생성한다. 후자의 주소 변경은 Clang이 EAX의 addr32를
+  REX.W 뒤에 놓는 문제를 피한다. 64비트 SYSEXIT/SYSRET 2개는 q suffix를 명시한다.
+- SDM 원문 `operand_types`/Description/opcode/form hash와 token 입력은 보존한다.
+  `effective_operand_types`, `generation_corrections`, structured memory의 실제 data/address 폭을
+  별도로 기록하며 far pointer 폭은 explicit operand-size prefix 문맥에서 검사한다.
+- 직전 snapshot을 ID/lineage 기준으로 지정하는 audit의 `--previous-combos` 옵션을 추가했다.
+  기본 경로는 유지하고 manifest revision은 실제 generation contract의 revision을 사용한다.
+- 검증: 새 회귀 5개 및 기존 generation contract 회귀 20개 PASS. 새 회귀는 13개 source의
+  GNU/Clang 실제 바이트 26개, REX.W의 opcode 직전 위치, 원문/유효 타입/폭 메타데이터,
+  인접 form 미교정, 기존 잘못된 폭과 prefix 누락 및 far64 EAX 표기의 반례를 확인한다.
+- ISA DB와 이전 snapshot은 수정하지 않았고 31개 주소 문제와 3개 미확정 MOV 입력의
+  교정 규칙은 추가하지 않았다. 전체 재실행 집계는 별도 새 snapshot에서 검증한다. CPU 실행 없음.
+
+## 2026-10-09 [도구·검토] 매뉴얼 조회 화면, 공통 규칙 초안, MOV 44개 검토
+
+- 작업 중 WSL이 멈춰 색인 생성이 중단됐다. pdfplumber가 2,565쪽의 페이지 캐시를 쌓는 것을 막으려고 페이지마다 `page.close()`를 호출한다.
+  재생성 중 메모리 사용량은 약 2GB를 유지했다. 저장된 원문으로 절 구분만 다시 하는 `--reuse-pages`를 추가했다.
+- 색인(`pipeline/manual_index.py`, `out/manual_index/`, manual-index-v2)은 PDF sha256과 규칙 버전으로 무효화를 판단한다.
+  제목 없는 꼬리말(장 시작·총론·부록) 쪽을 앞 명령 절에 붙이던 결함을 고쳤다(LZCNT가 698~703쪽, VSCATTERPF가 부록 전체를 흡수하던 문제).
+  꼬리말이 아예 없는 63쪽만 앞 절에 이어 붙이고 화면에 표시한다.
+- 조회 서버 `scripts/manual_server.py`(127.0.0.1:8787)와 `web/manual/`: 검색, 절 원문, isa_db 행, 생성 사례와 저장 관측(새 실행 아님),
+  총론 제목, 규칙표, 원본 PDF 쪽을 연결한다.
+- 공통 규칙 초안 `data/rules/common_rules.csv` 19개(초안 16, 미확인 3: OPEN-02, ADDR-01, MOFFS-01). 인용문이 해당 쪽에 실제로 있는지 테스트로 검사한다.
+  이 PDF판(2026-02)에는 `REX + 88 /r` 행이 없고 각주 1로만 처리되어 있다. isa_db와 일치한다.
+- MOV 88/89/8A/8B 44개: 주 에이전트 독립 판정을 먼저 저장했다(`main_independent_record.txt`에 시각과 해시).
+  그다음 Sol(Opus 에이전트)이 초안을 썼고, 둘을 대조해 `out/mov_review_2026-10-09/mov_review.csv`를 만들었다.
+  - 결과: 정적 판정은 합치 32, 미확인 12(`[eax]`). 인코딩 판정은 합치 36, 불일치 8(8A/8B reg-reg가 88/89로 조립됨).
+  - 두 검토자는 인코딩 44개에서 일치했다. 이견은 `[eax]` 12개의 정적 판정뿐이며, 사용자 결정 항목으로 넘겼다.
+  - Sol 이견 중 원문으로 확인한 것을 OPEN-02, ADDR-01, REX-01, PFX-01에 반영했다.
+  - 새 실측: as 2.42는 `{load}`로 8A/8B를 낸다. clang 18.1.3은 `{load}`를 거부한다. CPU 실행은 없다.
+- 생성 코드는 수정하지 않았다. 사용자 확인 목록은 `USER_CHECK_LIST.md`이며 어떤 사례도 확인 완료가 아니다. 회귀 108개 통과(새 매뉴얼 색인 검사 10개 포함).
+
+## 2026-10-09 [변경] 매뉴얼 조회를 브라우저에서 터미널로 바꿈
+
+- 사용자 지시: 조회 화면은 브라우저를 쓰지 않고 터미널에서 수행한다.
+  `scripts/manual_server.py`와 `web/manual/`(같은 날 만들었고 커밋하지 않음)을 지우고 `scripts/manual_lookup.py`로 대체했다.
+- 조회 로직은 `pipeline/manual_lookup.py`(값 생성)로, 출력은 CLI로 나눴다.
+  - 명령: status, search, show(--part 소제목, --text 전체), page, general, rules, cases.
+  - 원본 확인은 출력된 'PDF 파일 쪽'을 각자 PDF 뷰어에서 연다.
+- `--part`는 소제목 하나의 원문만 다음 소제목 직전까지 자른다. 빈 쪽 머리말이 끼던 결함을 고치고, 그 결함을 반례로 하는 회귀를 넣었다.
+- 검증: 회귀 112개 통과(터미널 조회 4개 추가). 이 항목 이전 기록의 '조회 서버'는 이 변경으로 대체됐다.
+- 같은 날 사용자 결정: 최종 검사 도구(원래 계획 4절의 브라우저 GUI)도 터미널로 한다. 기능 요구는 유지하고 출력 방식만 바꾼다.
+
+## 2026-10-09 [방향 전환] 원문 최우선, 전체 4,210행 재검토, 조합 생성기 재작성
+
+- 사용자 결정:
+  - 원문이 최우선이고 에이전트 해석은 배제한다. 이전 해석 규칙 `data/rules/common_rules.csv`는 폐기한다(이력으로만 보존).
+  - MOV만이 아니라 전체 행을 재검토하고, 총론을 처음 본 기준으로 조합 생성기를 새로 쓴다.
+  - 결정 1: 명령 절 표·Description이 주소 크기를 말하면 그것을, 말하지 않으면 총론 2.2.1.4의 64비트 기본 주소를 쓴다.
+  - 결정 2: 방향 쌍 레지스터-레지스터는 도달 불가로 표시하고, GNU 소스에만 `{load}`/`{store}`를 붙인다.
+  - 대표값: 원문 목록 순서대로 고르되, 같은 절 표에 고정 오퍼랜드로 나온 레지스터는 뺀다.
+  - Sol(Opus) 8개로 전체를 나눠 원문을 추출한다.
+- 원문 근거 자료:
+  - `data/rules/sdm_symbols.csv`(`scripts/build_sdm_symbols.py`): 총론 3.1.1.1~3.1.1.5 표기 정의 101항목. 원문 345줄 전부 한 번씩 포함, 해석 열 없음.
+  - `scripts/extract_table_footnotes.py`: 1단계와 같은 표 추출에서 위첨자 각주를 `^n`으로 보존한다. 4,210행이 isa_db와 순서·값 모두 일치했다. 각주 있는 행은 281개이고, 각주 본문을 못 찾은 26개는 대부분 GF2P8 니모닉 숫자를 각주로 잘못 잡은 것이다.
+  - `pipeline/sdm_evidence.py` → `out/sdm_evidence_2026-10-09/rows.jsonl`: 행별 표 원문 셀, 각주, Op/En 줄, Description.
+  - 매뉴얼 색인 v3: 제목이 묶음 표기(`VF[,N]MADD[132,213,231]PH` 등)인 절도 그 쪽 표 행의 니모닉으로 연결한다. 소속 절이 없던 120행이 0행이 됐다.
+- "정의 없는 표기" 점검: 1,999건 중 1,821건은 원문 쪽에 글자 그대로 있어 파싱 오류가 아니다. 178건은 오퍼랜드가 없는 행의 빈 값이다.
+- 주 에이전트 독립 판정 `out/sdm_review_2026-10-09/main_symbol_spec.csv`: 총론 정의 문구만 기계적으로 읽었고, Sol 결과를 보기 전에 시각·해시를 기록했다.
+  - 오퍼랜드 9,820개 중 7,766개는 총론 정의, 190개는 고정 표기, 178개는 오퍼랜드 없음, 1,686개는 총론 정의 없음(zmm, xmm/ymm bcst, tmm, mem 등).
+- 터미널 조회의 `rules`를 `symbols`(원문 정의)로 바꿨다. 회귀 112개 통과.
+
+## 2026-10-10 [검토] Sol 8개 part 완료, 주 에이전트 판정과 대조
+
+- part1은 CSV 두 개만 있고 notes가 없었다. 보조 스크립트를 다시 실행해 저장본과 바이트 동일함을, `verify.py`로 인용 664개가 원문에 있음을 확인했다. 그 뒤 `sol_part1_notes.md`를 썼다. 이어 쓸 때 형식 참고로 part2 notes를 열었고, 이 경위를 notes에 적었다.
+- `main_symbol_spec_record.txt`의 sha256과 현재 파일 해시가 다르다.
+  - 두 파일의 수정 시각은 17:02:00으로 같고, Sol 결과(20:25~)보다 앞선다.
+  - 현재 모듈로 재계산한 9,452줄이 모두 같았다. 사후 수정 흔적은 없고 기록 결함으로 본다. 처음 해시의 대상은 확인하지 못했다.
+- 대조 도구 `pipeline/sdm_review_compare.py`, `scripts/compare_sdm_review.py`를 추가했다. 결과는 `out/sdm_review_2026-10-09/compare/`(REPORT.md, operands.csv, row_conditions_review.csv, summary.json)에 있다.
+  - 오퍼랜드 9,643줄 중 종류 일치 7,307, 불일치 502, Sol만 값 1,410, 둘 다 없음 276, 고정 표기 분류 차이 147이다. 폭 숫자끼리 다른 줄은 0이다.
+  - 불일치 478줄은 main 문구 규칙 결함이다(SYM065/070의 "register or 256/512-bit memory operand"를 memory로 분류). main 파일은 보존했다.
+  - Sol 원문 없음은 1,016줄이고 그중 zmm 단독 폭이 650줄이다. 원문 충돌은 257줄과 행 조건 21개다.
+  - part 사이 기준 차이: zmm 단독 폭을 part1은 512로 확정했고, 다른 part는 대부분 원문 없음이나 빈칸으로 두었다.
+- 검증: 새 회귀 8개(손으로 만든 반례)를 포함해 전체 127개가 통과했다. 줄 수(9,642+1)와 행 조건 수(21+1)를 독립 집계로 확인했다. 생성 코드, Sol 파일, main 파일은 수정하지 않았다. 사용자 확인 항목 6개는 REPORT.md에 있다.
+
+- 보충(같은 날, 직전 세션 기록 `c42d9a2f` 확인 후):
+  - 직전 세션에서 정한 "전 part 같은 기계적 기준으로 status 재판정"을 처음 대조에서 빠뜨렸다. 이를 `uniform_status`로 추가했다.
+    - 기준: 종류·폭이 모두 원문으로 채워져야 확정이다. 단독 zmm에 폭이 있으면 결정 대기다. Sol 원래 status는 보존한다.
+    - 결과: 원문 확정 8,127 / 원문 없음 1,220 / 원문 충돌 257 / 결정 대기 39. 바뀐 243줄의 part별 내역은 REPORT.md에 있다.
+  - part1은 10-10 09:41에 한도로 멈췄고, part5에 보낸 zmm 폭 기준 지시를 받지 못했다. part1 notes에 이 사실과 27줄의 차이를 적었다.
+  - 직전 세션의 미기록 변경:
+    - `pipeline/manual_lookup.py`: 묶음 제목 절(SETcc 등)의 표 행을 `table_mnemonics`로 찾게 했다.
+    - part5 단독 zmm 61줄을 원문 없음으로 수정했다(Sol이 수정, 94줄 변경).
+    - part3 보고의 "1560행 660F 오기"는 실제로 1562행이다.
+  - 회귀: 대조 테스트 10개.
+
+## 2026-10-10 [검토] Sol 인용 원문 확인, 재검토 결과를 최신 생성 케이스에 연결
+
+- `pipeline/quote_check.py`, `scripts/verify_sol_quotes.py`로 전 part의 고유 인용 7,658개를 쪽 원문·표 셀·SYM 원문과 대조했다.
+  - exact 7,258, nospace 63, nohyphen 156, table_label 147, 못 찾음 34.
+  - 34개는 낱말 단위 비교로 수동 분류했다(`quote_not_found_review.csv`): 추출 흔적 21, Sol 가공 표기 7, 원문 오타·구두점 수정 6. 지어낸 인용은 없었다.
+  - 첫 실행은 표 인용 2,068개를 못 찾았다. 원인은 표 인용이 쪽 텍스트가 아니라 표 셀 원문을 옮긴 것이기 때문이었다. 표 인용은 표 셀과도 대조하도록 고쳤다.
+- `scripts/map_review_to_combos.py`로 행 상태(공통 기준과 행 조건)와 1단계 추출 결함을 `generator_audit_2026-10-09_mode_address/combos.csv`에 연결했다.
+  - 원문 확정 행에서 나왔고 추출 결함도 없는 케이스는 15,938/23,199다. 나머지는 원문 없음 5,399, 원문 충돌 1,429, 결정 대기 170, 추출 불완전 1이고, 원문 확정 행이지만 추출 결함이 있는 케이스가 262다.
+  - 추출 결함 91행(332 케이스)은 기계 판정이다. x87·XACQUIRE의 op_en 빈칸은 원문에 열이 없어 제외했다.
+  - isa_db와 table_cells는 같은 추출에서 나와 독립 근거가 아님을 확인했다(차이는 하이픈 분철 4행뿐).
+- 원문 확정 행이라도 생성기가 고른 대표값이 원문 제약을 지키는지는 확인하지 않았다(REPORT.md 추가 2).
+- 검증: 손으로 만든 반례 회귀를 추가했다(인용 대조 10, 행 상태·추출 결함 2). 행·케이스 합계, row_id 대응, 충돌 행 수(212∪22=233)는 독립 집계로 검산했다. 전체 회귀 통과. 생성 코드, isa_db, Sol/main 파일은 수정하지 않았다.
+
+## 2026-10-10 [결정 반영] 사용자 결정 1·3·4·5, VEX.L 충돌 실측
+
+- 결정 1(zmm 단독 폭은 원문 없음), 결정 4(표에 이름이 적힌 고정 레지스터는 폭 문장 없이 확정)를 `uniform_status`에 반영했다. 반례 회귀를 추가했다.
+  - 상수 `1`, `r8`, `Sreg`, `sibmem`은 고정 레지스터가 아니다. `<eax>`, `<edx>`는 고정 레지스터다.
+- 결정 5: `sdm_symbol_spec.KIND_PHRASES_FIXED`와 `scripts/build_main_rulefix.py`를 추가했다.
+  - 원본 규칙 재계산이 원본 파일과 다르면 멈추도록 했다. 바뀐 칸은 SYM065 366줄과 SYM070 112줄의 종류뿐이다. 원본 해시는 그대로다.
+- 결정 3: 원문 충돌 예외 목록 `data/rules/source_conflict_cases.csv`(VEX.L 13행)와 `scripts/check_source_conflicts.py`(GNU/Clang 조립, VEX.L 비트, `--execute` 시 CPU 실행)를 추가했다.
+  - 실측(Core Ultra 5 226V): 대조군 정상. VEX.256 11행은 정상 실행돼 예외 목록과 반대다. VEXTRACTPS·VINSERTPS는 L=0 정상, L=1 SIGILL이다.
+  - 통과한 13행은 영향 연결에서 `예외 등록·실측 확인`으로 둔다.
+- 결정 2 재확인: PDF 쪽 그림으로 확인했다. 실제 차이는 51줄, Sol 오분류 3줄, 유형 오분류 1줄(PCLMULQDQ)이다. EVEX 용어 설명과 함께 재질문 중이다.
+- 반영 뒤 최신 케이스 23,199개 중 사양을 신뢰할 수 있는 것은 16,056개다. 전체 회귀 통과.
+- 같은 날 추가 결정:
+  - 2: EVEX 문단 51줄은 3번과 같은 방식으로 처리한다. 예외 목록에 21행(`EVEXD-01~21`)을 등록했다. 레지스터·메모리·broadcast 형식 62개가 GNU/Clang 바이트 동일, EVEX L'L 일치로 통과했다. avx512f가 없어 CPU 실행은 하지 않았다.
+  - 4 추가: 고정 상수 `1`도 확정이다.
+  - 6: Sol 단독 1,410줄은 생성기 재작성 때 대조한다.
+- 대조 스크립트: 형식 여러 개, EVEX L'L, CPU 플래그 확인, verdict를 추가했다. 결과 파일 이름은 `conflict_tests/results.csv`다. 바이트 해석 회귀 4개는 손 계산 바이트로 만들었다.
+  - 영향 연결은 모든 형식이 통과한 등록 행만 충돌 해소로 본다.
+- 결과: 신뢰 가능 케이스 16,367/23,199. 남은 원문 충돌 198행(1,162 케이스)은 아직 등록하지 않은 다른 유형이다. 전체 회귀 통과.
+
+## 2026-10-10 [검토] 남은 원문 충돌 198행에 '표 기준 + 예외 하드코딩 + 대조' 적용
+
+- 사용자 결정: 남은 충돌도 같은 원칙으로 처리한다.
+- `scripts/check_conflict_rows.py`:
+  - 대상: Sol 상태로 계산한 충돌 행에서 VEX.L·EVEX 34행을 뺀 198행이다.
+  - 최신 snapshot 케이스 1,162개를 GNU/Clang으로 조립하고 `check_encoding`으로 표 opcode와 대조한다.
+  - 도달하지 못한 케이스는 의사 접두어로 강제하고, 지원 CPU에서는 실행한다.
+- 하드코딩 추가:
+  - `encoding_check_overrides.csv`(16행): 대조 도구가 읽지 못하는 표기(`/ib`, `!(11)`, `/vsib`, 소문자 opcode, MAP5)와 원문 누락을 근거와 함께 보정했다. VFIXUPIMMPS 128/256 `ib`, VREDUCESD `/r ib`는 PDF 그림으로 확인했다.
+  - `unreachable_forms.csv`(MOVQ/VMOVQ 별칭 6행).
+  - SAHF 예외 MODE-01.
+- 결과:
+  - 198행 = 통과 136 + GNU 단독·도달 불가 포함 57 + 음성 확인 4 + SAHF 예외 1.
+  - 저장형 `{k1}{z}` 메모리 목적지는 두 도구 모두 거부했다(Operation·SYM072 쪽).
+  - 영향 연결 후 원문 충돌 0행이다. 신뢰 가능 케이스는 17,302/23,199다.
+- 관측(확정 아님):
+  - clang은 moffs 64비트 주소를 ModRM disp32로 바꾸어 냈다.
+  - clang은 `rex64`를 받지만 REX.W를 내지 않거나 67 앞에 놓았다.
+  - 9월 29일 기록과 같은 계열로 보인다.
+- 수정:
+  - 대조 스크립트 이름을 `scripts/check_source_conflicts.py`, `scripts/check_conflict_rows.py`로 바꿨다. tests의 동명 모듈과 충돌했기 때문이다.
+  - 대상 행을 영향 연결 결과에서 읽어 재실행 시 0행이 되며 결과 파일을 비우던 결함을 고쳤다. 대상은 Sol 상태에서 직접 계산하고, 0행이면 쓰지 않는다.
+- 검증: 판정·하드코딩 반례 회귀 5개를 추가했다(MAP5 패턴 반례 4개, 보정 opcode 반례 포함). 전체 회귀 통과, 처음부터 재실행해 같은 수치를 확인했다.
+
+## 2026-10-10 [검토·도구] 추출 결함 보정, 대조 도구 표기 확장, 전체 도달 지도
+
+- 추출 결함 91행:
+  - `scripts/build_extraction_corrections.py`가 PDF 텍스트에서 보정값과 근거를 찾아 `data/rules/extraction_corrections.csv`에 기록했다. 90행을 확인했다.
+  - VMOVD `6E /`는 PDF 원문 오기다(그림 확인). 앞선 '추출 결함' 기록을 정정했다.
+  - 결함 행 케이스 332개를 대조했다. LAR·LSL 레지스터 형식은 재심 D절에 따라 도달 불가(문법)로 하드코딩했다.
+- `pipeline/encoding_audit.py`: 총론에 정의된 표기를 해석하도록 확장했다.
+  - NP, NFx, MAP5/6, NDS, /is4, /ib, imm8, SYM087 ModRM 표기, +i, +r, 철자 차이.
+  - 회귀 14개(반례 포함)를 추가했다. 이전 snapshot의 encoding_audit.csv는 다시 만들지 않았다.
+- `check_conflict_rows.py --target all`: 전체 23,199 케이스 도달 지도를 만들었다(약 6분).
+  - 행별 하드코딩 85행(PDF 오기, ib 누락, SETcc, FWAIT 쌍, 접두어 행)을 근거와 함께 추가했다.
+  - LAHF 예외 MODE-02를 추가했다.
+- `scripts/build_generator_issues.py`: 남은 91행을 유형별로 분류했다(기타 0). 생성기 재작성 입력이다.
+- 영향 연결에 도달 판정을 넣었다. 사양 신뢰 17,568, 도달 22,987, 둘 다 17,356(75%).
+- 검증: 전체 회귀 통과. 대조 스크립트 세 대상(conflicts, defects, all)을 처음부터 다시 실행했다.

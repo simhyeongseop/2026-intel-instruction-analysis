@@ -87,13 +87,14 @@ def match_token(token, op):
     token = token.strip().lower()
     if '{' in token or op['decorations']:
         return None  # 마스크/브로드캐스트/반올림 제약을 확인했다고 주장하지 않는다.
+    # SDM r8 is an 8-bit register *type*, not the concrete 64-bit register r8.
+    match = re.fullmatch(r'r(8|16|32|64)[ab]?', token)
+    if match:
+        return op['family'] == 'gpr' and op['bits'] == int(match.group(1))
     if token in GPR or token in SREG:
         return op['text'].lower() == token
     if token == 'sreg':
         return op['family'] == 'sreg'
-    match = re.fullmatch(r'r(8|16|32|64)', token)
-    if match:
-        return op['family'] == 'gpr' and op['bits'] == int(match.group(1))
     match = re.fullmatch(r'r/m(8|16|32|64)', token)
     if match:
         if op['kind'] == 'mem' and op['bits'] is None:
@@ -185,8 +186,9 @@ def check_opcode_template(hex_bytes, row):
         result['reason'] = '기계어 없음'
         return result
     # VEX/EVEX, +r, 특수 표기는 아직 해독하지 않는다.
-    tokens = re.sub(r'(?<=[0-9A-F])/', ' /', template.replace('REX.W +', 'REX.W')).split()
-    allowed = re.compile(r'(?:[0-9A-F]{2}|REX.W|/r|/[0-7]|ib|iw|id|io|cb|cw|cd|cp|NP)')
+    template = re.sub(r'(REX\.[WR])\s*\+\s*', r'\1 ', template)
+    tokens = re.sub(r'(?<=[0-9A-F])/', ' /', template).split()
+    allowed = re.compile(r'(?:[0-9A-F]{2}|REX\.[WR]|/r|/[0-7]|ib|iw|id|io|cb|cw|cd|cp|NP)')
     if not tokens or any(not allowed.fullmatch(t) for t in tokens):
         result['reason'] = '지원하지 않는 opcode 템플릿'
         return result
@@ -205,6 +207,9 @@ def check_opcode_template(hex_bytes, row):
     if 'REX.W' in tokens:
         good = rex is not None and bool(rex & 8) and good
         result['checked_fields'].append('REX.W')
+    if 'REX.R' in tokens:
+        good = rex is not None and bool(rex & 4) and good
+        result['checked_fields'].append('REX.R')
     extension = next((t for t in tokens if re.fullmatch(r'/[0-7]', t)), None)
     if extension:
         modpos = pos + len(expected)

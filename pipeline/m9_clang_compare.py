@@ -198,6 +198,8 @@ def main():
             "clang_objdump": clang_objdump_line,
             "as_error": as_row["error_message"] if as_row and not as_ok else "",
             "clang_error": clang_row["error_message"] if clang_row and not clang_ok else "",
+            "as_diagnostics": as_row.get('diagnostics', as_row.get('error_message', '')) if as_row else '',
+            "clang_diagnostics": clang_row.get('diagnostics', clang_row.get('error_message', '')) if clang_row else '',
             "display_syntax": args.display_syntax,
         }
         out_rows.append(out_row)
@@ -208,6 +210,7 @@ def main():
         "combo_id", "row_id", "mnemonic", "expected_valid", "mode_support",
         "asm_line", "as_result", "clang_result", "category",
         "as_bytes", "clang_bytes", "as_objdump", "clang_objdump", "as_error", "clang_error", "display_syntax",
+        "as_diagnostics", "clang_diagnostics",
     ]
     output = args.output or (OUT_CSV if args.display_syntax == 'intel' else
                              OUT_CSV.replace('.csv', '_%s.csv' % args.display_syntax))
