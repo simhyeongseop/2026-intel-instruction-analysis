@@ -10,7 +10,7 @@ asm_intel 칸은 ' ; '로 형식 여러 개를 담을 수 있다(레지스터·�
   CPU에 avx512f가 없으면 실행하지 않고 그 사실을 적는다.
 SIGILL은 #UD로 본다. 정상 종료(exit0)는 그 CPU에서 #UD가 나지 않았다는 관측일 뿐이며 ISA 전체 의미의 증거는 아니다.
 대조군: ud2(#UD 기대), AVX2 vpaddw ymm(정상 기대).
-결과: out/sdm_review_2026-10-09/conflict_tests/results.csv
+결과: out/sdm_review_093/conflict_tests/results.csv
 """
 
 import argparse
@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline import m11_execute as m11  # noqa: E402
 
 CASES_CSV = "data/rules/source_conflict_cases.csv"
-OUT_CSV = "out/sdm_review_2026-10-09/conflict_tests/results.csv"
+OUT_CSV = "out/sdm_review_093/conflict_tests/results.csv"
 CLANG_CMD = ["clang", "-c", "-x", "assembler", "--target=x86_64-linux-gnu"]
 CONTROLS = [
     {"case_id": "CTRL-UD2", "row_id": "", "mnemonic": "UD2", "asm_intel": "ud2", "table_form": ""},

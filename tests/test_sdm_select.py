@@ -11,7 +11,7 @@ sys.path.insert(0, ROOT)
 from pipeline import sdm_select  # noqa: E402
 
 
-EVIDENCE = os.path.join(ROOT, "out/sdm_evidence_2026-10-09/rows.jsonl")
+EVIDENCE = os.path.join(ROOT, "out/sdm_evidence_093/rows.jsonl")
 
 
 def isa_rows_on(*pages):
@@ -83,7 +83,9 @@ class DirectionPairTest(unittest.TestCase):
         self.assertFalse([p for p in pairs if "Sreg" in by_id[p[0]]["operands"]])
 
     def test_xchg_pair_has_same_opcode(self):
-        rows = [r for r in isa_rows_on(2270) if r["mnemonic"] == "XCHG"]
+        # 쪽 번호는 판마다 달라지므로(090판 2270, 093판 2279) XCHG 표가 있는 쪽을 isa_db에서 찾는다.
+        page = next(int(r["source_page"]) for r in isa_rows_on(*range(2200, 2400)) if r["mnemonic"] == "XCHG")
+        rows = [r for r in isa_rows_on(page) if r["mnemonic"] == "XCHG"]
         pairs = sdm_select.direction_pairs(rows)
         self.assertTrue(pairs)
         self.assertTrue(all(same for _, _, same in pairs))   # 86 /r, 87 /r: 두 행 opcode가 같다

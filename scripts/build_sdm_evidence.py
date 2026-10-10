@@ -1,6 +1,6 @@
 """ISA 행별 원문 근거 묶음을 만든다.
 
-    python3 scripts/build_sdm_evidence.py [--output-dir out/sdm_evidence_2026-10-09]
+    python3 scripts/build_sdm_evidence.py [--output-dir out/sdm_evidence_093]
 """
 
 import argparse
@@ -18,8 +18,8 @@ from pipeline import manual_index, sdm_evidence  # noqa: E402
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--isa-db", default="data/db/isa_db.csv")
-    parser.add_argument("--output-dir", default="out/sdm_evidence_2026-10-09")
-    parser.add_argument("--table-cells", default="out/sdm_evidence_2026-10-09/table_cells.jsonl",
+    parser.add_argument("--output-dir", default="out/sdm_evidence_093")
+    parser.add_argument("--table-cells", default="out/sdm_evidence_093/table_cells.jsonl",
                         help="scripts/extract_table_footnotes.py 결과")
     args = parser.parse_args()
 

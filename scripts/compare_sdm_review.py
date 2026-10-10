@@ -1,6 +1,6 @@
 """주 에이전트 독립 판정과 Sol 원문 추출 8개 part를 대조한다.
 
-    python3 scripts/compare_sdm_review.py [--review-dir out/sdm_review_2026-10-09]
+    python3 scripts/compare_sdm_review.py [--review-dir out/sdm_review_093]
 
 결과는 review-dir/compare/ 아래에 쓴다.
 - operands.csv: 오퍼랜드 줄마다 표기·종류·폭 대조와 확인 필요 이유
@@ -35,7 +35,7 @@ def write_csv(path, rows, fields):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--review-dir", default="out/sdm_review_2026-10-09")
+    parser.add_argument("--review-dir", default="out/sdm_review_093")
     args = parser.parse_args()
 
     main_path = os.path.join(args.review_dir, "main_symbol_spec.csv")

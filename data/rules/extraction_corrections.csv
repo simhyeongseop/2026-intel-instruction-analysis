@@ -3,8 +3,8 @@ row_id,mnemonic,defect,field,isa_value,corrected_value,page,evidence_line,check
 959,KORTESTB,op_en 빈칸,op_en,,RR,638,VEX.L0.66.0F.W0 98 /r RR V/V AVX512DQ Bitwise OR 8 bits masks k1 and k2 and update ZF and CF accordingly.,Operand Encoding 표에 있음
 960,KORTESTQ,op_en 빈칸,op_en,,RR,638,VEX.L0.0F.W1 98 /r RR V/V AVX512BW Bitwise OR 64 bits masks k1 and k2 and update ZF and CF accordingly.,Operand Encoding 표에 있음
 961,KORTESTD,op_en 빈칸,op_en,,RR,638,VEX.L0.66.0F.W1 98 /r RR V/V AVX512BW Bitwise OR 32 bits masks k1 and k2 and update ZF and CF accordingly.,Operand Encoding 표에 있음
-992,LAR,operands 각주 숫자,operands,"r32, r64/m161","r32, r64/m16",651,"REX.W + 0F 02/r LAR r32, r64/m16 RM Valid N.E. Load access rights from specified descriptor.",PDF 줄에서 읽음. '^1'은 실제 각주(CASE_REVIEW D절: 651쪽 2·3번째 행 모두 각주 1)
-1175,VMOVD,opcode /r 누락(PDF 원문 오기),opcode,VEX.128.66.0F.W0 6E /,,758,VEX.128.66.0F.W0 6E / A V/V AVX Move doubleword from r/m32 to xmm1.,PDF 원문 오기(그림 확인: '6E /'). 보정하지 않음; encoding_check_overrides.csv로 대조
+992,LAR,operands 각주 숫자,operands,"r32, r64/m161","r32, r64/m16",651,"REX.W + 0F 02/r LAR r32, r64/m16 RM Valid N.E. Load access rights from specified descriptor.",PDF 줄에서 읽음. 붙은 숫자는 각주 표시(CASE_REVIEW D절: LAR 표 2·3번째 행 모두 각주 1)
+1175,VMOVD,opcode /r 누락(PDF 원문 오기),opcode,VEX.128.66.0F.W0 6E /,,757,VEX.128.66.0F.W0 6E / A V/V AVX Move doubleword from r/m32 to xmm1.,PDF 원문 오기(그림 확인: '6E /'). 보정하지 않음; encoding_check_overrides.csv로 대조
 1820,PMINSD,op_en 빈칸,op_en,,A,1040,66 0F 38 39 /r A V/V SSE4_1 Compare packed signed dword integers in xmm1,Operand Encoding 표에 있음
 1821,VPMINSD,op_en 빈칸,op_en,,B,1040,VEX.128.66.0F38.WIG 39 /r B V/V AVX Compare packed signed dword integers in xmm2,Operand Encoding 표에 있음
 1822,VPMINSD,op_en 빈칸,op_en,,B,1040,VEX.256.66.0F38.WIG 39 /r B V/V AVX2 Compare packed signed dword integers in ymm2,Operand Encoding 표에 있음
@@ -23,70 +23,70 @@ row_id,mnemonic,defect,field,isa_value,corrected_value,page,evidence_line,check
 1848,VPMINUQ,op_en 빈칸,op_en,,C,1049,EVEX.128.66.0F38.W1 3B /r C V/V (AVX512VL AND Compare packed unsigned qword integers in xmm2,Operand Encoding 표에 있음
 1849,VPMINUQ,op_en 빈칸,op_en,,C,1049,EVEX.256.66.0F38.W1 3B /r C V/V (AVX512VL AND Compare packed unsigned qword integers in ymm2,Operand Encoding 표에 있음
 1850,VPMINUQ,op_en 빈칸,op_en,,C,1049,EVEX.512.66.0F38.W1 3B /r C V/V AVX512F Compare packed unsigned qword integers in zmm2,Operand Encoding 표에 있음
-2410,REP,operands에 니모닉,mnemonic|operands,"REP|INS m8, DX","REP INS|m8, DX",1266,"F3 6C REP INS m8, DX ZO Valid Valid Input (count) bytes from port DX to (dest).",PDF 줄에 Instruction 칸 있음
-2411,REP,operands에 니모닉,mnemonic|operands,"REP|INS m16, DX","REP INS|m16, DX",1266,"F3 6D REP INS m16, DX ZO Valid Valid Input (count) words from port DX to (dest).",PDF 줄에 Instruction 칸 있음
-2412,REP,operands에 니모닉,mnemonic|operands,"REP|INS m32, DX","REP INS|m32, DX",1266,"F3 6D REP INS m32, DX ZO Valid Valid Input (count) doublewords from port DX to",PDF 줄에 Instruction 칸 있음
-2413,REP,operands에 니모닉,mnemonic|operands,REP|LODS AL,REP LODS|AL,1266,F3 AC REP LODS AL ZO Valid Valid Load (count) bytes from (src) to AL.,PDF 줄에 Instruction 칸 있음
-2414,REP,operands에 니모닉,mnemonic|operands,REP|LODS AX,REP LODS|AX,1266,F3 AD REP LODS AX ZO Valid Valid Load (count) words from (src) to AX.,PDF 줄에 Instruction 칸 있음
-2415,REP,operands에 니모닉,mnemonic|operands,REP|LODS EAX,REP LODS|EAX,1266,F3 AD REP LODS EAX ZO Valid Valid Load (count) doublewords from (src) to EAX.,PDF 줄에 Instruction 칸 있음
-2416,REP,operands에 니모닉,mnemonic|operands,REP|LODS RAX,REP LODS|RAX,1266,F3 REX.W AD REP LODS RAX ZO Valid N.E. Load (count) quadwords from (src) to RAX.,PDF 줄에 Instruction 칸 있음
-2417,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m8, m8","REP MOVS|m8, m8",1266,"F3 A4 REP MOVS m8, m8 ZO Valid Valid Move (count) bytes from (src) to (dest).",PDF 줄에 Instruction 칸 있음
-2418,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m16, m16","REP MOVS|m16, m16",1266,"F3 A5 REP MOVS m16, m16 ZO Valid Valid Move (count) words from (src) to (dest).",PDF 줄에 Instruction 칸 있음
-2419,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m32, m32","REP MOVS|m32, m32",1266,"F3 A5 REP MOVS m32, m32 ZO Valid Valid Move (count) doublewords from (src) to (dest).",PDF 줄에 Instruction 칸 있음
-2420,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m64, m64","REP MOVS|m64, m64",1266,"F3 REX.W A5 REP MOVS m64, m64 ZO Valid N.E. Move (count) quadwords from (src) to (dest).",PDF 줄에 Instruction 칸 있음
-2421,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m8","REP OUTS|DX, m8",1266,"F3 6E REP OUTS DX, m8 ZO Valid Valid Output (count) bytes from (src) to port DX.",PDF 줄에 Instruction 칸 있음
-2422,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m16","REP OUTS|DX, m16",1266,"F3 6F REP OUTS DX, m16 ZO Valid Valid Output (count) words from (src) to port DX.",PDF 줄에 Instruction 칸 있음
-2423,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m32","REP OUTS|DX, m32",1266,"F3 6F REP OUTS DX, m32 ZO Valid Valid Output (count) doublewords from (src) to port",PDF 줄에 Instruction 칸 있음
-2424,REP,operands에 니모닉,mnemonic|operands,REP|STOS m8,REP STOS|m8,1266,F3 AA REP STOS m8 ZO Valid Valid Fill (count) bytes at (dest) with AL.,PDF 줄에 Instruction 칸 있음
-2425,REP,operands에 니모닉,mnemonic|operands,REP|STOS m16,REP STOS|m16,1266,F3 AB REP STOS m16 ZO Valid Valid Fill (count) words at (dest) with AX.,PDF 줄에 Instruction 칸 있음
-2426,REP,operands에 니모닉,mnemonic|operands,REP|STOS m32,REP STOS|m32,1266,F3 AB REP STOS m32 ZO Valid Valid Fill (count) doublewords at (dest) with EAX.,PDF 줄에 Instruction 칸 있음
-2427,REP,operands에 니모닉,mnemonic|operands,REP|STOS m64,REP STOS|m64,1266,F3 REX.W AB REP STOS m64 ZO Valid N.E. Fill (count) quadwords at (dest) with RAX.,PDF 줄에 Instruction 칸 있음
-2428,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m8, m8","REPE CMPS|m8, m8",1268,"F3 A6 REPE CMPS m8, m8 ZO Valid Valid Find nonmatching bytes in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
-2429,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m16, m16","REPE CMPS|m16, m16",1268,"F3 A7 REPE CMPS m16, m16 ZO Valid Valid Find nonmatching words in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
-2430,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m32, m32","REPE CMPS|m32, m32",1268,"F3 A7 REPE CMPS m32, m32 ZO Valid Valid Find nonmatching doublewords in (src1) and",PDF 줄에 Instruction 칸 있음
-2431,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m64, m64","REPE CMPS|m64, m64",1268,"F3 REX.W A7 REPE CMPS m64, m64 ZO Valid N.E. Find nonmatching quadwords in (src1) and",PDF 줄에 Instruction 칸 있음
-2432,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m8,REPE SCAS|m8,1268,F3 AE REPE SCAS m8 ZO Valid Valid Find non-AL byte starting at (src2).,PDF 줄에 Instruction 칸 있음
-2433,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m16,REPE SCAS|m16,1268,F3 AF REPE SCAS m16 ZO Valid Valid Find non-AX word starting at (src2).,PDF 줄에 Instruction 칸 있음
-2434,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m32,REPE SCAS|m32,1268,F3 AF REPE SCAS m32 ZO Valid Valid Find non-EAX doubleword starting at (src2).,PDF 줄에 Instruction 칸 있음
-2435,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m64,REPE SCAS|m64,1268,F3 REX.W AF REPE SCAS m64 ZO Valid N.E. Find non-RAX quadword starting at (src2).,PDF 줄에 Instruction 칸 있음
-2436,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m8, m8","REPNE CMPS|m8, m8",1270,"F2 A6 REPNE CMPS m8, m8 ZO Valid Valid Find matching bytes in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
-2437,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m16, m16","REPNE CMPS|m16, m16",1270,"F2 A7 REPNE CMPS m16, m16 ZO Valid Valid Find matching words in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
-2438,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m32, m32","REPNE CMPS|m32, m32",1270,"F2 A7 REPNE CMPS m32, m32 ZO Valid Valid Find matching doublewords in (src1) and",PDF 줄에 Instruction 칸 있음
-2439,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m64, m64","REPNE CMPS|m64, m64",1270,"F2 REX.W A7 REPNE CMPS m64, m64 ZO Valid N.E. Find matching quadwords in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
-2440,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m8,REPNE SCAS|m8,1270,"F2 AE REPNE SCAS m8 ZO Valid Valid Find AL, starting at (src2).",PDF 줄에 Instruction 칸 있음
-2441,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m16,REPNE SCAS|m16,1270,"F2 AF REPNE SCAS m16 ZO Valid Valid Find AX, starting at (src2).",PDF 줄에 Instruction 칸 있음
-2442,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m32,REPNE SCAS|m32,1270,"F2 AF REPNE SCAS m32 ZO Valid Valid Find EAX, starting at (src2).",PDF 줄에 Instruction 칸 있음
-2443,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m64,REPNE SCAS|m64,1270,"F2 REX.W AF REPNE SCAS m64 ZO Valid N.E. Find RAX, starting at (src2).",PDF 줄에 Instruction 칸 있음
-2675,SUBPD,op_en 빈칸,op_en,,A,1389,66 0F 5C /r A V/V SSE2 Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2676,VSUBPD,op_en 빈칸,op_en,,B,1389,VEX.128.66.0F.WIG 5C /r B V/V AVX Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2677,VSUBPD,op_en 빈칸,op_en,,B,1389,VEX.256.66.0F.WIG 5C /r B V/V AVX Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2678,VSUBPD,op_en 빈칸,op_en,,C,1389,EVEX.128.66.0F.W1 5C /r C V/V (AVX512VL AND Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2679,VSUBPD,op_en 빈칸,op_en,,C,1389,EVEX.256.66.0F.W1 5C /r C V/V (AVX512VL AND Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2680,VSUBPD,op_en 빈칸,op_en,,C,1389,EVEX.512.66.0F.W1 5C /r C V/V AVX512F Subtract packed double precision floating-point values,Operand Encoding 표에 있음
-2681,SUBPS,op_en 빈칸,op_en,,A,1392,NP 0F 5C /r A V/V SSE Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-2682,VSUBPS,op_en 빈칸,op_en,,B,1392,VEX.128.0F.WIG 5C /r B V/V AVX Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-2683,VSUBPS,op_en 빈칸,op_en,,B,1392,VEX.256.0F.WIG 5C /r B V/V AVX Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-2684,VSUBPS,op_en 빈칸,op_en,,C,1392,EVEX.128.0F.W0 5C /r C V/V (AVX512VL AND Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-2685,VSUBPS,op_en 빈칸,op_en,,C,1392,EVEX.256.0F.W0 5C /r C V/V (AVX512VL AND Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-2686,VSUBPS,op_en 빈칸,op_en,,C,1392,EVEX.512.0F.W0 5C /r C V/V AVX512F Subtract packed single precision floating-point values,Operand Encoding 표에 있음
-3410,VMASKMOVPS,op_en 공백 분리,op_en,RV M,RVM,1878,VEX.128.66.0F38.W0 2C /r RV V/V AVX Conditionally load packed single precision values from,Operand Encoding 표에 있음
-3411,VMASKMOVPS,op_en 공백 분리,op_en,RV M,RVM,1878,VEX.256.66.0F38.W0 2C /r RV V/V AVX Conditionally load packed single precision values from,Operand Encoding 표에 있음
-3412,VMASKMOVPD,op_en 공백 분리,op_en,RV M,RVM,1878,VEX.128.66.0F38.W0 2D /r RV V/V AVX Conditionally load packed double precision values from,Operand Encoding 표에 있음
-3413,VMASKMOVPD,op_en 공백 분리,op_en,RV M,RVM,1878,VEX.256.66.0F38.W0 2D /r RV V/V AVX Conditionally load packed double precision values from,Operand Encoding 표에 있음
-3414,VMASKMOVPS,op_en 공백 분리,op_en,MV R,MVR,1878,VEX.128.66.0F38.W0 2E /r MV V/V AVX Conditionally store packed single precision values from,Operand Encoding 표에 있음
-3415,VMASKMOVPS,op_en 공백 분리,op_en,MV R,MVR,1878,VEX.256.66.0F38.W0 2E /r MV V/V AVX Conditionally store packed single precision values from,Operand Encoding 표에 있음
-3416,VMASKMOVPD,op_en 공백 분리,op_en,MV R,MVR,1878,VEX.128.66.0F38.W0 2F /r MV V/V AVX Conditionally store packed double precision values from,Operand Encoding 표에 있음
-3417,VMASKMOVPD,op_en 공백 분리,op_en,MV R,MVR,1878,VEX.256.66.0F38.W0 2F /r MV V/V AVX Conditionally store packed double precision values from,Operand Encoding 표에 있음
-3596,VPERM2F128,op_en 공백 분리,op_en,RV MI,RVMI,1956,VEX.256.66.0F3A.W0 06 /r ib RV V/V AVX Permute 128-bit floating-point fields in,Operand Encoding 표에 있음
-4041,VSCATTERDPS,op_en 빈칸,op_en,,A,2202,"EVEX.128.66.0F38.W0 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter single-",Operand Encoding 표에 있음
-4042,VSCATTERDPS,op_en 빈칸,op_en,,A,2202,"EVEX.256.66.0F38.W0 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter single-",Operand Encoding 표에 있음
-4043,VSCATTERDPS,op_en 빈칸,op_en,,A,2202,"EVEX.512.66.0F38.W0 A2 /vsib A V/V AVX512F Using signed dword indices, scatter single-",Operand Encoding 표에 있음
-4044,VSCATTERDPD,op_en 빈칸,op_en,,A,2202,"EVEX.128.66.0F38.W1 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter double",Operand Encoding 표에 있음
-4045,VSCATTERDPD,op_en 빈칸,op_en,,A,2202,"EVEX.256.66.0F38.W1 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter double",Operand Encoding 표에 있음
-4046,VSCATTERDPD,op_en 빈칸,op_en,,A,2202,"EVEX.512.66.0F38.W1 A2 /vsib A V/V AVX512F Using signed dword indices, scatter double",Operand Encoding 표에 있음
-4047,VSCATTERQPS,op_en 빈칸,op_en,,A,2202,"EVEX.128.66.0F38.W0 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter single-",Operand Encoding 표에 있음
-4048,VSCATTERQPS,op_en 빈칸,op_en,,A,2202,"EVEX.256.66.0F38.W0 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter single-",Operand Encoding 표에 있음
-4049,VSCATTERQPS,op_en 빈칸,op_en,,A,2202,"EVEX.512.66.0F38.W0 A3 /vsib A V/V AVX512F Using signed qword indices, scatter single-",Operand Encoding 표에 있음
-4050,VSCATTERQPD,op_en 빈칸,op_en,,A,2202,"EVEX.128.66.0F38.W1 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter double",Operand Encoding 표에 있음
-4051,VSCATTERQPD,op_en 빈칸,op_en,,A,2202,"EVEX.256.66.0F38.W1 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter double",Operand Encoding 표에 있음
-4052,VSCATTERQPD,op_en 빈칸,op_en,,A,2202,"EVEX.512.66.0F38.W1 A3 /vsib A V/V AVX512F Using signed qword indices, scatter double",Operand Encoding 표에 있음
+2411,REP,operands에 니모닉,mnemonic|operands,"REP|INS m8, DX","REP INS|m8, DX",1266,"F3 6C REP INS m8, DX ZO Valid Valid Input (count) bytes from port DX to (dest).",PDF 줄에 Instruction 칸 있음
+2412,REP,operands에 니모닉,mnemonic|operands,"REP|INS m16, DX","REP INS|m16, DX",1266,"F3 6D REP INS m16, DX ZO Valid Valid Input (count) words from port DX to (dest).",PDF 줄에 Instruction 칸 있음
+2413,REP,operands에 니모닉,mnemonic|operands,"REP|INS m32, DX","REP INS|m32, DX",1266,"F3 6D REP INS m32, DX ZO Valid Valid Input (count) doublewords from port DX to",PDF 줄에 Instruction 칸 있음
+2414,REP,operands에 니모닉,mnemonic|operands,REP|LODS AL,REP LODS|AL,1266,F3 AC REP LODS AL ZO Valid Valid Load (count) bytes from (src) to AL.,PDF 줄에 Instruction 칸 있음
+2415,REP,operands에 니모닉,mnemonic|operands,REP|LODS AX,REP LODS|AX,1266,F3 AD REP LODS AX ZO Valid Valid Load (count) words from (src) to AX.,PDF 줄에 Instruction 칸 있음
+2416,REP,operands에 니모닉,mnemonic|operands,REP|LODS EAX,REP LODS|EAX,1266,F3 AD REP LODS EAX ZO Valid Valid Load (count) doublewords from (src) to EAX.,PDF 줄에 Instruction 칸 있음
+2417,REP,operands에 니모닉,mnemonic|operands,REP|LODS RAX,REP LODS|RAX,1266,F3 REX.W AD REP LODS RAX ZO Valid N.E. Load (count) quadwords from (src) to RAX.,PDF 줄에 Instruction 칸 있음
+2418,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m8, m8","REP MOVS|m8, m8",1266,"F3 A4 REP MOVS m8, m8 ZO Valid Valid Move (count) bytes from (src) to (dest).",PDF 줄에 Instruction 칸 있음
+2419,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m16, m16","REP MOVS|m16, m16",1266,"F3 A5 REP MOVS m16, m16 ZO Valid Valid Move (count) words from (src) to (dest).",PDF 줄에 Instruction 칸 있음
+2420,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m32, m32","REP MOVS|m32, m32",1266,"F3 A5 REP MOVS m32, m32 ZO Valid Valid Move (count) doublewords from (src) to (dest).",PDF 줄에 Instruction 칸 있음
+2421,REP,operands에 니모닉,mnemonic|operands,"REP|MOVS m64, m64","REP MOVS|m64, m64",1266,"F3 REX.W A5 REP MOVS m64, m64 ZO Valid N.E. Move (count) quadwords from (src) to (dest).",PDF 줄에 Instruction 칸 있음
+2422,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m8","REP OUTS|DX, m8",1266,"F3 6E REP OUTS DX, m8 ZO Valid Valid Output (count) bytes from (src) to port DX.",PDF 줄에 Instruction 칸 있음
+2423,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m16","REP OUTS|DX, m16",1266,"F3 6F REP OUTS DX, m16 ZO Valid Valid Output (count) words from (src) to port DX.",PDF 줄에 Instruction 칸 있음
+2424,REP,operands에 니모닉,mnemonic|operands,"REP|OUTS DX, m32","REP OUTS|DX, m32",1266,"F3 6F REP OUTS DX, m32 ZO Valid Valid Output (count) doublewords from (src) to port",PDF 줄에 Instruction 칸 있음
+2425,REP,operands에 니모닉,mnemonic|operands,REP|STOS m8,REP STOS|m8,1266,F3 AA REP STOS m8 ZO Valid Valid Fill (count) bytes at (dest) with AL.,PDF 줄에 Instruction 칸 있음
+2426,REP,operands에 니모닉,mnemonic|operands,REP|STOS m16,REP STOS|m16,1266,F3 AB REP STOS m16 ZO Valid Valid Fill (count) words at (dest) with AX.,PDF 줄에 Instruction 칸 있음
+2427,REP,operands에 니모닉,mnemonic|operands,REP|STOS m32,REP STOS|m32,1266,F3 AB REP STOS m32 ZO Valid Valid Fill (count) doublewords at (dest) with EAX.,PDF 줄에 Instruction 칸 있음
+2428,REP,operands에 니모닉,mnemonic|operands,REP|STOS m64,REP STOS|m64,1266,F3 REX.W AB REP STOS m64 ZO Valid N.E. Fill (count) quadwords at (dest) with RAX.,PDF 줄에 Instruction 칸 있음
+2429,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m8, m8","REPE CMPS|m8, m8",1268,"F3 A6 REPE CMPS m8, m8 ZO Valid Valid Find nonmatching bytes in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
+2430,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m16, m16","REPE CMPS|m16, m16",1268,"F3 A7 REPE CMPS m16, m16 ZO Valid Valid Find nonmatching words in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
+2431,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m32, m32","REPE CMPS|m32, m32",1268,"F3 A7 REPE CMPS m32, m32 ZO Valid Valid Find nonmatching doublewords in (src1) and",PDF 줄에 Instruction 칸 있음
+2432,REPE,operands에 니모닉,mnemonic|operands,"REPE|CMPS m64, m64","REPE CMPS|m64, m64",1268,"F3 REX.W A7 REPE CMPS m64, m64 ZO Valid N.E. Find nonmatching quadwords in (src1) and",PDF 줄에 Instruction 칸 있음
+2433,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m8,REPE SCAS|m8,1268,F3 AE REPE SCAS m8 ZO Valid Valid Find non-AL byte starting at (src2).,PDF 줄에 Instruction 칸 있음
+2434,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m16,REPE SCAS|m16,1268,F3 AF REPE SCAS m16 ZO Valid Valid Find non-AX word starting at (src2).,PDF 줄에 Instruction 칸 있음
+2435,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m32,REPE SCAS|m32,1268,F3 AF REPE SCAS m32 ZO Valid Valid Find non-EAX doubleword starting at (src2).,PDF 줄에 Instruction 칸 있음
+2436,REPE,operands에 니모닉,mnemonic|operands,REPE|SCAS m64,REPE SCAS|m64,1268,F3 REX.W AF REPE SCAS m64 ZO Valid N.E. Find non-RAX quadword starting at (src2).,PDF 줄에 Instruction 칸 있음
+2437,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m8, m8","REPNE CMPS|m8, m8",1270,"F2 A6 REPNE CMPS m8, m8 ZO Valid Valid Find matching bytes in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
+2438,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m16, m16","REPNE CMPS|m16, m16",1270,"F2 A7 REPNE CMPS m16, m16 ZO Valid Valid Find matching words in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
+2439,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m32, m32","REPNE CMPS|m32, m32",1270,"F2 A7 REPNE CMPS m32, m32 ZO Valid Valid Find matching doublewords in (src1) and",PDF 줄에 Instruction 칸 있음
+2440,REPNE,operands에 니모닉,mnemonic|operands,"REPNE|CMPS m64, m64","REPNE CMPS|m64, m64",1270,"F2 REX.W A7 REPNE CMPS m64, m64 ZO Valid N.E. Find matching quadwords in (src1) and (src2).",PDF 줄에 Instruction 칸 있음
+2441,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m8,REPNE SCAS|m8,1270,"F2 AE REPNE SCAS m8 ZO Valid Valid Find AL, starting at (src2).",PDF 줄에 Instruction 칸 있음
+2442,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m16,REPNE SCAS|m16,1270,"F2 AF REPNE SCAS m16 ZO Valid Valid Find AX, starting at (src2).",PDF 줄에 Instruction 칸 있음
+2443,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m32,REPNE SCAS|m32,1270,"F2 AF REPNE SCAS m32 ZO Valid Valid Find EAX, starting at (src2).",PDF 줄에 Instruction 칸 있음
+2444,REPNE,operands에 니모닉,mnemonic|operands,REPNE|SCAS m64,REPNE SCAS|m64,1270,"F2 REX.W AF REPNE SCAS m64 ZO Valid N.E. Find RAX, starting at (src2).",PDF 줄에 Instruction 칸 있음
+2677,SUBPD,op_en 빈칸,op_en,,A,1390,66 0F 5C /r A V/V SSE2 Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2678,VSUBPD,op_en 빈칸,op_en,,B,1390,VEX.128.66.0F.WIG 5C /r B V/V AVX Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2679,VSUBPD,op_en 빈칸,op_en,,B,1390,VEX.256.66.0F.WIG 5C /r B V/V AVX Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2680,VSUBPD,op_en 빈칸,op_en,,C,1390,EVEX.128.66.0F.W1 5C /r C V/V (AVX512VL AND Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2681,VSUBPD,op_en 빈칸,op_en,,C,1390,EVEX.256.66.0F.W1 5C /r C V/V (AVX512VL AND Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2682,VSUBPD,op_en 빈칸,op_en,,C,1390,EVEX.512.66.0F.W1 5C /r C V/V AVX512F Subtract packed double precision floating-point values,Operand Encoding 표에 있음
+2683,SUBPS,op_en 빈칸,op_en,,A,1393,NP 0F 5C /r A V/V SSE Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+2684,VSUBPS,op_en 빈칸,op_en,,B,1393,VEX.128.0F.WIG 5C /r B V/V AVX Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+2685,VSUBPS,op_en 빈칸,op_en,,B,1393,VEX.256.0F.WIG 5C /r B V/V AVX Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+2686,VSUBPS,op_en 빈칸,op_en,,C,1393,EVEX.128.0F.W0 5C /r C V/V (AVX512VL AND Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+2687,VSUBPS,op_en 빈칸,op_en,,C,1393,EVEX.256.0F.W0 5C /r C V/V (AVX512VL AND Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+2688,VSUBPS,op_en 빈칸,op_en,,C,1393,EVEX.512.0F.W0 5C /r C V/V AVX512F Subtract packed single precision floating-point values,Operand Encoding 표에 있음
+3418,VMASKMOVPS,op_en 공백 분리,op_en,RV M,RVM,1886,VEX.128.66.0F38.W0 2C /r RV V/V AVX Conditionally load packed single precision values from,Operand Encoding 표에 있음
+3419,VMASKMOVPS,op_en 공백 분리,op_en,RV M,RVM,1886,VEX.256.66.0F38.W0 2C /r RV V/V AVX Conditionally load packed single precision values from,Operand Encoding 표에 있음
+3420,VMASKMOVPD,op_en 공백 분리,op_en,RV M,RVM,1886,VEX.128.66.0F38.W0 2D /r RV V/V AVX Conditionally load packed double precision values from,Operand Encoding 표에 있음
+3421,VMASKMOVPD,op_en 공백 분리,op_en,RV M,RVM,1886,VEX.256.66.0F38.W0 2D /r RV V/V AVX Conditionally load packed double precision values from,Operand Encoding 표에 있음
+3422,VMASKMOVPS,op_en 공백 분리,op_en,MV R,MVR,1886,VEX.128.66.0F38.W0 2E /r MV V/V AVX Conditionally store packed single precision values from,Operand Encoding 표에 있음
+3423,VMASKMOVPS,op_en 공백 분리,op_en,MV R,MVR,1886,VEX.256.66.0F38.W0 2E /r MV V/V AVX Conditionally store packed single precision values from,Operand Encoding 표에 있음
+3424,VMASKMOVPD,op_en 공백 분리,op_en,MV R,MVR,1886,VEX.128.66.0F38.W0 2F /r MV V/V AVX Conditionally store packed double precision values from,Operand Encoding 표에 있음
+3425,VMASKMOVPD,op_en 공백 분리,op_en,MV R,MVR,1886,VEX.256.66.0F38.W0 2F /r MV V/V AVX Conditionally store packed double precision values from,Operand Encoding 표에 있음
+3604,VPERM2F128,op_en 공백 분리,op_en,RV MI,RVMI,1964,VEX.256.66.0F3A.W0 06 /r ib RV V/V AVX Permute 128-bit floating-point fields in,Operand Encoding 표에 있음
+4049,VSCATTERDPS,op_en 빈칸,op_en,,A,2210,"EVEX.128.66.0F38.W0 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter single-",Operand Encoding 표에 있음
+4050,VSCATTERDPS,op_en 빈칸,op_en,,A,2210,"EVEX.256.66.0F38.W0 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter single-",Operand Encoding 표에 있음
+4051,VSCATTERDPS,op_en 빈칸,op_en,,A,2210,"EVEX.512.66.0F38.W0 A2 /vsib A V/V AVX512F Using signed dword indices, scatter single-",Operand Encoding 표에 있음
+4052,VSCATTERDPD,op_en 빈칸,op_en,,A,2210,"EVEX.128.66.0F38.W1 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter double",Operand Encoding 표에 있음
+4053,VSCATTERDPD,op_en 빈칸,op_en,,A,2210,"EVEX.256.66.0F38.W1 A2 /vsib A V/V (AVX512VL AND Using signed dword indices, scatter double",Operand Encoding 표에 있음
+4054,VSCATTERDPD,op_en 빈칸,op_en,,A,2210,"EVEX.512.66.0F38.W1 A2 /vsib A V/V AVX512F Using signed dword indices, scatter double",Operand Encoding 표에 있음
+4055,VSCATTERQPS,op_en 빈칸,op_en,,A,2210,"EVEX.128.66.0F38.W0 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter single-",Operand Encoding 표에 있음
+4056,VSCATTERQPS,op_en 빈칸,op_en,,A,2210,"EVEX.256.66.0F38.W0 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter single-",Operand Encoding 표에 있음
+4057,VSCATTERQPS,op_en 빈칸,op_en,,A,2210,"EVEX.512.66.0F38.W0 A3 /vsib A V/V AVX512F Using signed qword indices, scatter single-",Operand Encoding 표에 있음
+4058,VSCATTERQPD,op_en 빈칸,op_en,,A,2210,"EVEX.128.66.0F38.W1 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter double",Operand Encoding 표에 있음
+4059,VSCATTERQPD,op_en 빈칸,op_en,,A,2210,"EVEX.256.66.0F38.W1 A3 /vsib A V/V (AVX512VL AND Using signed qword indices, scatter double",Operand Encoding 표에 있음
+4060,VSCATTERQPD,op_en 빈칸,op_en,,A,2210,"EVEX.512.66.0F38.W1 A3 /vsib A V/V AVX512F Using signed qword indices, scatter double",Operand Encoding 표에 있음

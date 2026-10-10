@@ -14,7 +14,7 @@ ISA_DB = os.path.join(ROOT, "data/db/isa_db.csv")
 # 총론 표기 정의(원문 그대로). 이전 해석 규칙(common_rules.csv)은 2026-10-09 사용자 결정으로 폐기했다.
 SYMBOLS_CSV = os.path.join(ROOT, "data/rules/sdm_symbols.csv")
 # 생성 사례와 저장된 도구 관측은 서로 다른 snapshot이다. 출력할 때 출처를 같이 보여준다.
-CASES_SNAPSHOT = os.path.join(ROOT, "out/generator_audit_2026-10-09_mode_address")
+CASES_SNAPSHOT = os.path.join(ROOT, "out/generator_audit_2026-10-10_093")
 OBSERVATION_SNAPSHOT = os.path.join(ROOT, "out/generator_audit_2026-09-29_description_fix")
 
 

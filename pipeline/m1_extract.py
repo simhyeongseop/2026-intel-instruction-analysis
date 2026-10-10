@@ -51,7 +51,7 @@ COVERAGE_REPORT = "data/db/coverage_report.md"
 # 118 = "AAA-ASCII Adjust After Addition" 로 챕터3 본문이 시작하는 페이지(0-based)
 # 2393 = "APPENDIX A OPCODE MAP" 이 시작하는 페이지 -> 여기부턴 opcode map/부록이라 제외.
 INSTR_REF_START = 118
-INSTR_REF_END = 2393
+INSTR_REF_END = 2402  # 093판(2026-09). 090판은 2393(sdm_paths.EDITION_090_INSTR_REF_END)
 
 # 목차(Contents)에서 명령어 전체 목록을 뽑을 범위. 실측 결과 이 안에 다 들어있다.
 TOC_START = 0

@@ -1,6 +1,6 @@
 """주 에이전트 독립 판정(main_symbol_spec.csv)을 고친 종류 규칙(KIND_PHRASES_FIXED)으로 다시 계산한다.
 
-    python3 scripts/build_main_rulefix.py [--review-dir out/sdm_review_2026-10-09]
+    python3 scripts/build_main_rulefix.py [--review-dir out/sdm_review_093]
 
 원본 파일은 2026-10-09 독립 기록이므로 고치지 않는다. 원본의 table_symbol을 그대로 쓰고,
 총론 정의가 있는 줄(status=defined)만 같은 모듈로 다시 계산해 main_symbol_spec_rulefix.csv에 쓴다.
@@ -21,7 +21,7 @@ COLUMNS = ["kind", "kind_phrase", "data_width", "width_phrase", "register_set", 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--review-dir", default="out/sdm_review_2026-10-09")
+    parser.add_argument("--review-dir", default="out/sdm_review_093")
     args = parser.parse_args()
 
     source = os.path.join(args.review_dir, "main_symbol_spec.csv")

@@ -52,9 +52,12 @@ class OverrideTest(unittest.TestCase):
     def setUp(self):
         with open(os.path.join(ROOT, "data/rules/encoding_check_overrides.csv"), encoding="utf-8") as handle:
             self.rows = {r["row_id"]: r for r in csv.DictReader(handle)}
+        # 판이 바뀌면 row_id가 밀리므로 표 opcode로 찾는다.
+        self.by_opcode = {r["table_opcode"]: r for r in self.rows.values()}
 
     def test_map5_patterns(self):
-        load, store = self.rows["3426"]["byte_pattern"], self.rows["3427"]["byte_pattern"]
+        load = self.by_opcode["EVEX.LLIG.F3.MAP5.W0 10 /r"]["byte_pattern"]
+        store = self.by_opcode["EVEX.LLIG.F3.MAP5.W0 11 /r"]["byte_pattern"]
         # 62 F5 7E 08 10 00: P0 F5(map 101), P1 7E(W0, vvvv 1111, pp F3), opcode 10
         self.assertTrue(re.match(load, "62f57e081000"))
         self.assertTrue(re.match(load, "6762f57e891000"))
@@ -75,9 +78,9 @@ class OverrideTest(unittest.TestCase):
                  "operands": "xmm0, xmm0, xmm0, 1", "operand_types": ""}
         data = "62f37d0854c001"
         self.assertEqual(script.encoding_status(data, combo, False, None), "different_encoding")
-        self.assertEqual(script.encoding_status(data, combo, False, self.rows["3041"]), "fields_match")
+        self.assertEqual(script.encoding_status(data, combo, False, self.by_opcode["EVEX.128.66.0F3A.W0 54 /r"]), "fields_match")
         # 반례: opcode 바이트가 55면 보정 opcode로도 맞지 않는다.
-        self.assertEqual(script.encoding_status("62f37d0855c001", combo, False, self.rows["3041"]), "different_encoding")
+        self.assertEqual(script.encoding_status("62f37d0855c001", combo, False, self.by_opcode["EVEX.128.66.0F3A.W0 54 /r"]), "different_encoding")
 
 
 if __name__ == "__main__":

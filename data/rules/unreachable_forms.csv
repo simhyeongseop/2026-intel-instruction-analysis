@@ -1,9 +1,9 @@
-row_id,mnemonic,table_opcode,form,alias_chosen_by_tools,reason,evidence,
-1168,MOVQ,NP REX.W + 0F 6E /r,memory,0F 6F (MOVQ mm, mm/m64),"같은 니모닉의 별칭 opcode. 메모리 형식은 GNU·clang 모두 0F 6F를 고르고, 니모닉 문법으로 REX.W 0F 6E 메모리 형식을 지정할 수 없음","[""2026-10-10 관측: movq mm0,[mem] -> 0f 6f; rex64 movd mm0,qword ptr -> GNU 'same type of prefix used twice', clang 'invalid operand'. 레지스터 형식 movq mm0,rax -> 48 0f 6e c0(도달)""]"
-1170,MOVQ,NP REX.W + 0F 7E /r,memory,0F 7F (MOVQ mm/m64, mm),같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 0F 7F를 고름,"['2026-10-10 관측: movq [mem],mm0 -> 0f 7f']"
-1172,MOVQ,66 REX.W 0F 6E /r,memory,F3 0F 7E (MOVQ xmm, xmm/m64),같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 F3 0F 7E를 고름,"['2026-10-10 관측: movq xmm0,[mem] -> f3 0f 7e']"
-1174,MOVQ,66 REX.W 0F 7E /r,memory,66 0F D6 (MOVQ xmm/m64, xmm),같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 66 0F D6을 고름,"['2026-10-10 관측: movq [mem],xmm0 -> 66 0f d6']"
-1176,VMOVQ,VEX.128.66.0F.W1 6E /r,memory,VEX.128.F3.0F 7E (VMOVQ xmm, xmm/m64),같은 니모닉의 별칭 opcode. {vex3}로도 F3 0F 7E를 고름,"['2026-10-10 관측: {vex3} vmovq xmm0,[mem] -> c4 e1 7a 7e']"
-1178,VMOVQ,VEX.128.66.0F.W1 7E /r,memory,VEX.128.66.0F D6 (VMOVQ xmm/m64, xmm),같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 66 0F D6을 고름,"['2026-10-10 관측: vmovq [mem],xmm0 -> c5 f9 d6']"
-992,LAR,REX.W + 0F 02/r,register,"GNU 거부, clang 0F 02(REX.W 없음)","표 문법 'LAR r32, r64'를 GNU는 'register type mismatch'로 거부, clang은 받지만 REX.W를 내지 않음. 32/64비트 동작이 같다고 본문이 명시한 동등 표현",docs/CASE_REVIEW_2026-09-14.md D절(특정 REX.W 행이 선택되지 않았음을 별도 기록). 2026-10-10 재관측,
-1041,LSL,REX.W + 0F 03 /r,register,"GNU 거부, clang 48 0F 03","표 문법 'LSL r64, r32'를 GNU는 'register type mismatch'로 거부. 32/64비트 동작이 같다고 본문이 명시한 동등 표현",docs/CASE_REVIEW_2026-09-14.md D절(LAR/LSL). 2026-10-10 재관측,
+row_id,mnemonic,table_opcode,form,alias_chosen_by_tools,reason,evidence,edition
+1168,MOVQ,NP REX.W + 0F 6E /r,memory,"0F 6F (MOVQ mm, mm/m64)","같은 니모닉의 별칭 opcode. 메모리 형식은 GNU·clang 모두 0F 6F를 고르고, 니모닉 문법으로 REX.W 0F 6E 메모리 형식을 지정할 수 없음","2026-10-10 관측: movq mm0,[mem] -> 0f 6f; rex64 movd mm0,qword ptr -> GNU 'same type of prefix used twice', clang 'invalid operand'. 레지스터 형식 movq mm0,rax -> 48 0f 6e c0(도달)",093
+1170,MOVQ,NP REX.W + 0F 7E /r,memory,"0F 7F (MOVQ mm/m64, mm)",같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 0F 7F를 고름,"2026-10-10 관측: movq [mem],mm0 -> 0f 7f",093
+1172,MOVQ,66 REX.W 0F 6E /r,memory,"F3 0F 7E (MOVQ xmm, xmm/m64)",같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 F3 0F 7E를 고름,"2026-10-10 관측: movq xmm0,[mem] -> f3 0f 7e",093
+1174,MOVQ,66 REX.W 0F 7E /r,memory,"66 0F D6 (MOVQ xmm/m64, xmm)",같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 66 0F D6을 고름,"2026-10-10 관측: movq [mem],xmm0 -> 66 0f d6",093
+1176,VMOVQ,VEX.128.66.0F.W1 6E /r,memory,"VEX.128.F3.0F 7E (VMOVQ xmm, xmm/m64)",같은 니모닉의 별칭 opcode. {vex3}로도 F3 0F 7E를 고름,"2026-10-10 관측: {vex3} vmovq xmm0,[mem] -> c4 e1 7a 7e",093
+1178,VMOVQ,VEX.128.66.0F.W1 7E /r,memory,"VEX.128.66.0F D6 (VMOVQ xmm/m64, xmm)",같은 니모닉의 별칭 opcode. 메모리 형식은 두 도구 모두 66 0F D6을 고름,"2026-10-10 관측: vmovq [mem],xmm0 -> c5 f9 d6",093
+992,LAR,REX.W + 0F 02/r,register,"GNU 거부, clang 0F 02(REX.W 없음)","표 문법 'LAR r32, r64'를 GNU는 'register type mismatch'로 거부, clang은 받지만 REX.W를 내지 않음. 32/64비트 동작이 같다고 본문이 명시한 동등 표현",docs/CASE_REVIEW_2026-09-14.md D절(특정 REX.W 행이 선택되지 않았음을 별도 기록). 2026-10-10 재관측,093
+1041,LSL,REX.W + 0F 03 /r,register,"GNU 거부, clang 48 0F 03","표 문법 'LSL r64, r32'를 GNU는 'register type mismatch'로 거부. 32/64비트 동작이 같다고 본문이 명시한 동등 표현",docs/CASE_REVIEW_2026-09-14.md D절(LAR/LSL). 2026-10-10 재관측,093

@@ -87,7 +87,9 @@ def main():
                 matched = re.search(re.escape(row["mnemonic"]) + r"\s+(.+?)\s+" + re.escape(row["op_en"]) + r"\s", line)
                 value = matched.group(1) if matched else ""
                 entry.update(field="operands", isa_value=row["operands"], corrected_value=value,
-                             check="PDF 줄에서 읽음" if value else "확인 실패")
+                             check=("PDF 줄에서 읽음. 붙은 숫자는 각주 표시"
+                                    + ("(CASE_REVIEW D절: LAR 표 2·3번째 행 모두 각주 1)" if row["mnemonic"] == "LAR" else ""))
+                             if value else "확인 실패")
             elif defect == "opcode /r 누락(PDF 원문 오기)":
                 entry.update(field="opcode", isa_value=row["opcode"], corrected_value="",
                              check="PDF 원문 오기(그림 확인: '6E /'). 보정하지 않음; encoding_check_overrides.csv로 대조")

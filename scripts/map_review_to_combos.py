@@ -1,6 +1,6 @@
 """SDM 원문 재검토 결과(행 상태·1단계 추출 결함)를 최신 생성 케이스에 연결한다.
 
-    python3 scripts/map_review_to_combos.py [--combos out/generator_audit_2026-10-09_mode_address/combos.csv]
+    python3 scripts/map_review_to_combos.py [--combos out/generator_audit_2026-10-10_093/combos.csv]
 
 행 상태는 Sol 추출의 공통 기준(uniform_status)과 행 전체 조건에서 정한다(sdm_review_compare.row_status).
 '원문 확정' 행에서 나온 케이스라도 고른 대표값이 원문 제약을 지키는지는 이 연결로 확인되지 않는다.
@@ -36,13 +36,30 @@ def write_csv(path, rows):
 
 
 CONFLICT_CASES = "data/rules/source_conflict_cases.csv"
-CONFLICT_RESULTS = "out/sdm_review_2026-10-09/conflict_tests/results.csv"
-ROW_CASES = "out/sdm_review_2026-10-09/conflict_tests/row_cases.csv"
+CONFLICT_RESULTS = "out/sdm_review_093/conflict_tests/results.csv"
+ROW_CASES = "out/sdm_review_093/conflict_tests/row_cases.csv"
 ROW_PASS = ("통과", "통과(GNU 단독·도달 불가 포함)", "음성 확인")
 CORRECTIONS = "data/rules/extraction_corrections.csv"
-REACH_RESULTS = "out/sdm_review_2026-10-09/conflict_tests/all_results.csv"
+REACH_RESULTS = "out/sdm_review_093/conflict_tests/all_results.csv"
 REACHED = ("통과", "통과(GNU 단독)", "도달 불가(별칭)", "도달 불가(문법)")
-DEFECT_CASES = "out/sdm_review_2026-10-09/conflict_tests/defect_cases.csv"
+DEFECT_CASES = "out/sdm_review_093/conflict_tests/defect_cases.csv"
+
+
+EDITION_DIFF = "out/sdm_093/edition_diff.csv"
+EDITION_REVIEW = "data/rules/edition_093_review.csv"
+UNREVIEWED = "미검토(093 신규)"
+RECHECK = "093 변경·재확인 필요"
+
+
+def edition_rows():
+    """093판에서 새로 생긴 행과, 093판 원문으로 다시 판단해야 하는 행(edition_093_review.csv의 '재확인 필요')."""
+    if not os.path.exists(EDITION_DIFF):
+        return set(), set()
+    added = {int(r["new_row_id"]) for r in read_csv(EDITION_DIFF) if r["status"] == "added"}
+    recheck = set()
+    if os.path.exists(EDITION_REVIEW):
+        recheck = {int(r["row_id"]) for r in read_csv(EDITION_REVIEW) if r["result"] == "재확인 필요"}
+    return added, recheck
 
 
 def verified_defect_rows():
@@ -83,8 +100,8 @@ def resolved_conflict_rows():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--review-dir", default="out/sdm_review_2026-10-09")
-    parser.add_argument("--combos", default="out/generator_audit_2026-10-09_mode_address/combos.csv")
+    parser.add_argument("--review-dir", default="out/sdm_review_093")
+    parser.add_argument("--combos", default="out/generator_audit_2026-10-10_093/combos.csv")
     parser.add_argument("--isa-db", default="data/db/isa_db.csv")
     args = parser.parse_args()
 
@@ -106,6 +123,8 @@ def main():
 
     resolved = resolved_conflict_rows()
     defects_verified = verified_defect_rows()
+    added_093, recheck_093 = edition_rows()
+    sol_rows_seen = {row_id for row_id, _ in sol}  # operand_statuses는 defaultdict라 'in'으로 기록 여부를 볼 수 없다
     rows = []
     for row_id, isa_row in enumerate(isa):
         condition = row_condition.get(row_id, "")
@@ -115,6 +134,10 @@ def main():
             cleared = ["원문 확정" if s == "원문 충돌" else s for s in operand_statuses[row_id]]
             remaining = cmp.row_status(cleared, "" if condition == "원문 충돌" else condition)
             status = RESOLVED if remaining == "원문 확정" else remaining
+        if row_id in added_093 and row_id not in sol_rows_seen:
+            status = UNREVIEWED  # Sol 기록이 없는 093 신규 행. 빈 상태 목록을 확정으로 세지 않는다.
+        elif row_id in recheck_093:
+            status = RECHECK
         rows.append({
             "row_id": row_id, "mnemonic": isa_row["mnemonic"], "instruction": isa_row["instruction"],
             "row_status": status, "exception_case": resolved.get(row_id, ""),

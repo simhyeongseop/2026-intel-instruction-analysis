@@ -29,7 +29,7 @@ VEX.L·EVEX 문단 사례(source_conflict_cases.csv의 vex_l, evex_desc)를 뺀 
 - 음성 케이스: test_kind=negative(모드 무효 등). 행 판정에 쓰지 않는다. 음성 케이스만 있는 행은 두 도구가
   모두 거부하면 '음성 확인'이다. 두 도구가 받으면 실행 가능한 경우 CPU로 실행해 기록한다
 store_zeroing 유형은 표가 적은 '메모리 목적지 + {k1}{z}'를 따로 만들어 두 도구가 받는지 본다(probe).
-결과: out/sdm_review_2026-10-09/conflict_tests/row_results.csv, row_cases.csv(행별 유형과 판정 요약)
+결과: out/sdm_review_093/conflict_tests/row_results.csv, row_cases.csv(행별 유형과 판정 요약)
 """
 
 import argparse
@@ -53,8 +53,8 @@ from pipeline.instruction_check import assemble  # noqa: E402
 from pipeline.m5_assemble import ASM_HEADER  # noqa: E402
 from pipeline.sdm_review_compare import extraction_defects  # noqa: E402
 
-REVIEW = "out/sdm_review_2026-10-09"
-COMBOS = "out/generator_audit_2026-10-09_mode_address/combos.csv"
+REVIEW = "out/sdm_review_093"
+COMBOS = "out/generator_audit_2026-10-10_093/combos.csv"
 OUT_DIR = os.path.join(REVIEW, "conflict_tests")
 
 # Sol 메모의 낱말로 충돌 유형을 나눈다(기록용 분류이며 판정에 쓰지 않는다). 위에서부터 처음 맞는 것.

@@ -923,3 +923,32 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - `scripts/build_generator_issues.py`: 남은 91행을 유형별로 분류했다(기타 0). 생성기 재작성 입력이다.
 - 영향 연결에 도달 판정을 넣었다. 사양 신뢰 17,568, 도달 22,987, 둘 다 17,356(75%).
 - 검증: 전체 회귀 통과. 대조 스크립트 세 대상(conflicts, defects, all)을 처음부터 다시 실행했다.
+
+## 2026-10-10 [기준 교체] SDM 093판(Vol.1·Vol.2)으로 이전
+
+- 사용자 결정:
+  - 미커밋 변경을 커밋했다. 브랜치는 `sdm-review-093`, 커밋은 dbf3732(090판 기준 기록)다. out/generator_audit_* 3개(약 244MB)와 out/manual_index(SDM 전문 텍스트)는 제외했다.
+  - Vol.1·Vol.2를 093판으로 맞춘다.
+- Intel 공식 배포 주소에서 받았다.
+  - Vol.2 325383-093US(2,574쪽)는 `intel_manual.pdf`다.
+  - Vol.1 253665-093US(600쪽)는 `intel_manual_vol1.pdf`다.
+  - 090판은 `manuals/vol2_090/`에 보존했다. 처음 받은 2022년판 Vol.1은 판이 맞지 않아 지웠다.
+- m1_extract: `--pdf/--out/--coverage/--first-page/--last-page` 옵션을 추가하고 쪽마다 `page.close()`를 넣었다. 기본 범위는 093판(119~2402쪽)이다.
+  - 090판 재추출은 기존 isa_db와 바이트가 같았고, 093판 기본값 재추출은 093 isa_db와 바이트가 같았다.
+- 추가한 스크립트:
+  - `scripts/compare_isa_editions.py`(접두어 표기 변화 재짝짓기 포함)
+  - `scripts/migrate_review_to_093.py`(쪽 대응·row_id 이전)
+  - `scripts/build_edition_review.py`
+  - `pipeline/sdm_paths.py`(판별 경로)
+  - 회귀: 판 비교 3개, 쪽 번호 바꾸기 3개
+- 상세와 수치는 `out/sdm_review_093/compare/REPORT_093.md`에 있다. 요약:
+  - 090→093은 같음 4,169, 바뀜 41, 신규 9, 없어짐 0이다.
+  - 093판 원문으로 재확인 필요 134행, 신규 미검토 9행이다.
+  - 사양 신뢰와 도달을 모두 만족하는 케이스는 16,726/23,216이다.
+- 이전 중 고친 결함:
+  - 쪽 대응에서 짧은 쪽이 다른 절과 우연히 일치하는 문제를 막았다(offset 이상치 제거, isa 행 쪽 기준점).
+  - `unreachable_forms.csv`의 열 밀림을 바로잡았다(처음 작성 시 따옴표 없는 쉼표).
+  - 영향 연결에서 defaultdict 때문에 신규 행이 확정으로 세이던 결함을 고쳤다.
+  - 고치는 중에 실수로 지운 함수와 상수는 커밋본에서 다시 적용해 되살렸다.
+  - 090 row_id·쪽 번호에 묶여 있던 테스트 2곳은 opcode와 니모닉으로 찾게 했다.
+- 검증: 전체 회귀 171개 통과. 093판에서 예외 대조, 충돌 198행, 추출 결함 91행, 전체 도달 지도, 영향 연결을 다시 실행했다.

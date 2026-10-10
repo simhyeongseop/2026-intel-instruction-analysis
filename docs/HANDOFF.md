@@ -1,6 +1,6 @@
 # 현재 작업 인계
 
-갱신: 2026-10-10. 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
+갱신: 2026-10-10(093판 이전 후). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
 
 ## 목적과 현재 작업
 
@@ -8,6 +8,18 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
 지금은 생성 입력 검증을 보완한다. 전체 ISA 의미 검증을 완료한 상태가 아니다.
 
 ## 현재 기준
+
+- **SDM 판: 093판(2026-09)**. `intel_manual.pdf`=Vol.2 325383-093US, `intel_manual_vol1.pdf`=Vol.1 253665-093US. 경로는 `pipeline/sdm_paths.py`에 있다.
+  - 090판 기록: 커밋 dbf3732(브랜치 `sdm-review-093`), `manuals/vol2_090/`, `out/sdm_review_2026-10-09`, `out/sdm_evidence_2026-10-09`, `out/manual_index_090`.
+  - 이전 보고: `out/sdm_review_093/compare/REPORT_093.md`.
+  - 093 생성 snapshot: `out/generator_audit_2026-10-10_093`(23,216). 090 ID 대응표는 `out/sdm_093/combo_id_map.csv`.
+- **093판 남은 일**:
+  1. 재확인 필요 134행과 신규 9행을 093판 원문으로 다시 추출·판정한다(`data/rules/edition_093_review.csv`).
+  2. 원문 없음 기준 완화를 적용한다. 범위: Vol.1 레지스터 폭, 결합 규칙, 원문상 가변 분리(사용자 결정 대기 중인 세부 적용).
+  3. 생성기 재작성.
+- 아래 '진행 중' 절의 수치 중 090판 기준(17,356 등)은 기록이다. 093판 현재 수치는 REPORT_093.md를 따른다.
+
+## 이전 기준(090판까지의 경과)
 
 - 최신 생성·제약 검사: `out/generator_audit_2026-10-09_mode_address/`.
   23,199개: checked 9,806 / unverified 13,321 / invalid 72.

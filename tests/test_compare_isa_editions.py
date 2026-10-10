@@ -33,6 +33,13 @@ class PairTest(unittest.TestCase):
         new = [row("F3  6D", "REP INS m16,DX"), row("F3 6D", "REP INS m32, DX")]
         self.assertEqual(script.pair_rows(old, new), [(0, 0), (1, 1)])
 
+    def test_prefix_notation_change_is_same_row(self):
+        old = [row("0F 38 F0 /r", "MOVBE r16, m16")]
+        new = [row("NFx 0F 38 F0 /r", "MOVBE r16, m16")]
+        pairs = script.pair_rows(old, new)
+        self.assertEqual(pairs, [(0, 0)])
+        self.assertEqual(script.classify(old[0], new[0]), ("changed", ["opcode"]))
+
 
 if __name__ == "__main__":
     unittest.main()

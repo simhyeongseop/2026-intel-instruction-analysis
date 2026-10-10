@@ -1,6 +1,6 @@
 """Sol 8개 part의 인용문이 SDM 원문(쪽 텍스트)·총론 기호 정의에 실제로 있는지 확인한다.
 
-    python3 scripts/verify_sol_quotes.py [--review-dir out/sdm_review_2026-10-09]
+    python3 scripts/verify_sol_quotes.py [--review-dir out/sdm_review_093]
 
 쪽 인용은 적힌 쪽의 앞 1쪽 ~ 뒤 2쪽 텍스트에서 찾는다(인용이 쪽 경계를 넘는 경우).
 결과: review-dir/compare/quote_check.csv(인용마다 한 줄), quote_check_summary.json.
@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline import manual_index, quote_check  # noqa: E402
 
 SYMBOLS_CSV = "data/rules/sdm_symbols.csv"
-TABLE_CELLS = "out/sdm_evidence_2026-10-09/table_cells.jsonl"
+TABLE_CELLS = "out/sdm_evidence_093/table_cells.jsonl"
 
 
 def load_table_cells(path=TABLE_CELLS):
@@ -35,7 +35,7 @@ def load_table_cells(path=TABLE_CELLS):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--review-dir", default="out/sdm_review_2026-10-09")
+    parser.add_argument("--review-dir", default="out/sdm_review_093")
     args = parser.parse_args()
 
     index = manual_index.ManualIndex()

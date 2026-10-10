@@ -2,7 +2,7 @@
 
     python3 scripts/build_generator_issues.py
 
-결과: out/sdm_review_2026-10-09/compare/generator_issues.csv
+결과: out/sdm_review_093/compare/generator_issues.csv
 유형은 기계 규칙으로 정한다(아래 classify). 예외 목록(source_conflict_cases.csv)에 '예외'로 등록한 행은 뺀다.
 """
 
@@ -11,9 +11,9 @@ import csv
 import os
 import re
 
-RESULTS = "out/sdm_review_2026-10-09/conflict_tests/all_results.csv"
-CASES = "out/sdm_review_2026-10-09/conflict_tests/all_cases.csv"
-OUT = "out/sdm_review_2026-10-09/compare/generator_issues.csv"
+RESULTS = "out/sdm_review_093/conflict_tests/all_results.csv"
+CASES = "out/sdm_review_093/conflict_tests/all_cases.csv"
+OUT = "out/sdm_review_093/compare/generator_issues.csv"
 PASSED = ("통과", "통과(GNU 단독)", "음성 케이스", "도달 불가(별칭)", "도달 불가(문법)")
 FIX = {
     "imm1_shift_alias": "C0/C1 시프트·회전 행에 imm8=1을 쓰지 않는다(두 도구 모두 D0/D1 1비트 행을 고름)",

@@ -1,6 +1,6 @@
 """인코딩 표의 각주 번호를 지우지 않고 표시한 원문 셀을 뽑는다.
 
-    ~/pdftools_venv/bin/python scripts/extract_table_footnotes.py [--output out/sdm_evidence_2026-10-09/table_cells.jsonl]
+    ~/pdftools_venv/bin/python scripts/extract_table_footnotes.py [--output out/sdm_evidence_093/table_cells.jsonl]
 
 1단계(m1_extract)와 같은 표 찾기·셀 조립·행 파싱을 그대로 쓴다. 다른 점은 하나다:
 m1이 지우는 위첨자 각주 숫자를 '^숫자'로 남긴 셀도 함께 만든다(예: 'MOV r/m8^1, r8^1').
@@ -84,7 +84,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pdf", default="intel_manual.pdf")
     parser.add_argument("--isa-db", default="data/db/isa_db.csv")
-    parser.add_argument("--output", default="out/sdm_evidence_2026-10-09/table_cells.jsonl")
+    parser.add_argument("--output", default="out/sdm_evidence_093/table_cells.jsonl")
     args = parser.parse_args()
 
     with open(args.isa_db, encoding="utf-8") as handle:
