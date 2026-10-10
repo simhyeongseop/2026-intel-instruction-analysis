@@ -174,7 +174,7 @@ def why_not_runnable(case, flags):
 
 def run_on_cpu(results, cases, flags):
     """SDM 일치(GNU)한 레지스터 전용 케이스를 격리 실행한다. CPUID 칸이 있는 행의 SIGILL만 #UD 관측으로 적는다."""
-    from pipeline import m11_execute as m11
+    from pipeline import cpu_run
     with tempfile.TemporaryDirectory(prefix="m3_run_") as folder:
         for result, case in zip(results, cases):
             if not result["verdict_as"].startswith("SDM 일치") or case["expected"] != "reach":
@@ -185,8 +185,8 @@ def run_on_cpu(results, cases, flags):
                 continue
             data = result["bytes_as"]
             body = ".byte " + ", ".join("0x" + data[i:i + 2] for i in range(0, len(data), 2))
-            status, error, _ = m11.build_and_run({"name": "c" + case["case_id"].replace("-", "_"),
-                                                  "body": body + m11.EXIT_CLEAN}, folder)
+            status, error, _ = cpu_run.build_and_run({"name": "c" + case["case_id"].replace("-", "_"),
+                                                       "body": body + cpu_run.EXIT_CLEAN}, folder)
             result["run"] = status if not error else status + ": " + error
             if status == "SIGILL" and case["cpuid_flag"].strip():
                 result["run"] += " (#UD 관측: CPUID 기능 있음)"

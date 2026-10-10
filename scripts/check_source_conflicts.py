@@ -23,7 +23,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pipeline import m11_execute as m11  # noqa: E402
+from pipeline import cpu_run  # noqa: E402
 
 CASES_CSV = "data/rules/source_conflict_cases.csv"
 OUT_CSV = "out/sdm_review_093/conflict_tests/results.csv"
@@ -87,7 +87,7 @@ def flip_vex_l(code):
 
 def run_bytes(code, tmp_dir, name):
     body = ".byte " + ", ".join("0x%02x" % b for b in code)
-    status, error, _ = m11.build_and_run({"name": name, "body": body + m11.EXIT_CLEAN}, tmp_dir)
+    status, error, _ = cpu_run.build_and_run({"name": name, "body": body + cpu_run.EXIT_CLEAN}, tmp_dir)
     return status if not error else status + ": " + error
 
 
@@ -105,7 +105,7 @@ def main():
             kind = case.get("conflict_type", "control")
             for number, asm in enumerate(case["asm_intel"].split(" ; "), 1):
                 name = "%s_%d" % (case["case_id"].replace("-", "_"), number)
-                gnu, gnu_err = text_bytes(m11.AS_CMD, asm, tmp_dir, name + "_gnu")
+                gnu, gnu_err = text_bytes(cpu_run.AS_CMD, asm, tmp_dir, name + "_gnu")
                 clang, clang_err = text_bytes(CLANG_CMD, asm, tmp_dir, name + "_clang")
                 same = bool(gnu and clang and gnu == clang)
                 row = {

@@ -1063,3 +1063,13 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - 19,244케이스 중 SDM 일치 계열은 objdump 19,211, LLVM 19,182다.
   - 차이: r/m16을 32비트 이름으로 출력, objdump m16:64 FWORD, LLVM MPX·LKGS·UD0·INT1 디코드 실패, ERETS/ERETU→clac, CLRSSBSY/RSTORSSP dword, 도구 관례 철자
 - 검증: `tests/test_m4_disasm.py`가 의사 니모닉 표 값을 원문 쪽에서 확인하고, 비교 함수 반례를 포함한다. 전체 회귀 통과.
+
+## 2026-10-11 [정리] 예전 5~13단계 삭제
+
+- 사용자 요청: 역어셈블 대조를 커밋하고(6e0135a) 예전 5~13단계를 삭제한다.
+- 삭제: `pipeline/m5_assemble.py` ~ `m13_lint.py`, 그 전용 테스트(`test_observation_status.py`, `test_roundtrip_classification.py`,
+  `test_pipeline.py`의 triage 이력 테스트), 예전 단계만 돌리던 `scripts/run_ubuntu_tests.sh`, `scripts/run_spec_probe.py`
+- 남긴 것: 3단계 `--execute`와 충돌 확인 스크립트가 쓰던 실행 함수는 `pipeline/cpu_run.py`로 옮겼다(동작 같음).
+  예전 결과 파일(`out/asm_result.csv`, `out/lint/` 등)과 `docs/review_artifacts/`의 과거 감사 스크립트는 기록으로 둔다(후자는 이제 실행되지 않음).
+- 검증: 전체 회귀 통과. `cpu_run.build_and_run`으로 nop → exit0, `mov eax, [0]` → SIGSEGV, ud2 → SIGILL 확인.
+  `check_source_conflicts.py`, `check_conflict_rows.py` 불러오기 확인.

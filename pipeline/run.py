@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT))
 from pipeline.instruction_check import environment, sha256
 
 # 현재 파이프라인(2026-10-11 생성기 재작성): 추출 -> 생성 -> 도구별 판정 -> 역어셈블러별 대조.
-# 예전 5~13단계(m5_assemble ... m13_lint)는 삭제한 생성기의 out/tests.s를 입력으로 쓰므로 여기서 뺐다.
+# 예전 5~13단계(m5_assemble ... m13_lint)는 2026-10-11에 삭제했다. CPU 실행 관측은 cpu_run.py로 옮겼다.
 STAGES = [
     ('extractor', 'pipeline/m1_extract.py'), ('generator', 'pipeline/m2_generate.py'),
     ('check', 'pipeline/m3_check.py'), ('disasm', 'pipeline/m4_disasm.py'),

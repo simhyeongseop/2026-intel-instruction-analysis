@@ -14,8 +14,8 @@
 - 3단계: 판정은 SDM 대 GNU, SDM 대 clang을 따로 본다(2026-10-11 사용자 결정, 도구끼리는 비교하지 않음).
   `--execute`를 주면 SDM 일치한 레지스터 전용 케이스를 이 CPU에서 격리 실행해 기록한다.
 - 예전 2~4단계(`m2_tokenize`, `m3_combine`, `m4_generate`)와 `data/db/tokens.csv`, `combos.csv`는 2026-10-11에 삭제했다(git 기록 75b35ef 이전).
-- 예전 5~13단계(`m5_assemble` ~ `m13_lint`)는 삭제한 생성기의 `out/tests.s`를 입력으로 쓰므로 실행기에서 뺐다.
-  파일과 과거 결과는 남아 있다. 역어셈블 대조는 4단계로 새로 붙였다(예전 6·10단계의 텍스트·재조립 비교 대신 SDM 행 기준).
+- 예전 5~13단계(`m5_assemble` ~ `m13_lint`)와 그 전용 테스트·실행 스크립트(`run_ubuntu_tests.sh`, `run_spec_probe.py`)는 2026-10-11에 삭제했다.
+  과거 결과 파일(`out/asm_result.csv`, `out/lint/` 등)은 남아 있다. CPU 실행 함수는 `pipeline/cpu_run.py`로 옮겼다. 역어셈블 대조는 4단계로 새로 붙였다(예전 6·10단계의 텍스트·재조립 비교 대신 SDM 행 기준).
 
 ## 단계 선택
 
@@ -34,12 +34,12 @@ python3 scripts/manual_lookup.py cases MOV --opcode "8A /r"  # 저장된 케이�
 
 ## 추가 사례와 재심
 
-`data/cases.csv`는 사람이 이름을 붙인 추가 사례다. 기존 `combo_id`를 밀거나 바꾸지 않고 13단계에서 함께 검사한다.
+`data/cases.csv`는 사람이 이름을 붙인 추가 사례다. 기존 `combo_id`를 밀거나 바꾸지 않았다(예전 13단계에서 함께 검사했다).
 LAR/LSL 대칭 r64 사례도 여기에 포함한다. 원래 생성기 사례 수와 추가 사례 수를 따로 집계한다.
 
 재심용 `scripts/review_cases.py`는 고정된 27개 소스의 as/Clang 결과와 20개 CPU 대조 관측을 남긴다.
 `--skip-cpu`를 주면 어셈블·역어셈블만 수행한다. CPU 테스트 소스는 `tests/review_cpu_cases.c`다.
-이 실험은 11·12단계의 일반 실행과 독립적인, 가설을 구분하기 위한 대조 실험이다.
+이 실험은 3단계 `--execute`의 일반 실행과 독립적인, 가설을 구분하기 위한 대조 실험이다.
 
 `out/*_evidence*.md`는 과거 분석의 원시 기록이며 작성 당시 결론이 포함돼 있다.
 현재 결론은 [재심 보고서](CASE_REVIEW_2026-09-14.md)와 `pipeline/review_verdicts.py`를 따른다.

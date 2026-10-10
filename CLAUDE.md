@@ -26,7 +26,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 | 위치 | 역할 |
 |---|---|
 | `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py`, `m4_disasm.py` | 현재 단계(추출 → 생성 → 도구별 판정 → 역어셈블러별 대조). 규칙은 `case_rules.py`, `disasm_rules.py` |
-| `pipeline/m5_*.py` ~ `m13_*.py` | 예전 5~13단계(실행기에서 뺌, 과거 결과 근거용) |
+| `pipeline/cpu_run.py` | 3단계 `--execute`의 CPU 격리 실행 관측(예전 11단계에서 옮김) |
 | `pipeline/run.py` | 단계 선택 실행, 실행 기록 |
 | `pipeline/instruction_check.py`, `operand_forms.py` | 검사 도구의 공통 API와 부분 오퍼랜드/opcode 대조 |
 | `pipeline/review_verdicts.py` | 날짜와 근거를 가진 재심 판정; 기존 판정 보존 |
@@ -41,7 +41,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 ## 실행·검증
 
 Windows에서는 WSL Ubuntu를 사용한다. 1단계만 `pdfplumber`가 추가로 필요하다.
-일반 검사 도구는 입력 명령어를 실행하지 않는다. 11·12단계 CPU 실험은 `--execute`로 선택한다.
+일반 검사 도구는 입력 명령어를 실행하지 않는다. CPU 실행 관측은 3단계 `--execute`로 선택한다.
 임의의 사용자 입력을 CPU 실험 목록으로 자동 승격하지 않는다.
 
 ```bash

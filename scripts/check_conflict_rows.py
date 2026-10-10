@@ -46,10 +46,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
-from pipeline import m11_execute as m11  # noqa: E402
+from pipeline import cpu_run  # noqa: E402
 from pipeline.encoding_audit import check_encoding  # noqa: E402
 from pipeline.instruction_check import assemble  # noqa: E402
-from pipeline.m5_assemble import ASM_HEADER  # noqa: E402
+from pipeline.m2_generate import ASM_HEADER  # noqa: E402
 from pipeline.sdm_review_compare import extraction_defects  # noqa: E402
 
 REVIEW = "out/sdm_review_093"
@@ -239,7 +239,7 @@ def main():
             negative_accepted = combo["test_kind"] == "negative" and gnu["observation_status"] == "accepted"
             if args.execute and not reason and gnu["bytes"] and (combo["test_kind"] != "negative" or negative_accepted):
                 body = ".byte " + ", ".join("0x" + gnu["bytes"][i:i + 2] for i in range(0, len(gnu["bytes"]), 2))
-                status, error, _ = m11.build_and_run({"name": "c%s" % combo["combo_id"], "body": body + m11.EXIT_CLEAN},
+                status, error, _ = cpu_run.build_and_run({"name": "c%s" % combo["combo_id"], "body": body + cpu_run.EXIT_CLEAN},
                                                      tmp_dir)
                 run = status if not error else status + ": " + error
                 # CPUID 기능이 적혀 있고 이 CPU가 지원할 때만 SIGILL을 #UD 판정에 쓴다.
