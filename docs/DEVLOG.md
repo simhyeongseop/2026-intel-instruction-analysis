@@ -1076,3 +1076,52 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - 이어서 `.claude/agents/`의 예전 단계 에이전트 지침 10개(assembler, clang_assemble, clang_compare, combiner, execute, generator,
   reassemble_check, roundtrip, tokenizer, triage)를 지웠다. `extractor`, `verifier`와 `.claude/commands/run-pipeline.md`는 현재 1~4단계 기준으로 고쳤다.
   `.claude/`는 `.gitignore` 대상이라 git에는 이 기록과 CLAUDE.md 문장만 남는다.
+
+## 2026-10-11 [확인] 남은 불일치 사례
+
+- 사용자 요청: 남은 불일치 사례를 확인한다.
+- 3단계 SDM 일치가 아닌 케이스를 GNU(`-mintel64`)·clang으로 다시 조립하고 objdump·llvm-mc로 풀어 확인했다. 결과는 `out/cases/REPORT.md` 마지막 절에 있다.
+- 판정 규칙 수정:
+  - 3단계: 무효 행(reject)인데 받아들인 경우 같은 니모닉의 64비트 유효 행 인코딩과 맞는지 찾아 `다른 행으로 수용`과 `reached_row`로 기록한다.
+    GNU 17, clang 12가 모두 여기에 들어갔다(MPX → r/m64 행, CALL·JMP → 먼 m16:16·m16:32 행).
+  - 4단계: 먼 CALL·JMP(m16:N) 행을 크기 표기도 l 접두 철자도 없이 출력하면 `오퍼랜드 다름(먼 포인터 표시 없음)`. LLVM 6케이스.
+    처음 규칙은 크기 표기가 없으면 크기를 비교하지 않아 가까운 호출 텍스트 `call [rax]`를 SDM 일치로 셌다.
+- 버그 후보(확정 아님): clang data16 PUSH imm16·XBEGIN 바이트 깨짐, clang 가까운 호출 문법 → 먼 호출,
+  LLVM 먼 호출 출력, clang CLRSSBSY·RSTORSSP dword 요구, clang Intel 문법 AVX512PF 거부
+- 보고서의 "CALL·JMP r/m16 N.S."를 DB 값에 맞게 고쳤다(CALL r/m16·r/m32 N.E., JMP r/m16·r/m32 N.S.).
+- 검증: 새 `tests/test_m3_check.py`(66 FF 18 → CALL m16:16, MPX → r/m64, 무관 바이트 반례), `test_m4_disasm.py` 먼 포인터 테스트. 전체 회귀 통과.
+
+## 2026-10-11 [재점검] 버그 후보의 원문 대조
+
+- 사용자 요청: 버그 후보를 SDM Vol.1·Vol.2에서 다시 찾아 원문에 맞게 케이스가 생성됐는지 점검한다.
+- 근거(파일 쪽):
+  - PUSH 1225, XBEGIN 2276, CALL 239·240, CLRSSBSY 268, RSTORSSP 1301, VGATHERPF0DPS 2375
+  - Vol.2 2.2.1.7(42), Vol.1 Table 3-4(83, 인쇄 3-19)
+  - 총론 기호 SYM008·024·036·037·044·046·075
+- 결과:
+  - 6개 후보 모두 기대 바이트와 기대 결과는 원문과 맞았다.
+  - data16 PUSH imm16·XBEGIN rel16은 철회했다. 소스 접두어 `data16`은 GNU 문서의 철자(오퍼랜드 크기 변경)다. clang에서는 0x66 한 바이트일 뿐이다(`data16 pushw $0x1234` → `66 66 68 34 12`). 그래서 케이스가 clang에 그 행을 지정하지 못했다. clang AT&T `pushw`는 맞게 낸다.
+  - LLVM `call [rax]`는 SDM 위반이 아니라 LLVM 자기 문법 안의 불일치로 성격을 정정했다.
+- 점검 중 발견: `encoding_audit`가 레거시 16비트 행의 66H를 확인하지 않는다.
+  - 실제 결과를 따로 훑은 결과(같은 opcode에 32비트 행이 있는 16비트 행)는 GNU·clang 모두 66 누락·과잉 0건이다.
+  - 66 없이 맞은 행은 원문상 16비트로 고정된 ENTER, RET imm16, LLDT 등이다. 기준 보강은 남았다.
+
+## 2026-10-11 [기준 보강] 66H 오퍼랜드 크기 접두어 대조
+
+- 사용자 요청: 66H 확인을 넣고 다시 돌린 뒤 커밋한다.
+- 사용자 질문 "66이 생략 가능한가, alias인가"에 대한 답: 둘 다 아니다.
+  - 같은 opcode에 32비트 짝 행이 있으면 66H가 두 행을 가르는 인코딩 요소다. 빠지면 다른 명령이다.
+  - ENTER, RET imm16, LLDT 등은 16비트가 명령 자체로 고정되어 66이 인코딩 요소가 아니다.
+- `pipeline/operand_size_prefix.py`(새 파일):
+  - 같은 opcode 칸 행들의 오퍼랜드 기호 크기 차이로 16/32/64를 정한다. 오퍼랜드 없는 행은 Description의 첫 크기 표현으로 정한다(485행).
+  - `encoding_audit`가 `operand_size_prefix_66` 필드로 대조한다. `+r` 치환 전 원래 행으로 규칙을 찾는다.
+- 결과: PUSHF·POPF·LEAVE·IRET 16비트 행 7케이스가 66 없이 일치로 세어져 있었다.
+  - 원문(PUSHF·POPF·IRET Description)이 니모닉만으로는 16비트가 정해지지 않는다고 적으므로 케이스 철자를 고쳤다(`pushfw`, `popfw`, `data16 leave`).
+  - IRET은 SDM 니모닉을 유지한다(GNU `cf`, clang `66 cf`).
+  - 앞서 "숨은 오류 0건"이라고 적은 점검은 오퍼랜드 없는 행을 빠뜨린 것이었다. REPORT에 정정했다.
+- objdump의 `leavew`, `iretw`는 도구 관례 철자에 추가했다.
+- 수치:
+  - 3단계 SDM 일치 GNU 19,323, clang 19,108
+  - 4단계 일치 계열 objdump 19,209, LLVM 19,176
+  - CPU exit0 1,954, SIGSEGV 88, SIGFPE 8, SIGILL 10, SIGTRAP 2
+- 검증: `tests/test_operand_size_prefix.py`(손계산 바이트, 66 누락·과잉 반례, 고정 16비트 행 반례), `test_m2_generate.py` PUSHF·LEAVE 철자. 전체 회귀 통과.

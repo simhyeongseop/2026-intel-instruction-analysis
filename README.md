@@ -11,8 +11,8 @@ Intel 매뉴얼의 오퍼랜드 표에서 만든 x86-64 Intel-syntax 명령어�
 현재 파이프라인은 SDM 표 행마다 케이스를 만들고, SDM을 각 도구와 따로 대조한다(도구끼리는 비교하지 않는다). 상세는 [보고서](out/cases/REPORT.md).
 
 - 생성: 4,219행 → 19,425케이스(행마다 근거 기록)
-- 판정: SDM 일치 GNU as 19,324, clang 19,108
-- 역어셈블 대조: SDM 일치 바이트 19,244개 중 SDM 일치 objdump 19,211, LLVM 19,182
+- 판정: SDM 일치 GNU as 19,323, clang 19,108
+- 역어셈블 대조: SDM 일치 바이트 19,244개 중 SDM 일치 objdump 19,209, LLVM 19,176
 - 환경: WSL2 Ubuntu, GNU binutils 2.42, Clang/LLVM 18.1.3, Intel Core Ultra 5 226V
 
 이 수치는 전체 ISA 의미 검증 완료율이 아니다. 2026-09-14 예전 13단계 전체 실행 기록은 [최신 검증 기록](docs/LATEST_TEST_RUN.md)에 남아 있다(당시 기준).

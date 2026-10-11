@@ -74,5 +74,24 @@ class MnemonicTest(unittest.TestCase):
         self.assertEqual(M.opcode_key("F3 0F B8 /r"), "F3 0F B8 /r")     # 필수 접두어 F3는 떼지 않음
 
 
+class FarPointerTest(unittest.TestCase):
+    """먼 CALL(FF /3)을 크기 표기 없이 'call [rax]'로 내면 가까운 호출 텍스트다(다시 조립하면 ff10)."""
+
+    def setUp(self):
+        import shutil
+        if not (shutil.which("objdump") and shutil.which("llvm-mc-18")):
+            self.skipTest("역어셈블러 없음")
+        self.isa = M.read_csv(os.path.join(ROOT, "data/db/isa_db.csv"))
+        self.row = next(r for r in self.isa if r["instruction"] == "CALL m16:32")
+        self.case = {"source": "call fword ptr [rax]", "operands": "fword ptr [rax]"}
+
+    def judge(self, name, hex_bytes):
+        return M.judge(name, hex_bytes, self.case, self.row, M.sdm_mnemonics(self.isa))["verdict"]
+
+    def test_far_call_needs_a_size_or_far_spelling(self):
+        self.assertEqual(self.judge("llvm", "ff18"), "오퍼랜드 다름(먼 포인터 표시 없음)")   # 'call [rax]'
+        self.assertEqual(self.judge("objdump", "ff18"), "SDM 일치")                          # 'call FWORD PTR [rax]'
+
+
 if __name__ == "__main__":
     unittest.main()

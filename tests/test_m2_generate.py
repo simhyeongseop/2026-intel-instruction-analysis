@@ -92,6 +92,11 @@ class GeneratedOutputTest(unittest.TestCase):
         self.assertIn("rcl dl, 0x12", self.sources("C0 /2 ib", "RCL r/m8, imm8"))
         self.assertIn("retf", self.sources("CB", "RET"))
         self.assertIn("data16 push 0x1234", self.sources("68 iw", "PUSH imm16"))
+        self.assertEqual(self.sources("9C", "PUSHF"), ["pushfw"])          # 16비트 행: SDM 니모닉은 동의어로 다뤄짐
+        self.assertEqual(self.sources("9C", "PUSHFQ"), ["pushfq"])
+        leave = {c["instruction"] + c["source"] for c in self.cases if c["opcode"] == "C9"}
+        self.assertIn("LEAVEdata16 leave", leave)
+        self.assertIn("LEAVEleave", leave)
         self.assertIn("senduipi rcx", self.sources("F3 0F C7 /6", "SENDUIPI reg"))     # 명령 절: 64비트
         self.assertNotIn("bndmk bnd0, qword ptr [rip+0x10]", self.sources("F3 0F 1B /r", "BNDMK bnd, m64"))  # RIP는 #UD
         self.assertIn("tcmmimfp16ps tmm0, tmm1, tmm2", self.sources("VEX.128.66.0F38.W0 6C 11:rrr:bbb",

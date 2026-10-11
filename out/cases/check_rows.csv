@@ -173,14 +173,14 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 171,BLSMSK,"BLSMSK r64, r/m64",VEX.LZ.0F38.W1 F3 /2,reach,4,SDM 일치 4,SDM 일치 4
 172,BLSR,"BLSR r32, r/m32",VEX.LZ.0F38.W0 F3 /1,reach,4,SDM 일치 4,SDM 일치 4
 173,BLSR,"BLSR r64, r/m64",VEX.LZ.0F38.W1 F3 /1,reach,4,SDM 일치 4,SDM 일치 4
-174,BNDCL,"BNDCL bnd, r/m32",F3 0F 1A /r,reject,4,SDM과 다름(수용) 3; SDM 일치(거부) 1,SDM 일치(거부) 4
+174,BNDCL,"BNDCL bnd, r/m32",F3 0F 1A /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
 175,BNDCL,"BNDCL bnd, r/m64",F3 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
-176,BNDCU,"BNDCU bnd, r/m32",F2 0F 1A /r,reject,4,SDM과 다름(수용) 3; SDM 일치(거부) 1,SDM 일치(거부) 4
+176,BNDCU,"BNDCU bnd, r/m32",F2 0F 1A /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
 177,BNDCU,"BNDCU bnd, r/m64",F2 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
-178,BNDCN,"BNDCN bnd, r/m32",F2 0F 1B /r,reject,4,SDM과 다름(수용) 3; SDM 일치(거부) 1,SDM 일치(거부) 4
+178,BNDCN,"BNDCN bnd, r/m32",F2 0F 1B /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
 179,BNDCN,"BNDCN bnd, r/m64",F2 0F 1B /r,reach,4,SDM 일치 4,모르는 명령 4
 180,BNDLDX,"BNDLDX bnd, mib",NP 0F 1A /r,reach,2,SDM 일치 2,모르는 명령 2
-181,BNDMK,"BNDMK bnd, m32",F3 0F 1B /r,reject,2,SDM과 다름(수용) 2,SDM 일치(거부) 2
+181,BNDMK,"BNDMK bnd, m32",F3 0F 1B /r,reject,2,다른 행으로 수용 2,SDM 일치(거부) 2
 182,BNDMK,"BNDMK bnd, m64",F3 0F 1B /r,reach,2,SDM 일치 2,모르는 명령 2
 183,BNDMOV,"BNDMOV bnd1, bnd2/m64",66 0F 1A /r,alias_no_test/reject,4,SDM 일치(거부) 3; 시험 불가(별칭) 1,SDM 일치(거부) 3; 시험 불가(별칭) 1
 184,BNDMOV,"BNDMOV bnd1, bnd2/m128",66 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
@@ -225,8 +225,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 223,BZHI,"BZHI r64a, r/m64, r64b",VEX.LZ.0F38.W1 F5 /r,reach,4,SDM 일치 4,SDM 일치 4
 224,CALL,CALL rel16,E8 cw,alias_no_test,1,시험 불가(별칭) 1,시험 불가(별칭) 1
 225,CALL,CALL rel32,E8 cd,reach,1,SDM 일치 1,SDM 일치 1
-226,CALL,CALL r/m16,FF /2,reject,4,SDM 일치(거부) 4,SDM과 다름(수용) 3; SDM 일치(거부) 1
-227,CALL,CALL r/m32,FF /2,reject,4,SDM과 다름(수용) 3; SDM 일치(거부) 1,SDM과 다름(수용) 3; SDM 일치(거부) 1
+226,CALL,CALL r/m16,FF /2,reject,4,SDM 일치(거부) 4,다른 행으로 수용 3; SDM 일치(거부) 1
+227,CALL,CALL r/m32,FF /2,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,다른 행으로 수용 3; SDM 일치(거부) 1
 228,CALL,CALL r/m64,FF /2,reach,4,SDM 일치 4,SDM 일치 4
 229,CALL,CALL ptr16:16,9A cd,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 230,CALL,CALL ptr16:32,9A cp,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
@@ -816,7 +816,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 814,INVLPG,INVLPG m,0F 01/7,reach,3,SDM 일치 3,SDM 일치 3
 815,INVPCID,"INVPCID r32, m128",66 0F 38 82 /r,reject,3,SDM 일치(거부) 3,SDM 일치(거부) 3
 816,INVPCID,"INVPCID r64, m128",66 0F 38 82 /r,reach,3,SDM 일치 3,SDM 일치 3
-817,IRET,IRET,CF,reach,1,SDM 일치 1,SDM 일치 1
+817,IRET,IRET,CF,reach,1,다른 인코딩 1,SDM 일치 1
 818,IRETD,IRETD,CF,reach,1,SDM 일치 1,SDM 일치 1
 819,IRETQ,IRETQ,REX.W + CF,reach,1,SDM 일치 1,SDM 일치 1
 820,JA,JA rel8,77 cb,reach,1,SDM 일치 1,SDM 일치 1
@@ -917,8 +917,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 915,JMP,JMP rel8,EB cb,reach,1,SDM 일치 1,SDM 일치 1
 916,JMP,JMP rel16,E9 cw,alias_no_test,1,시험 불가(별칭) 1,시험 불가(별칭) 1
 917,JMP,JMP rel32,E9 cd,reach,1,SDM 일치 1,SDM 일치 1
-918,JMP,JMP r/m16,FF /4,reject,4,SDM 일치(거부) 4,SDM과 다름(수용) 3; SDM 일치(거부) 1
-919,JMP,JMP r/m32,FF /4,reject,4,SDM과 다름(수용) 3; SDM 일치(거부) 1,SDM과 다름(수용) 3; SDM 일치(거부) 1
+918,JMP,JMP r/m16,FF /4,reject,4,SDM 일치(거부) 4,다른 행으로 수용 3; SDM 일치(거부) 1
+919,JMP,JMP r/m32,FF /4,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,다른 행으로 수용 3; SDM 일치(거부) 1
 920,JMP,JMP r/m64,FF /4,reach,4,SDM 일치 4,SDM 일치 4
 921,JMP,JMP ptr16:16,EA cd,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 922,JMP,JMP ptr16:32,EA cp,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1

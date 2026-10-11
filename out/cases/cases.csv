@@ -3284,9 +3284,9 @@ case_id,row_id,mnemonic,instruction,opcode,mode_support,cpuid_flag,row_status,sp
 1014-0,1014,LEA,"LEA r64,m",REX.W + 8D /r,Valid,,원문 확정,예,reach,,base,"lea rcx, [rax]","rcx, [rax]","lea r64, [rax]","r64=reg(SYM029); m=mem(SYM040 (16, 32 또는 64))",
 1014-1,1014,LEA,"LEA r64,m",REX.W + 8D /r,Valid,,원문 확정,예,reach,,base:sib,"lea rcx, [rax+rbx*4+0x10]","rcx, [rax+rbx*4+0x10]","lea r64, [rax+rbx*4+0x10]","r64=reg(SYM029); m=mem(SYM040 (16, 32 또는 64))",
 1014-2,1014,LEA,"LEA r64,m",REX.W + 8D /r,Valid,,원문 확정,예,reach,,base:rip,"lea rcx, [rip+0x10]","rcx, [rip+0x10]","lea r64, [rip+0x10]","r64=reg(SYM029); m=mem(SYM040 (16, 32 또는 64))",
-1015-0,1015,LEAVE,LEAVE,C9,Valid,,원문 확정,예,reach,1016 1017,base,leave,,leave,,
-1016-0,1016,LEAVE,LEAVE,C9,N.E.,,원문 확정,예,alias_no_test,1015 1017,base,leave,,leave,,
-1017-0,1017,LEAVE,LEAVE,C9,Valid,,원문 확정,예,reach,1015 1016,base,leave,,leave,,
+1015-0,1015,LEAVE,LEAVE,C9,Valid,,원문 확정,예,reach,,base,data16 leave,,data16 leave,,"16비트 행 철자: Vol.2 LEAVE: 16·32·64비트 행 문법이 같음, 66H로 16비트"
+1016-0,1016,LEAVE,LEAVE,C9,N.E.,,원문 확정,예,alias_no_test,1017,base,leave,,leave,,
+1017-0,1017,LEAVE,LEAVE,C9,Valid,,원문 확정,예,reach,1016,base,leave,,leave,,
 1018-0,1018,LFENCE,LFENCE,NP 0F AE E8,Valid,SSE2,원문 확정,예,reach,,base,lfence,,lfence,,
 1019-0,1019,LGDT,LGDT m16&32,0F 01 /2,N.E.,,원문 확정,예,alias_no_test,1021,base,lgdt [rax],[rax],lgdt [rax],m16&32=mem(SYM047),
 1019-1,1019,LGDT,LGDT m16&32,0F 01 /2,N.E.,,원문 확정,예,alias_no_test,1021,base:sib,lgdt [rax+rbx*4+0x10],[rax+rbx*4+0x10],lgdt [rax+rbx*4+0x10],m16&32=mem(SYM047),
@@ -7678,7 +7678,7 @@ case_id,row_id,mnemonic,instruction,opcode,mode_support,cpuid_flag,row_status,sp
 1996-1,1996,POPCNT,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,Valid,,원문 확정,예,reach,,alt1,"popcnt rcx, qword ptr [rax]","rcx, qword ptr [rax]","popcnt r64, qword ptr [rax]",r64=reg(SYM029); r/m64=mem(SYM044),
 1996-2,1996,POPCNT,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,Valid,,원문 확정,예,reach,,alt1:sib,"popcnt rcx, qword ptr [rax+rbx*4+0x10]","rcx, qword ptr [rax+rbx*4+0x10]","popcnt r64, qword ptr [rax+rbx*4+0x10]",r64=reg(SYM029); r/m64=mem(SYM044),
 1996-3,1996,POPCNT,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,Valid,,원문 확정,예,reach,,alt1:rip,"popcnt rcx, qword ptr [rip+0x10]","rcx, qword ptr [rip+0x10]","popcnt r64, qword ptr [rip+0x10]",r64=reg(SYM029); r/m64=mem(SYM044),
-1997-0,1997,POPF,POPF,9D,Valid,,원문 확정,예,reach,,base,popf,,popf,,
+1997-0,1997,POPF,POPF,9D,Valid,,원문 확정,예,reach,,base,popfw,,popfw,,16비트 행 철자: Vol.2 POPF: 니모닉을 동의어로 다루는 어셈블러가 있음
 1998-0,1998,POPFD,POPFD,9D,N.E.,,원문 확정,예,reject,,base,popfd,,popfd,,
 1999-0,1999,POPFQ,POPFQ,9D,Valid,,원문 확정,예,reach,,base,popfq,,popfq,,
 2000-0,2000,POR,"POR mm, mm/m64",NP 0F EB /r,Valid,MMX,원문 확정,예,reach,,base,"por mm0, mm1","mm0, mm1","por mm, mm",mm=reg(SYM055); mm/m64=reg(SYM055),
@@ -9233,7 +9233,7 @@ case_id,row_id,mnemonic,instruction,opcode,mode_support,cpuid_flag,row_status,sp
 2321-0,2321,PUSH,PUSH GS,0F A8,Valid,,원문 확정,예,reach,,base,push gs,gs,push gs,GS=fixed(표에 적힌 레지스터),
 2322-0,2322,PUSHA,PUSHA,60,Invalid,,원문 확정,예,reject,,base,pusha,,pusha,,
 2323-0,2323,PUSHAD,PUSHAD,60,Invalid,,원문 확정,예,reject,,base,pushad,,pushad,,
-2324-0,2324,PUSHF,PUSHF,9C,Valid,,원문 확정,예,reach,,base,pushf,,pushf,,
+2324-0,2324,PUSHF,PUSHF,9C,Valid,,원문 확정,예,reach,,base,pushfw,,pushfw,,16비트 행 철자: Vol.2 PUSHF: 니모닉을 동의어로 다루는 어셈블러가 있음
 2325-0,2325,PUSHFD,PUSHFD,9C,N.E.,,원문 확정,예,reject,,base,pushfd,,pushfd,,
 2326-0,2326,PUSHFQ,PUSHFQ,9C,Valid,,원문 확정,예,reach,,base,pushfq,,pushfq,,
 2327-0,2327,PXOR,"PXOR mm, mm/m64",NP 0F EF /r,Valid,MMX,원문 확정,예,reach,,base,"pxor mm0, mm1","mm0, mm1","pxor mm, mm",mm=reg(SYM055); mm/m64=reg(SYM055),

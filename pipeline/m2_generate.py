@@ -27,6 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from pipeline import case_rules as R  # noqa: E402
+from pipeline.operand_size_prefix import required_size  # noqa: E402
 from pipeline import sdm_review_compare as cmp  # noqa: E402
 
 ISA_DB = os.path.join(ROOT, "data/db/isa_db.csv")
@@ -338,6 +339,10 @@ def apply_row_spelling(row):
     if rule:
         row["asm_prefix"], row["asm_mnemonic"] = rule[0], rule[1]
         notes.append("행 지정 철자: " + rule[3])
+    spelling = R.OPERANDLESS_16BIT_SPELLINGS.get(row["name"])
+    if spelling and not row["symbols"] and required_size(row["isa"]) == 16:
+        row["asm_prefix"], row["asm_mnemonic"] = spelling[0], spelling[1]
+        notes.append("16비트 행 철자: " + spelling[2])
     if row["name"] == "XBEGIN" and symbol == "rel16":
         row["asm_prefix"] = "data16"
         notes.append("XBEGIN rel16: 64비트 모드에서 유효(표), data16으로 16비트 꼬리를 고름")

@@ -222,6 +222,10 @@ def compare_operands(case, decoded_text, folded_imm, reversible, isa_row):
     return any(len(w) == len(got) and all(D.same_operand(a, b) for a, b in zip(w, got)) for w in orders)
 
 
+def far_pointer(isa_row):
+    return any(part.strip() in D.FAR_POINTER_BITS for part in isa_row["operands"].split(","))
+
+
 def reversible_rows(isa):
     """같은 opcode 칸에 오퍼랜드 순서만 뒤집힌 표 행이 있는 행(XCHG r/m16, r16 과 r16, r/m16): 두 순서 모두 SDM 표기."""
     forms = collections.defaultdict(set)
@@ -277,7 +281,10 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
         # 표 행에 오퍼랜드가 없음(OUTSB, MOVSB 등). 역어셈블러가 출력한 암묵 오퍼랜드는 SDM 표에 없어 대조하지 않는다
         out["verdict"] = "SDM 일치(암묵 오퍼랜드 미대조)"
         return out
-    out["verdict"] = "SDM 일치" if compare_operands(case, rest, folded, reversible, isa_row) else "오퍼랜드 다름"
+    if main in D.NEAR_AND_FAR and far_pointer(isa_row) and not re.search(r"\bptr\b", rest, re.I):
+        out["verdict"] = "오퍼랜드 다름(먼 포인터 표시 없음)"
+    else:
+        out["verdict"] = "SDM 일치" if compare_operands(case, rest, folded, reversible, isa_row) else "오퍼랜드 다름"
     again = assemble(".intel_syntax noprefix\n" + strip_comment(texts[0]) + "\n", DISASSEMBLERS[name])
     out["reassembled"] = (again["bytes"] if again["bytes"] == hex_bytes else
                           "같은 문법의 다른 인코딩 " + again["bytes"] if again["observation_status"] == "accepted"

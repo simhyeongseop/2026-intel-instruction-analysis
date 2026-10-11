@@ -138,9 +138,21 @@ ROW_SPELLINGS = {
     # 표 Description "Far return". 표 Instruction 칸은 near와 같은 'RET'이므로 GNU/clang의 far 철자 retf를 쓴다
     ('RET', 'CB', ''): ('', 'retf', '', '표 Description "Far return to calling procedure."'),
     ('RET', 'CA iw', 'imm16'): ('', 'retf', '', '표 Description "Far return ... pop imm16 bytes"'),
-    # 64비트 모드 'push imm'은 68 id가 된다. 16비트 피연산자(66)는 두 도구가 모두 받는 data16 접두어로 지정
-    # (2026-10-11 관측: GNU 'pushw' 수용·clang 거부, 'data16 push' 둘 다 66 68 iw)
+    # 64비트 모드 'push imm'은 68 id가 된다. 16비트 피연산자(66)는 GNU 문서의 data16 접두어로 지정
+    # (2026-10-11 관측: GNU 'data16 push' -> 66 68 iw. clang의 data16은 0x66 한 바이트라 66 68 id가 된다.
+    #  clang Intel 문법에는 PUSH imm16 철자가 없다. REPORT '버그 후보 원문 재점검')
     ('PUSH', '68 iw', 'imm16'): ('data16', '', '', '표 "PUSH imm16"(66 접두어로 16비트 피연산자)'),
+}
+# 오퍼랜드 없는 16비트 행(operand_size_prefix가 16으로 정한 행): SDM 니모닉만으로는 도구가 16비트를 고르지 않는다.
+# 원문: PUSHF·POPF "Others may treat these mnemonics as synonyms"(Vol.2 PUSHF·POPF Description),
+#       LEAVE는 16·32·64비트 행의 문법이 모두 'LEAVE'다.
+# 두 도구가 받는 철자를 쓴다(2026-10-11 관측: pushfw 669c, popfw 669d, data16 leave 66c9).
+# IRET(16비트)은 SDM 니모닉 'iret'을 그대로 둔다. clang은 66 cf, GNU는 cf(SDM: "most assemblers use the IRET
+# mnemonic interchangeably")이며, GNU의 iretw는 clang이 모른다.
+OPERANDLESS_16BIT_SPELLINGS = {
+    'PUSHF': ('', 'pushfw', 'Vol.2 PUSHF: 니모닉을 동의어로 다루는 어셈블러가 있음'),
+    'POPF': ('', 'popfw', 'Vol.2 POPF: 니모닉을 동의어로 다루는 어셈블러가 있음'),
+    'LEAVE': ('data16', '', 'Vol.2 LEAVE: 16·32·64비트 행 문법이 같음, 66H로 16비트'),
 }
 FAR_POINTER_MEMORY = {'16': 'dword', '32': 'fword', '64': 'tbyte'}  # LSS/LFS/LGS: m16:16/32/64의 전체 크기
 FAR_POINTER_IMMEDIATE = {'ptr16:16': '0x10:0x1234', 'ptr16:32': '0x10:0x12345678'}  # SYM025

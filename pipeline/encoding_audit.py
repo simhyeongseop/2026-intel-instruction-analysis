@@ -6,6 +6,7 @@ Matches are field matches. Only the explicitly listed narrow forms get row_reach
 import re
 
 from pipeline.operand_forms import check_opcode_template, legacy_fields
+from pipeline.operand_size_prefix import required_size
 
 
 def gpr_number(text):
@@ -85,17 +86,18 @@ def check_encoding(hex_bytes, row, relocations=False):
     +r 표기에서 r8~r15는 REX.B가 4번째 비트를 맡으므로 opcode 하위 3비트는 같은 0..7 범위다.
     """
     template = row.get('opcode', '')
+    size = required_size(row)   # +r 치환 전에 원래 행으로 찾는다
     plus = re.search(r'([0-9A-Fa-f]{2})\s*\+\s*(?:i|r[bwdo])\b', template)
     if not plus:
-        return _check_encoding(hex_bytes, row, relocations)
+        return _check_encoding(hex_bytes, row, relocations, size)
     base = int(plus.group(1), 16)
     results = [_check_encoding(hex_bytes, dict(row, opcode=template.replace(plus.group(0), '%02X' % (base + i))),
-                               relocations) for i in range(8)]
+                               relocations, size) for i in range(8)]
     matched = [r for r in results if r['status'] == 'fields_match']
     return matched[0] if matched else results[0]
 
 
-def _check_encoding(hex_bytes, row, relocations=False):
+def _check_encoding(hex_bytes, row, relocations=False, operand_size=None):
     result = {'status': 'not_checked', 'row_reach': 'unverified', 'checked_fields': [],
               'unverified_fields': ['operand_semantics', 'CPUID', 'execution'],
               'meaning_verified': False, 'coverage_eligible': False}
@@ -205,6 +207,13 @@ def _check_encoding(hex_bytes, row, relocations=False):
         tail = bits // 8
         good = good and ((0x66 in prefixes) == (bits == 16))
         result['checked_fields'].append('xbegin_operand_size')
+    if not vector and operand_size:
+        # pipeline/operand_size_prefix.py: 같은 opcode 칸의 행이 오퍼랜드 크기로만 갈린다(Vol.1 Table 3-4).
+        if operand_size == 16:
+            good = good and 0x66 in prefixes and not (rex and rex & 8)
+        else:
+            good = good and 0x66 not in prefixes
+        result['checked_fields'].append('operand_size_prefix_66')
     moffs = re.search(r'\bmoffs(8|16|32|64)\b', row.get('operand_types', row.get('operands', '')))
     if end is None:
         good = False

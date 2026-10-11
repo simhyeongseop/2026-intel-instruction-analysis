@@ -27,9 +27,13 @@ PREFIX_BYTE_NAMES = ("Vol.2 31 2.1.1", {"rep": "f3", "repe": "f3", "repz": "f3",
 FWAIT_PAIR = ("Vol.2 506", "an FWAIT instruction followed by an FNSTCW instruction")
 # 도구 관례 철자: SDM 니모닉과 다르지만 같은 명령을 가리키는 도구 쪽 이름. SDM 일치로 세지 않고 따로 센다.
 TOOL_SPELLINGS = {"movabs": "mov", "pushw": "push", "sysretd": "sysret", "sysexitd": "sysexit", "xbeginw": "xbegin",
-                  "lcall": "call", "ljmp": "jmp", "fcompi": "fcomip", "fucompi": "fucomip"}
+                  "lcall": "call", "ljmp": "jmp", "fcompi": "fcomip", "fucompi": "fucomip",
+                  "leavew": "leave", "iretw": "iret"}
 # 원문 폭: 먼 포인터 m16:16/32/64는 오프셋 + 셀렉터(SYM046) = 32/48/80비트
 FAR_POINTER_BITS = {"m16:16": 32, "m16:32": 48, "m16:64": 80}
+# 먼 CALL/JMP(FF /3, FF /5)는 가까운 CALL/JMP r/m64(FF /2, FF /4)와 니모닉이 같다. 크기 표기도 l 접두 철자도 없으면
+# 텍스트가 가까운 분기를 가리킨다(LLVM 'call [rax]'를 다시 조립하면 ff10). 먼 포인터로 이름 붙인 것으로 보지 않는다.
+NEAR_AND_FAR = ("call", "jmp")
 
 SIZE_WORDS = {"byte": 8, "word": 16, "dword": 32, "fword": 48, "qword": 64, "tbyte": 80, "xmmword": 128,
               "oword": 128, "ymmword": 256, "zmmword": 512}

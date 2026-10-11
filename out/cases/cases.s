@@ -3288,7 +3288,7 @@ lea ecx, [rip+0x10]  # case=1013-2 row=1013 expected=reach
 lea rcx, [rax]  # case=1014-0 row=1014 expected=reach
 lea rcx, [rax+rbx*4+0x10]  # case=1014-1 row=1014 expected=reach
 lea rcx, [rip+0x10]  # case=1014-2 row=1014 expected=reach
-leave  # case=1015-0 row=1015 expected=reach
+data16 leave  # case=1015-0 row=1015 expected=reach
 leave  # case=1016-0 row=1016 expected=alias_no_test
 leave  # case=1017-0 row=1017 expected=reach
 lfence  # case=1018-0 row=1018 expected=reach
@@ -7682,7 +7682,7 @@ popcnt rcx, rdx  # case=1996-0 row=1996 expected=reach
 popcnt rcx, qword ptr [rax]  # case=1996-1 row=1996 expected=reach
 popcnt rcx, qword ptr [rax+rbx*4+0x10]  # case=1996-2 row=1996 expected=reach
 popcnt rcx, qword ptr [rip+0x10]  # case=1996-3 row=1996 expected=reach
-popf  # case=1997-0 row=1997 expected=reach
+popfw  # case=1997-0 row=1997 expected=reach
 popfd  # case=1998-0 row=1998 expected=reject
 popfq  # case=1999-0 row=1999 expected=reach
 por mm0, mm1  # case=2000-0 row=2000 expected=reach
@@ -9237,7 +9237,7 @@ push fs  # case=2320-0 row=2320 expected=reach
 push gs  # case=2321-0 row=2321 expected=reach
 pusha  # case=2322-0 row=2322 expected=reject
 pushad  # case=2323-0 row=2323 expected=reject
-pushf  # case=2324-0 row=2324 expected=reach
+pushfw  # case=2324-0 row=2324 expected=reach
 pushfd  # case=2325-0 row=2325 expected=reject
 pushfq  # case=2326-0 row=2326 expected=reach
 pxor mm0, mm1  # case=2327-0 row=2327 expected=reach

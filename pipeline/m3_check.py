@@ -15,7 +15,9 @@
   - 인코딩 미대조: 받아들였지만 대조 도구가 이 opcode 표기를 읽지 못함
   - 모르는 명령: 도구가 니모닉 자체를 모름(GNU "no such instruction", clang "invalid instruction mnemonic")
   - 거부: 도구가 그 밖의 이유로 거부함
-- expected=reject: SDM 일치(거부) / SDM과 다름(수용)
+- expected=reject: SDM 일치(거부) / 다른 행으로 수용 / SDM과 다름(수용)
+  - 다른 행으로 수용: 받아들인 바이트가 같은 니모닉의 64비트 유효 표 행 인코딩이다(reached_row).
+    예: GNU `call dword ptr [rax]` -> 66 FF /3 = CALL m16:16(먼 호출). 소스 문법이 무효 행과 유효 행 양쪽에 맞는다.
 - expected=alias_no_test: 시험 불가(별칭). 받아들였는지와 나온 바이트만 기록한다
 --execute: SDM 일치한 레지스터 전용 케이스를 이 CPU가 지원하면 격리 실행한다(SIGILL = #UD 관측, 기록만).
 """
@@ -109,7 +111,11 @@ def judge(case, tool, asm, isa, overrides, unreachable=None):
            "reached_row": "", "diagnostic": observed["diagnostic"] if observed["status"] != "accepted" else ""}
     own = encoding(observed["bytes"], row, observed["relocations"], overrides.get(int(case["row_id"])))
     if case["expected"] == "reject":
-        out["verdict"] = "SDM 일치(거부)" if observed["status"] != "accepted" else "SDM과 다름(수용)"
+        if observed["status"] != "accepted":
+            out["verdict"] = "SDM 일치(거부)"
+            return out
+        reached = valid_rows_reached(observed, case, isa, overrides)
+        out.update(verdict="다른 행으로 수용" if reached else "SDM과 다름(수용)", reached_row=" ".join(reached))
         return out
     if case["expected"] == "alias_no_test":
         out["verdict"] = "시험 불가(별칭)"
@@ -137,6 +143,18 @@ def judge(case, tool, asm, isa, overrides, unreachable=None):
             return out
     out["verdict"] = "다른 인코딩"
     return registered(out, case, unreachable)
+
+
+def valid_rows_reached(observed, case, isa, overrides):
+    """받아들인 바이트가 인코딩과 맞는, 같은 니모닉의 64비트 유효(Valid) 표 행 번호들."""
+    found = []
+    for row_id, other in enumerate(isa):
+        if other["mnemonic"] != case["mnemonic"] or other["mode_support"] != "Valid" or row_id == int(case["row_id"]):
+            continue
+        if encoding(observed["bytes"], check_row(other, case), observed["relocations"],
+                    overrides.get(row_id)) == "fields_match":
+            found.append(str(row_id))
+    return found
 
 
 def registered(out, case, unreachable):

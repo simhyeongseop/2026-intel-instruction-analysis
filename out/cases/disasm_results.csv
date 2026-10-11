@@ -914,9 +914,9 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 228-2,228,CALL r/m64,FF /2,call qword ptr [rax+rbx*4+0x10],ff549810,as,SDM 일치,call   QWORD PTR [rax+rbx*4+0x10],ff549810,SDM 일치,call	qword ptr [rax + 4*rbx + 16],ff549810
 228-3,228,CALL r/m64,FF /2,call qword ptr [rip+0x10],ff1510000000,as,SDM 일치,call   QWORD PTR [rip+0x10]        # 0x16,ff1510000000,SDM 일치,call	qword ptr [rip + 16],ff1510000000
 231-0,231,CALL m16:16,FF /3,data16 call fword ptr [rax],66ff18,as,SDM 일치,call   DWORD PTR [rax],66ff18,니모닉 다름(도구 관례 철자),lcall	[rax],
-232-0,232,CALL m16:32,FF /3,call fword ptr [rax],ff18,as,SDM 일치,call   FWORD PTR [rax],ff18,SDM 일치,call	[rax],같은 문법의 다른 인코딩 ff10
-232-1,232,CALL m16:32,FF /3,call fword ptr [rax+rbx*4+0x10],ff5c9810,as,SDM 일치,call   FWORD PTR [rax+rbx*4+0x10],ff5c9810,SDM 일치,call	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff549810
-232-2,232,CALL m16:32,FF /3,call fword ptr [rip+0x10],ff1d10000000,as,SDM 일치,call   FWORD PTR [rip+0x10]        # 0x16,ff1d10000000,SDM 일치,call	[rip + 16],같은 문법의 다른 인코딩 ff1510000000
+232-0,232,CALL m16:32,FF /3,call fword ptr [rax],ff18,as,SDM 일치,call   FWORD PTR [rax],ff18,오퍼랜드 다름(먼 포인터 표시 없음),call	[rax],같은 문법의 다른 인코딩 ff10
+232-1,232,CALL m16:32,FF /3,call fword ptr [rax+rbx*4+0x10],ff5c9810,as,SDM 일치,call   FWORD PTR [rax+rbx*4+0x10],ff5c9810,오퍼랜드 다름(먼 포인터 표시 없음),call	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff549810
+232-2,232,CALL m16:32,FF /3,call fword ptr [rip+0x10],ff1d10000000,as,SDM 일치,call   FWORD PTR [rip+0x10]        # 0x16,ff1d10000000,오퍼랜드 다름(먼 포인터 표시 없음),call	[rip + 16],같은 문법의 다른 인코딩 ff1510000000
 233-0,233,CALL m16:64,REX.W FF /3,rex64 call fword ptr [rax],48ff18,as,오퍼랜드 다름,rex.W call FWORD PTR [rax],48ff18,니모닉 다름(도구 관례 철자),lcall	[rax],
 234-0,234,CBW,98,cbw,6698,as,SDM 일치,cbw,6698,SDM 일치,cbw,6698
 235-0,235,CWDE,98,cwde,98,as,SDM 일치,cwde,98,SDM 일치,cwde,98
@@ -2933,7 +2933,7 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 816-0,816,"INVPCID r64, m128",66 0F 38 82 /r,"invpcid rcx, xmmword ptr [rax]",660f388208,as,SDM 일치,"invpcid rcx,[rax]",660f388208,SDM 일치,"invpcid	rcx, xmmword ptr [rax]",660f388208
 816-1,816,"INVPCID r64, m128",66 0F 38 82 /r,"invpcid rcx, xmmword ptr [rax+rbx*4+0x10]",660f38824c9810,as,SDM 일치,"invpcid rcx,[rax+rbx*4+0x10]",660f38824c9810,SDM 일치,"invpcid	rcx, xmmword ptr [rax + 4*rbx + 16]",660f38824c9810
 816-2,816,"INVPCID r64, m128",66 0F 38 82 /r,"invpcid rcx, xmmword ptr [rip+0x10]",660f38820d10000000,as,SDM 일치,"invpcid rcx,[rip+0x10]        # 0x19",660f38820d10000000,SDM 일치,"invpcid	rcx, xmmword ptr [rip + 16]",660f38820d10000000
-817-0,817,IRET,CF,iret,cf,as,SDM 일치,iret,cf,SDM 일치,iretd,cf
+817-0,817,IRET,CF,iret,66cf,clang,니모닉 다름(도구 관례 철자),iretw,,SDM 일치,iret,66cf
 818-0,818,IRETD,CF,iretd,cf,as,SDM 일치,iret,cf,SDM 일치,iretd,cf
 819-0,819,IRETQ,REX.W + CF,iretq,48cf,as,SDM 일치,iretq,48cf,SDM 일치,iretq,48cf
 820-0,820,JA rel8,77 cb,ja .Ltarget,77fe,as,SDM 일치(분기 대상 미대조),ja     0x0,,SDM 일치(분기 대상 미대조),ja	-2,
@@ -3006,9 +3006,9 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 920-2,920,JMP r/m64,FF /4,jmp qword ptr [rax+rbx*4+0x10],ff649810,as,SDM 일치,jmp    QWORD PTR [rax+rbx*4+0x10],ff649810,SDM 일치,jmp	qword ptr [rax + 4*rbx + 16],ff649810
 920-3,920,JMP r/m64,FF /4,jmp qword ptr [rip+0x10],ff2510000000,as,SDM 일치,jmp    QWORD PTR [rip+0x10]        # 0x16,ff2510000000,SDM 일치,jmp	qword ptr [rip + 16],ff2510000000
 923-0,923,JMP m16:16,FF /5,data16 jmp fword ptr [rax],66ff28,as,SDM 일치,jmp    DWORD PTR [rax],66ff28,니모닉 다름(도구 관례 철자),ljmp	[rax],
-924-0,924,JMP m16:32,FF /5,jmp fword ptr [rax],ff28,as,SDM 일치,jmp    FWORD PTR [rax],ff28,SDM 일치,jmp	[rax],같은 문법의 다른 인코딩 ff20
-924-1,924,JMP m16:32,FF /5,jmp fword ptr [rax+rbx*4+0x10],ff6c9810,as,SDM 일치,jmp    FWORD PTR [rax+rbx*4+0x10],ff6c9810,SDM 일치,jmp	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff649810
-924-2,924,JMP m16:32,FF /5,jmp fword ptr [rip+0x10],ff2d10000000,as,SDM 일치,jmp    FWORD PTR [rip+0x10]        # 0x16,ff2d10000000,SDM 일치,jmp	[rip + 16],같은 문법의 다른 인코딩 ff2510000000
+924-0,924,JMP m16:32,FF /5,jmp fword ptr [rax],ff28,as,SDM 일치,jmp    FWORD PTR [rax],ff28,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rax],같은 문법의 다른 인코딩 ff20
+924-1,924,JMP m16:32,FF /5,jmp fword ptr [rax+rbx*4+0x10],ff6c9810,as,SDM 일치,jmp    FWORD PTR [rax+rbx*4+0x10],ff6c9810,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff649810
+924-2,924,JMP m16:32,FF /5,jmp fword ptr [rip+0x10],ff2d10000000,as,SDM 일치,jmp    FWORD PTR [rip+0x10]        # 0x16,ff2d10000000,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rip + 16],같은 문법의 다른 인코딩 ff2510000000
 925-0,925,JMP m16:64,REX.W FF /5,rex64 jmp fword ptr [rax],48ff28,as,오퍼랜드 다름,rex.W jmp FWORD PTR [rax],48ff28,니모닉 다름(도구 관례 철자),ljmp	[rax],
 926-0,926,"KADDW k1, k2, k3",VEX.L1.0F.W0 4A /r,"kaddw k0, k1, k2",c5f44ac2,as,SDM 일치,"kaddw  k0,k1,k2",c5f44ac2,SDM 일치,"kaddw	k0, k1, k2",c5f44ac2
 927-0,927,"KADDB k1, k2, k3",VEX.L1.66.0F.W0 4A /r,"kaddb k0, k1, k2",c5f54ac2,as,SDM 일치,"kaddb  k0,k1,k2",c5f54ac2,SDM 일치,"kaddb	k0, k1, k2",c5f54ac2
@@ -3167,7 +3167,7 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 1014-0,1014,"LEA r64,m",REX.W + 8D /r,"lea rcx, [rax]",488d08,as,SDM 일치,"lea    rcx,[rax]",488d08,SDM 일치,"lea	rcx, [rax]",488d08
 1014-1,1014,"LEA r64,m",REX.W + 8D /r,"lea rcx, [rax+rbx*4+0x10]",488d4c9810,as,SDM 일치,"lea    rcx,[rax+rbx*4+0x10]",488d4c9810,SDM 일치,"lea	rcx, [rax + 4*rbx + 16]",488d4c9810
 1014-2,1014,"LEA r64,m",REX.W + 8D /r,"lea rcx, [rip+0x10]",488d0d10000000,as,SDM 일치,"lea    rcx,[rip+0x10]        # 0x17",488d0d10000000,SDM 일치,"lea	rcx, [rip + 16]",488d0d10000000
-1015-0,1015,LEAVE,C9,leave,c9,as,SDM 일치,leave,c9,SDM 일치,leave,c9
+1015-0,1015,LEAVE,C9,data16 leave,66c9,as,니모닉 다름(도구 관례 철자),leavew,,SDM 일치,leave,같은 문법의 다른 인코딩 c9
 1017-0,1017,LEAVE,C9,leave,c9,as,SDM 일치,leave,c9,SDM 일치,leave,c9
 1018-0,1018,LFENCE,NP 0F AE E8,lfence,0faee8,as,SDM 일치,lfence,0faee8,SDM 일치,lfence,0faee8
 1021-0,1021,LGDT m16&64,0F 01 /2,lgdt [rax],0f0110,as,SDM 일치,lgdt   [rax],0f0110,SDM 일치,lgdt	[rax],0f0110
@@ -7517,7 +7517,7 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 1996-1,1996,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,"popcnt rcx, qword ptr [rax]",f3480fb808,as,SDM 일치,"popcnt rcx,QWORD PTR [rax]",f3480fb808,SDM 일치,"popcnt	rcx, qword ptr [rax]",f3480fb808
 1996-2,1996,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,"popcnt rcx, qword ptr [rax+rbx*4+0x10]",f3480fb84c9810,as,SDM 일치,"popcnt rcx,QWORD PTR [rax+rbx*4+0x10]",f3480fb84c9810,SDM 일치,"popcnt	rcx, qword ptr [rax + 4*rbx + 16]",f3480fb84c9810
 1996-3,1996,"POPCNT r64, r/m64",F3 REX.W 0F B8 /r,"popcnt rcx, qword ptr [rip+0x10]",f3480fb80d10000000,as,SDM 일치,"popcnt rcx,QWORD PTR [rip+0x10]        # 0x19",f3480fb80d10000000,SDM 일치,"popcnt	rcx, qword ptr [rip + 16]",f3480fb80d10000000
-1997-0,1997,POPF,9D,popf,9d,as,SDM 일치,popf,9d,SDM 일치,popfq,9d
+1997-0,1997,POPF,9D,popfw,669d,as,SDM 일치,popfw,669d,SDM 일치,popf,같은 문법의 다른 인코딩 9d
 1999-0,1999,POPFQ,9D,popfq,9d,as,SDM 일치,popf,9d,SDM 일치,popfq,9d
 2000-0,2000,"POR mm, mm/m64",NP 0F EB /r,"por mm0, mm1",0febc1,as,SDM 일치,"por    mm0,mm1",0febc1,SDM 일치,"por	mm0, mm1",0febc1
 2000-1,2000,"POR mm, mm/m64",NP 0F EB /r,"por mm0, qword ptr [rax]",0feb00,as,SDM 일치,"por    mm0,QWORD PTR [rax]",0feb00,SDM 일치,"por	mm0, qword ptr [rax]",0feb00
@@ -9060,7 +9060,7 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 2315-1,2315,PUSH imm32,68 id,push 0x7fffffff,68ffffff7f,as,SDM 일치,push   0x7fffffff,68ffffff7f,SDM 일치,push	2147483647,68ffffff7f
 2320-0,2320,PUSH FS,0F A0,push fs,0fa0,as,SDM 일치,push   fs,0fa0,SDM 일치,push	fs,같은 문법의 다른 인코딩 660fa0
 2321-0,2321,PUSH GS,0F A8,push gs,0fa8,as,SDM 일치,push   gs,0fa8,SDM 일치,push	gs,같은 문법의 다른 인코딩 660fa8
-2324-0,2324,PUSHF,9C,pushf,9c,as,SDM 일치,pushf,9c,SDM 일치,pushfq,9c
+2324-0,2324,PUSHF,9C,pushfw,669c,as,SDM 일치,pushfw,669c,SDM 일치,pushf,같은 문법의 다른 인코딩 9c
 2326-0,2326,PUSHFQ,9C,pushfq,9c,as,SDM 일치,pushf,9c,SDM 일치,pushfq,9c
 2327-0,2327,"PXOR mm, mm/m64",NP 0F EF /r,"pxor mm0, mm1",0fefc1,as,SDM 일치,"pxor   mm0,mm1",0fefc1,SDM 일치,"pxor	mm0, mm1",0fefc1
 2327-1,2327,"PXOR mm, mm/m64",NP 0F EF /r,"pxor mm0, qword ptr [rax]",0fef00,as,SDM 일치,"pxor   mm0,QWORD PTR [rax]",0fef00,SDM 일치,"pxor	mm0, qword ptr [rax]",0fef00
