@@ -46,6 +46,12 @@ TOOLS = ("as", "clang")
 # 도구가 문서로 제공하는 인코딩 지정 의사 접두어. clang은 {load}/{store}를 받지 않는다(2026-10-10 관측).
 FORCING = {"as": ["{evex} ", "{vex3} ", "{vex} ", "{load} ", "{store} ", "{evex} {load} ", "{evex} {store} ", "rex64 "],
            "clang": ["{evex} ", "{vex3} ", "{vex} "]}
+# 도구가 기본 설정에서 끈 기능(CPUID 칸 -> 설명). 기본 설정 그대로 시험하고, 거부 이유와 켜는 방법을 note에 남긴다.
+# GNU: binutils 커밋 57c526470(2024-12-02, Jan Beulich) "x86: default to not accepting MPX insns", 2.44부터.
+#   "Gcc9 had MPX support removed. While we don't want to remove support, require these deprecated insns
+#   (and registers) to be enabled explicitly." opcodes/i386-gen.c 기본 아키텍처 UNKNOWN = ~(IAMCU|MPX|...).
+DEFAULT_OFF = {"as": {"MPX": "GNU 2.44부터 기본 설정에서 MPX 제외(커밋 57c526470: GCC 9가 MPX를 뺌). "
+                             "-march=generic64+mpx 또는 .arch .mpx로 켬"}}
 NOT_ON_THIS_CPU = re.compile(r"AVX512|AVX10|AMX|FRED|HRESET|AVX-VNNI-INT|KL\b|AESKLE|APX", re.I)
 FLAG_NAMES = {"SSE4_1": "sse4_1", "SSE4_2": "sse4_2", "BMI1": "bmi1", "BMI2": "bmi2", "PCLMULQDQ": "pclmulqdq",
               "SSE": "sse", "SSE2": "sse2", "SSE3": "pni", "SSSE3": "ssse3", "AVX": "avx", "AVX2": "avx2",
@@ -261,7 +267,14 @@ def main():
             judged = judge(case, tool, asm, isa, overrides, unreachable)
             for key in ("verdict", "status", "bytes", "tested_source", "reached_row", "diagnostic"):
                 result["%s_%s" % (key, tool)] = judged[key]
-        result["note"] = "도구 미지원 등록 행(source_conflict_cases)" if case["row_id"] in unsupported else ""
+        # 등록은 GNU 2.42·clang 18 관측(source_conflict_cases). 지금 도구가 실제로 거부할 때만 적는다
+        still = [t for t in TOOLS if result["verdict_" + t] in ("거부", "모르는 명령")]
+        result["note"] = ("도구 미지원 등록 행(source_conflict_cases): " + ", ".join(still)
+                          if case["row_id"] in unsupported and still else "")
+        for tool in TOOLS:
+            reason = DEFAULT_OFF.get(tool, {}).get(case["cpuid_flag"].strip())
+            if reason and "is not supported on" in result["diagnostic_" + tool]:
+                result["note"] = (result["note"] + " | " if result["note"] else "") + reason
         result["run"] = ""
         results.append(result)
     if args.execute:

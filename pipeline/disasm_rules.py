@@ -28,7 +28,12 @@ FWAIT_PAIR = ("Vol.2 506", "an FWAIT instruction followed by an FNSTCW instructi
 # 도구 관례 철자: SDM 니모닉과 다르지만 같은 명령을 가리키는 도구 쪽 이름. SDM 일치로 세지 않고 따로 센다.
 TOOL_SPELLINGS = {"movabs": "mov", "pushw": "push", "sysretd": "sysret", "sysexitd": "sysexit", "xbeginw": "xbegin",
                   "lcall": "call", "ljmp": "jmp", "fcompi": "fcomip", "fucompi": "fucomip",
-                  "leavew": "leave", "iretw": "iret"}
+                  "leavew": "leave", "iretw": "iret",
+                  # CMPccXADD(Vol.2 281~285쪽)는 조건마다 이름 하나만 적는다. binutils 2.47·LLVM 23은 같은 조건 subcode의
+                  # 다른 이름으로 출력한다. 조건 subcode(opcode 하위 4비트)가 같은 동의어는 Vol.1 Table B-1(파일 539쪽)에
+                  # 있지만 그 표의 적용 대상은 CMOVcc·FCMOVcc·Jcc·SETcc라서 SDM 일치로 세지 않는다.
+                  "cmpaxadd": "cmpnbexadd", "cmpaexadd": "cmpnbxadd", "cmpgxadd": "cmpnlexadd",
+                  "cmpgexadd": "cmpnlxadd", "cmpnexadd": "cmpnzxadd", "cmpexadd": "cmpzxadd"}
 # 원문 폭: 먼 포인터 m16:16/32/64는 오프셋 + 셀렉터(SYM046) = 32/48/80비트
 FAR_POINTER_BITS = {"m16:16": 32, "m16:32": 48, "m16:64": 80}
 # 먼 CALL/JMP(FF /3, FF /5)는 가까운 CALL/JMP r/m64(FF /2, FF /4)와 니모닉이 같다. 크기 표기도 l 접두 철자도 없으면

@@ -15,14 +15,17 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
   - 093 생성 snapshot: `out/generator_audit_2026-10-10_093`(23,216). 090 ID 대응표는 `out/sdm_093/combo_id_map.csv`.
 - **093판 현재(10월 10일)**: 사양 신뢰 23,216/23,216, 신뢰+도달 23,000/23,216(REPORT_093.md 마지막 절).
   - 093 재확인 143행 완료(Sol 재추출 `sol_rerun_093.csv`). 원문 없음 완화 A·B·C·D를 적용했다(`pipeline/sdm_relaxation.py`).
-  - 원문 없음·원문 충돌·추출 불완전은 모두 0행이다. 남은 것은 생성기 문제 95행(`compare/generator_issues.csv`)이며, 그중 `tool_unsupported` 3행(RDMSR·WRMSRNS imm32, UDB: GNU 2.42·clang 18 미지원)은 생성기 문제가 아니다.
+  - 원문 없음·원문 충돌·추출 불완전은 모두 0행이다. 남은 것은 생성기 문제 95행(`compare/generator_issues.csv`)이며, 그중 `tool_unsupported` 3행(RDMSR·WRMSRNS imm32, UDB: GNU 2.42·clang 18 미지원)은 생성기 문제가 아니다. 2.47·23.1.3에서는 UDB-clang만 남았다.
   - MAP7 4행은 `source_conflict_cases.csv` MAP7-*로 처리했다. 사용자가 PDF를 보고 확인한 보정은 `data/rules/pdf_confirmed_corrections.csv`에 있다(UDB Op/En ZO, VGATHERDPD CPUID OR·Operand 2).
   - XSAVE 계열 mem은 완화 C(Vol.1 323·324쪽), FP16 m16bcst는 완화 D(VMAXPH 1889쪽 정의 문장), FSTCW/FNSTCW m2byte는 완화 A(Vol.1 213쪽)다.
 - **생성기 재작성 완료(10월 11일)**: `python3 pipeline/run.py generator --until check [--execute]`
   - 생성 `pipeline/m2_generate.py`(규칙 `case_rules.py`) → `out/cases/cases.csv`. 판정 `pipeline/m3_check.py`(SDM 대 GNU, SDM 대 clang 따로).
-  - 19,425케이스 중 SDM 일치는 GNU 19,323, clang 19,108이다(66H 대조 추가 후). 상세는 `out/cases/REPORT.md`.
+  - **도구 갱신(10월 12일)**: GNU Binutils 2.47, LLVM 23.1.3(`pipeline/toolchain.py`, `~/opt` 설치).
+    - 19,425케이스 중 SDM 일치는 GNU 19,313, clang 19,118이다. 이전 판(2.42/18.1.3)에서는 19,323 / 19,108이었다.
+    - GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(커밋 57c526470, GCC 9의 MPX 제거). 사용자 결정: 기본 설정 그대로 기록. 쓰려면 `-march=generic64+mpx`.
+    - 상세는 `out/cases/REPORT.md` 첫 절.
   - 예전 m2~m4 생성기와 예전 5~13단계는 삭제했다. CPU 실행 함수는 `pipeline/cpu_run.py`로 옮겼다.
-  - 역어셈블 대조 4단계 `pipeline/m4_disasm.py`: SDM 일치 바이트 19,244개 중 SDM 일치는 objdump 19,209, LLVM 19,176(일치 계열 합계, 먼 포인터 규칙·66H 대조 추가 후).
+  - 역어셈블 대조 4단계 `pipeline/m4_disasm.py`: SDM 일치 바이트 19,223개 중 SDM 일치 계열은 objdump 19,152, LLVM 19,150(2.47/23.1.3).
     차이는 REPORT.md 마지막 절에 있다(r/m16을 32비트 이름으로 출력, objdump m16:64 FWORD, LLVM의 MPX 디코드 실패·ERETS→clac 등).
 - **다음 작업**:
   - 남은 불일치 확인은 끝났다(10월 11일, REPORT.md '남은 불일치 확인'). 버그 후보:
@@ -31,7 +34,7 @@ Intel SDM 행에서 생성한 x86-64 입력의 정확도를 높이고, 의도한
     - clang CLRSSBSY·RSTORSSP dword 요구
     - clang Intel 문법 AVX512PF 거부
     원문 재점검에서 data16 PUSH imm16·XBEGIN 후보는 철회했다. clang `data16`은 0x66 한 바이트라 케이스가 그 행을 지정하지 못한다.
-    알려진 문제인지(LLVM 이슈) 확인과 보고 여부는 사용자 결정. MOV Sreg, r/m64 메모리 폭은 아직 미확인.
+    LLVM 이슈 확인(10월 12일): 먼 호출 조립·CET 크기는 #88516·#95232로 이미 보고됨(열림). LLVM Intel 문법 먼 호출 출력과 AVX512PF Intel 문법 거부는 보고를 찾지 못함. 새 보고 여부는 사용자 결정. MOV Sreg, r/m64 메모리 폭은 아직 미확인.
   - 66H 오퍼랜드 크기 대조를 넣었다(`pipeline/operand_size_prefix.py`). PUSHF·POPF·LEAVE 16비트 행 철자를 고쳤고, GNU IRET `iret` → `cf`가 남았다(원문이 허용하는 동의어 처리).
   - 결정 6(Sol 단독 값 1,410줄)을 생성 값과 대조
 - 아래 '진행 중' 절의 수치 중 090판 기준(17,356 등)은 기록이다. 093판 현재 수치는 REPORT_093.md를 따른다.

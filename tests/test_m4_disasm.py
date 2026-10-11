@@ -79,7 +79,8 @@ class FarPointerTest(unittest.TestCase):
 
     def setUp(self):
         import shutil
-        if not (shutil.which("objdump") and shutil.which("llvm-mc-18")):
+        from pipeline import toolchain as T
+        if not (shutil.which(T.OBJDUMP) and shutil.which(T.LLVM_MC)):
             self.skipTest("역어셈블러 없음")
         self.isa = M.read_csv(os.path.join(ROOT, "data/db/isa_db.csv"))
         self.row = next(r for r in self.isa if r["instruction"] == "CALL m16:32")

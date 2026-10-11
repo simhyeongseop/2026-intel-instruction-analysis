@@ -1,7 +1,53 @@
 # 새 생성기 첫 실행 (2026-10-11)
 
 재현: `python3 pipeline/run.py generator --until check --execute` (실행 기록 `out/runs/20261010T160510248706Z.json`)
-환경: GNU as 2.42, clang 18.1.3, Intel Core Ultra 5 226V(AVX-512 없음). SDM 093판.
+환경: Intel Core Ultra 5 226V(AVX-512 없음), SDM 093판. 도구는 2026-10-12부터 GNU Binutils 2.47, LLVM 23.1.3(아래 첫 절). 그 아래 절의 수치는 GNU 2.42, clang 18.1.3 기록이다.
+
+## 도구 갱신: GNU Binutils 2.47, LLVM 23.1.3 (2026-10-12)
+
+사용자 결정으로 두 도구를 최신 판으로 바꿨다. 경로는 `pipeline/toolchain.py` 한곳에서 정하고, 실행 기록에 판이 남는다.
+- GNU Binutils 2.47(2026-07-26 출시): `~/opt/binutils-2.47`, 소스 빌드. SHA256은 출시 공지 값과 같다.
+- LLVM 23.1.3(2026-10-06 출시): `~/opt/llvm-23.1.3`, 공식 Linux-X64 바이너리. SHA256은 GitHub 릴리스 값과 같다.
+- 재현: `python3 pipeline/run.py check --until disasm --execute`(실행 기록 `out/runs/20261011T163012324196Z.json`)
+- 아래 다른 절의 수치는 이전 판(GNU 2.42, clang/LLVM 18.1.3) 기록이다.
+
+| 항목 | 이전 (2.42 / 18.1.3) | 지금 (2.47 / 23.1.3) |
+|---|---|---|
+| 3단계 SDM 일치 GNU / clang | 19,323 / 19,108 | 19,313 / 19,118 |
+| 행 전체 일치 GNU / clang (4,219행) | 4,196 / 4,059 | 4,195 / 4,064 |
+| 4단계 대상 | 19,244 | 19,223 |
+| 4단계 일치 계열 objdump / LLVM | 19,209 / 19,176 | 19,152 / 19,150 |
+| LLVM 디코드 실패 | 35 | 6 (INT1, UD0, UDB) |
+| CPU 관측 | exit0 1,954, SIGSEGV 88, SIGFPE 8, SIGILL 10, SIGTRAP 2 | SIGILL 11 (UDB 추가), 나머지 같음 |
+
+판이 바뀌어 달라진 것
+- **GNU는 기본 설정에서 MPX를 받지 않는다** (2.47에서 MPX 14행 31케이스가 SDM 일치 → 거부)
+  - 오류: "`bndcl' is not supported on `x86_64'". 3단계 결과의 note 칸에 이유와 켜는 방법을 적었다.
+  - 사용자 결정(2026-10-12): 도구 기본 설정 그대로 시험하고, 기본 설정에서 받지 않는다고 기록한다.
+  - **쓰려면 `-march=generic64+mpx` 옵션 또는 소스의 `.arch .mpx` 지시어로 켠다.** 2.47에서 확인: `bndcl bnd0, rcx` → `f3 0f 1a c1`.
+  - 이유: binutils 커밋 [57c526470](https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=57c526470bbf03220f928f0894a85c76a9659d35)(2024-12-02, Jan Beulich) "x86: default to not accepting MPX insns"
+    - 커밋 설명: "Gcc9 had MPX support removed. While we don't want to remove support, require these deprecated insns (and registers) to be enabled explicitly."
+    - 기본 아키텍처 정의(`opcodes/i386-gen.c`)를 `~IAMCU`에서 `~(IAMCU|MPX)`로 바꿨다. 커밋 당시 개발판 2.43.50이므로 **2.44부터** 적용됐다.
+    - gas/NEWS와 사용 설명서에는 이 변경이 적혀 있지 않다(2.47 기준).
+  - 같은 방식으로 이후 AMX-TRANSPOSE(05b24220b, 2025-10)와 AMX-TF32(ddd9b65d0, 2026-06)도 기본에서 뺐다.
+    - 이유: "de-published"되었고 "will not show up on any Intel/AMD hardware"
+    - SDM 093에는 이 두 기능의 행이 없어 영향이 없다.
+  - clang은 원래 MPX를 모르므로, MPX는 두 도구 모두 바이트가 없어 4단계 대상에서 빠졌다.
+- GNU 2.47이 UDB를 받는다(`d6`). CPU 실행은 SIGILL이고, 원문 "Raise invalid opcode exception"과 맞다.
+- GNU 2.47·clang 23이 RDMSR·WRMSRNS imm32를 받는다(SDM 일치). `source_conflict_cases`의 "도구 미지원" 등록은 이전 판 관측이다. 3단계 note는 지금 도구가 실제로 거부할 때만 적는다(지금은 UDB-clang 1건).
+- clang 23이 ERETS·ERETU·LKGS를 받는다(SDM 일치). LLVM 23 역어셈블러도 이것들과 MPX를 디코드한다.
+  - 이전 판의 ERETS·ERETU → `clac`은 사라졌다.
+- **CMPccXADD 역어셈블 이름**: objdump 2.47·LLVM 23이 같은 조건의 다른 이름으로 출력한다(36케이스).
+  - 예: CMPNBEXADD → `cmpaxadd`, CMPZXADD → `cmpexadd`
+  - CMPccXADD 절(Vol.2 281~285쪽)은 조건마다 이름 하나만 적는다. 같은 subcode의 동의어는 Vol.1 Table B-1(539쪽)에 있지만, 그 표의 적용 대상은 CMOVcc·FCMOVcc·Jcc·SETcc다.
+  - 그래서 SDM 일치가 아니라 `니모닉 다름(도구 관례 철자)`로 센다.
+- LLVM 23은 VGATHERPF0DPS 메모리를 `zmmword` 대신 `dword ptr`로 출력한다.
+
+버그 후보 4개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 모두 그대로 재현된다.
+- clang `call word/dword ptr [rax]` → `ff 18`
+- llvm-mc `ff 18` → `call [rax]`
+- clang CLRSSBSY·RSTORSSP `qword ptr` 거부
+- clang Intel 문법 AVX512PF 16행 거부
 
 ## 생성 (2단계 `m2_generate.py`)
 
@@ -139,6 +185,20 @@ SIGILL 10개는 모두 CPUID 칸이 비어 있는 명령이다(UD0/UD1/UD2, RSM,
 | clang Intel 문법 AVX512PF 거부 | `VGATHERPF0DPS vm32z {k1}` 등(2375쪽, Xeon Phi 전용 장). vm32z = ZMM 32비트 인덱스 VSIB(SYM075). | 케이스 `vgatherpf0dps [rax+zmm0] {k1}`는 원문 오퍼랜드 순서·인덱스 레지스터·마스크와 맞다. GNU는 이 문법을 받는다. | **후보 유지.** clang은 Intel 문법의 모든 철자를 거부하고 AT&T는 받는다. LLVM 역어셈블러 출력(`{k1}, zmmword ptr [...]`)도 clang이 읽지 못한다. |
 
 점검 중 발견한 판정 기준의 한계는 아래 절에서 고쳤다.
+
+### 남은 버그 후보의 LLVM 이슈 확인 (2026-10-12)
+
+LLVM 이슈 트래커와 llvm-bugs 목록을 검색했다(GitHub API, 웹 검색). 상태는 2026-10-12에 확인한 것이다.
+
+| 후보 | 기존 보고 | 상태 |
+|---|---|---|
+| clang `call/jmp word·dword ptr [rax]` → 먼 호출 `ff 18`/`ff 28` | [#88516](https://github.com/llvm/llvm-project/issues/88516) "[x86] Assembler syntax check bugs"(2024-04, clang 16): `call BYTE/WORD/DWORD/XMMWORD PTR [RAX]`가 모두 `FWORD PTR`로 조립됨. [#95232](https://github.com/llvm/llvm-project/issues/95232) Case 2: `call WORD PTR [RAX]` → `call FWORD PTR`. | 둘 다 열림, 담당자·수정 PR 없음. **알려진 문제** |
+| clang CLRSSBSY·RSTORSSP `qword ptr` 거부, `dword ptr` 수용 | [#95232](https://github.com/llvm/llvm-project/issues/95232) "[Clang] Allows incorrect memory size directive."(2024-06) Case 1이 같은 두 명령. #88516 목록에도 있음. | 열림. **알려진 문제** |
+| LLVM 역어셈블러 `ff 18` → Intel 문법 `call [rax]` | 찾지 못함. 관련: [#59038](https://github.com/llvm/llvm-project/issues/59038)(Intel 문법 간접 분기 조립 문제, 2023-08 닫힘, 역어셈블 출력은 다루지 않음), [D35846](https://marc.info/?l=llvm-commits&m=150211659720112&w=2)(FWORD로 먼 분기를 고르게 한 조립 쪽 수정) | **보고 없음(검색 범위 안)**. 같은 바이트를 AT&T 문법으로는 `lcalll *(%rax)`로 출력한다. Intel 문법 출력에서만 먼 호출 표시가 없다. |
+| clang Intel 문법 AVX512PF 거부 | 찾지 못함. LLVM 19 릴리스 노트: AVX512PF 등 knl/knm 전용 내장 함수는 제거하고 "assembly encoding/decoding supports are kept". LLVM MC 시험에는 AT&T 시험(`llvm/test/MC/X86/avx512pf-64-att.s`)만 있고 Intel 문법 시험은 없다. | **보고 없음(검색 범위 안)**. Intel 문법 파서가 시험되지 않은 경로로 보인다(추정). |
+
+- 시험한 도구는 clang/LLVM 18.1.3 하나다. 최신 LLVM에서 고쳐졌는지는 확인하지 않았다(로컬에 18만 있음).
+- "보고 없음"은 위 검색어로 찾지 못했다는 뜻이다. 없다는 확인은 아니다.
 
 ### 66H 오퍼랜드 크기 접두어 대조 (2026-10-11 추가)
 

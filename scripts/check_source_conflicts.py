@@ -24,10 +24,11 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pipeline import cpu_run  # noqa: E402
+from pipeline import toolchain as T  # noqa: E402
 
 CASES_CSV = "data/rules/source_conflict_cases.csv"
 OUT_CSV = "out/sdm_review_093/conflict_tests/results.csv"
-CLANG_CMD = ["clang", "-c", "-x", "assembler", "--target=x86_64-linux-gnu"]
+CLANG_CMD = [T.CLANG, "-c", "-x", "assembler", "--target=x86_64-linux-gnu"]
 CONTROLS = [
     {"case_id": "CTRL-UD2", "row_id": "", "mnemonic": "UD2", "asm_intel": "ud2", "table_form": ""},
     {"case_id": "CTRL-AVX2", "row_id": "", "mnemonic": "VPADDW", "asm_intel": "vpaddw ymm1, ymm2, ymm3", "table_form": ""},
@@ -44,7 +45,7 @@ def text_bytes(tool_cmd, asm, tmp_dir, name):
     result = subprocess.run(tool_cmd + ["-o", obj, src], capture_output=True, text=True, timeout=20)
     if result.returncode != 0:
         return None, result.stderr.strip()
-    subprocess.run(["objcopy", "-O", "binary", "-j", ".text", obj, raw], check=True, timeout=20)
+    subprocess.run([T.OBJCOPY, "-O", "binary", "-j", ".text", obj, raw], check=True, timeout=20)
     with open(raw, "rb") as handle:
         return handle.read(), ""
 

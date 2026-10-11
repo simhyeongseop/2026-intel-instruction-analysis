@@ -36,6 +36,8 @@ class RegisterTest(unittest.TestCase):
 class OperandTest(unittest.TestCase):
     def test_reg_or_mem(self):
         self.assertEqual([(k, t) for k, t, _ in choices("r/m8")], [("reg", "cl"), ("mem", "byte ptr {addr}")])
+        self.assertEqual(choices("r/m16")[1][2], "SYM036")       # 메모리 근거: r/m16 정의(SYM042 m16은 문자열 명령 전용)
+        self.assertEqual(choices("m16", "LLDT")[0][2], "SYM042")  # 단독 m16 표기는 그대로
 
     def test_broadcast_count_from_plain_memory_width(self):
         self.assertEqual(choices("xmm3/m128/m32bcst")[-1][1], "dword ptr {addr}{1to4}")

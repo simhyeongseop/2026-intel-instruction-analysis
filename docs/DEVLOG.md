@@ -1125,3 +1125,46 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - 4단계 일치 계열 objdump 19,209, LLVM 19,176
   - CPU exit0 1,954, SIGSEGV 88, SIGFPE 8, SIGILL 10, SIGTRAP 2
 - 검증: `tests/test_operand_size_prefix.py`(손계산 바이트, 66 누락·과잉 반례, 고정 16비트 행 반례), `test_m2_generate.py` PUSHF·LEAVE 철자. 전체 회귀 통과.
+
+## 2026-10-12 [확인] 버그 후보 LLVM 이슈 검색, 근거 칸 수정
+
+- 사용자 요청: 남은 버그 후보 4개가 이미 알려진 문제인지 확인하고, 생성 근거 칸 오기를 고친다.
+- LLVM 이슈 검색(GitHub API `search/issues`·`search/code`, 웹 검색):
+  - 먼 호출 조립과 CLRSSBSY·RSTORSSP 크기는 #88516·#95232에 이미 있다(둘 다 열림, 수정 PR 없음).
+  - LLVM Intel 문법 먼 호출 출력(`call [rax]`)과 Intel 문법 AVX512PF 거부는 보고를 찾지 못했다.
+  - 로컬 확인: llvm-mc-18 AT&T 출력은 `lcalll *(%rax)`. AVX512PF는 LLVM MC 시험에 AT&T 파일만 있다.
+- 근거 칸: r/m8~r/m64 메모리 쪽 근거를 SYM041~044(m8~m64)에서 SYM035~038(r/m 정의)로 바꿨다. SYM042는 "used only with the string instructions"라서 r/m16 근거로 맞지 않았다.
+  - 1,728케이스의 evidence 칸만 바뀌었고 소스·cases.s는 같아서 3·4단계는 다시 돌리지 않았다.
+- 검증: `test_m2_generate.py`에 r/m16 → SYM036, 단독 m16 → SYM042 대조 추가. 전체 회귀 통과.
+
+## 2026-10-12 [도구 갱신] GNU Binutils 2.47, LLVM 23.1.3
+
+- 사용자 요청: 두 어셈블러를 최신 판으로 바꾼다.
+- 최신 판 확인:
+  - binutils 2.47(2026-07-26, info-gnu 공지)
+  - LLVM 23.1.3(2026-10-06, GitHub releases/latest)
+- 설치(sudo 없이 홈 아래):
+  - binutils는 소스 빌드로 `~/opt/binutils-2.47`(gdb·gprofng 제외)
+  - LLVM은 공식 `LLVM-23.1.3-Linux-X64.tar.xz`를 `~/opt/llvm-23.1.3`에 풀었다
+  - SHA256은 공지·릴리스 값과 같다. binutils GPG 서명은 공개키가 없어 확인하지 않았다.
+- `pipeline/toolchain.py`(새 파일):
+  - as·ld·objdump·objcopy·readelf·clang·llvm-mc 경로를 한곳에서 정한다. 환경 변수로 바꿀 수 있다.
+  - 쓰는 곳: instruction_check, cpu_run, m4_disasm, check_source_conflicts, review_cases, test_m4_disasm
+  - 실행 기록의 버전 줄은 판 번호가 든 첫 줄로 고쳤다(llvm-mc 첫 줄은 'LLVM (http://llvm.org/):').
+- 결과(REPORT 첫 절):
+  - SDM 일치 GNU 19,323 → 19,313, clang 19,108 → 19,118
+  - GNU 2.47이 MPX를 기본 아키텍처에서 뺐다(`opcodes/i386-gen.c` 50행)
+  - GNU UDB·MSR imm 수용, clang ERETS·ERETU·LKGS·MSR imm 수용
+  - objdump·LLVM의 CMPccXADD 조건 동의어 출력은 도구 관례 철자로 분류했다(Vol.1 Table B-1 범위 밖)
+- 3단계 note: "도구 미지원 등록"은 지금 도구가 실제로 거부할 때만 적는다.
+- 버그 후보 4개는 LLVM 23.1.3에서도 모두 재현된다.
+- 검증: 전체 회귀 143개 통과(새 도구). 새 clang으로 `tests/review_cpu_cases.c` 빌드 확인.
+
+## 2026-10-12 [기록] GNU MPX 기본 제외의 이유
+
+- 사용자 결정: 기본 설정 그대로 두고, 받지 않는 이유와 켜는 방법(`-march=generic64+mpx`)을 적는다.
+- 이유 확인:
+  - sourceware binutils-gdb 저장소를 부분 복제했다(`--filter=blob:none --shallow-since=2023-01-01`, `~/opt/git`). 웹은 봇 차단, GitHub 미러는 접근 불가였다.
+  - `git log -G MPX -- opcodes/i386-gen.c`로 찾았다: 57c526470(2024-12-02, Jan Beulich) "x86: default to not accepting MPX insns", 개발판 2.43.50 → 2.44부터.
+  - 이후 같은 방식의 변경: AMX-TRANSPOSE 05b24220b, AMX-TF32 ddd9b65d0. SDM 093에는 해당 행이 없다.
+- 3단계: `DEFAULT_OFF` 표를 두고, GNU가 MPX 행을 "is not supported on"으로 거부하면 note에 이유와 켜는 방법을 적는다.

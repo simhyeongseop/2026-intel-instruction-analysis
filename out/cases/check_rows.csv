@@ -173,20 +173,20 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 171,BLSMSK,"BLSMSK r64, r/m64",VEX.LZ.0F38.W1 F3 /2,reach,4,SDM 일치 4,SDM 일치 4
 172,BLSR,"BLSR r32, r/m32",VEX.LZ.0F38.W0 F3 /1,reach,4,SDM 일치 4,SDM 일치 4
 173,BLSR,"BLSR r64, r/m64",VEX.LZ.0F38.W1 F3 /1,reach,4,SDM 일치 4,SDM 일치 4
-174,BNDCL,"BNDCL bnd, r/m32",F3 0F 1A /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
-175,BNDCL,"BNDCL bnd, r/m64",F3 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
-176,BNDCU,"BNDCU bnd, r/m32",F2 0F 1A /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
-177,BNDCU,"BNDCU bnd, r/m64",F2 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
-178,BNDCN,"BNDCN bnd, r/m32",F2 0F 1B /r,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,SDM 일치(거부) 4
-179,BNDCN,"BNDCN bnd, r/m64",F2 0F 1B /r,reach,4,SDM 일치 4,모르는 명령 4
-180,BNDLDX,"BNDLDX bnd, mib",NP 0F 1A /r,reach,2,SDM 일치 2,모르는 명령 2
-181,BNDMK,"BNDMK bnd, m32",F3 0F 1B /r,reject,2,다른 행으로 수용 2,SDM 일치(거부) 2
-182,BNDMK,"BNDMK bnd, m64",F3 0F 1B /r,reach,2,SDM 일치 2,모르는 명령 2
+174,BNDCL,"BNDCL bnd, r/m32",F3 0F 1A /r,reject,4,SDM 일치(거부) 4,SDM 일치(거부) 4
+175,BNDCL,"BNDCL bnd, r/m64",F3 0F 1A /r,reach,4,거부 4,모르는 명령 4
+176,BNDCU,"BNDCU bnd, r/m32",F2 0F 1A /r,reject,4,SDM 일치(거부) 4,SDM 일치(거부) 4
+177,BNDCU,"BNDCU bnd, r/m64",F2 0F 1A /r,reach,4,거부 4,모르는 명령 4
+178,BNDCN,"BNDCN bnd, r/m32",F2 0F 1B /r,reject,4,SDM 일치(거부) 4,SDM 일치(거부) 4
+179,BNDCN,"BNDCN bnd, r/m64",F2 0F 1B /r,reach,4,거부 4,모르는 명령 4
+180,BNDLDX,"BNDLDX bnd, mib",NP 0F 1A /r,reach,2,거부 2,모르는 명령 2
+181,BNDMK,"BNDMK bnd, m32",F3 0F 1B /r,reject,2,SDM 일치(거부) 2,SDM 일치(거부) 2
+182,BNDMK,"BNDMK bnd, m64",F3 0F 1B /r,reach,2,거부 2,모르는 명령 2
 183,BNDMOV,"BNDMOV bnd1, bnd2/m64",66 0F 1A /r,alias_no_test/reject,4,SDM 일치(거부) 3; 시험 불가(별칭) 1,SDM 일치(거부) 3; 시험 불가(별칭) 1
-184,BNDMOV,"BNDMOV bnd1, bnd2/m128",66 0F 1A /r,reach,4,SDM 일치 4,모르는 명령 4
+184,BNDMOV,"BNDMOV bnd1, bnd2/m128",66 0F 1A /r,reach,4,거부 4,모르는 명령 4
 185,BNDMOV,"BNDMOV bnd1/m64, bnd2",66 0F 1B /r,alias_no_test/reject,4,SDM 일치(거부) 3; 시험 불가(별칭) 1,SDM 일치(거부) 3; 시험 불가(별칭) 1
-186,BNDMOV,"BNDMOV bnd1/m128, bnd2",66 0F 1B /r,reach,4,SDM 일치 3; SDM 일치(강제 접두어) 1,모르는 명령 4
-187,BNDSTX,"BNDSTX mib, bnd",NP 0F 1B /r,reach,2,SDM 일치 2,모르는 명령 2
+186,BNDMOV,"BNDMOV bnd1/m128, bnd2",66 0F 1B /r,reach,4,거부 4,모르는 명령 4
+187,BNDSTX,"BNDSTX mib, bnd",NP 0F 1B /r,reach,2,거부 2,모르는 명령 2
 188,BOUND,"BOUND r16, m16&16",62 /r,reject,3,SDM 일치(거부) 3,SDM 일치(거부) 3
 189,BOUND,"BOUND r32, m32&32",62 /r,reject,3,SDM 일치(거부) 3,SDM 일치(거부) 3
 190,BSF,"BSF r16, r/m16",0F BC /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -577,8 +577,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 575,ENTER,"ENTER imm16, 0",C8 iw 00,reach,2,SDM 일치 2,SDM 일치 2
 576,ENTER,"ENTER imm16,1",C8 iw 01,reach,2,SDM 일치 2,SDM 일치 2
 577,ENTER,"ENTER imm16, imm8",C8 iw ib,reach,2,SDM 일치 2,SDM 일치 2
-578,ERETS,ERETS,F2 0F 01 CA,reach,1,SDM 일치 1,모르는 명령 1
-579,ERETU,ERETU,F3 0F 01 CA,reach,1,SDM 일치 1,모르는 명령 1
+578,ERETS,ERETS,F2 0F 01 CA,reach,1,SDM 일치 1,SDM 일치 1
+579,ERETU,ERETU,F3 0F 01 CA,reach,1,SDM 일치 1,SDM 일치 1
 580,EXTRACTPS,"EXTRACTPS reg/m32, xmm1, imm8",66 0F 3A 17 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 581,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",VEX.128.66.0F3A.WIG 17 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 582,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",EVEX.128.66.0F3A.WIG 17 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 5
@@ -1022,7 +1022,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1020,LIDT,LIDT m16&32,0F 01 /3,alias_no_test,3,시험 불가(별칭) 3,시험 불가(별칭) 3
 1021,LGDT,LGDT m16&64,0F 01 /2,reach,3,SDM 일치 3,SDM 일치 3
 1022,LIDT,LIDT m16&64,0F 01 /3,reach,3,SDM 일치 3,SDM 일치 3
-1023,LKGS,LKGS r/m16,F2 0F 00 /6,reach,4,SDM 일치 4,모르는 명령 4
+1023,LKGS,LKGS r/m16,F2 0F 00 /6,reach,4,SDM 일치 4,SDM 일치 4
 1024,LLDT,LLDT r/m16,0F 00 /2,reach,4,SDM 일치 4,SDM 일치 4
 1025,LMSW,LMSW r/m16,0F 01 /6,reach,4,SDM 일치 4,SDM 일치 4
 1026,LOADIWKEY,"LOADIWKEY xmm1, xmm2, <EAX>, <XMM0>",F3 0F 38 DC 11:rrr:bbb,reach,1,SDM 일치 1,SDM 일치 1
@@ -2394,7 +2394,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2392,RDGSBASE,RDGSBASE r32,F3 0F AE /1,reach,1,SDM 일치 1,SDM 일치 1
 2393,RDGSBASE,RDGSBASE r64,F3 REX.W 0F AE /1,reach,1,SDM 일치 1,SDM 일치 1
 2394,RDMSR,RDMSR,0F 32,reach,1,SDM 일치 1,SDM 일치 1
-2395,RDMSR,"RDMSR r64, imm32",VEX.128.F2.MAP7:W0.F6 11:000:bbb,reach,2,거부 2,거부 2
+2395,RDMSR,"RDMSR r64, imm32",VEX.128.F2.MAP7:W0.F6 11:000:bbb,reach,2,SDM 일치 2,SDM 일치 2
 2396,RDMSRLIST,RDMSRLIST,F2 0F 01 C6,reach,1,SDM 일치 1,SDM 일치 1
 2397,RDPID,RDPID r32,F3 0F C7 /7,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 2398,RDPID,RDPID r64,F3 0F C7 /7,reach,1,SDM 일치 1,SDM 일치 1
@@ -2740,7 +2740,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2738,UD0,"UD0 r32, r/m32",0F FF /r,reach,4,SDM 일치 4,모르는 명령 4
 2739,UD1,"UD1 r32, r/m32",0F B9 /r,reach,4,SDM 일치 4,SDM 일치 4
 2740,UD2,UD2,0F 0B,reach,1,SDM 일치 1,SDM 일치 1
-2741,UDB,UDB,D6,reach,1,모르는 명령 1,모르는 명령 1
+2741,UDB,UDB,D6,reach,1,SDM 일치 1,모르는 명령 1
 2742,UIRET,UIRET,F3 0F 01 EC,reach,1,SDM 일치 1,SDM 일치 1
 2743,UMONITOR,UMONITOR r16/r32/r64,F3 0F AE /6,reach,1,SDM 일치 1,SDM 일치 1
 2744,UMWAIT,"UMWAIT r32, <edx>, <eax>",F2 0F AE /6,reach,1,SDM 일치 1,SDM 일치 1
@@ -4104,7 +4104,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4102,WRMSR,WRMSR,0F 30,reach,1,SDM 일치 1,SDM 일치 1
 4103,WRMSRLIST,WRMSRLIST,F3 0F 01 C6,reach,1,SDM 일치 1,SDM 일치 1
 4104,WRMSRNS,WRMSRNS,NP 0F 01 C6,reach,1,SDM 일치 1,SDM 일치 1
-4105,WRMSRNS,"WRMSRNS imm32, r64",VEX.128.F3.MAP7:W0.F6 11:000:bbb,reach,2,거부 2,거부 2
+4105,WRMSRNS,"WRMSRNS imm32, r64",VEX.128.F3.MAP7:W0.F6 11:000:bbb,reach,2,SDM 일치 2,SDM 일치 2
 4106,WRPKRU,WRPKRU,NP 0F 01 EF,reach,1,SDM 일치 1,SDM 일치 1
 4107,WRSSD,"WRSSD m32, r32",0F 38 F6 !(11):rrr:bbb,reach,3,SDM 일치 3,SDM 일치 3
 4108,WRSSQ,"WRSSQ m64, r64",REX.W 0F 38 F6 !(11):rrr:bbb,reach,3,SDM 일치 3,SDM 일치 3

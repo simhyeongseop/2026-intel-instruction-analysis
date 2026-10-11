@@ -26,6 +26,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 | 위치 | 역할 |
 |---|---|
 | `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py`, `m4_disasm.py` | 현재 단계(추출 → 생성 → 도구별 판정 → 역어셈블러별 대조). 규칙은 `case_rules.py`, `disasm_rules.py` |
+| `pipeline/toolchain.py` | 도구 경로(GNU Binutils 2.47, LLVM 23.1.3, `~/opt`). 환경 변수 `BINUTILS_BIN`·`LLVM_BIN` |
 | `pipeline/cpu_run.py` | 3단계 `--execute`의 CPU 격리 실행 관측(예전 11단계에서 옮김) |
 | `pipeline/run.py` | 단계 선택 실행, 실행 기록 |
 | `pipeline/instruction_check.py`, `operand_forms.py` | 검사 도구의 공통 API와 부분 오퍼랜드/opcode 대조 |

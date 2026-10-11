@@ -4,8 +4,8 @@
 
 대상: 3단계에서 SDM 일치(reach)한 케이스의 바이트(GNU 바이트 우선, 없으면 clang 바이트).
 역어셈블러
-- objdump: GNU objdump 2.42 `-D -b binary -m i386:x86-64 -M intel`. 다시 조립은 GNU as
-- llvm: llvm-mc 18 `--disassemble --output-asm-variant=1`(llvm-objdump와 같은 MC 역어셈블러). 다시 조립은 clang
+- objdump: GNU objdump(경로·판은 pipeline/toolchain.py) `-D -b binary -m i386:x86-64 -M intel`. 다시 조립은 GNU as
+- llvm: llvm-mc(pipeline/toolchain.py) `--disassemble --output-asm-variant=1`(llvm-objdump와 같은 MC 역어셈블러). 다시 조립은 clang
 두 역어셈블러를 서로 비교하지 않는다(2026-10-11 결정). 각각을 SDM 행과 비교한다.
 
 판정(verdict_objdump, verdict_llvm): 역어셈블러가 SDM 행의 명령을 생성 때 의도한 오퍼랜드로 이름 붙였는가
@@ -39,6 +39,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from pipeline import disasm_rules as D  # noqa: E402
+from pipeline import toolchain as T  # noqa: E402
 from pipeline import case_rules as R  # noqa: E402
 from pipeline.instruction_check import assemble  # noqa: E402
 
@@ -70,7 +71,7 @@ def disassemble_objdump(hex_bytes):
         path = os.path.join(folder, "b.bin")
         with open(path, "wb") as handle:
             handle.write(bytes.fromhex(hex_bytes))
-        run = subprocess.run(["objdump", "-D", "-w", "-b", "binary", "-m", "i386:x86-64", "-M", "intel",
+        run = subprocess.run([T.OBJDUMP, "-D", "-w", "-b", "binary", "-m", "i386:x86-64", "-M", "intel",
                               "--insn-width=16", path], capture_output=True, text=True, timeout=20)
     out = []
     for line in run.stdout.splitlines():
@@ -83,7 +84,7 @@ def disassemble_objdump(hex_bytes):
 def disassemble_llvm(hex_bytes):
     """llvm-mc는 바이트 수를 따로 내지 않는다. 명령 텍스트 목록과 경고(잘못된 인코딩)만 돌려준다."""
     text = " ".join("0x" + hex_bytes[i:i + 2] for i in range(0, len(hex_bytes), 2))
-    run = subprocess.run(["llvm-mc-18", "--disassemble", "-triple=x86_64-unknown-linux-gnu", "--output-asm-variant=1"],
+    run = subprocess.run([T.LLVM_MC, "--disassemble", "-triple=x86_64-unknown-linux-gnu", "--output-asm-variant=1"],
                          input=text, capture_output=True, text=True, timeout=20)
     lines = [l.strip() for l in run.stdout.splitlines() if l.strip() and not l.strip().startswith(".")]
     return lines, "invalid instruction encoding" in run.stderr or "potentially undefined" in run.stderr

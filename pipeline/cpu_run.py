@@ -9,8 +9,10 @@ import os
 import signal
 import subprocess
 
-AS_CMD = ["as", "--64", "-mintel64"]
-LD_CMD = ["ld"]
+from pipeline import toolchain as T
+
+AS_CMD = [T.AS, "--64", "-mintel64"]
+LD_CMD = [T.LD]
 LOAD_ADDR = "0x400000"  # -fno-pie 스타일 고정 주소
 
 ASM_HEADER = ".intel_syntax noprefix\n.global _start\n.text\n_start:\n"

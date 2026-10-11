@@ -10,6 +10,7 @@ import copy
 from functools import lru_cache
 from pathlib import Path
 
+from pipeline import toolchain as T
 from pipeline.operand_forms import (check_opcode_template, compare_forms, legacy_fields,
                                     parse_instruction)
 
@@ -75,16 +76,18 @@ def process_status(run):
 
 @lru_cache(maxsize=32)
 def tool_info(name):
-    path = shutil.which(name)
+    path = shutil.which(T.ALL.get(name, name))   # pipeline/toolchain.py의 경로
     if not path:
         return {'available': False, 'name': name}
     result = command([path, '--version'])
     return {'available': result['returncode'] == 0, 'path': str(Path(path).resolve()),
-            'version': (result['stdout'] or result['stderr']).splitlines()[0:1],
+            # 판 번호(2.47, 23.1.3 …)가 든 첫 줄. llvm-mc는 첫 줄이 'LLVM (http://llvm.org/):'다
+            'version': ([l.strip() for l in (result['stdout'] or result['stderr']).splitlines()
+                         if re.search(r'\d+\.\d+', l)] or (result['stdout'] or result['stderr']).splitlines())[0:1],
             'sha256': sha256(path), 'probe': result}
 
 
-def environment(tool_names=('as', 'clang', 'objdump', 'objcopy', 'readelf')):
+def environment(tool_names=('as', 'ld', 'objdump', 'objcopy', 'readelf', 'clang', 'llvm-mc')):
     result = {'platform': platform.platform(), 'machine': platform.machine(),
               'python': platform.python_version(),
               'tools': {name: tool_info(name) for name in tool_names}}
@@ -113,9 +116,9 @@ def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'
     with tempfile.TemporaryDirectory(prefix='asmcheck_') as folder:
         Path(folder, 'input.s').write_text(source, encoding='utf-8', newline='\n')
         if tool == 'as':
-            args = ['as'] + (AS_OPTIONS if options is None else options)
+            args = [T.AS] + (AS_OPTIONS if options is None else options)
         else:
-            args = ['clang', '-target', 'x86_64-linux-gnu', '-c', '-x', 'assembler']
+            args = [T.CLANG, '-target', 'x86_64-linux-gnu', '-c', '-x', 'assembler']
         run = command(args + ['-o', 'input.o', 'input.s'], folder, timeout)
         observed_status = process_status(run)
         result = {'status': ('rejected' if observed_status == 'diagnostic_rejection' else observed_status),
@@ -129,9 +132,9 @@ def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'
             result.update(status='accepted', validation_status='tool_failed',
                           inspection_failure='object_missing', reason='오브젝트 파일이 생성되지 않음')
             return result
-        extract = command(['objcopy', '-O', 'binary', '--only-section=.text', 'input.o', 'text.bin'], folder, timeout)
-        decode = command(['objdump', '-d', '-w', '-M', display_syntax, '--insn-width=16', 'input.o'], folder, timeout)
-        reloc = command(['readelf', '-rW', 'input.o'], folder, timeout)
+        extract = command([T.OBJCOPY, '-O', 'binary', '--only-section=.text', 'input.o', 'text.bin'], folder, timeout)
+        decode = command([T.OBJDUMP, '-d', '-w', '-M', display_syntax, '--insn-width=16', 'input.o'], folder, timeout)
+        reloc = command([T.READELF, '-rW', 'input.o'], folder, timeout)
         result['inspection'] = {'objcopy': extract, 'objdump': decode, 'readelf': reloc}
         if extract['returncode'] == 0 and Path(folder, 'text.bin').exists():
             result['bytes'] = Path(folder, 'text.bin').read_bytes().hex()

@@ -68,6 +68,9 @@ MEMORY_BITS = {
     'm16int': ('SYM052', 16), 'm32int': ('SYM052', 32), 'm64int': ('SYM052', 64), 'm80bcd': ('SYM048', 80),
     'm2byte': ('Vol.2 506 + Vol.1 213 / Vol.2 510 (완화 A)', 16),
 }
+# r/m8~r/m64는 총론이 레지스터·메모리 겸용 기호로 따로 정의한다(SYM035~038). 메모리 쪽 근거는 이 번호로 적는다.
+# (SYM042 m16은 "used only with the string instructions"라서 r/m16의 메모리 근거로 맞지 않는다)
+RM_SYMBOLS = {'r/m8': 'SYM035', 'r/m16': 'SYM036', 'r/m32': 'SYM037', 'r/m64': 'SYM038'}
 # 크기 키워드 없이 쓰는 메모리 표기(원문 폭이 키워드와 맞지 않거나 원문이 폭을 하나로 정하지 않음)
 MEMORY_NO_KEYWORD = {
     'm': 'SYM040 (16, 32 또는 64)', 'mem': '완화 C(가변) 또는 원문 없음', 'mib': 'SYM068', 'sibmem': 'Vol.2 51 2.4',

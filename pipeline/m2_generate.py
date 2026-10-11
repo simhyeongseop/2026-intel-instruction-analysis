@@ -166,7 +166,8 @@ def operand_choices(symbol, row, regs):
                 name = piece.split("+")[0]
         choices.append(("reg", name, source))
     for piece in memory_parts:
-        choices.extend(memory_choices(piece, pieces, row, regs))
+        for kind, text, source in memory_choices(piece, pieces, row, regs):
+            choices.append((kind, text, R.RM_SYMBOLS.get(part, source) if kind == "mem" else source))
     return choices, notes
 
 

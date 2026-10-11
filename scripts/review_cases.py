@@ -8,6 +8,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from pipeline import toolchain as T
 from pipeline.instruction_check import HEADER, assemble, command, environment, sha256
 
 
@@ -43,7 +44,7 @@ def main():
         report['cpu_source_sha256'] = sha256(src)
         with tempfile.TemporaryDirectory(prefix='asm_review_cpu_') as folder:
             binary = str(Path(folder, 'review'))
-            compile_result = command(['clang', '-O0', '-Wall', '-Wextra', '-Werror', str(src), '-o', binary])
+            compile_result = command([T.CLANG, '-O0', '-Wall', '-Wextra', '-Werror', str(src), '-o', binary])
             report['cpu_compile'] = compile_result
             failed = failed or compile_result['returncode'] != 0
             if compile_result['returncode'] == 0:
