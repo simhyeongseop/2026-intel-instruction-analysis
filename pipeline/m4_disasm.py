@@ -271,7 +271,7 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
     if main not in names and not folded:
         out["verdict"] = ("니모닉 다름(도구 관례 철자)" if D.TOOL_SPELLINGS.get(main) in names else "니모닉 다름")
         return out
-    if ".Ltarget" in case["source"]:
+    if ".Ltarget" in case["source"] or case.get("relative"):   # 검사 CLI: 표 행이 rel 형식
         out["verdict"] = "SDM 일치(분기 대상 미대조)"
         return out
     if not rest.strip() and source_operands(case) and any(
@@ -293,6 +293,14 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
     return out
 
 
+def prepare(isa):
+    """판정에 쓰는 표: opcode 칸 -> SDM 니모닉, 순서만 뒤집힌 행, 같은 opcode 행(SAME_OPCODE). CLI도 쓴다."""
+    if not SAME_OPCODE:
+        for row in isa:
+            SAME_OPCODE.setdefault(" ".join(row["opcode"].split()), []).append(row)
+    return sdm_mnemonics(isa), reversible_rows(isa)
+
+
 def sdm_bytes(result):
     for tool in ("as", "clang"):
         if result["expected"] == "reach" and result["verdict_" + tool].startswith("SDM 일치") and result["bytes_" + tool]:
@@ -308,10 +316,7 @@ def main():
     results = read_csv(os.path.join(args.cases, "check_results.csv"))
     operands_by_case = {c["case_id"]: c["operands"] for c in read_csv(os.path.join(args.cases, "cases.csv"))}
     isa = read_csv(os.path.join(ROOT, "data/db/isa_db.csv"))
-    by_opcode = sdm_mnemonics(isa)
-    reversible = reversible_rows(isa)
-    for row in isa:
-        SAME_OPCODE.setdefault(" ".join(row["opcode"].split()), []).append(row)
+    by_opcode, reversible = prepare(isa)
     targets = []
     for result in results:
         data, origin = sdm_bytes(result)

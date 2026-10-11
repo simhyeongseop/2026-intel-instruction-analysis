@@ -43,6 +43,8 @@
   - 그래서 SDM 일치가 아니라 `니모닉 다름(도구 관례 철자)`로 센다.
 - LLVM 23은 VGATHERPF0DPS 메모리를 `zmmword` 대신 `dword ptr`로 출력한다.
 
+- REX.W 짝 행 대조 추가(2026-10-12): 같은 opcode 칸에 REX.W 행이 따로 있으면 REX.W 없는 행은 REX.W 바이트를 받지 않는다(Vol.1 Table 3-4). 예: `48 ff 18`은 CALL m16:64이고 CALL m16:32가 아니다. 3·4단계를 다시 돌렸고 판정 변화는 0건이다(실행 기록 `out/runs/20261011T180101901220Z.json`).
+
 버그 후보 4개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 모두 그대로 재현된다.
 - clang `call word/dword ptr [rax]` → `ff 18`
 - llvm-mc `ff 18` → `call [rax]`

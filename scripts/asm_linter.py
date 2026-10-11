@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Intel syntax 명령어 검사 CLI. 예: python scripts/asm_linter.py 'mov eax, ebx'"""
+"""Intel syntax 명령어 검사 CLI. 예: python scripts/asm_linter.py 'mov eax, ebx'
+
+줄마다 후보 SDM 행을 찾고, 파이프라인 3·4단계와 같은 기준으로 판정한다(pipeline/sdm_judge.py).
+SDM 대 각 어셈블러(GNU as, clang), SDM 대 각 역어셈블러(objdump, llvm-mc). 도구끼리는 비교하지 않는다.
+"""
 import argparse
 from collections import Counter
 from datetime import datetime, timezone
@@ -22,6 +26,25 @@ STATUS_TEXT = {'accepted': '수용됨 (실행 의미는 미검증)', 'rejected':
                'process_crash': '프로세스 비정상 종료',
                'timeout': '도구 timeout', 'unavailable': '도구 없음',
                'resource_failure': '자원 오류', 'skipped': '설정/라벨'}
+SUMMARY_TEXT = {'sdm_match': '모든 도구가 SDM과 일치', 'sdm_difference': 'SDM과 다른 도구가 있음',
+                'no_sdm_row': '형태가 맞는 SDM 행 없음'}
+EXPECTED_TEXT = {'reach': '64비트 모드 유효 행이 있음(조립돼야 함)', 'reject': '후보가 모두 64비트 무효(거부돼야 함)',
+                 'unknown': '후보 행 없음'}
+
+
+def print_candidates(row):
+    """후보 SDM 행: 형태 match / partial(검사기 범위 밖 칸), 64비트 모드, 행 상태(원문 검토)."""
+    sdm = row['sdm']
+    found = sdm['rows']
+    expected = row.get('sdm_judgment', {}).get('expected')
+    print('  후보 SDM 행 %d개%s%s' % (len(found), ' (REP 따로 붙인 형식)' if sdm.get('rep_separate') else '',
+                                   (' - ' + EXPECTED_TEXT[expected]) if expected else ''))
+    for c in found[:6]:
+        print('    %5s  %-36s %-26s %-6s %s%s' % (c['row_id'], c['instruction'][:36], c['opcode'][:26],
+                                              c['mode_support'], c['row_status'],
+                                              '' if c['form'] == 'match' else ' (형태 일부 미대조)'))
+    if len(found) > 6:
+        print('    ... %d개 더' % (len(found) - 6))
 
 
 def source_records(text):
@@ -65,18 +88,28 @@ def print_text(report):
         print('[%s] %s' % (STATUS_TEXT[row['status']], row['source']))
         if 'reason' in row:
             print('  ' + row['reason'])
-        for tool in ('gnu_as', 'clang'):
-            record = row.get(tool)
-            if record:
-                print('  %s: %s  %s' % (tool, record['status'], record['bytes']))
-                if record['assembly']['stderr']:
-                    print('    ' + record['assembly']['stderr'].strip().replace('\n', '\n    '))
-                for instruction in record['instructions']:
-                    print('    objdump: ' + instruction['text'])
         if 'sdm' in row:
-            print('  SDM 형태: %s (동작 일치 판정 아님)' % row['sdm']['status'])
-        if 'roundtrip' in row:
-            print('  바이트 왕복: ' + row['roundtrip']['status'])
+            print_candidates(row)
+        judgment = row.get('sdm_judgment')
+        for tool, label in (('gnu_as', 'GNU as'), ('clang', 'clang')):
+            record = row.get(tool)
+            if not record:
+                continue
+            verdict = judgment['assemblers'].get(tool, {}) if judgment else {}
+            print('  %-8s %-18s %s%s' % (label, verdict.get('verdict', record['status']), record['bytes'] or '-',
+                                         ('  -> 행 ' + ', '.join(map(str, verdict['rows']))) if verdict.get('rows') else ''))
+            if record['assembly']['stderr']:
+                print('    ' + record['assembly']['stderr'].strip().replace('\n', '\n    '))
+            if verdict.get('note'):
+                print('    ' + verdict['note'])
+        for name, label in (('objdump', 'objdump'), ('llvm', 'llvm-mc')):
+            decoded = (judgment or {}).get('disassemblers', {}).get(name)
+            if decoded:
+                print('  %-8s %-18s %s  (%s 바이트, 행 %s)' % (label, decoded['verdict'], decoded['text'] or '-',
+                                                            'GNU' if decoded['from'] == 'gnu_as' else 'clang',
+                                                            decoded['row_id']))
+        if judgment:
+            print('  SDM 대조: %s (인코딩 필드 대조, 실행 의미 아님)' % SUMMARY_TEXT[judgment['summary']])
         for note in row['findings']:
             print('  [%s] %s' % (note['type'], note['message']))
         if 'expected_encoding' in row:

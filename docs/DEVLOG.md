@@ -1201,3 +1201,30 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - 전체 회귀 132개 통과(지운 테스트 11개 제외)
   - 남은 모듈 패키지 import 확인, 1단계는 PDF 가상환경에서 import 확인
   - REPORT 안의 파일 링크가 모두 있는지 확인
+
+## 2026-10-12 [기능] 검사 CLI를 3·4단계 판정에 연결
+
+- 사용자 요청: 검사 CLI가 입력 줄의 후보 SDM 행을 찾고, 3·4단계와 같은 판정(SDM 대 각 어셈블러, SDM 대 각 역어셈블러)을 쓰게 한다.
+- `pipeline/sdm_judge.py`(새 파일):
+  - 후보 찾기:
+    - 2단계 행 정리(`m2_generate.load_rows`, `apply_row_spelling`, Description 보정, REP 누산기 메모리 철자)를 그대로 쓴다.
+    - 오퍼랜드 종류(레지스터 계열·메모리·즉시값·rel·먼 포인터)와 폭(`operand_forms.match_token`)을 본다.
+    - REP 행 철자가 아니면 REP를 따로 붙인 기본 행을 후보로 본다(`rep_separate`).
+  - 기대 결과: 64비트 Valid 후보가 있으면 reach, 모두 무효면 reject, 없으면 unknown
+  - 어셈블러 판정: 3단계의 `encoding`·`check_row`·보정 파일·`DEFAULT_OFF`. 사용자 라벨의 분기는 꼬리 폭만 본다(`relative_target_unchecked`).
+  - 역어셈블러 판정: 4단계 `judge`·`prepare`(새로 뺀 준비 함수)
+- `pipeline/instruction_check.py`:
+  - `sdm`은 새 후보 결과, `sdm_judgment`는 새 판정이다. `--expect-row`도 3단계 인코딩 대조를 쓴다.
+  - GNU 대 clang 바이트 비교(`comparison`)를 지웠다(도구끼리 비교하지 않는다는 결정).
+  - 다시 조립(`roundtrip`)은 참고 기록으로만 남긴다.
+  - `needs_review`는 경고·확인 사항·재배치·SDM 판정 불일치로 정한다.
+- `scripts/asm_linter.py`: 후보 행, 도구별 판정과 도달 행, note, 역어셈블러별 판정을 출력한다.
+- `operand_forms.parse_instruction`: 의사 접두어(`{evex}` 등)를 떼고, 접두어 단독 행(`lock`)을 읽는다. 먼 포인터 즉시값(`0x10:0x1234`)을 메모리와 구분한다.
+- 작업 중 발견한 대조 빈틈: REX.W 짝 행
+  - 같은 opcode에 REX.W 행이 있으면 REX.W 없는 행은 REX.W 바이트를 받지 않게 했다(`operand_size_prefix.forbids_rex_w`).
+  - 3·4단계를 다시 돌렸고 판정 변화는 0건이다.
+- 검증:
+  - `tests/test_sdm_judge.py` 10개: 가짜 관측, 66 누락·먼 호출·분기·MPX note·종류 불일치 반례
+  - REX.W 반례를 `test_operand_size_prefix.py`에 추가했다.
+  - 전체 19,425케이스를 CLI와 대조했다(`scripts/check_cli_consistency.py`). 생성 행 19,425개가 모두 후보에 있었고, 3단계 SDM 일치 34,108건이 모두 같은 행으로 SDM 일치였다.
+  - 전체 회귀 통과

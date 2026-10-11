@@ -35,6 +35,7 @@ DESCRIPTION_SIZE = [
 ]
 
 _RULES = None
+_REX_W_KEYS = None
 
 
 def opcode_key(opcode):
@@ -95,6 +96,28 @@ def build_rules(isa):
             if bits:
                 rules[row_key(row)] = bits
     return rules
+
+
+def rex_w_free_key(opcode):
+    """'REX.W + FF /3' -> 'FF /3'의 열쇠. REX.W가 없으면 None."""
+    if not re.match(r"\s*REX\.W\b", opcode):
+        return None
+    return opcode_key(re.sub(r"^\s*REX\.W\s*\+?\s*", "", opcode))
+
+
+def forbids_rex_w(row):
+    """같은 opcode 칸에 'REX.W +' 행이 따로 있는 레거시 행: REX.W가 있으면 그 64비트 행이다(Vol.1 Table 3-4).
+
+    예: FF /3 CALL m16:32 와 REX.W FF /3 CALL m16:64, 01 /r ADD r/m32 와 REX.W 01 /r ADD r/m64.
+    """
+    global _REX_W_KEYS
+    opcode = row.get("opcode", "")
+    if opcode.startswith(("VEX", "EVEX")) or "REX.W" in opcode:
+        return False
+    if _REX_W_KEYS is None:
+        with open(ISA_DB, encoding="utf-8", newline="") as handle:
+            _REX_W_KEYS = {k for k in (rex_w_free_key(r["opcode"]) for r in csv.DictReader(handle)) if k}
+    return opcode_key(opcode) in _REX_W_KEYS
 
 
 def row_key(row):

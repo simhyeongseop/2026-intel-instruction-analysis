@@ -30,7 +30,7 @@ python3 pipeline/run.py --only check --execute   # SDM 일치한 레지스터 �
 ## 도구
 
 ```bash
-python3 scripts/asm_linter.py "mov eax, ebx"                # 명령어 검사 CLI
+python3 scripts/asm_linter.py "mov eax, ebx"                # 명령어 검사 CLI(후보 SDM 행 + 3·4단계 판정)
 python3 scripts/asm_linter.py --file examples/fuzz_inputs.s
 python3 scripts/manual_lookup.py show MOV --part Description # SDM 원문 조회
 python3 scripts/manual_lookup.py cases MOV --opcode "8A /r"  # 저장된 케이스와 판정 조회

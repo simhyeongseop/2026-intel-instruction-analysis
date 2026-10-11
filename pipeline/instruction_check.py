@@ -11,8 +11,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from pipeline import toolchain as T
-from pipeline.operand_forms import (check_opcode_template, compare_forms, legacy_fields,
-                                    parse_instruction)
+from pipeline.operand_forms import legacy_fields, parse_instruction
 
 AS_OPTIONS = ['--64', '-mintel64']
 HEADER = '.intel_syntax noprefix\n.text\n.Ltarget:\n'
@@ -253,7 +252,8 @@ def check_instruction(code, rows, static_only=False, compare_clang=True, timeout
         result['reason'] = '파서가 처리하지 못하는 문법입니다.'
         return result
     result['parsed'] = parsed
-    result['sdm'] = compare_forms(parsed, rows)
+    from pipeline import sdm_judge   # 3·4단계 모듈이 이 파일의 assemble을 쓰므로 여기서 불러온다
+    result['sdm'] = sdm_judge.candidates(parsed)   # 후보 SDM 행(2단계와 같은 행 정리·철자)
     result['findings'] = static_findings(parsed)
     if static_only:
         result['reason'] = '정적 형태 비교만 수행. 어셈블러 수용과 바이트는 미검사.'
@@ -263,25 +263,15 @@ def check_instruction(code, rows, static_only=False, compare_clang=True, timeout
     if compare_clang:
         result['clang'] = assemble(HEADER + code + '\n', tool='clang', timeout=timeout,
                                    display_syntax=display_syntax)
-        clang = result['clang']
-        if (as_result['status'] == clang['status'] == 'accepted'
-                and as_result['inspection_complete'] and clang['inspection_complete']):
-            if as_result['relocations'] or clang['relocations']:
-                result['comparison'] = 'context_required'
-            else:
-                result['comparison'] = 'same_bytes' if as_result['bytes'] == clang['bytes'] else 'different_bytes'
-        elif any(clang.get('observation_status') in ('timeout', 'unavailable', 'resource_failure', 'tool_failed', 'process_crash')
-                 for clang in (as_result, clang)):
-            result['comparison'] = 'not_checked'
-        else:
-            result['comparison'] = 'as_%s_clang_%s' % (as_result['status'], clang['status'])
+    # 3·4단계와 같은 판정: SDM 대 각 어셈블러, SDM 대 각 역어셈블러. 도구끼리는 비교하지 않는다(2026-10-11 결정).
+    result['sdm_judgment'] = sdm_judge.judge(code, parsed, {'gnu_as': as_result, 'clang': result.get('clang')})
     result['status'] = as_result['status']
     if as_result.get('observation_status') in ('timeout', 'unavailable', 'resource_failure', 'tool_failed', 'process_crash'):
         result['validation_status'] = as_result['observation_status']
         return result
     if as_result['status'] == 'accepted':
         result['findings'].extend(observed_findings(parsed, as_result))
-        result['roundtrip'] = roundtrip(as_result, parsed, timeout, display_syntax)
+        result['roundtrip'] = roundtrip(as_result, parsed, timeout, display_syntax)   # 참고 기록(판정에 쓰지 않음)
         result['option_comparison'] = assemble(HEADER + code + '\n', options=['--64'], timeout=timeout,
                                                display_syntax=display_syntax)
         if not as_result['inspection_complete'] or len(as_result['instructions']) != 1:
@@ -290,9 +280,7 @@ def check_instruction(code, rows, static_only=False, compare_clang=True, timeout
         elif as_result['relocations']:
             result['status'] = 'needs_review'
         elif (result['findings'] or as_result['assembly']['stderr'].strip()
-              or result['sdm']['status'] != 'form_match'
-              or result['roundtrip']['status'] != 'same_bytes'
-              or (compare_clang and result.get('comparison') != 'same_bytes')):
+              or result['sdm_judgment']['summary'] != 'sdm_match'):
             result['status'] = 'needs_review'
     if compare_clang and (result['clang'].get('observation_status') in
                           ('timeout', 'unavailable', 'resource_failure', 'tool_failed', 'process_crash')
@@ -321,7 +309,11 @@ def evaluate_expected(result, expected_row, encoding_policy='allow_equivalent'):
         evaluated['policy_decision'] = 'review' if evaluated.get('status') in ('process_crash', 'timeout', 'tool_error', 'incomplete') else 'reject'
         evaluated['encoding_policy'] = encoding_policy
         return evaluated
-    expected = check_opcode_template(evaluated['gnu_as'].get('bytes', ''), expected_row)
+    from pipeline import sdm_judge
+    operands = sdm_judge.operands_text(evaluated['parsed']) if evaluated.get('parsed') else ''
+    # 3단계와 같은 인코딩 대조(encoding_audit + 보정 파일)
+    expected = {'row_id': expected_row['row_id'], 'meaning_verified': False,
+                'status': sdm_judge.judge_expected_row(evaluated['gnu_as'], expected_row, operands)}
     evaluated['expected_encoding'] = expected
     if expected['status'] == 'fields_match':
         evaluated['encoding_target_match'] = 'fields_match'

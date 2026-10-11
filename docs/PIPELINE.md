@@ -31,7 +31,7 @@ python3 pipeline/run.py --only check --execute        # 판정 + CPU 격리 실�
   - `reject`: 64비트 모드 무효
   - `alias_no_test`: 무효 행인데 유효 행과 문법이 같아 소스로 구별할 수 없음
 - 3단계 인코딩 대조(`pipeline/encoding_audit.py`):
-  - 접두어, 66H 오퍼랜드 크기(`operand_size_prefix.py`), 맵, opcode, ModRM 조건, 꼬리 길이를 본다.
+  - 접두어, 66H 오퍼랜드 크기·REX.W 짝 행(`operand_size_prefix.py`), 맵, opcode, ModRM 조건, 꼬리 길이를 본다.
   - 레지스터 번호와 실행 의미는 보지 않는다.
 - 3단계의 거부·수용 해석:
   - 무효 행을 받아들였으면 바이트가 어느 유효 행인지 찾아 `다른 행으로 수용`으로 적는다.
@@ -45,7 +45,8 @@ python3 pipeline/run.py --only check --execute        # 판정 + CPU 격리 실�
 |---|---|
 | `pipeline/case_rules.py` | 레지스터 목록 순서, 주소 형태, 즉시값, 메모리 폭, 행 지정 철자. 값마다 총론 SYM 번호·쪽 |
 | `pipeline/disasm_rules.py` | 의사 니모닉 표(VCMPPD·CMPPD·VPCMP·PCLMULQDQ), FWAIT 짝, 도구 관례 철자 |
-| `pipeline/operand_size_prefix.py` | 같은 opcode 칸이 오퍼랜드 크기로만 갈리는 행의 66H 요구(Vol.1 Table 3-4) |
+| `pipeline/operand_size_prefix.py` | 같은 opcode 칸이 오퍼랜드 크기로만 갈리는 행의 66H 요구, REX.W 짝 행이 있는 행의 REX.W 금지(Vol.1 Table 3-4) |
+| `pipeline/sdm_judge.py` | 검사 CLI 판정: 입력 줄의 후보 SDM 행 + 3·4단계와 같은 판정 |
 | `pipeline/toolchain.py` | 도구 경로(`~/opt/binutils-2.47`, `~/opt/llvm-23.1.3`). 환경 변수 `BINUTILS_BIN`·`LLVM_BIN` |
 | `data/rules/` | 총론 기호(`sdm_symbols.csv`), 원문 충돌 예외, 인코딩 대조 보정, 도달 불가 형식, 추출 보정, PDF 확인 보정 |
 | `out/sdm_review_093/` | Sol 원문 추출 8 part, 주 에이전트 독립 판정, 대조 결과(`compare/`), 예외 대조 기록(`conflict_tests/`) |
@@ -70,6 +71,8 @@ python3 scripts/build_rows_status.py           # 행 상태 -> compare/rows_stat
 - 매뉴얼 조회(터미널): `python3 scripts/manual_lookup.py show MOV [--part Description|--text]`
   - 다른 하위 명령: `search`, `page`, `general`, `symbols`, `cases`
 - 명령어 검사 CLI: `python3 scripts/asm_linter.py "mov eax, ebx"`([도구 안내](TOOL_GUIDE.md))
+  - 줄마다 후보 SDM 행을 찾고 3·4단계와 같은 판정(SDM 대 각 어셈블러, SDM 대 각 역어셈블러)을 낸다(`pipeline/sdm_judge.py`).
+  - CLI 판정과 3단계가 같은지: `python3 scripts/check_cli_consistency.py [--sample N]`
 - 고정 재심 사례: `python3 scripts/review_cases.py [--skip-cpu]`(CPU 소스 `tests/review_cpu_cases.c`)
 
 ## 지운 것

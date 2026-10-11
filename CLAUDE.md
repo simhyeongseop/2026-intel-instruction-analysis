@@ -33,7 +33,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 | `pipeline/sdm_*.py`, `scripts/compare_sdm_review.py`, `scripts/build_rows_status.py` | SDM 원문 검토(Sol 추출 대조, 완화 규칙, 행 상태) |
 | `scripts/manual_lookup.py` | 터미널 매뉴얼 조회(원문·기호·저장된 케이스) |
 | `pipeline/review_verdicts.py` | 날짜와 근거를 가진 재심 판정; 기존 판정 보존 |
-| `scripts/asm_linter.py` | 사용자용 CLI |
+| `scripts/asm_linter.py`, `pipeline/sdm_judge.py` | 사용자용 검사 CLI. 줄마다 후보 SDM 행 + 3·4단계와 같은 판정 |
 | `scripts/review_cases.py` | 고정 재심 사례 및 제한된 CPU 대조 실험 |
 | `data/db/`, `data/rules/` | 기준 추출 DB(`isa_db.csv`), 원문 기호·예외·보정 규칙 |
 | `data/cases.csv` | 이름이 고정된 추가 사례(검사 CLI용) |

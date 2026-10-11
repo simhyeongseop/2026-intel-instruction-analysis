@@ -6,7 +6,7 @@ Matches are field matches. Only the explicitly listed narrow forms get row_reach
 import re
 
 from pipeline.operand_forms import check_opcode_template, legacy_fields
-from pipeline.operand_size_prefix import required_size
+from pipeline.operand_size_prefix import forbids_rex_w, required_size
 
 
 def gpr_number(text):
@@ -87,17 +87,18 @@ def check_encoding(hex_bytes, row, relocations=False):
     """
     template = row.get('opcode', '')
     size = required_size(row)   # +r 치환 전에 원래 행으로 찾는다
+    no_rex_w = forbids_rex_w(row)
     plus = re.search(r'([0-9A-Fa-f]{2})\s*\+\s*(?:i|r[bwdo])\b', template)
     if not plus:
-        return _check_encoding(hex_bytes, row, relocations, size)
+        return _check_encoding(hex_bytes, row, relocations, size, no_rex_w)
     base = int(plus.group(1), 16)
     results = [_check_encoding(hex_bytes, dict(row, opcode=template.replace(plus.group(0), '%02X' % (base + i))),
-                               relocations, size) for i in range(8)]
+                               relocations, size, no_rex_w) for i in range(8)]
     matched = [r for r in results if r['status'] == 'fields_match']
     return matched[0] if matched else results[0]
 
 
-def _check_encoding(hex_bytes, row, relocations=False, operand_size=None):
+def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex_w=False):
     result = {'status': 'not_checked', 'row_reach': 'unverified', 'checked_fields': [],
               'unverified_fields': ['operand_semantics', 'CPUID', 'execution'],
               'meaning_verified': False, 'coverage_eligible': False}
@@ -214,6 +215,10 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None):
         else:
             good = good and 0x66 not in prefixes
         result['checked_fields'].append('operand_size_prefix_66')
+    if not vector and no_rex_w:
+        # operand_size_prefix.forbids_rex_w: 같은 opcode 칸의 REX.W 행과 갈린다
+        good = good and not (rex and rex & 8)
+        result['checked_fields'].append('no_REX.W')
     moffs = re.search(r'\bmoffs(8|16|32|64)\b', row.get('operand_types', row.get('operands', '')))
     if end is None:
         good = False
@@ -251,9 +256,12 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None):
     if relative and end is not None and tail:
         bits = int(relative.group(1))
         good = good and tail == bits // 8 and (bits != 16 or is_xbegin)
-        displacement = int.from_bytes(data[end:], 'little', signed=True)
-        good = good and (displacement + len(data) == (0 if bits == 8 else 4096))
-        result['checked_fields'].append('relative_displacement_target')
+        if row.get('relative_target_unchecked'):
+            result['unverified_fields'].append('relative_displacement_target')   # 검사 CLI: 사용자 라벨
+        else:
+            displacement = int.from_bytes(data[end:], 'little', signed=True)
+            good = good and (displacement + len(data) == (0 if bits == 8 else 4096))
+            result['checked_fields'].append('relative_displacement_target')
     name = row.get('mnemonic', '').split()[-1].upper() if row.get('mnemonic') else ''
     if not vector and name in ('MOVS', 'CMPS', 'LODS', 'STOS', 'SCAS', 'INS', 'OUTS'):
         widths = re.findall(r'\bm(8|16|32|64)\b', row.get('operand_types', ''))

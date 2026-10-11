@@ -51,5 +51,16 @@ class OperandSizePrefixTest(unittest.TestCase):
         self.assertTrue(self.match("LLDT r/m16", "0f00d1"))
 
 
+    def test_rex_w_sibling_rows(self):
+        # 같은 opcode 칸에 REX.W 행이 따로 있으면 REX.W 없는 행은 REX.W 바이트를 받지 않는다(Vol.1 Table 3-4)
+        self.assertTrue(self.match("CALL m16:32", "ff18"))
+        self.assertFalse(self.match("CALL m16:32", "48ff18"))        # 48 = REX.W -> CALL m16:64
+        self.assertTrue(self.match("CALL m16:64", "48ff18"))
+        self.assertFalse(self.match("ADD r/m32, r32", "4801d1"))
+        self.assertTrue(self.match("ADD r/m32, r32", "4101d1"))      # REX.B만(r9d)은 REX.W가 아니다
+        self.assertTrue(self.match("PUSH r64", "51"))                # REX.W 짝 행이 없는 행은 대상이 아니다
+        self.assertFalse(P.forbids_rex_w(next(r for r in self.isa if r["instruction"] == "PUSH r64")))
+
+
 if __name__ == "__main__":
     unittest.main()

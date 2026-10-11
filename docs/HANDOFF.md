@@ -14,6 +14,8 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
   - binutils는 소스 빌드, LLVM은 공식 바이너리다. 설치 절차는 DEVLOG 2026-10-12.
 - 파이프라인: 추출 → 생성 → 도구별 판정 → 역어셈블러별 대조([안내](PIPELINE.md))
 - 결과: `out/cases/REPORT.md`(첫 절이 최신 판 기준)
+- 검사 CLI(`scripts/asm_linter.py`): 줄마다 후보 SDM 행을 찾고 3·4단계와 같은 판정을 낸다(`pipeline/sdm_judge.py`, 10월 12일).
+  - 전체 19,425케이스 대조: 생성 행이 모두 후보에 있고, 3단계 SDM 일치 34,108건이 CLI에서도 같은 행으로 SDM 일치(`scripts/check_cli_consistency.py`).
 
 ## 수치(2026-10-12, 2.47 / 23.1.3)
 
@@ -47,6 +49,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 
 - 생성: `pipeline/m2_generate.py`, `pipeline/case_rules.py`, `tests/test_m2_generate.py`
 - 판정: `pipeline/m3_check.py`, `pipeline/encoding_audit.py`, `pipeline/operand_size_prefix.py`
+- 검사 CLI: `scripts/asm_linter.py`, `pipeline/instruction_check.py`, `pipeline/sdm_judge.py`, `tests/test_sdm_judge.py`
 - 역어셈블: `pipeline/m4_disasm.py`, `pipeline/disasm_rules.py`
 - 원문 검토: `out/sdm_review_093/`, `pipeline/sdm_review_compare.py`, `pipeline/sdm_relaxation.py`, `scripts/build_rows_status.py`
 - 판정 기준 문서: [판정 기준](RESULT_VALIDITY_AND_BUG_CRITERIA.md), [재심 보고서](CASE_REVIEW_2026-09-14.md)

@@ -39,8 +39,11 @@ def operand(text):
     bare = re.sub(r'\{[^}]*\}', '', low).strip()
     result = {'text': text.strip(), 'kind': 'unknown', 'bits': None,
               'family': None, 'decorations': decorations}
+    far = re.fullmatch(r'(?:far\s+ptr\s+)?((?:0x[0-9a-f]+|\d+)\s*:\s*(?:0x[0-9a-f]+|\d+))', bare)
     size = re.match(r'^(\w+)\s+ptr\b', bare)
-    if '[' in bare or size:
+    if far:
+        result.update(kind='far_ptr', value_text=far.group(1).replace(' ', ''))   # ptr16:16/32 즉시 먼 포인터
+    elif '[' in bare or size:
         result.update(kind='mem', bits=PTR_BITS.get(size.group(1)) if size else None)
         result['address_registers'] = [r for r in re.findall(r'\b[a-z]+\d*\b', bare)
                                        if r in GPR or re.fullmatch(r'[xyz]mm\d+', r)]
@@ -69,9 +72,12 @@ def operand(text):
 def parse_instruction(code):
     parts = code.strip().split(None, 1)
     prefixes = []
-    while parts and parts[0].lower() in PREFIXES:
+    # 도구 의사 접두어({evex}, {vex3}, {load}, {store} …)도 접두어로 뗀다
+    while parts and (parts[0].lower() in PREFIXES or re.fullmatch(r'\{[a-z0-9]+\}', parts[0].lower())):
         prefixes.append(parts[0].lower())
         parts = parts[1].split(None, 1) if len(parts) > 1 else []
+    if not parts and prefixes and prefixes[-1] in ('lock', 'xacquire', 'xrelease'):
+        parts = [prefixes.pop()]                 # 접두어 단독 표 행(LOCK F0 등)
     if not parts or not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', parts[0]):
         return None
     tail = parts[1] if len(parts) > 1 else ''

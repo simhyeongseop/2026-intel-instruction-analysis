@@ -1,7 +1,12 @@
 # 명령어 검사 도구 사용법
 
-이 도구는 퍼징으로 만든 어셈블리 입력을 GNU as/Clang에 넣어 수용 여부와 실제 생성 바이트를 비교한다.
-검사 결과를 저장하고 후속 분석 대상을 고르는 데 사용한다. 입력 명령어를 CPU에서 실행하지 않는다.
+퍼징 등으로 만든 Intel 문법 명령어를 한 줄씩 파이프라인 3·4단계와 같은 기준으로 판정한다(2026-10-12).
+1. 입력 줄의 후보 SDM 행을 찾는다.
+2. SDM 대 각 어셈블러(GNU as, clang)로 판정한다.
+3. SDM 대 각 역어셈블러(objdump, llvm-mc)로 판정한다.
+
+도구끼리는 비교하지 않는다. 판정 코드는 `pipeline/sdm_judge.py`이고, 3단계 `m3_check`·4단계 `m4_disasm`의 함수를 그대로 쓴다.
+입력 명령어를 CPU에서 실행하지 않는다.
 
 ## 입력과 실행
 
@@ -9,50 +14,84 @@
 Windows PowerShell에서는 명령 앞에 `wsl -d Ubuntu --`를 붙인다.
 
 ```bash
-python3 scripts/asm_linter.py 'mov eax, ebx'
+python3 scripts/asm_linter.py 'add cx, dx'
 python3 scripts/asm_linter.py --file examples/fuzz_inputs.s
 python3 scripts/asm_linter.py --stdin --format jsonl
 python3 scripts/asm_linter.py --demo --format json --output out/demo.json
 ```
 
-`--file`은 각 명령어를 독립적으로 검사한다. 파일 전체의 제어 흐름·매크로·링크를 검증하는 방식이 아니다.
-`.intel_syntax noprefix`, `.text`, 라벨, `#` 주석 및 `;` 문장 구분을 처리한다.
-다른 지시자가 등장하면 그 지시자와 이후 문맥을 `incomplete`로 남긴다. 모드 변경을 무시하고 성공이라고 보고하지 않는다.
+입력 처리:
+- `--file`은 각 명령어를 독립적으로 검사한다. 파일 전체의 제어 흐름·매크로·링크를 검증하지 않는다.
+- `.intel_syntax noprefix`, `.text`, 라벨, `#` 주석, `;` 문장 구분을 처리한다.
+- 다른 지시자가 나오면 그 지시자와 이후 문맥을 `incomplete`로 남긴다.
 
-각 명령어의 실측 소스에는 아래 공통 설정이 붙는다. `.Ltarget`은 기존 파이프라인의 분기용 더미 라벨이다.
+각 명령어의 실측 소스 앞에는 `.intel_syntax noprefix`, `.text`, `.Ltarget:`가 붙는다.
+도구 판은 `pipeline/toolchain.py`(GNU Binutils 2.47, LLVM 23.1.3)를 따른다.
 
-```asm
-.intel_syntax noprefix
-.text
-.Ltarget:
+## 출력 예
+
+```text
+[추가 확인 필요] call dword ptr [rax]
+  후보 SDM 행 2개 - 64비트 모드 유효 행이 있음(조립돼야 함)
+      227  CALL r/m32        FF /2   N.E.   원문 확정
+      231  CALL m16:16       FF /3   Valid  원문 확정
+  GNU as   SDM 일치             66ff18  -> 행 231
+  clang    다른 행 인코딩        ff18  -> 행 232
+  objdump  SDM 일치             call   DWORD PTR [rax]  (GNU 바이트, 행 231)
+  llvm-mc  니모닉 다름(도구 관례 철자)   lcall	[rax]  (GNU 바이트, 행 231)
+  SDM 대조: SDM과 다른 도구가 있음
 ```
 
-## 출력 읽는 법
+## 판정
 
-| 필드 | 의미 |
+**후보 SDM 행**(`sdm`)
+- 2단계 생성기와 같은 행 정리를 쓴다(REP 계열, 행 지정 철자 `retf`·`pushfw`·`data16`·`movabs`, Description 보정).
+- 니모닉과 오퍼랜드 종류(레지스터 계열·메모리·즉시값·분기 대상·먼 포인터)와 폭이 맞는 표 행을 고른다.
+- `form`:
+  - `match`: 모든 칸을 대조함
+  - `partial`: 마스크·브로드캐스트처럼 이 검사기가 확정하지 못한 칸이 있음
+- 기대 결과:
+  - 64비트 모드 Valid인 후보가 있으면 조립돼야 함(reach)
+  - 후보가 모두 무효면 거부돼야 함(reject)
+  - 후보가 없으면 판정하지 않음
+- `rep movsb`처럼 REP 행 철자가 아니면, REP를 따로 붙인 기본 행(MOVSB)을 후보로 보고 `rep_separate`를 표시한다.
+
+**어셈블러별**(`sdm_judgment.assemblers`)
+
+| 판정 | 뜻 |
 |---|---|
-| `status` | 이 검사의 수용/거부/검토/미완료 상태 |
-| `gnu_as`, `clang` | 실제 명령행, stdout/stderr, 종료 코드, 바이트, objdump 출력, 재배치 여부 |
-| `sdm` | DB의 오퍼랜드 형태 후보. `form_match`도 전체 명세 적합 판정이 아님 |
-| `comparison` | 두 구현의 바이트 일치 여부. 재배치가 있으면 문맥 필요 |
-| `roundtrip` | 역어셈블 문장을 재어셈블한 바이트 비교. 분기·재배치는 문맥 필요 |
-| `findings` | 입력 형식 차이·표시 결함·지원 차이·동등 표현 등 확인 사항 |
-| `expected_encoding` | `--expect-row`를 준 경우 제한된 legacy opcode 필드 대조 |
-| `semantic_status` | 현재 일반 검사에서는 항상 `not_verified` |
+| SDM 일치 | 바이트가 후보 행의 인코딩과 맞음(접두어·66H·REX.W·맵·opcode·ModRM·꼬리 길이) |
+| SDM 일치(거부) | 후보가 모두 무효이고 도구도 거부함 |
+| 다른 행 인코딩 | 후보가 아닌 같은 니모닉의 유효 행 바이트가 나옴(`rows`) |
+| 다른 행으로 수용 | 거부돼야 하는데 받아들였고, 바이트는 같은 니모닉의 유효 행 |
+| SDM과 다름(수용) | 거부돼야 하는데 받아들였고, 맞는 유효 행이 없음 |
+| 다른 인코딩 / 인코딩 미대조 | 맞는 행이 없음 / 대조기가 읽지 못하는 표기·재배치 |
+| 거부 / 모르는 명령 | 조립돼야 하는데 거부함 / 니모닉 자체를 모름 |
 
-`gnu_as.bytes`는 오브젝트의 `.text` 전체를 `objcopy`로 추출한 값이다.
-objdump에서 보이는 첫 줄 바이트만 잘라 비교하지 않으므로 긴 명령어도 끝까지 읽는다.
-`readelf`로 재배치를 확인한다. 왕복 바이트가 같아도 원본 입력의 의미까지 맞았다고 승격하지 않는다.
+- note에는 기본 설정에서 끈 기능(GNU MPX: `-march=generic64+mpx`)과 도달 불가 등록 사유가 적힌다.
+- 분기(rel) 행은 사용자 라벨의 거리를 정할 수 없어 꼬리 폭만 대조한다.
+
+**역어셈블러별**(`sdm_judgment.disassemblers`)
+- SDM 일치한 바이트(GNU 우선, 없으면 clang)를 objdump와 llvm-mc로 따로 푼다.
+- 4단계와 같은 판정(`SDM 일치`, `니모닉 다름(도구 관례 철자)`, `오퍼랜드 다름`, `디코드 실패` …)을 쓴다.
+
+**요약**(`sdm_judgment.summary`)
+- `sdm_match`: 모든 도구가 SDM과 일치
+- `sdm_difference`: SDM과 다른 도구가 있음
+- `no_sdm_row`: 형태가 맞는 SDM 행이 없음
+
+`status`(GNU as 기준):
+- `accepted`: GNU가 받았고, 모든 도구가 SDM과 일치했고, 경고·확인 사항이 없음
+- `needs_review`: 그 밖의 수용
+- `rejected`: GNU가 거부함. 기대가 거부인지는 `sdm_judgment`로 본다.
+
+`roundtrip`(역어셈블 → 다시 조립)과 `option_comparison`(`--64`만 준 GNU)은 참고 기록이며 판정에 쓰지 않는다.
 
 | 종료 코드 | 처리 방법 |
 |---|---|
-| 0 | 지정 도구가 수용했고 수행한 제한 검사에서 검토 항목이 없음. 일반적 실행 안전성 증명은 아님 |
+| 0 | 모든 줄이 `accepted`. 일반적 실행 안전성 증명은 아님 |
 | 1 | 거부되었거나 검토할 항목이 있음. 버그라고 자동 집계하지 말고 결과를 보관 |
 | 2 | 미완료·도구/설정 오류·빈 입력·부분 처리. 성공 테스트로 집계하지 않음 |
-
-예를 들어 `mov eax, ebx`는 현재 도구에서 `89d8`로 수용된다.
-`mov eax, rbx`는 거부된다. `lss rcx, tbyte ptr [eax]`는 수용되지만 objdump 표시 결함이 관측되므로 검토 대상으로 나온다.
-이 동작은 도구 버전과 옵션에 따라 달라질 수 있으며 실행 결과에 버전과 바이너리 해시를 함께 저장한다.
 
 ## 퍼징에서 호출하기
 
@@ -64,36 +103,32 @@ result = subprocess.run(
     ["python3", "scripts/asm_linter.py", "--format", "json", "mov eax, ebx"],
     capture_output=True, text=True, encoding="utf-8",
 )
-if not result.stdout:
-    raise RuntimeError(result.stderr)  # 인자/DB/환경 설정 오류
 report = json.loads(result.stdout)
 for case in report["results"]:
-    print(case["source"], case["status"])
-# 1은 버그 확정 코드가 아니다. 입력 거부와 분석 대상이 모두 포함된다.
+    judgment = case.get("sdm_judgment", {})
+    print(case["source"], case["status"], judgment.get("summary"),
+          {tool: a["verdict"] for tool, a in judgment.get("assemblers", {}).items()})
 ```
 
-Python API를 반복 호출하면 도구 버전 조회 비용을 줄일 수 있다. 작업 디렉터리를 저장소 루트로 두거나 저장소를 Python 경로에 넣는다.
+Python API(저장소 루트에서):
 
 ```python
 from pipeline.operand_forms import load_db
 from pipeline.instruction_check import check_instruction
 
-db = load_db()
-result = check_instruction("mov eax, ebx", db)
+result = check_instruction("mov eax, ebx", load_db())
+print(result["sdm_judgment"]["summary"])
 ```
 
-어셈블러가 특정 매뉴얼 행의 인코딩을 골랐는지 조사하려면 `--expect-row`에 DB 데이터 행 번호(0부터)를 준다.
-검사한 필드는 출력의 `checked_fields`에 명시된다. `fields_match`는 전체 행 일치가 아니다.
-VEX/EVEX, `+r` 등 지원하지 않는 템플릿은 `not_checked`다.
+특정 표 행 하나와 대조하려면 `--expect-row`에 DB 데이터 행 번호(0부터)를 준다(3단계와 같은 인코딩 대조).
 
-## 현재 검사 범위
+## 검사 범위
 
-- 기본 Intel syntax, x86-64 타깃, GNU as `--64 -mintel64`; Clang `-target x86_64-linux-gnu`.
-- 일반 레지스터·명시적 메모리 폭·즉시값·일부 복합 SDM 토큰의 형태 비교.
-- 마스크/브로드캐스트/반올림, 주소 표현식의 모든 제약, 즉시값 부호확장 의미, CPUID·권한·OS 조건은 일반 검증하지 않음.
-- 디스어셈블을 단일 명령어로 해석하지 못하거나 도구가 없으면 미완료.
-- `--static-only`는 도구가 없는 환경에서 후보만 확인하며 종료 코드 2. 동적 검사 대신 성공으로 처리하지 않음.
-- `--limit N`으로 잘라 검사한 경우 미처리 입력이 있음을 표시하고 종료 코드 2.
+- Intel 문법, x86-64 타깃. GNU as `--64 -mintel64`, clang `-target x86_64-linux-gnu`.
+- 인코딩 필드 대조다. 레지스터 번호, 즉시값 부호확장 의미, CPUID·권한·OS 조건, 실행 의미는 검증하지 않는다.
+- 후보 형태 대조는 마스크·브로드캐스트·반올림 칸을 `partial`로 남긴다.
+- 표 행이 오퍼랜드 종류로만 갈리는 경우(예: `call dword ptr [rax]`는 CALL r/m32와 CALL m16:16)는 후보를 모두 보여 준다.
+- `--static-only`는 도구 없이 후보만 확인하며 종료 코드 2.
+- `--limit N`으로 잘라 검사하면 미처리 입력이 있음을 표시하고 종료 코드 2.
 
-알려진 사례와 현재 판단의 근거는 [재심 보고서](CASE_REVIEW_2026-09-14.md)에 있다.
-
+알려진 차이와 근거는 `out/cases/REPORT.md`와 [재심 보고서](CASE_REVIEW_2026-09-14.md)에 있다.
