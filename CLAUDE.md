@@ -51,4 +51,4 @@ python3 scripts/asm_linter.py --demo
 ```
 
 전체 개발·현재 데이터 기준은 [단계별 안내](docs/PIPELINE.md), [인계 문서](docs/HANDOFF.md)를 참고한다.
-`.claude/agents/`의 오래된 모듈 지침과 충돌하면 현재 코드와 위 문서의 기준을 적용한다.
+`.claude/agents/`(git 미포함)에는 `extractor`, `verifier`만 남겼다. 충돌하면 현재 코드와 위 문서의 기준을 적용한다.

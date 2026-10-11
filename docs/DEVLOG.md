@@ -1073,3 +1073,6 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   예전 결과 파일(`out/asm_result.csv`, `out/lint/` 등)과 `docs/review_artifacts/`의 과거 감사 스크립트는 기록으로 둔다(후자는 이제 실행되지 않음).
 - 검증: 전체 회귀 통과. `cpu_run.build_and_run`으로 nop → exit0, `mov eax, [0]` → SIGSEGV, ud2 → SIGILL 확인.
   `check_source_conflicts.py`, `check_conflict_rows.py` 불러오기 확인.
+- 이어서 `.claude/agents/`의 예전 단계 에이전트 지침 10개(assembler, clang_assemble, clang_compare, combiner, execute, generator,
+  reassemble_check, roundtrip, tokenizer, triage)를 지웠다. `extractor`, `verifier`와 `.claude/commands/run-pipeline.md`는 현재 1~4단계 기준으로 고쳤다.
+  `.claude/`는 `.gitignore` 대상이라 git에는 이 기록과 CLAUDE.md 문장만 남는다.
