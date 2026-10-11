@@ -1168,3 +1168,36 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - `git log -G MPX -- opcodes/i386-gen.c`로 찾았다: 57c526470(2024-12-02, Jan Beulich) "x86: default to not accepting MPX insns", 개발판 2.43.50 → 2.44부터.
   - 이후 같은 방식의 변경: AMX-TRANSPOSE 05b24220b, AMX-TF32 ddd9b65d0. SDM 093에는 해당 행이 없다.
 - 3단계: `DEFAULT_OFF` 표를 두고, GNU가 MPX 행을 "is not supported on"으로 거부하면 note에 이유와 켜는 방법을 적는다.
+
+## 2026-10-12 [정리] 최종 상태로 불필요한 파일 삭제
+
+- 사용자 요청: 최종 내용으로 필요 없는 파일을 지운다.
+- 사용자 확인으로 정한 범위: 아래 묶음 전부(git 밖 예전 결과물, 090판 이관 사슬, 과거 기록 문서 포함)
+- 지운 것(git 추적 파일은 커밋 기록에서 되살릴 수 있다):
+  - 예전 5~13단계 결과
+    - `out/` 아래 asm_result, roundtrip, triage, clang_*, reassemble_check, edge_case_*, address_test_result, tests.s, lint, rejected_input_review
+    - `out/review`의 예전 감사 문서(`cases.json`은 남김)
+    - `out/runs`의 9월 실행 기록
+  - 예전 파이프라인 전용 스크립트·테스트
+    - audit_verdicts, check_pipeline_health, check_report_numbers, compare_round, build_generator_issues, check_conflict_rows, extract_review_manual
+    - test_conflict_rows, manual_bug_check, tests/baseline
+  - 090판 이관 사슬
+    - out/sdm_review_2026-10-09, sdm_evidence_2026-10-09, mov_review_2026-10-09, manual_index_090
+    - out/sdm_093의 이관 파일(`edition_diff.csv`만 남김)
+    - migrate_review_to_093, build_edition_review, compare_isa_editions와 그 테스트
+  - 과거 기록 문서
+    - archive/, spec.md, docs/review_artifacts
+    - docs의 DESCRIPTION_FIX, FUZZING_RESEARCH_REVIEW, GENERATOR_FIX_SCOPE, GENERATOR_VALIDATION, LATEST_TEST_RUN, REJECTED_INPUT_REVIEW, SDM_REGENERATION_PLAN
+  - git 밖: out/generator_audit_* 4개(약 310MB), out/spec_probe, out/lint, out/ubuntu-tests, 빈 objects 폴더, tmp
+- 남긴 것:
+  - 판정 기준 문서(CASE_REVIEW, RESULT_VALIDITY. 테스트·지침이 참조), 회의록, TOOL_GUIDE, SOL_EXTRACTION_GUIDE(경로를 093으로)
+  - `out/sdm_review_093/conflict_tests/`의 대조 기록(행 상태 근거)
+  - 사용자 자료로 보이는 `manuals/`(PDF), `Claude outputs/`(9월 발표 자료), `review/false_alarm_checklist.csv`는 손대지 않았다.
+- 코드 수정:
+  - `scripts/map_review_to_combos.py` → `scripts/build_rows_status.py`. 예전 조합 영향 표를 떼고 행 상태만 만든다. 다시 만든 `rows_status.csv`가 커밋된 파일과 같다.
+  - `pipeline/sdm_paths.py`에서 090판·예전 조합 경로를 뺐다.
+- 문서: README, CLAUDE.md, AGENTS.md, docs/PIPELINE.md, docs/HANDOFF.md를 최종 상태로 다시 썼다. TOOL_GUIDE의 지운 점검 도구 절을 뺐다.
+- 검증:
+  - 전체 회귀 132개 통과(지운 테스트 11개 제외)
+  - 남은 모듈 패키지 import 확인, 1단계는 PDF 가상환경에서 import 확인
+  - REPORT 안의 파일 링크가 모두 있는지 확인

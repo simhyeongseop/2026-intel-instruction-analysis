@@ -120,7 +120,7 @@ STRING_ADDRESSES = {'MOVS': ['[rdi]', '[rsi]'], 'CMPS': ['[rsi]', '[rdi]'], 'LOD
                     'STOS': ['[rdi]'], 'SCAS': ['[rdi]'], 'INS': ['[rdi]']}
 STRING_ACCUMULATOR_BITS = {'AL': 8, 'AX': 16, 'EAX': 32, 'RAX': 64}
 
-# SDM Description 보정(docs/REJECTED_INPUT_REVIEW_2026-09-28.md에서 옮김): (니모닉, opcode, 표기) -> 생성 표기
+# SDM Description 보정(2026-09-28 거부 입력 재검토에서 옮김, 문서는 git 기록 b24bb9c 이전): (니모닉, opcode, 표기) -> 생성 표기
 DESCRIPTION_CORRECTIONS = {
     ('VPMOVQD', 'EVEX.128.F3.0F38.W0 35 /r', 'xmm1/m128'):
         ('xmm1/m64', 'SDM PDF 2054-2055: Half Mem, 2 dwords -> m64'),

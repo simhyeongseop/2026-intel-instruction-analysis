@@ -1,6 +1,6 @@
 # Intel Instruction Study — 현재 프로젝트 지침
 
-갱신: 2026-10-09. 시작할 때 [현재 인계](docs/HANDOFF.md)와 [공통 작업 기준](AGENTS.md)을 읽는다.
+갱신: 2026-10-12. 시작할 때 [현재 인계](docs/HANDOFF.md)와 [공통 작업 기준](AGENTS.md)을 읽는다.
 이후에는 작업 대상의 코드·데이터·근거만 읽고 과거 기록은 필요한 경우 확인한다.
 
 ## 목적
@@ -17,7 +17,7 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 - 발견 유형과 확정 상태는 별도 기록한다. 기준은 [판정 기준](docs/RESULT_VALIDITY_AND_BUG_CRITERIA.md),
   개별 재심 근거는 [재심 보고서](docs/CASE_REVIEW_2026-09-14.md), 최신 생성 상태는 인계 문서를 따른다.
 - 근거가 부족한 것은 미확인 상태로 둔다. `not_reassessed`를 확정이라고 보고하지 않는다.
-- 기존 사용자 변경과 실험 근거를 보존한다. 과거 자료는 `archive/`에 있으며 현재 실행 지침이 아니다.
+- 기존 사용자 변경과 실험 근거를 보존한다. 지운 과거 자료는 git 기록에서 찾는다(2026-10-12 정리, `docs/DEVLOG.md`).
 - 새 코드에는 그 코드와 독립적인 기대값·반례로 검증을 수행한다. 검증하지 않은 사실을 통과했다고 쓰지 않는다.
 - 작업 범위를 바꿀 때 생성물·판정·문서를 함께 점검하고, 변경 이유와 검증 범위를 `docs/DEVLOG.md`에 남긴다.
 
@@ -25,19 +25,20 @@ Intel SDM의 형식에서 만든 입력과 실제 어셈블러/역어셈블러 �
 
 | 위치 | 역할 |
 |---|---|
-| `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py`, `m4_disasm.py` | 현재 단계(추출 → 생성 → 도구별 판정 → 역어셈블러별 대조). 규칙은 `case_rules.py`, `disasm_rules.py` |
+| `pipeline/m1_extract.py`, `m2_generate.py`, `m3_check.py`, `m4_disasm.py` | 현재 단계(추출 → 생성 → 도구별 판정 → 역어셈블러별 대조). 규칙은 `case_rules.py`, `disasm_rules.py`, `operand_size_prefix.py` |
 | `pipeline/toolchain.py` | 도구 경로(GNU Binutils 2.47, LLVM 23.1.3, `~/opt`). 환경 변수 `BINUTILS_BIN`·`LLVM_BIN` |
 | `pipeline/cpu_run.py` | 3단계 `--execute`의 CPU 격리 실행 관측(예전 11단계에서 옮김) |
 | `pipeline/run.py` | 단계 선택 실행, 실행 기록 |
-| `pipeline/instruction_check.py`, `operand_forms.py` | 검사 도구의 공통 API와 부분 오퍼랜드/opcode 대조 |
+| `pipeline/instruction_check.py`, `operand_forms.py`, `encoding_audit.py` | 검사 도구의 공통 API, 오퍼랜드/opcode 대조, SDM 행 인코딩 대조 |
+| `pipeline/sdm_*.py`, `scripts/compare_sdm_review.py`, `scripts/build_rows_status.py` | SDM 원문 검토(Sol 추출 대조, 완화 규칙, 행 상태) |
+| `scripts/manual_lookup.py` | 터미널 매뉴얼 조회(원문·기호·저장된 케이스) |
 | `pipeline/review_verdicts.py` | 날짜와 근거를 가진 재심 판정; 기존 판정 보존 |
 | `scripts/asm_linter.py` | 사용자용 CLI |
 | `scripts/review_cases.py` | 고정 재심 사례 및 제한된 CPU 대조 실험 |
-| `data/db/` | 기준 추출 DB(`isa_db.csv`) |
-| `data/cases.csv` | 이름이 고정된 추가 사례. 기존 combo ID와 구분 |
+| `data/db/`, `data/rules/` | 기준 추출 DB(`isa_db.csv`), 원문 기호·예외·보정 규칙 |
+| `data/cases.csv` | 이름이 고정된 추가 사례(검사 CLI용) |
 | `tests/`, `examples/` | 회귀 검증·사용 예제 |
 | `out/` | 단계별 결과; `docs/PIPELINE.md`에서 매핑 |
-| `archive/legacy/`, `archive/prototypes/` | 구 파이프라인과 이전 문서/프로토타입 |
 
 ## 실행·검증
 

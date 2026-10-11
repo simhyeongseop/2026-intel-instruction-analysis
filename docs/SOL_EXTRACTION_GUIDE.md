@@ -7,14 +7,14 @@
 ## 작업 폴더와 금지 사항
 
 - 작업 폴더: `/mnt/c/Users/wltjq/OneDrive/assembler-testing` (WSL Ubuntu, `python3`).
-- 쓰는 파일은 자기 몫 세 개뿐이다: `out/sdm_review_2026-10-09/sol_partN.csv`, `sol_partN_sections.csv`, `sol_partN_notes.md` (N = 맡은 번호).
+- 쓰는 파일은 자기 몫 세 개뿐이다: `out/sdm_review_093/sol_partN.csv`, `sol_partN_sections.csv`, `sol_partN_notes.md` (N = 맡은 번호).
 - 다른 파일은 만들거나 고치지 않는다. 코드·데이터·문서 모두 해당한다. 보조 스크립트가 필요하면 `/tmp/claude-1000/sol_partN/` 아래에만 둔다.
-- `out/sdm_review_2026-10-09/main_*` 파일과 다른 part의 결과는 열지 않는다. 독립 검토다.
+- `out/sdm_review_093/main_*` 파일과 다른 part의 결과는 열지 않는다. 독립 검토다.
 - 어셈블러 실행이나 CPU 실행은 하지 않는다. 이번 일은 원문 추출이다.
 
 ## 입력
 
-- 행별 원문 근거: `out/sdm_evidence_2026-10-09/rows.jsonl`. 한 줄이 한 행(row_id = data/db/isa_db.csv 행 번호)이다.
+- 행별 원문 근거: `out/sdm_evidence_093/rows.jsonl`. 한 줄이 한 행(row_id = data/db/isa_db.csv 행 번호)이다.
   - `table_cells`: 인코딩 표 원문 셀. 위첨자 각주는 `^n`으로 보존돼 있다.
   - `footnotes`: 그 각주 번호의 원문. `footnotes_missing`은 본문을 찾지 못한 번호다.
   - `op_en_lines`: Instruction Operand Encoding 표에서 그 Op/En 글자로 시작하는 줄.

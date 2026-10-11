@@ -1,10 +1,11 @@
-"""SDM 원문 재검토 결과(행 상태·1단계 추출 결함)를 최신 생성 케이스에 연결한다.
+"""SDM 원문 재검토 결과(Sol 추출·예외 대조·추출 보정)로 isa_db 행마다 상태를 정한다. 2단계 생성기가 읽는다.
 
-    python3 scripts/map_review_to_combos.py [--combos out/generator_audit_2026-10-10_093/combos.csv]
+    python3 scripts/build_rows_status.py
 
 행 상태는 Sol 추출의 공통 기준(uniform_status)과 행 전체 조건에서 정한다(sdm_review_compare.row_status).
-'원문 확정' 행에서 나온 케이스라도 고른 대표값이 원문 제약을 지키는지는 이 연결로 확인되지 않는다.
-결과: review-dir/compare/combo_impact.csv(케이스마다 한 줄), rows_status.csv, combo_impact_summary.json.
+결과: review-dir/compare/rows_status.csv, rows_status_summary.json.
+conflict_tests/의 row_cases·all_cases·all_results·defect_cases는 예전 생성기(2026-10-10) 때 대조한 기록이다.
+그 대조 스크립트는 2026-10-12에 지웠고(git 기록 b24bb9c 이전), 기록 파일은 행 상태의 근거로 남긴다.
 
 사용자 결정 3(2026-10-10): 원문끼리 충돌한 행은 표 기준으로 생성하고, 예외 목록(data/rules/source_conflict_cases.csv)에
 등록해 따로 대조한다. 등록된 행 중 모든 형식이 대조를 통과한 행(check_source_conflicts.py의 verdict)은 충돌을
@@ -41,7 +42,6 @@ ROW_CASES = "out/sdm_review_093/conflict_tests/row_cases.csv"
 ROW_PASS = ("통과", "통과(GNU 단독·도달 불가 포함)", "음성 확인")
 CORRECTIONS = "data/rules/extraction_corrections.csv"
 REACH_RESULTS = "out/sdm_review_093/conflict_tests/all_results.csv"
-REACHED = ("통과", "통과(GNU 단독)", "도달 불가(별칭)", "도달 불가(문법)")
 DEFECT_CASES = "out/sdm_review_093/conflict_tests/defect_cases.csv"
 ALL_CASES = "out/sdm_review_093/conflict_tests/all_cases.csv"
 PDF_CONFIRMED = "data/rules/pdf_confirmed_corrections.csv"
@@ -91,7 +91,7 @@ def resolved_conflict_rows():
         verdicts[result["case_id"]].append(result["verdict"])
     resolved = {int(case["row_id"]): case_id for case_id, case in decided.items()
                 if verdicts[case_id] and all(v == "통과" for v in verdicts[case_id])}
-    # 남은 충돌 행 전체 대조(check_conflict_rows.py): 행 판정이 통과·음성 확인인 행.
+    # 남은 충돌 행 전체 대조(예전 check_conflict_rows.py의 기록 row_cases.csv): 행 판정이 통과·음성 확인인 행.
     if os.path.exists(ROW_CASES):
         for case in read_csv(ROW_CASES):
             if case["row_verdict"] in ROW_PASS:
@@ -127,7 +127,6 @@ def tool_unsupported_rows():
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--review-dir", default="out/sdm_review_093")
-    parser.add_argument("--combos", default="out/generator_audit_2026-10-10_093/combos.csv")
     parser.add_argument("--isa-db", default="data/db/isa_db.csv")
     args = parser.parse_args()
 
@@ -175,52 +174,22 @@ def main():
             "reasons": "; ".join(reasons[row_id]),
         })
 
-    combos = read_csv(args.combos)
-    reach = {r["combo_id"]: r for r in read_csv(REACH_RESULTS)} if os.path.exists(REACH_RESULTS) else {}
-    impact = []
-    for combo in combos:
-        row = rows[int(combo["row_id"])]
-        impact.append({
-            "combo_id": combo["combo_id"], "row_id": combo["row_id"], "mnemonic": combo["mnemonic"],
-            "operands": combo["operands"], "test_kind": combo["test_kind"], "input_status": combo["input_status"],
-            "row_status": row["row_status"], "extraction_defects": row["extraction_defects"],
-            "extraction_status": row["extraction_status"],
-            "trusted_spec": "예" if row["row_status"] in TRUSTED_STATUSES
-                            and row["extraction_status"] in ("", "보정·대조 확인") else "",
-            "reach_verdict": reach.get(combo["combo_id"], {}).get("verdict", ""),
-            "reach_ok": "예" if reach.get(combo["combo_id"]) and (
-                reach[combo["combo_id"]]["verdict"] in REACHED or (
-                    reach[combo["combo_id"]]["verdict"] == "음성 케이스"
-                    and "accepted" not in (reach[combo["combo_id"]]["gnu_status"],
-                                           reach[combo["combo_id"]]["clang_status"]))) else "",
-        })
-
     out_dir = os.path.join(args.review_dir, "compare")
     write_csv(os.path.join(out_dir, "rows_status.csv"), rows)
-    write_csv(os.path.join(out_dir, "combo_impact.csv"), impact)
 
     def count(items, *fields):
         return {" / ".join(k): v for k, v in collections.Counter(
             tuple(x[f] or "-" for f in fields) for x in items).most_common()}
 
     summary = {
-        "combos_file": args.combos,
         "isa_rows": len(rows),
         "rows_by_status": count(rows, "row_status"),
         "rows_with_extraction_defect": sum(1 for r in rows if r["extraction_defects"]),
         "extraction_defect_types": dict(collections.Counter(
             d for r in rows for d in filter(None, r["extraction_defects"].split("; "))).most_common()),
-        "combos": len(impact),
-        "combos_by_row_status": count(impact, "row_status"),
-        "combos_with_extraction_defect": sum(1 for c in impact if c["extraction_defects"]),
-        "combos_by_extraction_status": count(impact, "extraction_status"),
-        "combos_trusted_spec": sum(1 for c in impact if c["trusted_spec"]),
-        "combos_reach_ok": sum(1 for c in impact if c["reach_ok"]),
-        "combos_trusted_and_reached": sum(1 for c in impact if c["trusted_spec"] and c["reach_ok"]),
-        "combos_by_reach_verdict": count(impact, "reach_verdict"),
-        "combos_by_row_status_and_input_status": count(impact, "row_status", "input_status"),
+        "rows_by_extraction_status": count(rows, "extraction_status"),
     }
-    with open(os.path.join(out_dir, "combo_impact_summary.json"), "w", encoding="utf-8") as handle:
+    with open(os.path.join(out_dir, "rows_status_summary.json"), "w", encoding="utf-8") as handle:
         json.dump(summary, handle, ensure_ascii=False, indent=1)
     print(json.dumps(summary, ensure_ascii=False, indent=1))
 
