@@ -1283,3 +1283,16 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - CPU(`tests/review_cpu_cases.c` 쪽 경계, Core Ultra 5 226V 재실행): `48 8e`는 쪽 끝 2바이트 앞에서 정상, 1바이트 앞에서 경계 SIGSEGV. 대조군 `movq`는 2바이트 앞에서 SIGSEGV. 2바이트만 읽는다.
   - 처리: 생성은 표 기준 그대로, 3단계 거부에 note(`m3_check.ROW_REJECT_NOTES`, CLI도 같은 note). 버그 후보 아님.
 - 재실행(`20261012T010114208021Z`, `--execute`): 변화는 MOV Sreg 3케이스 note, LLVM 먼 CALL·JMP 6케이스 판정. LLVM 일치 계열 19,181. 전체 회귀 통과.
+
+## 2026-10-12 [재검증] AVX512PF Intel 문법 버그 초안
+
+- 사용자 요청: 초안의 재현·원문·원인·수정 방향이 실제 버그인지 독립 확인.
+- 별도 snapshot `out/avx512pf_review_20261012/`에 작은 재현 스크립트, manifest, 모든 입력과 진단, 16개 요약을 저장했다. 기존 원문 DB·파이프라인 결과를 덮어쓰지 않았다.
+- 직접 실행 버전: LLVM 23.1.3, GNU Binutils 2.47.20260726. 16개 모두 LLVM Intel(크기 생략/올바른 크기 표기) 거부, AT&T 성공, LLVM Intel 출력 재조립 거부, GNU Intel 성공. 각 명령의 GNU 바이트와 LLVM AT&T 바이트가 같다.
+- 시험 입력: DPD 4개는 SDM 표 `vm32y`대로 YMM 인덱스, 나머지는 ZMM. 일반 gather와 메모리 마스크 scatter 대조군은 성공했다.
+- `-mattr=+avx512f,+avx512pf` 추가 시험은 `+avx512pf` 인식 불가·무시 경고가 있으므로 기능 활성화 확인으로 취급하지 않는다. 원시 진단은 보존했다.
+- SDM 093판 Vol.2D 8-12(PDF 2375쪽)의 opcode·마스크 순서는 초안과 맞는다. 기존 snapshot `20261012T010114208021Z`의 check/disasm 파일 6개 해시도 manifest와 일치한다. `verdict_llvm=SDM 일치`는 재조립 성공을 뜻하지 않는다.
+- 소스 원인 설명을 명확히 했다: 메모리 뒤 마스크는 파싱 가능하지만 Intel TableGen 정의의 순서와 맞지 않는다. 선행 `{k1}`는 rounding/SAE 파서에서 거부된다.
+- 초안에 YMM/ZMM 구분, 정확한 GNU 버전, 메모리 마스크 대조군, 수정안 빌드 미검증을 반영하고 검증 문서를 추가했다. PR #122051 API 본문에서 마스크 위치를 수정하지 않았다는 언급도 확인했다.
+- GitHub API로 23.1.3 commit `0d261d1ca552c95a8f007e061c787ac7132fbcbc`의 정의·파서와 X86 MC 파일 목록(456개, 잘림 없음)을 확인했다. AT&T 파일은 있고 `avx512pf-64-intel.s`는 없다. 세 검색의 결과·범위는 `upstream_check.json`/`.txt`에 보존했으며 중복 이슈 부재로 단정하지 않았다.
+- 검증 범위: 조립 수용·출력 바이트·역어셈블·재조립. CPU 실행, 패치 빌드, 전체 파이프라인 회귀는 수행하지 않았다(파이프라인 코드 변경 없음). 이슈 제출·커밋 없음.

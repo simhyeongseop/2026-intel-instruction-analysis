@@ -1,0 +1,1947 @@
+[
+  {
+    "label": "version",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "--version"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "LLVM (http://llvm.org/):\n  LLVM version 23.1.3\n  Optimized build.\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - legacy name for amdgpu\n    amdgpu      - AMDGPU gfx6+\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv32be   - 32-bit big endian RISC-V\n    riscv64     - 64-bit RISC-V\n    riscv64be   - 64-bit big endian RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n",
+    "stderr": ""
+  },
+  {
+    "label": "version",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--version"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "GNU assembler (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-pc-linux-gnu'.\n",
+    "stderr": ""
+  },
+  {
+    "label": "version",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "--version"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "GNU objdump (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf0dps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0dps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc6,0x0c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc6,0x0c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf0dps   {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf0dps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c6 0c 00 \tvgatherpf0dps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf0qps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0qps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc7,0x0c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc7,0x0c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf0qps   {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf0qps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c7 0c 00 \tvgatherpf0qps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf0dpd (%rax,%ymm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0dpd\t(%rax,%ymm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc6,0x0c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dpd [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dpd [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0dpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc6,0x0c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf0dpd   {k1}, qword ptr [rax + ymm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf0dpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0dpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0dpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c6 0c 00 \tvgatherpf0dpd QWORD PTR [rax+ymm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf0qpd (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0qpd\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc7,0x0c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qpd [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qpd [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf0qpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc7,0x0c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf0qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf0qpd   {k1}, qword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf0qpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf0qpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf0qpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c7 0c 00 \tvgatherpf0qpd QWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf1dps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1dps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc6,0x14,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc6,0x14,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf1dps   {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf1dps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c6 14 00 \tvgatherpf1dps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf1qps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1qps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc7,0x14,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc7,0x14,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf1qps   {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf1qps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c7 14 00 \tvgatherpf1qps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf1dpd (%rax,%ymm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1dpd\t(%rax,%ymm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc6,0x14,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dpd [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dpd [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1dpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc6,0x14,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf1dpd   {k1}, qword ptr [rax + ymm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf1dpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1dpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1dpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c6 14 00 \tvgatherpf1dpd QWORD PTR [rax+ymm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vgatherpf1qpd (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1qpd\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc7,0x14,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qpd [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qpd [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvgatherpf1qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vgatherpf1qpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc7,0x14,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvgatherpf1qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf1qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:16: error: unknown token in expression\nvgatherpf1qpd   {k1}, qword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vgatherpf1qpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvgatherpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vgatherpf1qpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vgatherpf1qpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c7 14 00 \tvgatherpf1qpd QWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf0dps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0dps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc6,0x2c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc6,0x2c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf0dps  {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf0dps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c6 2c 00 \tvscatterpf0dps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf0qps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0qps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc7,0x2c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc7,0x2c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf0qps  {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf0qps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf0qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c7 2c 00 \tvscatterpf0qps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf0dpd (%rax,%ymm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0dpd\t(%rax,%ymm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc6,0x2c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dpd [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dpd [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0dpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc6,0x2c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf0dpd  {k1}, qword ptr [rax + ymm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf0dpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf0dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0dpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0dpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c6 2c 00 \tvscatterpf0dpd QWORD PTR [rax+ymm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf0qpd (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0qpd\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc7,0x2c,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qpd [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qpd [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf0qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf0qpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc7,0x2c,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf0qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf0qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf0qpd  {k1}, qword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf0qpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf0qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf0qpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf0qpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c7 2c 00 \tvscatterpf0qpd QWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf1dps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1dps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc6,0x34,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc6,0x34,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf1dps  {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf1dps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf1dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c6 34 00 \tvscatterpf1dps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qps/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf1qps (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1qps\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0x7d,0x49,0xc7,0x34,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qps/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qps [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qps [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qps/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qps/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qps/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0x7d,0x49,0xc7,0x34,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qps/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qps\t{k1}, dword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf1qps  {k1}, dword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf1qps/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qps.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf1qps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qps/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qps.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qps.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qps/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qps.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qps.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 7d 49 c7 34 00 \tvscatterpf1qps DWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf1dpd (%rax,%ymm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1dpd\t(%rax,%ymm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc6,0x34,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dpd [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dpd [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1dpd qword ptr [rax+ymm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1dpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc6,0x34,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1dpd\t{k1}, qword ptr [rax + ymm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf1dpd  {k1}, qword ptr [rax + ymm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf1dpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf1dpd qword ptr [rax+ymm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1dpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1dpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c6 34 00 \tvscatterpf1dpd QWORD PTR [rax+ymm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qpd/att",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": "vscatterpf1qpd (%rax,%zmm0) {%k1}\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1qpd\t(%rax,%zmm0) {%k1}      # encoding: [0x62,0xf2,0xfd,0x49,0xc7,0x34,0x00]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qpd/intel",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qpd [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qpd [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qpd/intel_sized",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qpd/intel_features",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding",
+      "-mattr=+avx512f,+avx512pf"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "'+avx512pf' is not a recognized feature for this target (ignoring feature)\n<stdin>:2:1: error: invalid operand for instruction\nvscatterpf1qpd qword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "vscatterpf1qpd/disasm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "--disassemble",
+      "--output-asm-variant=1"
+    ],
+    "stdin": "0x62,0xf2,0xfd,0x49,0xc7,0x34,0x00\n",
+    "returncode": 0,
+    "stdout": "\tvscatterpf1qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qpd/roundtrip",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterpf1qpd\t{k1}, qword ptr [rax + zmm0]\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:17: error: unknown token in expression\nvscatterpf1qpd  {k1}, qword ptr [rax + zmm0]\n                 ^\n"
+  },
+  {
+    "label": "vscatterpf1qpd/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qpd.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvscatterpf1qpd qword ptr [rax+zmm0] {k1}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qpd/objcopy",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objcopy",
+      "-O",
+      "binary",
+      "--only-section=.text",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qpd.o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qpd.bin"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "vscatterpf1qpd/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qpd.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/avx512pf_review_20261012/vscatterpf1qpd.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f2 fd 49 c7 34 00 \tvscatterpf1qpd QWORD PTR [rax+zmm0*1]{k1}\n",
+    "stderr": ""
+  },
+  {
+    "label": "spelling/0",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps dword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "spelling/1",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps zmmword ptr [rax+zmm0] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps zmmword ptr [rax+zmm0] {k1}\n^\n"
+  },
+  {
+    "label": "spelling/2",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps dword ptr [rax+zmm0*4] {k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps dword ptr [rax+zmm0*4] {k1}\n^\n"
+  },
+  {
+    "label": "spelling/3",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherpf0dps [rax+zmm0]{k1}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvgatherpf0dps [rax+zmm0]{k1}\n^\n"
+  },
+  {
+    "label": "control/vgatherdps",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvgatherdps zmm0 {k1}, [rax+zmm1]\n",
+    "returncode": 0,
+    "stdout": "\n\tvgatherdps\t(%rax,%zmm1), %zmm0 {%k1} # encoding: [0x62,0xf2,0x7d,0x49,0x92,0x04,0x08]\n",
+    "stderr": ""
+  },
+  {
+    "label": "control/vscatterdps",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvscatterdps [rax+zmm1] {k1}, zmm0\n",
+    "returncode": 0,
+    "stdout": "\n\tvscatterdps\t%zmm0, (%rax,%zmm1) {%k1} # encoding: [0x62,0xf2,0x7d,0x49,0xa2,0x04,0x08]\n",
+    "stderr": ""
+  }
+]

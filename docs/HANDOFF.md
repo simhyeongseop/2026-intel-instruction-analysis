@@ -1,6 +1,6 @@
 # 현재 작업 인계
 
-갱신: 2026-10-12(최종 정리 후). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
+갱신: 2026-10-12(AVX512PF 독립 재검증 후). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
 
 ## 목적
 
@@ -31,7 +31,9 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 - 버그 후보 3개. LLVM 23.1.3에서도 재현된다. 새 보고 여부는 사용자 결정이다.
   - clang `call/jmp word·dword ptr [rax]` → 먼 호출 m16:32(`ff 18`): 이미 보고됨(#88516, #95232, 열림)
   - clang CLRSSBSY·RSTORSSP `qword ptr` 거부: 이미 보고됨(#95232, 열림)
-  - clang Intel 문법 AVX512PF 16행 거부(AT&T는 받음): 보고를 찾지 못함. 원인은 LLVM Intel 정의 `{${mask}}, $src`를 파서가 읽지 못함
+  - clang Intel 문법 AVX512PF 16행 거부(AT&T는 받음): 보고를 찾지 못함. LLVM Intel 정의 `{${mask}}, $src`가 메모리 뒤 마스크의 파싱 순서와 불일치하고, 맨 앞 `{k1}`도 거부됨
+    - 이슈 초안: `docs/issues/llvm_avx512pf_intel_mask_draft.md`(제출 전). 관련 언급: PR #122051 본문(별도 이슈는 검색에서 못 찾음)
+    - 독립 재검증: `docs/issues/llvm_avx512pf_intel_mask_verification.md`, 별도 snapshot `out/avx512pf_review_20261012/`. LLVM 23.1.3에서 올바른 VSIB 폭의 16개 Intel 거부·AT&T 성공·Intel 출력 재조립 거부를 직접 확인. DPD 4개는 YMM, 나머지는 ZMM. 제안 패치는 빌드 미검증이며 중복 이슈 부재를 단정하지 않는다.
   - 철회(10월 12일): llvm-mc `ff 18` → Intel `call [rax]`. SDM에 크기 표기 문법이 없어 원문 근거가 없다.
 - GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(binutils 57c526470).
   - 사용자 결정: 기본 설정 그대로 기록한다. 쓰려면 `-march=generic64+mpx`

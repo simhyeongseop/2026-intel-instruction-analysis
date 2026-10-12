@@ -51,6 +51,7 @@ Thumbs.db
 !out/runs/*.json
 !data/*.json
 !docs/review_artifacts/*.json
+!out/avx512pf_review_20261012/*.json
 *.log
 
 # Temporary files
