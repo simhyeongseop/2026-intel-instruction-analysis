@@ -91,7 +91,20 @@ def disassemble_llvm(hex_bytes):
     run = subprocess.run([T.LLVM_MC, "--disassemble", "-triple=x86_64-unknown-linux-gnu", "--output-asm-variant=1"],
                          input=text, capture_output=True, text=True, timeout=20)
     lines = [l.strip() for l in run.stdout.splitlines() if l.strip() and not l.strip().startswith(".")]
-    return lines, "invalid instruction encoding" in run.stderr or "potentially undefined" in run.stderr
+    return join_prefix_lines(lines), "invalid instruction encoding" in run.stderr or "potentially undefined" in run.stderr
+
+
+def join_prefix_lines(lines):
+    """llvm-mc는 lock·xacquire·xrelease를 다음 명령과 다른 줄에 낸다('lock' / 'add ...').
+    접두어 낱말만 있는 줄은 뒤 명령 줄과 합친다. 뒤에 명령이 없으면(접두어 단독 행 'f0') 그대로 둔다."""
+    out, pending = [], []
+    for line in lines:
+        if all(w.lower() in REP_WORDS for w in line.split()) and line.split():
+            pending.append(line)
+            continue
+        out.append(" ".join(pending + [line]))
+        pending = []
+    return out + pending
 
 
 def strip_comment(text):
@@ -144,8 +157,8 @@ def expected_names(case, isa_row, by_opcode):
     source_words = case["source"].split()
     source_main = [w for w in source_words if w.lower() not in PREFIX_WORDS and w.lower() not in REP_WORDS]
     names = set(by_opcode[opcode_key(isa_row["opcode"])])
-    if source_main:
-        names.add(source_main[0].lower())            # 생성 철자(retf, sysretq 등)
+    if source_main and source_main[0].lower() not in D.TOOL_SPELLINGS:
+        names.add(source_main[0].lower())            # 생성 철자(retf, sysretq 등). 도구 관례 철자(movabs)는 SDM 이름이 아님
     reps = [REP_WORDS[w.lower()] for w in source_words if w.lower() in REP_WORDS]
     return names, reps
 

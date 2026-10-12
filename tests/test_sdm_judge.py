@@ -41,6 +41,14 @@ class CandidateTest(unittest.TestCase):
         self.assertEqual(self.rows("mov eax, rbx"), [])
         self.assertNotIn("CALL rel32", [instruction(r) for r in self.rows("call dword ptr [rax]")])
 
+    def test_movabs_spelling(self):
+        # movabs: 64비트 즉시값(MOV r64, imm64)과 64비트 절대 주소(moffs) 행. 다른 MOV 행은 아님
+        self.assertEqual([instruction(r) for r in self.rows("movabs rax, 0x1122334455667788")], ["MOV r64, imm64"])
+        # MOV AL, moffs8은 A0과 REX.W + A0 두 행(Vol.2 731쪽)
+        self.assertEqual([instruction(r) for r in self.rows("movabs al, byte ptr [0x1122334455667788]")],
+                         ["MOV AL, moffs8", "MOV AL, moffs8"])
+        self.assertEqual(self.rows("movabs eax, ebx"), [])
+
     def test_rep_spellings(self):
         separate = J.candidates(parse_instruction("rep movsb"))
         self.assertTrue(separate.get("rep_separate"))

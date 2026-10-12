@@ -90,6 +90,15 @@
   - 정리: 원문 기호는 m64, 도구와 CPU 관측은 16비트. 생성은 표 기준(`qword ptr`, reach) 그대로 두고, 3단계 거부에 note(`m3_check.ROW_REJECT_NOTES`)를 단다.
 - 재실행(실행 기록 `out/runs/20261012T010114208021Z.json`, `--execute`): 바뀐 것은 MOV Sreg 3케이스 note와 LLVM 먼 CALL·JMP 6케이스 판정뿐이다. 4단계 LLVM 일치 계열 19,175 → 19,181. 나머지 수치는 같다.
 
+## 검사 CLI 빈틈 수정: movabs imm64, LOCK 줄, 도구 관례 철자 (2026-10-12)
+
+- 후보 찾기: `movabs`를 64비트 절대 주소(moffs) 행뿐 아니라 `MOV r64, imm64`(B8+rd io) 행에도 연결한다. 전에는 `movabs rax, 0x1122334455667788`가 후보 0개였다.
+- 4단계 llvm-mc 출력: `lock`·`xacquire`·`xrelease`를 다음 명령과 다른 줄에 내므로, 접두어만 있는 줄은 뒤 명령 줄과 합친다(`m4_disasm.join_prefix_lines`). 전에는 `lock add dword ptr [rax], 1`이 "디코드 실패"였다. 파이프라인에는 LOCK을 붙인 명령 케이스가 없어 수치 영향은 없다.
+- 4단계 니모닉: 입력(생성) 철자가 도구 관례 철자(`disasm_rules.TOOL_SPELLINGS`, 예 `movabs`)이면 SDM 이름으로 치지 않는다. 전에는 같은 `movabs` 출력이 moffs 행(소스가 movabs)에서는 SDM 일치, imm64 행(소스가 mov)에서는 `니모닉 다름(도구 관례 철자)`으로 갈렸다.
+  - 재실행(`out/runs/20261012T014754844345Z.json`): moffs 10케이스(`rex64` 2개 포함)가 SDM 일치 → `니모닉 다름(도구 관례 철자)`. 4단계 일치 계열 objdump 19,177 → 19,167, LLVM 19,181 → 19,171. 다른 판정 변화 0.
+- CLI와 3단계 대조 다시 실행: 19,462 후보, 34,144건 같은 행 SDM 일치.
+- 남은 빈틈: `{er}`·`{sae}` 반올림 오퍼랜드(`vaddpd zmm0, zmm1, zmm2, {rn-sae}`)는 후보 대조와 2단계 생성이 모두 다루지 않는다(범위 결정 대기).
+
 남은 버그 후보 3개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 그대로 재현된다.
 - clang `call word/dword ptr [rax]` → `ff 18`
 - clang CLRSSBSY·RSTORSSP `qword ptr` 거부

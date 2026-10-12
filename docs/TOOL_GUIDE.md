@@ -128,7 +128,9 @@ print(result["sdm_judgment"]["summary"])
 
 - Intel 문법, x86-64 타깃. GNU as `--64 -mintel64`, clang `-target x86_64-linux-gnu`.
 - 인코딩 필드 대조다. 레지스터 번호, 즉시값 부호확장 의미, CPUID·권한·OS 조건, 실행 의미는 검증하지 않는다.
-- 후보 형태 대조는 마스크·브로드캐스트·반올림 칸을 `partial`로 남긴다.
+- 후보 형태 대조는 마스크·브로드캐스트 칸을 `partial`로 남긴다. 따로 적은 반올림·SAE 오퍼랜드(`{rn-sae}`, `{sae}`)는 아직 후보를 찾지 못한다.
+- `movabs`는 64비트 절대 주소(moffs)와 `MOV r64, imm64` 행의 후보로 찾는다. 역어셈블러가 `movabs`로 출력하면 `니모닉 다름(도구 관례 철자)`이다.
+- 지시자(`.byte`, `.align` 등)가 나오면 그 줄과 뒤의 모든 줄이 `incomplete`다. 라벨·심볼(`jmp .L1`, `call printf`, `[rip+foo]`)은 주소를 몰라 `인코딩 미대조`다.
 - 표 행이 오퍼랜드 종류로만 갈리는 경우(예: `call dword ptr [rax]`는 CALL r/m32와 CALL m16:16)는 후보를 모두 보여 준다.
 - `--static-only`는 도구 없이 후보만 확인하며 종료 코드 2.
 - `--limit N`으로 잘라 검사하면 미처리 입력이 있음을 표시하고 종료 코드 2.

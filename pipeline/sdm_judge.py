@@ -52,7 +52,8 @@ def spellings(row):
     names = {words[-1]}
     if row["asm_mnemonic"]:
         names.add(row["asm_mnemonic"].lower())
-    if row["name"] == "MOV" and any(re.fullmatch(r"moffs\d+", R.clean_symbol(s)) for s in row["symbols"]):
+    # movabs: GNU·LLVM 관례 철자. 64비트 절대 주소(moffs)와 64비트 즉시값(MOV r64, imm64) 형식에 쓴다
+    if row["name"] == "MOV" and any(re.fullmatch(r"moffs\d+|imm64", R.clean_symbol(s)) for s in row["symbols"]):
         names.add("movabs")
     return rep, names
 

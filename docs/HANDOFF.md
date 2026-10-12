@@ -23,7 +23,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 
 - 4,219행 → 19,462케이스(reg 칸 r64 변형 37개 포함). 모든 행이 사양 신뢰 상태다(원문 확정·완화 A~D·예외 등록).
 - 3단계 SDM 일치: GNU 19,336, clang 19,140. 행 전체 일치: GNU 4,187, clang 4,058.
-- 4단계(SDM 일치 바이트 19,248개) 일치 계열: objdump 19,177, LLVM 19,181(먼 호출 6 철회 반영).
+- 4단계(SDM 일치 바이트 19,248개) 일치 계열: objdump 19,167, LLVM 19,171(movabs 10케이스는 도구 관례 철자로 셈).
 - CPU 관측: exit0 1,973, SIGSEGV 88, SIGFPE 8, SIGILL 11, SIGTRAP 2.
 
 ## 열린 항목
@@ -35,6 +35,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
     - 이슈 초안: `docs/issues/llvm_avx512pf_intel_mask_draft.md`(제출 전). 관련 언급: PR #122051 본문(별도 이슈는 검색에서 못 찾음)
     - 독립 재검증: `docs/issues/llvm_avx512pf_intel_mask_verification.md`, 별도 snapshot `out/avx512pf_review_20261012/`. LLVM 23.1.3에서 올바른 VSIB 폭의 16개 Intel 거부·AT&T 성공·Intel 출력 재조립 거부를 직접 확인. DPD 4개는 YMM, 나머지는 ZMM. 제안 패치는 빌드 미검증이며 중복 이슈 부재를 단정하지 않는다.
   - 철회(10월 12일): llvm-mc `ff 18` → Intel `call [rax]`. SDM에 크기 표기 문법이 없어 원문 근거가 없다.
+- 검사 CLI 빈틈: `{er}`·`{sae}` 반올림·SAE 오퍼랜드는 후보 대조와 2단계 생성 모두 다루지 않는다. 범위는 사용자 결정(10월 12일, movabs imm64·LOCK 줄은 고침).
 - GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(binutils 57c526470).
   - 사용자 결정: 기본 설정 그대로 기록한다. 쓰려면 `-march=generic64+mpx`
 - MOV Sreg, r/m64 메모리(10월 12일 정리): 원문 기호는 m64(표·SYM038·Description), 도구와 CPU 관측(쪽 경계 실험)은 2바이트 읽기. 버그 후보 아님, 3단계 거부에 note.

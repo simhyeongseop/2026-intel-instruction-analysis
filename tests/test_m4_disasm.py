@@ -95,6 +95,24 @@ class FarPointerTest(unittest.TestCase):
         self.assertEqual(self.judge("objdump", "ff18"), "SDM 일치")                          # 'call FWORD PTR [rax]'
 
 
+class PrefixLineTest(unittest.TestCase):
+    """llvm-mc 출력 'lock' / 'add ...'(두 줄)은 명령 하나. 접두어 단독 행 'lock'(f0)은 그대로."""
+
+    def test_join(self):
+        self.assertEqual(M.join_prefix_lines(["xacquire", "lock", "add\tdword ptr [rax], 1"]),
+                         ["xacquire lock add\tdword ptr [rax], 1"])
+        self.assertEqual(M.join_prefix_lines(["lock"]), ["lock"])
+        self.assertEqual(M.join_prefix_lines(["add eax, 1", "add eax, 2"]), ["add eax, 1", "add eax, 2"])
+
+    def test_tool_spelling_in_source_is_not_an_sdm_name(self):
+        # 입력이 movabs여도 SDM 니모닉 목록에 넣지 않는다(도구 관례 철자, disasm_rules.TOOL_SPELLINGS)
+        row = {"opcode": "REX.W + B8+ rd io", "instruction": "MOV r64, imm64", "mnemonic": "MOV", "operands": "r64, imm64"}
+        names, _ = M.expected_names({"source": "movabs rax, 0x1"}, row, {M.opcode_key(row["opcode"]): ["mov"]})
+        self.assertNotIn("movabs", names)
+        names, _ = M.expected_names({"source": "retf"}, row, {M.opcode_key(row["opcode"]): ["ret"]})
+        self.assertIn("retf", names)                     # 행 지정 생성 철자는 그대로
+
+
 class RegWidthTest(unittest.TestCase):
     """SYM039 reg 칸(r16, r32, or r64)은 같은 번호의 다른 폭 이름도 SDM 표기. 다른 칸이나 다른 번호는 아님."""
 
