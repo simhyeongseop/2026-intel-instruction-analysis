@@ -75,7 +75,7 @@ class MnemonicTest(unittest.TestCase):
 
 
 class FarPointerTest(unittest.TestCase):
-    """먼 CALL(FF /3)을 크기 표기 없이 'call [rax]'로 내면 가까운 호출 텍스트다(다시 조립하면 ff10)."""
+    """먼 CALL(FF /3)을 크기 표기 없이 'call [rax]'로 내면 크기 표기를 대조하지 못한다(다시 조립하면 ff10은 참고 기록)."""
 
     def setUp(self):
         import shutil
@@ -90,7 +90,8 @@ class FarPointerTest(unittest.TestCase):
         return M.judge(name, hex_bytes, self.case, self.row, M.sdm_mnemonics(self.isa))["verdict"]
 
     def test_far_call_needs_a_size_or_far_spelling(self):
-        self.assertEqual(self.judge("llvm", "ff18"), "오퍼랜드 다름(먼 포인터 표시 없음)")   # 'call [rax]'
+        # 'call [rax]': SDM에 m16:N 크기 표기 문법이 없어 미대조(버그 후보 철회, 2026-10-12)
+        self.assertEqual(self.judge("llvm", "ff18"), "SDM 일치(먼 포인터 크기 표기 미대조)")
         self.assertEqual(self.judge("objdump", "ff18"), "SDM 일치")                          # 'call FWORD PTR [rax]'
 
 

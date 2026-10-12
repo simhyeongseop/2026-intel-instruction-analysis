@@ -71,9 +71,27 @@
 - 4단계: 역어셈블러가 같은 바이트를 `edx`로 출력한다. 표 기호 reg가 폭을 가리지 않으므로 새 판정 `SDM 일치(reg 칸 레지스터 폭 표기)`로 센다(objdump 25, LLVM 23). 다른 칸이나 다른 번호의 레지스터는 그대로 `오퍼랜드 다름`이다.
 - REP LODS 4행의 철자 note 근거를 도구 관측에서 Vol.2 685쪽 LODS 절(explicit-operands form은 source를 적고 destination은 자동 선택)로 바꿨다.
 
-버그 후보 4개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 모두 그대로 재현된다.
+## 버그 후보 재점검: 먼 호출 출력 철회, AVX512PF 원인, MOV Sreg 관측 (2026-10-12)
+
+- **철회: llvm-mc `ff 18` → Intel `call [rax]`** (사용자 결정)
+  - SDM 두 권 전체에서 `PTR`·`FWORD`·`FAR PTR` 같은 크기 표기 문법을 찾지 못했다(`PTR`은 Vol.1 부록 C 인라인 어셈블리 예제에만 있음). SDM은 `CALL m16:32`라는 추상 표기만 정한다.
+  - 따라서 "먼 포인터 표시 없음"은 우리 판정 규칙이었고 원문 근거가 없다. 4단계 판정을 `SDM 일치(먼 포인터 크기 표기 미대조)`로 바꿨다.
+  - 원인(LLVM 23.1.3 `X86InstrControl.td` 274행): `FARCALL32m : (ins opaquemem:$dst), "{l}call{l}\t{*}$dst"`. `opaquemem`은 크기를 출력하지 않고 `{l}`은 AT&T에만 붙어, Intel 출력이 가까운 호출과 같은 글자가 된다. `FARCALL16m`은 `"lcall{w}"`라 Intel에서도 `lcall`이다(예전에 본 m16:16·m16:64만 `lcall`인 이유).
+  - 다시 조립하면 `ff 10`이 되는 것은 도구 자기 일관성 관측으로만 남긴다. 조립 쪽 후보(#88516)도 같은 정의에서 나온다.
+- **유지: clang Intel 문법 AVX512PF 거부** — 생성 소스 문제 아님
+  - 생성 `vgatherpf0dps [rax+zmm0] {k1}`는 표 문법 `VGATHERPF0DPS vm32z {k1}` 순서 그대로다. GNU는 받고, 같은 주소 형태의 일반 gather(`vgatherdps zmm0 {k1}, [rax+zmm1]`)는 clang도 받는다.
+  - 원인(`X86InstrAVX512.td` 10438행): `"\t{$src {${mask}}|{${mask}}, $src}"`. AT&T는 `메모리 {마스크}`(SDM 순서, 받음: `vgatherpf0dps (%rax,%zmm0) {%k1}` → `62 f2 7d 49 c6 0c 00`), Intel은 `{k1}, 메모리`로 마스크를 앞에 따로 둔다. clang Intel 파서는 맨 앞 단독 `{k1}`을 읽지 못한다("unknown token in expression").
+  - 시험한 Intel 철자 7가지(SDM 순서, `[..]{k1}`, `dword ptr`, `zmmword ptr`, 배율 `*4`, LLVM 자체 출력 `{k1}, dword ptr [rax + zmm0]`)가 모두 거부됐다.
+- **MOV Sreg, r/m64 메모리(REX.W 8E): 버그 후보 아님, 원문과 관측을 기록**
+  - 원문: 표 `MOV Sreg, r/m64`, Description "Move lower 16 bits of r/m64 to segment register"(731쪽), SYM038 r/m64 = quadword 레지스터·메모리. 같은 표 저장 방향은 `MOV r64/m16, Sreg`로 m16을 따로 적는다. 각주 2는 32비트 모드 66 접두어 이야기다. 메모리 폭을 16비트로 정하는 문장은 Vol.1·Vol.2에서 찾지 못했다.
+  - 맞지 않는 일반 문장: 732쪽 "Both operands must be the same size"(Sreg 16과 r64 레지스터 형식부터 어긋남). Vol.1 86쪽은 선택자가 "a memory location or in a 16-bit register"에 있다고만 한다.
+  - 관측: GNU·clang 모두 `qword ptr`를 거부하고, GNU는 `rex.w mov es, word ptr [rax]`로만 `48 8e 00`을 낸다. 두 역어셈블러 모두 `48 8e 00`을 `word ptr`로 출력한다.
+  - CPU(Core Ultra 5 226V, `tests/review_cpu_cases.c`): 피연산자를 쪽 끝 2바이트 앞에 두면 `8e`·`66 8e`·`48 8e` 모두 정상 종료, 1바이트 앞이면 쪽 경계에서 SIGSEGV. 대조군 `movq`는 2바이트 앞에서 SIGSEGV. **REX.W 8E는 2바이트만 읽는다.**
+  - 정리: 원문 기호는 m64, 도구와 CPU 관측은 16비트. 생성은 표 기준(`qword ptr`, reach) 그대로 두고, 3단계 거부에 note(`m3_check.ROW_REJECT_NOTES`)를 단다.
+- 재실행(실행 기록 `out/runs/20261012T010114208021Z.json`, `--execute`): 바뀐 것은 MOV Sreg 3케이스 note와 LLVM 먼 CALL·JMP 6케이스 판정뿐이다. 4단계 LLVM 일치 계열 19,175 → 19,181. 나머지 수치는 같다.
+
+남은 버그 후보 3개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 그대로 재현된다.
 - clang `call word/dword ptr [rax]` → `ff 18`
-- llvm-mc `ff 18` → `call [rax]`
 - clang CLRSSBSY·RSTORSSP `qword ptr` 거부
 - clang Intel 문법 AVX512PF 16행 거부
 
@@ -120,7 +138,7 @@
   - MPX r/m32 형식 11케이스 → BNDCL·BNDCU·BNDCN·BNDMK r/m64(m64) 행
   - CALL·JMP r/m32 6케이스 → 먼 CALL·JMP m16:16(`66 FF /3`, `66 FF /5`)
 - **거부 9**:
-  - MOV Sreg, r/m64(REX.W 8E) 메모리: 사용자 확인 대기 사례
+  - MOV Sreg, r/m64(REX.W 8E) 메모리: 원문 m64 대 도구·CPU 16비트(note, 2026-10-12)
   - RDMSR·WRMSRNS imm32: 도구 미지원으로 등록됨
   - SYSEXIT·SYSRET(0F 35, 0F 07): GNU가 SDM 철자를 "ambiguous operand size"로 거부한다. `sysretd`는 GNU만 받는다.
 - **별칭 행 도달 24**: MOVQ/VMOVQ 메모리 별칭 opcode(`unreachable_forms.csv`의 그 행들). VMOVQ EVEX 2행은 GNU `{evex}`로 다른 EVEX 행이 나온다.
@@ -208,7 +226,7 @@ SIGILL 10개는 모두 CPUID 칸이 비어 있는 명령이다(UD0/UD1/UD2, RSM,
 | clang `data16 push 0x1234` → `66 68 34 12 00 00` | PUSH 표 `68 iw PUSH imm16` Valid(1225쪽). Description: "Operand size ... may be overridden by instruction prefixes (66H or REX.W)". Vol.1 Table 3-4(83쪽, 인쇄 3-19): 64비트 모드에서 66H·REX.W=0이면 유효 오퍼랜드 크기 16. iw = 2바이트 즉시값(SYM008, 102쪽). 기대 바이트 `66 68 iw`는 원문과 맞다. | 소스 철자 `data16`은 SDM이 아니라 GNU 문서의 접두어다("data16 ... change 32-bit operands ... into 16-bit operands", binutils 2.42 i386-Prefixes). clang의 `data16`은 0x66 한 바이트를 따로 낸다: `data16 pushw $0x1234` → `66 66 68 34 12`(GNU는 "same type of prefix used twice"로 거부). | **후보 철회.** 케이스가 clang에 PUSH imm16을 지정하지 못했다. clang은 AT&T `pushw $0x1234` → `66 68 34 12`로 맞게 낸다. Intel 문법에서는 맞는 철자를 찾지 못했다(`pushw` 모름, `push word ptr 0x1234` → `68 34 12 00 00`). → 도구 철자 미지원. |
 | clang `data16 xbegin` → `66 c7 f8` + 4바이트 | XBEGIN 표 `C7 F8 XBEGIN rel16` V/V(2276쪽). Operation: 64비트 모드에서 "IF OperandSize = 16 THEN fallbackRIP := RIP + SignExtend64(rel16)". rel16 = 오퍼랜드 크기 16(SYM024). 기대 바이트 `66 C7 F8 cw`는 원문과 맞다. | 위와 같은 `data16` 문제. clang은 Intel·AT&T 모두 rel16을 지정할 철자가 없다(`xbeginw` 모름). | **후보 철회.** clang 도구 미지원 형식으로 분류. |
 | clang `call word ptr [rax]`·`call dword ptr [rax]` → `ff 18` | CALL 표: r/m16·r/m32 N.E., r/m64 Valid(239쪽). 240쪽: "When in 64-bit mode, the operand size for near call ... is forced to 64-bits". 먼 포인터는 "a 4-byte (16-bit operand size) or 6-byte (32-bit operand size) far address"(240쪽). | 케이스 `call word ptr [rax]`(r/m16, SYM036), `call dword ptr [rax]`(r/m32, SYM037)는 표 문법과 맞고 기대 결과 reject도 맞다. clang 바이트 `FF /3`(66 없음) = CALL m16:32, 6바이트 포인터를 읽는다. | **후보 유지.** 소스 크기(2·4바이트)와 원문의 m16:32 폭(6바이트)이 다르다. GNU의 `call dword ptr` → `66 FF /3`(m16:16, 4바이트)는 원문 크기와 맞는다. |
-| LLVM 역어셈블러 `ff 18` → `call [rax]` | CALL m16:32 `FF /3`, 가까운 CALL r/m64 `FF /2`(239쪽). 두 행은 니모닉이 같고 오퍼랜드 종류로만 구별된다. | 케이스 `call fword ptr [rax]`(m16:32 = 6바이트, 240쪽)는 원문과 맞다. | **후보 유지(성격 정정).** SDM은 Intel 문법의 크기 키워드를 정하지 않으므로 SDM 위반이 아니다. LLVM 자신의 문법에서 가까운 호출 텍스트가 되는 것이 문제다(clang이 `ff 10`으로 다시 조립). 같은 LLVM이 m16:16·m16:64는 `lcall`로 출력해 m16:32만 구별이 없다. |
+| LLVM 역어셈블러 `ff 18` → `call [rax]` | CALL m16:32 `FF /3`, 가까운 CALL r/m64 `FF /2`(239쪽). 두 행은 니모닉이 같고 오퍼랜드 종류로만 구별된다. | 케이스 `call fword ptr [rax]`(m16:32 = 6바이트, 240쪽)는 원문과 맞다. | **후보 유지(성격 정정) → 2026-10-12 철회**(위 '버그 후보 재점검' 절). SDM은 Intel 문법의 크기 키워드를 정하지 않으므로 SDM 위반이 아니다. LLVM 자신의 문법에서 가까운 호출 텍스트가 되는 것이 문제다(clang이 `ff 10`으로 다시 조립). 같은 LLVM이 m16:16·m16:64는 `lcall`로 출력해 m16:32만 구별이 없다. |
 | clang CLRSSBSY·RSTORSSP `qword ptr` 거부 | CLRSSBSY `F3 0F AE /6 CLRSSBSY m64`(268쪽), Operation `shadow_stack_lock_cmpxchg8b`. RSTORSSP `RSTORSSP m64`(1301쪽), Operation "Locked shadow_stack_load 8 bytes". m64 = 메모리 쿼드워드(SYM044). | 케이스 `qword ptr [rax]`는 원문과 맞다. | **후보 유지.** clang은 `dword ptr`만 받고, LLVM 역어셈블러도 dword로 출력한다. 바이트는 같다. |
 | clang Intel 문법 AVX512PF 거부 | `VGATHERPF0DPS vm32z {k1}` 등(2375쪽, Xeon Phi 전용 장). vm32z = ZMM 32비트 인덱스 VSIB(SYM075). | 케이스 `vgatherpf0dps [rax+zmm0] {k1}`는 원문 오퍼랜드 순서·인덱스 레지스터·마스크와 맞다. GNU는 이 문법을 받는다. | **후보 유지.** clang은 Intel 문법의 모든 철자를 거부하고 AT&T는 받는다. LLVM 역어셈블러 출력(`{k1}, zmmword ptr [...]`)도 clang이 읽지 못한다. |
 
@@ -222,10 +240,10 @@ LLVM 이슈 트래커와 llvm-bugs 목록을 검색했다(GitHub API, 웹 검색
 |---|---|---|
 | clang `call/jmp word·dword ptr [rax]` → 먼 호출 `ff 18`/`ff 28` | [#88516](https://github.com/llvm/llvm-project/issues/88516) "[x86] Assembler syntax check bugs"(2024-04, clang 16): `call BYTE/WORD/DWORD/XMMWORD PTR [RAX]`가 모두 `FWORD PTR`로 조립됨. [#95232](https://github.com/llvm/llvm-project/issues/95232) Case 2: `call WORD PTR [RAX]` → `call FWORD PTR`. | 둘 다 열림, 담당자·수정 PR 없음. **알려진 문제** |
 | clang CLRSSBSY·RSTORSSP `qword ptr` 거부, `dword ptr` 수용 | [#95232](https://github.com/llvm/llvm-project/issues/95232) "[Clang] Allows incorrect memory size directive."(2024-06) Case 1이 같은 두 명령. #88516 목록에도 있음. | 열림. **알려진 문제** |
-| LLVM 역어셈블러 `ff 18` → Intel 문법 `call [rax]` | 찾지 못함. 관련: [#59038](https://github.com/llvm/llvm-project/issues/59038)(Intel 문법 간접 분기 조립 문제, 2023-08 닫힘, 역어셈블 출력은 다루지 않음), [D35846](https://marc.info/?l=llvm-commits&m=150211659720112&w=2)(FWORD로 먼 분기를 고르게 한 조립 쪽 수정) | **보고 없음(검색 범위 안)**. 같은 바이트를 AT&T 문법으로는 `lcalll *(%rax)`로 출력한다. Intel 문법 출력에서만 먼 호출 표시가 없다. |
-| clang Intel 문법 AVX512PF 거부 | 찾지 못함. LLVM 19 릴리스 노트: AVX512PF 등 knl/knm 전용 내장 함수는 제거하고 "assembly encoding/decoding supports are kept". LLVM MC 시험에는 AT&T 시험(`llvm/test/MC/X86/avx512pf-64-att.s`)만 있고 Intel 문법 시험은 없다. | **보고 없음(검색 범위 안)**. Intel 문법 파서가 시험되지 않은 경로로 보인다(추정). |
+| LLVM 역어셈블러 `ff 18` → Intel 문법 `call [rax]` | 찾지 못함. 관련: [#59038](https://github.com/llvm/llvm-project/issues/59038)(Intel 문법 간접 분기 조립 문제, 2023-08 닫힘, 역어셈블 출력은 다루지 않음), [D35846](https://marc.info/?l=llvm-commits&m=150211659720112&w=2)(FWORD로 먼 분기를 고르게 한 조립 쪽 수정) | **2026-10-12 철회**(SDM에 크기 표기 문법 없음). 같은 바이트를 AT&T 문법으로는 `lcalll *(%rax)`로 출력한다. |
+| clang Intel 문법 AVX512PF 거부 | 찾지 못함. LLVM 19 릴리스 노트: AVX512PF 등 knl/knm 전용 내장 함수는 제거하고 "assembly encoding/decoding supports are kept". LLVM MC 시험에는 AT&T 시험(`llvm/test/MC/X86/avx512pf-64-att.s`)만 있고 Intel 문법 시험은 없다. | **보고 없음(검색 범위 안)**. 원인은 Intel 문법 정의가 마스크를 앞에 두는데(`{${mask}}, $src`) 파서가 그것을 읽지 못하는 것이다(위 '버그 후보 재점검'). |
 
-- 시험한 도구는 clang/LLVM 18.1.3 하나다. 최신 LLVM에서 고쳐졌는지는 확인하지 않았다(로컬에 18만 있음).
+- 처음 검색 때 시험한 도구는 clang/LLVM 18.1.3이었다. 이후 LLVM 23.1.3에서도 재현을 확인했다(2026-10-12).
 - "보고 없음"은 위 검색어로 찾지 못했다는 뜻이다. 없다는 확인은 아니다.
 
 ### 66H 오퍼랜드 크기 접두어 대조 (2026-10-11 추가)
@@ -265,4 +283,4 @@ LLVM 이슈 트래커와 llvm-bugs 목록을 검색했다(GitHub API, 웹 검색
 
 ### 아직 판단하지 않은 것
 
-- MOV Sreg, r/m64 메모리(REX.W 8E): 원문은 "Move lower 16 bits of r/m64 to segment register"(731쪽)이다. 두 도구 모두 `qword ptr`를 거부한다. 메모리에서 읽는 폭의 근거가 없어 기존대로 미확인으로 둔다.
+- MOV Sreg, r/m64 메모리(REX.W 8E): 2026-10-12에 원문 재검색과 CPU 쪽 경계 실험으로 정리했다(위 '버그 후보 재점검'). 원문 기호는 m64, 도구·CPU 관측은 16비트.

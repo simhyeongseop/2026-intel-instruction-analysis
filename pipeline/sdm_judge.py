@@ -22,7 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOL_NAMES = {"gnu_as": "as", "clang": "clang"}
 ASSEMBLER_OK = ("SDM 일치", "SDM 일치(거부)")
 DISASM_OK = ("SDM 일치", "SDM 일치(분기 대상 미대조)", "SDM 일치(암묵 오퍼랜드 미대조)", "SDM 일치(같은 opcode 표 행의 표기)",
-             "SDM 일치(reg 칸 레지스터 폭 표기)")
+             "SDM 일치(reg 칸 레지스터 폭 표기)", "SDM 일치(먼 포인터 크기 표기 미대조)")
 REP_BYTE = {"rep": "f3", "repe": "f3", "repz": "f3", "repne": "f2", "repnz": "f2"}
 
 _CONTEXT = None
@@ -214,6 +214,8 @@ def judge_assembler(tool, observed, cand, expected, operands):
             reason = m3.DEFAULT_OFF.get(TOOL_NAMES[tool], {}).get(c["cpuid_flag"].strip())
             if reason and "is not supported on" in diagnostic:
                 out["note"] = reason
+            if str(c["row_id"]) in m3.ROW_REJECT_NOTES and expected == "reach":
+                out["note"] = (out["note"] + " | " if out["note"] else "") + m3.ROW_REJECT_NOTES[str(c["row_id"])]
         return out
     own, unchecked = matching_rows(observed, [c["row_id"] for c in cand["rows"]], operands)
     valid_own = [r for r in own if context()["isa"][r]["mode_support"] == "Valid"]

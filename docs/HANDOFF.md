@@ -23,19 +23,19 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 
 - 4,219행 → 19,462케이스(reg 칸 r64 변형 37개 포함). 모든 행이 사양 신뢰 상태다(원문 확정·완화 A~D·예외 등록).
 - 3단계 SDM 일치: GNU 19,336, clang 19,140. 행 전체 일치: GNU 4,187, clang 4,058.
-- 4단계(SDM 일치 바이트 19,248개) 일치 계열: objdump 19,177, LLVM 19,175.
+- 4단계(SDM 일치 바이트 19,248개) 일치 계열: objdump 19,177, LLVM 19,181(먼 호출 6 철회 반영).
 - CPU 관측: exit0 1,973, SIGSEGV 88, SIGFPE 8, SIGILL 11, SIGTRAP 2.
 
 ## 열린 항목
 
-- 버그 후보 4개. LLVM 23.1.3에서도 재현된다. 새 보고 여부는 사용자 결정이다.
+- 버그 후보 3개. LLVM 23.1.3에서도 재현된다. 새 보고 여부는 사용자 결정이다.
   - clang `call/jmp word·dword ptr [rax]` → 먼 호출 m16:32(`ff 18`): 이미 보고됨(#88516, #95232, 열림)
   - clang CLRSSBSY·RSTORSSP `qword ptr` 거부: 이미 보고됨(#95232, 열림)
-  - llvm-mc가 먼 호출 `ff 18`을 Intel 문법 `call [rax]`로 출력함(AT&T는 `lcalll`): 보고를 찾지 못함
-  - clang Intel 문법 AVX512PF 16행 거부(AT&T는 받음): 보고를 찾지 못함
+  - clang Intel 문법 AVX512PF 16행 거부(AT&T는 받음): 보고를 찾지 못함. 원인은 LLVM Intel 정의 `{${mask}}, $src`를 파서가 읽지 못함
+  - 철회(10월 12일): llvm-mc `ff 18` → Intel `call [rax]`. SDM에 크기 표기 문법이 없어 원문 근거가 없다.
 - GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(binutils 57c526470).
   - 사용자 결정: 기본 설정 그대로 기록한다. 쓰려면 `-march=generic64+mpx`
-- MOV Sreg, r/m64 메모리 폭: 원문 근거가 없어 미확인이다.
+- MOV Sreg, r/m64 메모리(10월 12일 정리): 원문 기호는 m64(표·SYM038·Description), 도구와 CPU 관측(쪽 경계 실험)은 2바이트 읽기. 버그 후보 아님, 3단계 거부에 note.
 - VMOVW·VPBROADCASTB/W r64: 명령 절이 폭을 적지 않아 SYM039만 근거다. GNU는 모두 거부, clang은 VMOVW만 받는다. 버그 후보로 올리지 않았다.
 - GNU IRET `iret` → `cf`(IRETD): 원문이 허용하는 동의어 처리로 기록했다.
 

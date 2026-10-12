@@ -1266,3 +1266,20 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - 4단계 19,248개, objdump 19,177, LLVM 19,175. CPU exit0 1,973
   - 새 판정 근거가 SYM039뿐인 VMOVW·VPBROADCASTB/W r64 거부는 버그 후보로 올리지 않았다.
 - 검증: `test_m2_generate`(r64 순서, SENDUIPI 대안 없음), `test_m4_disasm`(reg 칸만, 같은 번호만). CLI 일치 대조(19,462 후보, 34,144건 같음), 결정 6 대조 다시 실행(다름 0). 전체 회귀 통과.
+
+## 2026-10-12 [재심] 먼 호출 출력 후보 철회, AVX512PF 원인, MOV Sreg r/m64 원문·CPU 관측
+
+- 사용자 요청: 보고 기록이 없는 버그 후보 2건이 생성기나 원문 확인 문제인지 다시 찾고, MOV Sreg r/m64 원문을 다시 찾는다.
+- 먼 호출 출력(llvm-mc `ff 18` → Intel `call [rax]`): **철회**(사용자 결정)
+  - Vol.1·Vol.2 색인 전체에서 `PTR`·`FWORD`·`FAR PTR`을 찾았다. `PTR`은 Vol.1 566~567쪽 C 인라인 어셈블리 예제에만 있고, 크기 표기 문법 정의는 없다.
+  - 그래서 4단계 규칙 "먼 포인터 표시 없음"은 원문 근거가 없는 우리 규칙이었다. 판정을 `SDM 일치(먼 포인터 크기 표기 미대조)`로 바꿨다(`m4_disasm`, CLI `DISASM_OK`, 테스트).
+  - LLVM 원인: `X86InstrControl.td`(llvmorg-23.1.3) `FARCALL32m`·`FARJMP32m`이 `opaquemem`과 `"{l}call{l}"`·`"{l}jmp{l}"`. Intel 출력에 크기도 `l`도 없다.
+- AVX512PF Intel 거부: **유지**. 생성기·원문 문제 아님
+  - 생성 소스는 표 문법 순서 그대로이고 GNU는 받는다. clang은 Intel 철자 7가지를 모두 거부, AT&T는 받는다.
+  - LLVM 원인: `X86InstrAVX512.td` 10438행 `"\t{$src {${mask}}|{${mask}}, $src}"`. Intel 형태가 마스크를 앞에 두는데 파서가 맨 앞 `{k1}`을 읽지 못한다.
+- MOV Sreg, r/m64 메모리: 원문 재검색
+  - 근거: 731쪽 표·Description "lower 16 bits of r/m64", SYM038, 같은 표 8C 저장 방향의 `r64/m16`. 16비트 메모리를 정하는 문장은 없다. 732쪽 "Both operands must be the same size"는 Sreg 행과 원래 맞지 않는다. Vol.1 86쪽은 폭을 말하지 않는다.
+  - 도구: GNU·clang 모두 `qword ptr` 거부, 역어셈블러는 `48 8e 00`을 `word ptr`로 출력.
+  - CPU(`tests/review_cpu_cases.c` 쪽 경계, Core Ultra 5 226V 재실행): `48 8e`는 쪽 끝 2바이트 앞에서 정상, 1바이트 앞에서 경계 SIGSEGV. 대조군 `movq`는 2바이트 앞에서 SIGSEGV. 2바이트만 읽는다.
+  - 처리: 생성은 표 기준 그대로, 3단계 거부에 note(`m3_check.ROW_REJECT_NOTES`, CLI도 같은 note). 버그 후보 아님.
+- 재실행(`20261012T010114208021Z`, `--execute`): 변화는 MOV Sreg 3케이스 note, LLVM 먼 CALL·JMP 6케이스 판정. LLVM 일치 계열 19,181. 전체 회귀 통과.

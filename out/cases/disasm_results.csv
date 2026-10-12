@@ -888,9 +888,9 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 228-2,228,CALL r/m64,FF /2,call qword ptr [rax+rbx*4+0x10],ff549810,as,SDM 일치,call   QWORD PTR [rax+rbx*4+0x10],ff549810,SDM 일치,call	qword ptr [rax + 4*rbx + 16],ff549810
 228-3,228,CALL r/m64,FF /2,call qword ptr [rip+0x10],ff1510000000,as,SDM 일치,call   QWORD PTR [rip+0x10]        # 0x16,ff1510000000,SDM 일치,call	qword ptr [rip + 16],ff1510000000
 231-0,231,CALL m16:16,FF /3,data16 call fword ptr [rax],66ff18,as,SDM 일치,call   DWORD PTR [rax],66ff18,니모닉 다름(도구 관례 철자),lcall	[rax],
-232-0,232,CALL m16:32,FF /3,call fword ptr [rax],ff18,as,SDM 일치,call   FWORD PTR [rax],ff18,오퍼랜드 다름(먼 포인터 표시 없음),call	[rax],같은 문법의 다른 인코딩 ff10
-232-1,232,CALL m16:32,FF /3,call fword ptr [rax+rbx*4+0x10],ff5c9810,as,SDM 일치,call   FWORD PTR [rax+rbx*4+0x10],ff5c9810,오퍼랜드 다름(먼 포인터 표시 없음),call	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff549810
-232-2,232,CALL m16:32,FF /3,call fword ptr [rip+0x10],ff1d10000000,as,SDM 일치,call   FWORD PTR [rip+0x10]        # 0x16,ff1d10000000,오퍼랜드 다름(먼 포인터 표시 없음),call	[rip + 16],같은 문법의 다른 인코딩 ff1510000000
+232-0,232,CALL m16:32,FF /3,call fword ptr [rax],ff18,as,SDM 일치,call   FWORD PTR [rax],ff18,SDM 일치(먼 포인터 크기 표기 미대조),call	[rax],같은 문법의 다른 인코딩 ff10
+232-1,232,CALL m16:32,FF /3,call fword ptr [rax+rbx*4+0x10],ff5c9810,as,SDM 일치,call   FWORD PTR [rax+rbx*4+0x10],ff5c9810,SDM 일치(먼 포인터 크기 표기 미대조),call	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff549810
+232-2,232,CALL m16:32,FF /3,call fword ptr [rip+0x10],ff1d10000000,as,SDM 일치,call   FWORD PTR [rip+0x10]        # 0x16,ff1d10000000,SDM 일치(먼 포인터 크기 표기 미대조),call	[rip + 16],같은 문법의 다른 인코딩 ff1510000000
 233-0,233,CALL m16:64,REX.W FF /3,rex64 call fword ptr [rax],48ff18,as,오퍼랜드 다름,rex.W call FWORD PTR [rax],48ff18,니모닉 다름(도구 관례 철자),lcall	[rax],
 234-0,234,CBW,98,cbw,6698,as,SDM 일치,cbw,6698,SDM 일치,cbw,6698
 235-0,235,CWDE,98,cwde,98,as,SDM 일치,cwde,98,SDM 일치,cwde,98
@@ -2983,9 +2983,9 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 920-2,920,JMP r/m64,FF /4,jmp qword ptr [rax+rbx*4+0x10],ff649810,as,SDM 일치,jmp    QWORD PTR [rax+rbx*4+0x10],ff649810,SDM 일치,jmp	qword ptr [rax + 4*rbx + 16],ff649810
 920-3,920,JMP r/m64,FF /4,jmp qword ptr [rip+0x10],ff2510000000,as,SDM 일치,jmp    QWORD PTR [rip+0x10]        # 0x16,ff2510000000,SDM 일치,jmp	qword ptr [rip + 16],ff2510000000
 923-0,923,JMP m16:16,FF /5,data16 jmp fword ptr [rax],66ff28,as,SDM 일치,jmp    DWORD PTR [rax],66ff28,니모닉 다름(도구 관례 철자),ljmp	[rax],
-924-0,924,JMP m16:32,FF /5,jmp fword ptr [rax],ff28,as,SDM 일치,jmp    FWORD PTR [rax],ff28,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rax],같은 문법의 다른 인코딩 ff20
-924-1,924,JMP m16:32,FF /5,jmp fword ptr [rax+rbx*4+0x10],ff6c9810,as,SDM 일치,jmp    FWORD PTR [rax+rbx*4+0x10],ff6c9810,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff649810
-924-2,924,JMP m16:32,FF /5,jmp fword ptr [rip+0x10],ff2d10000000,as,SDM 일치,jmp    FWORD PTR [rip+0x10]        # 0x16,ff2d10000000,오퍼랜드 다름(먼 포인터 표시 없음),jmp	[rip + 16],같은 문법의 다른 인코딩 ff2510000000
+924-0,924,JMP m16:32,FF /5,jmp fword ptr [rax],ff28,as,SDM 일치,jmp    FWORD PTR [rax],ff28,SDM 일치(먼 포인터 크기 표기 미대조),jmp	[rax],같은 문법의 다른 인코딩 ff20
+924-1,924,JMP m16:32,FF /5,jmp fword ptr [rax+rbx*4+0x10],ff6c9810,as,SDM 일치,jmp    FWORD PTR [rax+rbx*4+0x10],ff6c9810,SDM 일치(먼 포인터 크기 표기 미대조),jmp	[rax + 4*rbx + 16],같은 문법의 다른 인코딩 ff649810
+924-2,924,JMP m16:32,FF /5,jmp fword ptr [rip+0x10],ff2d10000000,as,SDM 일치,jmp    FWORD PTR [rip+0x10]        # 0x16,ff2d10000000,SDM 일치(먼 포인터 크기 표기 미대조),jmp	[rip + 16],같은 문법의 다른 인코딩 ff2510000000
 925-0,925,JMP m16:64,REX.W FF /5,rex64 jmp fword ptr [rax],48ff28,as,오퍼랜드 다름,rex.W jmp FWORD PTR [rax],48ff28,니모닉 다름(도구 관례 철자),ljmp	[rax],
 926-0,926,"KADDW k1, k2, k3",VEX.L1.0F.W0 4A /r,"kaddw k0, k1, k2",c5f44ac2,as,SDM 일치,"kaddw  k0,k1,k2",c5f44ac2,SDM 일치,"kaddw	k0, k1, k2",c5f44ac2
 927-0,927,"KADDB k1, k2, k3",VEX.L1.66.0F.W0 4A /r,"kaddb k0, k1, k2",c5f54ac2,as,SDM 일치,"kaddb  k0,k1,k2",c5f54ac2,SDM 일치,"kaddb	k0, k1, k2",c5f54ac2

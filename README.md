@@ -10,7 +10,7 @@ Intel SDM(093판)의 인코딩 표 행마다 x86-64 Intel 문법 명령어를 �
 - 환경: WSL2 Ubuntu, GNU Binutils 2.47, LLVM 23.1.3(`pipeline/toolchain.py`), Intel Core Ultra 5 226V
 - 생성: 4,219행 → 19,462케이스(값마다 원문 근거 기록)
 - 판정: SDM 일치 GNU as 19,336, clang 19,140
-- 역어셈블 대조: SDM 일치 바이트 19,248개 중 SDM 일치 objdump 19,177, LLVM 19,175
+- 역어셈블 대조: SDM 일치 바이트 19,248개 중 SDM 일치 objdump 19,177, LLVM 19,181
 - 상세와 차이 목록: [보고서](out/cases/REPORT.md)
 
 이 수치는 인코딩 필드 대조 결과이며 전체 ISA 의미 검증 완료율이 아니다.

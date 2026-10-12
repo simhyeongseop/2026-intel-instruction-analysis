@@ -52,6 +52,9 @@ FORCING = {"as": ["{evex} ", "{vex3} ", "{vex} ", "{load} ", "{store} ", "{evex}
 #   (and registers) to be enabled explicitly." opcodes/i386-gen.c 기본 아키텍처 UNKNOWN = ~(IAMCU|MPX|...).
 DEFAULT_OFF = {"as": {"MPX": "GNU 2.44부터 기본 설정에서 MPX 제외(커밋 57c526470: GCC 9가 MPX를 뺌). "
                              "-march=generic64+mpx 또는 .arch .mpx로 켬"}}
+# 원문 폭과 도구·CPU 관측이 다른 행: 도구가 거부할 때 note에 남긴다(버그 후보 아님, 2026-10-12 사용자 결정)
+ROW_REJECT_NOTES = {"1099": "원문 r/m64(표·SYM038·Description 'lower 16 bits of r/m64') 대 관측: GNU·clang은 16비트 메모리로 "
+                            "처리, CPU(Core Ultra 5 226V)는 2바이트만 읽음(tests/review_cpu_cases.c 쪽 경계)"}
 NOT_ON_THIS_CPU = re.compile(r"AVX512|AVX10|AMX|FRED|HRESET|AVX-VNNI-INT|KL\b|AESKLE|APX", re.I)
 FLAG_NAMES = {"SSE4_1": "sse4_1", "SSE4_2": "sse4_2", "BMI1": "bmi1", "BMI2": "bmi2", "PCLMULQDQ": "pclmulqdq",
               "SSE": "sse", "SSE2": "sse2", "SSE3": "pni", "SSSE3": "ssse3", "AVX": "avx", "AVX2": "avx2",
@@ -271,6 +274,8 @@ def main():
         still = [t for t in TOOLS if result["verdict_" + t] in ("거부", "모르는 명령")]
         result["note"] = ("도구 미지원 등록 행(source_conflict_cases): " + ", ".join(still)
                           if case["row_id"] in unsupported and still else "")
+        if case["row_id"] in ROW_REJECT_NOTES and still:
+            result["note"] = (result["note"] + " | " if result["note"] else "") + ROW_REJECT_NOTES[case["row_id"]]
         for tool in TOOLS:
             reason = DEFAULT_OFF.get(tool, {}).get(case["cpuid_flag"].strip())
             if reason and "is not supported on" in result["diagnostic_" + tool]:

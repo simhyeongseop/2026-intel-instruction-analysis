@@ -16,6 +16,8 @@
 - 니모닉 다름: 같은 opcode 칸의 SDM 표 행 니모닉, SDM 의사 니모닉 표(disasm_rules), 생성 철자 어디에도 없음
 - 니모닉 다름(도구 관례 철자): 그중 도구 쪽 관례 이름(movabs, lcall, fcompi …, disasm_rules.TOOL_SPELLINGS)
 - SDM 일치(같은 opcode 표 행의 표기): 같은 opcode의 오퍼랜드 없는 표 행 이름으로 출력(XLAT m8 -> XLATB)
+- SDM 일치(먼 포인터 크기 표기 미대조): 먼 CALL·JMP(m16:N) 바이트를 크기 표기 없이 출력함(LLVM 'call [rax]').
+  SDM에는 m16:N의 어셈블리 크기 표기 문법이 없어 대조할 기준이 없다(예전 판정 '오퍼랜드 다름(먼 포인터 표시 없음)' 철회)
 - SDM 일치(reg 칸 레지스터 폭 표기): 표 기호가 reg(SYM039 "r16, r32, or r64")인 칸에서 같은 번호의 다른 폭
   범용 레지스터로 출력(movmskpd rdx -> edx, 같은 바이트)
 대조 규칙(disasm_rules, 근거 쪽 포함): FWAIT 짝(9B 행 = FWAIT + FN*), F2/F3 접두어 이름(2.1.1),
@@ -297,7 +299,8 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
         out["verdict"] = "SDM 일치(암묵 오퍼랜드 미대조)"
         return out
     if main in D.NEAR_AND_FAR and far_pointer(isa_row) and not re.search(r"\bptr\b", rest, re.I):
-        out["verdict"] = "오퍼랜드 다름(먼 포인터 표시 없음)"
+        # SDM은 m16:N의 어셈블리 크기 표기(FWORD PTR 등)를 정의하지 않는다(Vol.1·Vol.2 전체 검색, 2026-10-12)
+        out["verdict"] = "SDM 일치(먼 포인터 크기 표기 미대조)"
     else:
         if compare_operands(case, rest, folded, reversible, isa_row):
             out["verdict"] = "SDM 일치"
