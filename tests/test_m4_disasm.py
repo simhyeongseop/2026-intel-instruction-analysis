@@ -94,5 +94,21 @@ class FarPointerTest(unittest.TestCase):
         self.assertEqual(self.judge("objdump", "ff18"), "SDM 일치")                          # 'call FWORD PTR [rax]'
 
 
+class RegWidthTest(unittest.TestCase):
+    """SYM039 reg 칸(r16, r32, or r64)은 같은 번호의 다른 폭 이름도 SDM 표기. 다른 칸이나 다른 번호는 아님."""
+
+    def compare(self, operands, decoded, row_operands, free):
+        row = {"operands": row_operands, "opcode": "66 0F 50 /r", "mnemonic": "MOVMSKPD",
+               "instruction": "MOVMSKPD " + row_operands}
+        return M.compare_operands({"operands": operands}, decoded, False, False, row, reg_width_free=free)
+
+    def test_reg_symbol(self):
+        self.assertFalse(self.compare("rdx, xmm0", "edx, xmm0", "reg, xmm", False))
+        self.assertTrue(self.compare("rdx, xmm0", "edx, xmm0", "reg, xmm", True))
+        self.assertTrue(self.compare("rdx, xmm0, 0x12", "edx, xmm0, 0x12", "reg/m16, xmm, imm8", True))
+        self.assertFalse(self.compare("rdx, xmm0", "ecx, xmm0", "reg, xmm", True))     # 다른 번호
+        self.assertFalse(self.compare("rdx, rcx", "rdx, ecx", "r64, r/m64", True))      # reg 칸이 아님
+
+
 if __name__ == "__main__":
     unittest.main()

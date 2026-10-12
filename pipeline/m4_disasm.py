@@ -16,6 +16,8 @@
 - 니모닉 다름: 같은 opcode 칸의 SDM 표 행 니모닉, SDM 의사 니모닉 표(disasm_rules), 생성 철자 어디에도 없음
 - 니모닉 다름(도구 관례 철자): 그중 도구 쪽 관례 이름(movabs, lcall, fcompi …, disasm_rules.TOOL_SPELLINGS)
 - SDM 일치(같은 opcode 표 행의 표기): 같은 opcode의 오퍼랜드 없는 표 행 이름으로 출력(XLAT m8 -> XLATB)
+- SDM 일치(reg 칸 레지스터 폭 표기): 표 기호가 reg(SYM039 "r16, r32, or r64")인 칸에서 같은 번호의 다른 폭
+  범용 레지스터로 출력(movmskpd rdx -> edx, 같은 바이트)
 대조 규칙(disasm_rules, 근거 쪽 포함): FWAIT 짝(9B 행 = FWAIT + FN*), F2/F3 접두어 이름(2.1.1),
 의사 니모닉 표, 암묵 오퍼랜드(<XMM0>, 문자열 누산기, 리터럴 1) 생략·출력, 메모리 폭은 원문 폭(m16:N 포함)과 비교
 - SDM 일치(암묵 오퍼랜드 미대조): 표 행에 오퍼랜드가 없는데(OUTSB 등) 역어셈블러가 암묵 오퍼랜드를 출력함
@@ -208,7 +210,15 @@ def drop_implicit(got, wanted, isa_row):
     return got, wanted
 
 
-def compare_operands(case, decoded_text, folded_imm, reversible, isa_row):
+def reg_positions(isa_row):
+    """표 기호 순서(암묵 오퍼랜드 제외)에서 레지스터 칸이 SYM039 reg인 자리('reg', 'reg/m16' 등)."""
+    symbols = [R.clean_symbol(s) for s in isa_row["operands"].split(",")]
+    symbols = [s for s in symbols if s and not s.startswith("<")]
+    return {index for index, symbol in enumerate(symbols) if "reg" in symbol.split("/")}
+
+
+def compare_operands(case, decoded_text, folded_imm, reversible, isa_row, reg_width_free=False):
+    """오퍼랜드가 같은가. reg_width_free면 SYM039 reg 칸은 범용 레지스터 번호만 본다."""
     wanted = [D.operand(t) for t in source_operands(case)]
     bits = sdm_memory_bits(isa_row)
     if len(bits) == len(wanted):
@@ -219,8 +229,12 @@ def compare_operands(case, decoded_text, folded_imm, reversible, isa_row):
         wanted = wanted[:-1]
     got = [D.operand(t) for t in decoded_operands(decoded_text)]
     got, wanted = drop_implicit(got, wanted, isa_row)
+    free = reg_positions(isa_row) if reg_width_free and not reversible else set()
+
+    def same(index, a, b):
+        return D.same_operand(a, b) or (index in free and D.same_gp_register(a, b))
     orders = [wanted] + ([wanted[::-1]] if reversible else [])
-    return any(len(w) == len(got) and all(D.same_operand(a, b) for a, b in zip(w, got)) for w in orders)
+    return any(len(w) == len(got) and all(same(i, a, b) for i, (a, b) in enumerate(zip(w, got))) for w in orders)
 
 
 def far_pointer(isa_row):
@@ -285,7 +299,12 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
     if main in D.NEAR_AND_FAR and far_pointer(isa_row) and not re.search(r"\bptr\b", rest, re.I):
         out["verdict"] = "오퍼랜드 다름(먼 포인터 표시 없음)"
     else:
-        out["verdict"] = "SDM 일치" if compare_operands(case, rest, folded, reversible, isa_row) else "오퍼랜드 다름"
+        if compare_operands(case, rest, folded, reversible, isa_row):
+            out["verdict"] = "SDM 일치"
+        elif compare_operands(case, rest, folded, reversible, isa_row, reg_width_free=True):
+            out["verdict"] = "SDM 일치(reg 칸 레지스터 폭 표기)"   # SYM039: r16, r32, or r64 같은 표기
+        else:
+            out["verdict"] = "오퍼랜드 다름"
     again = assemble(".intel_syntax noprefix\n" + strip_comment(texts[0]) + "\n", DISASSEMBLERS[name])
     out["reassembled"] = (again["bytes"] if again["bytes"] == hex_bytes else
                           "같은 문법의 다른 인코딩 " + again["bytes"] if again["observation_status"] == "accepted"

@@ -132,7 +132,8 @@ def operand_choices(symbol, row, regs):
     if mnemonic in R.STRING_NAMES and part in R.STRING_ACCUMULATOR_BITS and row["string_memory_accumulator"]:
         keyword = R.SIZE_KEYWORD[R.STRING_ACCUMULATOR_BITS[part]]
         return [("string_mem", "%s ptr [rsi]" % keyword, "SYM041/042 DS:(E)SI")], \
-            notes + ["누산기 표기를 GNU가 받는 메모리 철자로 씀(as 관측: 'rep lods al' 거부)"]
+            notes + ["누산기 대신 원천 메모리를 적음(Vol.2 685 LODS: explicit-operands form은 source를 적고 "
+                     "destination은 자동 선택)"]
     fixed = R.fixed_register(part)
     if fixed:
         return [("fixed", fixed, "표에 적힌 레지스터")], notes
@@ -142,7 +143,8 @@ def operand_choices(symbol, row, regs):
         stated = row["widths"].get(symbol, "").strip()
         width = "r64" if stated == "64" or re.search(r"\bW1\b|REX\.W", opcode) else "r32"
         name, source = regs.take(width)
-        return [("reg", name, "SYM039 + " + ("명령 절 64" if stated == "64" else R.VOL1_DEFAULTS[0]))], notes
+        choices = [("reg", name, "SYM039 + " + ("명령 절 64" if stated == "64" else R.VOL1_DEFAULTS[0]))]
+        return choices + wide_register(row, regs, width), notes
     pieces = [part] if R.is_memory(part) else part.split("/")   # 'm14/28byte'는 표기 하나
     register_parts = [p for p in pieces if not R.is_memory(p)]
     memory_parts = [p for p in pieces if R.is_memory(p)]
@@ -154,12 +156,15 @@ def operand_choices(symbol, row, regs):
         if piece == "r":   # r/m8 등: 짝 메모리 폭의 범용 레지스터(SYM035~038)
             width = re.match(r"m(\d+)", memory_parts[0]).group(1)
             piece = "r" + width
-        if piece == "reg":
+        from_reg = piece == "reg"
+        if from_reg:   # reg/m16 등: SYM039(r16·r32·r64 중 하나)에서 64비트 모드 기본 크기 32를 고름
             piece = "r32"
         family = R.register_family(piece)
         if family is None:
             raise ValueError("모르는 레지스터 표기 %r (row %s)" % (piece, row["row_id"]))
         name, source = regs.take(family, even=piece.startswith("k") and "+1" in part)
+        if from_reg:
+            source = "SYM039 + " + R.VOL1_DEFAULTS[0]
         if family == "zmm" or family == "xmm" or family == "ymm":
             block = re.fullmatch(r"[xyz]mm(\d+)\+3", piece)
             if block:  # zmm2+3: 표에 적힌 첫 레지스터부터 4개 묶음(번호는 표 그대로)
@@ -168,7 +173,17 @@ def operand_choices(symbol, row, regs):
     for piece in memory_parts:
         for kind, text, source in memory_choices(piece, pieces, row, regs):
             choices.append((kind, text, R.RM_SYMBOLS.get(part, source) if kind == "mem" else source))
+    if "reg" in pieces:
+        choices += wide_register(row, regs, "r32")
     return choices, notes
+
+
+def wide_register(row, regs, chosen):
+    """reg 칸의 r64 대안. 대표값이 r32이고 원문이 r64를 허용하는 행만(case_rules.REG_R64). 변형 목록 끝에 붙인다."""
+    if chosen != "r32" or row["name"] not in R.REG_R64:
+        return []
+    name, _ = regs.take("r64")
+    return [("reg", name, R.REG_R64[row["name"]])]
 
 
 def memory_choices(piece, pieces, row, regs):

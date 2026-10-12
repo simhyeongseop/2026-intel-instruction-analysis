@@ -137,6 +137,19 @@ def operand(text):
     return {"kind": "reg", "name": text.replace(" ", ""), "decor": decorations}
 
 
+# 범용 레지스터 번호: SYM039 reg 칸은 r16·r32·r64 중 무엇이든 같은 표기라 번호만 비교한다
+_GP_NAMES = [("ax", "eax", "rax"), ("cx", "ecx", "rcx"), ("dx", "edx", "rdx"), ("bx", "ebx", "rbx"),
+             ("sp", "esp", "rsp"), ("bp", "ebp", "rbp"), ("si", "esi", "rsi"), ("di", "edi", "rdi")] + \
+            [("r%dw" % n, "r%dd" % n, "r%d" % n) for n in range(8, 16)]
+GP_NUMBER = {name: number for number, names in enumerate(_GP_NAMES) for name in names}
+
+
+def same_gp_register(source, decoded):
+    """reg 칸: 둘 다 범용 레지스터(16/32/64)이고 번호가 같은가(edx와 rdx)."""
+    return (source["kind"] == decoded["kind"] == "reg" and source["decor"] == decoded["decor"]
+            and source["name"] in GP_NUMBER and GP_NUMBER[source["name"]] == GP_NUMBER.get(decoded["name"]))
+
+
 def same_operand(source, decoded):
     """생성 소스의 오퍼랜드와 역어셈블 오퍼랜드가 같은 것을 가리키는가."""
     if source["kind"] != decoded["kind"] or source["decor"] != decoded["decor"]:

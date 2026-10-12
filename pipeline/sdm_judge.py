@@ -21,7 +21,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # CLI의 도구 이름 -> 3단계 이름
 TOOL_NAMES = {"gnu_as": "as", "clang": "clang"}
 ASSEMBLER_OK = ("SDM 일치", "SDM 일치(거부)")
-DISASM_OK = ("SDM 일치", "SDM 일치(분기 대상 미대조)", "SDM 일치(암묵 오퍼랜드 미대조)", "SDM 일치(같은 opcode 표 행의 표기)")
+DISASM_OK = ("SDM 일치", "SDM 일치(분기 대상 미대조)", "SDM 일치(암묵 오퍼랜드 미대조)", "SDM 일치(같은 opcode 표 행의 표기)",
+             "SDM 일치(reg 칸 레지스터 폭 표기)")
 REP_BYTE = {"rep": "f3", "repe": "f3", "repz": "f3", "repne": "f2", "repnz": "f2"}
 
 _CONTEXT = None

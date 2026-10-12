@@ -61,6 +61,7 @@ SDM 원문 검토 결과가 바뀌면 다음 순서로 행 상태를 다시 만�
 python3 scripts/compare_sdm_review.py          # Sol 추출과 독립 판정 대조 -> compare/
 python3 scripts/check_source_conflicts.py --execute   # 원문 충돌 예외 대조 -> conflict_tests/results.csv
 python3 scripts/build_rows_status.py           # 행 상태 -> compare/rows_status.csv
+python3 scripts/check_sol_only_values.py       # Sol만 값을 붙인 줄과 생성 값 대조 -> compare/sol_only_check.csv(2단계 뒤)
 ```
 
 `conflict_tests/`의 `row_cases.csv`, `all_cases.csv`, `all_results.csv`, `defect_cases.csv`는 예전 생성기(2026-10-10) 때 대조한 기록이다.

@@ -16,13 +16,15 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 - 결과: `out/cases/REPORT.md`(첫 절이 최신 판 기준)
 - 검사 CLI(`scripts/asm_linter.py`): 줄마다 후보 SDM 행을 찾고 3·4단계와 같은 판정을 낸다(`pipeline/sdm_judge.py`, 10월 12일).
   - 전체 19,425케이스 대조: 생성 행이 모두 후보에 있고, 3단계 SDM 일치 34,108건이 CLI에서도 같은 행으로 SDM 일치(`scripts/check_cli_consistency.py`).
+- reg 칸 r64 변형 추가(10월 12일): 기존 케이스 판정 변화 0. 4단계 새 판정 `SDM 일치(reg 칸 레지스터 폭 표기)`.
+- 결정 6 완료(10월 12일): Sol만 값을 붙였던 1,410줄이 생성 값과 모두 맞는다(일치 786, Sol 폭 없음·완화 근거 620, REP LODS 철자 선택 4). `scripts/check_sol_only_values.py`
 
 ## 수치(2026-10-12, 2.47 / 23.1.3)
 
-- 4,219행 → 19,425케이스. 모든 행이 사양 신뢰 상태다(원문 확정·완화 A~D·예외 등록).
-- 3단계 SDM 일치: GNU 19,313, clang 19,118. 행 전체 일치: GNU 4,195, clang 4,064.
-- 4단계(SDM 일치 바이트 19,223개) 일치 계열: objdump 19,152, LLVM 19,150.
-- CPU 관측: exit0 1,954, SIGSEGV 88, SIGFPE 8, SIGILL 11, SIGTRAP 2.
+- 4,219행 → 19,462케이스(reg 칸 r64 변형 37개 포함). 모든 행이 사양 신뢰 상태다(원문 확정·완화 A~D·예외 등록).
+- 3단계 SDM 일치: GNU 19,336, clang 19,140. 행 전체 일치: GNU 4,187, clang 4,058.
+- 4단계(SDM 일치 바이트 19,248개) 일치 계열: objdump 19,177, LLVM 19,175.
+- CPU 관측: exit0 1,973, SIGSEGV 88, SIGFPE 8, SIGILL 11, SIGTRAP 2.
 
 ## 열린 항목
 
@@ -34,7 +36,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 - GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(binutils 57c526470).
   - 사용자 결정: 기본 설정 그대로 기록한다. 쓰려면 `-march=generic64+mpx`
 - MOV Sreg, r/m64 메모리 폭: 원문 근거가 없어 미확인이다.
-- 결정 6(Sol 단독 값 1,410줄)을 생성 값과 대조하는 일이 남았다.
+- VMOVW·VPBROADCASTB/W r64: 명령 절이 폭을 적지 않아 SYM039만 근거다. GNU는 모두 거부, clang은 VMOVW만 받는다. 버그 후보로 올리지 않았다.
 - GNU IRET `iret` → `cf`(IRETD): 원문이 허용하는 동의어 처리로 기록했다.
 
 ## 사용자 결정(유지)
@@ -43,6 +45,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 - 원문 충돌은 표 기준으로 생성하고 예외로 등록해 대조한다(`data/rules/source_conflict_cases.csv`).
 - 도구끼리는 비교하지 않고, SDM 대 각 도구로 판정한다.
 - 매뉴얼 조회와 검사 도구는 터미널로 한다.
+- reg 칸(SYM039 "r16, r32, or r64")의 r16 케이스는 만들지 않는다(2026-10-12). 명령 절에 r16이 없고 16비트 크기를 나타낼 인코딩이 없다.
 - 커밋은 브랜치 `sdm-review-093`에, 사용자 승인 후에 한다. PDF와 `out/manual_index*`는 커밋하지 않는다.
 
 ## 필요한 파일만 읽기

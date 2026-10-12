@@ -38,6 +38,22 @@ class OperandTest(unittest.TestCase):
         self.assertEqual([(k, t) for k, t, _ in choices("r/m8")], [("reg", "cl"), ("mem", "byte ptr {addr}")])
         self.assertEqual(choices("r/m16")[1][2], "SYM036")       # 메모리 근거: r/m16 정의(SYM042 m16은 문자열 명령 전용)
         self.assertEqual(choices("m16", "LLDT")[0][2], "SYM042")  # 단독 m16 표기는 그대로
+        # reg/m16(VMOVW): 레지스터 칸 근거는 reg 정의(SYM039: r16, r32, or r64)이고 값은 64비트 모드 기본 32
+        reg = choices("reg/m16", "VMOVW", "EVEX.128.66.MAP5.WIG 6E /r")[0]
+        self.assertEqual(reg[1], "ecx")
+        self.assertTrue(reg[2].startswith("SYM039"))
+
+    def test_reg_r64_alternative(self):
+        # MOVMSKPD 절 "The upper bits of r32 or r64 are filled with zeros": 대표 r32 다음에 r64
+        picks = [(k, t) for k, t, _ in choices("reg", "MOVMSKPD", "66 0F 50 /r")]
+        self.assertEqual(picks, [("reg", "ecx"), ("reg", "rdx")])
+        # reg/m16: r32, m16, r64 순서(기존 변형 이름을 바꾸지 않음). r16은 만들지 않음
+        kinds = [(k, t) for k, t, _ in choices("reg/m16", "VMOVW", "EVEX.128.66.MAP5.WIG 6E /r")]
+        self.assertEqual(kinds, [("reg", "ecx"), ("mem", "word ptr {addr}"), ("reg", "rdx")])
+        # SENDUIPI 절 "The operand always has 64 bits": 대표값이 이미 r64면 대안 없음
+        row = fake_row("SENDUIPI", "F3 0F C7 /6", ["reg"])
+        row["widths"] = {"reg": "64"}
+        self.assertEqual([t for _, t, _ in G.operand_choices("reg", row, G.RowRegisters(set()))[0]], ["rax"])
 
     def test_broadcast_count_from_plain_memory_width(self):
         self.assertEqual(choices("xmm3/m128/m32bcst")[-1][1], "dword ptr {addr}{1to4}")

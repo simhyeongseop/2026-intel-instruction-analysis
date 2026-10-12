@@ -1228,3 +1228,41 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
   - REX.W 반례를 `test_operand_size_prefix.py`에 추가했다.
   - 전체 19,425케이스를 CLI와 대조했다(`scripts/check_cli_consistency.py`). 생성 행 19,425개가 모두 후보에 있었고, 3단계 SDM 일치 34,108건이 모두 같은 행으로 SDM 일치였다.
   - 전체 회귀 통과
+
+## 2026-10-12 [검토] 결정 6: Sol 단독 값 1,410줄을 생성 값과 대조
+
+- 대상: 10월 10일 오퍼랜드 대조(`out/sdm_review_093/compare/operands.csv`)에서 `main 총론 정의 없음·Sol 값 있음`인 1,410줄.
+  - main 기호 규칙표에 총론 정의가 없어 Sol 한쪽만 종류·폭을 붙인 줄이다. 원문 근거가 없는 줄이 아니다.
+  - 행 상태는 이미 모두 정해져 있었다(원문 확정 587, 완화 A 625, B 65, D 39, C 21, 원문 충돌 예외 73).
+- `scripts/check_sol_only_values.py`(새 파일): 줄마다 생성 케이스의 그 칸 종류(근거 열)와 폭(소스 문자열)을 Sol 값과 대조한다.
+  - 폭은 Sol 폭 문장의 수이거나, 표 기호에 적힌 그 칸의 폭(xmm=128, m64, m32bcst의 32, reg=SYM039 16·32·64)이면 맞는 것으로 본다.
+  - Sol 폭 문장은 메모리 폭만 적은 줄이 많아(`xmm2/m64`의 64), 레지스터·브로드캐스트 원소 폭은 표 기호로 본다.
+  - 결과 `out/sdm_review_093/compare/sol_only_check.csv`
+- 결과: 일치 786, 종류 일치(Sol 폭 없음) 620, 철자 선택 4, 다름 0
+  - Sol 폭 없음 620줄: 생성 근거가 완화 A(Vol.1 332 zmm), B(결합), C(가변) 원문을 인용한다.
+  - 철자 선택 4줄: REP LODS AL/AX/EAX/RAX. 누산기 대신 GNU가 받는 메모리 철자(`rep lods byte ptr [rsi]`)로 생성했고 이미 note에 있다. 폭은 Sol과 같다.
+  - VMOVW `reg/m16` 2줄: Sol 폭 16은 옮기는 word 원소 폭이다(본문 "the lower 16-bits of the register"). 생성 `ecx`는 SYM039 "r16, r32, or r64" 안이다.
+- 대조 중 고친 근거 표기(생성 값은 그대로, `cases.csv` evidence 열만 59케이스·24행 변경):
+  - `reg/m8~32`의 레지스터 칸 근거를 SYM028(r32)에서 SYM039(reg) + Vol.1 66 기본 크기로 고쳤다(EXTRACTPS, PEXTRB/W, VMOVW 등 8행).
+  - `mem` 근거 문구 "완화 C(가변) 또는 원문 없음"을 실제 근거로 고쳤다. 대상 13행은 LDDQU(명령 절 16바이트) 하나와 XSAVE·XRSTOR 계열(완화 C)이다.
+  - 이제 생성 근거에 "원문 없음"은 0건이다. 소스·기대 결과가 같아 3·4단계는 다시 돌리지 않았다.
+- 검증: `test_m2_generate.py`에 reg/m16 근거 반례를 추가했다. 생성 전후 `cases.csv`를 대조해 evidence 열 외 변화 0을 확인했다. 전체 회귀 통과.
+
+## 2026-10-12 [생성·판정] reg 칸 r64 변형, REP LODS 근거, 4단계 reg 폭 표기
+
+- 계기: 결정 6 대조에서 VMOVW `reg/m16`을 확인하다가, 생성기가 SYM039 reg 칸을 r32 하나로만 만든다는 점을 확인했다. 사용자 요청으로 명령 절마다 원문을 확인하고 대안을 넣었다.
+- 원문 확인(reg 칸이 있는 31행):
+  - 명령 절이 r32·r64를 적음 23행: MOVMSKPD/PS 787·789쪽 "r32 or r64", PEXTRB 989쪽, PEXTRW 992쪽, PMOVMSKB 1053쪽(VPMOVMSKB ymm는 Description r64, Operation r32), EXTRACTPS 423쪽 "default operand size of 64 bits"
+  - 64비트만 적음 1행: SENDUIPI 1323쪽 "The operand always has 64 bits"(이미 r64)
+  - 폭을 적지 않음 8행: VMOVW 1899쪽, VPBROADCASTB/W 1921쪽. SYM039만 근거
+  - r16은 어느 명령 절에도 없다. 레거시 형태는 66이 필수 접두어, VEX/EVEX는 앞의 66이 #UD(Vol.2 43쪽)라 16비트 크기를 나타낼 인코딩이 없다. 만들지 않았다. 사용자 결정(같은 날): r16은 만들지 않는 것으로 확정.
+- `case_rules.REG_R64`, `m2_generate.wide_register`: reg 칸에 r64 대안을 변형 목록 끝에 붙인다. 37케이스 추가(19,462).
+  - 같은 행 안의 imm_max·mask 변형 번호(case_id)가 하나씩 밀린 행이 있다. row_id·변형·소스·근거 기준으로 기존 케이스는 모두 그대로다.
+- REP LODS note: 근거를 "as 관측: 'rep lods al' 거부"에서 Vol.2 685쪽 LODS explicit-operands form으로 바꿨다. `lods al`은 GNU·clang 모두 거부, `rep lods al, byte ptr [rsi]`와 `rep lods byte ptr [rsi]`는 둘 다 `f3 ac`.
+- 4단계 `SDM 일치(reg 칸 레지스터 폭 표기)`(`m4_disasm.reg_positions`, `disasm_rules.same_gp_register`): reg 칸에서 같은 번호의 다른 폭 범용 레지스터 출력. r64 소스가 r32와 같은 바이트라 역어셈블러가 `edx`로 낸다. 검사 CLI도 이 판정을 SDM 일치 계열로 센다.
+- 결과(실행 기록 `20261011T235932729872Z`, 4단계 `20261012T000926452246Z`):
+  - 기존 케이스 3·4단계 판정 변화 0
+  - 3단계 GNU 19,336, clang 19,140. 행 전체 일치 GNU 4,187(−8: VMOVW 2, VPBROADCASTB/W 6), clang 4,058(−6: VPBROADCASTB/W)
+  - 4단계 19,248개, objdump 19,177, LLVM 19,175. CPU exit0 1,973
+  - 새 판정 근거가 SYM039뿐인 VMOVW·VPBROADCASTB/W r64 거부는 버그 후보로 올리지 않았다.
+- 검증: `test_m2_generate`(r64 순서, SENDUIPI 대안 없음), `test_m4_disasm`(reg 칸만, 같은 번호만). CLI 일치 대조(19,462 후보, 34,144건 같음), 결정 6 대조 다시 실행(다름 0). 전체 회귀 통과.

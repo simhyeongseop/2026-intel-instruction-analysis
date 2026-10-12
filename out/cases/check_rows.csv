@@ -579,9 +579,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 577,ENTER,"ENTER imm16, imm8",C8 iw ib,reach,2,SDM 일치 2,SDM 일치 2
 578,ERETS,ERETS,F2 0F 01 CA,reach,1,SDM 일치 1,SDM 일치 1
 579,ERETU,ERETU,F3 0F 01 CA,reach,1,SDM 일치 1,SDM 일치 1
-580,EXTRACTPS,"EXTRACTPS reg/m32, xmm1, imm8",66 0F 3A 17 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-581,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",VEX.128.66.0F3A.WIG 17 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-582,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",EVEX.128.66.0F3A.WIG 17 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 5
+580,EXTRACTPS,"EXTRACTPS reg/m32, xmm1, imm8",66 0F 3A 17 /r ib,reach,6,SDM 일치 6,SDM 일치 6
+581,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",VEX.128.66.0F3A.WIG 17 /r ib,reach,6,SDM 일치 6,SDM 일치 6
+582,VEXTRACTPS,"VEXTRACTPS reg/m32, xmm1, imm8",EVEX.128.66.0F3A.WIG 17 /r ib,reach,6,SDM 일치(강제 접두어) 6,SDM 일치(강제 접두어) 6
 583,F2XM1,F2XM1,D9 F0,reach,1,SDM 일치 1,SDM 일치 1
 584,FABS,FABS,D9 E1,reach,1,SDM 일치 1,SDM 일치 1
 585,FADD,FADD m32fp,D8 /0,reach,3,SDM 일치 3,SDM 일치 3
@@ -1261,12 +1261,12 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1259,MOVLPS,"MOVLPS m64, xmm1",0F 13/r,reach,3,SDM 일치 3,SDM 일치 3
 1260,VMOVLPS,"VMOVLPS m64, xmm1",VEX.128.0F.WIG 13/r,reach,3,SDM 일치 3,SDM 일치 3
 1261,VMOVLPS,"VMOVLPS m64, xmm1",EVEX.128.0F.W0 13/r,reach,3,SDM 일치(강제 접두어) 3,SDM 일치(강제 접두어) 3
-1262,MOVMSKPD,"MOVMSKPD reg, xmm",66 0F 50 /r,reach,1,SDM 일치 1,SDM 일치 1
-1263,VMOVMSKPD,"VMOVMSKPD reg, xmm2",VEX.128.66.0F.WIG 50 /r,reach,1,SDM 일치 1,SDM 일치 1
-1264,VMOVMSKPD,"VMOVMSKPD reg, ymm2",VEX.256.66.0F.WIG 50 /r,reach,1,SDM 일치 1,SDM 일치 1
-1265,MOVMSKPS,"MOVMSKPS reg, xmm",NP 0F 50 /r,reach,1,SDM 일치 1,SDM 일치 1
-1266,VMOVMSKPS,"VMOVMSKPS reg, xmm2",VEX.128.0F.WIG 50 /r,reach,1,SDM 일치 1,SDM 일치 1
-1267,VMOVMSKPS,"VMOVMSKPS reg, ymm2",VEX.256.0F.WIG 50 /r,reach,1,SDM 일치 1,SDM 일치 1
+1262,MOVMSKPD,"MOVMSKPD reg, xmm",66 0F 50 /r,reach,2,SDM 일치 2,SDM 일치 2
+1263,VMOVMSKPD,"VMOVMSKPD reg, xmm2",VEX.128.66.0F.WIG 50 /r,reach,2,SDM 일치 2,SDM 일치 2
+1264,VMOVMSKPD,"VMOVMSKPD reg, ymm2",VEX.256.66.0F.WIG 50 /r,reach,2,SDM 일치 2,SDM 일치 2
+1265,MOVMSKPS,"MOVMSKPS reg, xmm",NP 0F 50 /r,reach,2,SDM 일치 2,SDM 일치 2
+1266,VMOVMSKPS,"VMOVMSKPS reg, xmm2",VEX.128.0F.WIG 50 /r,reach,2,SDM 일치 2,SDM 일치 2
+1267,VMOVMSKPS,"VMOVMSKPS reg, ymm2",VEX.256.0F.WIG 50 /r,reach,2,SDM 일치 2,SDM 일치 2
 1268,MOVNTDQ,"MOVNTDQ m128, xmm1",66 0F E7 /r,reach,3,SDM 일치 3,SDM 일치 3
 1269,VMOVNTDQ,"VMOVNTDQ m128, xmm1",VEX.128.66.0F.WIG E7 /r,reach,3,SDM 일치 3,SDM 일치 3
 1270,VMOVNTDQ,"VMOVNTDQ m256, ymm1",VEX.256.66.0F.WIG E7 /r,reach,3,SDM 일치 3,SDM 일치 3
@@ -1693,22 +1693,22 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1691,PDEP,"PDEP r64a, r64b, r/m64",VEX.LZ.F2.0F38.W1 F5 /r,reach,4,SDM 일치 4,SDM 일치 4
 1692,PEXT,"PEXT r32a, r32b, r/m32",VEX.LZ.F3.0F38.W0 F5 /r,reach,4,SDM 일치 4,SDM 일치 4
 1693,PEXT,"PEXT r64a, r64b, r/m64",VEX.LZ.F3.0F38.W1 F5 /r,reach,4,SDM 일치 4,SDM 일치 4
-1694,PEXTRB,"PEXTRB reg/m8, xmm2, imm8",66 0F 3A 14 /r ib,reach,5,SDM 일치 5,SDM 일치 5
+1694,PEXTRB,"PEXTRB reg/m8, xmm2, imm8",66 0F 3A 14 /r ib,reach,6,SDM 일치 6,SDM 일치 6
 1695,PEXTRD,"PEXTRD r/m32, xmm2, imm8",66 0F 3A 16 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 1696,PEXTRQ,"PEXTRQ r/m64, xmm2, imm8",66 REX.W 0F 3A 16 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-1697,VPEXTRB,"VPEXTRB reg/m8, xmm2, imm8",VEX.128.66.0F3A.W0 14 /r ib,reach,5,SDM 일치 5,SDM 일치 5
+1697,VPEXTRB,"VPEXTRB reg/m8, xmm2, imm8",VEX.128.66.0F3A.W0 14 /r ib,reach,6,SDM 일치 6,SDM 일치 6
 1698,VPEXTRD,"VPEXTRD r32/m32, xmm2, imm8",VEX.128.66.0F3A.W0 16 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 1699,VPEXTRQ,"VPEXTRQ r64/m64, xmm2, imm8",VEX.128.66.0F3A.W1 16 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-1700,VPEXTRB,"VPEXTRB reg/m8, xmm2, imm8",EVEX.128.66.0F3A.WIG 14 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 5
+1700,VPEXTRB,"VPEXTRB reg/m8, xmm2, imm8",EVEX.128.66.0F3A.WIG 14 /r ib,reach,6,SDM 일치(강제 접두어) 6,SDM 일치(강제 접두어) 6
 1701,VPEXTRD,"VPEXTRD r32/m32, xmm2, imm8",EVEX.128.66.0F3A.W0 16 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 5
 1702,VPEXTRQ,"VPEXTRQ r64/m64, xmm2, imm8",EVEX.128.66.0F3A.W1 16 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 5
-1703,PEXTRW,"PEXTRW reg, mm, imm8",NP 0F C5 /r ib,reach,2,SDM 일치 2,SDM 일치 2
-1704,PEXTRW,"PEXTRW reg, xmm, imm8",66 0F C5 /r ib,reach,2,SDM 일치 2,SDM 일치 2
-1705,PEXTRW,"PEXTRW reg/m16, xmm, imm8",66 0F 3A 15 /r ib,reach,5,SDM 일치 3; SDM 일치(강제 접두어) 2,SDM 일치 3; 별칭 행 도달 2
-1706,VPEXTRW,"VPEXTRW reg, xmm1, imm8",VEX.128.66.0F.W0 C5 /r ib,reach,2,SDM 일치 2,SDM 일치 2
-1707,VPEXTRW,"VPEXTRW reg/m16, xmm2, imm8",VEX.128.66.0F3A.W0 15 /r ib,reach,5,SDM 일치 3; SDM 일치(강제 접두어) 2,SDM 일치 3; 별칭 행 도달 2
-1708,VPEXTRW,"VPEXTRW reg, xmm1, imm8",EVEX.128.66.0F.WIG C5 /r ib,reach,2,SDM 일치(강제 접두어) 2,SDM 일치(강제 접두어) 2
-1709,VPEXTRW,"VPEXTRW reg/m16, xmm2, imm8",EVEX.128.66.0F3A.WIG 15 /r ib,reach,5,SDM 일치(강제 접두어) 5,SDM 일치(강제 접두어) 3; 별칭 행 도달 2
+1703,PEXTRW,"PEXTRW reg, mm, imm8",NP 0F C5 /r ib,reach,3,SDM 일치 3,SDM 일치 3
+1704,PEXTRW,"PEXTRW reg, xmm, imm8",66 0F C5 /r ib,reach,3,SDM 일치 3,SDM 일치 3
+1705,PEXTRW,"PEXTRW reg/m16, xmm, imm8",66 0F 3A 15 /r ib,reach,6,SDM 일치(강제 접두어) 3; SDM 일치 3,별칭 행 도달 3; SDM 일치 3
+1706,VPEXTRW,"VPEXTRW reg, xmm1, imm8",VEX.128.66.0F.W0 C5 /r ib,reach,3,SDM 일치 3,SDM 일치 3
+1707,VPEXTRW,"VPEXTRW reg/m16, xmm2, imm8",VEX.128.66.0F3A.W0 15 /r ib,reach,6,SDM 일치(강제 접두어) 3; SDM 일치 3,별칭 행 도달 3; SDM 일치 3
+1708,VPEXTRW,"VPEXTRW reg, xmm1, imm8",EVEX.128.66.0F.WIG C5 /r ib,reach,3,SDM 일치(강제 접두어) 3,SDM 일치(강제 접두어) 3
+1709,VPEXTRW,"VPEXTRW reg/m16, xmm2, imm8",EVEX.128.66.0F3A.WIG 15 /r ib,reach,6,SDM 일치(강제 접두어) 6,별칭 행 도달 3; SDM 일치(강제 접두어) 3
 1710,PHADDSW,"PHADDSW mm1, mm2/m64",NP 0F 38 03 /r,reach,4,SDM 일치 4,SDM 일치 4
 1711,PHADDSW,"PHADDSW xmm1, xmm2/m128",66 0F 38 03 /r,reach,4,SDM 일치 4,SDM 일치 4
 1712,VPHADDSW,"VPHADDSW xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.WIG 03 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -1850,10 +1850,10 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1848,VPMINUQ,"VPMINUQ xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F38.W1 3B /r,reach,8,SDM 일치 8,SDM 일치 8
 1849,VPMINUQ,"VPMINUQ ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 3B /r,reach,8,SDM 일치 8,SDM 일치 8
 1850,VPMINUQ,"VPMINUQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst",EVEX.512.66.0F38.W1 3B /r,reach,8,SDM 일치 8,SDM 일치 8
-1851,PMOVMSKB,"PMOVMSKB reg, mm",NP 0F D7 /r,reach,1,SDM 일치 1,SDM 일치 1
-1852,PMOVMSKB,"PMOVMSKB reg, xmm",66 0F D7 /r,reach,1,SDM 일치 1,SDM 일치 1
-1853,VPMOVMSKB,"VPMOVMSKB reg, xmm1",VEX.128.66.0F.WIG D7 /r,reach,1,SDM 일치 1,SDM 일치 1
-1854,VPMOVMSKB,"VPMOVMSKB reg, ymm1",VEX.256.66.0F.WIG D7 /r,reach,1,SDM 일치 1,SDM 일치 1
+1851,PMOVMSKB,"PMOVMSKB reg, mm",NP 0F D7 /r,reach,2,SDM 일치 2,SDM 일치 2
+1852,PMOVMSKB,"PMOVMSKB reg, xmm",66 0F D7 /r,reach,2,SDM 일치 2,SDM 일치 2
+1853,VPMOVMSKB,"VPMOVMSKB reg, xmm1",VEX.128.66.0F.WIG D7 /r,reach,2,SDM 일치 2,SDM 일치 2
+1854,VPMOVMSKB,"VPMOVMSKB reg, ymm1",VEX.256.66.0F.WIG D7 /r,reach,2,SDM 일치 2,SDM 일치 2
 1855,PMOVSXBW,"PMOVSXBW xmm1, xmm2/m64",66 0f 38 20 /r,reach,4,SDM 일치 4,SDM 일치 4
 1856,PMOVSXBD,"PMOVSXBD xmm1, xmm2/m32",66 0f 38 21 /r,reach,4,SDM 일치 4,SDM 일치 4
 1857,PMOVSXBQ,"PMOVSXBQ xmm1, xmm2/m16",66 0f 38 22 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3437,8 +3437,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3435,VMOVSH,"VMOVSH m16{k1}, xmm1",EVEX.LLIG.F3.MAP5.W0 11 /r,reach,4,SDM 일치 4,SDM 일치 4
 3436,VMOVSH,"VMOVSH xmm1{k1}{z}, xmm2, xmm3",EVEX.LLIG.F3.MAP5.W0 10 /r,reach,2,SDM 일치 2,SDM 일치 2
 3437,VMOVSH,"VMOVSH xmm1{k1}{z}, xmm2, xmm3",EVEX.LLIG.F3.MAP5.W0 11 /r,reach,2,SDM 일치(강제 접두어) 2,별칭 행 도달 2
-3438,VMOVW,"VMOVW xmm1, reg/m16",EVEX.128.66.MAP5.WIG 6E /r,reach,4,SDM 일치 4,SDM 일치 4
-3439,VMOVW,"VMOVW reg/m16, xmm1",EVEX.128.66.MAP5.WIG 7E /r,reach,4,SDM 일치 4,SDM 일치 4
+3438,VMOVW,"VMOVW xmm1, reg/m16",EVEX.128.66.MAP5.WIG 6E /r,reach,5,SDM 일치 4; 거부 1,SDM 일치 5
+3439,VMOVW,"VMOVW reg/m16, xmm1",EVEX.128.66.MAP5.WIG 7E /r,reach,5,SDM 일치 4; 거부 1,SDM 일치 5
 3440,VMULPH,"VMULPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
 3441,VMULPH,"VMULPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
 3442,VMULPH,"VMULPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
@@ -3493,12 +3493,12 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3491,VBROADCASTI64X2,"VBROADCASTI64X2 zmm1 {k1}{z}, m128",EVEX.512.66.0F38.W1 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 3492,VBROADCASTI32X8,"VBROADCASTI32X8 zmm1 {k1}{z}, m256",EVEX.512.66.0F38.W0 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 3493,VBROADCASTI64X4,"VBROADCASTI64X4 zmm1 {k1}{z}, m256",EVEX.512.66.0F38.W1 5B /r,reach,4,SDM 일치 4,SDM 일치 4
-3494,VPBROADCASTB,"VPBROADCASTB xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
-3495,VPBROADCASTB,"VPBROADCASTB ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
-3496,VPBROADCASTB,"VPBROADCASTB zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
-3497,VPBROADCASTW,"VPBROADCASTW xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
-3498,VPBROADCASTW,"VPBROADCASTW ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
-3499,VPBROADCASTW,"VPBROADCASTW zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
+3494,VPBROADCASTB,"VPBROADCASTB xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3495,VPBROADCASTB,"VPBROADCASTB ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3496,VPBROADCASTB,"VPBROADCASTB zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3497,VPBROADCASTW,"VPBROADCASTW xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3498,VPBROADCASTW,"VPBROADCASTW ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3499,VPBROADCASTW,"VPBROADCASTW zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
 3500,VPBROADCASTD,"VPBROADCASTD xmm1 {k1}{z}, r32",EVEX.128.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2
 3501,VPBROADCASTD,"VPBROADCASTD ymm1 {k1}{z}, r32",EVEX.256.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2
 3502,VPBROADCASTD,"VPBROADCASTD zmm1 {k1}{z}, r32",EVEX.512.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2

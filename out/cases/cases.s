@@ -2393,17 +2393,20 @@ extractps ecx, xmm0, 0x12  # case=580-0 row=580 expected=reach
 extractps dword ptr [rax], xmm0, 0x12  # case=580-1 row=580 expected=reach
 extractps dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=580-2 row=580 expected=reach
 extractps dword ptr [rip+0x10], xmm0, 0x12  # case=580-3 row=580 expected=reach
-extractps ecx, xmm0, 0x7f  # case=580-4 row=580 expected=reach
+extractps rdx, xmm0, 0x12  # case=580-4 row=580 expected=reach
+extractps ecx, xmm0, 0x7f  # case=580-5 row=580 expected=reach
 vextractps ecx, xmm0, 0x12  # case=581-0 row=581 expected=reach
 vextractps dword ptr [rax], xmm0, 0x12  # case=581-1 row=581 expected=reach
 vextractps dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=581-2 row=581 expected=reach
 vextractps dword ptr [rip+0x10], xmm0, 0x12  # case=581-3 row=581 expected=reach
-vextractps ecx, xmm0, 0x7f  # case=581-4 row=581 expected=reach
+vextractps rdx, xmm0, 0x12  # case=581-4 row=581 expected=reach
+vextractps ecx, xmm0, 0x7f  # case=581-5 row=581 expected=reach
 vextractps ecx, xmm0, 0x12  # case=582-0 row=582 expected=reach
 vextractps dword ptr [rax], xmm0, 0x12  # case=582-1 row=582 expected=reach
 vextractps dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=582-2 row=582 expected=reach
 vextractps dword ptr [rip+0x10], xmm0, 0x12  # case=582-3 row=582 expected=reach
-vextractps ecx, xmm0, 0x7f  # case=582-4 row=582 expected=reach
+vextractps rdx, xmm0, 0x12  # case=582-4 row=582 expected=reach
+vextractps ecx, xmm0, 0x7f  # case=582-5 row=582 expected=reach
 f2xm1  # case=583-0 row=583 expected=reach
 fabs  # case=584-0 row=584 expected=reach
 fadd dword ptr [rax]  # case=585-0 row=585 expected=reach
@@ -4248,11 +4251,17 @@ vmovlps qword ptr [rax], xmm0  # case=1261-0 row=1261 expected=reach
 vmovlps qword ptr [rax+rbx*4+0x10], xmm0  # case=1261-1 row=1261 expected=reach
 vmovlps qword ptr [rip+0x10], xmm0  # case=1261-2 row=1261 expected=reach
 movmskpd ecx, xmm0  # case=1262-0 row=1262 expected=reach
+movmskpd rdx, xmm0  # case=1262-1 row=1262 expected=reach
 vmovmskpd ecx, xmm0  # case=1263-0 row=1263 expected=reach
+vmovmskpd rdx, xmm0  # case=1263-1 row=1263 expected=reach
 vmovmskpd ecx, ymm0  # case=1264-0 row=1264 expected=reach
+vmovmskpd rdx, ymm0  # case=1264-1 row=1264 expected=reach
 movmskps ecx, xmm0  # case=1265-0 row=1265 expected=reach
+movmskps rdx, xmm0  # case=1265-1 row=1265 expected=reach
 vmovmskps ecx, xmm0  # case=1266-0 row=1266 expected=reach
+vmovmskps rdx, xmm0  # case=1266-1 row=1266 expected=reach
 vmovmskps ecx, ymm0  # case=1267-0 row=1267 expected=reach
+vmovmskps rdx, ymm0  # case=1267-1 row=1267 expected=reach
 movntdq xmmword ptr [rax], xmm0  # case=1268-0 row=1268 expected=reach
 movntdq xmmword ptr [rax+rbx*4+0x10], xmm0  # case=1268-1 row=1268 expected=reach
 movntdq xmmword ptr [rip+0x10], xmm0  # case=1268-2 row=1268 expected=reach
@@ -6211,7 +6220,8 @@ pextrb ecx, xmm0, 0x12  # case=1694-0 row=1694 expected=reach
 pextrb byte ptr [rax], xmm0, 0x12  # case=1694-1 row=1694 expected=reach
 pextrb byte ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1694-2 row=1694 expected=reach
 pextrb byte ptr [rip+0x10], xmm0, 0x12  # case=1694-3 row=1694 expected=reach
-pextrb ecx, xmm0, 0x7f  # case=1694-4 row=1694 expected=reach
+pextrb rdx, xmm0, 0x12  # case=1694-4 row=1694 expected=reach
+pextrb ecx, xmm0, 0x7f  # case=1694-5 row=1694 expected=reach
 pextrd ecx, xmm0, 0x12  # case=1695-0 row=1695 expected=reach
 pextrd dword ptr [rax], xmm0, 0x12  # case=1695-1 row=1695 expected=reach
 pextrd dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1695-2 row=1695 expected=reach
@@ -6226,7 +6236,8 @@ vpextrb ecx, xmm0, 0x12  # case=1697-0 row=1697 expected=reach
 vpextrb byte ptr [rax], xmm0, 0x12  # case=1697-1 row=1697 expected=reach
 vpextrb byte ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1697-2 row=1697 expected=reach
 vpextrb byte ptr [rip+0x10], xmm0, 0x12  # case=1697-3 row=1697 expected=reach
-vpextrb ecx, xmm0, 0x7f  # case=1697-4 row=1697 expected=reach
+vpextrb rdx, xmm0, 0x12  # case=1697-4 row=1697 expected=reach
+vpextrb ecx, xmm0, 0x7f  # case=1697-5 row=1697 expected=reach
 vpextrd ecx, xmm0, 0x12  # case=1698-0 row=1698 expected=reach
 vpextrd dword ptr [rax], xmm0, 0x12  # case=1698-1 row=1698 expected=reach
 vpextrd dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1698-2 row=1698 expected=reach
@@ -6241,7 +6252,8 @@ vpextrb ecx, xmm0, 0x12  # case=1700-0 row=1700 expected=reach
 vpextrb byte ptr [rax], xmm0, 0x12  # case=1700-1 row=1700 expected=reach
 vpextrb byte ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1700-2 row=1700 expected=reach
 vpextrb byte ptr [rip+0x10], xmm0, 0x12  # case=1700-3 row=1700 expected=reach
-vpextrb ecx, xmm0, 0x7f  # case=1700-4 row=1700 expected=reach
+vpextrb rdx, xmm0, 0x12  # case=1700-4 row=1700 expected=reach
+vpextrb ecx, xmm0, 0x7f  # case=1700-5 row=1700 expected=reach
 vpextrd ecx, xmm0, 0x12  # case=1701-0 row=1701 expected=reach
 vpextrd dword ptr [rax], xmm0, 0x12  # case=1701-1 row=1701 expected=reach
 vpextrd dword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1701-2 row=1701 expected=reach
@@ -6253,28 +6265,35 @@ vpextrq qword ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1702-2 row=1702 expected=
 vpextrq qword ptr [rip+0x10], xmm0, 0x12  # case=1702-3 row=1702 expected=reach
 vpextrq rcx, xmm0, 0x7f  # case=1702-4 row=1702 expected=reach
 pextrw ecx, mm0, 0x12  # case=1703-0 row=1703 expected=reach
-pextrw ecx, mm0, 0x7f  # case=1703-1 row=1703 expected=reach
+pextrw rdx, mm0, 0x12  # case=1703-1 row=1703 expected=reach
+pextrw ecx, mm0, 0x7f  # case=1703-2 row=1703 expected=reach
 pextrw ecx, xmm0, 0x12  # case=1704-0 row=1704 expected=reach
-pextrw ecx, xmm0, 0x7f  # case=1704-1 row=1704 expected=reach
+pextrw rdx, xmm0, 0x12  # case=1704-1 row=1704 expected=reach
+pextrw ecx, xmm0, 0x7f  # case=1704-2 row=1704 expected=reach
 pextrw ecx, xmm0, 0x12  # case=1705-0 row=1705 expected=reach
 pextrw word ptr [rax], xmm0, 0x12  # case=1705-1 row=1705 expected=reach
 pextrw word ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1705-2 row=1705 expected=reach
 pextrw word ptr [rip+0x10], xmm0, 0x12  # case=1705-3 row=1705 expected=reach
-pextrw ecx, xmm0, 0x7f  # case=1705-4 row=1705 expected=reach
+pextrw rdx, xmm0, 0x12  # case=1705-4 row=1705 expected=reach
+pextrw ecx, xmm0, 0x7f  # case=1705-5 row=1705 expected=reach
 vpextrw ecx, xmm0, 0x12  # case=1706-0 row=1706 expected=reach
-vpextrw ecx, xmm0, 0x7f  # case=1706-1 row=1706 expected=reach
+vpextrw rdx, xmm0, 0x12  # case=1706-1 row=1706 expected=reach
+vpextrw ecx, xmm0, 0x7f  # case=1706-2 row=1706 expected=reach
 vpextrw ecx, xmm0, 0x12  # case=1707-0 row=1707 expected=reach
 vpextrw word ptr [rax], xmm0, 0x12  # case=1707-1 row=1707 expected=reach
 vpextrw word ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1707-2 row=1707 expected=reach
 vpextrw word ptr [rip+0x10], xmm0, 0x12  # case=1707-3 row=1707 expected=reach
-vpextrw ecx, xmm0, 0x7f  # case=1707-4 row=1707 expected=reach
+vpextrw rdx, xmm0, 0x12  # case=1707-4 row=1707 expected=reach
+vpextrw ecx, xmm0, 0x7f  # case=1707-5 row=1707 expected=reach
 vpextrw ecx, xmm0, 0x12  # case=1708-0 row=1708 expected=reach
-vpextrw ecx, xmm0, 0x7f  # case=1708-1 row=1708 expected=reach
+vpextrw rdx, xmm0, 0x12  # case=1708-1 row=1708 expected=reach
+vpextrw ecx, xmm0, 0x7f  # case=1708-2 row=1708 expected=reach
 vpextrw ecx, xmm0, 0x12  # case=1709-0 row=1709 expected=reach
 vpextrw word ptr [rax], xmm0, 0x12  # case=1709-1 row=1709 expected=reach
 vpextrw word ptr [rax+rbx*4+0x10], xmm0, 0x12  # case=1709-2 row=1709 expected=reach
 vpextrw word ptr [rip+0x10], xmm0, 0x12  # case=1709-3 row=1709 expected=reach
-vpextrw ecx, xmm0, 0x7f  # case=1709-4 row=1709 expected=reach
+vpextrw rdx, xmm0, 0x12  # case=1709-4 row=1709 expected=reach
+vpextrw ecx, xmm0, 0x7f  # case=1709-5 row=1709 expected=reach
 phaddsw mm0, mm1  # case=1710-0 row=1710 expected=reach
 phaddsw mm0, qword ptr [rax]  # case=1710-1 row=1710 expected=reach
 phaddsw mm0, qword ptr [rax+rbx*4+0x10]  # case=1710-2 row=1710 expected=reach
@@ -7009,9 +7028,13 @@ vpminuq zmm0 {k1}{z}, zmm1, zmm2  # case=1850-5 row=1850 expected=reach
 vpminuq zmm0 {k1}{z}, zmm1, zmmword ptr [rax]  # case=1850-6 row=1850 expected=reach
 vpminuq zmm0 {k1}{z}, zmm1, qword ptr [rax]{1to8}  # case=1850-7 row=1850 expected=reach
 pmovmskb ecx, mm0  # case=1851-0 row=1851 expected=reach
+pmovmskb rdx, mm0  # case=1851-1 row=1851 expected=reach
 pmovmskb ecx, xmm0  # case=1852-0 row=1852 expected=reach
+pmovmskb rdx, xmm0  # case=1852-1 row=1852 expected=reach
 vpmovmskb ecx, xmm0  # case=1853-0 row=1853 expected=reach
+vpmovmskb rdx, xmm0  # case=1853-1 row=1853 expected=reach
 vpmovmskb ecx, ymm0  # case=1854-0 row=1854 expected=reach
+vpmovmskb rdx, ymm0  # case=1854-1 row=1854 expected=reach
 pmovsxbw xmm0, xmm1  # case=1855-0 row=1855 expected=reach
 pmovsxbw xmm0, qword ptr [rax]  # case=1855-1 row=1855 expected=reach
 pmovsxbw xmm0, qword ptr [rax+rbx*4+0x10]  # case=1855-2 row=1855 expected=reach
@@ -15196,10 +15219,12 @@ vmovw xmm0, ecx  # case=3438-0 row=3438 expected=reach
 vmovw xmm0, word ptr [rax]  # case=3438-1 row=3438 expected=reach
 vmovw xmm0, word ptr [rax+rbx*4+0x10]  # case=3438-2 row=3438 expected=reach
 vmovw xmm0, word ptr [rip+0x10]  # case=3438-3 row=3438 expected=reach
+vmovw xmm0, rdx  # case=3438-4 row=3438 expected=reach
 vmovw ecx, xmm0  # case=3439-0 row=3439 expected=reach
 vmovw word ptr [rax], xmm0  # case=3439-1 row=3439 expected=reach
 vmovw word ptr [rax+rbx*4+0x10], xmm0  # case=3439-2 row=3439 expected=reach
 vmovw word ptr [rip+0x10], xmm0  # case=3439-3 row=3439 expected=reach
+vmovw rdx, xmm0  # case=3439-4 row=3439 expected=reach
 vmulph xmm0, xmm1, xmm2  # case=3440-0 row=3440 expected=reach
 vmulph xmm0, xmm1, xmmword ptr [rax]  # case=3440-1 row=3440 expected=reach
 vmulph xmm0, xmm1, xmmword ptr [rax+rbx*4+0x10]  # case=3440-2 row=3440 expected=reach
@@ -15504,17 +15529,29 @@ vbroadcasti64x4 zmm0, ymmword ptr [rax+rbx*4+0x10]  # case=3493-1 row=3493 expec
 vbroadcasti64x4 zmm0, ymmword ptr [rip+0x10]  # case=3493-2 row=3493 expected=reach
 vbroadcasti64x4 zmm0 {k1}{z}, ymmword ptr [rax]  # case=3493-3 row=3493 expected=reach
 vpbroadcastb xmm0, ecx  # case=3494-0 row=3494 expected=reach
-vpbroadcastb xmm0 {k1}{z}, ecx  # case=3494-1 row=3494 expected=reach
+vpbroadcastb xmm0, rdx  # case=3494-1 row=3494 expected=reach
+vpbroadcastb xmm0 {k1}{z}, ecx  # case=3494-2 row=3494 expected=reach
+vpbroadcastb xmm0 {k1}{z}, rdx  # case=3494-3 row=3494 expected=reach
 vpbroadcastb ymm0, ecx  # case=3495-0 row=3495 expected=reach
-vpbroadcastb ymm0 {k1}{z}, ecx  # case=3495-1 row=3495 expected=reach
+vpbroadcastb ymm0, rdx  # case=3495-1 row=3495 expected=reach
+vpbroadcastb ymm0 {k1}{z}, ecx  # case=3495-2 row=3495 expected=reach
+vpbroadcastb ymm0 {k1}{z}, rdx  # case=3495-3 row=3495 expected=reach
 vpbroadcastb zmm0, ecx  # case=3496-0 row=3496 expected=reach
-vpbroadcastb zmm0 {k1}{z}, ecx  # case=3496-1 row=3496 expected=reach
+vpbroadcastb zmm0, rdx  # case=3496-1 row=3496 expected=reach
+vpbroadcastb zmm0 {k1}{z}, ecx  # case=3496-2 row=3496 expected=reach
+vpbroadcastb zmm0 {k1}{z}, rdx  # case=3496-3 row=3496 expected=reach
 vpbroadcastw xmm0, ecx  # case=3497-0 row=3497 expected=reach
-vpbroadcastw xmm0 {k1}{z}, ecx  # case=3497-1 row=3497 expected=reach
+vpbroadcastw xmm0, rdx  # case=3497-1 row=3497 expected=reach
+vpbroadcastw xmm0 {k1}{z}, ecx  # case=3497-2 row=3497 expected=reach
+vpbroadcastw xmm0 {k1}{z}, rdx  # case=3497-3 row=3497 expected=reach
 vpbroadcastw ymm0, ecx  # case=3498-0 row=3498 expected=reach
-vpbroadcastw ymm0 {k1}{z}, ecx  # case=3498-1 row=3498 expected=reach
+vpbroadcastw ymm0, rdx  # case=3498-1 row=3498 expected=reach
+vpbroadcastw ymm0 {k1}{z}, ecx  # case=3498-2 row=3498 expected=reach
+vpbroadcastw ymm0 {k1}{z}, rdx  # case=3498-3 row=3498 expected=reach
 vpbroadcastw zmm0, ecx  # case=3499-0 row=3499 expected=reach
-vpbroadcastw zmm0 {k1}{z}, ecx  # case=3499-1 row=3499 expected=reach
+vpbroadcastw zmm0, rdx  # case=3499-1 row=3499 expected=reach
+vpbroadcastw zmm0 {k1}{z}, ecx  # case=3499-2 row=3499 expected=reach
+vpbroadcastw zmm0 {k1}{z}, rdx  # case=3499-3 row=3499 expected=reach
 vpbroadcastd xmm0, ecx  # case=3500-0 row=3500 expected=reach
 vpbroadcastd xmm0 {k1}{z}, ecx  # case=3500-1 row=3500 expected=reach
 vpbroadcastd ymm0, ecx  # case=3501-0 row=3501 expected=reach

@@ -45,6 +45,32 @@
 
 - REX.W 짝 행 대조 추가(2026-10-12): 같은 opcode 칸에 REX.W 행이 따로 있으면 REX.W 없는 행은 REX.W 바이트를 받지 않는다(Vol.1 Table 3-4). 예: `48 ff 18`은 CALL m16:64이고 CALL m16:32가 아니다. 3·4단계를 다시 돌렸고 판정 변화는 0건이다(실행 기록 `out/runs/20261011T180101901220Z.json`).
 
+## reg 칸 r64 변형 추가 (2026-10-12)
+
+`reg` 기호(SYM039 "The register can be r16, r32, or r64") 칸에 대표 r32 외에 r64 케이스를 넣었다(31행 중 30행, 37케이스).
+재현: `python3 pipeline/run.py check --until disasm --execute`(실행 기록 `out/runs/20261011T235932729872Z.json`, 4단계 `20261012T000926452246Z.json`).
+- 근거: 명령 절이 "r32 or r64"를 적은 23행(MOVMSKPD/PS, PEXTRB/W, PMOVMSKB, EXTRACTPS 계열). 명령 절이 폭을 적지 않은 8행(VMOVW, VPBROADCASTB/W EVEX)은 SYM039만 근거다. SENDUIPI는 원문이 64비트만 적어 이미 r64다.
+- r16은 만들지 않았다. 31행 어느 명령 절에도 r16이 없고, 레거시 형태는 66이 필수 접두어, VEX/EVEX는 앞에 66이 오면 #UD(Vol.2 43쪽)라 16비트 크기를 따로 나타낼 인코딩이 없다. 사용자 결정(2026-10-12): r16은 만들지 않는다.
+- 기존 케이스의 판정 변화는 0건이다(3·4단계, row_id·소스 기준 대조).
+
+| 항목 | 추가 전 | 추가 후 |
+|---|---|---|
+| 케이스 | 19,425 | 19,462 |
+| 3단계 SDM 일치 GNU / clang | 19,313 / 19,118 | 19,336 / 19,140 |
+| 행 전체 일치 GNU / clang | 4,195 / 4,064 | 4,187 / 4,058 |
+| 4단계 대상 / 일치 계열 objdump / LLVM | 19,223 / 19,152 / 19,150 | 19,248 / 19,177 / 19,175 |
+| CPU exit0 | 1,954 | 1,973 (나머지 신호 수 같음) |
+
+새 케이스 결과
+- 명령 절 근거 23행: GNU·clang 모두 SDM 일치. r64 소스가 r32와 같은 바이트(REX.W 없음)로 조립된다.
+  - PEXTRW·VPEXTRW `reg/m16` 3행: clang은 r32 때와 같이 같은 문법의 `C5` 행으로 조립한다(`별칭 행 도달`).
+- SYM039만 근거인 8행:
+  - VMOVW r64 2행: GNU 거부("operand type mismatch"), clang은 `EVEX.W1`로 조립(행이 WIG라 SDM 일치)
+  - VPBROADCASTB/W r64 6행: GNU·clang 모두 거부. 같은 절의 VPBROADCASTQ `r64`는 별도 행(W1 7C)이다.
+  - 명령 절이 r64를 적지 않으므로 버그 후보로 올리지 않는다. 원문이 일반 정의(SYM039)뿐이라는 사실과 관측만 기록한다.
+- 4단계: 역어셈블러가 같은 바이트를 `edx`로 출력한다. 표 기호 reg가 폭을 가리지 않으므로 새 판정 `SDM 일치(reg 칸 레지스터 폭 표기)`로 센다(objdump 25, LLVM 23). 다른 칸이나 다른 번호의 레지스터는 그대로 `오퍼랜드 다름`이다.
+- REP LODS 4행의 철자 note 근거를 도구 관측에서 Vol.2 685쪽 LODS 절(explicit-operands form은 source를 적고 destination은 자동 선택)로 바꿨다.
+
 버그 후보 4개(아래 'LLVM 이슈 확인' 절)는 LLVM 23.1.3에서도 모두 그대로 재현된다.
 - clang `call word/dword ptr [rax]` → `ff 18`
 - llvm-mc `ff 18` → `call [rax]`

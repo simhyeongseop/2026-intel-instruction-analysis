@@ -74,6 +74,7 @@ python3 scripts/asm_linter.py --demo --format json --output out/demo.json
 **역어셈블러별**(`sdm_judgment.disassemblers`)
 - SDM 일치한 바이트(GNU 우선, 없으면 clang)를 objdump와 llvm-mc로 따로 푼다.
 - 4단계와 같은 판정(`SDM 일치`, `니모닉 다름(도구 관례 철자)`, `오퍼랜드 다름`, `디코드 실패` …)을 쓴다.
+- `SDM 일치(reg 칸 레지스터 폭 표기)`: 표 기호가 reg(SYM039 "r16, r32, or r64")인 칸을 같은 번호의 다른 폭 레지스터로 출력함(`movmskpd rdx, xmm0` → `edx`, 같은 바이트)
 
 **요약**(`sdm_judgment.summary`)
 - `sdm_match`: 모든 도구가 SDM과 일치

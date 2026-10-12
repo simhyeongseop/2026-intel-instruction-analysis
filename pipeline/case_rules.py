@@ -73,7 +73,7 @@ MEMORY_BITS = {
 RM_SYMBOLS = {'r/m8': 'SYM035', 'r/m16': 'SYM036', 'r/m32': 'SYM037', 'r/m64': 'SYM038'}
 # 크기 키워드 없이 쓰는 메모리 표기(원문 폭이 키워드와 맞지 않거나 원문이 폭을 하나로 정하지 않음)
 MEMORY_NO_KEYWORD = {
-    'm': 'SYM040 (16, 32 또는 64)', 'mem': '완화 C(가변) 또는 원문 없음', 'mib': 'SYM068', 'sibmem': 'Vol.2 51 2.4',
+    'm': 'SYM040 (16, 32 또는 64)', 'mem': '명령 절 폭: LDDQU 16바이트, XSAVE·XRSTOR 계열 완화 C 가변', 'mib': 'SYM068', 'sibmem': 'Vol.2 51 2.4',
     'm384': 'GNU 키워드 없음', 'm512byte': 'GNU 키워드 없음', 'm14/28byte': 'GNU 키워드 없음',
     'm94/108byte': 'GNU 키워드 없음', 'm16&32': 'SYM047', 'm16&16': 'SYM047', 'm32&32': 'SYM047', 'm16&64': 'SYM047',
 }
@@ -106,6 +106,19 @@ SYMBOL_FIXES = {
 
 # 주소 크기를 따르는 레지스터(Description: 레지스터가 주소를 담음). 64비트 기본 주소 크기(VOL1_DEFAULTS)의 r64를 쓴다.
 ADDRESS_REGISTER_MNEMONICS = {'UMONITOR', 'MOVDIR64B', 'ENQCMD', 'ENQCMDS'}
+
+# reg 칸(SYM039 "can be r16, r32, or r64")의 r64 대안과 근거. 대표값 r32(Vol.1 66 기본 크기) 다음에 만든다.
+# 명령 절이 r32·r64를 적은 행은 그 쪽, 명령 절이 폭을 적지 않은 행은 SYM039만 근거로 적는다.
+# r16은 만들지 않는다(2026-10-12 사용자 결정): 어느 명령 절에도 없고, 16비트 크기를 나타낼 인코딩이 없다.
+_SECTION_R32_R64 = {
+    'EXTRACTPS': 'Vol.2 423 "default operand size of 64 bits"', 'VEXTRACTPS': 'Vol.2 423 "default operand size of 64 bits"',
+    'MOVMSKPD': 'Vol.2 787 "r32 or r64"', 'VMOVMSKPD': 'Vol.2 787 "r32 or r64"',
+    'MOVMSKPS': 'Vol.2 789 "r32 or r64"', 'VMOVMSKPS': 'Vol.2 789 "r32 or r64"',
+    'PEXTRB': 'Vol.2 989 "r32 or r64"', 'VPEXTRB': 'Vol.2 989 "r64/r32"',
+    'PEXTRW': 'Vol.2 992 "r32 or r64"', 'VPEXTRW': 'Vol.2 992 "r64/r32"',
+    'PMOVMSKB': 'Vol.2 1053 "r32 or r64"', 'VPMOVMSKB': 'Vol.2 1053 "r32 or r64"',
+}
+REG_R64 = dict(_SECTION_R32_R64, **{name: 'SYM039 (명령 절 폭 없음)' for name in ('VMOVW', 'VPBROADCASTB', 'VPBROADCASTW')})
 
 # 명령 절이 RIP 상대 주소를 #UD로 정한 메모리 오퍼랜드: RIP 형태를 만들지 않는다
 RIP_UNDEFINED = {

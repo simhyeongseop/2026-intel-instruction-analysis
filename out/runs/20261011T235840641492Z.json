@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-10-11T23:58:40.641492+00:00",
+  "environment": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "tools": {
+      "as": {
+        "available": true,
+        "path": "/home/simhss/opt/binutils-2.47/bin/as",
+        "version": [
+          "GNU assembler (GNU Binutils) 2.47.20260726"
+        ],
+        "sha256": "17366a1c703454734d007e19358c5cc89f11dfabb435e1922b1083d946e561f4",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU assembler (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `x86_64-pc-linux-gnu'.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "ld": {
+        "available": true,
+        "path": "/home/simhss/opt/binutils-2.47/bin/ld",
+        "version": [
+          "GNU ld (GNU Binutils) 2.47.20260726"
+        ],
+        "sha256": "995d0d4dfbb6d3ec70d74df9c7c40082ce94e1c0df89e39338bc104caa5199ae",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/ld",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU ld (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) a later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objdump": {
+        "available": true,
+        "path": "/home/simhss/opt/binutils-2.47/bin/objdump",
+        "version": [
+          "GNU objdump (GNU Binutils) 2.47.20260726"
+        ],
+        "sha256": "3ec2fc542ff7e8cc908e2ff525a694d9421dfb07a5726ac17787e5a4c3e0dcda",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objdump (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "objcopy": {
+        "available": true,
+        "path": "/home/simhss/opt/binutils-2.47/bin/objcopy",
+        "version": [
+          "GNU objcopy (GNU Binutils) 2.47.20260726"
+        ],
+        "sha256": "1ccd37641d0a54addc1878089a86da36b4db76eaba6f500766b04074cf55890f",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU objcopy (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "readelf": {
+        "available": true,
+        "path": "/home/simhss/opt/binutils-2.47/bin/readelf",
+        "version": [
+          "GNU readelf (GNU Binutils) 2.47.20260726"
+        ],
+        "sha256": "babbf914135250027d28e7d781e03f0775a46f2373128c8d47e1d1a5871312b4",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "GNU readelf (GNU Binutils) 2.47.20260726\nCopyright (C) 2026 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "clang": {
+        "available": true,
+        "path": "/home/simhss/opt/llvm-23.1.3/bin/clang-23",
+        "version": [
+          "clang version 23.1.3 (https://github.com/llvm/llvm-project 0d261d1ca552c95a8f007e061c787ac7132fbcbc)"
+        ],
+        "sha256": "913453afb492abab17025139852413ba7fd7a52b4fb75fcce58ff3fe399d0a9e",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/llvm-23.1.3/bin/clang",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "clang version 23.1.3 (https://github.com/llvm/llvm-project 0d261d1ca552c95a8f007e061c787ac7132fbcbc)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /home/simhss/opt/llvm-23.1.3/bin\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      },
+      "llvm-mc": {
+        "available": true,
+        "path": "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+        "version": [
+          "LLVM version 23.1.3"
+        ],
+        "sha256": "d0b057ac168817be59202c64b89a647d87d9fdb2e7830fdb38683c1c38c97c22",
+        "probe": {
+          "command": [
+            "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+            "--version"
+          ],
+          "returncode": 0,
+          "stdout": "LLVM (http://llvm.org/):\n  LLVM version 23.1.3\n  Optimized build.\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - legacy name for amdgpu\n    amdgpu      - AMDGPU gfx6+\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv32be   - 32-bit big endian RISC-V\n    riscv64     - 64-bit RISC-V\n    riscv64be   - 64-bit big endian RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "cpu": {
+      "vendor_id": "GenuineIntel",
+      "model name": "Intel(R) Core(TM) Ultra 5 226V",
+      "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities"
+    }
+  },
+  "code_hashes": {
+    "pipeline/case_rules.py": "0815aee7e49a1552eafc5892027fda01bec892029b327c8d57888892151758a0",
+    "pipeline/cpu_run.py": "ad862737f7891467e272cbbbed6d064084bec31a18d5a0e72cbd09683db62cc9",
+    "pipeline/disasm_rules.py": "a6a3bb313861957b0a3ff59160311603e95539788ecfa1b37e0d265c952f7d07",
+    "pipeline/encoding_audit.py": "6e43ec37ad47fc2f052addaff7176b902771536c9ab82fedc7fd029a31045051",
+    "pipeline/instruction_check.py": "107c45597bbb52dad0de5d83da0da8562cfe8c49d6a22fd428fbfcadf5e13546",
+    "pipeline/m1_extract.py": "dd3d901ee2669b2eccc8c1c8b39557a2883d4d701aeba620a6f216c0b54113f8",
+    "pipeline/m2_generate.py": "e15597f0e9f11dc9da3ae857ddb3314ea3953267637d99e6105812e7b374ae5b",
+    "pipeline/m3_check.py": "0db970085d6e13254a17470c46baf23e03aa7e61276a47cf9ea06211e5846715",
+    "pipeline/m4_disasm.py": "ff06605474fe6e7dba2ab37fd3e3206e0b61a35173d58b0913eae954cd6c4706",
+    "pipeline/manual_index.py": "52995b9361f79f7fedc6248b67d656982f187c3a4bd5b9db65e6d950663327a4",
+    "pipeline/manual_lookup.py": "86d6661255d3ce6cc2f123f273b093c8bfa290a83c91bd8d61381a3a5b318b02",
+    "pipeline/operand_forms.py": "b12ba14de73f27dfd65e08ef44712194ef3f990fcc408202544f7b8059918fec",
+    "pipeline/operand_size_prefix.py": "208d2a8e82a8247e5adc76d7a1ed37e6f9b3b316c9eb68777bcf43a0f5083046",
+    "pipeline/quote_check.py": "1d7ef8d6aa501e330ddf26d19b6fa5dd7f677dc8580b4c58b57ddd5671ecd33f",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "8325e965f3c20d2fba1eed2b4e4336458023b5cf6008e2599ebebb178375d3cb",
+    "pipeline/sdm_evidence.py": "0f4825d06a18cc97a2128e1862f003de4b3b600626fdeec1d11a2242b040690b",
+    "pipeline/sdm_judge.py": "8882e9dbcda7849a01b5b187fe460e265a3449f814b3a6935b29f1f86efa618f",
+    "pipeline/sdm_paths.py": "a7e0b21f83bafbca058abc1fdf2c8e384758e0aec183003e9b99f28cbca75f2b",
+    "pipeline/sdm_relaxation.py": "fb3a4ad21615d12a365e2d3c4244dc3c7e5a23fa3d73f9447d18fd519ba03b07",
+    "pipeline/sdm_review_compare.py": "6647830ccb48f4190d37d67f600301493ff0f9a3ad08404d4ecb86113be62910",
+    "pipeline/sdm_select.py": "f80ce5893169a19002464bcbb4548a12fb6e5ac6e638442957296ab5c9e9fb6d",
+    "pipeline/sdm_symbol_spec.py": "01ab569e8e7ffcb504cf5eb04a59ae6776ab631b76555733a9e85e85b4d07e87",
+    "pipeline/toolchain.py": "7c0947a6dcc180cf7fb889c338da94c2f786eda89b094ce6dde4453167bce4ee"
+  },
+  "steps": [
+    {
+      "stage": "generator",
+      "script": "pipeline/m2_generate.py",
+      "input_hashes": {
+        "data/db/isa_db.csv": "ff73fa082b12ac5d53a1eb03a1afe6f2476b6887e3e4f342a627ed696517d822",
+        "out/sdm_review_093/compare/rows_status.csv": "7df768dd2aa540cfa9e2cb2bbab061d268a5357c136ae2924bb789c10889a427"
+      },
+      "command": [
+        "/usr/bin/python3",
+        "pipeline/m2_generate.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"cases\": 19462, \"rows\": 4219, \"expected\": {\"reject\": 106, \"reach\": 19308, \"alias_no_test\": 48}, \"spec_trusted\": 19462, \"variants\": {\"base\": 4857, \"imm_max\": 610, \"alt1\": 9225, \"alt2\": 895, \"mask\": 3875}}\n",
+      "stderr": "",
+      "status": "completed",
+      "output_hashes": {
+        "out/cases/cases.csv": "2f287ee8547b2263a167a21a5ead38e8766b8b7e13568df6348fc595497afbd3",
+        "out/cases/cases.s": "5d84afd6a1cf20c93902b12f09a6aa36085107968a1492f7d1d9e7923b57ca72",
+        "out/cases/generate_summary.json": "03c8b967f894f462b19c2e1bce8b4c5079a68a365a21be2b5db5778805d9b1cf"
+      }
+    }
+  ],
+  "completed": true,
+  "finished_utc": "2026-10-11T23:58:44.571033+00:00"
+}
