@@ -1,0 +1,12 @@
+{
+ "cases": 1598,
+ "skipped_not_sdm_match": 0,
+ "verdicts": {
+  "objdump": {
+   "SDM 일치": 1598
+  },
+  "llvm": {
+   "SDM 일치": 1598
+  }
+ }
+}

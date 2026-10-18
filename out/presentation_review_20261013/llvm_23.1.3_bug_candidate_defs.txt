@@ -1,0 +1,84 @@
+== X86InstrSystem.td (llvmorg-23.1.3) 553-600
+    let Defs = [SSP] in {
+      def SAVEPREVSSP : I<0x01, MRM_EA, (outs), (ins), "saveprevssp",
+                       [(int_x86_saveprevssp)]>, TB, XS;
+      def RSTORSSP : I<0x01, MRM5m, (outs), (ins i32mem:$src),
+                       "rstorssp\t$src",
+                       [(int_x86_rstorssp addr:$src)]>, TB, XS;
+    } // Defs SSP
+  } // Uses SSP
+
+let Predicates = [NoEGPR] in {
+  def WRSSD : I<0xF6, MRMDestMem, (outs), (ins i32mem:$dst, GR32:$src),
+                "wrssd\t{$src, $dst|$dst, $src}",
+                [(int_x86_wrssd GR32:$src, addr:$dst)]>, T8;
+  def WRSSQ : RI<0xF6, MRMDestMem, (outs), (ins i64mem:$dst, GR64:$src),
+                 "wrssq\t{$src, $dst|$dst, $src}",
+                 [(int_x86_wrssq GR64:$src, addr:$dst)]>, T8;
+  def WRUSSD : I<0xF5, MRMDestMem, (outs), (ins i32mem:$dst, GR32:$src),
+                 "wrussd\t{$src, $dst|$dst, $src}",
+                 [(int_x86_wrussd GR32:$src, addr:$dst)]>, T8, PD;
+  def WRUSSQ : RI<0xF5, MRMDestMem, (outs), (ins i64mem:$dst, GR64:$src),
+                  "wrussq\t{$src, $dst|$dst, $src}",
+                  [(int_x86_wrussq GR64:$src, addr:$dst)]>, T8, PD;
+}
+
+let Predicates = [HasEGPR, In64BitMode] in {
+  def WRSSD_EVEX : I<0x66, MRMDestMem, (outs), (ins i32mem:$dst, GR32:$src),
+                     "wrssd\t{$src, $dst|$dst, $src}",
+                     [(int_x86_wrssd GR32:$src, addr:$dst)]>, EVEX, NoCD8, T_MAP4;
+  def WRSSQ_EVEX : RI<0x66, MRMDestMem, (outs), (ins i64mem:$dst, GR64:$src),
+                      "wrssq\t{$src, $dst|$dst, $src}",
+                      [(int_x86_wrssq GR64:$src, addr:$dst)]>, EVEX, NoCD8, T_MAP4;
+  def WRUSSD_EVEX : I<0x65, MRMDestMem, (outs), (ins i32mem:$dst, GR32:$src),
+                      "wrussd\t{$src, $dst|$dst, $src}",
+                      [(int_x86_wrussd GR32:$src, addr:$dst)]>, EVEX, NoCD8, T_MAP4, PD;
+  def WRUSSQ_EVEX : RI<0x65, MRMDestMem, (outs), (ins i64mem:$dst, GR64:$src),
+                       "wrussq\t{$src, $dst|$dst, $src}",
+                       [(int_x86_wrussq GR64:$src, addr:$dst)]>, EVEX, NoCD8, T_MAP4, PD;
+}
+
+  let Defs = [SSP] in {
+    let Uses = [SSP] in {
+        def SETSSBSY : I<0x01, MRM_E8, (outs), (ins), "setssbsy",
+                         [(int_x86_setssbsy)]>, TB, XS;
+    } // Uses SSP
+
+    def CLRSSBSY : I<0xAE, MRM6m, (outs), (ins i32mem:$src),
+                     "clrssbsy\t$src",
+                     [(int_x86_clrssbsy addr:$src)]>, TB, XS;
+  } // Defs SSP
+
+== X86InstrControl.td (llvmorg-23.1.3) 180-195, 265-280
+                            "ljmp{w}\t$seg, $off", []>,
+                            OpSize16, Sched<[WriteJump]>;
+  }
+  let mayLoad = 1 in {
+    def FARJMP64m  : RI<0xFF, MRM5m, (outs), (ins opaquemem:$dst),
+                        "ljmp{q}\t{*}$dst", []>, Sched<[WriteJump]>, Requires<[In64BitMode]>;
+
+    def FARJMP32m  : I<0xFF, MRM5m, (outs), (ins opaquemem:$dst),
+                       "{l}jmp{l}\t{*}$dst", []>, OpSize32, Sched<[WriteJumpLd]>;
+    let AsmVariantName = "att" in
+    def FARJMP16m  : I<0xFF, MRM5m, (outs), (ins opaquemem:$dst),
+                       "ljmp{w}\t{*}$dst", []>, OpSize16, Sched<[WriteJumpLd]>;
+  }
+}
+
+def JMPABS64i : Ii64<0xA1, RawFrm, (outs), (ins i64imm:$dst), "jmpabs\t$dst", []>,
+                               "lcall{l}\t$seg, $off", []>,
+                               OpSize32, Sched<[WriteJump]>;
+      def FARCALL16i  : Iseg16<0x9A, RawFrmImm16, (outs),
+                               (ins i16imm:$off, i16imm:$seg),
+                               "lcall{w}\t$seg, $off", []>,
+                               OpSize16, Sched<[WriteJump]>;
+    }
+
+    let mayLoad = 1 in {
+      def FARCALL32m  : I<0xFF, MRM3m, (outs), (ins opaquemem:$dst),
+                          "{l}call{l}\t{*}$dst", []>, OpSize32, Sched<[WriteJumpLd]>;
+      def FARCALL16m  : I<0xFF, MRM3m, (outs), (ins opaquemem:$dst),
+                          "lcall{w}\t{*}$dst", []>, OpSize16, Sched<[WriteJumpLd]>;
+    }
+  }
+

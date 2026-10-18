@@ -1,0 +1,187 @@
+[
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1f54858c2",
+    "cli_candidates": {
+      "status": "incomplete",
+      "rows": [
+        {
+          "row_id": 51,
+          "instruction": "VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",
+          "opcode": "EVEX.512.66.0F.W1 58 /r",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "134",
+          "form": "partial",
+          "row_status": "원문 확정(완화 A: Vol.1)"
+        }
+      ],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rn-sae}",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1f51858c2",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rd-sae}",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1f53858c2",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {ru-sae}",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1f55858c2",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rz-sae}",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1f57858c2",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd ymm0, ymm1, ymm2, {rn-sae}",
+    "llvm_rc": 1,
+    "gnu_rc": 1,
+    "llvm_hex": "",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}",
+    "llvm_rc": 1,
+    "gnu_rc": 1,
+    "llvm_hex": "",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {sae}",
+    "llvm_rc": 1,
+    "gnu_rc": 1,
+    "llvm_hex": "",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vcomisd xmm0, xmm1, {sae}",
+    "llvm_rc": 0,
+    "gnu_rc": 0,
+    "llvm_hex": "62f1fd182fc1",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        423,
+        424
+      ],
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vcomisd xmm0, qword ptr [rax], {sae}",
+    "llvm_rc": 1,
+    "gnu_rc": 1,
+    "llvm_hex": "",
+    "cli_candidates": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        423,
+        424
+      ],
+      "meaning_verified": false
+    }
+  }
+]

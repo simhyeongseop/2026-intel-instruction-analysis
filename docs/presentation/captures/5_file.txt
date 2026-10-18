@@ -1,0 +1,12 @@
+$ python3 scripts/asm_linter.py -f examples/fuzz_inputs.s
+[수용됨 (실행 의미는 미검증)] mov eax, ebx
+  후보 SDM 행 2개 - 64비트 모드 유효 행이 있음(조립돼야 함)
+     1089  MOV r/m32, r32                       89 /r                      Valid  원문 확정
+     1093  MOV r32, r/m32                       8B /r                      Valid  원문 확정
+  GNU as   SDM 일치             89d8  -> 행 1089
+  clang    SDM 일치             89d8  -> 행 1089
+  objdump  SDM 일치             mov    eax,ebx  (GNU 바이트, 행 1089)
+  llvm-mc  SDM 일치             mov	eax, ebx  (GNU 바이트, 행 1089)
+  ...
+집계: skipped=1, accepted=1, rejected=1, needs_review=4
+종료 코드 1. 0도 전체 ISA 적합성이나 CPU 실행 안전성을 보증하지 않습니다.

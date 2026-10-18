@@ -1,0 +1,234 @@
+LLVM AVX512PF upstream verification: llvmorg-23.1.3
+Commit: 0d261d1ca552c95a8f007e061c787ac7132fbcbc
+Checked UTC: 10/12/2026 01:26:10
+
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/lib/Target/X86/X86InstrAVX512.td#L10433-L10489
+// prefetch
+multiclass avx512_gather_scatter_prefetch<bits<8> opc, Format F, string OpcodeStr,
+                       RegisterClass KRC, X86MemOperand memop> {
+  let mayLoad = 1, mayStore = 1 in
+  def m  : AVX5128I<opc, F, (outs), (ins KRC:$mask, memop:$src),
+            !strconcat(OpcodeStr, "\t{$src {${mask}}|{${mask}}, $src}"), []>,
+            EVEX, EVEX_K, Sched<[WriteLoad]>;
+}
+
+defm VGATHERPF0DPS: avx512_gather_scatter_prefetch<0xC6, MRM1m, "vgatherpf0dps",
+                     VK16WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VGATHERPF0QPS: avx512_gather_scatter_prefetch<0xC7, MRM1m, "vgatherpf0qps",
+                     VK8WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VGATHERPF0DPD: avx512_gather_scatter_prefetch<0xC6, MRM1m, "vgatherpf0dpd",
+                     VK8WM, vy64xmem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VGATHERPF0QPD: avx512_gather_scatter_prefetch<0xC7, MRM1m, "vgatherpf0qpd",
+                     VK8WM, vz64mem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VGATHERPF1DPS: avx512_gather_scatter_prefetch<0xC6, MRM2m, "vgatherpf1dps",
+                     VK16WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VGATHERPF1QPS: avx512_gather_scatter_prefetch<0xC7, MRM2m, "vgatherpf1qps",
+                     VK8WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VGATHERPF1DPD: avx512_gather_scatter_prefetch<0xC6, MRM2m, "vgatherpf1dpd",
+                     VK8WM, vy64xmem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VGATHERPF1QPD: avx512_gather_scatter_prefetch<0xC7, MRM2m, "vgatherpf1qpd",
+                     VK8WM, vz64mem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VSCATTERPF0DPS: avx512_gather_scatter_prefetch<0xC6, MRM5m, "vscatterpf0dps",
+                     VK16WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VSCATTERPF0QPS: avx512_gather_scatter_prefetch<0xC7, MRM5m, "vscatterpf0qps",
+                     VK8WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VSCATTERPF0DPD: avx512_gather_scatter_prefetch<0xC6, MRM5m, "vscatterpf0dpd",
+                     VK8WM, vy64xmem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VSCATTERPF0QPD: avx512_gather_scatter_prefetch<0xC7, MRM5m, "vscatterpf0qpd",
+                     VK8WM, vz64mem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VSCATTERPF1DPS: avx512_gather_scatter_prefetch<0xC6, MRM6m, "vscatterpf1dps",
+                     VK16WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VSCATTERPF1QPS: avx512_gather_scatter_prefetch<0xC7, MRM6m, "vscatterpf1qps",
+                     VK8WM, vz32mem>, EVEX_V512, EVEX_CD8<32, CD8VT1>;
+
+defm VSCATTERPF1DPD: avx512_gather_scatter_prefetch<0xC6, MRM6m, "vscatterpf1dpd",
+                     VK8WM, vy64xmem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+defm VSCATTERPF1QPD: avx512_gather_scatter_prefetch<0xC7, MRM6m, "vscatterpf1qpd",
+                     VK8WM, vz64mem>, EVEX_V512, REX_W, EVEX_CD8<64, CD8VT1>;
+
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/lib/Target/X86/AsmParser/X86AsmParser.cpp#L2335-L2376
+//ParseRoundingModeOp - Parse AVX-512 rounding mode operand
+bool X86AsmParser::ParseRoundingModeOp(SMLoc Start, OperandVector &Operands) {
+  MCAsmParser &Parser = getParser();
+  const AsmToken &Tok = Parser.getTok();
+  // Eat "{" and mark the current place.
+  const SMLoc consumedToken = consumeToken();
+  if (Tok.isNot(AsmToken::Identifier))
+    return Error(Tok.getLoc(), "Expected an identifier after {");
+  if (Tok.getIdentifier().starts_with("r")) {
+    int rndMode = StringSwitch<int>(Tok.getIdentifier())
+      .Case("rn", X86::STATIC_ROUNDING::TO_NEAREST_INT)
+      .Case("rd", X86::STATIC_ROUNDING::TO_NEG_INF)
+      .Case("ru", X86::STATIC_ROUNDING::TO_POS_INF)
+      .Case("rz", X86::STATIC_ROUNDING::TO_ZERO)
+      .Default(-1);
+    if (-1 == rndMode)
+      return Error(Tok.getLoc(), "Invalid rounding mode.");
+     Parser.Lex();  // Eat "r*" of r*-sae
+    if (!getLexer().is(AsmToken::Minus))
+      return Error(Tok.getLoc(), "Expected - at this point");
+    Parser.Lex();  // Eat "-"
+    Parser.Lex();  // Eat the sae
+    if (!getLexer().is(AsmToken::RCurly))
+      return Error(Tok.getLoc(), "Expected } at this point");
+    SMLoc End = Tok.getEndLoc();
+    Parser.Lex();  // Eat "}"
+    const MCExpr *RndModeOp =
+      MCConstantExpr::create(rndMode, Parser.getContext());
+    Operands.push_back(X86Operand::CreateImm(RndModeOp, Start, End));
+    return false;
+  }
+  if (Tok.getIdentifier() == "sae") {
+    Parser.Lex();  // Eat the sae
+    if (!getLexer().is(AsmToken::RCurly))
+      return Error(Tok.getLoc(), "Expected } at this point");
+    Parser.Lex();  // Eat "}"
+    Operands.push_back(X86Operand::CreateToken("{sae}", consumedToken));
+    return false;
+  }
+  return Error(Tok.getLoc(), "unknown token in expression");
+}
+
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/lib/Target/X86/AsmParser/X86AsmParser.cpp#L2657-L2676
+bool X86AsmParser::parseIntelOperand(OperandVector &Operands, StringRef Name) {
+  MCAsmParser &Parser = getParser();
+  const AsmToken &Tok = Parser.getTok();
+  SMLoc Start, End;
+
+  // Parse optional Size directive.
+  unsigned Size;
+  StringRef SizeStr;
+  if (ParseIntelMemoryOperandSize(Size, &SizeStr))
+    return true;
+  bool PtrInOperand = bool(Size);
+
+  Start = Tok.getLoc();
+
+  // Rounding mode operand.
+  if (getLexer().is(AsmToken::LCurly))
+    return ParseRoundingModeOp(Start, Operands);
+
+  // Register operand.
+  MCRegister RegNo;
+
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/lib/Target/X86/AsmParser/X86AsmParser.cpp#L3013-L3032
+      // no errors.
+      // Query for the need of further parsing for a {%k<NUM>} mark
+      if (!Z || getLexer().is(AsmToken::LCurly)) {
+        SMLoc StartLoc = Z ? consumeToken() : consumedToken;
+        // Parse an op-mask register mark ({%k<NUM>}), which is now to be
+        // expected
+        MCRegister RegNo;
+        SMLoc RegLoc;
+        if (!parseRegister(RegNo, RegLoc, StartLoc) &&
+            getX86MCRegisterClass(X86::VK1RegClassID).contains(RegNo)) {
+          if (RegNo == X86::K0)
+            return Error(RegLoc, "Register k0 can't be used as write mask");
+          if (!getLexer().is(AsmToken::RCurly))
+            return Error(getLexer().getLoc(), "Expected } at this point");
+          Operands.push_back(X86Operand::CreateToken("{", StartLoc));
+          Operands.push_back(
+              X86Operand::CreateReg(RegNo, StartLoc, StartLoc));
+          Operands.push_back(X86Operand::CreateToken("}", consumeToken()));
+        } else
+          return Error(getLexer().getLoc(),
+
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/lib/Target/X86/AsmParser/X86AsmParser.cpp#L3664-L3675
+    // Read the operands.
+    while (true) {
+      if (parseOperand(Operands, Name))
+        return true;
+      if (HandleAVX512Operand(Operands))
+        return true;
+
+      // check for comma and eat it
+      if (getLexer().is(AsmToken::Comma))
+        Parser.Lex();
+      else
+        break;
+
+X86 test directory: 456 entries, truncated=False
+avx512pf-64-intel.s exists: False
+  avx512pf-64-att.s ef2d30ee21a20ffc004cb2c6d164a48ad9f9f7b0
+Filename inventory only; absence of this filename does not prove absence of all Intel coverage in other files.
+https://github.com/llvm/llvm-project/blob/0d261d1ca552c95a8f007e061c787ac7132fbcbc/llvm/test/MC/X86/avx512pf-64-att.s#L1-L12
+// RUN: llvm-mc -triple x86_64-unknown-unknown --show-encoding %s | FileCheck %s
+
+// CHECK: vgatherpf0dps (%r8,%zmm20) {%k1}
+// CHECK: encoding: [0x62,0xd2,0x7d,0x41,0xc6,0x0c,0x20]
+vgatherpf0dps (%r8,%zmm20){%k1}
+
+// CHECK: vgatherpf1dps (%r9,%zmm19) {%k2}
+// CHECK: encoding: [0x62,0xd2,0x7d,0x42,0xc6,0x14,0x19]
+vgatherpf1dps (%r9,%zmm19){%k2}
+
+// CHECK: vgatherpf0dpd (%r10,%ymm18) {%k3}
+// CHECK: encoding: [0x62,0xd2,0xfd,0x43,0xc6,0x0c,0x12]
+
+Search: repo:llvm/llvm-project AVX512PF Intel
+Count: 28, incomplete=False
+  #97856 [pull_request] [open] [compiler-rt][X86] Better unify ProcessorFeatures and X86TargetParser https://github.com/llvm/llvm-project/pull/97856
+  #59075 [issue] [open] CPU2000/172.mgrid performance regression after D137913 https://github.com/llvm/llvm-project/issues/59075
+  #89487 [issue] [open] [feature request] Clang should be able to print the current CPU march name based on its detected features https://github.com/llvm/llvm-project/issues/89487
+  #60322 [issue] [open] [X86,FMA] SPEC CPU2006/410.bwaves: suboptimal FMA generation https://github.com/llvm/llvm-project/issues/60322
+  #29055 [issue] [open] Runtime library not exposing some _Unwind symbols. https://github.com/llvm/llvm-project/issues/29055
+  #39198 [issue] [closed] Clang 7.0: crash compiling C++17 https://github.com/llvm/llvm-project/issues/39198
+  #168750 [pull_request] [closed] [X86] Sync multiversion features with libgcc and refactor internal feature tables https://github.com/llvm/llvm-project/pull/168750
+  #122051 [pull_request] [closed] [X86] Correct the cdisp8 encoding for VSCATTER/VGATHER prefetch https://github.com/llvm/llvm-project/pull/122051
+  #93123 [pull_request] [closed] Revert "[X86] Remove knl/knm specific ISAs supports (#92883)" https://github.com/llvm/llvm-project/pull/93123
+  #96246 [pull_request] [closed] Remove support for 3DNow!, both intrinsics and builtins. https://github.com/llvm/llvm-project/pull/96246
+  #91076 [issue] [closed] Build failure with -march=native on Intel Core i5 13600KF (error in backend: ZMM registers are not supported without EVEX512) https://github.com/llvm/llvm-project/issues/91076
+  #76383 [pull_request] [closed] [X86] Remove Intel Xeon Phi Supports. https://github.com/llvm/llvm-project/pull/76383
+  #93136 [pull_request] [closed] Reland "[X86] Remove knl/knm specific ISAs supports (#92883)" https://github.com/llvm/llvm-project/pull/93136
+  #75580 [pull_request] [closed] [X86] Emit Warnings for frontend options to enable knl/knm specific ISAs. https://github.com/llvm/llvm-project/pull/75580
+  #90356 [issue] [closed] LLVM 18 regression: SelectionDAG/LegalizeDAG.cpp:991: void {anonymous}::SelectionDAGLegalize::LegalizeOp(llvm::SDNode*): Assertion `(TLI.getTypeAction(*DAG.getContext(), Op.getValueType()) == TargetLowering::TypeLegal || Op.getOpcode() == ISD::TargetConstant || Op.getOpcode() == ISD::Register) && "Unexpected illegal type!"' failed https://github.com/llvm/llvm-project/issues/90356
+  #75711 [pull_request] [closed] [clang] Add `intrin0.h` header to mimic `intrin0.h` used by MSVC STL for clang-cl https://github.com/llvm/llvm-project/pull/75711
+  #67278 [pull_request] [closed] [X86][RFC] Support AVX10 options https://github.com/llvm/llvm-project/pull/67278
+  #44061 [issue] [closed] regex, std::_Is_word, parser EOF https://github.com/llvm/llvm-project/issues/44061
+  #25634 [issue] [closed] fatal error: error in backend: SSE register return with SSE disabled https://github.com/llvm/llvm-project/issues/25634
+  #36712 [issue] [closed] Segmentation fault https://github.com/llvm/llvm-project/issues/36712
+  #23507 [issue] [closed] crash in function tryCaptureVariable https://github.com/llvm/llvm-project/issues/23507
+  #59364 [issue] [closed] Raptor Lake cpu detected as goldmont https://github.com/llvm/llvm-project/issues/59364
+  #28746 [issue] [closed] avx512 JIT backend generates wrong code on <4 x float> https://github.com/llvm/llvm-project/issues/28746
+  #35967 [issue] [closed] '-march=native' incorrectly emits VZEROUPPER with Knights Landing https://github.com/llvm/llvm-project/issues/35967
+  #35872 [issue] [closed] [LV] Lost vectorization opportunity https://github.com/llvm/llvm-project/issues/35872
+  #29890 [issue] [closed] Crash in InnerLoopVectorizer::vectorizeLoop https://github.com/llvm/llvm-project/issues/29890
+  #33597 [issue] [closed] Panic when using _addcarryx_u64 with Clang 3.9 https://github.com/llvm/llvm-project/issues/33597
+  #40759 [issue] [closed] Cannot emit physreg copy instruction after r357703 https://github.com/llvm/llvm-project/issues/40759
+
+Search: repo:llvm/llvm-project vgatherpf0dps
+Count: 3, incomplete=False
+  #122051 [pull_request] [closed] [X86] Correct the cdisp8 encoding for VSCATTER/VGATHER prefetch https://github.com/llvm/llvm-project/pull/122051
+  #122530 [pull_request] [closed] [X86] Use loaded/stored element size when parsing/printing gather/scatter pointer size in Intel syntax. https://github.com/llvm/llvm-project/pull/122530
+  #35550 [issue] [closed] llvm-mc doesn't accept AVX512 instructions using %zmm16+ https://github.com/llvm/llvm-project/issues/35550
+
+Search: repo:llvm/llvm-project "mask operand position"
+Count: 6, incomplete=False
+  #202620 [pull_request] [open] [AMDGPU] Intern custom operand match sequences https://github.com/llvm/llvm-project/pull/202620
+  #179831 [pull_request] [closed] [mlir][SPIRV] Add sub-element-byte lowering support for atomic_rmw ori/andi ops https://github.com/llvm/llvm-project/pull/179831
+  #122051 [pull_request] [closed] [X86] Correct the cdisp8 encoding for VSCATTER/VGATHER prefetch https://github.com/llvm/llvm-project/pull/122051
+  #129731 [pull_request] [closed] [DAG] Add ShuffleVectorSDNode::getSplatMaskIndex static helper https://github.com/llvm/llvm-project/pull/129731
+  #167266 [pull_request] [closed] DAG: Fold copysign with a known signmask to a disjoint or https://github.com/llvm/llvm-project/pull/167266
+  #105551 [pull_request] [closed] [VP] Remove VP_PROPERTY_REDUCTION and VP_PROPERTY_CMP [nfc] https://github.com/llvm/llvm-project/pull/105551
+
+Reviewed relevant search hits:
+  #122051: Related cdisp8 correction; parent independently verified body explicitly leaves unusual mask position unaddressed. https://github.com/llvm/llvm-project/pull/122051
+  #122530: Related memory-size presentation change; title/body do not track the mask-position defect. https://github.com/llvm/llvm-project/pull/122530
+  #35550: Different feature-gating issue for high-numbered ZMM registers; initial example is vpaddd and notes -mcpu=skx permits it. Closed as fixed in 2019. https://github.com/llvm/llvm-project/issues/35550
+
+Bounded issue/PR search is not proof that no duplicate exists.
+Source inspection only; the proposed patch was not built or tested.

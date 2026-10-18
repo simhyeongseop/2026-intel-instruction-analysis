@@ -1,0 +1,90 @@
+row_id,mnemonic,table_opcode,check_opcode,byte_pattern,reason,evidence,edition
+762,HRESET,F3 0F 3A F0 C0 /ib,F3 0F 3A F0 C0 ib,,표기 '/ib'를 대조 도구가 읽지 못함. 고정 ModRM C0 뒤 imm8,"PDF 표 opcode 칸, Op/En A Operand 1 imm8",093
+1175,VMOVD,VEX.128.66.0F.W0 6E /,VEX.128.66.0F.W0 6E /r,,PDF 원문 오기: 표 opcode 칸이 '6E /'로 인쇄됨(r 누락). 추출 결함 아님,PDF 756쪽 그림 확인(2026-10-10). 같은 절 VEX.128.66.0F.W1 6E /r 행과 같은 형식,093
+1857,PMOVSXBQ,66 0f 38 22 /r,66 0F 38 22 /r,,opcode가 소문자로 추출되어 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+1893,PMOVZXBQ,66 0f 38 32 /r,66 0F 38 32 /r,,opcode가 소문자로 추출되어 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+3049,VFIXUPIMMPS,EVEX.128.66.0F3A.W0 54 /r,EVEX.128.66.0F3A.W0 54 /r ib,,PDF 표 EVEX.128/256 행에 ib 없음(원문 누락),"같은 절 EVEX.512 행 '54 /r ib', Op/En A Operand 4 = imm8, 명령어 칸 imm8 (1665쪽)",093
+3050,VFIXUPIMMPS,EVEX.256.66.0F3A.W0 54 /r,EVEX.256.66.0F3A.W0 54 /r ib,,PDF 표 EVEX.128/256 행에 ib 없음(원문 누락),"같은 절 EVEX.512 행 '54 /r ib', Op/En A Operand 4 = imm8, 명령어 칸 imm8 (1665쪽)",093
+3434,VMOVSH,EVEX.LLIG.F3.MAP5.W0 10 /r,,^(67)?62[0-9a-f][5d]7e[0-9a-f]{2}10,"대조 도구가 MAP5를 다루지 못함. EVEX P0 map=101, P1 W0·vvvv=1111·pp=F3(7E), opcode 10을 손으로 해석",PDF 표 opcode 칸,093
+3435,VMOVSH,EVEX.LLIG.F3.MAP5.W0 11 /r,,^(67)?62[0-9a-f][5d]7e[0-9a-f]{2}11,"대조 도구가 MAP5를 다루지 못함. EVEX P0 map=101, P1 W0·vvvv=1111·pp=F3(7E), opcode 11을 손으로 해석",PDF 표 opcode 칸,093
+4010,VREDUCESD,EVEX.LLIG.66.0F3A.W1 57,EVEX.LLIG.66.0F3A.W1 57 /r ib,,"PDF 표 opcode 칸에 /r·ib 없음, 명령어 칸 'imm8/r', Op/En Operand 4 N/A(원문 누락·충돌)","Op/En Operand 3 = ModRM:r/m, Description 'imm8[7:4]', 같은 계열 VREDUCESS 행 '57 /r /ib' (2163쪽, 2167쪽)",093
+4012,VREDUCESS,EVEX.LLIG.66.0F3A.W0 57 /r /ib,EVEX.LLIG.66.0F3A.W0 57 /r ib,,표기 '/ib'를 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+4108,WRSSQ,REX.W 0F 38 F6 !(11):rrr:bbb,REX.W 0F 38 F6 /r,,'!(11)' 표기(메모리 형식만)를 대조 도구가 읽지 못함. 시험 형식은 모두 메모리,SYM087 !(11) 정의,093
+4110,WRUSSQ,66 REX.W 0F 38 F5 !(11):rrr:bbb,66 REX.W 0F 38 F5 /r,,'!(11)' 표기(메모리 형식만)를 대조 도구가 읽지 못함. 시험 형식은 모두 메모리,SYM087 !(11) 정의,093
+4195,VGATHERPF0DPD,EVEX.512.66.0F38.W1 C6 /1 /vsib,EVEX.512.66.0F38.W1 C6 /1,,'/vsib' 표기를 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+4199,VGATHERPF1DPD,EVEX.512.66.0F38.W1 C6 /2 /vsib,EVEX.512.66.0F38.W1 C6 /2,,'/vsib' 표기를 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+4213,VSCATTERPF0DPD,EVEX.512.66.0F38.W1 C6 /5 /vsib,EVEX.512.66.0F38.W1 C6 /5,,'/vsib' 표기를 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+4217,VSCATTERPF1DPD,EVEX.512.66.0F38.W1 C6 /6 /vsib,EVEX.512.66.0F38.W1 C6 /6,,'/vsib' 표기를 대조 도구가 읽지 못함,PDF 표 opcode 칸,093
+4049,VSCATTERDPS,EVEX.128.66.0F38.W0 A2 /vsib,EVEX.128.66.0F38.W0 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4050,VSCATTERDPS,EVEX.256.66.0F38.W0 A2 /vsib,EVEX.256.66.0F38.W0 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4051,VSCATTERDPS,EVEX.512.66.0F38.W0 A2 /vsib,EVEX.512.66.0F38.W0 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4052,VSCATTERDPD,EVEX.128.66.0F38.W1 A2 /vsib,EVEX.128.66.0F38.W1 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4053,VSCATTERDPD,EVEX.256.66.0F38.W1 A2 /vsib,EVEX.256.66.0F38.W1 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4054,VSCATTERDPD,EVEX.512.66.0F38.W1 A2 /vsib,EVEX.512.66.0F38.W1 A2 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4055,VSCATTERQPS,EVEX.128.66.0F38.W0 A3 /vsib,EVEX.128.66.0F38.W0 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4056,VSCATTERQPS,EVEX.256.66.0F38.W0 A3 /vsib,EVEX.256.66.0F38.W0 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4057,VSCATTERQPS,EVEX.512.66.0F38.W0 A3 /vsib,EVEX.512.66.0F38.W0 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4058,VSCATTERQPD,EVEX.128.66.0F38.W1 A3 /vsib,EVEX.128.66.0F38.W1 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4059,VSCATTERQPD,EVEX.256.66.0F38.W1 A3 /vsib,EVEX.256.66.0F38.W1 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+4060,VSCATTERQPD,EVEX.512.66.0F38.W1 A3 /vsib,EVEX.512.66.0F38.W1 A3 /r,,"'/vsib' 표기를 대조 도구가 읽지 못함. ModRM.reg = 원본 레지스터, rm=100(SIB, 벡터 인덱스)이므로 /r로 대조","PDF 표 opcode 칸, Op/En(BaseReg/VectorReg) 표",093
+1562,VPADDUSB,VEX.128.660F.WIG DC /r,VEX.128.66.0F.WIG DC /r,,PDF 원문 오기 '660F'(점 누락),"PDF 915쪽 텍스트 층 ""VEX.128.660F.WIG DC /r""; 다음 행 ""VEX.128.66.0F.WIG DD /r""",093
+1902,VPMOVZXDQ,VEX.128.66.0F 38.WIG 35 /r,VEX.128.66.0F38.WIG 35 /r,,'0F 38.WIG' 공백(추출 배치 차이),"PDF 1065쪽; 같은 절 다른 행 ""VEX.128.66.0F38.WIG 30 /r""",093
+1909,VPMOVZXBW,EVEX.128.66.0F38 30.WIG /r,EVEX.128.66.0F38.WIG 30 /r,,PDF 원문 표기 순서 오류 '0F38 30.WIG',"PDF 1066쪽 텍스트 층 ""EVEX.128.66.0F38 30.WIG /r""; 다음 행 ""EVEX.128.66.0F38.WIG 31 /r""",093
+2928,VCVTTPD2UDQ,EVEX.256.0F.W1 78 02 /r,EVEX.256.0F.W1 78 /r,,PDF 원문 오기 '78 02 /r'(02 덧붙음),"PDF 1581쪽 텍스트 층; 같은 절 EVEX.128/512 행 ""78 /r""",093
+3092,VFMADD231PS,VEX.256.66.0F38.0 B8 /r,VEX.256.66.0F38.W0 B8 /r,,PDF 원문 오기 '.0'(W0의 W 누락),"PDF 1698쪽 텍스트 층 ""VEX.256.66.0F38.0 B8 /r""; 같은 절 다른 VEX.256 행 ""W0""",093
+3197,VFMSUB231PS,VEX.256.66.0F38.0 BA /r,VEX.256.66.0F38.W0 BA /r,,PDF 원문 오기 '.0'(W0의 W 누락),"PDF 1747쪽 텍스트 층 ""VEX.256.66.0F38.0 BA /r""; 같은 절 다른 VEX.256 행 ""W0""",093
+3284,VFNMADD231PS,VEX.256.66.0F38.0 BC /r,VEX.256.66.0F38.W0 BC /r,,PDF 원문 오기 '.0'(W0의 W 누락),"PDF 1790쪽 텍스트 층 ""VEX.256.66.0F38.0 BC /r""; 같은 절 다른 VEX.256 행 ""W0""",093
+3326,VFNMSUB231PS,VEX.256.66.0F38.0 BE /r,VEX.256.66.0F38.W0 BE /r,,PDF 원문 오기 '.0'(W0의 W 누락),"PDF 1810쪽 텍스트 층 ""VEX.256.66.0F38.0 BE /r""; 같은 절 다른 VEX.256 행 ""W0""",093
+966,KSHIFTLW,VEX.L0.66.0F3A.W1 32 /r,VEX.L0.66.0F3A.W1 32 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 641쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+967,KSHIFTLB,VEX.L0.66.0F3A.W0 32 /r,VEX.L0.66.0F3A.W0 32 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 641쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+968,KSHIFTLQ,VEX.L0.66.0F3A.W1 33 /r,VEX.L0.66.0F3A.W1 33 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 641쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+969,KSHIFTLD,VEX.L0.66.0F3A.W0 33 /r,VEX.L0.66.0F3A.W0 33 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 641쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+970,KSHIFTRW,VEX.L0.66.0F3A.W1 30 /r,VEX.L0.66.0F3A.W1 30 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 643쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+971,KSHIFTRB,VEX.L0.66.0F3A.W0 30 /r,VEX.L0.66.0F3A.W0 30 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 643쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+972,KSHIFTRQ,VEX.L0.66.0F3A.W1 31 /r,VEX.L0.66.0F3A.W1 31 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 643쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+973,KSHIFTRD,VEX.L0.66.0F3A.W0 31 /r,VEX.L0.66.0F3A.W0 31 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 643쪽 텍스트 층; 명령어 칸 imm8, Op/En RRI",093
+3359,VFPCLASSSS,EVEX.LLIG.66.0F3A.W0 67 /r,EVEX.LLIG.66.0F3A.W0 67 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 1834쪽 텍스트 층; 명령어 칸 imm8, Op/En A",093
+3987,VRANGESD,EVEX.LLIG.66.0F3A.W1 51 /r,EVEX.LLIG.66.0F3A.W1 51 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 2146쪽 텍스트 층; 명령어 칸 imm8, Op/En A",093
+3988,VRANGESS,EVEX.LLIG.66.0F3A.W0 51 /r,EVEX.LLIG.66.0F3A.W0 51 /r ib,,PDF 표 opcode 칸에 ib 없음(원문 누락),"PDF 2149쪽 텍스트 층; 명령어 칸 imm8, Op/En A",093
+2554,SETA,0F 97,0F 97 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 97""; Op/En M = ModRM:r/m (w)",093
+2555,SETAE,0F 93,0F 93 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 93""; Op/En M = ModRM:r/m (w)",093
+2556,SETB,0F 92,0F 92 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 92""; Op/En M = ModRM:r/m (w)",093
+2557,SETBE,0F 96,0F 96 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 96""; Op/En M = ModRM:r/m (w)",093
+2558,SETC,0F 92,0F 92 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 92""; Op/En M = ModRM:r/m (w)",093
+2559,SETE,0F 94,0F 94 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 94""; Op/En M = ModRM:r/m (w)",093
+2560,SETG,0F 9F,0F 9F /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9F""; Op/En M = ModRM:r/m (w)",093
+2561,SETGE,0F 9D,0F 9D /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9D""; Op/En M = ModRM:r/m (w)",093
+2562,SETL,0F 9C,0F 9C /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9C""; Op/En M = ModRM:r/m (w)",093
+2563,SETLE,0F 9E,0F 9E /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9E""; Op/En M = ModRM:r/m (w)",093
+2564,SETNA,0F 96,0F 96 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 96""; Op/En M = ModRM:r/m (w)",093
+2565,SETNAE,0F 92,0F 92 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 92""; Op/En M = ModRM:r/m (w)",093
+2566,SETNB,0F 93,0F 93 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 93""; Op/En M = ModRM:r/m (w)",093
+2567,SETNBE,0F 97,0F 97 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 97""; Op/En M = ModRM:r/m (w)",093
+2568,SETNC,0F 93,0F 93 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 93""; Op/En M = ModRM:r/m (w)",093
+2569,SETNE,0F 95,0F 95 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 95""; Op/En M = ModRM:r/m (w)",093
+2570,SETNG,0F 9E,0F 9E /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9E""; Op/En M = ModRM:r/m (w)",093
+2571,SETNGE,0F 9C,0F 9C /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9C""; Op/En M = ModRM:r/m (w)",093
+2572,SETNL,0F 9D,0F 9D /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9D""; Op/En M = ModRM:r/m (w)",093
+2573,SETNLE,0F 9F,0F 9F /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9F""; Op/En M = ModRM:r/m (w)",093
+2574,SETNO,0F 91,0F 91 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 91""; Op/En M = ModRM:r/m (w)",093
+2575,SETNP,0F 9B,0F 9B /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9B""; Op/En M = ModRM:r/m (w)",093
+2576,SETNS,0F 99,0F 99 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 99""; Op/En M = ModRM:r/m (w)",093
+2577,SETNZ,0F 95,0F 95 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 95""; Op/En M = ModRM:r/m (w)",093
+2578,SETO,0F 90,0F 90 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 90""; Op/En M = ModRM:r/m (w)",093
+2579,SETP,0F 9A,0F 9A /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9A""; Op/En M = ModRM:r/m (w)",093
+2580,SETPE,0F 9A,0F 9A /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9A""; Op/En M = ModRM:r/m (w)",093
+2581,SETPO,0F 9B,0F 9B /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 9B""; Op/En M = ModRM:r/m (w)",093
+2582,SETS,0F 98,0F 98 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 98""; Op/En M = ModRM:r/m (w)",093
+2583,SETZ,0F 94,0F 94 /r,,PDF 표 opcode 칸에 ModRM 표기 없음(SETcc),"PDF 1327쪽 텍스트 층 ""0F 94""; Op/En M = ModRM:r/m (w)",093
+684,FSAVE,9B DD /6,,^9b(67)?dd[37b][0-7],"'9B'는 별도 명령 FWAIT이고 그 뒤 명령의 접두어(67)가 9B와 opcode 사이에 온다. 대조 도구가 한 명령으로 읽지 못함. ModRM: MOD!=11, REG=/6 또는 /7을 hex 범위로 씀","PDF 493쪽 표 ""9B DD /6""",093
+701,FSTSW,9B DD /7,,^9b(67)?dd[37b][89a-f],"'9B'는 별도 명령 FWAIT이고 그 뒤 명령의 접두어(67)가 9B와 opcode 사이에 온다. 대조 도구가 한 명령으로 읽지 못함. ModRM: MOD!=11, REG=/6 또는 /7을 hex 범위로 씀","PDF 510쪽 표 ""9B DD /7""",093
+697,FSTCW,9B D9 /7,,^9b(67)?d9[37b][89a-f],"'9B'는 별도 명령 FWAIT이고 그 뒤 명령의 접두어(67)가 9B와 opcode 사이에 온다. 대조 도구가 한 명령으로 읽지 못함. ModRM: MOD!=11, REG=/6 또는 /7을 hex 범위로 씀","PDF 506쪽 표 ""9B D9 /7""",093
+699,FSTENV,9B D9 /6,,^9b(67)?d9[37b][0-7],"'9B'는 별도 명령 FWAIT이고 그 뒤 명령의 접두어(67)가 9B와 opcode 사이에 온다. 대조 도구가 한 명령으로 읽지 못함. ModRM: MOD!=11, REG=/6 또는 /7을 hex 범위로 씀","PDF 508쪽 표 ""9B D9 /6""",093
+1027,LOCK,F0,,^f0$,접두어만으로 된 행. 대조 도구가 opcode 없는 행을 읽지 못함,"PDF 683쪽 표 ""F0""",093
+4112,XACQUIRE,F2,,^f2$,접두어만으로 된 행. 대조 도구가 opcode 없는 행을 읽지 못함,"PDF 2279쪽 표 ""F2""",093
+4113,XRELEASE,F3,,^f3$,접두어만으로 된 행. 대조 도구가 opcode 없는 행을 읽지 못함,"PDF 2279쪽 표 ""F3""",093
+2725,TILERELEASE,VEX.128.NP.0F38.W0 49 C0,,^c4e27849c0$,벡터 행의 고정 ModRM 바이트(C0)를 대조 도구가 읽지 못함. C4 E2(map 0F38) 78(W0 vvvv1111 L0 pp NP) 49 C0,"PDF 1433쪽 표 ""VEX.128.NP.0F38.W0 49 C0""",093
+2395,RDMSR,VEX.128.F2.MAP7:W0.F6 11:000:bbb,,^c4[02468ace]77bf6c[0-7][0-9a-f]{8}$,"표 opcode 칸에 imm32 꼬리(id) 표기가 없음(Op/En MI의 imm32). 손으로 해석한 바이트: C4, R̄X̄B̄+mmmmm=00111(map 7), W0 vvvv=1111 L0 pp=F2(11), opcode F6, ModRM 11:000:bbb, imm32 4바이트",PDF 1247쪽 표 칸과 Instruction Operand Encoding; MAP7은 source_conflict_cases MAP7-*,093
+2770,URDMSR,VEX.128.F2.MAP7:W0.F8 11:000:bbb,,^c4[02468ace]77bf8c[0-7][0-9a-f]{8}$,"표 opcode 칸에 imm32 꼬리(id) 표기가 없음(Op/En MI의 imm32). 손으로 해석한 바이트: C4, R̄X̄B̄+mmmmm=00111(map 7), W0 vvvv=1111 L0 pp=F2(11), opcode F8, ModRM 11:000:bbb, imm32 4바이트",PDF 1463쪽 표 칸과 Instruction Operand Encoding; MAP7은 source_conflict_cases MAP7-*,093
+2772,UWRMSR,VEX.128.F3.MAP7:W0.F8 11:000:bbb,,^c4[02468ace]77af8c[0-7][0-9a-f]{8}$,"표 opcode 칸에 imm32 꼬리(id) 표기가 없음(Op/En IM의 imm32). 손으로 해석한 바이트: C4, R̄X̄B̄+mmmmm=00111(map 7), W0 vvvv=1111 L0 pp=F3(10), opcode F8, ModRM 11:000:bbb, imm32 4바이트",PDF 1465쪽 표 칸과 Instruction Operand Encoding; MAP7은 source_conflict_cases MAP7-*,093
+4105,WRMSRNS,VEX.128.F3.MAP7:W0.F6 11:000:bbb,,^c4[02468ace]77af6c[0-7][0-9a-f]{8}$,"표 opcode 칸에 imm32 꼬리(id) 표기가 없음(Op/En IM의 imm32). 손으로 해석한 바이트: C4, R̄X̄B̄+mmmmm=00111(map 7), W0 vvvv=1111 L0 pp=F3(10), opcode F6, ModRM 11:000:bbb, imm32 4바이트",PDF 2259쪽 표 칸과 Instruction Operand Encoding; MAP7은 source_conflict_cases MAP7-*,093

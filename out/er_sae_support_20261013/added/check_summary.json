@@ -1,0 +1,24 @@
+{
+ "cases": 1598,
+ "spec_trusted": 1598,
+ "expected": {
+  "reach": 1598
+ },
+ "verdicts": {
+  "as": {
+   "SDM 일치": 1598
+  },
+  "clang": {
+   "SDM 일치": 1558,
+   "거부": 40
+  }
+ },
+ "sdm_match": {
+  "as": 1598,
+  "clang": 1558
+ },
+ "spec_trusted_and_sdm_match": {
+  "as": 1598,
+  "clang": 1558
+ }
+}

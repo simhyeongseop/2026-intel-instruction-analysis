@@ -43,7 +43,7 @@ import re
 import pdfplumber
 from pdfplumber.utils import extract_text as chars_to_text
 
-PDF_PATH = "325383-090-sdm-vol-2abcd.pdf"
+PDF_PATH = "intel_manual.pdf"
 OUT_CSV = "data/db/isa_db.csv"
 COVERAGE_REPORT = "data/db/coverage_report.md"
 
@@ -51,7 +51,7 @@ COVERAGE_REPORT = "data/db/coverage_report.md"
 # 118 = "AAA-ASCII Adjust After Addition" 로 챕터3 본문이 시작하는 페이지(0-based)
 # 2393 = "APPENDIX A OPCODE MAP" 이 시작하는 페이지 -> 여기부턴 opcode map/부록이라 제외.
 INSTR_REF_START = 118
-INSTR_REF_END = 2393
+INSTR_REF_END = 2402  # 093판(2026-09). 090판은 2393이었다
 
 # 목차(Contents)에서 명령어 전체 목록을 뽑을 범위. 실측 결과 이 안에 다 들어있다.
 TOC_START = 0
@@ -401,6 +401,7 @@ def extract_all_rows(pdf):
         page = pdf.pages[i]
         rows = extract_rows_from_page(page, i + 1)  # source_page는 사람이 보기 쉬운 1-based
         all_rows.extend(rows)
+        page.close()  # pdfplumber 쪽 캐시가 쌓여 WSL 메모리를 다 쓰는 것을 막는다
     return all_rows
 
 
@@ -519,7 +520,7 @@ def write_coverage_report(toc_names, cc_family, extracted_mnemonics, row_count, 
     lines.append(", ".join(cc_missing) if cc_missing else "(없음)")
     lines.append("")
     lines.append("## 실제 누락 의심 목록 (0 이어야 함)")
-    lines.append(", ".join(real_missing) if real_missing else "(없음 - 커버리지 100%)")
+    lines.append(", ".join(real_missing) if real_missing else "(목차 이름 대조상 누락 없음; ISA 의미/인코딩 커버리지와 다름)")
     lines.append("")
     lines.append("## 알려진 제한사항 (수동 확인 결과, 실제 파이프라인 버그 아님)")
     lines.append(
@@ -540,7 +541,19 @@ def write_coverage_report(toc_names, cc_family, extracted_mnemonics, row_count, 
     return real_missing
 
 
-def main():
+def main(argv=None):
+    """기본값은 기존 동작(intel_manual.pdf -> data/db/isa_db.csv)이다. 다른 판은 옵션으로 별도 위치에 쓴다."""
+    import argparse
+    global PDF_PATH, OUT_CSV, COVERAGE_REPORT, INSTR_REF_START, INSTR_REF_END
+    parser = argparse.ArgumentParser(description="SDM Vol.2 인코딩 표 추출")
+    parser.add_argument("--pdf", default=PDF_PATH)
+    parser.add_argument("--out", default=OUT_CSV)
+    parser.add_argument("--coverage", default=COVERAGE_REPORT)
+    parser.add_argument("--first-page", type=int, default=INSTR_REF_START + 1, help="명령어 표 첫 쪽(1부터)")
+    parser.add_argument("--last-page", type=int, default=INSTR_REF_END, help="명령어 표 마지막 쪽(1부터, 포함)")
+    args = parser.parse_args(argv)
+    PDF_PATH, OUT_CSV, COVERAGE_REPORT = args.pdf, args.out, args.coverage
+    INSTR_REF_START, INSTR_REF_END = args.first_page - 1, args.last_page
     pdf = pdfplumber.open(PDF_PATH)
     print("추출 시작 (챕터 3~8 opcode 표 스캔)...")
     rows = extract_all_rows(pdf)

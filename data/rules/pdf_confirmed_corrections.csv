@@ -1,0 +1,4 @@
+row_id,mnemonic,field,isa_value,corrected_value,page,printed_page,confirmed,evidence
+2741,UDB,op_en,Z0,ZO,1440,Vol. 2B 4-737,사용자 PDF 확인 2026-10-10(화면상 ZO),"pdfplumber 단어 추출은 이 칸만 'Z0', 위 UD2 줄과 Operand Encoding 표는 'ZO'"
+3367,VGATHERDPD,cpuid_flag,(AVX512VL AND AVX512F) R AVX10.1,(AVX512VL AND AVX512F) OR AVX10.1,1832,Vol. 2C 5-362,사용자 PDF 확인 2026-10-10(OR 오타로 봄),PDF 줄 'AVX512F) R' / 'AVX10.11'. 같은 표 다른 행은 'OR AVX10.1'. 각주 1 본문은 그 쪽에 없음(표기 오류로 봄)
+3367,VGATHERDPD,operand_encoding_2,,"BaseReg (R): VSIB:base, VectorReg(R): VSIB:index",1832,Vol. 2C 5-362,사용자 PDF 확인 2026-10-10,Operand 2 칸이 줄 위아래로 갈라져 추출에서 빠짐. Op/En 'A Tuple1 Scalar ModRM:reg (w) [Operand 2] N/A N/A'

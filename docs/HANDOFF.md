@@ -1,89 +1,90 @@
-# 인계 문서 (HANDOFF) — 2026-09-03 기준
+# 현재 작업 인계
 
-이 파일은 **작업이 중단됐을 때 다음 사람(또는 codex)이 그대로 이어받기 위한 문서**다.
-새 라운드를 시작하면 이 파일을 갱신해서 항상 "지금 상태"만 담고 있게 유지한다.
+갱신: 2026-10-19(현재 작업 커밋·push 완료, main 반영 PR #1, 회귀 156개 재확인). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
 
----
+## 목적
 
-## 1. 지금 무엇을 하던 중인가
+Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가 SDM대로 처리하는지 대조한다.
+다른 퍼징 실험에서 명령어 입력을 검사할 수 있는 도구도 제공한다. 전체 ISA 의미 검증을 완료한 상태가 아니다.
 
-**9회 보고서의 "확정 버그" 판정을 계속 좁혀나가는 중이다.**
+## 현재 기준
 
-- 8월 세션: 확정 버그 8건 → codex + 최신 clang(19.1.1/20.1.2) 교차검증으로 **4건**으로 하향
-  (VPMOVQD/LAR/LSL → false_alarm, MOV Sreg 메모리형 → unsure). 이 작업은 **완료·검증 통과**했으나
-  아직 **커밋 안 됨**(아래 2절).
-- 9월 3일(현재): 형섭이 남은 4건에도 이의를 제기해서 **3개 사안을 재검증 중**(아래 3절).
+- SDM 093판: `intel_manual.pdf`(Vol.2 325383-093US), `intel_manual_vol1.pdf`(Vol.1 253665-093US). 경로는 `pipeline/sdm_paths.py`.
+- 도구: GNU Binutils 2.47, LLVM 23.1.3. `~/opt`에 sudo 없이 설치했고, 경로는 `pipeline/toolchain.py`에 있다.
+  - binutils는 소스 빌드, LLVM은 공식 바이너리다. 설치 절차는 DEVLOG 2026-10-12.
+- 파이프라인: 추출 → 생성 → 도구별 판정 → 역어셈블러별 대조([안내](PIPELINE.md))
+- 전체 조립의 기준: `out/cases/`(10월 13일 전체 재실행, ER/SAE 포함, 실행 기록 `out/runs/20261013T025438835844Z.json`). 10월 12일 결과는 git `3813bf2`에 있다.
+- 검사 CLI(`scripts/asm_linter.py`): 줄마다 후보 SDM 행을 찾고 3·4단계와 같은 판정을 낸다(`pipeline/sdm_judge.py`, 10월 12일).
+  - 보존된 19,462케이스: 생성 행이 모두 후보에 있고, 3단계 SDM 일치 34,144건이 CLI에서도 같은 행으로 SDM 일치. 새 ER/SAE 1,598개도 모두 후보에 있고, 3,156건 같은 행 SDM 일치(`scripts/check_cli_consistency.py`).
+- reg 칸 r64 변형 추가(10월 12일): 기존 케이스 판정 변화 0. 4단계 새 판정 `SDM 일치(reg 칸 레지스터 폭 표기)`.
+- 결정 6 완료(10월 12일): Sol만 값을 붙였던 1,410줄이 생성 값과 모두 맞는다(일치 786, Sol 폭 없음·완화 근거 620, REP LODS 철자 선택 4). `scripts/check_sol_only_values.py`
 
-## 2. 커밋 안 된 변경 (working tree, 브랜치 main)
+## ER/SAE 최신 snapshot(2026-10-13)
 
-`git status --short` 기준 6개 파일. 전부 "bug 8→4 하향" 작업의 결과물이고 서로 일치한다.
+- `out/er_sae_support_20261013/`: `generated/`는 4,219행·21,060케이스 전체 생성, `added/`는 새 288행·1,598개만 실제 조립·역어셈블한 결과다. 기본 out/cases의 과거 CPU 관측을 새 결과로 설명하지 않는다.
+- 구현: `pipeline/fp_controls.py`의 조건을 생성기·CLI·인코딩 대조가 공유한다. ER 네 모드, SAE, 장식 중복·위치·메모리 조건, EVEX.b/RC, 역어셈블 장식 누락·변경을 검사한다. LLVM의 RC-before-GPR 철자도 처리한다.
+- 추가 케이스: GNU 1,598 SDM 일치, clang 1,558 일치·40 거부. 두 역어셈블러는 1,598 모두 일치. clang 거부 40개는 정수→실수 변환에서 RC를 GPR 뒤에 적은 입력이다. GPR 앞에 적은 LLVM 출력 40개는 두 어셈블러·CLI 모두 SDM 일치(`layout_observations.json`). 이를 명령 미지원이나 새 버그로 분류하지 않았다.
+- 최종 코드 검증: `final_validation_v2/manifest.json`, 회귀 153개 통과(건너뜀 없음). 기존 입력 19,462개 변경 0. 저장된 기존 인코딩 일치 38,282건·역어셈블 오퍼랜드 일치 38,115건 유지. 이는 저장된 관측 재판정이며 기존 전체를 다시 조립한 것은 아니다.
+- 자세한 범위·원문 근거·실행 기록: `docs/ER_SAE_SUPPORT.md`. CPU 실행·이슈 제출·커밋은 하지 않았다.
 
-| 파일 | 변경 내용 |
-|---|---|
-| `pipeline/m7_triage.py` | `ERROR_COMBO_OVERRIDES`에서 combo 6540(VPMOVQD)/1516(LAR)/1571(LSL)을 bug→false_alarm, 1683(MOV Sreg)을 bug→unsure. `ROUNDTRIP_COMBO_OVERRIDES`의 1527(LSS) 사유 문구 정밀화 |
-| `out/triage.csv`, `out/triage_report.md` | 위 스크립트 재실행 결과 (verdict: bug=4, false_alarm=1557, unsure=24) |
-| `docs/DEVLOG.md` | 2026-09-03 항목 — 재검토 경위·근거·fork 충돌 사고 교훈 기록 |
-| `docs/MEETING_NOTES/9회_미팅_보고서.md` | 5절 "확정 버그 8건" 표에 정정 경고 + "재검토 후 4건" 표 추가 |
-| `tests/manual_bug_check.py` | PoC 재현 대상에서 LAR/LSL/MOV/VPMOVQD 제거, `DOWNGRADED_CASES`로 이동 |
+## 발표 전 재점검(2026-10-13)
 
-**검증 상태: PASS**(2026-09-03, `@agent-verifier`). 확인된 것 — 문법 정상, `python3 pipeline/m7_triage.py`
-재실행 결과가 워킹트리와 바이트 동일(결정적), combo별 verdict 정확, `tests/manual_bug_check.py` 정상 실행,
-다른 파이프라인 산출물 회귀 없음.
+- `docs/PRESENTATION_REVIEW_2026-10-13.md`: SDM 일치가 아닌 GNU 78·clang 274케이스 재분류. 근거 `out/presentation_review_20261013/`.
+- 우리 쪽 문제 후보 3가지: CALL·JMP `dword ptr` 기대값(m16:16과 같은 문법이므로 alias), VMOVW·VPBROADCASTB/W r64 변형(XED는 GPR32), `data16` 철자(clang용 아님). 코드 수정은 사용자 결정 대기.
+- 사용자 결정(10월 13일): 세 가지 모두 코드에서 고친다. `case_rules.FAR_POINTER_MEMORY_ALIASES`+`m2_generate.mark_far_pointer_aliases`, `REG_R64`에서 세 니모닉 제외, `unreachable_forms.csv`에 PUSH imm16(2314)·XBEGIN rel16(4118) 등록.
+- AVX512PF 의견: `docs/AVX512PF_OPINION_2026-10-13.md`(매뉴얼 오류 근거 없음, 가장 강한 근거는 LLVM 자기 출력 재조립 실패).
+- 발표 원고: `docs/presentation/SLIDES.md`(10장, 대본 포함, 생성 AI 입력용), 터미널 캡처 `docs/presentation/captures/`(`render.py`로 PNG), 원문·Godbolt 이미지 `docs/presentation/images/`.
 
-**→ 커밋해도 되는 상태다.** (형섭이 3절 재검증 결과를 보고 함께 커밋할지, 먼저 커밋할지 정하면 됨)
+## 수치(2026-10-13 전체 재실행, 2.47 / 23.1.3)
 
-## 3. 진행 중인 재검증 — 형섭의 이의 3건
+- 4,219행(니모닉 1,617) → 21,046케이스(ER/SAE 1,598 포함, r64 변형 14개 제거). 기대: reach 20,892, reject 100, alias_no_test 54.
+- 3단계 SDM 일치: GNU 20,934, clang 20,696. 10월 12일 대비 판정 변화는 의도한 15케이스뿐(CALL·JMP dword 12 → 시험 불가, PUSH·XBEGIN 3 → 도달 불가(등록)), 나머지는 바이트까지 같음.
+- 4단계(대상 20,844) 일치 계열: objdump 20,763, LLVM 20,767.
+- CPU 관측: exit0 1,973, SIGSEGV 88, SIGFPE 8, SIGILL 11, SIGTRAP 2.
+- 회귀 156개 통과, CLI 일치 대조: 21,046 후보, 37,298건 같은 행 SDM 일치.
 
-형섭 발언(2026-09-03): *"lss/lfs/lgs, mov sreg는 입출력 비트수만 맞추면 되는 거라 버그가 아닌 것 같고,
-udb는 그냥 정의되지 않은 명령어 전체를 뜻하는 거라 인식 못하는 게 문제가 되지 않는 것 같다."*
+## 열린 항목
 
-| # | 대상 combo | 현재 verdict | 형섭의 반론 | 확인해야 할 핵심 질문 |
-|---|---|---|---|---|
-| A | 1527/1532/1535 (LSS/LFS/LGS) | `bug` (objdump 표시 결함) | 크기 지시자(FWORD/TBYTE)는 어셈블 시점 문법 힌트일 뿐, 인코딩된 뒤 CPU가 읽는 바이트 수는 opcode+REX.W가 결정 → 표시만의 문제, 진짜 버그 아님 | 실행 의미가 안 바뀌면 오탐인가? 아니면 objdump 출력을 같은 툴체인의 as에 되먹일 수 없는 것(round-trip 실패)이 그 자체로 도구 결함인가? |
-| B | 1683 (MOV Sreg, r/m64 메모리형) | `unsure` | 세그먼트 레지스터는 항상 16비트 셀렉터만 로드 → REX.W는 허용되지만 의미상 무효. SDM 표의 `r/m64`는 실제 64비트 전송을 뜻하지 않음 → LAR/LSL과 같은 계열의 오탐 | SDM이 Sreg 로드의 폭 고정/REX.W 무효를 명시하는가? 반대방향 행 `REX.W + 8C /r MOV r64/m16, Sreg`는 폭을 구분해 적는데 8E 행만 뭉뚱그린 표기인가? |
-| C | 4597 (UDB) | `bug` (as에 니모닉 없음) | UDB는 UD0/UD1/UD2 같은 구체 명령어가 아니라 "정의되지 않은 명령어"를 가리키는 문서상 라벨 → as가 몰라도 정상 | UDB가 SDM에 **정식 명령어 참조 항목**(자체 Opcode/Description/Operation/Exceptions 구조)으로 실려 있는가, 아니면 설명문·각주·오피코드 맵의 라벨로만 등장하는가? "UDB does so only in 64-bit mode" 문장의 실제 전후 문맥이 갈림길 |
+- 버그 후보 3종(clang 28케이스: CLRSSBSY·RSTORSSP 6, call·jmp `word ptr` 6, AVX512PF 16). `dword ptr` 먼 호출은 m16:16과 같은 문법이라 10월 13일 시험 불가로 바꿨다. 새 보고 여부는 사용자 결정이다.
+  - clang `call/jmp word·dword ptr [rax]` → 먼 호출 m16:32(`ff 18`): 이미 보고됨(#88516, #95232, 열림)
+  - clang CLRSSBSY·RSTORSSP `qword ptr` 거부: 이미 보고됨(#95232, 열림)
+  - clang Intel 문법 AVX512PF 16행 거부(AT&T는 받음): 보고를 찾지 못함. LLVM Intel 정의 `{${mask}}, $src`가 메모리 뒤 마스크의 파싱 순서와 불일치하고, 맨 앞 `{k1}`도 거부됨
+    - 이슈 초안: `docs/issues/llvm_avx512pf_intel_mask_draft.md`(제출 전). 관련 언급: PR #122051 본문(별도 이슈는 검색에서 못 찾음)
+    - 명시적 문법 근거: Vol.1 §15.6.1.2, 15-10쪽(PDF 394)은 predicate opmask를 Intel 문법의 첫 피연산자 뒤에 중괄호로 표시한다고 명시한다. 초안에 개별 명령 표와 함께 추가했다.
+    - 독립 재검증: `docs/issues/llvm_avx512pf_intel_mask_verification.md`, 별도 snapshot `out/avx512pf_review_20261012/`. LLVM 23.1.3에서 올바른 VSIB 폭의 16개 Intel 거부·AT&T 성공·Intel 출력 재조립 거부를 직접 확인. DPD 4개는 YMM, 나머지는 ZMM. 제안 패치는 빌드 미검증이며 중복 이슈 부재를 단정하지 않는다.
+    - Godbolt 대표 1개 재현(Clang 23.1.0): Intel 실패 https://godbolt.org/z/of1hfozfa / AT&T 성공 https://godbolt.org/z/Goo8f9jvd . 로컬 23.1.3 전체 검사와 구분한다. 원문 PDF 2375쪽(8-12) 이미지와 화면은 같은 별도 snapshot에 저장했다.
+  - 철회(10월 12일): llvm-mc `ff 18` → Intel `call [rax]`. SDM에 크기 표기 문법이 없어 원문 근거가 없다.
+- `{er}`·`{sae}` 공백은 10월 13일 수정했다(위 snapshot). 이전 후보 0개 관측은 `out/operand_review_20261013/`에 보존한다. 원문 조건과 실제 도구 수용·바이트를 구분한다.
+- AVX512PF 10월 13일 별도 snapshot 재실행: 16개 모두 LLVM Intel 거부·AT&T 성공·자체 Intel 출력 재조립 거부. 시험한 버전의 Intel 문법 결함 판단 유지. 패치 빌드·CPU 실행·이슈 제출은 하지 않았다.
+- GNU는 2.44부터 기본 설정에서 MPX를 받지 않는다(binutils 57c526470).
+  - 사용자 결정: 기본 설정 그대로 기록한다. 쓰려면 `-march=generic64+mpx`
+- MOV Sreg, r/m64 메모리(10월 12일 정리): 원문 기호는 m64(표·SYM038·Description), 도구와 CPU 관측(쪽 경계 실험)은 2바이트 읽기. 버그 후보 아님, 3단계 거부에 note.
+- VMOVW·VPBROADCASTB/W r64: 10월 13일 생성에서 뺐다(SYM039만 근거, Intel XED는 GPR32).
+- GNU IRET `iret` → `cf`(IRETD): 원문이 허용하는 동의어 처리로 기록했다.
 
-**진행 방식**: 세 사안을 각각 독립 fork에 맡겨 (1) SDM PDF 원문 직접 인용, (2) as/objdump/clang 바이트 레벨
-재현, (3) codex 교차검증(전문가 독립 판단, 유도 금지) 순으로 조사시키고, **최종 판정은 오케스트레이터(또는 형섭)가
-원시 데이터를 직접 재현해서 확정한다.** 각 fork는 저장소 파일 수정 금지(조사·보고만) — 8월에 fork가 지시를 어기고
-triage.csv를 직접 고친 사고가 있었으므로 fork 종료 후 반드시 `git diff`로 실제 변경 범위를 확인할 것.
+## 사용자 결정(유지)
 
-**아직 결론 안 남.** 결과가 나오면 이 표의 "현재 verdict"와 `pipeline/m7_triage.py`의 override를 갱신하고,
-`python3 pipeline/m7_triage.py` 재실행 → `@agent-verifier` → DEVLOG 기록 → 커밋 순서로 진행한다.
+- 원문 최우선, 에이전트 해석 배제. 근거를 찾을 수 있으면 사용자가 PDF로 확인한 내용을 적용한다.
+- 원문 충돌은 표 기준으로 생성하고 예외로 등록해 대조한다(`data/rules/source_conflict_cases.csv`).
+- 도구끼리는 비교하지 않고, SDM 대 각 도구로 판정한다.
+- 매뉴얼 조회와 검사 도구는 터미널로 한다.
+- reg 칸(SYM039 "r16, r32, or r64")의 r16 케이스는 만들지 않는다(2026-10-12). 명령 절에 r16이 없고 16비트 크기를 나타낼 인코딩이 없다.
+- 커밋은 브랜치 `sdm-review-093`에, 사용자 승인 후에 한다. PDF와 `out/manual_index*`는 커밋하지 않는다.
 
-## 4. codex가 이어받는 법
+## 필요한 파일만 읽기
 
-codex CLI는 **Windows 쪽**에 설치돼 있다(WSL에는 없음). 긴 프롬프트는 인용부호 문제를 피해 stdin으로 넣는다:
+- 10월 19일 저장 작업: `852a3ed`로 코드·문서·실험 snapshot·발표 자료를 커밋하고 `origin/sdm-review-093`에 push했다. 사용자 요청으로 [PR #1](https://github.com/simhyeongseop/2026-intel-instruction-analysis/pull/1)에서 main 반영을 진행한다. PDF와 `out/manual_index*`는 제외했다. WSL 회귀 156개 통과; 조립·CPU 실험을 새로 실행한 것은 아니다. 다음 작업은 위 열린 항목의 사용자 결정에 따른다.
+
+- 생성: `pipeline/m2_generate.py`, `pipeline/case_rules.py`, `tests/test_m2_generate.py`
+- 판정: `pipeline/m3_check.py`, `pipeline/encoding_audit.py`, `pipeline/operand_size_prefix.py`
+- 검사 CLI: `scripts/asm_linter.py`, `pipeline/instruction_check.py`, `pipeline/sdm_judge.py`, `tests/test_sdm_judge.py`
+- 역어셈블: `pipeline/m4_disasm.py`, `pipeline/disasm_rules.py`
+- 원문 검토: `out/sdm_review_093/`, `pipeline/sdm_review_compare.py`, `pipeline/sdm_relaxation.py`, `scripts/build_rows_status.py`
+- 판정 기준 문서: [판정 기준](RESULT_VALIDITY_AND_BUG_CRITERIA.md), [재심 보고서](CASE_REVIEW_2026-09-14.md)
+
+과거 경과는 `docs/DEVLOG.md`에 있다. 지운 코드·문서는 git 기록(`b24bb9c` 이전)에서 찾는다.
 
 ```bash
-"/c/Users/wltjq/AppData/Local/Programs/OpenAI/Codex/bin/codex" exec -s read-only - < prompt.txt
+python3 -m unittest discover -s tests -p 'test_*.py' -q
+python3 pipeline/run.py generator --until disasm
 ```
-
-조사에 필요한 것들:
-
-- **SDM PDF 원문**: `intel_manual.pdf` (저장소 루트). 인쇄 페이지 번호(p.651, p.1436 등)와 PDF 인덱스는
-  다르므로 **텍스트 검색으로 찾을 것**.
-- **pdfplumber**: WSL에 venv 준비돼 있음 → `wsl -d Ubuntu -- bash -lc "~/pdftools_venv/bin/python <script.py>"`
-- **as / objdump / clang**: WSL(Ubuntu)에만 있다 → `wsl -d Ubuntu -- bash -lc "..."`,
-  프로젝트 경로는 WSL에서 `/mnt/c/Users/wltjq/OneDrive/assembler-testing`
-- **판정 근거 원문**: `pipeline/m7_triage.py`의 `ERROR_COMBO_OVERRIDES` / `ROUNDTRIP_COMBO_OVERRIDES`
-  (각 combo마다 왜 그렇게 판정했는지 긴 한국어 사유가 그대로 들어있다)
-- **이전 라운드 근거 파일**: `out/clang_compare_evidence_raw.md`, `out/reassemble_check_evidence.md`,
-  `out/edge_case_execution_evidence.md`, `docs/DEVLOG.md`
-
-## 5. 환경 메모 (재구축이 필요할 때)
-
-- WSL이 `Wsl/Service/0x8007274c`로 끊기면 → `wsl --shutdown` 후 재시작하면 복구됨(재부팅이 근본 해결).
-- WSL에 sudo 비밀번호가 없어 `apt install` 불가. 8월 세션에서는 `apt-get download` + `dpkg-deb -x`로
-  clang-19/20을 시스템 설치 없이 스크래치에 풀어서 썼다(`LD_LIBRARY_PATH`만 맞춰주면 동작).
-  **주의: 그 스크래치 디렉터리는 현재 남아있지 않다** — 최신 clang 교차검증이 다시 필요하면 재구축해야 한다.
-  시스템 clang은 18.1.3 고정.
-- binutils 2.47도 8월에 root 없이 소스 빌드해 썼으나 역시 남아있지 않음. 시스템 as는 2.42.
-
-## 6. 다음 라운드 후보 (아직 착수 안 함)
-
-- **LAR/LSL 대칭 REX.W 폼 정식 판정**: `as`는 `lar rcx,rcx` / `lsl rcx,rcx`(양쪽 다 r64) 대칭 폼에서도
-  REX.W를 전혀 만들지 않는다(AT&T `larq`/`lslq`로도). clang은 정확히 만든다 → **as만의 진짜 한계일 가능성**.
-  현재 `combos.csv`에 이 대칭 폼 combo가 없어서 미판정 상태다. combiner/generator에 케이스를 추가해서
-  정식 combo로 확정할 것.
-- 8회 후속 과제 5번(커버리지 수치 + GitHub 정리)은 9회 보고서와 함께 완료됨.
