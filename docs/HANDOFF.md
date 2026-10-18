@@ -1,6 +1,6 @@
 # 현재 작업 인계
 
-갱신: 2026-10-19(현재 작업 커밋·push 완료, main 반영 PR #1, 회귀 156개 재확인). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
+갱신: 2026-10-19(PR #1 main 머지 완료, 인터뷰에 따라 README 설명·그림 확장). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
 
 ## 목적
 
@@ -73,7 +73,8 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 
 ## 필요한 파일만 읽기
 
-- 10월 19일 저장 작업: `852a3ed`로 코드·문서·실험 snapshot·발표 자료를 커밋하고 `origin/sdm-review-093`에 push했다. 사용자 요청으로 [PR #1](https://github.com/simhyeongseop/2026-intel-instruction-analysis/pull/1)에서 main 반영을 진행한다. PDF와 `out/manual_index*`는 제외했다. WSL 회귀 156개 통과; 조립·CPU 실험을 새로 실행한 것은 아니다. 다음 작업은 위 열린 항목의 사용자 결정에 따른다.
+- 10월 19일 저장 작업: `852a3ed`로 코드·문서·실험 snapshot·발표 자료를 커밋하고 push했다. [PR #1](https://github.com/simhyeongseop/2026-intel-instruction-analysis/pull/1)은 `bb9025a`로 main에 머지됐다. PDF와 `out/manual_index*`는 제외했다. WSL 회귀 156개 통과; 조립·CPU 실험을 새로 실행한 것은 아니다.
+- README 확장: 연구실 교수·동료 연구자를 독자로, 파이프라인 동작과 결과 해석을 중심으로 다시 썼다. 전체 흐름·CLI 흐름 Mermaid 그림, 단계별 설명, 저장된 ADC 사례, 데이터 역할과 실행 전 검사 범위를 추가했다. 현재 CLI는 명세 DB와 판정 규칙을 공유하고 조립·역어셈블 도구를 실제 호출한다. 이 설명을 결과 CSV 조회만으로 CPU 의미를 예측하는 기능으로 확대하지 않는다. 사용자가 이번 문서 변경의 커밋·push·main 머지를 승인했다. README 로컬 링크 25개와 diff 공백 검사를 확인했다. 후속 연구 작업은 위 열린 항목의 사용자 결정에 따른다.
 
 - 생성: `pipeline/m2_generate.py`, `pipeline/case_rules.py`, `tests/test_m2_generate.py`
 - 판정: `pipeline/m3_check.py`, `pipeline/encoding_audit.py`, `pipeline/operand_size_prefix.py`
