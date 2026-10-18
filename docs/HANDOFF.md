@@ -1,6 +1,6 @@
 # 현재 작업 인계
 
-갱신: 2026-10-19(사용자 요청으로 현재 작업 커밋·push 준비, 회귀 156개 재확인). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
+갱신: 2026-10-19(현재 작업 커밋·push 완료, main 반영 PR #1, 회귀 156개 재확인). 시작할 때 이 문서를 읽고, 작업 대상의 코드와 근거만 추가로 읽는다.
 
 ## 목적
 
@@ -73,7 +73,7 @@ Intel SDM 표 행에서 만든 x86-64 입력을 어셈블러·역어셈블러가
 
 ## 필요한 파일만 읽기
 
-- 10월 19일 저장 작업: 사용자 요청으로 `sdm-review-093`의 코드·문서·실험 snapshot·발표 자료를 함께 커밋하고 origin에 push한다. PDF와 `out/manual_index*`는 제외한다. WSL 회귀 156개 통과; 조립·CPU 실험을 새로 실행한 것은 아니다. 다음 작업은 위 열린 항목의 사용자 결정에 따른다.
+- 10월 19일 저장 작업: `852a3ed`로 코드·문서·실험 snapshot·발표 자료를 커밋하고 `origin/sdm-review-093`에 push했다. 사용자 요청으로 [PR #1](https://github.com/simhyeongseop/2026-intel-instruction-analysis/pull/1)에서 main 반영을 진행한다. PDF와 `out/manual_index*`는 제외했다. WSL 회귀 156개 통과; 조립·CPU 실험을 새로 실행한 것은 아니다. 다음 작업은 위 열린 항목의 사용자 결정에 따른다.
 
 - 생성: `pipeline/m2_generate.py`, `pipeline/case_rules.py`, `tests/test_m2_generate.py`
 - 판정: `pipeline/m3_check.py`, `pipeline/encoding_audit.py`, `pipeline/operand_size_prefix.py`

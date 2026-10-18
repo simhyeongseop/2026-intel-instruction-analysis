@@ -1373,3 +1373,9 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - PDF와 `out/manual_index*`, 재생성 가능한 오브젝트 파일은 제외한다. 원문 DB와 기존 실험 snapshot 내용은 변경하지 않는다.
 - 검증: WSL Ubuntu에서 `python3 -m unittest discover -s tests -p 'test_*.py' -q` 재실행, 156개 통과(10.886초, 건너뜀 없음). 이번 저장 작업에서 조립·역어셈블·CPU 실험을 새로 실행하지 않았다.
 - HANDOFF의 과거 결과 참조를 이동하는 HEAD 대신 `3813bf2`로 고정한다. 열린 버그 후보의 이슈 제출은 이번 요청 범위에 포함하지 않는다.
+
+## 2026-10-19 [PR] 누적 작업 main 반영
+
+- 사용자 요청으로 [PR #1](https://github.com/simhyeongseop/2026-intel-instruction-analysis/pull/1)을 생성했다(`sdm-review-093` → `main`). 생성 시점 원격 main은 브랜치의 조상이며 38커밋 뒤에 있었다.
+- GitHub 확인: 충돌 없음(`MERGEABLE`, `CLEAN`), 등록된 상태 검사 없음. 검증 근거는 위 WSL 회귀 156개 통과와 각 snapshot의 실행 기록이다. 관리자 우회 없이 일반 merge로 진행한다.
+- README에 남아 있던 10월 12일 수치를 HANDOFF·전체 실행 결과와 같은 10월 13일 기준으로 갱신했다. 이번 추가 변경은 문서뿐이며 코드·실험 결과는 바꾸지 않았다.
