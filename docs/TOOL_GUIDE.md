@@ -1,6 +1,6 @@
 # 명령어 검사 도구 사용법
 
-퍼징 등으로 만든 Intel 문법 명령어를 한 줄씩 파이프라인 3·4단계와 같은 기준으로 판정한다(2026-10-12).
+퍼징 등으로 만든 Intel 문법 명령어를 한 줄씩 파이프라인 3·4단계와 같은 기준으로 판정한다(2026-10-13 ER/SAE 지원 포함).
 1. 입력 줄의 후보 SDM 행을 찾는다.
 2. SDM 대 각 어셈블러(GNU as, clang)로 판정한다.
 3. SDM 대 각 역어셈블러(objdump, llvm-mc)로 판정한다.
@@ -128,7 +128,7 @@ print(result["sdm_judgment"]["summary"])
 
 - Intel 문법, x86-64 타깃. GNU as `--64 -mintel64`, clang `-target x86_64-linux-gnu`.
 - 인코딩 필드 대조다. 레지스터 번호, 즉시값 부호확장 의미, CPUID·권한·OS 조건, 실행 의미는 검증하지 않는다.
-- 후보 형태 대조는 마스크·브로드캐스트 칸을 `partial`로 남긴다. 따로 적은 반올림·SAE 오퍼랜드(`{rn-sae}`, `{sae}`)는 아직 후보를 찾지 못한다.
+- 후보 형태 대조는 마스크·브로드캐스트 칸을 `partial`로 남긴다. 반올림·SAE 오퍼랜드(`{rn-sae}`, `{rd-sae}`, `{ru-sae}`, `{rz-sae}`, `{sae}`)는 지원 행·위치·중복·메모리 조건과 관련 EVEX 필드를 검사한다. 구현·관측 범위는 [ER/SAE 지원 기록](ER_SAE_SUPPORT.md)에 있다.
 - `movabs`는 64비트 절대 주소(moffs)와 `MOV r64, imm64` 행의 후보로 찾는다. 역어셈블러가 `movabs`로 출력하면 `니모닉 다름(도구 관례 철자)`이다.
 - 지시자(`.byte`, `.align` 등)가 나오면 그 줄과 뒤의 모든 줄이 `incomplete`다. 라벨·심볼(`jmp .L1`, `call printf`, `[rip+foo]`)은 주소를 몰라 `인코딩 미대조`다.
 - 표 행이 오퍼랜드 종류로만 갈리는 경우(예: `call dword ptr [rax]`는 CALL r/m32와 CALL m16:16)는 후보를 모두 보여 준다.
