@@ -1,0 +1,330 @@
+[
+  {
+    "label": "rounding/0/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2\n",
+    "returncode": 0,
+    "stdout": "\n\tvaddpd\t%zmm2, %zmm1, %zmm0             # encoding: [0x62,0xf1,0xf5,0x48,0x58,0xc2]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/0/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_0.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/0/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_0.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_0.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 48 58 c2    \tvaddpd zmm0,zmm1,zmm2\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/1/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2, {rn-sae}\n",
+    "returncode": 0,
+    "stdout": "\n\tvaddpd\t{rn-sae}, %zmm2, %zmm1, %zmm0   # encoding: [0x62,0xf1,0xf5,0x18,0x58,0xc2]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/1/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_1.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2, {rn-sae}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/1/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_1.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_1.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 18 58 c2    \tvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/2/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2, {rd-sae}\n",
+    "returncode": 0,
+    "stdout": "\n\tvaddpd\t{rd-sae}, %zmm2, %zmm1, %zmm0   # encoding: [0x62,0xf1,0xf5,0x38,0x58,0xc2]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/2/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_2.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2, {rd-sae}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/2/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_2.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_2.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 38 58 c2    \tvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/3/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2, {ru-sae}\n",
+    "returncode": 0,
+    "stdout": "\n\tvaddpd\t{ru-sae}, %zmm2, %zmm1, %zmm0   # encoding: [0x62,0xf1,0xf5,0x58,0x58,0xc2]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/3/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_3.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2, {ru-sae}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/3/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_3.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_3.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 58 58 c2    \tvaddpd zmm0,zmm1,zmm2{ru-sae}\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/4/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2, {rz-sae}\n",
+    "returncode": 0,
+    "stdout": "\n\tvaddpd\t{rz-sae}, %zmm2, %zmm1, %zmm0   # encoding: [0x62,0xf1,0xf5,0x78,0x58,0xc2]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/4/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_4.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2, {rz-sae}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/4/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_4.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_4.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 78 58 c2    \tvaddpd zmm0,zmm1,zmm2{rz-sae}\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/5/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n^\n"
+  },
+  {
+    "label": "rounding/5/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_5.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Assembler messages:\n{standard input}:3: Error: operand size mismatch for `vaddpd'\n"
+  },
+  {
+    "label": "rounding/6/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n^\n"
+  },
+  {
+    "label": "rounding/6/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_6.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Assembler messages:\n{standard input}:3: Error: unsupported static rounding/sae for `vaddpd'\n"
+  },
+  {
+    "label": "rounding/7/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvaddpd zmm0, zmm1, zmm2, {sae}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvaddpd zmm0, zmm1, zmm2, {sae}\n^\n"
+  },
+  {
+    "label": "rounding/7/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_7.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvaddpd zmm0, zmm1, zmm2, {sae}\n",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Assembler messages:\n{standard input}:3: Error: unsupported static rounding/sae for `vaddpd'\n"
+  },
+  {
+    "label": "rounding/8/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvcomisd xmm0, xmm1, {sae}\n",
+    "returncode": 0,
+    "stdout": "\n\tvcomisd\t{sae}, %xmm1, %xmm0             # encoding: [0x62,0xf1,0xfd,0x18,0x2f,0xc1]\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/8/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_8.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvcomisd xmm0, xmm1, {sae}\n",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/8/objdump",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/objdump",
+      "-d",
+      "-Mintel",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_8.o"
+    ],
+    "stdin": "",
+    "returncode": 0,
+    "stdout": "\n/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_8.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 2f c1    \tvcomisd xmm0,xmm1{sae}\n",
+    "stderr": ""
+  },
+  {
+    "label": "rounding/9/llvm",
+    "argv": [
+      "/home/simhss/opt/llvm-23.1.3/bin/llvm-mc",
+      "-triple=x86_64",
+      "-show-encoding"
+    ],
+    "stdin": ".intel_syntax noprefix\nvcomisd xmm0, qword ptr [rax], {sae}\n",
+    "returncode": 1,
+    "stdout": "\n",
+    "stderr": "<stdin>:2:1: error: invalid operand for instruction\nvcomisd xmm0, qword ptr [rax], {sae}\n^\n"
+  },
+  {
+    "label": "rounding/9/gnu",
+    "argv": [
+      "/home/simhss/opt/binutils-2.47/bin/as",
+      "--64",
+      "-o",
+      "/mnt/c/Users/wltjq/OneDrive/assembler-testing/out/operand_review_20261013/rounding_9.o"
+    ],
+    "stdin": ".intel_syntax noprefix\n.text\nvcomisd xmm0, qword ptr [rax], {sae}\n",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Assembler messages:\n{standard input}:3: Error: unsupported static rounding/sae for `vcomisd'\n"
+  }
+]

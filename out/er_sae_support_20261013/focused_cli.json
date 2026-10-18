@@ -1,0 +1,3117 @@
+[
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rn-sae}",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "f40eb9dcf65514ed2144222d3693197af05d8ebbafaf6a15707881b4eae5bff2",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm2",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{rn-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rn-sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "incomplete",
+      "rows": [
+        {
+          "row_id": 51,
+          "instruction": "VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",
+          "opcode": "EVEX.512.66.0F.W1 58 /r",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "134",
+          "form": "partial",
+          "row_status": "원문 확정(완화 A: Vol.1)"
+        }
+      ],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rn-sae}\n",
+      "bytes": "62f1f51858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f51858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rn-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 18 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rn-sae}\n",
+      "bytes": "62f1f51858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f51858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rn-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 18 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "incomplete",
+        "rows": [
+          {
+            "row_id": 51,
+            "instruction": "VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",
+            "opcode": "EVEX.512.66.0F.W1 58 /r",
+            "mode_support": "Valid",
+            "cpuid_flag": "AVX512F OR AVX10.1",
+            "source_page": "134",
+            "form": "partial",
+            "row_status": "원문 확정(완화 A: Vol.1)"
+          }
+        ],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "reach",
+      "assemblers": {
+        "gnu_as": {
+          "status": "accepted",
+          "bytes": "62f1f51858c2",
+          "verdict": "SDM 일치",
+          "rows": [
+            51
+          ],
+          "note": ""
+        },
+        "clang": {
+          "status": "accepted",
+          "bytes": "62f1f51858c2",
+          "verdict": "SDM 일치",
+          "rows": [
+            51
+          ],
+          "note": ""
+        }
+      },
+      "disassemblers": {
+        "objdump": {
+          "from": "gnu_as",
+          "row_id": 51,
+          "verdict": "SDM 일치",
+          "text": "vaddpd zmm0,zmm1,zmm2{rn-sae}",
+          "reassembled": "62f1f51858c2"
+        },
+        "llvm": {
+          "from": "gnu_as",
+          "row_id": 51,
+          "verdict": "SDM 일치",
+          "text": "vaddpd\tzmm0, zmm1, zmm2, {rn-sae}",
+          "reassembled": "62f1f51858c2"
+        }
+      },
+      "summary": "sdm_match",
+      "meaning_verified": false
+    },
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+        "bytes": "62f1f51858c2",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "62f1f51858c2",
+            "text": "vaddpd zmm0,zmm1,zmm2{rn-sae}"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 18 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rn-sae}\n",
+      "bytes": "62f1f51858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f51858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rn-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 18 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rn-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rd-sae}",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "48376d59247b13484974d7c011afea09cc62e2048d896aa973aad7e4a7cce1ee",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm2",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{rd-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rd-sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "incomplete",
+      "rows": [
+        {
+          "row_id": 51,
+          "instruction": "VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",
+          "opcode": "EVEX.512.66.0F.W1 58 /r",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "134",
+          "form": "partial",
+          "row_status": "원문 확정(완화 A: Vol.1)"
+        }
+      ],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rd-sae}\n",
+      "bytes": "62f1f53858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f53858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rd-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 38 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rd-sae}\n",
+      "bytes": "62f1f53858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f53858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rd-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 38 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "incomplete",
+        "rows": [
+          {
+            "row_id": 51,
+            "instruction": "VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",
+            "opcode": "EVEX.512.66.0F.W1 58 /r",
+            "mode_support": "Valid",
+            "cpuid_flag": "AVX512F OR AVX10.1",
+            "source_page": "134",
+            "form": "partial",
+            "row_status": "원문 확정(완화 A: Vol.1)"
+          }
+        ],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "reach",
+      "assemblers": {
+        "gnu_as": {
+          "status": "accepted",
+          "bytes": "62f1f53858c2",
+          "verdict": "SDM 일치",
+          "rows": [
+            51
+          ],
+          "note": ""
+        },
+        "clang": {
+          "status": "accepted",
+          "bytes": "62f1f53858c2",
+          "verdict": "SDM 일치",
+          "rows": [
+            51
+          ],
+          "note": ""
+        }
+      },
+      "disassemblers": {
+        "objdump": {
+          "from": "gnu_as",
+          "row_id": 51,
+          "verdict": "SDM 일치",
+          "text": "vaddpd zmm0,zmm1,zmm2{rd-sae}",
+          "reassembled": "62f1f53858c2"
+        },
+        "llvm": {
+          "from": "gnu_as",
+          "row_id": 51,
+          "verdict": "SDM 일치",
+          "text": "vaddpd\tzmm0, zmm1, zmm2, {rd-sae}",
+          "reassembled": "62f1f53858c2"
+        }
+      },
+      "summary": "sdm_match",
+      "meaning_verified": false
+    },
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+        "bytes": "62f1f53858c2",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "62f1f53858c2",
+            "text": "vaddpd zmm0,zmm1,zmm2{rd-sae}"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 38 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rd-sae}\n",
+      "bytes": "62f1f53858c2",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1f53858c2",
+          "text": "vaddpd zmm0,zmm1,zmm2{rd-sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 f5 38 58 c2                               \tvaddpd zmm0,zmm1,zmm2{rd-sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  {
+    "source": "vcomisd xmm0, xmm1, {sae}",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "91352e3f3eb40adbd7e15e98886520a675e3018dc4f2727bac9cfb1201eb3144",
+    "parsed": {
+      "mnemonic": "vcomisd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "xmm0",
+          "kind": "reg",
+          "bits": 128,
+          "family": "xmm",
+          "decorations": []
+        },
+        {
+          "text": "xmm1",
+          "kind": "reg",
+          "bits": 128,
+          "family": "xmm",
+          "decorations": []
+        },
+        {
+          "text": "{sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "form_match",
+      "rows": [
+        {
+          "row_id": 424,
+          "instruction": "VCOMISD xmm1, xmm2/m64{sae}",
+          "opcode": "EVEX.LLIG.66.0F.W1 2F /r",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "317",
+          "form": "match",
+          "row_status": "원문 확정"
+        }
+      ],
+      "same_name_rows": [
+        423,
+        424
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0, xmm1, {sae}\n",
+      "bytes": "62f1fd182fc1",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd182fc1",
+          "text": "vcomisd xmm0,xmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 2f c1                               \tvcomisd xmm0,xmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0, xmm1, {sae}\n",
+      "bytes": "62f1fd182fc1",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd182fc1",
+          "text": "vcomisd xmm0,xmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 2f c1                               \tvcomisd xmm0,xmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "form_match",
+        "rows": [
+          {
+            "row_id": 424,
+            "instruction": "VCOMISD xmm1, xmm2/m64{sae}",
+            "opcode": "EVEX.LLIG.66.0F.W1 2F /r",
+            "mode_support": "Valid",
+            "cpuid_flag": "AVX512F OR AVX10.1",
+            "source_page": "317",
+            "form": "match",
+            "row_status": "원문 확정"
+          }
+        ],
+        "same_name_rows": [
+          423,
+          424
+        ],
+        "meaning_verified": false
+      },
+      "expected": "reach",
+      "assemblers": {
+        "gnu_as": {
+          "status": "accepted",
+          "bytes": "62f1fd182fc1",
+          "verdict": "SDM 일치",
+          "rows": [
+            424
+          ],
+          "note": ""
+        },
+        "clang": {
+          "status": "accepted",
+          "bytes": "62f1fd182fc1",
+          "verdict": "SDM 일치",
+          "rows": [
+            424
+          ],
+          "note": ""
+        }
+      },
+      "disassemblers": {
+        "objdump": {
+          "from": "gnu_as",
+          "row_id": 424,
+          "verdict": "SDM 일치",
+          "text": "vcomisd xmm0,xmm1{sae}",
+          "reassembled": "62f1fd182fc1"
+        },
+        "llvm": {
+          "from": "gnu_as",
+          "row_id": 424,
+          "verdict": "SDM 일치",
+          "text": "vcomisd\txmm0, xmm1, {sae}",
+          "reassembled": "62f1fd182fc1"
+        }
+      },
+      "summary": "sdm_match",
+      "meaning_verified": false
+    },
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0,xmm1{sae}\n",
+        "bytes": "62f1fd182fc1",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "62f1fd182fc1",
+            "text": "vcomisd xmm0,xmm1{sae}"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 2f c1                               \tvcomisd xmm0,xmm1{sae}\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0, xmm1, {sae}\n",
+      "bytes": "62f1fd182fc1",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd182fc1",
+          "text": "vcomisd xmm0,xmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 2f c1                               \tvcomisd xmm0,xmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  {
+    "source": "vcmppd k1, zmm0, zmm1, {sae}, 0x12",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "0bd33e8319c737a716dc4d1679a287a617d094bd39b0f38b8995c71bb6c6c476",
+    "parsed": {
+      "mnemonic": "vcmppd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "k1",
+          "kind": "reg",
+          "bits": null,
+          "family": "k",
+          "decorations": []
+        },
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{sae}"
+          ]
+        },
+        {
+          "text": "0x12",
+          "kind": "imm",
+          "bits": null,
+          "family": null,
+          "decorations": [],
+          "value": 18
+        }
+      ]
+    },
+    "sdm": {
+      "status": "incomplete",
+      "rows": [
+        {
+          "row_id": 395,
+          "instruction": "VCMPPD k1 {k2}, zmm2, zmm3/m512/m64bcst {sae}, imm8",
+          "opcode": "EVEX.512.66.0F.W1 C2 /r ib",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "286",
+          "form": "partial",
+          "row_status": "원문 확정(완화 A: Vol.1)"
+        }
+      ],
+      "same_name_rows": [
+        391,
+        392,
+        393,
+        394,
+        395
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcmppd k1, zmm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f1fd18c2c912",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd18c2c912",
+          "text": "vcmple_oqpd k1,zmm0,zmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 c2 c9 12                            \tvcmple_oqpd k1,zmm0,zmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcmppd k1, zmm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f1fd18c2c912",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd18c2c912",
+          "text": "vcmple_oqpd k1,zmm0,zmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 c2 c9 12                            \tvcmple_oqpd k1,zmm0,zmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "incomplete",
+        "rows": [
+          {
+            "row_id": 395,
+            "instruction": "VCMPPD k1 {k2}, zmm2, zmm3/m512/m64bcst {sae}, imm8",
+            "opcode": "EVEX.512.66.0F.W1 C2 /r ib",
+            "mode_support": "Valid",
+            "cpuid_flag": "AVX512F OR AVX10.1",
+            "source_page": "286",
+            "form": "partial",
+            "row_status": "원문 확정(완화 A: Vol.1)"
+          }
+        ],
+        "same_name_rows": [
+          391,
+          392,
+          393,
+          394,
+          395
+        ],
+        "meaning_verified": false
+      },
+      "expected": "reach",
+      "assemblers": {
+        "gnu_as": {
+          "status": "accepted",
+          "bytes": "62f1fd18c2c912",
+          "verdict": "SDM 일치",
+          "rows": [
+            395
+          ],
+          "note": ""
+        },
+        "clang": {
+          "status": "accepted",
+          "bytes": "62f1fd18c2c912",
+          "verdict": "SDM 일치",
+          "rows": [
+            395
+          ],
+          "note": ""
+        }
+      },
+      "disassemblers": {
+        "objdump": {
+          "from": "gnu_as",
+          "row_id": 395,
+          "verdict": "SDM 일치",
+          "text": "vcmple_oqpd k1,zmm0,zmm1{sae}",
+          "reassembled": "62f1fd18c2c912"
+        },
+        "llvm": {
+          "from": "gnu_as",
+          "row_id": 395,
+          "verdict": "SDM 일치",
+          "text": "vcmple_oqpd\tk1, zmm0, zmm1, {sae}",
+          "reassembled": "62f1fd18c2c912"
+        }
+      },
+      "summary": "sdm_match",
+      "meaning_verified": false
+    },
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcmple_oqpd k1,zmm0,zmm1{sae}\n",
+        "bytes": "62f1fd18c2c912",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "62f1fd18c2c912",
+            "text": "vcmple_oqpd k1,zmm0,zmm1{sae}"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 c2 c9 12                            \tvcmple_oqpd k1,zmm0,zmm1{sae}\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcmppd k1, zmm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f1fd18c2c912",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f1fd18c2c912",
+          "text": "vcmple_oqpd k1,zmm0,zmm1{sae}"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f1 fd 18 c2 c9 12                            \tvcmple_oqpd k1,zmm0,zmm1{sae}\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  {
+    "source": "vcvtps2ph ymm0, zmm1, {sae}, 0x12",
+    "status": "accepted",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "checked",
+    "observation_id": "c62c3c925550338fca30f5b7166ea86f42881ea46f82728dcbf8a76e22051777",
+    "parsed": {
+      "mnemonic": "vcvtps2ph",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "ymm0",
+          "kind": "reg",
+          "bits": 256,
+          "family": "ymm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{sae}"
+          ]
+        },
+        {
+          "text": "0x12",
+          "kind": "imm",
+          "bits": null,
+          "family": null,
+          "decorations": [],
+          "value": 18
+        }
+      ]
+    },
+    "sdm": {
+      "status": "form_match",
+      "rows": [
+        {
+          "row_id": 2888,
+          "instruction": "VCVTPS2PH ymm1/m256 {k1}{z}, zmm2 {sae}, imm8",
+          "opcode": "EVEX.512.66.0F3A.W0 1D /r ib",
+          "mode_support": "Valid",
+          "cpuid_flag": "AVX512F OR AVX10.1",
+          "source_page": "1538",
+          "form": "match",
+          "row_status": "원문 확정(완화 A: Vol.1)"
+        }
+      ],
+      "same_name_rows": [
+        2884,
+        2885,
+        2886,
+        2887,
+        2888
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcvtps2ph ymm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f37d181dc812",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f37d181dc812",
+          "text": "vcvtps2ph ymm0,zmm1{sae},0x12"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f3 7d 18 1d c8 12                            \tvcvtps2ph ymm0,zmm1{sae},0x12\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "clang": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcvtps2ph ymm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f37d181dc812",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f37d181dc812",
+          "text": "vcvtps2ph ymm0,zmm1{sae},0x12"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f3 7d 18 1d c8 12                            \tvcvtps2ph ymm0,zmm1{sae},0x12\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "form_match",
+        "rows": [
+          {
+            "row_id": 2888,
+            "instruction": "VCVTPS2PH ymm1/m256 {k1}{z}, zmm2 {sae}, imm8",
+            "opcode": "EVEX.512.66.0F3A.W0 1D /r ib",
+            "mode_support": "Valid",
+            "cpuid_flag": "AVX512F OR AVX10.1",
+            "source_page": "1538",
+            "form": "match",
+            "row_status": "원문 확정(완화 A: Vol.1)"
+          }
+        ],
+        "same_name_rows": [
+          2884,
+          2885,
+          2886,
+          2887,
+          2888
+        ],
+        "meaning_verified": false
+      },
+      "expected": "reach",
+      "assemblers": {
+        "gnu_as": {
+          "status": "accepted",
+          "bytes": "62f37d181dc812",
+          "verdict": "SDM 일치",
+          "rows": [
+            2888
+          ],
+          "note": ""
+        },
+        "clang": {
+          "status": "accepted",
+          "bytes": "62f37d181dc812",
+          "verdict": "SDM 일치",
+          "rows": [
+            2888
+          ],
+          "note": ""
+        }
+      },
+      "disassemblers": {
+        "objdump": {
+          "from": "gnu_as",
+          "row_id": 2888,
+          "verdict": "SDM 일치",
+          "text": "vcvtps2ph ymm0,zmm1{sae},0x12",
+          "reassembled": "62f37d181dc812"
+        },
+        "llvm": {
+          "from": "gnu_as",
+          "row_id": 2888,
+          "verdict": "SDM 일치",
+          "text": "vcvtps2ph\tymm0, zmm1, {sae}, 18",
+          "reassembled": "62f37d181dc812"
+        }
+      },
+      "summary": "sdm_match",
+      "meaning_verified": false
+    },
+    "roundtrip": {
+      "status": "same_bytes",
+      "result": {
+        "status": "accepted",
+        "observation_status": "accepted",
+        "assembly": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/as",
+            "--64",
+            "-mintel64",
+            "-o",
+            "input.o",
+            "input.s"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcvtps2ph ymm0,zmm1{sae},0x12\n",
+        "bytes": "62f37d181dc812",
+        "instructions": [
+          {
+            "offset": 0,
+            "bytes": "62f37d181dc812",
+            "text": "vcvtps2ph ymm0,zmm1{sae},0x12"
+          }
+        ],
+        "relocations": false,
+        "inspection_complete": true,
+        "validation_status": "checked",
+        "display_syntax": "intel",
+        "inspection": {
+          "objcopy": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objcopy",
+              "-O",
+              "binary",
+              "--only-section=.text",
+              "input.o",
+              "text.bin"
+            ],
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "objdump": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/objdump",
+              "-d",
+              "-w",
+              "-M",
+              "intel",
+              "--insn-width=16",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f3 7d 18 1d c8 12                            \tvcvtps2ph ymm0,zmm1{sae},0x12\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          },
+          "readelf": {
+            "command": [
+              "/home/simhss/opt/binutils-2.47/bin/readelf",
+              "-rW",
+              "input.o"
+            ],
+            "returncode": 0,
+            "stdout": "\nThere are no relocations in this file.\n",
+            "stderr": "",
+            "failure": null,
+            "status": "completed"
+          }
+        }
+      },
+      "meaning_verified": false
+    },
+    "option_comparison": {
+      "status": "accepted",
+      "observation_status": "accepted",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcvtps2ph ymm0, zmm1, {sae}, 0x12\n",
+      "bytes": "62f37d181dc812",
+      "instructions": [
+        {
+          "offset": 0,
+          "bytes": "62f37d181dc812",
+          "text": "vcvtps2ph ymm0,zmm1{sae},0x12"
+        }
+      ],
+      "relocations": false,
+      "inspection_complete": true,
+      "validation_status": "checked",
+      "display_syntax": "intel",
+      "inspection": {
+        "objcopy": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objcopy",
+            "-O",
+            "binary",
+            "--only-section=.text",
+            "input.o",
+            "text.bin"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "objdump": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/objdump",
+            "-d",
+            "-w",
+            "-M",
+            "intel",
+            "--insn-width=16",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\ninput.o:     file format elf64-x86-64\n\n\nDisassembly of section .text:\n\n0000000000000000 <.text>:\n   0:\t62 f3 7d 18 1d c8 12                            \tvcvtps2ph ymm0,zmm1{sae},0x12\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        },
+        "readelf": {
+          "command": [
+            "/home/simhss/opt/binutils-2.47/bin/readelf",
+            "-rW",
+            "input.o"
+          ],
+          "returncode": 0,
+          "stdout": "\nThere are no relocations in this file.\n",
+          "stderr": "",
+          "failure": null,
+          "status": "completed"
+        }
+      }
+    }
+  },
+  {
+    "source": "vaddpd ymm0, ymm1, ymm2, {rn-sae}",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "b515fd8dd77e00afdc12c01ed547ef8e445abfc2e21571f0105834a86f968d16",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "ymm0",
+          "kind": "reg",
+          "bits": 256,
+          "family": "ymm",
+          "decorations": []
+        },
+        {
+          "text": "ymm1",
+          "kind": "reg",
+          "bits": 256,
+          "family": "ymm",
+          "decorations": []
+        },
+        {
+          "text": "ymm2",
+          "kind": "reg",
+          "bits": 256,
+          "family": "ymm",
+          "decorations": []
+        },
+        {
+          "text": "{rn-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rn-sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: operand size mismatch for `vaddpd'\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd ymm0, ymm1, ymm2, {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "a7231319dce797f8084e246f8aeef34b3f1ff32338a1fcc57a7023a4b4f2c8cb",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmmword ptr [rax]",
+          "kind": "mem",
+          "bits": 512,
+          "family": null,
+          "decorations": [],
+          "address_registers": [
+            "rax"
+          ]
+        },
+        {
+          "text": "{rn-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rn-sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: unsupported static rounding/sae for `vaddpd'\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmmword ptr [rax], {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {sae}",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "3e2a86617c6eb5983fa49edeb0e67dd525ddeaa062224191f539d4d63a7c9389",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm2",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: unsupported static rounding/sae for `vaddpd'\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvaddpd zmm0, zmm1, zmm2, {sae}\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vcomisd xmm0, qword ptr [rax], {sae}",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "dbe5690ff2310da3c4ee9660405b7fb91b1bb5edd442ab7fa6fe10c03df34872",
+    "parsed": {
+      "mnemonic": "vcomisd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "xmm0",
+          "kind": "reg",
+          "bits": 128,
+          "family": "xmm",
+          "decorations": []
+        },
+        {
+          "text": "qword ptr [rax]",
+          "kind": "mem",
+          "bits": 64,
+          "family": null,
+          "decorations": [],
+          "address_registers": [
+            "rax"
+          ]
+        },
+        {
+          "text": "{sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        423,
+        424
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: unsupported static rounding/sae for `vcomisd'\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0, qword ptr [rax], {sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvcomisd xmm0, qword ptr [rax], {sae}\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvcomisd xmm0, qword ptr [rax], {sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          423,
+          424
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, {rd-sae}, zmm1, zmm2",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "569a4d5c8e2755ec3382e01cdbfad35f7744efbeac27c35aa1367046749cba5b",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{rd-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rd-sae}"
+          ]
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm2",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: `vaddpd': misplaced `{rd-sae}'\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, {rd-sae}, zmm1, zmm2\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvaddpd zmm0, {rd-sae}, zmm1, zmm2\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, {rd-sae}, zmm1, zmm2\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  },
+  {
+    "source": "vaddpd zmm0, zmm1, zmm2, {rd-sae}, {rn-sae}",
+    "status": "rejected",
+    "findings": [],
+    "semantic_status": "not_verified",
+    "syntax": "intel",
+    "display_syntax": "intel",
+    "validation_status": "rejected",
+    "observation_id": "4a634908756424e31af7be2412aa045f6d999fda7f52bdc0557afae3e32c74b7",
+    "parsed": {
+      "mnemonic": "vaddpd",
+      "prefixes": [],
+      "operands": [
+        {
+          "text": "zmm0",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm1",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "zmm2",
+          "kind": "reg",
+          "bits": 512,
+          "family": "zmm",
+          "decorations": []
+        },
+        {
+          "text": "{rd-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rd-sae}"
+          ]
+        },
+        {
+          "text": "{rn-sae}",
+          "kind": "unknown",
+          "bits": null,
+          "family": null,
+          "decorations": [
+            "{rn-sae}"
+          ]
+        }
+      ]
+    },
+    "sdm": {
+      "status": "no_form_match",
+      "rows": [],
+      "same_name_rows": [
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "meaning_verified": false
+    },
+    "gnu_as": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/binutils-2.47/bin/as",
+          "--64",
+          "-mintel64",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s: Assembler messages:\ninput.s:4: Error: duplicated `{rn-sae}'\ninput.s:4: Error: bad expression\ninput.s:4: Error: junk `rn-sae}' after expression\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rd-sae}, {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "clang": {
+      "status": "rejected",
+      "observation_status": "diagnostic_rejection",
+      "assembly": {
+        "command": [
+          "/home/simhss/opt/llvm-23.1.3/bin/clang",
+          "-target",
+          "x86_64-linux-gnu",
+          "-c",
+          "-x",
+          "assembler",
+          "-o",
+          "input.o",
+          "input.s"
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "input.s:4:1: error: invalid operand for instruction\nvaddpd zmm0, zmm1, zmm2, {rd-sae}, {rn-sae}\n^\n",
+        "failure": null,
+        "status": "completed"
+      },
+      "source": ".intel_syntax noprefix\n.text\n.Ltarget:\nvaddpd zmm0, zmm1, zmm2, {rd-sae}, {rn-sae}\n",
+      "bytes": "",
+      "instructions": [],
+      "relocations": null,
+      "inspection_complete": false,
+      "validation_status": "not_requested",
+      "display_syntax": "intel"
+    },
+    "sdm_judgment": {
+      "candidates": {
+        "status": "no_form_match",
+        "rows": [],
+        "same_name_rows": [
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "meaning_verified": false
+      },
+      "expected": "unknown",
+      "assemblers": {
+        "gnu_as": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        },
+        "clang": {
+          "status": "rejected",
+          "bytes": "",
+          "verdict": "거부",
+          "rows": [],
+          "note": ""
+        }
+      },
+      "disassemblers": {},
+      "summary": "no_sdm_row",
+      "meaning_verified": false
+    }
+  }
+]

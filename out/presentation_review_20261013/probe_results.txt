@@ -1,0 +1,23 @@
+call word ptr [rax]                      | GNU ERR: Error: operand type mismatch for `call' | LLVM encoding: [0xff,0x18]
+call dword ptr [rax]                     | GNU 66ff18                       | LLVM encoding: [0xff,0x18]
+call fword ptr [rax]                     | GNU ff18                         | LLVM encoding: [0xff,0x18]
+jmp dword ptr [rax]                      | GNU 66ff28                       | LLVM encoding: [0xff,0x28]
+iret                                     | GNU cf                           | LLVM encoding: [0x66,0xcf]
+sysexit                                  | GNU ERR: Error: ambiguous operand size for `sysexit' | LLVM encoding: [0x0f,0x35]
+push word ptr 0x1234                     | GNU 66683412                     | LLVM encoding: [0x68,0x34,0x12,0x00,0x00]
+data16 push 0x1234                       | GNU 66683412                     | LLVM encoding: [0x66]encoding: [0x68,0x34,0x12,0x00,0x00]
+data16 xbegin .Ltarget16                 | GNU 66c7f8fbff                   | LLVM encoding: [0x66]encoding: [0xc7,0xf8,A,A,A,A]
+movsxd ecx, edx                          | GNU 63ca                         | LLVM ERR: error: invalid operand for instruction
+movsxd cx, word ptr [rax]                | GNU 666308                       | LLVM ERR: error: invalid operand for instruction
+int1                                     | GNU f1                           | LLVM ERR: error: invalid instruction mnemonic 'int1'
+ud0 ecx, edx                             | GNU 0fffca                       | LLVM ERR: error: invalid instruction mnemonic 'ud0'
+udb                                      | GNU d6                           | LLVM ERR: error: invalid instruction mnemonic 'udb'
+clrssbsy qword ptr [rax]                 | GNU f30fae30                     | LLVM ERR: error: invalid operand for instruction
+clrssbsy dword ptr [rax]                 | GNU ERR: Error: operand size mismatch for `clrssbsy' | LLVM encoding: [0xf3,0x0f,0xae,0x30]
+rstorssp qword ptr [rax]                 | GNU f30f0128                     | LLVM ERR: error: invalid operand for instruction
+vpbroadcastb xmm1, rcx                   | GNU ERR: Error: operand type mismatch for `vpbroadcastb' | LLVM ERR: error: invalid operand for instruction
+vpbroadcastb xmm1, ecx                   | GNU 62f27d087ac9                 | LLVM encoding: [0x62,0xf2,0x7d,0x08,0x7a,0xc9]
+vmovw xmm1, rcx                          | GNU ERR: Error: operand type mismatch for `vmovw' | LLVM encoding: [0x62,0xf5,0xfd,0x08,0x6e,0xc9]
+mov ds, qword ptr [rax]                  | GNU ERR: Error: operand type mismatch for `mov' | LLVM ERR: error: invalid operand for instruction
+mov ds, word ptr [rax]                   | GNU 8e18                         | LLVM encoding: [0x8e,0x18]
+vgatherpf0dps [rax+zmm0] {k1}            | GNU 62f27d49c60c00               | LLVM ERR: error: invalid operand for instruction

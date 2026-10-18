@@ -15,7 +15,8 @@ from pipeline import case_rules as R
 from pipeline import m2_generate as m2
 from pipeline import m3_check as m3
 from pipeline import m4_disasm as m4
-from pipeline.operand_forms import match_token
+from pipeline.operand_forms import match_token, operand
+from pipeline import fp_controls as FP
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # CLI의 도구 이름 -> 3단계 이름
@@ -108,6 +109,12 @@ def kind_accepts(symbol, op):
 
 def form(symbols, operands, row=None):
     """'match' / 'partial'(검사기 범위 밖 칸이 있음) / None(형태 다름)."""
+    text = ", ".join(op["text"] for op in operands)
+    parts, controls, _ = FP.separate(text)
+    if controls:
+        if not row or FP.form_error(row["opcode"], symbols, text):
+            return None
+        operands = [operand(part) for part in parts]
     if len(symbols) != len(operands):
         return None
     partial = False

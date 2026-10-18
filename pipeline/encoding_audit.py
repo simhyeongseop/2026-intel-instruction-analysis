@@ -7,6 +7,7 @@ import re
 
 from pipeline.operand_forms import check_opcode_template, legacy_fields
 from pipeline.operand_size_prefix import forbids_rex_w, required_size
+from pipeline import fp_controls as FP
 
 
 def gpr_number(text):
@@ -108,6 +109,12 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
     if relocations:
         result['reason'] = 'unresolved_relocation'
         return result
+    if FP.separate(row.get('operands', ''))[1]:
+        error = FP.form_error(row.get('opcode', ''), FP.symbols_of(row), row['operands'])
+        if error:
+            result.update(status='different_encoding', row_reach='different', reason=error,
+                          checked_fields=['ER_SAE_input_form'])
+            return result
     data, pos, rex, prefixes = legacy_fields(hex_bytes)
     # SDM notations (REX.w, 11:rrr:bbb, !(11), imm8, /vsib ...) -> comparable template + ModRM conditions.
     template, modrm_conditions = normalize_template(row.get('opcode', ''))
@@ -155,11 +162,23 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
             # EVEX.b on a register operand reuses LL for rounding control.
             if data[pos+3] & 0x10 and len(data) > opcode_pos + 1 and data[opcode_pos+1] >> 6 == 3:
                 length = None
-                result['unverified_fields'].append('EVEX_rounding_LL')
+                if not FP.separate(row.get('operands', ''))[1]:
+                    result['unverified_fields'].append('EVEX_rounding_LL')
         else:
             result.update(status='different_encoding', row_reach='different', reason='encoding_family')
             return result
         good = (family, map_id, pp) == (actual_family, actual_map, actual_pp)
+        control_match = FP.encoding_fields(row, data, pos, opcode_pos)
+        if control_match is not None:
+            good = good and control_match
+            controls = FP.separate(row.get('operands', ''))[1]
+            result['checked_fields'].extend(['EVEX.b', 'ModRM.mod_register'])
+            if controls:
+                result['checked_fields'].append('ER_SAE_input_form')
+            if controls and controls != ['{sae}']:
+                result['checked_fields'].append('EVEX_rounding_RC')
+            elif controls:
+                result['unverified_fields'].append('EVEX_SAE_LL_ignored')
         result['checked_fields'].extend(['encoding_family', 'opcode_map', 'mandatory_prefix'])
         if width is not None:
             good = good and width == actual_w

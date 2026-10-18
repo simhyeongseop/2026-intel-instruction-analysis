@@ -1,0 +1,11 @@
+$ python3 scripts/asm_linter.py 'vaddps zmm1, zmm2, zmm3, {rn-sae}'
+[수용됨 (실행 의미는 미검증)] vaddps zmm1, zmm2, zmm3, {rn-sae}
+  후보 SDM 행 1개 - 64비트 모드 유효 행이 있음(조립돼야 함)
+       57  VADDPS zmm1 {k1}{z}, zmm2, zmm3/m512 EVEX.512.0F.W0 58 /r       Valid  원문 확정(완화 A: Vol.1) (형태 일부 미대조)
+  GNU as   SDM 일치             62f16c1858cb  -> 행 57
+  clang    SDM 일치             62f16c1858cb  -> 행 57
+  objdump  SDM 일치             vaddps zmm1,zmm2,zmm3{rn-sae}  (GNU 바이트, 행 57)
+  llvm-mc  SDM 일치             vaddps	zmm1, zmm2, zmm3, {rn-sae}  (GNU 바이트, 행 57)
+  SDM 대조: 모든 도구가 SDM과 일치 (인코딩 필드 대조, 실행 의미 아님)
+집계: accepted=1
+종료 코드 0. 0도 전체 ISA 적합성이나 CPU 실행 안전성을 보증하지 않습니다.

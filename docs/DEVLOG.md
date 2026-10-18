@@ -1,5 +1,28 @@
 # DEVLOG — 진행 기록
 
+## 2026-10-13 [수정] ER/SAE 생성·CLI·인코딩·역어셈블 지원
+
+- 사용자 요청으로 지원 공백을 수정했다. `operand_forms`가 쉼표 뒤 RC/SAE를 추가 오퍼랜드로 읽어 후보가 없어지던 문제를 `fp_controls.separate`와 `sdm_judge.form`에서 처리한다. 데이터 오퍼랜드와 제어 장식을 구분하되 모르는 장식을 버리지 않는다.
+- 원문: Vol.2 PDF 72 §§2.7.8–9(register-to-register, scalar/512), 73 Table 2-38(RC 00/01/10/11), 75 Table 2-43 note 2(SAE-only L'L ignored), 108 ER/SAE 정의. 사용 색인 텍스트는 별도 snapshot에 보존했다.
+- `m2_generate.add_fp_controls`: 288행에 ER 네 모드·SAE, 마스크 유무 변형 1,598개를 뒤에 추가했다. 전체 생성 21,060개. 기존 19,462개 CSV 필드·case_id 변화 0.
+- `encoding_audit`: 요청과 EVEX.b/RC/ModRM.mod를 대조한다. 모드 변경·장식 비트 누락·입력에 없는 ER/SAE를 구분한다. 지정 행 검사도 지원하지 않는 장식을 무시하지 않는다. `m4_disasm`은 RC/SAE 누락·변경을 오퍼랜드 불일치로 센다.
+- 새 실제 조립: GNU 1,598 SDM 일치, clang 1,558 일치·40 거부. 두 역어셈블러는 각각 1,598 일치. clang 거부는 정수→실수 변환 10개 GPR 형식 × 네 모드다. LLVM 출력의 RC-before-GPR 철자 40개는 GNU·clang·CLI 모두 SDM 일치로 직접 확인했다. CLI가 이 철자도 처리하게 했다. 이를 명령 미지원·새 버그로 분류하지 않았다.
+- 최종 검증: WSL 전체 회귀 153개 통과, 건너뜀 0. 기존 인코딩 일치 38,282건·역어셈블 오퍼랜드 일치 38,115건을 저장된 관측으로 재판정해 유지 확인. CLI 기존 19,462후보·34,144일치, 새 1,598후보·3,156일치. 원문 DB와 기본 out/cases 증거 해시 보존.
+- 새 snapshot `out/er_sae_support_20261013/`: generated/는 전체 생성, added/는 추가 케이스만 실제 조립·역어셈블. manifest는 이 범위를 명시한다. 최종 코드 검증은 `final_validation_v2/manifest.json`이다. 이전 재판정 도구의 FWAIT 텍스트 결합 누락 3건은 도구 보완 후 재검증했고 파이프라인 판정 변화는 없다.
+- CPU 실행·LLVM 패치·이슈 제출·커밋 없음. 자세한 결과: `docs/ER_SAE_SUPPORT.md`.
+
+## 2026-10-13 [재검토] AVX512PF와 ER/SAE 관측 원칙
+
+- 사용자 지적: ER/SAE 사양 유효성을 사용자 범위 결정으로 남기지 말고 실제 관측을 기록한다. 구현 우선순위와 사양 판정을 구분한다.
+- `out/operand_review_20261013/probe.py`: 기존 AVX512PF 재현 코드를 읽고 새 `avx512pf/` snapshot에서 실행했다. 기존 DB·결과는 보존했다. LLVM 23.1.3, GNU Binutils 2.47.20260726.
+- AVX512PF 16개 모두 LLVM Intel 크기 생략·명시 거부, AT&T 성공, 자체 Intel 출력 재조립 거부, GNU Intel 성공. DPD 4개 YMM, 나머지 ZMM. 일반 gather·메모리 마스크 scatter 대조군 성공. 기존 기능 옵션 시험의 `+avx512pf` 미인식 경고는 기능 활성화 근거에서 제외한다.
+- Vol.1 PDF 394쪽의 저장된 원문 텍스트를 다시 읽었다. predicate opmask는 Intel 문법 첫 피연산자 뒤 decorator로 표시한다. 개별 표와 함께 Intel 문법 결함 판단을 유지한다. GNU 수용 자체가 사양 근거는 아니다. 웹 upstream 재조회는 실패했으므로 최신 수정·이슈 상태는 갱신하지 않았다.
+- ER/SAE 대표 10입력: ZMM VADDPD 기본형과 네 반올림 모드(rn/rd/ru/rz-sae), 레지스터 VCOMISD SAE는 GNU·LLVM 모두 수용. YMM VADDPD ER, 메모리 VADDPD ER, VADDPD SAE 단독, 메모리 VCOMISD SAE는 둘 다 거부. 이는 관측이며 전체 사양 판정이 아니다.
+- CLI 기본 VADDPD 후보는 1개(부분 대조), 장식이 있는 나머지 9입력은 모두 후보 0개. 쉼표 뒤 장식을 추가 오퍼랜드로 세어 표의 오퍼랜드 수와 맞지 않는다. SDM Vol.2 PDF 134쪽은 ZMM VADDPD 행에 ER를 명시한다.
+- 원시 입력·진단·바이트·CLI 후보는 `rounding_observations.json`, `rounding_summary.json`에 저장했다. AVX512PF 버전·범위는 `avx512pf/manifest.json`에 있다.
+- 다음 구현: 대상 SDM 행과 개별 조건 정리 → ER 네 모드·SAE 생성 → 후보 탐색 장식 분리 → EVEX 필드 대조 → 역어셈블 및 회귀. 미확인 조건은 관측과 함께 미확인으로 남긴다.
+- 이번 검증은 조립·역어셈블과 CLI 후보 조회다. 파이프라인 코드 변경·전체 회귀·CPU 실행·수정 LLVM 빌드·이슈 제출·커밋은 하지 않았다.
+
 ## 2026-10-09 [입력 검사·인계] 지원 모드와 64비트 주소 충돌 표시
 
 - 모드가 Invalid/N.E./N.S.인 SDM 행의 64비트 메모리 주소를 입력 위반으로 표시한다.
@@ -1306,3 +1329,47 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - 재실행(`20261012T014754844345Z`, 4단계만): moffs 10케이스 판정 변경, objdump 19,167, LLVM 19,171. 다른 판정 변화 0. CLI와 3단계 대조 19,462 후보, 34,144건 같음.
 - 검증: `test_sdm_judge`(movabs 후보, moffs 두 행 A0·REX.W A0), `test_m4_disasm`(접두어 줄 합치기, 도구 관례 철자 제외, 행 지정 철자 `retf` 유지). 전체 회귀 통과.
 - 남은 빈틈: `{er}`·`{sae}` 반올림 오퍼랜드. 후보 대조와 2단계 생성 모두 다루지 않는다(범위 결정 대기).
+
+## 2026-10-12 [Godbolt] AVX512PF 재현 링크와 원문 페이지
+
+- 사용자 요청: Godbolt에서 직접 확인하고 원문도 보기.
+- Compiler Explorer의 Assembly / x86-64 clang 23.1.0에서 직접 확인했다. 이전 로컬 llvm-mc 23.1.3과는 별도 환경이다.
+- Intel 실패: https://godbolt.org/z/of1hfozfa — `.intel_syntax noprefix` 뒤 `vgatherpf0dps [rax+zmm0] {k1}`; invalid operand for instruction, Compiler returned: 1.
+- AT&T 성공: https://godbolt.org/z/Goo8f9jvd — `.att_syntax prefix` 뒤 `vgatherpf0dps (%rax,%zmm0) {%k1}`; Compilation succeeded.
+- 두 링크는 대표 1개 명령의 입력 수용 차이를 검증한다. Godbolt 오른쪽 역어셈블 표시를 llvm-mc의 출력이라고 취급하지 않는다. Godbolt에서 16개 전체·LLVM 자체 왕복을 다시 시험한 것은 아니다.
+- Intel 공식 다운로드 페이지에서 Vol.2 링크 https://cdrdv2.intel.com/v1/dl/getContent/671110 를 확인했다. 로컬 093판 PDF 2375쪽(인쇄 8-12)을 다시 읽고 이미지로 렌더링했다.
+- 화면·원문 이미지: out/avx512pf_review_20261012/godbolt-intel-error-wide.png, godbolt-att-success.png, sdm-8-12.png. 코드 및 원문 DB 변경 없음.
+
+## 2026-10-12 [원문 보강] AVX512PF 마스크 위치의 공통 문법 설명
+
+- 사용자 요청으로 Vol.1/2 색인의 관련 표기·문법 설명을 검색하고 원본을 확인했다.
+- Vol.1 §15.6.1.2, 15-10/PDF 394쪽: predicate opmask는 Intel 문법의 첫 번째 피연산자 뒤에 중괄호 decorator로 표시한다고 명시한다. 기존 명령 표보다 직접적인 위치 규칙이다.
+- Vol.1 §15.1.4, 15-2/PDF 386쪽에는 destination operand 옆에 {k1}를 붙인다는 일반 설명이 있다. prefetch에는 첫 피연산자 뒤라는 명시와 개별 표를 함께 근거로 사용한다.
+- Vol.2A 3-7/PDF 107쪽은 {k1}와 일반 피연산자 k1를 구분한다. VGATHERPF0 절 8-12~13에도 마스크를 앞에 별도로 두라는 예외는 없다.
+- Vol.1 두 페이지를 기존 별도 snapshot의 sdm-vol1-page-386.png 및 sdm-vol1-page-394.png로 보존하고 394쪽을 시각 확인했다. 초안·검증 문서·HANDOFF 근거 보강. 코드 변경·조립 재실행 없음.
+
+## 2026-10-13 [재점검] 발표 전 SDM 불일치 케이스 재분류
+
+- 사용자 요청: 원문 표기 한계·근거 부족·미분류 케이스가 정말 원문에 없는지, 생성 오류는 아닌지, 버그 후보가 맞는지 다시 확인.
+- 도구 재실행(GNU `--64 -mintel64`, llvm-mc Intel), SDM 원문(manual_lookup), LLVM 23.1.3 TableGen, Intel XED, LLVM 이슈·릴리스 노트, binutils 커밋을 대조했다. 결과는 `docs/PRESENTATION_REVIEW_2026-10-13.md`, 근거는 `out/presentation_review_20261013/`.
+- 새로 확인한 것: CALL·JMP `dword ptr` 6케이스의 GNU 결과는 SDM 유효 행 m16:16(4바이트 먼 포인터)이고, 우리 reject 기대가 틀렸다. IRET은 원문이 동의어 사용을 명시한다. LLVM MOVSXD r16·r32는 소스 주석상 역어셈블러 전용이다. XED는 VPBROADCASTB/W·VMOVW의 범용 레지스터를 GPR32로만 정의한다. LLVM 19 릴리스 노트는 AVX512PF 어셈블 인코딩·디코딩 지원을 유지한다고 적는다.
+- 코드·기본 판정 파일 변경 없음. 수정 여부는 사용자 결정 대기.
+
+## 2026-10-13 [수정·재실행] 자체 오류 3건 수정, ER/SAE 포함 전체 재실행, 발표 원고
+
+- 사용자 결정: 재점검에서 찾은 우리 쪽 문제 3건을 코드에서 고치고, ER/SAE를 포함해 전체를 다시 돌린다.
+- 수정
+  - CALL·JMP r/m32 메모리 형식: SDM Description(4바이트 먼 주소 = m16:16, 유효)과 같은 문법이므로 alias_no_test(`case_rules.FAR_POINTER_MEMORY_ALIASES`, `m2_generate.mark_far_pointer_aliases`). 레지스터 형식은 reject 유지.
+  - VMOVW·VPBROADCASTB/W r64 변형 제거(`REG_R64`). 근거가 SYM039뿐이고 Intel XED는 GPR32.
+  - PUSH imm16·XBEGIN rel16: `data16`은 GNU 관례이고 LLVM Intel 문법에 철자가 없어 `unreachable_forms.csv`에 등록.
+- 재실행 `20261013T025438835844Z`(`generator --until disasm --execute`): 21,046케이스. GNU 20,934, clang 20,696 SDM 일치. 10월 12일 대비 판정 변화는 위 15케이스뿐이고 바이트 변화 없음. 추가 1,598케이스는 ER/SAE snapshot과 같은 결과(GNU 1,598, clang 1,558+거부 40).
+- 검증: 새 테스트(`test_far_pointer_memory_alias`, r64 제외·PEXTRW 유지, `RegisteredFormTest`), 회귀 156개 통과, CLI 일치 대조(21,046 후보, 37,298건).
+- 발표 원고 `docs/presentation/SLIDES.md`, 의견 자료 `docs/AVX512PF_OPINION_2026-10-13.md`. 커밋·이슈 제출 없음.
+
+## 2026-10-19 [저장] 현재 작업 커밋·push
+
+- 사용자 요청: 지금까지의 작업을 Git에 push한다. 대상 브랜치는 기존 결정대로 `sdm-review-093`이다.
+- ER/SAE 지원, 자체 오류 3건 수정, 10월 13일 전체 재실행 결과, AVX512PF 검증 근거, 발표 자료를 함께 보존한다. 기본 ignore 대상인 실험 JSON도 해당 snapshot의 manifest·관측·해시를 보존하기 위해 명시적으로 추가한다.
+- PDF와 `out/manual_index*`, 재생성 가능한 오브젝트 파일은 제외한다. 원문 DB와 기존 실험 snapshot 내용은 변경하지 않는다.
+- 검증: WSL Ubuntu에서 `python3 -m unittest discover -s tests -p 'test_*.py' -q` 재실행, 156개 통과(10.886초, 건너뜀 없음). 이번 저장 작업에서 조립·역어셈블·CPU 실험을 새로 실행하지 않았다.
+- HANDOFF의 과거 결과 참조를 이동하는 HEAD 대신 `3813bf2`로 고정한다. 열린 버그 후보의 이슈 제출은 이번 요청 범위에 포함하지 않는다.

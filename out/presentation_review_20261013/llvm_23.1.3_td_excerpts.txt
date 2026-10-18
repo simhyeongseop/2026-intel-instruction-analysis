@@ -1,0 +1,71 @@
+                    Sched<[WriteALU]>;
+def MOVSX64rm16: RI<0xBF, MRMSrcMem, (outs GR64:$dst), (ins i16mem:$src),
+                    "movs{wq|x}\t{$src, $dst|$dst, $src}",
+                    [(set GR64:$dst, (sextloadi64i16 addr:$src))]>,
+                    TB, Sched<[WriteLoad]>;
+def MOVSX64rr32: RI<0x63, MRMSrcReg, (outs GR64:$dst), (ins GR32:$src),
+                    "movs{lq|xd}\t{$src, $dst|$dst, $src}",
+                    [(set GR64:$dst, (sext GR32:$src))]>,
+                    Sched<[WriteALU]>, Requires<[In64BitMode]>;
+def MOVSX64rm32: RI<0x63, MRMSrcMem, (outs GR64:$dst), (ins i32mem:$src),
+                    "movs{lq|xd}\t{$src, $dst|$dst, $src}",
+                    [(set GR64:$dst, (sextloadi64i32 addr:$src))]>,
+                    Sched<[WriteLoad]>, Requires<[In64BitMode]>;
+
+// These instructions exist as a consequence of operand size prefix having
+// control of the destination size, but not the input size. Only support them
+// for the disassembler.
+let isCodeGenOnly = 1, ForceDisassemble = 1, hasSideEffects = 0 in {
+def MOVSX16rr32: I<0x63, MRMSrcReg, (outs GR16:$dst), (ins GR32:$src),
+                   "movs{lq|xd}\t{$src, $dst|$dst, $src}", []>,
+                   Sched<[WriteALU]>, OpSize16, Requires<[In64BitMode]>;
+def MOVSX32rr32: I<0x63, MRMSrcReg, (outs GR32:$dst), (ins GR32:$src),
+                   "movs{lq|xd}\t{$src, $dst|$dst, $src}", []>,
+                   Sched<[WriteALU]>, OpSize32, Requires<[In64BitMode]>;
+let mayLoad = 1 in {
+def MOVSX16rm32: I<0x63, MRMSrcMem, (outs GR16:$dst), (ins i32mem:$src),
+                   "movs{lq|xd}\t{$src, $dst|$dst, $src}", []>,
+                   Sched<[WriteLoad]>, OpSize16, Requires<[In64BitMode]>;
+def MOVSX32rm32: I<0x63, MRMSrcMem, (outs GR32:$dst), (ins i32mem:$src),
+                   "movs{lq|xd}\t{$src, $dst|$dst, $src}", []>,
+                   Sched<[WriteLoad]>, OpSize32, Requires<[In64BitMode]>;
+} // mayLoad = 1
+} // isCodeGenOnly = 1, ForceDisassemble = 1, hasSideEffects = 0
+
+
+def RDTSCP : I<0x01, MRM_F9, (outs), (ins), "rdtscp", []>, TB;
+
+// CPU flow control instructions
+
+let mayLoad = 1, mayStore = 0, hasSideEffects = 1, isTrap = 1 in {
+  def TRAP    : I<0x0B, RawFrm, (outs), (ins), "ud2", [(trap)]>, TB;
+
+  def UD1Wm   : I<0xB9, MRMSrcMem, (outs), (ins GR16:$src1, i16mem:$src2),
+                  "ud1{w}\t{$src2, $src1|$src1, $src2}", []>, TB, OpSize16;
+  def UD1Lm   : I<0xB9, MRMSrcMem, (outs), (ins GR32:$src1, i32mem:$src2),
+                  "ud1{l}\t{$src2, $src1|$src1, $src2}", []>, TB, OpSize32;
+  def UD1Qm   : RI<0xB9, MRMSrcMem, (outs), (ins GR64:$src1, i64mem:$src2),
+                   "ud1{q}\t{$src2, $src1|$src1, $src2}", []>, TB;
+
+  def UD1Wr   : I<0xB9, MRMSrcReg, (outs), (ins GR16:$src1, GR16:$src2),
+                  "ud1{w}\t{$src2, $src1|$src1, $src2}", []>, TB, OpSize16;
+  def UD1Lr   : I<0xB9, MRMSrcReg, (outs), (ins GR32:$src1, GR32:$src2),
+                  "ud1{l}\t{$src2, $src1|$src1, $src2}", []>, TB, OpSize32;
+  def UD1Qr   : RI<0xB9, MRMSrcReg, (outs), (ins GR64:$src1, GR64:$src2),
+                   "ud1{q}\t{$src2, $src1|$src1, $src2}", []>, TB;
+}
+
+def XBEGIN : I<0, Pseudo, (outs GR32:$dst), (ins),
+               "# XBEGIN", [(set GR32:$dst, (int_x86_xbegin))]>,
+             Requires<[HasRTM]>;
+
+let isBranch = 1, isTerminator = 1, Defs = [EAX] in {
+def XBEGIN_2 : Ii16PCRel<0xc7, MRM_F8, (outs), (ins brtarget16:$dst),
+                         "xbegin\t$dst", []>, OpSize16;
+def XBEGIN_4 : Ii32PCRel<0xc7, MRM_F8, (outs), (ins brtarget32:$dst),
+                         "xbegin\t$dst", []>, OpSize32;
+
+def PUSH16i8 : Ii8<0x6a, RawFrm, (outs), (ins i16i8imm:$imm),
+                   "push{w}\t$imm", []>, OpSize16;
+def PUSH16i  : Ii16<0x68, RawFrm, (outs), (ins i16imm:$imm),
+                   "push{w}\t$imm", []>, OpSize16;

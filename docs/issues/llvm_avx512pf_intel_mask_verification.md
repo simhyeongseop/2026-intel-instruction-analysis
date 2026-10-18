@@ -26,6 +26,7 @@
 
 ## 원문과 기존 결과 대조
 
+- 추가 확인(사용자 공통 설명 재검색 요청): Vol.1 §15.6.1.2, 인쇄 15-10/PDF 394쪽은 predicate opmask를 중괄호 decorator로 Intel 문법의 첫 번째 피연산자 뒤에 표시한다고 명시한다. Vol.1 §15.1.4, 15-2/PDF 386쪽에도 `{k1}`를 destination operand 옆에 붙인다는 일반 설명과 `VADDPS zmm1 {k1}{z}, zmm2, zmm3` 예가 있다. prefetch에 destination이라는 말만 적용하지 않고, 첫 피연산자 뒤라는 설명과 개별 명령 표를 함께 근거로 삼는다. 두 페이지 원본을 다시 읽고 `sdm-vol1-page-386.png`/`sdm-vol1-page-394.png`로 보존했다.
 - 로컬 `intel_manual.pdf`, order no. 325383-093US, PDF 2375쪽 = Vol. 2D 8-12: `EVEX.512.66.0F38.W0 C6 /1 /vsib VGATHERPF0DPS vm32z {k1}`. 초안의 쪽수·순서·대표 opcode 근거가 맞다.
 - 나머지 묶음은 PDF 2377/2399/2401쪽, 인쇄 쪽 8-14/8-36/8-38. 네 DPD 표는 `vm32y`이며 프로젝트의 표 우선 규칙에 따라 YMM을 쓴다.
 - 기존 `out/runs/20261012T010114208021Z.json`의 범위는 check + disasm이며, 현재 결과 파일 6개의 SHA256은 manifest와 일치한다. 그 결과도 올바른 인덱스 폭으로 16개 GNU 수용·clang 거부, LLVM Intel 출력 재조립 거부를 기록한다.

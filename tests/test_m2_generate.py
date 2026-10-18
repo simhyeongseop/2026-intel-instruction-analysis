@@ -47,9 +47,13 @@ class OperandTest(unittest.TestCase):
         # MOVMSKPD 절 "The upper bits of r32 or r64 are filled with zeros": 대표 r32 다음에 r64
         picks = [(k, t) for k, t, _ in choices("reg", "MOVMSKPD", "66 0F 50 /r")]
         self.assertEqual(picks, [("reg", "ecx"), ("reg", "rdx")])
-        # reg/m16: r32, m16, r64 순서(기존 변형 이름을 바꾸지 않음). r16은 만들지 않음
+        # VMOVW·VPBROADCASTB/W: 명령 절에 폭이 없고 XED는 GPR32만 정의 -> r64 대안 없음(2026-10-13)
         kinds = [(k, t) for k, t, _ in choices("reg/m16", "VMOVW", "EVEX.128.66.MAP5.WIG 6E /r")]
-        self.assertEqual(kinds, [("reg", "ecx"), ("mem", "word ptr {addr}"), ("reg", "rdx")])
+        self.assertEqual(kinds, [("reg", "ecx"), ("mem", "word ptr {addr}")])
+        picks = [t for _, t, _ in choices("reg", "VPBROADCASTB", "EVEX.128.66.0F38.W0 7A /r")]
+        self.assertEqual(picks, ["ecx"])
+        # 명령 절이 "r32 or r64"를 적은 reg/m16 행은 r64 대안을 유지(PEXTRW)
+        self.assertIn(("reg", "rdx"), [(k, t) for k, t, _ in choices("reg/m16", "PEXTRW", "66 0F 3A 15 /r ib")])
         # SENDUIPI 절 "The operand always has 64 bits": 대표값이 이미 r64면 대안 없음
         row = fake_row("SENDUIPI", "F3 0F C7 /6", ["reg"])
         row["widths"] = {"reg": "64"}
@@ -87,6 +91,18 @@ class AliasTest(unittest.TestCase):
         G.mark_aliases(cases)
         self.assertEqual([c["expected"] for c in cases], ["reach", "alias_no_test", "alias_no_test", "reach", "reject"])
         self.assertEqual(cases[0]["alias_rows"], "2")
+
+    def test_far_pointer_memory_alias(self):
+        # CALL r/m32(N.E.)의 메모리 형식은 4바이트 먼 포인터 m16:16(유효)과 같은 문법. 레지스터 형식은 그대로 거부 시험
+        cases = [dict(self.case(227, "call ecx", "call r32", "reject"), instruction="CALL r/m32", notes=""),
+                 dict(self.case(227, "call dword ptr [rax]", "call dword ptr [r]", "reject"),
+                      instruction="CALL r/m32", notes=""),
+                 dict(self.case(231, "data16 call fword ptr [rax]", "data16 call fword ptr [r]", "reach"),
+                      instruction="CALL m16:16", notes="")]
+        G.mark_far_pointer_aliases(cases)
+        self.assertEqual([c["expected"] for c in cases], ["reject", "alias_no_test", "reach"])
+        self.assertEqual(cases[1]["alias_rows"], "231")
+        self.assertEqual(cases[0]["alias_rows"], "")
 
     def test_shape_ignores_register_numbers_not_fixed_names(self):
         self.assertEqual(G.shape_of("reg", "mm1"), G.shape_of("reg", "mm0"))

@@ -293,3 +293,16 @@ LLVM 이슈 트래커와 llvm-bugs 목록을 검색했다(GitHub API, 웹 검색
 ### 아직 판단하지 않은 것
 
 - MOV Sreg, r/m64 메모리(REX.W 8E): 2026-10-12에 원문 재검색과 CPU 쪽 경계 실험으로 정리했다(위 '버그 후보 재점검'). 원문 기호는 m64, 도구·CPU 관측은 16비트.
+
+## 자체 오류 3건 수정 + ER/SAE 포함 전체 재실행 (2026-10-13)
+
+재현: `python3 pipeline/run.py generator --until disasm --execute`(실행 기록 `out/runs/20261013T025438835844Z.json`). 근거: `docs/PRESENTATION_REVIEW_2026-10-13.md`.
+
+| 항목 | 10월 12일 | 10월 13일 |
+|---|---|---|
+| 케이스 (reach / reject / alias) | 19,462 (19,308 / 106 / 48) | 21,046 (20,892 / 100 / 54) |
+| 3단계 SDM 일치 GNU / clang | 19,336 / 19,140 | 20,934 / 20,696 |
+| 4단계 대상 / 일치 계열 objdump / LLVM | 19,248 / 19,167 / 19,171 | 20,844 / 20,763 / 20,767 |
+
+- 바뀐 판정: CALL·JMP `dword ptr [m]` 12(GNU 6·clang 6) 다른 행으로 수용 → 시험 불가(별칭), clang PUSH imm16·XBEGIN rel16 3 다른 인코딩 → 도달 불가(등록). 다른 기존 케이스는 판정·바이트 같음.
+- 제거: VMOVW·VPBROADCASTB/W r64 14케이스. 추가: ER/SAE 1,598케이스.

@@ -1,0 +1,10 @@
+$ python3 scripts/manual_lookup.py show CLRSSBSY --part Description
+============================================================
+s0072 CLRSSBSY—Clear Busy Flag in a Supervisor Shadow Stack Token  [원문]
+권 2A, 파일 268쪽 / 인쇄 3-150 ~ 파일 269쪽 (2쪽 분량)
+  ...
+--- Description [원문] ---
+[파일 268쪽 / 인쇄 3-150]
+Description
+Clear busy flag in supervisor shadow stack token reference by m64. Subsequent to marking the shadow stack as
+not busy the SSP is loaded with value 0.

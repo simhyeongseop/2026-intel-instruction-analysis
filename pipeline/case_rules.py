@@ -118,7 +118,17 @@ _SECTION_R32_R64 = {
     'PEXTRW': 'Vol.2 992 "r32 or r64"', 'VPEXTRW': 'Vol.2 992 "r64/r32"',
     'PMOVMSKB': 'Vol.2 1053 "r32 or r64"', 'VPMOVMSKB': 'Vol.2 1053 "r32 or r64"',
 }
-REG_R64 = dict(_SECTION_R32_R64, **{name: 'SYM039 (명령 절 폭 없음)' for name in ('VMOVW', 'VPBROADCASTB', 'VPBROADCASTW')})
+# 명령 절이 폭을 적지 않은 VMOVW·VPBROADCASTB/W는 r64를 만들지 않는다(2026-10-13 사용자 결정).
+# 근거가 일반 정의 SYM039뿐이고, Intel XED는 이 행들의 범용 레지스터를 GPR32로만 정의한다.
+REG_R64 = dict(_SECTION_R32_R64)
+
+# 64비트 무효 행인데 메모리 형식 문법이 유효한 먼 포인터 행과 같은 것(표 Instruction -> 같은 문법의 유효 행).
+# CALL·JMP Description: 간접 먼 호출·점프의 메모리는 4바이트(16비트 오퍼랜드 크기, m16:16) 또는 6바이트.
+# 그래서 'dword ptr [m]'은 N.E. 행 r/m32와 유효 행 m16:16 모두에 맞는다(2026-10-13 재점검).
+FAR_POINTER_MEMORY_ALIASES = {
+    'CALL r/m32': ('CALL m16:16', 'SDM CALL Description(Vol.2 239~): 4-byte far address = m16:16'),
+    'JMP r/m32': ('JMP m16:16', 'SDM JMP Description(Vol.2 622~): 4-byte far address = m16:16'),
+}
 
 # 명령 절이 RIP 상대 주소를 #UD로 정한 메모리 오퍼랜드: RIP 형태를 만들지 않는다
 RIP_UNDEFINED = {

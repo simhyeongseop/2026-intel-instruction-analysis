@@ -1,0 +1,12 @@
+{
+ "cases": 1598,
+ "rows": 288,
+ "expected": {
+  "reach": 1598
+ },
+ "spec_trusted": 1598,
+ "variants": {
+  "er": 1416,
+  "sae": 182
+ }
+}

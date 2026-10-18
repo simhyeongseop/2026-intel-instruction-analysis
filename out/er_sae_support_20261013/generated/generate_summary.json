@@ -1,0 +1,19 @@
+{
+ "cases": 21060,
+ "rows": 4219,
+ "expected": {
+  "reject": 106,
+  "reach": 20906,
+  "alias_no_test": 48
+ },
+ "spec_trusted": 21060,
+ "variants": {
+  "base": 4857,
+  "imm_max": 610,
+  "alt1": 9225,
+  "alt2": 895,
+  "mask": 3875,
+  "er": 1416,
+  "sae": 182
+ }
+}

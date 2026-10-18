@@ -33,5 +33,24 @@ class ValidRowsReachedTest(unittest.TestCase):
         self.assertEqual(self.reached("CALL r/m32", "90"), [])
 
 
+class RegisteredFormTest(unittest.TestCase):
+    """data/rules/unreachable_forms.csv: 등록한 형식만 '도달 불가(등록)'로 바꾼다(형식 칸이 메모리인지로 구분)."""
+
+    def setUp(self):
+        self.entries = {int(r["row_id"]): r for r in C.read_csv(C.UNREACHABLE)}
+
+    def verdict(self, row_id, source):
+        out = {"verdict": "다른 인코딩", "diagnostic": ""}
+        return C.registered(out, {"row_id": str(row_id), "source": source}, self.entries)["verdict"]
+
+    def test_push_imm16_and_xbegin_rel16(self):
+        self.assertEqual(self.verdict(2314, "data16 push 0x1234"), "도달 불가(등록)")
+        self.assertEqual(self.verdict(4118, "data16 xbegin .Ltarget16"), "도달 불가(등록)")
+
+    def test_unregistered_row_kept(self):
+        self.assertEqual(self.verdict(2315, "push 0x12345678"), "다른 인코딩")
+        self.assertEqual(self.verdict(2314, "push word ptr [rax]"), "다른 인코딩")   # 메모리 형식은 등록 밖
+
+
 if __name__ == "__main__":
     unittest.main()

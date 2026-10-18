@@ -50,6 +50,8 @@ The `zmmword ptr` spelling above is only an additional rejected spelling, not ev
 
 `vgatherpf0dps dword ptr [rax+zmm0] {k1}` (memory operand followed by the mask) should assemble to `62 f2 7d 49 c6 0c 00`. This is the order used by the Intel SDM, Vol. 2D, "VGATHERPF0DPS/VGATHERPF0QPS/VGATHERPF0DPD/VGATHERPF0QPD", p. 8-12 (order no. 325383-093US): `EVEX.512.66.0F38.W0 C6 /1 /vsib  VGATHERPF0DPS vm32z {k1}`.
 
+The SDM also states the placement rule explicitly in Vol. 1, section 15.6.1.2, "Example of Opmask Usages", p. 15-10 (253665-093US; PDF page 394): "An opmask register serving as a predicate operand is expressed as a curly-braces-enclosed decorator following the first operand in the Intel assembly syntax." Together with the instruction-specific signature above, this directly supports placing `{k1}` after the memory operand.
+
 For reference, GNU as (version output: `GNU Binutils 2.47.20260726`) accepts `vgatherpf0dps dword ptr [rax+zmm0]{k1}` and emits the same bytes. objdump prints `vgatherpf0dps DWORD PTR [rax+zmm0*1]{k1}`.
 
 Ordinary gathers with a mask attached to a register operand, such as `vgatherdps zmm0 {k1}, [rax+zmm1]`, assemble fine in Intel syntax. So does `vscatterdps [rax+zmm1] {k1}, zmm0`, which attaches the mask to a memory operand.

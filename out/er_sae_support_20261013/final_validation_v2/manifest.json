@@ -1,0 +1,67 @@
+{
+  "started_utc": "2026-10-12T16:39:50.279563+00:00",
+  "completed": true,
+  "scope": "Final code: full tests, CLI consistency, saved byte/text regression. Fresh tool observations are in the parent snapshot; no CPU execution.",
+  "code_hashes": {
+    "pipeline/case_rules.py": "5ff14f036787b71a21e912bb02f5426d3229219ab746ff506a16daa242b1b205",
+    "pipeline/cpu_run.py": "ad862737f7891467e272cbbbed6d064084bec31a18d5a0e72cbd09683db62cc9",
+    "pipeline/disasm_rules.py": "9a8808e48b0795ba906f9439ed637d18e4d112aeeb13c8d0ff26a8cd3c92450d",
+    "pipeline/encoding_audit.py": "af06333e9c048d9c110871ab6f45c36cb8d1a87da6dd5507ff5bd789c01304f2",
+    "pipeline/fp_controls.py": "4159d41f52b2756e3afd56dab5de484270b2dc47605a379ef2c09cc48353a01c",
+    "pipeline/instruction_check.py": "107c45597bbb52dad0de5d83da0da8562cfe8c49d6a22fd428fbfcadf5e13546",
+    "pipeline/m1_extract.py": "dd3d901ee2669b2eccc8c1c8b39557a2883d4d701aeba620a6f216c0b54113f8",
+    "pipeline/m2_generate.py": "63260eecf6674a4aa70519f98cc721f3368a55acfcf553a1eba1b0d053386787",
+    "pipeline/m3_check.py": "c3f37499e263bf6e121245e4e173393301f217404e0211d0da1447637019ef3c",
+    "pipeline/m4_disasm.py": "562dbe7de063787365e92cab79cde0d1471a9ce13aeaa98b14ff245ff48c6f02",
+    "pipeline/manual_index.py": "52995b9361f79f7fedc6248b67d656982f187c3a4bd5b9db65e6d950663327a4",
+    "pipeline/manual_lookup.py": "86d6661255d3ce6cc2f123f273b093c8bfa290a83c91bd8d61381a3a5b318b02",
+    "pipeline/operand_forms.py": "b12ba14de73f27dfd65e08ef44712194ef3f990fcc408202544f7b8059918fec",
+    "pipeline/operand_size_prefix.py": "208d2a8e82a8247e5adc76d7a1ed37e6f9b3b316c9eb68777bcf43a0f5083046",
+    "pipeline/quote_check.py": "1d7ef8d6aa501e330ddf26d19b6fa5dd7f677dc8580b4c58b57ddd5671ecd33f",
+    "pipeline/review_verdicts.py": "0a19b9013006130f57a455feaad226598c131f9c46f3ea6b3c544e31e5e10ba8",
+    "pipeline/run.py": "8325e965f3c20d2fba1eed2b4e4336458023b5cf6008e2599ebebb178375d3cb",
+    "pipeline/sdm_evidence.py": "0f4825d06a18cc97a2128e1862f003de4b3b600626fdeec1d11a2242b040690b",
+    "pipeline/sdm_judge.py": "9ba923c848830662daeeb38d3ac74fbb9c4e0de854bdc1e88bd4dcee92ad4754",
+    "pipeline/sdm_paths.py": "a7e0b21f83bafbca058abc1fdf2c8e384758e0aec183003e9b99f28cbca75f2b",
+    "pipeline/sdm_relaxation.py": "fb3a4ad21615d12a365e2d3c4244dc3c7e5a23fa3d73f9447d18fd519ba03b07",
+    "pipeline/sdm_review_compare.py": "6647830ccb48f4190d37d67f600301493ff0f9a3ad08404d4ecb86113be62910",
+    "pipeline/sdm_select.py": "f80ce5893169a19002464bcbb4548a12fb6e5ac6e638442957296ab5c9e9fb6d",
+    "pipeline/sdm_symbol_spec.py": "01ab569e8e7ffcb504cf5eb04a59ae6776ab631b76555733a9e85e85b4d07e87",
+    "pipeline/toolchain.py": "7c0947a6dcc180cf7fb889c338da94c2f786eda89b094ce6dde4453167bce4ee"
+  },
+  "steps": [
+    {
+      "name": "tests",
+      "returncode": 0
+    },
+    {
+      "name": "baseline_cli",
+      "returncode": 0
+    },
+    {
+      "name": "added_cli",
+      "returncode": 0
+    }
+  ],
+  "input_hashes": {
+    "out/cases/cases.csv": "2f287ee8547b2263a167a21a5ead38e8766b8b7e13568df6348fc595497afbd3",
+    "out/cases/check_results.csv": "2bf7bf1219a3b9ae88cee52754d11e2f48fc0416f994f58213bf7b7a32690183",
+    "out/cases/disasm_results.csv": "80bc4cfba21dd7d7ae70989e12134292fb57edb16c8b02cc67d9a92823b79b15",
+    "out/er_sae_support_20261013/added/cases.csv": "d82d9c27497eaea8704a07ccddcf9014ae8a363791bfa87cbc80656bcb4911c4",
+    "out/er_sae_support_20261013/added/check_results.csv": "7d27270314784a08930909a393fe8c9e225d38ba1bc98dead7477cf2889e63ae",
+    "out/er_sae_support_20261013/added/disasm_results.csv": "83d2e1e0b4e77e943ce29353390321030045c841c67a26a71bb42c10ed1f2a31"
+  },
+  "llvm_before_gpr_layout_matches": 40,
+  "regression": {
+    "baseline": {
+      "encoding_matches": 38282,
+      "disasm_matches": 38115
+    },
+    "added": {
+      "encoding_matches": 3156,
+      "disasm_matches": 3196
+    }
+  },
+  "errors": [],
+  "finished_utc": "2026-10-12T16:40:44.708176+00:00"
+}

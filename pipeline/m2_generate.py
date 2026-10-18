@@ -28,6 +28,7 @@ sys.path.insert(0, ROOT)
 
 from pipeline import case_rules as R  # noqa: E402
 from pipeline.operand_size_prefix import required_size  # noqa: E402
+from pipeline import fp_controls as FP  # noqa: E402
 from pipeline import sdm_review_compare as cmp  # noqa: E402
 
 ISA_DB = os.path.join(ROOT, "data/db/isa_db.csv")
@@ -294,7 +295,28 @@ def build_row_cases(row, regs):
             picks = [c[alt] if alt < len(c) else c[0] for _, c in per_operand]
             add("mask" if alt == 0 else "mask:alt%d" % alt, picks, address_forms(row, picks)[:1][0]
                 if any("{addr}" in p[1] for p in picks) and address_forms(row, picks) else "base", with_mask=True)
+    add_fp_controls(row, per_operand, base, masks, keep_mask, add, cases)
     return cases, notes
+
+
+def add_fp_controls(row, per_operand, base, masks, keep_mask, add, cases):
+    """대표 레지스터 형식에 ER 네 모드/SAE 변형을 기존 케이스 뒤에 추가한다."""
+    symbols = [symbol for symbol, _ in per_operand]
+    for index, symbol in enumerate(symbols):
+        controls = tuple(FP.ROUNDING) if "{er}" in symbol else ("{sae}",) if "{sae}" in symbol else ()
+        for control in controls:
+            for with_mask in ([keep_mask, True] if masks and not keep_mask else [keep_mask]):
+                label = ("er:" + control[1:-1] if control in FP.ROUNDING else "sae") + (":mask" if with_mask else "")
+                add(label, base, with_mask=with_mask)
+                variant, texts, evidence, shapes = cases.pop()
+                trial = list(texts)
+                trial.insert(index + 1, control)
+                if FP.form_error(row["opcode"], symbols, ", ".join(trial)):
+                    continue
+                texts.insert(index + 1, control)
+                shapes.insert(index + 1, control)
+                evidence.append(control + "=" + FP.EVIDENCE)
+                cases.append((variant, texts, evidence, shapes))
 
 
 REGISTER_NAME = re.compile(r"\b(?:[xyz]?mm|k|tmm|bnd)\d+\b|\bst\(\d\)")
@@ -398,6 +420,7 @@ def generate(rows):
                 "notes": "; ".join(dict.fromkeys(notes + more)),
             })
     mark_aliases(cases)
+    mark_far_pointer_aliases(cases)
     return cases
 
 
@@ -420,6 +443,20 @@ def mark_aliases(cases):
             case["alias_rows"] = " ".join(str(r) for r in others)
             if case["expected"] == "reject" and valid_rows:
                 case["expected"] = "alias_no_test"
+
+
+def mark_far_pointer_aliases(cases):
+    """FAR_POINTER_MEMORY_ALIASES: 무효 행의 메모리 형식이 유효한 m16:16 행과 같은 문법이면 거부 시험을 만들지 않는다.
+    m16:16 행의 소스(data16 ... fword ptr)는 도구 철자라 모양 비교(mark_aliases)로는 찾지 못한다."""
+    row_of = {c["instruction"]: c["row_id"] for c in cases}
+    for case in cases:
+        rule = R.FAR_POINTER_MEMORY_ALIASES.get(case["instruction"])
+        if not rule or "[" not in case["source"] or rule[0] not in row_of:
+            continue
+        case["alias_rows"] = " ".join(filter(None, [case["alias_rows"], str(row_of[rule[0]])]))
+        if case["expected"] == "reject":
+            case["expected"] = "alias_no_test"
+        case["notes"] = "; ".join(filter(None, [case["notes"], "같은 문법의 유효 행 %s: %s" % rule]))
 
 
 def write_outputs(cases, out_dir):

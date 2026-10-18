@@ -50,19 +50,19 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 48,VADDPD,"VADDPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 49,VADDPD,"VADDPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 58 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 50,VADDPD,"VADDPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 58 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-51,VADDPD,"VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",EVEX.512.66.0F.W1 58 /r,reach,8,SDM 일치 8,SDM 일치 8
+51,VADDPD,"VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst {er}",EVEX.512.66.0F.W1 58 /r,reach,16,SDM 일치 16,SDM 일치 16
 52,ADDPS,"ADDPS xmm1, xmm2/m128",NP 0F 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 53,VADDPS,"VADDPS xmm1,xmm2, xmm3/m128",VEX.128.0F.WIG 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 54,VADDPS,"VADDPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 55,VADDPS,"VADDPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 58 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 56,VADDPS,"VADDPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 58 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-57,VADDPS,"VADDPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.0F.W0 58 /r,reach,8,SDM 일치 8,SDM 일치 8
+57,VADDPS,"VADDPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.0F.W0 58 /r,reach,16,SDM 일치 16,SDM 일치 16
 58,ADDSD,"ADDSD xmm1, xmm2/m64",F2 0F 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 59,VADDSD,"VADDSD xmm1, xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 58 /r,reach,4,SDM 일치 4,SDM 일치 4
-60,VADDSD,"VADDSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 58 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+60,VADDSD,"VADDSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 58 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 61,ADDSS,"ADDSS xmm1, xmm2/m32",F3 0F 58 /r,reach,4,SDM 일치 4,SDM 일치 4
 62,VADDSS,"VADDSS xmm1,xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 58 /r,reach,4,SDM 일치 4,SDM 일치 4
-63,VADDSS,"VADDSS xmm1{k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 58 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+63,VADDSS,"VADDSS xmm1{k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 58 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 64,ADDSUBPD,"ADDSUBPD xmm1, xmm2/m128",66 0F D0 /r,reach,4,SDM 일치 4,SDM 일치 4
 65,VADDSUBPD,"VADDSUBPD xmm1, xmm2, xmm3/m128",VEX.128.66.0F.WIG D0 /r,reach,4,SDM 일치 4,SDM 일치 4
 66,VADDSUBPD,"VADDSUBPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG D0 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -226,7 +226,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 224,CALL,CALL rel16,E8 cw,alias_no_test,1,시험 불가(별칭) 1,시험 불가(별칭) 1
 225,CALL,CALL rel32,E8 cd,reach,1,SDM 일치 1,SDM 일치 1
 226,CALL,CALL r/m16,FF /2,reject,4,SDM 일치(거부) 4,다른 행으로 수용 3; SDM 일치(거부) 1
-227,CALL,CALL r/m32,FF /2,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,다른 행으로 수용 3; SDM 일치(거부) 1
+227,CALL,CALL r/m32,FF /2,alias_no_test/reject,4,시험 불가(별칭) 3; SDM 일치(거부) 1,시험 불가(별칭) 3; SDM 일치(거부) 1
 228,CALL,CALL r/m64,FF /2,reach,4,SDM 일치 4,SDM 일치 4
 229,CALL,CALL ptr16:16,9A cd,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 230,CALL,CALL ptr16:32,9A cp,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
@@ -394,13 +394,13 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 392,VCMPPD,"VCMPPD ymm1, ymm2, ymm3/m256, imm8",VEX.256.66.0F.WIG C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 393,VCMPPD,"VCMPPD k1 {k2}, xmm2, xmm3/m128/m64bcst, imm8",EVEX.128.66.0F.W1 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 394,VCMPPD,"VCMPPD k1 {k2}, ymm2, ymm3/m256/m64bcst, imm8",EVEX.256.66.0F.W1 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-395,VCMPPD,"VCMPPD k1 {k2}, zmm2, zmm3/m512/m64bcst {sae}, imm8",EVEX.512.66.0F.W1 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+395,VCMPPD,"VCMPPD k1 {k2}, zmm2, zmm3/m512/m64bcst {sae}, imm8",EVEX.512.66.0F.W1 C2 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 396,CMPPS,"CMPPS xmm1, xmm2/m128, imm8",NP 0F C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 397,VCMPPS,"VCMPPS xmm1, xmm2, xmm3/m128, imm8",VEX.128.0F.WIG C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 398,VCMPPS,"VCMPPS ymm1, ymm2, ymm3/m256, imm8",VEX.256.0F.WIG C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 399,VCMPPS,"VCMPPS k1 {k2}, xmm2, xmm3/m128/m32bcst, imm8",EVEX.128.0F.W0 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 400,VCMPPS,"VCMPPS k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8",EVEX.256.0F.W0 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-401,VCMPPS,"VCMPPS k1 {k2}, zmm2, zmm3/m512/m32bcst {sae}, imm8",EVEX.512.0F.W0 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+401,VCMPPS,"VCMPPS k1 {k2}, zmm2, zmm3/m512/m32bcst {sae}, imm8",EVEX.512.0F.W0 C2 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 402,CMPS,"CMPS m8, m8",A6,reach,1,SDM 일치 1,SDM 일치 1
 403,CMPS,"CMPS m16, m16",A7,reach,1,SDM 일치 1,SDM 일치 1
 404,CMPS,"CMPS m32, m32",A7,reach,1,SDM 일치 1,SDM 일치 1
@@ -411,10 +411,10 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 409,CMPSQ,CMPSQ,REX.W + A7,reach,1,SDM 일치 1,SDM 일치 1
 410,CMPSD,"CMPSD xmm1, xmm2/m64, imm8",F2 0F C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 411,VCMPSD,"VCMPSD xmm1, xmm2, xmm3/m64, imm8",VEX.LIG.F2.0F.WIG C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-412,VCMPSD,"VCMPSD k1 {k2}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.F2.0F.W1 C2 /r ib,reach,7,SDM 일치 7,SDM 일치 7
+412,VCMPSD,"VCMPSD k1 {k2}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.F2.0F.W1 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 413,CMPSS,"CMPSS xmm1, xmm2/m32, imm8",F3 0F C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 414,VCMPSS,"VCMPSS xmm1, xmm2, xmm3/m32, imm8",VEX.LIG.F3.0F.WIG C2 /r ib,reach,5,SDM 일치 5,SDM 일치 5
-415,VCMPSS,"VCMPSS k1 {k2}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.F3.0F.W0 C2 /r ib,reach,7,SDM 일치 7,SDM 일치 7
+415,VCMPSS,"VCMPSS k1 {k2}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.F3.0F.W0 C2 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 416,CMPXCHG,"CMPXCHG r/m8, r8",0F B0/r,reach,4,SDM 일치 4,SDM 일치 4
 417,CMPXCHG,"CMPXCHG r/m16, r16",0F B1/r,reach,4,SDM 일치 4,SDM 일치 4
 418,CMPXCHG,"CMPXCHG r/m32, r32",0F B1/r,reach,4,SDM 일치 4,SDM 일치 4
@@ -423,10 +423,10 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 421,CMPXCHG16B,CMPXCHG16B m128,REX.W + 0F C7 /1,reach,3,SDM 일치 3,SDM 일치 3
 422,COMISD,"COMISD xmm1, xmm2/m64",66 0F 2F /r,reach,4,SDM 일치 4,SDM 일치 4
 423,VCOMISD,"VCOMISD xmm1, xmm2/m64",VEX.LIG.66.0F.WIG 2F /r,reach,4,SDM 일치 4,SDM 일치 4
-424,VCOMISD,"VCOMISD xmm1, xmm2/m64{sae}",EVEX.LLIG.66.0F.W1 2F /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+424,VCOMISD,"VCOMISD xmm1, xmm2/m64{sae}",EVEX.LLIG.66.0F.W1 2F /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 425,COMISS,"COMISS xmm1, xmm2/m32",NP 0F 2F /r,reach,4,SDM 일치 4,SDM 일치 4
 426,VCOMISS,"VCOMISS xmm1, xmm2/m32",VEX.LIG.0F.WIG 2F /r,reach,4,SDM 일치 4,SDM 일치 4
-427,VCOMISS,"VCOMISS xmm1, xmm2/m32{sae}",EVEX.LLIG.0F.W0 2F /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+427,VCOMISS,"VCOMISS xmm1, xmm2/m32{sae}",EVEX.LLIG.0F.W0 2F /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 428,CPUID,CPUID,0F A2,reach,1,SDM 일치 1,SDM 일치 1
 429,CRC32,"CRC32 r32, r/m8",F2 0F 38 F0 /r,reach,4,SDM 일치 4,SDM 일치 4
 430,CRC32,"CRC32 r32, r/m16",F2 0F 38 F1 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -444,20 +444,20 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 442,VCVTDQ2PS,"VCVTDQ2PS ymm1, ymm2/m256",VEX.256.0F.WIG 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 443,VCVTDQ2PS,"VCVTDQ2PS xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 444,VCVTDQ2PS,"VCVTDQ2PS ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-445,VCVTDQ2PS,"VCVTDQ2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.0F.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+445,VCVTDQ2PS,"VCVTDQ2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.0F.W0 5B /r,reach,16,SDM 일치 16,SDM 일치 16
 446,CVTPD2DQ,"CVTPD2DQ xmm1, xmm2/m128",F2 0F E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 447,VCVTPD2DQ,"VCVTPD2DQ xmm1, xmm2/m128",VEX.128.F2.0F.WIG E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 448,VCVTPD2DQ,"VCVTPD2DQ xmm1, ymm2/m256",VEX.256.F2.0F.WIG E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 449,VCVTPD2DQ,"VCVTPD2DQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.F2.0F.W1 E6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 450,VCVTPD2DQ,"VCVTPD2DQ xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.F2.0F.W1 E6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-451,VCVTPD2DQ,"VCVTPD2DQ ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.0F.W1 E6 /r,reach,8,SDM 일치 8,SDM 일치 8
+451,VCVTPD2DQ,"VCVTPD2DQ ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.0F.W1 E6 /r,reach,16,SDM 일치 16,SDM 일치 16
 452,CVTPD2PI,"CVTPD2PI mm, xmm/m128",66 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 453,CVTPD2PS,"CVTPD2PS xmm1, xmm2/m128",66 0F 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 454,VCVTPD2PS,"VCVTPD2PS xmm1, xmm2/m128",VEX.128.66.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 455,VCVTPD2PS,"VCVTPD2PS xmm1, ymm2/m256",VEX.256.66.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 456,VCVTPD2PS,"VCVTPD2PS xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 5A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 457,VCVTPD2PS,"VCVTPD2PS xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 5A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-458,VCVTPD2PS,"VCVTPD2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 5A /r,reach,8,SDM 일치 8,SDM 일치 8
+458,VCVTPD2PS,"VCVTPD2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 5A /r,reach,16,SDM 일치 16,SDM 일치 16
 459,CVTPI2PD,"CVTPI2PD xmm, mm/m64",66 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 460,CVTPI2PS,"CVTPI2PS xmm, mm/m64",NP 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 461,CVTPS2DQ,"CVTPS2DQ xmm1, xmm2/m128",66 0F 5B /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -465,70 +465,70 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 463,VCVTPS2DQ,"VCVTPS2DQ ymm1, ymm2/m256",VEX.256.66.0F.WIG 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 464,VCVTPS2DQ,"VCVTPS2DQ xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.66.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 465,VCVTPS2DQ,"VCVTPS2DQ ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.66.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-466,VCVTPS2DQ,"VCVTPS2DQ zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.66.0F.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+466,VCVTPS2DQ,"VCVTPS2DQ zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.66.0F.W0 5B /r,reach,16,SDM 일치 16,SDM 일치 16
 467,CVTPS2PD,"CVTPS2PD xmm1, xmm2/m64",NP 0F 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 468,VCVTPS2PD,"VCVTPS2PD xmm1, xmm2/m64",VEX.128.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 469,VCVTPS2PD,"VCVTPS2PD ymm1, xmm2/m128",VEX.256.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 470,VCVTPS2PD,"VCVTPS2PD xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.0F.W0 5A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 471,VCVTPS2PD,"VCVTPS2PD ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.0F.W0 5A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-472,VCVTPS2PD,"VCVTPS2PD zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.0F.W0 5A /r,reach,8,SDM 일치 8,SDM 일치 8
+472,VCVTPS2PD,"VCVTPS2PD zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.0F.W0 5A /r,reach,10,SDM 일치 10,SDM 일치 10
 473,CVTPS2PI,"CVTPS2PI mm, xmm/m64",NP 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 474,CVTSD2SI,"CVTSD2SI r32, xmm1/m64",F2 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 475,CVTSD2SI,"CVTSD2SI r64, xmm1/m64",F2 REX.W 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 476,VCVTSD2SI,"VCVTSD2SI r32, xmm1/m64",VEX.LIG.F2.0F.W0 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 477,VCVTSD2SI,"VCVTSD2SI r64, xmm1/m64",VEX.LIG.F2.0F.W1 2D /r,reach,4,SDM 일치 4,SDM 일치 4
-478,VCVTSD2SI,"VCVTSD2SI r32, xmm1/m64{er}",EVEX.LLIG.F2.0F.W0 2D /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-479,VCVTSD2SI,"VCVTSD2SI r64, xmm1/m64{er}",EVEX.LLIG.F2.0F.W1 2D /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+478,VCVTSD2SI,"VCVTSD2SI r32, xmm1/m64{er}",EVEX.LLIG.F2.0F.W0 2D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
+479,VCVTSD2SI,"VCVTSD2SI r64, xmm1/m64{er}",EVEX.LLIG.F2.0F.W1 2D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 480,CVTSD2SS,"CVTSD2SS xmm1, xmm2/m64",F2 0F 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 481,VCVTSD2SS,"VCVTSD2SS xmm1,xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
-482,VCVTSD2SS,"VCVTSD2SS xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5A /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+482,VCVTSD2SS,"VCVTSD2SS xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5A /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 483,CVTSI2SD,"CVTSI2SD xmm1, r32/m32",F2 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 484,CVTSI2SD,"CVTSI2SD xmm1, r/m64",F2 REX.W 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 485,VCVTSI2SD,"VCVTSI2SD xmm1, xmm2, r/m32",VEX.LIG.F2.0F.W0 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 486,VCVTSI2SD,"VCVTSI2SD xmm1, xmm2, r/m64",VEX.LIG.F2.0F.W1 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 487,VCVTSI2SD,"VCVTSI2SD xmm1, xmm2, r/m32",EVEX.LLIG.F2.0F.W0 2A /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-488,VCVTSI2SD,"VCVTSI2SD xmm1, xmm2, r/m64{er}",EVEX.LLIG.F2.0F.W1 2A /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+488,VCVTSI2SD,"VCVTSI2SD xmm1, xmm2, r/m64{er}",EVEX.LLIG.F2.0F.W1 2A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; 거부 4
 489,CVTSI2SS,"CVTSI2SS xmm1, r/m32",F3 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 490,CVTSI2SS,"CVTSI2SS xmm1, r/m64",F3 REX.W 0F 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 491,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m32",VEX.LIG.F3.0F.W0 2A /r,reach,4,SDM 일치 4,SDM 일치 4
 492,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m64",VEX.LIG.F3.0F.W1 2A /r,reach,4,SDM 일치 4,SDM 일치 4
-493,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m32{er}",EVEX.LLIG.F3.0F.W0 2A /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-494,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m64{er}",EVEX.LLIG.F3.0F.W1 2A /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+493,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m32{er}",EVEX.LLIG.F3.0F.W0 2A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; 거부 4
+494,VCVTSI2SS,"VCVTSI2SS xmm1, xmm2, r/m64{er}",EVEX.LLIG.F3.0F.W1 2A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; 거부 4
 495,CVTSS2SD,"CVTSS2SD xmm1, xmm2/m32",F3 0F 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 496,VCVTSS2SD,"VCVTSS2SD xmm1, xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 5A /r,reach,4,SDM 일치 4,SDM 일치 4
-497,VCVTSS2SD,"VCVTSS2SD xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5A /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+497,VCVTSS2SD,"VCVTSS2SD xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 498,CVTSS2SI,"CVTSS2SI r32, xmm1/m32",F3 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 499,CVTSS2SI,"CVTSS2SI r64, xmm1/m32",F3 REX.W 0F 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 500,VCVTSS2SI,"VCVTSS2SI r32, xmm1/m32",VEX.LIG.F3.0F.W0 2D /r,reach,4,SDM 일치 4,SDM 일치 4
 501,VCVTSS2SI,"VCVTSS2SI r64, xmm1/m32",VEX.LIG.F3.0F.W1 2D /r,reach,4,SDM 일치 4,SDM 일치 4
-502,VCVTSS2SI,"VCVTSS2SI r32, xmm1/m32{er}",EVEX.LLIG.F3.0F.W0 2D /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-503,VCVTSS2SI,"VCVTSS2SI r64, xmm1/m32{er}",EVEX.LLIG.F3.0F.W1 2D /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+502,VCVTSS2SI,"VCVTSS2SI r32, xmm1/m32{er}",EVEX.LLIG.F3.0F.W0 2D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
+503,VCVTSS2SI,"VCVTSS2SI r64, xmm1/m32{er}",EVEX.LLIG.F3.0F.W1 2D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 504,CVTTPD2DQ,"CVTTPD2DQ xmm1, xmm2/m128",66 0F E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 505,VCVTTPD2DQ,"VCVTTPD2DQ xmm1, xmm2/m128",VEX.128.66.0F.WIG E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 506,VCVTTPD2DQ,"VCVTTPD2DQ xmm1, ymm2/m256",VEX.256.66.0F.WIG E6 /r,reach,4,SDM 일치 4,SDM 일치 4
 507,VCVTTPD2DQ,"VCVTTPD2DQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 E6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 508,VCVTTPD2DQ,"VCVTTPD2DQ xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 E6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-509,VCVTTPD2DQ,"VCVTTPD2DQ ymm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 E6 /r,reach,8,SDM 일치 8,SDM 일치 8
+509,VCVTTPD2DQ,"VCVTTPD2DQ ymm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 E6 /r,reach,10,SDM 일치 10,SDM 일치 10
 510,CVTTPD2PI,"CVTTPD2PI mm, xmm/m128",66 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 511,CVTTPS2DQ,"CVTTPS2DQ xmm1, xmm2/m128",F3 0F 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 512,VCVTTPS2DQ,"VCVTTPS2DQ xmm1, xmm2/m128",VEX.128.F3.0F.WIG 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 513,VCVTTPS2DQ,"VCVTTPS2DQ ymm1, ymm2/m256",VEX.256.F3.0F.WIG 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 514,VCVTTPS2DQ,"VCVTTPS2DQ xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.F3.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 515,VCVTTPS2DQ,"VCVTTPS2DQ ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.F3.0F.W0 5B /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-516,VCVTTPS2DQ,"VCVTTPS2DQ zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.F3.0F.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+516,VCVTTPS2DQ,"VCVTTPS2DQ zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.F3.0F.W0 5B /r,reach,10,SDM 일치 10,SDM 일치 10
 517,CVTTPS2PI,"CVTTPS2PI mm, xmm/m64",NP 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 518,CVTTSD2SI,"CVTTSD2SI r32, xmm1/m64",F2 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 519,CVTTSD2SI,"CVTTSD2SI r64, xmm1/m64",F2 REX.W 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 520,VCVTTSD2SI,"VCVTTSD2SI r32, xmm1/m64",VEX.LIG.F2.0F.W0 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 521,VCVTTSD2SI,"VCVTTSD2SI r64, xmm1/m64",VEX.LIG.F2.0F.W1 2C /r,reach,4,SDM 일치 4,SDM 일치 4
-522,VCVTTSD2SI,"VCVTTSD2SI r32, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W0 2C /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-523,VCVTTSD2SI,"VCVTTSD2SI r64, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W1 2C /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+522,VCVTTSD2SI,"VCVTTSD2SI r32, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W0 2C /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
+523,VCVTTSD2SI,"VCVTTSD2SI r64, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W1 2C /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 524,CVTTSS2SI,"CVTTSS2SI r32, xmm1/m32",F3 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 525,CVTTSS2SI,"CVTTSS2SI r64, xmm1/m32",F3 REX.W 0F 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 526,VCVTTSS2SI,"VCVTTSS2SI r32, xmm1/m32",VEX.LIG.F3.0F.W0 2C /r,reach,4,SDM 일치 4,SDM 일치 4
 527,VCVTTSS2SI,"VCVTTSS2SI r64, xmm1/m32",VEX.LIG.F3.0F.W1 2C /r,reach,4,SDM 일치 4,SDM 일치 4
-528,VCVTTSS2SI,"VCVTTSS2SI r32, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W0 2C /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
-529,VCVTTSS2SI,"VCVTTSS2SI r64, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W1 2C /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+528,VCVTTSS2SI,"VCVTTSS2SI r32, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W0 2C /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
+529,VCVTTSS2SI,"VCVTTSS2SI r64, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W1 2C /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 530,CWD,CWD,99,reach,1,SDM 일치 1,SDM 일치 1
 531,CDQ,CDQ,99,reach,1,SDM 일치 1,SDM 일치 1
 532,CQO,CQO,REX.W + 99,reach,1,SDM 일치 1,SDM 일치 1
@@ -549,19 +549,19 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 547,VDIVPD,"VDIVPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 548,VDIVPD,"VDIVPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 5E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 549,VDIVPD,"VDIVPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 5E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-550,VDIVPD,"VDIVPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 5E /r,reach,8,SDM 일치 8,SDM 일치 8
+550,VDIVPD,"VDIVPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 5E /r,reach,16,SDM 일치 16,SDM 일치 16
 551,DIVPS,"DIVPS xmm1, xmm2/m128",NP 0F 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 552,VDIVPS,"VDIVPS xmm1, xmm2, xmm3/m128",VEX.128.0F.WIG 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 553,VDIVPS,"VDIVPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 554,VDIVPS,"VDIVPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 5E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 555,VDIVPS,"VDIVPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 5E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-556,VDIVPS,"VDIVPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.0F.W0 5E /r,reach,8,SDM 일치 8,SDM 일치 8
+556,VDIVPS,"VDIVPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.0F.W0 5E /r,reach,16,SDM 일치 16,SDM 일치 16
 557,DIVSD,"DIVSD xmm1, xmm2/m64",F2 0F 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 558,VDIVSD,"VDIVSD xmm1, xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 5E /r,reach,4,SDM 일치 4,SDM 일치 4
-559,VDIVSD,"VDIVSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5E /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+559,VDIVSD,"VDIVSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5E /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 560,DIVSS,"DIVSS xmm1, xmm2/m32",F3 0F 5E /r,reach,4,SDM 일치 4,SDM 일치 4
 561,VDIVSS,"VDIVSS xmm1, xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 5E /r,reach,4,SDM 일치 4,SDM 일치 4
-562,VDIVSS,"VDIVSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 5E /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+562,VDIVSS,"VDIVSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 5E /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 563,DPPD,"DPPD xmm1, xmm2/m128, imm8",66 0F 3A 41 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 564,VDPPD,"VDPPD xmm1,xmm2, xmm3/m128, imm8",VEX.128.66.0F3A.WIG 41 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 565,DPPS,"DPPS xmm1, xmm2/m128, imm8",66 0F 3A 40 /r ib,reach,5,SDM 일치 5,SDM 일치 5
@@ -918,7 +918,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 916,JMP,JMP rel16,E9 cw,alias_no_test,1,시험 불가(별칭) 1,시험 불가(별칭) 1
 917,JMP,JMP rel32,E9 cd,reach,1,SDM 일치 1,SDM 일치 1
 918,JMP,JMP r/m16,FF /4,reject,4,SDM 일치(거부) 4,다른 행으로 수용 3; SDM 일치(거부) 1
-919,JMP,JMP r/m32,FF /4,reject,4,다른 행으로 수용 3; SDM 일치(거부) 1,다른 행으로 수용 3; SDM 일치(거부) 1
+919,JMP,JMP r/m32,FF /4,alias_no_test/reject,4,시험 불가(별칭) 3; SDM 일치(거부) 1,시험 불가(별칭) 3; SDM 일치(거부) 1
 920,JMP,JMP r/m64,FF /4,reach,4,SDM 일치 4,SDM 일치 4
 921,JMP,JMP ptr16:16,EA cd,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 922,JMP,JMP ptr16:32,EA cp,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
@@ -1053,38 +1053,38 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1051,VMAXPD,"VMAXPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1052,VMAXPD,"VMAXPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1053,VMAXPD,"VMAXPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1054,VMAXPD,"VMAXPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}",EVEX.512.66.0F.W1 5F /r,reach,8,SDM 일치 8,SDM 일치 8
+1054,VMAXPD,"VMAXPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}",EVEX.512.66.0F.W1 5F /r,reach,10,SDM 일치 10,SDM 일치 10
 1055,MAXPS,"MAXPS xmm1, xmm2/m128",NP 0F 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1056,VMAXPS,"VMAXPS xmm1, xmm2, xmm3/m128",VEX.128.0F.WIG 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1057,VMAXPS,"VMAXPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1058,VMAXPS,"VMAXPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1059,VMAXPS,"VMAXPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1060,VMAXPS,"VMAXPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}",EVEX.512.0F.W0 5F /r,reach,8,SDM 일치 8,SDM 일치 8
+1060,VMAXPS,"VMAXPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}",EVEX.512.0F.W0 5F /r,reach,10,SDM 일치 10,SDM 일치 10
 1061,MAXSD,"MAXSD xmm1, xmm2/m64",F2 0F 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1062,VMAXSD,"VMAXSD xmm1, xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 5F /r,reach,4,SDM 일치 4,SDM 일치 4
-1063,VMAXSD,"VMAXSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.F2.0F.W1 5F /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1063,VMAXSD,"VMAXSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.F2.0F.W1 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1064,MAXSS,"MAXSS xmm1, xmm2/m32",F3 0F 5F /r,reach,4,SDM 일치 4,SDM 일치 4
 1065,VMAXSS,"VMAXSS xmm1, xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 5F /r,reach,4,SDM 일치 4,SDM 일치 4
-1066,VMAXSS,"VMAXSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5F /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1066,VMAXSS,"VMAXSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5F /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1067,MFENCE,MFENCE,NP 0F AE F0,reach,1,SDM 일치 1,SDM 일치 1
 1068,MINPD,"MINPD xmm1, xmm2/m128",66 0F 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1069,VMINPD,"VMINPD xmm1, xmm2, xmm3/m128",VEX.128.66.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1070,VMINPD,"VMINPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1071,VMINPD,"VMINPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1072,VMINPD,"VMINPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1073,VMINPD,"VMINPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}",EVEX.512.66.0F.W1 5D /r,reach,8,SDM 일치 8,SDM 일치 8
+1073,VMINPD,"VMINPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}",EVEX.512.66.0F.W1 5D /r,reach,10,SDM 일치 10,SDM 일치 10
 1074,MINPS,"MINPS xmm1, xmm2/m128",NP 0F 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1075,VMINPS,"VMINPS xmm1, xmm2, xmm3/m128",VEX.128.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1076,VMINPS,"VMINPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1077,VMINPS,"VMINPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1078,VMINPS,"VMINPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1079,VMINPS,"VMINPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}",EVEX.512.0F.W0 5D /r,reach,8,SDM 일치 8,SDM 일치 8
+1079,VMINPS,"VMINPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}",EVEX.512.0F.W0 5D /r,reach,10,SDM 일치 10,SDM 일치 10
 1080,MINSD,"MINSD xmm1, xmm2/m64",F2 0F 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1081,VMINSD,"VMINSD xmm1, xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
-1082,VMINSD,"VMINSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.F2.0F.W1 5D /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1082,VMINSD,"VMINSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.F2.0F.W1 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1083,MINSS,"MINSS xmm1,xmm2/m32",F3 0F 5D /r,reach,4,SDM 일치 4,SDM 일치 4
 1084,VMINSS,"VMINSS xmm1,xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 5D /r,reach,4,SDM 일치 4,SDM 일치 4
-1085,VMINSS,"VMINSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5D /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1085,VMINSS,"VMINSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.F3.0F.W0 5D /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1086,MONITOR,MONITOR,0F 01 C8,reach,1,SDM 일치 1,SDM 일치 1
 1087,MOV,"MOV r/m8, r8",88 /r,reach,4,SDM 일치 4,SDM 일치 4
 1088,MOV,"MOV r/m16, r16",89 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -1394,19 +1394,19 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 1392,VMULPD,"VMULPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1393,VMULPD,"VMULPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 59 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1394,VMULPD,"VMULPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 59 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1395,VMULPD,"VMULPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 59 /r,reach,8,SDM 일치 8,SDM 일치 8
+1395,VMULPD,"VMULPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 59 /r,reach,16,SDM 일치 16,SDM 일치 16
 1396,MULPS,"MULPS xmm1, xmm2/m128",NP 0F 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1397,VMULPS,"VMULPS xmm1,xmm2, xmm3/m128",VEX.128.0F.WIG 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1398,VMULPS,"VMULPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1399,VMULPS,"VMULPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 59 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 1400,VMULPS,"VMULPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 59 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-1401,VMULPS,"VMULPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.0F.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
+1401,VMULPS,"VMULPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.0F.W0 59 /r,reach,16,SDM 일치 16,SDM 일치 16
 1402,MULSD,"MULSD xmm1,xmm2/m64",F2 0F 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1403,VMULSD,"VMULSD xmm1,xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 59 /r,reach,4,SDM 일치 4,SDM 일치 4
-1404,VMULSD,"VMULSD xmm1 {k1}{z}, xmm2, xmm3/m64 {er}",EVEX.LLIG.F2.0F.W1 59 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1404,VMULSD,"VMULSD xmm1 {k1}{z}, xmm2, xmm3/m64 {er}",EVEX.LLIG.F2.0F.W1 59 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 1405,MULSS,"MULSS xmm1,xmm2/m32",F3 0F 59 /r,reach,4,SDM 일치 4,SDM 일치 4
 1406,VMULSS,"VMULSS xmm1,xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 59 /r,reach,4,SDM 일치 4,SDM 일치 4
-1407,VMULSS,"VMULSS xmm1 {k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.0F.W0 59 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+1407,VMULSS,"VMULSS xmm1 {k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.0F.W0 59 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 1408,MULX,"MULX r32a, r32b, r/m32",VEX.LZ.F2.0F38.W0 F6 /r,reach,4,SDM 일치 4,SDM 일치 4
 1409,MULX,"MULX r64a, r64b, r/m64",VEX.LZ.F2.0F38.W1 F6 /r,reach,4,SDM 일치 4,SDM 일치 4
 1410,MWAIT,MWAIT,0F 01 C9,reach,1,SDM 일치 1,SDM 일치 1
@@ -2313,7 +2313,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2311,PUSH,PUSH r32,50+rd,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 2312,PUSH,PUSH r64,50+rd,reach,1,SDM 일치 1,SDM 일치 1
 2313,PUSH,PUSH imm8,6A ib,reach,2,SDM 일치 2,SDM 일치 2
-2314,PUSH,PUSH imm16,68 iw,reach,2,SDM 일치 2,다른 인코딩 2
+2314,PUSH,PUSH imm16,68 iw,reach,2,SDM 일치 2,도달 불가(등록) 2
 2315,PUSH,PUSH imm32,68 id,reach,2,SDM 일치 2,SDM 일치 2
 2316,PUSH,PUSH CS,0E,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
 2317,PUSH,PUSH SS,16,reject,1,SDM 일치(거부) 1,SDM 일치(거부) 1
@@ -2627,19 +2627,19 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2625,VSQRTPD,"VSQRTPD ymm1, ymm2/m256",VEX.256.66.0F.WIG 51 /r,reach,4,SDM 일치 4,SDM 일치 4
 2626,VSQRTPD,"VSQRTPD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 51 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 2627,VSQRTPD,"VSQRTPD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 51 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-2628,VSQRTPD,"VSQRTPD zmm1 {k1}{z}, zmm2/m512/m64bcst{er}",EVEX.512.66.0F.W1 51 /r,reach,8,SDM 일치 8,SDM 일치 8
+2628,VSQRTPD,"VSQRTPD zmm1 {k1}{z}, zmm2/m512/m64bcst{er}",EVEX.512.66.0F.W1 51 /r,reach,16,SDM 일치 16,SDM 일치 16
 2629,SQRTPS,"SQRTPS xmm1, xmm2/m128",NP 0F 51 /r,reach,4,SDM 일치 4,SDM 일치 4
 2630,VSQRTPS,"VSQRTPS xmm1, xmm2/m128",VEX.128.0F.WIG 51 /r,reach,4,SDM 일치 4,SDM 일치 4
 2631,VSQRTPS,"VSQRTPS ymm1, ymm2/m256",VEX.256.0F.WIG 51/r,reach,4,SDM 일치 4,SDM 일치 4
 2632,VSQRTPS,"VSQRTPS xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.0F.W0 51 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 2633,VSQRTPS,"VSQRTPS ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.0F.W0 51 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-2634,VSQRTPS,"VSQRTPS zmm1 {k1}{z}, zmm2/m512/m32bcst{er}",EVEX.512.0F.W0 51/r,reach,8,SDM 일치 8,SDM 일치 8
+2634,VSQRTPS,"VSQRTPS zmm1 {k1}{z}, zmm2/m512/m32bcst{er}",EVEX.512.0F.W0 51/r,reach,16,SDM 일치 16,SDM 일치 16
 2635,SQRTSD,"SQRTSD xmm1,xmm2/m64",F2 0F 51/r,reach,4,SDM 일치 4,SDM 일치 4
 2636,VSQRTSD,"VSQRTSD xmm1,xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 51/r,reach,4,SDM 일치 4,SDM 일치 4
-2637,VSQRTSD,"VSQRTSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 51/r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+2637,VSQRTSD,"VSQRTSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 51/r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 2638,SQRTSS,"SQRTSS xmm1, xmm2/m32",F3 0F 51 /r,reach,4,SDM 일치 4,SDM 일치 4
 2639,VSQRTSS,"VSQRTSS xmm1, xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 51 /r,reach,4,SDM 일치 4,SDM 일치 4
-2640,VSQRTSS,"VSQRTSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 51 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+2640,VSQRTSS,"VSQRTSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 51 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 2641,STAC,STAC,NP 0F 01 CB,reach,1,SDM 일치 1,SDM 일치 1
 2642,STC,STC,F9,reach,1,SDM 일치 1,SDM 일치 1
 2643,STD,STD,FD,reach,1,SDM 일치 1,SDM 일치 1
@@ -2681,19 +2681,19 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2679,VSUBPD,"VSUBPD ymm1, ymm2, ymm3/m256",VEX.256.66.0F.WIG 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2680,VSUBPD,"VSUBPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F.W1 5C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 2681,VSUBPD,"VSUBPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F.W1 5C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-2682,VSUBPD,"VSUBPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 5C /r,reach,8,SDM 일치 8,SDM 일치 8
+2682,VSUBPD,"VSUBPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F.W1 5C /r,reach,16,SDM 일치 16,SDM 일치 16
 2683,SUBPS,"SUBPS xmm1, xmm2/m128",NP 0F 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2684,VSUBPS,"VSUBPS xmm1,xmm2, xmm3/m128",VEX.128.0F.WIG 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2685,VSUBPS,"VSUBPS ymm1, ymm2, ymm3/m256",VEX.256.0F.WIG 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2686,VSUBPS,"VSUBPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.0F.W0 5C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 2687,VSUBPS,"VSUBPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.0F.W0 5C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-2688,VSUBPS,"VSUBPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.0F.W0 5C /r,reach,8,SDM 일치 8,SDM 일치 8
+2688,VSUBPS,"VSUBPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.0F.W0 5C /r,reach,16,SDM 일치 16,SDM 일치 16
 2689,SUBSD,"SUBSD xmm1, xmm2/m64",F2 0F 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2690,VSUBSD,"VSUBSD xmm1,xmm2, xmm3/m64",VEX.LIG.F2.0F.WIG 5C /r,reach,4,SDM 일치 4,SDM 일치 4
-2691,VSUBSD,"VSUBSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5C /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+2691,VSUBSD,"VSUBSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.F2.0F.W1 5C /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 2692,SUBSS,"SUBSS xmm1, xmm2/m32",F3 0F 5C /r,reach,4,SDM 일치 4,SDM 일치 4
 2693,VSUBSS,"VSUBSS xmm1,xmm2, xmm3/m32",VEX.LIG.F3.0F.WIG 5C /r,reach,4,SDM 일치 4,SDM 일치 4
-2694,VSUBSS,"VSUBSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 5C /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+2694,VSUBSS,"VSUBSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.F3.0F.W0 5C /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 2695,SWAPGS,SWAPGS,0F 01 F8,reach,1,SDM 일치 1,SDM 일치 1
 2696,SYSCALL,SYSCALL,0F 05,reach,1,SDM 일치 1,SDM 일치 1
 2697,SYSENTER,SYSENTER,0F 34,reach,1,SDM 일치 1,SDM 일치 1
@@ -2733,10 +2733,10 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2731,TZCNT,"TZCNT r64, r/m64",F3 REX.W 0F BC /r,reach,4,SDM 일치 4,SDM 일치 4
 2732,UCOMISD,"UCOMISD xmm1, xmm2/m64",66 0F 2E /r,reach,4,SDM 일치 4,SDM 일치 4
 2733,VUCOMISD,"VUCOMISD xmm1, xmm2/m64",VEX.LIG.66.0F.WIG 2E /r,reach,4,SDM 일치 4,SDM 일치 4
-2734,VUCOMISD,"VUCOMISD xmm1, xmm2/m64{sae}",EVEX.LLIG.66.0F.W1 2E /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+2734,VUCOMISD,"VUCOMISD xmm1, xmm2/m64{sae}",EVEX.LLIG.66.0F.W1 2E /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 2735,UCOMISS,"UCOMISS xmm1, xmm2/m32",NP 0F 2E /r,reach,4,SDM 일치 4,SDM 일치 4
 2736,VUCOMISS,"VUCOMISS xmm1, xmm2/m32",VEX.LIG.0F.WIG 2E /r,reach,4,SDM 일치 4,SDM 일치 4
-2737,VUCOMISS,"VUCOMISS xmm1, xmm2/m32{sae}",EVEX.LLIG.0F.W0 2E /r,reach,4,SDM 일치(강제 접두어) 4,SDM 일치(강제 접두어) 4
+2737,VUCOMISS,"VUCOMISS xmm1, xmm2/m32{sae}",EVEX.LLIG.0F.W0 2E /r,reach,5,SDM 일치(강제 접두어) 4; SDM 일치 1,SDM 일치(강제 접두어) 4; SDM 일치 1
 2738,UD0,"UD0 r32, r/m32",0F FF /r,reach,4,SDM 일치 4,모르는 명령 4
 2739,UD1,"UD1 r32, r/m32",0F B9 /r,reach,4,SDM 일치 4,SDM 일치 4
 2740,UD2,UD2,0F 0B,reach,1,SDM 일치 1,SDM 일치 1
@@ -2774,8 +2774,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2772,UWRMSR,"UWRMSR imm32, r64",VEX.128.F3.MAP7:W0.F8 11:000:bbb,reach,2,SDM 일치 2,SDM 일치 2
 2773,VADDPH,"VADDPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 58 /r,reach,8,SDM 일치 8,SDM 일치 8
 2774,VADDPH,"VADDPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 58 /r,reach,8,SDM 일치 8,SDM 일치 8
-2775,VADDPH,"VADDPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 58 /r,reach,8,SDM 일치 8,SDM 일치 8
-2776,VADDSH,"VADDSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 58 /r,reach,6,SDM 일치 6,SDM 일치 6
+2775,VADDPH,"VADDPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 58 /r,reach,16,SDM 일치 16,SDM 일치 16
+2776,VADDSH,"VADDSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 58 /r,reach,14,SDM 일치 14,SDM 일치 14
 2777,VALIGND,"VALIGND xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 03 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 2778,VALIGNQ,"VALIGNQ xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 03 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 2779,VALIGND,"VALIGND ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 03 /r ib,reach,9,SDM 일치 9,SDM 일치 9
@@ -2814,9 +2814,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2812,VBROADCASTF64X4,"VBROADCASTF64X4 zmm1 {k1}{z}, m256",EVEX.512.66.0F38.W1 1B /r,reach,4,SDM 일치 4,SDM 일치 4
 2813,VCMPPH,"VCMPPH k1{k2}, xmm2, xmm3/m128/m16bcst, imm8",EVEX.128.NP.0F3A.W0 C2 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
 2814,VCMPPH,"VCMPPH k1{k2}, ymm2, ymm3/m256/m16bcst, imm8",EVEX.256.NP.0F3A.W0 C2 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
-2815,VCMPPH,"VCMPPH k1{k2}, zmm2, zmm3/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 C2 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
-2816,VCMPSH,"VCMPSH k1{k2}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.F3.0F3A.W0 C2 /r /ib,reach,7,SDM 일치 7,SDM 일치 7
-2817,VCOMISH,"VCOMISH xmm1, xmm2/m16 {sae}",EVEX.LLIG.NP.MAP5.W0 2F /r,reach,4,SDM 일치 4,SDM 일치 4
+2815,VCMPPH,"VCMPPH k1{k2}, zmm2, zmm3/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 C2 /r /ib,reach,11,SDM 일치 11,SDM 일치 11
+2816,VCMPSH,"VCMPSH k1{k2}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.F3.0F3A.W0 C2 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+2817,VCOMISH,"VCOMISH xmm1, xmm2/m16 {sae}",EVEX.LLIG.NP.MAP5.W0 2F /r,reach,5,SDM 일치 5,SDM 일치 5
 2818,VCOMPRESSPD,"VCOMPRESSPD xmm1/m128 {k1}{z}, xmm2",EVEX.128.66.0F38.W1 8A /r,reach,6,SDM 일치 6,SDM 일치 6
 2819,VCOMPRESSPD,"VCOMPRESSPD ymm1/m256 {k1}{z}, ymm2",EVEX.256.66.0F38.W1 8A /r,reach,6,SDM 일치 6,SDM 일치 6
 2820,VCOMPRESSPD,"VCOMPRESSPD zmm1/m512 {k1}{z}, zmm2",EVEX.512.66.0F38.W1 8A /r,reach,6,SDM 일치 6,SDM 일치 6
@@ -2825,7 +2825,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2823,VCOMPRESSPS,"VCOMPRESSPS zmm1/m512 {k1}{z}, zmm2",EVEX.512.66.0F38.W0 8A /r,reach,6,SDM 일치 6,SDM 일치 6
 2824,VCVTDQ2PH,"VCVTDQ2PH xmm1{k1}{z}, xmm2/m128/m32bcst",EVEX.128.NP.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
 2825,VCVTDQ2PH,"VCVTDQ2PH xmm1{k1}{z}, ymm2/m256/m32bcst",EVEX.256.NP.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2826,VCVTDQ2PH,"VCVTDQ2PH ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.NP.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+2826,VCVTDQ2PH,"VCVTDQ2PH ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.NP.MAP5.W0 5B /r,reach,16,SDM 일치 16,SDM 일치 16
 2827,VCVTNE2PS2BF16,"VCVTNE2PS2BF16 xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F2.0F38.W0 72 /r,reach,8,SDM 일치 8,SDM 일치 8
 2828,VCVTNE2PS2BF16,"VCVTNE2PS2BF16 ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F2.0F38.W0 72 /r,reach,8,SDM 일치 8,SDM 일치 8
 2829,VCVTNE2PS2BF16,"VCVTNE2PS2BF16 zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst",EVEX.512.F2.0F38.W0 72 /r,reach,8,SDM 일치 8,SDM 일치 8
@@ -2844,166 +2844,166 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 2842,VCVTNEPS2BF16,"VCVTNEPS2BF16 ymm1{k1}{z}, zmm2/m512/m32bcst",EVEX.512.F3.0F38.W0 72 /r,reach,8,SDM 일치 8,SDM 일치 8
 2843,VCVTPD2PH,"VCVTPD2PH xmm1{k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.MAP5.W1 5A /r,reach,8,SDM 일치 8,SDM 일치 8
 2844,VCVTPD2PH,"VCVTPD2PH xmm1{k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.MAP5.W1 5A /r,reach,8,SDM 일치 8,SDM 일치 8
-2845,VCVTPD2PH,"VCVTPD2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.MAP5.W1 5A /r,reach,8,SDM 일치 8,SDM 일치 8
+2845,VCVTPD2PH,"VCVTPD2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.MAP5.W1 5A /r,reach,16,SDM 일치 16,SDM 일치 16
 2846,VCVTPD2QQ,"VCVTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 8
 2847,VCVTPD2QQ,"VCVTPD2QQ ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 8
-2848,VCVTPD2QQ,"VCVTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 8
+2848,VCVTPD2QQ,"VCVTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 7B /r,reach,16,SDM 일치 16,SDM 일치 16
 2849,VCVTPD2UDQ,"VCVTPD2UDQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2850,VCVTPD2UDQ,"VCVTPD2UDQ xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2851,VCVTPD2UDQ,"VCVTPD2UDQ ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2851,VCVTPD2UDQ,"VCVTPD2UDQ ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.0F.W1 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2852,VCVTPD2UQQ,"VCVTPD2UQQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2853,VCVTPD2UQQ,"VCVTPD2UQQ ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2854,VCVTPD2UQQ,"VCVTPD2UQQ zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2854,VCVTPD2UQQ,"VCVTPD2UQQ zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.66.0F.W1 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2855,VCVTPH2DQ,"VCVTPH2DQ xmm1{k1}{z}, xmm2/m64/m16bcst",EVEX.128.66.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
 2856,VCVTPH2DQ,"VCVTPH2DQ ymm1{k1}{z}, xmm2/m128/m16bcst",EVEX.256.66.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2857,VCVTPH2DQ,"VCVTPH2DQ zmm1{k1}{z}, ymm2/m256/m16bcst {er}",EVEX.512.66.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+2857,VCVTPH2DQ,"VCVTPH2DQ zmm1{k1}{z}, ymm2/m256/m16bcst {er}",EVEX.512.66.MAP5.W0 5B /r,reach,16,SDM 일치 16,SDM 일치 16
 2858,VCVTPH2PD,"VCVTPH2PD xmm1{k1}{z}, xmm2/m32/m16bcst",EVEX.128.NP.MAP5.W0 5A /r,reach,8,SDM 일치 8,SDM 일치 8
 2859,VCVTPH2PD,"VCVTPH2PD ymm1{k1}{z}, xmm2/m64/m16bcst",EVEX.256.NP.MAP5.W0 5A /r,reach,8,SDM 일치 8,SDM 일치 8
-2860,VCVTPH2PD,"VCVTPH2PD zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5A /r,reach,8,SDM 일치 8,SDM 일치 8
+2860,VCVTPH2PD,"VCVTPH2PD zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5A /r,reach,10,SDM 일치 10,SDM 일치 10
 2861,VCVTPH2PS,"VCVTPH2PS xmm1, xmm2/m64",VEX.128.66.0F38.W0 13 /r,reach,4,SDM 일치 4,SDM 일치 4
 2862,VCVTPH2PS,"VCVTPH2PS ymm1, xmm2/m128",VEX.256.66.0F38.W0 13 /r,reach,4,SDM 일치 4,SDM 일치 4
 2863,VCVTPH2PS,"VCVTPH2PS xmm1 {k1}{z}, xmm2/m64",EVEX.128.66.0F38.W0 13 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
 2864,VCVTPH2PS,"VCVTPH2PS ymm1 {k1}{z}, xmm2/m128",EVEX.256.66.0F38.W0 13 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-2865,VCVTPH2PS,"VCVTPH2PS zmm1 {k1}{z}, ymm2/m256 {sae}",EVEX.512.66.0F38.W0 13 /r,reach,6,SDM 일치 6,SDM 일치 6
+2865,VCVTPH2PS,"VCVTPH2PS zmm1 {k1}{z}, ymm2/m256 {sae}",EVEX.512.66.0F38.W0 13 /r,reach,8,SDM 일치 8,SDM 일치 8
 2866,VCVTPH2PSX,"VCVTPH2PSX xmm1{k1}{z}, xmm2/m64/m16bcst",EVEX.128.66.MAP6.W0 13 /r,reach,8,SDM 일치 8,SDM 일치 8
 2867,VCVTPH2PSX,"VCVTPH2PSX ymm1{k1}{z}, xmm2/m128/m16bcst",EVEX.256.66.MAP6.W0 13 /r,reach,8,SDM 일치 8,SDM 일치 8
-2868,VCVTPH2PSX,"VCVTPH2PSX zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.66.MAP6.W0 13 /r,reach,8,SDM 일치 8,SDM 일치 8
+2868,VCVTPH2PSX,"VCVTPH2PSX zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.66.MAP6.W0 13 /r,reach,10,SDM 일치 10,SDM 일치 10
 2869,VCVTPH2QQ,"VCVTPH2QQ xmm1{k1}{z}, xmm2/m32/m16bcst",EVEX.128.66.MAP5.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
 2870,VCVTPH2QQ,"VCVTPH2QQ ymm1{k1}{z}, xmm2/m64/m16bcst",EVEX.256.66.MAP5.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
-2871,VCVTPH2QQ,"VCVTPH2QQ zmm1{k1}{z}, xmm2/m128/m16bcst {er}",EVEX.512.66.MAP5.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
+2871,VCVTPH2QQ,"VCVTPH2QQ zmm1{k1}{z}, xmm2/m128/m16bcst {er}",EVEX.512.66.MAP5.W0 7B /r,reach,16,SDM 일치 16,SDM 일치 16
 2872,VCVTPH2UDQ,"VCVTPH2UDQ xmm1{k1}{z}, xmm2/m64/m16bcst",EVEX.128.NP.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2873,VCVTPH2UDQ,"VCVTPH2UDQ ymm1{k1}{z}, xmm2/m128/m16bcst",EVEX.256.NP.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2874,VCVTPH2UDQ,"VCVTPH2UDQ zmm1{k1}{z}, ymm2/m256/m16bcst {er}",EVEX.512.NP.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2874,VCVTPH2UDQ,"VCVTPH2UDQ zmm1{k1}{z}, ymm2/m256/m16bcst {er}",EVEX.512.NP.MAP5.W0 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2875,VCVTPH2UQQ,"VCVTPH2UQQ xmm1{k1}{z}, xmm2/m32/m16bcst",EVEX.128.66.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2876,VCVTPH2UQQ,"VCVTPH2UQQ ymm1{k1}{z}, xmm2/m64/m16bcst",EVEX.256.66.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2877,VCVTPH2UQQ,"VCVTPH2UQQ zmm1{k1}{z}, xmm2/m128/m16bcst {er}",EVEX.512.66.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2877,VCVTPH2UQQ,"VCVTPH2UQQ zmm1{k1}{z}, xmm2/m128/m16bcst {er}",EVEX.512.66.MAP5.W0 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2878,VCVTPH2UW,"VCVTPH2UW xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.NP.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
 2879,VCVTPH2UW,"VCVTPH2UW ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.NP.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
-2880,VCVTPH2UW,"VCVTPH2UW zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
+2880,VCVTPH2UW,"VCVTPH2UW zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 7D /r,reach,16,SDM 일치 16,SDM 일치 16
 2881,VCVTPH2W,"VCVTPH2W xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.66.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
 2882,VCVTPH2W,"VCVTPH2W ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.66.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
-2883,VCVTPH2W,"VCVTPH2W zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.66.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
+2883,VCVTPH2W,"VCVTPH2W zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.66.MAP5.W0 7D /r,reach,16,SDM 일치 16,SDM 일치 16
 2884,VCVTPS2PH,"VCVTPS2PH xmm1/m64, xmm2, imm8",VEX.128.66.0F3A.W0 1D /r ib,reach,5,SDM 일치 5,SDM 일치 5
 2885,VCVTPS2PH,"VCVTPS2PH xmm1/m128, ymm2, imm8",VEX.256.66.0F3A.W0 1D /r ib,reach,5,SDM 일치 5,SDM 일치 5
 2886,VCVTPS2PH,"VCVTPS2PH xmm1/m64 {k1}{z}, xmm2, imm8",EVEX.128.66.0F3A.W0 1D /r ib,reach,7,SDM 일치(강제 접두어) 5; SDM 일치 2,SDM 일치(강제 접두어) 5; SDM 일치 2
 2887,VCVTPS2PH,"VCVTPS2PH xmm1/m128 {k1}{z}, ymm2, imm8",EVEX.256.66.0F3A.W0 1D /r ib,reach,7,SDM 일치(강제 접두어) 5; SDM 일치 2,SDM 일치(강제 접두어) 5; SDM 일치 2
-2888,VCVTPS2PH,"VCVTPS2PH ymm1/m256 {k1}{z}, zmm2 {sae}, imm8",EVEX.512.66.0F3A.W0 1D /r ib,reach,7,SDM 일치 7,SDM 일치 7
+2888,VCVTPS2PH,"VCVTPS2PH ymm1/m256 {k1}{z}, zmm2 {sae}, imm8",EVEX.512.66.0F3A.W0 1D /r ib,reach,9,SDM 일치 9,SDM 일치 9
 2889,VCVTPS2PHX,"VCVTPS2PHX xmm1{k1}{z}, xmm2/m128/m32bcst",EVEX.128.66.MAP5.W0 1D /r,reach,8,SDM 일치 8,SDM 일치 8
 2890,VCVTPS2PHX,"VCVTPS2PHX xmm1{k1}{z}, ymm2/m256/m32bcst",EVEX.256.66.MAP5.W0 1D /r,reach,8,SDM 일치 8,SDM 일치 8
-2891,VCVTPS2PHX,"VCVTPS2PHX ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.66.MAP5.W0 1D /r,reach,8,SDM 일치 8,SDM 일치 8
+2891,VCVTPS2PHX,"VCVTPS2PHX ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.66.MAP5.W0 1D /r,reach,16,SDM 일치 16,SDM 일치 16
 2892,VCVTPS2QQ,"VCVTPS2QQ xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.66.0F.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
 2893,VCVTPS2QQ,"VCVTPS2QQ ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.66.0F.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
-2894,VCVTPS2QQ,"VCVTPS2QQ zmm1 {k1}{z}, ymm2/m256/m32bcst {er}",EVEX.512.66.0F.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 8
+2894,VCVTPS2QQ,"VCVTPS2QQ zmm1 {k1}{z}, ymm2/m256/m32bcst {er}",EVEX.512.66.0F.W0 7B /r,reach,16,SDM 일치 16,SDM 일치 16
 2895,VCVTPS2UDQ,"VCVTPS2UDQ xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2896,VCVTPS2UDQ,"VCVTPS2UDQ ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2897,VCVTPS2UDQ,"VCVTPS2UDQ zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2897,VCVTPS2UDQ,"VCVTPS2UDQ zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.0F.W0 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2898,VCVTPS2UQQ,"VCVTPS2UQQ xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.66.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2899,VCVTPS2UQQ,"VCVTPS2UQQ ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.66.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
-2900,VCVTPS2UQQ,"VCVTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {er}",EVEX.512.66.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2900,VCVTPS2UQQ,"VCVTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {er}",EVEX.512.66.0F.W0 79 /r,reach,16,SDM 일치 16,SDM 일치 16
 2901,VCVTQQ2PD,"VCVTQQ2PD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.F3.0F.W1 E6 /r,reach,8,SDM 일치 8,SDM 일치 8
 2902,VCVTQQ2PD,"VCVTQQ2PD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.F3.0F.W1 E6 /r,reach,8,SDM 일치 8,SDM 일치 8
-2903,VCVTQQ2PD,"VCVTQQ2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F3.0F.W1 E6 /r,reach,8,SDM 일치 8,SDM 일치 8
+2903,VCVTQQ2PD,"VCVTQQ2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F3.0F.W1 E6 /r,reach,16,SDM 일치 16,SDM 일치 16
 2904,VCVTQQ2PH,"VCVTQQ2PH xmm1{k1}{z}, xmm2/m128/m64bcst",EVEX.128.NP.MAP5.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
 2905,VCVTQQ2PH,"VCVTQQ2PH xmm1{k1}{z}, ymm2/m256/m64bcst",EVEX.256.NP.MAP5.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2906,VCVTQQ2PH,"VCVTQQ2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.NP.MAP5.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+2906,VCVTQQ2PH,"VCVTQQ2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.NP.MAP5.W1 5B /r,reach,16,SDM 일치 16,SDM 일치 16
 2907,VCVTQQ2PS,"VCVTQQ2PS xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.0F.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
 2908,VCVTQQ2PS,"VCVTQQ2PS xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.0F.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2909,VCVTQQ2PS,"VCVTQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.0F.W1 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2910,VCVTSD2SH,"VCVTSD2SH xmm1{k1}{z}, xmm2, xmm3/m64 {er}",EVEX.LLIG.F2.MAP5.W1 5A /r,reach,6,SDM 일치 6,SDM 일치 6
-2911,VCVTSD2USI,"VCVTSD2USI r32, xmm1/m64{er}",EVEX.LLIG.F2.0F.W0 79 /r,reach,4,SDM 일치 4,SDM 일치 4
-2912,VCVTSD2USI,"VCVTSD2USI r64, xmm1/m64{er}",EVEX.LLIG.F2.0F.W1 79 /r,reach,4,SDM 일치 4,SDM 일치 4
-2913,VCVTSH2SD,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5A /r,reach,6,SDM 일치 6,SDM 일치 6
-2914,VCVTSH2SI,"VCVTSH2SI r32, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W0 2D /r,reach,4,SDM 일치 4,SDM 일치 4
-2915,VCVTSH2SI,"VCVTSH2SI r64, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W1 2D /r,reach,4,SDM 일치 4,SDM 일치 4
-2916,VCVTSH2SS,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.NP.MAP6.W0 13 /r,reach,6,SDM 일치 6,SDM 일치 6
-2917,VCVTSH2USI,"VCVTSH2USI r32, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W0 79 /r,reach,4,SDM 일치 4,SDM 일치 4
-2918,VCVTSH2USI,"VCVTSH2USI r64, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W1 79 /r,reach,4,SDM 일치 4,SDM 일치 4
-2919,VCVTSI2SH,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",EVEX.LLIG.F3.MAP5.W0 2A /r,reach,4,SDM 일치 4,SDM 일치 4
-2920,VCVTSI2SH,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",EVEX.LLIG.F3.MAP5.W1 2A /r,reach,4,SDM 일치 4,SDM 일치 4
-2921,VCVTSS2SH,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.NP.MAP5.W0 1D /r,reach,6,SDM 일치 6,SDM 일치 6
-2922,VCVTSS2USI,"VCVTSS2USI r32, xmm1/m32{er}",EVEX.LLIG.F3.0F.W0 79 /r,reach,4,SDM 일치 4,SDM 일치 4
-2923,VCVTSS2USI,"VCVTSS2USI r64, xmm1/m32{er}",EVEX.LLIG.F3.0F.W1 79 /r,reach,4,SDM 일치 4,SDM 일치 4
+2909,VCVTQQ2PS,"VCVTQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.0F.W1 5B /r,reach,16,SDM 일치 16,SDM 일치 16
+2910,VCVTSD2SH,"VCVTSD2SH xmm1{k1}{z}, xmm2, xmm3/m64 {er}",EVEX.LLIG.F2.MAP5.W1 5A /r,reach,14,SDM 일치 14,SDM 일치 14
+2911,VCVTSD2USI,"VCVTSD2USI r32, xmm1/m64{er}",EVEX.LLIG.F2.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2912,VCVTSD2USI,"VCVTSD2USI r64, xmm1/m64{er}",EVEX.LLIG.F2.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2913,VCVTSH2SD,"VCVTSH2SD xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5A /r,reach,8,SDM 일치 8,SDM 일치 8
+2914,VCVTSH2SI,"VCVTSH2SI r32, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W0 2D /r,reach,8,SDM 일치 8,SDM 일치 8
+2915,VCVTSH2SI,"VCVTSH2SI r64, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W1 2D /r,reach,8,SDM 일치 8,SDM 일치 8
+2916,VCVTSH2SS,"VCVTSH2SS xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.NP.MAP6.W0 13 /r,reach,8,SDM 일치 8,SDM 일치 8
+2917,VCVTSH2USI,"VCVTSH2USI r32, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2918,VCVTSH2USI,"VCVTSH2USI r64, xmm1/m16 {er}",EVEX.LLIG.F3.MAP5.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2919,VCVTSI2SH,"VCVTSI2SH xmm1, xmm2, r32/m32 {er}",EVEX.LLIG.F3.MAP5.W0 2A /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2920,VCVTSI2SH,"VCVTSI2SH xmm1, xmm2, r64/m64 {er}",EVEX.LLIG.F3.MAP5.W1 2A /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2921,VCVTSS2SH,"VCVTSS2SH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.NP.MAP5.W0 1D /r,reach,14,SDM 일치 14,SDM 일치 14
+2922,VCVTSS2USI,"VCVTSS2USI r32, xmm1/m32{er}",EVEX.LLIG.F3.0F.W0 79 /r,reach,8,SDM 일치 8,SDM 일치 8
+2923,VCVTSS2USI,"VCVTSS2USI r64, xmm1/m32{er}",EVEX.LLIG.F3.0F.W1 79 /r,reach,8,SDM 일치 8,SDM 일치 8
 2924,VCVTTPD2QQ,"VCVTTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2925,VCVTTPD2QQ,"VCVTTPD2QQ ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2926,VCVTTPD2QQ,"VCVTTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2926,VCVTTPD2QQ,"VCVTTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 7A /r,reach,10,SDM 일치 10,SDM 일치 10
 2927,VCVTTPD2UDQ,"VCVTTPD2UDQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.0F.W1 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2928,VCVTTPD2UDQ,"VCVTTPD2UDQ xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.0F.W1 78 02 /r,reach,8,SDM 일치 8,SDM 일치 8
-2929,VCVTTPD2UDQ,"VCVTTPD2UDQ ymm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.0F.W1 78 /r,reach,8,SDM 일치 8,SDM 일치 8
+2929,VCVTTPD2UDQ,"VCVTTPD2UDQ ymm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.0F.W1 78 /r,reach,10,SDM 일치 10,SDM 일치 10
 2930,VCVTTPD2UQQ,"VCVTTPD2UQQ xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F.W1 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2931,VCVTTPD2UQQ,"VCVTTPD2UQQ ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F.W1 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2932,VCVTTPD2UQQ,"VCVTTPD2UQQ zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 78 /r,reach,8,SDM 일치 8,SDM 일치 8
+2932,VCVTTPD2UQQ,"VCVTTPD2UQQ zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F.W1 78 /r,reach,10,SDM 일치 10,SDM 일치 10
 2933,VCVTTPH2DQ,"VCVTTPH2DQ xmm1{k1}{z}, xmm2/m64/m16bcst",EVEX.128.F3.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
 2934,VCVTTPH2DQ,"VCVTTPH2DQ ymm1{k1}{z}, xmm2/m128/m16bcst",EVEX.256.F3.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
-2935,VCVTTPH2DQ,"VCVTTPH2DQ zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.F3.MAP5.W0 5B /r,reach,8,SDM 일치 8,SDM 일치 8
+2935,VCVTTPH2DQ,"VCVTTPH2DQ zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.F3.MAP5.W0 5B /r,reach,10,SDM 일치 10,SDM 일치 10
 2936,VCVTTPH2QQ,"VCVTTPH2QQ xmm1{k1}{z}, xmm2/m32/m16bcst",EVEX.128.66.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2937,VCVTTPH2QQ,"VCVTTPH2QQ ymm1{k1}{z}, xmm2/m64/m16bcst",EVEX.256.66.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2938,VCVTTPH2QQ,"VCVTTPH2QQ zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.66.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2938,VCVTTPH2QQ,"VCVTTPH2QQ zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.66.MAP5.W0 7A /r,reach,10,SDM 일치 10,SDM 일치 10
 2939,VCVTTPH2UDQ,"VCVTTPH2UDQ xmm1{k1}{z}, xmm2/m64/m16bcst",EVEX.128.NP.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2940,VCVTTPH2UDQ,"VCVTTPH2UDQ ymm1{k1}{z}, xmm2/m128/m16bcst",EVEX.256.NP.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2941,VCVTTPH2UDQ,"VCVTTPH2UDQ zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.NP.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
+2941,VCVTTPH2UDQ,"VCVTTPH2UDQ zmm1{k1}{z}, ymm2/m256/m16bcst {sae}",EVEX.512.NP.MAP5.W0 78 /r,reach,10,SDM 일치 10,SDM 일치 10
 2942,VCVTTPH2UQQ,"VCVTTPH2UQQ xmm1{k1}{z}, xmm2/m32/m16bcst",EVEX.128.66.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2943,VCVTTPH2UQQ,"VCVTTPH2UQQ ymm1{k1}{z}, xmm2/m64/m16bcst",EVEX.256.66.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2944,VCVTTPH2UQQ,"VCVTTPH2UQQ zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.66.MAP5.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
+2944,VCVTTPH2UQQ,"VCVTTPH2UQQ zmm1{k1}{z}, xmm2/m128/m16bcst {sae}",EVEX.512.66.MAP5.W0 78 /r,reach,10,SDM 일치 10,SDM 일치 10
 2945,VCVTTPH2UW,"VCVTTPH2UW xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.NP.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
 2946,VCVTTPH2UW,"VCVTTPH2UW ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.NP.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
-2947,VCVTTPH2UW,"VCVTTPH2UW zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
+2947,VCVTTPH2UW,"VCVTTPH2UW zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 7C /r,reach,10,SDM 일치 10,SDM 일치 10
 2948,VCVTTPH2W,"VCVTTPH2W xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.66.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
 2949,VCVTTPH2W,"VCVTTPH2W ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.66.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
-2950,VCVTTPH2W,"VCVTTPH2W zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.66.MAP5.W0 7C /r,reach,8,SDM 일치 8,SDM 일치 8
+2950,VCVTTPH2W,"VCVTTPH2W zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.66.MAP5.W0 7C /r,reach,10,SDM 일치 10,SDM 일치 10
 2951,VCVTTPS2QQ,"VCVTTPS2QQ xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.66.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2952,VCVTTPS2QQ,"VCVTTPS2QQ ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.66.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2953,VCVTTPS2QQ,"VCVTTPS2QQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.66.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2953,VCVTTPS2QQ,"VCVTTPS2QQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.66.0F.W0 7A /r,reach,10,SDM 일치 10,SDM 일치 10
 2954,VCVTTPS2UDQ,"VCVTTPS2UDQ xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2955,VCVTTPS2UDQ,"VCVTTPS2UDQ ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2956,VCVTTPS2UDQ,"VCVTTPS2UDQ zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
+2956,VCVTTPS2UDQ,"VCVTTPS2UDQ zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.0F.W0 78 /r,reach,10,SDM 일치 10,SDM 일치 10
 2957,VCVTTPS2UQQ,"VCVTTPS2UQQ xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.66.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
 2958,VCVTTPS2UQQ,"VCVTTPS2UQQ ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.66.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2959,VCVTTPS2UQQ,"VCVTTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.66.0F.W0 78 /r,reach,8,SDM 일치 8,SDM 일치 8
-2960,VCVTTSD2USI,"VCVTTSD2USI r32, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W0 78 /r,reach,4,SDM 일치 4,SDM 일치 4
-2961,VCVTTSD2USI,"VCVTTSD2USI r64, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W1 78 /r,reach,4,SDM 일치 4,SDM 일치 4
-2962,VCVTTSH2SI,"VCVTTSH2SI r32, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 2C /r,reach,4,SDM 일치 4,SDM 일치 4
-2963,VCVTTSH2SI,"VCVTTSH2SI r64, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W1 2C /r,reach,4,SDM 일치 4,SDM 일치 4
-2964,VCVTTSH2USI,"VCVTTSH2USI r32, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 78 /r,reach,4,SDM 일치 4,SDM 일치 4
-2965,VCVTTSH2USI,"VCVTTSH2USI r64, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W1 78 /r,reach,4,SDM 일치 4,SDM 일치 4
-2966,VCVTTSS2USI,"VCVTTSS2USI r32, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W0 78 /r,reach,4,SDM 일치 4,SDM 일치 4
-2967,VCVTTSS2USI,"VCVTTSS2USI r64, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W1 78 /r,reach,4,SDM 일치 4,SDM 일치 4
+2959,VCVTTPS2UQQ,"VCVTTPS2UQQ zmm1 {k1}{z}, ymm2/m256/m32bcst {sae}",EVEX.512.66.0F.W0 78 /r,reach,10,SDM 일치 10,SDM 일치 10
+2960,VCVTTSD2USI,"VCVTTSD2USI r32, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W0 78 /r,reach,5,SDM 일치 5,SDM 일치 5
+2961,VCVTTSD2USI,"VCVTTSD2USI r64, xmm1/m64{sae}",EVEX.LLIG.F2.0F.W1 78 /r,reach,5,SDM 일치 5,SDM 일치 5
+2962,VCVTTSH2SI,"VCVTTSH2SI r32, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 2C /r,reach,5,SDM 일치 5,SDM 일치 5
+2963,VCVTTSH2SI,"VCVTTSH2SI r64, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W1 2C /r,reach,5,SDM 일치 5,SDM 일치 5
+2964,VCVTTSH2USI,"VCVTTSH2USI r32, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 78 /r,reach,5,SDM 일치 5,SDM 일치 5
+2965,VCVTTSH2USI,"VCVTTSH2USI r64, xmm1/m16 {sae}",EVEX.LLIG.F3.MAP5.W1 78 /r,reach,5,SDM 일치 5,SDM 일치 5
+2966,VCVTTSS2USI,"VCVTTSS2USI r32, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W0 78 /r,reach,5,SDM 일치 5,SDM 일치 5
+2967,VCVTTSS2USI,"VCVTTSS2USI r64, xmm1/m32{sae}",EVEX.LLIG.F3.0F.W1 78 /r,reach,5,SDM 일치 5,SDM 일치 5
 2968,VCVTUDQ2PD,"VCVTUDQ2PD xmm1 {k1}{z}, xmm2/m64/m32bcst",EVEX.128.F3.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2969,VCVTUDQ2PD,"VCVTUDQ2PD ymm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.256.F3.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2970,VCVTUDQ2PD,"VCVTUDQ2PD zmm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.512.F3.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2971,VCVTUDQ2PH,"VCVTUDQ2PH xmm1{k1}{z}, xmm2/m128/m32bcst",EVEX.128.F2.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2972,VCVTUDQ2PH,"VCVTUDQ2PH xmm1{k1}{z}, ymm2/m256/m32bcst",EVEX.256.F2.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2973,VCVTUDQ2PH,"VCVTUDQ2PH ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.F2.MAP5.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2973,VCVTUDQ2PH,"VCVTUDQ2PH ymm1{k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.F2.MAP5.W0 7A /r,reach,16,SDM 일치 16,SDM 일치 16
 2974,VCVTUDQ2PS,"VCVTUDQ2PS xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.F2.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2975,VCVTUDQ2PS,"VCVTUDQ2PS ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.F2.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2976,VCVTUDQ2PS,"VCVTUDQ2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.F2.0F.W0 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2976,VCVTUDQ2PS,"VCVTUDQ2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {er}",EVEX.512.F2.0F.W0 7A /r,reach,16,SDM 일치 16,SDM 일치 16
 2977,VCVTUQQ2PD,"VCVTUQQ2PD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.F3.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2978,VCVTUQQ2PD,"VCVTUQQ2PD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.F3.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2979,VCVTUQQ2PD,"VCVTUQQ2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F3.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2979,VCVTUQQ2PD,"VCVTUQQ2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F3.0F.W1 7A /r,reach,16,SDM 일치 16,SDM 일치 16
 2980,VCVTUQQ2PH,"VCVTUQQ2PH xmm1{k1}{z}, xmm2/m128/m64bcst",EVEX.128.F2.MAP5.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2981,VCVTUQQ2PH,"VCVTUQQ2PH xmm1{k1}{z}, ymm2/m256/m64bcst",EVEX.256.F2.MAP5.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2982,VCVTUQQ2PH,"VCVTUQQ2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.MAP5.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2982,VCVTUQQ2PH,"VCVTUQQ2PH xmm1{k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.MAP5.W1 7A /r,reach,16,SDM 일치 16,SDM 일치 16
 2983,VCVTUQQ2PS,"VCVTUQQ2PS xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.F2.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
 2984,VCVTUQQ2PS,"VCVTUQQ2PS xmm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.F2.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
-2985,VCVTUQQ2PS,"VCVTUQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.0F.W1 7A /r,reach,8,SDM 일치 8,SDM 일치 8
+2985,VCVTUQQ2PS,"VCVTUQQ2PS ymm1 {k1}{z}, zmm2/m512/m64bcst {er}",EVEX.512.F2.0F.W1 7A /r,reach,16,SDM 일치 16,SDM 일치 16
 2986,VCVTUSI2SD,"VCVTUSI2SD xmm1, xmm2, r/m32",EVEX.LLIG.F2.0F.W0 7B /r,reach,4,SDM 일치 4,SDM 일치 4
-2987,VCVTUSI2SD,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",EVEX.LLIG.F2.0F.W1 7B /r,reach,4,SDM 일치 4,SDM 일치 4
-2988,VCVTUSI2SH,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",EVEX.LLIG.F3.MAP5.W0 7B /r,reach,4,SDM 일치 4,SDM 일치 4
-2989,VCVTUSI2SH,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",EVEX.LLIG.F3.MAP5.W1 7B /r,reach,4,SDM 일치 4,SDM 일치 4
-2990,VCVTUSI2SS,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",EVEX.LLIG.F3.0F.W0 7B /r,reach,4,SDM 일치 4,SDM 일치 4
-2991,VCVTUSI2SS,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",EVEX.LLIG.F3.0F.W1 7B /r,reach,4,SDM 일치 4,SDM 일치 4
+2987,VCVTUSI2SD,"VCVTUSI2SD xmm1, xmm2, r/m64{er}",EVEX.LLIG.F2.0F.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2988,VCVTUSI2SH,"VCVTUSI2SH xmm1, xmm2, r32/m32 {er}",EVEX.LLIG.F3.MAP5.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2989,VCVTUSI2SH,"VCVTUSI2SH xmm1, xmm2, r64/m64 {er}",EVEX.LLIG.F3.MAP5.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2990,VCVTUSI2SS,"VCVTUSI2SS xmm1, xmm2, r/m32{er}",EVEX.LLIG.F3.0F.W0 7B /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
+2991,VCVTUSI2SS,"VCVTUSI2SS xmm1, xmm2, r/m64{er}",EVEX.LLIG.F3.0F.W1 7B /r,reach,8,SDM 일치 8,SDM 일치 4; 거부 4
 2992,VCVTUW2PH,"VCVTUW2PH xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.F2.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
 2993,VCVTUW2PH,"VCVTUW2PH ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.F2.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
-2994,VCVTUW2PH,"VCVTUW2PH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.F2.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
+2994,VCVTUW2PH,"VCVTUW2PH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.F2.MAP5.W0 7D /r,reach,16,SDM 일치 16,SDM 일치 16
 2995,VCVTW2PH,"VCVTW2PH xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.F3.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
 2996,VCVTW2PH,"VCVTW2PH ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.F3.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
-2997,VCVTW2PH,"VCVTW2PH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.F3.MAP5.W0 7D /r,reach,8,SDM 일치 8,SDM 일치 8
+2997,VCVTW2PH,"VCVTW2PH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.F3.MAP5.W0 7D /r,reach,16,SDM 일치 16,SDM 일치 16
 2998,VDBPSADBW,"VDBPSADBW xmm1 {k1}{z}, xmm2, xmm3/m128, imm8",EVEX.128.66.0F3A.W0 42 /r ib,reach,7,SDM 일치 7,SDM 일치 7
 2999,VDBPSADBW,"VDBPSADBW ymm1 {k1}{z}, ymm2, ymm3/m256, imm8",EVEX.256.66.0F3A.W0 42 /r ib,reach,7,SDM 일치 7,SDM 일치 7
 3000,VDBPSADBW,"VDBPSADBW zmm1 {k1}{z}, zmm2, zmm3/m512, imm8",EVEX.512.66.0F3A.W0 42 /r ib,reach,7,SDM 일치 7,SDM 일치 7
 3001,VDIVPH,"VDIVPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 5E /r,reach,8,SDM 일치 8,SDM 일치 8
 3002,VDIVPH,"VDIVPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 5E /r,reach,8,SDM 일치 8,SDM 일치 8
-3003,VDIVPH,"VDIVPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 5E /r,reach,8,SDM 일치 8,SDM 일치 8
-3004,VDIVSH,"VDIVSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 5E /r,reach,6,SDM 일치 6,SDM 일치 6
+3003,VDIVPH,"VDIVPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 5E /r,reach,16,SDM 일치 16,SDM 일치 16
+3004,VDIVSH,"VDIVSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 5E /r,reach,14,SDM 일치 14,SDM 일치 14
 3005,VDPBF16PS,"VDPBF16PS xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F3.0F38.W0 52 /r,reach,8,SDM 일치 8,SDM 일치 8
 3006,VDPBF16PS,"VDPBF16PS ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F3.0F38.W0 52 /r,reach,8,SDM 일치 8,SDM 일치 8
 3007,VDPBF16PS,"VDPBF16PS zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst",EVEX.512.F3.0F38.W0 52 /r,reach,8,SDM 일치 8,SDM 일치 8
@@ -3031,28 +3031,28 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3029,VEXTRACTI64x4,"VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8",EVEX.512.66.0F3A.W1 3B /r ib,reach,7,SDM 일치 7,SDM 일치 7
 3030,VFCMADDCPH,"VFCMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F2.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
 3031,VFCMADDCPH,"VFCMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F2.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
-3032,VFCMADDCPH,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F2.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
+3032,VFCMADDCPH,"VFCMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F2.MAP6.W0 56 /r,reach,16,SDM 일치 16,SDM 일치 16
 3033,VFMADDCPH,"VFMADDCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F3.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
 3034,VFMADDCPH,"VFMADDCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F3.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
-3035,VFMADDCPH,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F3.MAP6.W0 56 /r,reach,8,SDM 일치 8,SDM 일치 8
-3036,VFCMADDCSH,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F2.MAP6.W0 57 /r,reach,6,SDM 일치 6,SDM 일치 6
-3037,VFMADDCSH,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.MAP6.W0 57 /r,reach,6,SDM 일치 6,SDM 일치 6
+3035,VFMADDCPH,"VFMADDCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F3.MAP6.W0 56 /r,reach,16,SDM 일치 16,SDM 일치 16
+3036,VFCMADDCSH,"VFCMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F2.MAP6.W0 57 /r,reach,14,SDM 일치 14,SDM 일치 14
+3037,VFMADDCSH,"VFMADDCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.MAP6.W0 57 /r,reach,14,SDM 일치 14,SDM 일치 14
 3038,VFCMULCPH,"VFCMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F2.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
 3039,VFCMULCPH,"VFCMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F2.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3040,VFCMULCPH,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F2.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
+3040,VFCMULCPH,"VFCMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F2.MAP6.W0 D6 /r,reach,16,SDM 일치 16,SDM 일치 16
 3041,VFMULCPH,"VFMULCPH xmm1{k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.F3.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
 3042,VFMULCPH,"VFMULCPH ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.F3.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3043,VFMULCPH,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F3.MAP6.W0 D6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3044,VFCMULCSH,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F2.MAP6.W0 D7 /r,reach,6,SDM 일치 6,SDM 일치 6
-3045,VFMULCSH,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.MAP6.W0 D7 /r,reach,6,SDM 일치 6,SDM 일치 6
+3043,VFMULCPH,"VFMULCPH zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst {er}",EVEX.512.F3.MAP6.W0 D6 /r,reach,16,SDM 일치 16,SDM 일치 16
+3044,VFCMULCSH,"VFCMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F2.MAP6.W0 D7 /r,reach,14,SDM 일치 14,SDM 일치 14
+3045,VFMULCSH,"VFMULCSH xmm1{k1}{z}, xmm2, xmm3/m32 {er}",EVEX.LLIG.F3.MAP6.W0 D7 /r,reach,14,SDM 일치 14,SDM 일치 14
 3046,VFIXUPIMMPD,"VFIXUPIMMPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 54 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3047,VFIXUPIMMPD,"VFIXUPIMMPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 54 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3048,VFIXUPIMMPD,"VFIXUPIMMPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 54 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+3048,VFIXUPIMMPD,"VFIXUPIMMPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 54 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 3049,VFIXUPIMMPS,"VFIXUPIMMPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 54 /r,reach,9,SDM 일치 9,SDM 일치 9
 3050,VFIXUPIMMPS,"VFIXUPIMMPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 54 /r,reach,9,SDM 일치 9,SDM 일치 9
-3051,VFIXUPIMMPS,"VFIXUPIMMPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 54 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3052,VFIXUPIMMSD,"VFIXUPIMMSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 55 /r ib,reach,7,SDM 일치 7,SDM 일치 7
-3053,VFIXUPIMMSS,"VFIXUPIMMSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 55 /r ib,reach,7,SDM 일치 7,SDM 일치 7
+3051,VFIXUPIMMPS,"VFIXUPIMMPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 54 /r ib,reach,11,SDM 일치 11,SDM 일치 11
+3052,VFIXUPIMMSD,"VFIXUPIMMSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 55 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+3053,VFIXUPIMMSS,"VFIXUPIMMSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 55 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3054,VFMADD132PD,"VFMADD132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 98 /r,reach,4,SDM 일치 4,SDM 일치 4
 3055,VFMADD213PD,"VFMADD213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 A8 /r,reach,4,SDM 일치 4,SDM 일치 4
 3056,VFMADD231PD,"VFMADD231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 B8 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3065,27 +3065,27 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3063,VFMADD132PD,"VFMADD132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 98 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3064,VFMADD213PD,"VFMADD213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 A8 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3065,VFMADD231PD,"VFMADD231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 B8 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3066,VFMADD132PD,"VFMADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 98 /r,reach,8,SDM 일치 8,SDM 일치 8
-3067,VFMADD213PD,"VFMADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A8 /r,reach,8,SDM 일치 8,SDM 일치 8
-3068,VFMADD231PD,"VFMADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B8 /r,reach,8,SDM 일치 8,SDM 일치 8
+3066,VFMADD132PD,"VFMADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 98 /r,reach,16,SDM 일치 16,SDM 일치 16
+3067,VFMADD213PD,"VFMADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A8 /r,reach,16,SDM 일치 16,SDM 일치 16
+3068,VFMADD231PD,"VFMADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B8 /r,reach,16,SDM 일치 16,SDM 일치 16
 3069,VFMADD132PH,"VFMADD132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 98 /r,reach,8,SDM 일치 8,SDM 일치 8
 3070,VFMADD132PH,"VFMADD132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 98 /r,reach,8,SDM 일치 8,SDM 일치 8
-3071,VFMADD132PH,"VFMADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 98 /r,reach,8,SDM 일치 8,SDM 일치 8
+3071,VFMADD132PH,"VFMADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 98 /r,reach,16,SDM 일치 16,SDM 일치 16
 3072,VFMADD213PH,"VFMADD213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 A8 /r,reach,8,SDM 일치 8,SDM 일치 8
 3073,VFMADD213PH,"VFMADD213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 A8 /r,reach,8,SDM 일치 8,SDM 일치 8
-3074,VFMADD213PH,"VFMADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A8 /r,reach,8,SDM 일치 8,SDM 일치 8
+3074,VFMADD213PH,"VFMADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A8 /r,reach,16,SDM 일치 16,SDM 일치 16
 3075,VFMADD231PH,"VFMADD231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 B8 /r,reach,8,SDM 일치 8,SDM 일치 8
 3076,VFMADD231PH,"VFMADD231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 B8 /r,reach,8,SDM 일치 8,SDM 일치 8
-3077,VFMADD231PH,"VFMADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B8 /r,reach,8,SDM 일치 8,SDM 일치 8
+3077,VFMADD231PH,"VFMADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B8 /r,reach,16,SDM 일치 16,SDM 일치 16
 3078,VFNMADD132PH,"VFNMADD132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 9C /r,reach,8,SDM 일치 8,SDM 일치 8
 3079,VFNMADD132PH,"VFNMADD132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 9C /r,reach,8,SDM 일치 8,SDM 일치 8
-3080,VFNMADD132PH,"VFNMADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9C /r,reach,8,SDM 일치 8,SDM 일치 8
+3080,VFNMADD132PH,"VFNMADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9C /r,reach,16,SDM 일치 16,SDM 일치 16
 3081,VFNMADD213PH,"VFNMADD213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 AC /r,reach,8,SDM 일치 8,SDM 일치 8
 3082,VFNMADD213PH,"VFNMADD213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 AC /r,reach,8,SDM 일치 8,SDM 일치 8
-3083,VFNMADD213PH,"VFNMADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AC /r,reach,8,SDM 일치 8,SDM 일치 8
+3083,VFNMADD213PH,"VFNMADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AC /r,reach,16,SDM 일치 16,SDM 일치 16
 3084,VFNMADD231PH,"VFNMADD231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 BC /r,reach,8,SDM 일치 8,SDM 일치 8
 3085,VFNMADD231PH,"VFNMADD231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 BC /r,reach,8,SDM 일치 8,SDM 일치 8
-3086,VFNMADD231PH,"VFNMADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BC /r,reach,8,SDM 일치 8,SDM 일치 8
+3086,VFNMADD231PH,"VFNMADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BC /r,reach,16,SDM 일치 16,SDM 일치 16
 3087,VFMADD132PS,"VFMADD132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 98 /r,reach,4,SDM 일치 4,SDM 일치 4
 3088,VFMADD213PS,"VFMADD213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 A8 /r,reach,4,SDM 일치 4,SDM 일치 4
 3089,VFMADD231PS,"VFMADD231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 B8 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3098,27 +3098,27 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3096,VFMADD132PS,"VFMADD132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 98 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3097,VFMADD213PS,"VFMADD213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 A8 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3098,VFMADD231PS,"VFMADD231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 B8 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3099,VFMADD132PS,"VFMADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 98 /r,reach,8,SDM 일치 8,SDM 일치 8
-3100,VFMADD213PS,"VFMADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A8 /r,reach,8,SDM 일치 8,SDM 일치 8
-3101,VFMADD231PS,"VFMADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B8 /r,reach,8,SDM 일치 8,SDM 일치 8
+3099,VFMADD132PS,"VFMADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 98 /r,reach,16,SDM 일치 16,SDM 일치 16
+3100,VFMADD213PS,"VFMADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A8 /r,reach,16,SDM 일치 16,SDM 일치 16
+3101,VFMADD231PS,"VFMADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B8 /r,reach,16,SDM 일치 16,SDM 일치 16
 3102,VFMADD132SD,"VFMADD132SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 99 /r,reach,4,SDM 일치 4,SDM 일치 4
 3103,VFMADD213SD,"VFMADD213SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 A9 /r,reach,4,SDM 일치 4,SDM 일치 4
 3104,VFMADD231SD,"VFMADD231SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 B9 /r,reach,4,SDM 일치 4,SDM 일치 4
-3105,VFMADD132SD,"VFMADD132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 99 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3106,VFMADD213SD,"VFMADD213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 A9 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3107,VFMADD231SD,"VFMADD231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 B9 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3108,VFMADD132SH,"VFMADD132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 99 /r,reach,6,SDM 일치 6,SDM 일치 6
-3109,VFMADD213SH,"VFMADD213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 A9 /r,reach,6,SDM 일치 6,SDM 일치 6
-3110,VFMADD231SH,"VFMADD231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 B9 /r,reach,6,SDM 일치 6,SDM 일치 6
-3111,VFNMADD132SH,"VFNMADD132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9D /r,reach,6,SDM 일치 6,SDM 일치 6
-3112,VFNMADD213SH,"VFNMADD213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AD /r,reach,6,SDM 일치 6,SDM 일치 6
-3113,VFNMADD231SH,"VFNMADD231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BD /r,reach,6,SDM 일치 6,SDM 일치 6
+3105,VFMADD132SD,"VFMADD132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 99 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3106,VFMADD213SD,"VFMADD213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 A9 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3107,VFMADD231SD,"VFMADD231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 B9 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3108,VFMADD132SH,"VFMADD132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 99 /r,reach,14,SDM 일치 14,SDM 일치 14
+3109,VFMADD213SH,"VFMADD213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 A9 /r,reach,14,SDM 일치 14,SDM 일치 14
+3110,VFMADD231SH,"VFMADD231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 B9 /r,reach,14,SDM 일치 14,SDM 일치 14
+3111,VFNMADD132SH,"VFNMADD132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9D /r,reach,14,SDM 일치 14,SDM 일치 14
+3112,VFNMADD213SH,"VFNMADD213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AD /r,reach,14,SDM 일치 14,SDM 일치 14
+3113,VFNMADD231SH,"VFNMADD231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BD /r,reach,14,SDM 일치 14,SDM 일치 14
 3114,VFMADD132SS,"VFMADD132SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 99 /r,reach,4,SDM 일치 4,SDM 일치 4
 3115,VFMADD213SS,"VFMADD213SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 A9 /r,reach,4,SDM 일치 4,SDM 일치 4
 3116,VFMADD231SS,"VFMADD231SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 B9 /r,reach,4,SDM 일치 4,SDM 일치 4
-3117,VFMADD132SS,"VFMADD132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 99 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3118,VFMADD213SS,"VFMADD213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 A9 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3119,VFMADD231SS,"VFMADD231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 B9 /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3117,VFMADD132SS,"VFMADD132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 99 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3118,VFMADD213SS,"VFMADD213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 A9 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3119,VFMADD231SS,"VFMADD231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 B9 /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3120,VFMADDSUB132PD,"VFMADDSUB132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 96 /r,reach,4,SDM 일치 4,SDM 일치 4
 3121,VFMADDSUB213PD,"VFMADDSUB213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 A6 /r,reach,4,SDM 일치 4,SDM 일치 4
 3122,VFMADDSUB231PD,"VFMADDSUB231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 B6 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3131,18 +3131,18 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3129,VFMADDSUB213PD,"VFMADDSUB213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 A6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3130,VFMADDSUB231PD,"VFMADDSUB231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 B6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3131,VFMADDSUB132PD,"VFMADDSUB132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 96 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3132,VFMADDSUB213PD,"VFMADDSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3133,VFMADDSUB231PD,"VFMADDSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3134,VFMADDSUB132PD,"VFMADDSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 96 /r,reach,8,SDM 일치 8,SDM 일치 8
+3132,VFMADDSUB213PD,"VFMADDSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A6 /r,reach,16,SDM 일치 16,SDM 일치 16
+3133,VFMADDSUB231PD,"VFMADDSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B6 /r,reach,16,SDM 일치 16,SDM 일치 16
+3134,VFMADDSUB132PD,"VFMADDSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 96 /r,reach,16,SDM 일치 16,SDM 일치 16
 3135,VFMADDSUB132PH,"VFMADDSUB132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 96 /r,reach,8,SDM 일치 8,SDM 일치 8
 3136,VFMADDSUB132PH,"VFMADDSUB132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 96 /r,reach,8,SDM 일치 8,SDM 일치 8
-3137,VFMADDSUB132PH,"VFMADDSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 96 /r,reach,8,SDM 일치 8,SDM 일치 8
+3137,VFMADDSUB132PH,"VFMADDSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 96 /r,reach,16,SDM 일치 16,SDM 일치 16
 3138,VFMADDSUB213PH,"VFMADDSUB213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 A6 /r,reach,8,SDM 일치 8,SDM 일치 8
 3139,VFMADDSUB213PH,"VFMADDSUB213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 A6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3140,VFMADDSUB213PH,"VFMADDSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A6 /r,reach,8,SDM 일치 8,SDM 일치 8
+3140,VFMADDSUB213PH,"VFMADDSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A6 /r,reach,16,SDM 일치 16,SDM 일치 16
 3141,VFMADDSUB231PH,"VFMADDSUB231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 B6 /r,reach,8,SDM 일치 8,SDM 일치 8
 3142,VFMADDSUB231PH,"VFMADDSUB231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 B6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3143,VFMADDSUB231PH,"VFMADDSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B6 /r,reach,8,SDM 일치 8,SDM 일치 8
+3143,VFMADDSUB231PH,"VFMADDSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B6 /r,reach,16,SDM 일치 16,SDM 일치 16
 3144,VFMADDSUB132PS,"VFMADDSUB132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 96 /r,reach,4,SDM 일치 4,SDM 일치 4
 3145,VFMADDSUB213PS,"VFMADDSUB213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 A6 /r,reach,4,SDM 일치 4,SDM 일치 4
 3146,VFMADDSUB231PS,"VFMADDSUB231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 B6 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3155,9 +3155,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3153,VFMADDSUB213PS,"VFMADDSUB213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 A6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3154,VFMADDSUB231PS,"VFMADDSUB231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 B6 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3155,VFMADDSUB132PS,"VFMADDSUB132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 96 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3156,VFMADDSUB213PS,"VFMADDSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3157,VFMADDSUB231PS,"VFMADDSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B6 /r,reach,8,SDM 일치 8,SDM 일치 8
-3158,VFMADDSUB132PS,"VFMADDSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 96 /r,reach,8,SDM 일치 8,SDM 일치 8
+3156,VFMADDSUB213PS,"VFMADDSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A6 /r,reach,16,SDM 일치 16,SDM 일치 16
+3157,VFMADDSUB231PS,"VFMADDSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B6 /r,reach,16,SDM 일치 16,SDM 일치 16
+3158,VFMADDSUB132PS,"VFMADDSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 96 /r,reach,16,SDM 일치 16,SDM 일치 16
 3159,VFMSUB132PD,"VFMSUB132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 9A /r,reach,4,SDM 일치 4,SDM 일치 4
 3160,VFMSUB213PD,"VFMSUB213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 AA /r,reach,4,SDM 일치 4,SDM 일치 4
 3161,VFMSUB231PD,"VFMSUB231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 BA /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3170,27 +3170,27 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3168,VFMSUB132PD,"VFMSUB132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 9A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3169,VFMSUB213PD,"VFMSUB213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 AA /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3170,VFMSUB231PD,"VFMSUB231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 BA /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3171,VFMSUB132PD,"VFMSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9A /r,reach,8,SDM 일치 8,SDM 일치 8
-3172,VFMSUB213PD,"VFMSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AA /r,reach,8,SDM 일치 8,SDM 일치 8
-3173,VFMSUB231PD,"VFMSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BA /r,reach,8,SDM 일치 8,SDM 일치 8
+3171,VFMSUB132PD,"VFMSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9A /r,reach,16,SDM 일치 16,SDM 일치 16
+3172,VFMSUB213PD,"VFMSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AA /r,reach,16,SDM 일치 16,SDM 일치 16
+3173,VFMSUB231PD,"VFMSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BA /r,reach,16,SDM 일치 16,SDM 일치 16
 3174,VFMSUB132PH,"VFMSUB132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 9A /r,reach,8,SDM 일치 8,SDM 일치 8
 3175,VFMSUB132PH,"VFMSUB132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 9A /r,reach,8,SDM 일치 8,SDM 일치 8
-3176,VFMSUB132PH,"VFMSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9A /r,reach,8,SDM 일치 8,SDM 일치 8
+3176,VFMSUB132PH,"VFMSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9A /r,reach,16,SDM 일치 16,SDM 일치 16
 3177,VFMSUB213PH,"VFMSUB213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 AA /r,reach,8,SDM 일치 8,SDM 일치 8
 3178,VFMSUB213PH,"VFMSUB213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 AA /r,reach,8,SDM 일치 8,SDM 일치 8
-3179,VFMSUB213PH,"VFMSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AA /r,reach,8,SDM 일치 8,SDM 일치 8
+3179,VFMSUB213PH,"VFMSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AA /r,reach,16,SDM 일치 16,SDM 일치 16
 3180,VFMSUB231PH,"VFMSUB231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 BA /r,reach,8,SDM 일치 8,SDM 일치 8
 3181,VFMSUB231PH,"VFMSUB231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 BA /r,reach,8,SDM 일치 8,SDM 일치 8
-3182,VFMSUB231PH,"VFMSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BA /r,reach,8,SDM 일치 8,SDM 일치 8
+3182,VFMSUB231PH,"VFMSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BA /r,reach,16,SDM 일치 16,SDM 일치 16
 3183,VFNMSUB132PH,"VFNMSUB132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 9E /r,reach,8,SDM 일치 8,SDM 일치 8
 3184,VFNMSUB132PH,"VFNMSUB132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 9E /r,reach,8,SDM 일치 8,SDM 일치 8
-3185,VFNMSUB132PH,"VFNMSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9E /r,reach,8,SDM 일치 8,SDM 일치 8
+3185,VFNMSUB132PH,"VFNMSUB132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 9E /r,reach,16,SDM 일치 16,SDM 일치 16
 3186,VFNMSUB213PH,"VFNMSUB213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 AE /r,reach,8,SDM 일치 8,SDM 일치 8
 3187,VFNMSUB213PH,"VFNMSUB213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 AE /r,reach,8,SDM 일치 8,SDM 일치 8
-3188,VFNMSUB213PH,"VFNMSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AE /r,reach,8,SDM 일치 8,SDM 일치 8
+3188,VFNMSUB213PH,"VFNMSUB213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 AE /r,reach,16,SDM 일치 16,SDM 일치 16
 3189,VFNMSUB231PH,"VFNMSUB231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 BE /r,reach,8,SDM 일치 8,SDM 일치 8
 3190,VFNMSUB231PH,"VFNMSUB231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 BE /r,reach,8,SDM 일치 8,SDM 일치 8
-3191,VFNMSUB231PH,"VFNMSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BE /r,reach,8,SDM 일치 8,SDM 일치 8
+3191,VFNMSUB231PH,"VFNMSUB231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 BE /r,reach,16,SDM 일치 16,SDM 일치 16
 3192,VFMSUB132PS,"VFMSUB132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 9A /r,reach,4,SDM 일치 4,SDM 일치 4
 3193,VFMSUB213PS,"VFMSUB213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 AA /r,reach,4,SDM 일치 4,SDM 일치 4
 3194,VFMSUB231PS,"VFMSUB231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 BA /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3203,27 +3203,27 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3201,VFMSUB132PS,"VFMSUB132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 9A /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3202,VFMSUB213PS,"VFMSUB213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 AA /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3203,VFMSUB231PS,"VFMSUB231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 BA /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3204,VFMSUB132PS,"VFMSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9A /r,reach,8,SDM 일치 8,SDM 일치 8
-3205,VFMSUB213PS,"VFMSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AA /r,reach,8,SDM 일치 8,SDM 일치 8
-3206,VFMSUB231PS,"VFMSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BA /r,reach,8,SDM 일치 8,SDM 일치 8
+3204,VFMSUB132PS,"VFMSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9A /r,reach,16,SDM 일치 16,SDM 일치 16
+3205,VFMSUB213PS,"VFMSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AA /r,reach,16,SDM 일치 16,SDM 일치 16
+3206,VFMSUB231PS,"VFMSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BA /r,reach,16,SDM 일치 16,SDM 일치 16
 3207,VFMSUB132SD,"VFMSUB132SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 9B /r,reach,4,SDM 일치 4,SDM 일치 4
 3208,VFMSUB213SD,"VFMSUB213SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 AB /r,reach,4,SDM 일치 4,SDM 일치 4
 3209,VFMSUB231SD,"VFMSUB231SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 BB /r,reach,4,SDM 일치 4,SDM 일치 4
-3210,VFMSUB132SD,"VFMSUB132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9B /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3211,VFMSUB213SD,"VFMSUB213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AB /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3212,VFMSUB231SD,"VFMSUB231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BB /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3213,VFMSUB132SH,"VFMSUB132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9B /r,reach,6,SDM 일치 6,SDM 일치 6
-3214,VFMSUB213SH,"VFMSUB213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AB /r,reach,6,SDM 일치 6,SDM 일치 6
-3215,VFMSUB231SH,"VFMSUB231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BB /r,reach,6,SDM 일치 6,SDM 일치 6
-3216,VFNMSUB132SH,"VFNMSUB132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9F /r,reach,6,SDM 일치 6,SDM 일치 6
-3217,VFNMSUB213SH,"VFNMSUB213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AF /r,reach,6,SDM 일치 6,SDM 일치 6
-3218,VFNMSUB231SH,"VFNMSUB231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BF /r,reach,6,SDM 일치 6,SDM 일치 6
+3210,VFMSUB132SD,"VFMSUB132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9B /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3211,VFMSUB213SD,"VFMSUB213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AB /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3212,VFMSUB231SD,"VFMSUB231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BB /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3213,VFMSUB132SH,"VFMSUB132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9B /r,reach,14,SDM 일치 14,SDM 일치 14
+3214,VFMSUB213SH,"VFMSUB213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AB /r,reach,14,SDM 일치 14,SDM 일치 14
+3215,VFMSUB231SH,"VFMSUB231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BB /r,reach,14,SDM 일치 14,SDM 일치 14
+3216,VFNMSUB132SH,"VFNMSUB132SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 9F /r,reach,14,SDM 일치 14,SDM 일치 14
+3217,VFNMSUB213SH,"VFNMSUB213SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 AF /r,reach,14,SDM 일치 14,SDM 일치 14
+3218,VFNMSUB231SH,"VFNMSUB231SH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 BF /r,reach,14,SDM 일치 14,SDM 일치 14
 3219,VFMSUB132SS,"VFMSUB132SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 9B /r,reach,4,SDM 일치 4,SDM 일치 4
 3220,VFMSUB213SS,"VFMSUB213SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 AB /r,reach,4,SDM 일치 4,SDM 일치 4
 3221,VFMSUB231SS,"VFMSUB231SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 BB /r,reach,4,SDM 일치 4,SDM 일치 4
-3222,VFMSUB132SS,"VFMSUB132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9B /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3223,VFMSUB213SS,"VFMSUB213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AB /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3224,VFMSUB231SS,"VFMSUB231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BB /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3222,VFMSUB132SS,"VFMSUB132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9B /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3223,VFMSUB213SS,"VFMSUB213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AB /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3224,VFMSUB231SS,"VFMSUB231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BB /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3225,VFMSUBADD132PD,"VFMSUBADD132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 97 /r,reach,4,SDM 일치 4,SDM 일치 4
 3226,VFMSUBADD213PD,"VFMSUBADD213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 A7 /r,reach,4,SDM 일치 4,SDM 일치 4
 3227,VFMSUBADD231PD,"VFMSUBADD231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 B7 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3236,18 +3236,18 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3234,VFMSUBADD132PD,"VFMSUBADD132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 97 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3235,VFMSUBADD213PD,"VFMSUBADD213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 A7 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3236,VFMSUBADD231PD,"VFMSUBADD231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 B7 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3237,VFMSUBADD132PD,"VFMSUBADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 97 /r,reach,8,SDM 일치 8,SDM 일치 8
-3238,VFMSUBADD213PD,"VFMSUBADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A7 /r,reach,8,SDM 일치 8,SDM 일치 8
-3239,VFMSUBADD231PD,"VFMSUBADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B7 /r,reach,8,SDM 일치 8,SDM 일치 8
+3237,VFMSUBADD132PD,"VFMSUBADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 97 /r,reach,16,SDM 일치 16,SDM 일치 16
+3238,VFMSUBADD213PD,"VFMSUBADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 A7 /r,reach,16,SDM 일치 16,SDM 일치 16
+3239,VFMSUBADD231PD,"VFMSUBADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 B7 /r,reach,16,SDM 일치 16,SDM 일치 16
 3240,VFMSUBADD132PH,"VFMSUBADD132PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 97 /r,reach,8,SDM 일치 8,SDM 일치 8
 3241,VFMSUBADD132PH,"VFMSUBADD132PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 97 /r,reach,8,SDM 일치 8,SDM 일치 8
-3242,VFMSUBADD132PH,"VFMSUBADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 97 /r,reach,8,SDM 일치 8,SDM 일치 8
+3242,VFMSUBADD132PH,"VFMSUBADD132PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 97 /r,reach,16,SDM 일치 16,SDM 일치 16
 3243,VFMSUBADD213PH,"VFMSUBADD213PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 A7 /r,reach,8,SDM 일치 8,SDM 일치 8
 3244,VFMSUBADD213PH,"VFMSUBADD213PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 A7 /r,reach,8,SDM 일치 8,SDM 일치 8
-3245,VFMSUBADD213PH,"VFMSUBADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A7 /r,reach,8,SDM 일치 8,SDM 일치 8
+3245,VFMSUBADD213PH,"VFMSUBADD213PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 A7 /r,reach,16,SDM 일치 16,SDM 일치 16
 3246,VFMSUBADD231PH,"VFMSUBADD231PH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 B7 /r,reach,8,SDM 일치 8,SDM 일치 8
 3247,VFMSUBADD231PH,"VFMSUBADD231PH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 B7 /r,reach,8,SDM 일치 8,SDM 일치 8
-3248,VFMSUBADD231PH,"VFMSUBADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B7 /r,reach,8,SDM 일치 8,SDM 일치 8
+3248,VFMSUBADD231PH,"VFMSUBADD231PH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 B7 /r,reach,16,SDM 일치 16,SDM 일치 16
 3249,VFMSUBADD132PS,"VFMSUBADD132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 97 /r,reach,4,SDM 일치 4,SDM 일치 4
 3250,VFMSUBADD213PS,"VFMSUBADD213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 A7 /r,reach,4,SDM 일치 4,SDM 일치 4
 3251,VFMSUBADD231PS,"VFMSUBADD231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 B7 /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3260,9 +3260,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3258,VFMSUBADD132PS,"VFMSUBADD132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 97 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3259,VFMSUBADD213PS,"VFMSUBADD213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 A7 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3260,VFMSUBADD231PS,"VFMSUBADD231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 B7 /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3261,VFMSUBADD132PS,"VFMSUBADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 97 /r,reach,8,SDM 일치 8,SDM 일치 8
-3262,VFMSUBADD213PS,"VFMSUBADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A7 /r,reach,8,SDM 일치 8,SDM 일치 8
-3263,VFMSUBADD231PS,"VFMSUBADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B7 /r,reach,8,SDM 일치 8,SDM 일치 8
+3261,VFMSUBADD132PS,"VFMSUBADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 97 /r,reach,16,SDM 일치 16,SDM 일치 16
+3262,VFMSUBADD213PS,"VFMSUBADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 A7 /r,reach,16,SDM 일치 16,SDM 일치 16
+3263,VFMSUBADD231PS,"VFMSUBADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 B7 /r,reach,16,SDM 일치 16,SDM 일치 16
 3264,VFNMADD132PD,"VFNMADD132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 9C /r,reach,4,SDM 일치 4,SDM 일치 4
 3265,VFNMADD213PD,"VFNMADD213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 AC /r,reach,4,SDM 일치 4,SDM 일치 4
 3266,VFNMADD231PD,"VFNMADD231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 BC /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3275,9 +3275,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3273,VFNMADD132PD,"VFNMADD132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 9C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3274,VFNMADD213PD,"VFNMADD213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 AC /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3275,VFNMADD231PD,"VFNMADD231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 BC /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3276,VFNMADD132PD,"VFNMADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9C /r,reach,8,SDM 일치 8,SDM 일치 8
-3277,VFNMADD213PD,"VFNMADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AC /r,reach,8,SDM 일치 8,SDM 일치 8
-3278,VFNMADD231PD,"VFNMADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BC /r,reach,8,SDM 일치 8,SDM 일치 8
+3276,VFNMADD132PD,"VFNMADD132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9C /r,reach,16,SDM 일치 16,SDM 일치 16
+3277,VFNMADD213PD,"VFNMADD213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AC /r,reach,16,SDM 일치 16,SDM 일치 16
+3278,VFNMADD231PD,"VFNMADD231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BC /r,reach,16,SDM 일치 16,SDM 일치 16
 3279,VFNMADD132PS,"VFNMADD132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 9C /r,reach,4,SDM 일치 4,SDM 일치 4
 3280,VFNMADD213PS,"VFNMADD213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 AC /r,reach,4,SDM 일치 4,SDM 일치 4
 3281,VFNMADD231PS,"VFNMADD231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 BC /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3290,21 +3290,21 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3288,VFNMADD132PS,"VFNMADD132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 9C /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3289,VFNMADD213PS,"VFNMADD213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 AC /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3290,VFNMADD231PS,"VFNMADD231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 BC /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3291,VFNMADD132PS,"VFNMADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9C /r,reach,8,SDM 일치 8,SDM 일치 8
-3292,VFNMADD213PS,"VFNMADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AC /r,reach,8,SDM 일치 8,SDM 일치 8
-3293,VFNMADD231PS,"VFNMADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BC /r,reach,8,SDM 일치 8,SDM 일치 8
+3291,VFNMADD132PS,"VFNMADD132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9C /r,reach,16,SDM 일치 16,SDM 일치 16
+3292,VFNMADD213PS,"VFNMADD213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AC /r,reach,16,SDM 일치 16,SDM 일치 16
+3293,VFNMADD231PS,"VFNMADD231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BC /r,reach,16,SDM 일치 16,SDM 일치 16
 3294,VFNMADD132SD,"VFNMADD132SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 9D /r,reach,4,SDM 일치 4,SDM 일치 4
 3295,VFNMADD213SD,"VFNMADD213SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 AD /r,reach,4,SDM 일치 4,SDM 일치 4
 3296,VFNMADD231SD,"VFNMADD231SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 BD /r,reach,4,SDM 일치 4,SDM 일치 4
-3297,VFNMADD132SD,"VFNMADD132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9D /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3298,VFNMADD213SD,"VFNMADD213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AD /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3299,VFNMADD231SD,"VFNMADD231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BD /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3297,VFNMADD132SD,"VFNMADD132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9D /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3298,VFNMADD213SD,"VFNMADD213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AD /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3299,VFNMADD231SD,"VFNMADD231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BD /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3300,VFNMADD132SS,"VFNMADD132SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 9D /r,reach,4,SDM 일치 4,SDM 일치 4
 3301,VFNMADD213SS,"VFNMADD213SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 AD /r,reach,4,SDM 일치 4,SDM 일치 4
 3302,VFNMADD231SS,"VFNMADD231SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 BD /r,reach,4,SDM 일치 4,SDM 일치 4
-3303,VFNMADD132SS,"VFNMADD132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9D /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3304,VFNMADD213SS,"VFNMADD213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AD /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3305,VFNMADD231SS,"VFNMADD231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BD /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3303,VFNMADD132SS,"VFNMADD132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9D /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3304,VFNMADD213SS,"VFNMADD213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AD /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3305,VFNMADD231SS,"VFNMADD231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BD /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3306,VFNMSUB132PD,"VFNMSUB132PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 9E /r,reach,4,SDM 일치 4,SDM 일치 4
 3307,VFNMSUB213PD,"VFNMSUB213PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 AE /r,reach,4,SDM 일치 4,SDM 일치 4
 3308,VFNMSUB231PD,"VFNMSUB231PD xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W1 BE /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3317,9 +3317,9 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3315,VFNMSUB132PD,"VFNMSUB132PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 9E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3316,VFNMSUB213PD,"VFNMSUB213PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 AE /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3317,VFNMSUB231PD,"VFNMSUB231PD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 BE /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3318,VFNMSUB132PD,"VFNMSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9E /r,reach,8,SDM 일치 8,SDM 일치 8
-3319,VFNMSUB213PD,"VFNMSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AE /r,reach,8,SDM 일치 8,SDM 일치 8
-3320,VFNMSUB231PD,"VFNMSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BE /r,reach,8,SDM 일치 8,SDM 일치 8
+3318,VFNMSUB132PD,"VFNMSUB132PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 9E /r,reach,16,SDM 일치 16,SDM 일치 16
+3319,VFNMSUB213PD,"VFNMSUB213PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 AE /r,reach,16,SDM 일치 16,SDM 일치 16
+3320,VFNMSUB231PD,"VFNMSUB231PD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 BE /r,reach,16,SDM 일치 16,SDM 일치 16
 3321,VFNMSUB132PS,"VFNMSUB132PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 9E /r,reach,4,SDM 일치 4,SDM 일치 4
 3322,VFNMSUB213PS,"VFNMSUB213PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 AE /r,reach,4,SDM 일치 4,SDM 일치 4
 3323,VFNMSUB231PS,"VFNMSUB231PS xmm1, xmm2, xmm3/m128",VEX.128.66.0F38.W0 BE /r,reach,4,SDM 일치 4,SDM 일치 4
@@ -3332,21 +3332,21 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3330,VFNMSUB132PS,"VFNMSUB132PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 9E /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3331,VFNMSUB213PS,"VFNMSUB213PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 AE /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
 3332,VFNMSUB231PS,"VFNMSUB231PS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 BE /r,reach,8,SDM 일치(강제 접두어) 4; SDM 일치 4,SDM 일치(강제 접두어) 4; SDM 일치 4
-3333,VFNMSUB132PS,"VFNMSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9E /r,reach,8,SDM 일치 8,SDM 일치 8
-3334,VFNMSUB213PS,"VFNMSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AE /r,reach,8,SDM 일치 8,SDM 일치 8
-3335,VFNMSUB231PS,"VFNMSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BE /r,reach,8,SDM 일치 8,SDM 일치 8
+3333,VFNMSUB132PS,"VFNMSUB132PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 9E /r,reach,16,SDM 일치 16,SDM 일치 16
+3334,VFNMSUB213PS,"VFNMSUB213PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 AE /r,reach,16,SDM 일치 16,SDM 일치 16
+3335,VFNMSUB231PS,"VFNMSUB231PS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 BE /r,reach,16,SDM 일치 16,SDM 일치 16
 3336,VFNMSUB132SD,"VFNMSUB132SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 9F /r,reach,4,SDM 일치 4,SDM 일치 4
 3337,VFNMSUB213SD,"VFNMSUB213SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 AF /r,reach,4,SDM 일치 4,SDM 일치 4
 3338,VFNMSUB231SD,"VFNMSUB231SD xmm1, xmm2, xmm3/m64",VEX.LIG.66.0F38.W1 BF /r,reach,4,SDM 일치 4,SDM 일치 4
-3339,VFNMSUB132SD,"VFNMSUB132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9F /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3340,VFNMSUB213SD,"VFNMSUB213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AF /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3341,VFNMSUB231SD,"VFNMSUB231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BF /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3339,VFNMSUB132SD,"VFNMSUB132SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 9F /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3340,VFNMSUB213SD,"VFNMSUB213SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 AF /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3341,VFNMSUB231SD,"VFNMSUB231SD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 BF /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3342,VFNMSUB132SS,"VFNMSUB132SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 9F /r,reach,4,SDM 일치 4,SDM 일치 4
 3343,VFNMSUB213SS,"VFNMSUB213SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 AF /r,reach,4,SDM 일치 4,SDM 일치 4
 3344,VFNMSUB231SS,"VFNMSUB231SS xmm1, xmm2, xmm3/m32",VEX.LIG.66.0F38.W0 BF /r,reach,4,SDM 일치 4,SDM 일치 4
-3345,VFNMSUB132SS,"VFNMSUB132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9F /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3346,VFNMSUB213SS,"VFNMSUB213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AF /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
-3347,VFNMSUB231SS,"VFNMSUB231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BF /r,reach,6,SDM 일치(강제 접두어) 4; SDM 일치 2,SDM 일치(강제 접두어) 4; SDM 일치 2
+3345,VFNMSUB132SS,"VFNMSUB132SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 9F /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3346,VFNMSUB213SS,"VFNMSUB213SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 AF /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
+3347,VFNMSUB231SS,"VFNMSUB231SS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 BF /r,reach,14,SDM 일치 10; SDM 일치(강제 접두어) 4,SDM 일치 10; SDM 일치(강제 접두어) 4
 3348,VFPCLASSPD,"VFPCLASSPD k2 {k1}, xmm2/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 66 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3349,VFPCLASSPD,"VFPCLASSPD k2 {k1}, ymm2/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 66 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3350,VFPCLASSPD,"VFPCLASSPD k2 {k1}, zmm2/m512/m64bcst, imm8",EVEX.512.66.0F3A.W1 66 /r ib,reach,9,SDM 일치 9,SDM 일치 9
@@ -3381,28 +3381,28 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3379,VGATHERQPD,"VGATHERQPD zmm1 {k1}, vm64z",EVEX.512.66.0F38.W1 93 /vsib,reach,1,SDM 일치 1,SDM 일치 1
 3380,VGETEXPPD,"VGETEXPPD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F38.W1 42 /r,reach,8,SDM 일치 8,SDM 일치 8
 3381,VGETEXPPD,"VGETEXPPD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F38.W1 42 /r,reach,8,SDM 일치 8,SDM 일치 8
-3382,VGETEXPPD,"VGETEXPPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}",EVEX.512.66.0F38.W1 42 /r,reach,8,SDM 일치 8,SDM 일치 8
+3382,VGETEXPPD,"VGETEXPPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}",EVEX.512.66.0F38.W1 42 /r,reach,10,SDM 일치 10,SDM 일치 10
 3383,VGETEXPPH,"VGETEXPPH xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.66.MAP6.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
 3384,VGETEXPPH,"VGETEXPPH ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.66.MAP6.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
-3385,VGETEXPPH,"VGETEXPPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.66.MAP6.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
+3385,VGETEXPPH,"VGETEXPPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}",EVEX.512.66.MAP6.W0 42 /r,reach,10,SDM 일치 10,SDM 일치 10
 3386,VGETEXPPS,"VGETEXPPS xmm1 {k1}{z}, xmm2/m128/m32bcst",EVEX.128.66.0F38.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
 3387,VGETEXPPS,"VGETEXPPS ymm1 {k1}{z}, ymm2/m256/m32bcst",EVEX.256.66.0F38.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
-3388,VGETEXPPS,"VGETEXPPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}",EVEX.512.66.0F38.W0 42 /r,reach,8,SDM 일치 8,SDM 일치 8
-3389,VGETEXPSD,"VGETEXPSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.66.0F38.W1 43 /r,reach,6,SDM 일치 6,SDM 일치 6
-3390,VGETEXPSH,"VGETEXPSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.66.MAP6.W0 43 /r,reach,6,SDM 일치 6,SDM 일치 6
-3391,VGETEXPSS,"VGETEXPSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.66.0F38.W0 43 /r,reach,6,SDM 일치 6,SDM 일치 6
+3388,VGETEXPPS,"VGETEXPPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}",EVEX.512.66.0F38.W0 42 /r,reach,10,SDM 일치 10,SDM 일치 10
+3389,VGETEXPSD,"VGETEXPSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}",EVEX.LLIG.66.0F38.W1 43 /r,reach,8,SDM 일치 8,SDM 일치 8
+3390,VGETEXPSH,"VGETEXPSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.66.MAP6.W0 43 /r,reach,8,SDM 일치 8,SDM 일치 8
+3391,VGETEXPSS,"VGETEXPSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}",EVEX.LLIG.66.0F38.W0 43 /r,reach,8,SDM 일치 8,SDM 일치 8
 3392,VGETMANTPD,"VGETMANTPD xmm1 {k1}{z}, xmm2/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3393,VGETMANTPD,"VGETMANTPD ymm1 {k1}{z}, ymm2/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3394,VGETMANTPD,"VGETMANTPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+3394,VGETMANTPD,"VGETMANTPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 26 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 3395,VGETMANTPH,"VGETMANTPH xmm1{k1}{z}, xmm2/m128/m16bcst, imm8",EVEX.128.NP.0F3A.W0 26 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
 3396,VGETMANTPH,"VGETMANTPH ymm1{k1}{z}, ymm2/m256/m16bcst, imm8",EVEX.256.NP.0F3A.W0 26 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
-3397,VGETMANTPH,"VGETMANTPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 26 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+3397,VGETMANTPH,"VGETMANTPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 26 /r /ib,reach,11,SDM 일치 11,SDM 일치 11
 3398,VGETMANTPS,"VGETMANTPS xmm1 {k1}{z}, xmm2/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3399,VGETMANTPS,"VGETMANTPS ymm1 {k1}{z}, ymm2/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3400,VGETMANTPS,"VGETMANTPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 26 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3401,VGETMANTSD,"VGETMANTSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 27 /r ib,reach,7,SDM 일치 7,SDM 일치 7
-3402,VGETMANTSH,"VGETMANTSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 27 /r /ib,reach,7,SDM 일치 7,SDM 일치 7
-3403,VGETMANTSS,"VGETMANTSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 27 /r ib,reach,7,SDM 일치 7,SDM 일치 7
+3400,VGETMANTPS,"VGETMANTPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 26 /r ib,reach,11,SDM 일치 11,SDM 일치 11
+3401,VGETMANTSD,"VGETMANTSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 27 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+3402,VGETMANTSH,"VGETMANTSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 27 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+3403,VGETMANTSS,"VGETMANTSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 27 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3404,VINSERTF128,"VINSERTF128 ymm1, ymm2, xmm3/m128, imm8",VEX.256.66.0F3A.W0 18 /r ib,reach,5,SDM 일치 5,SDM 일치 5
 3405,VINSERTF32X4,"VINSERTF32X4 ymm1 {k1}{z}, ymm2, xmm3/m128, imm8",EVEX.256.66.0F3A.W0 18 /r ib,reach,7,SDM 일치 7,SDM 일치 7
 3406,VINSERTF32X4,"VINSERTF32X4 zmm1 {k1}{z}, zmm2, xmm3/m128, imm8",EVEX.512.66.0F3A.W0 18 /r ib,reach,7,SDM 일치 7,SDM 일치 7
@@ -3427,22 +3427,22 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3425,VMASKMOVPD,"VMASKMOVPD m256, ymm1, ymm2",VEX.256.66.0F38.W0 2F /r,reach,3,SDM 일치 3,SDM 일치 3
 3426,VMAXPH,"VMAXPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 5F /r,reach,8,SDM 일치 8,SDM 일치 8
 3427,VMAXPH,"VMAXPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 5F /r,reach,8,SDM 일치 8,SDM 일치 8
-3428,VMAXPH,"VMAXPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5F /r,reach,8,SDM 일치 8,SDM 일치 8
-3429,VMAXSH,"VMAXSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5F /r,reach,6,SDM 일치 6,SDM 일치 6
+3428,VMAXPH,"VMAXPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5F /r,reach,10,SDM 일치 10,SDM 일치 10
+3429,VMAXSH,"VMAXSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5F /r,reach,8,SDM 일치 8,SDM 일치 8
 3430,VMINPH,"VMINPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 5D /r,reach,8,SDM 일치 8,SDM 일치 8
 3431,VMINPH,"VMINPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 5D /r,reach,8,SDM 일치 8,SDM 일치 8
-3432,VMINPH,"VMINPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5D /r,reach,8,SDM 일치 8,SDM 일치 8
-3433,VMINSH,"VMINSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5D /r,reach,6,SDM 일치 6,SDM 일치 6
+3432,VMINPH,"VMINPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {sae}",EVEX.512.NP.MAP5.W0 5D /r,reach,10,SDM 일치 10,SDM 일치 10
+3433,VMINSH,"VMINSH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}",EVEX.LLIG.F3.MAP5.W0 5D /r,reach,8,SDM 일치 8,SDM 일치 8
 3434,VMOVSH,"VMOVSH xmm1{k1}{z}, m16",EVEX.LLIG.F3.MAP5.W0 10 /r,reach,4,SDM 일치 4,SDM 일치 4
 3435,VMOVSH,"VMOVSH m16{k1}, xmm1",EVEX.LLIG.F3.MAP5.W0 11 /r,reach,4,SDM 일치 4,SDM 일치 4
 3436,VMOVSH,"VMOVSH xmm1{k1}{z}, xmm2, xmm3",EVEX.LLIG.F3.MAP5.W0 10 /r,reach,2,SDM 일치 2,SDM 일치 2
 3437,VMOVSH,"VMOVSH xmm1{k1}{z}, xmm2, xmm3",EVEX.LLIG.F3.MAP5.W0 11 /r,reach,2,SDM 일치(강제 접두어) 2,별칭 행 도달 2
-3438,VMOVW,"VMOVW xmm1, reg/m16",EVEX.128.66.MAP5.WIG 6E /r,reach,5,SDM 일치 4; 거부 1,SDM 일치 5
-3439,VMOVW,"VMOVW reg/m16, xmm1",EVEX.128.66.MAP5.WIG 7E /r,reach,5,SDM 일치 4; 거부 1,SDM 일치 5
+3438,VMOVW,"VMOVW xmm1, reg/m16",EVEX.128.66.MAP5.WIG 6E /r,reach,4,SDM 일치 4,SDM 일치 4
+3439,VMOVW,"VMOVW reg/m16, xmm1",EVEX.128.66.MAP5.WIG 7E /r,reach,4,SDM 일치 4,SDM 일치 4
 3440,VMULPH,"VMULPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
 3441,VMULPH,"VMULPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
-3442,VMULPH,"VMULPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 59 /r,reach,8,SDM 일치 8,SDM 일치 8
-3443,VMULSH,"VMULSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 59 /r,reach,6,SDM 일치 6,SDM 일치 6
+3442,VMULPH,"VMULPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 59 /r,reach,16,SDM 일치 16,SDM 일치 16
+3443,VMULSH,"VMULSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 59 /r,reach,14,SDM 일치 14,SDM 일치 14
 3444,VP2INTERSECTD,"VP2INTERSECTD k1+1, xmm2, xmm3/m128/m32bcst",EVEX.NDS.128.F2.0F38.W0 68 /r,reach,5,SDM 일치 5,SDM 일치 5
 3445,VP2INTERSECTD,"VP2INTERSECTD k1+1, ymm2, ymm3/m256/m32bcst",EVEX.NDS.256.F2.0F38.W0 68 /r,reach,5,SDM 일치 5,SDM 일치 5
 3446,VP2INTERSECTD,"VP2INTERSECTD k1+1, zmm2, zmm3/m512/m32bcst",EVEX.NDS.512.F2.0F38.W0 68 /r,reach,5,SDM 일치 5,SDM 일치 5
@@ -3493,12 +3493,12 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3491,VBROADCASTI64X2,"VBROADCASTI64X2 zmm1 {k1}{z}, m128",EVEX.512.66.0F38.W1 5A /r,reach,4,SDM 일치 4,SDM 일치 4
 3492,VBROADCASTI32X8,"VBROADCASTI32X8 zmm1 {k1}{z}, m256",EVEX.512.66.0F38.W0 5B /r,reach,4,SDM 일치 4,SDM 일치 4
 3493,VBROADCASTI64X4,"VBROADCASTI64X4 zmm1 {k1}{z}, m256",EVEX.512.66.0F38.W1 5B /r,reach,4,SDM 일치 4,SDM 일치 4
-3494,VPBROADCASTB,"VPBROADCASTB xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
-3495,VPBROADCASTB,"VPBROADCASTB ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
-3496,VPBROADCASTB,"VPBROADCASTB zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7A /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
-3497,VPBROADCASTW,"VPBROADCASTW xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
-3498,VPBROADCASTW,"VPBROADCASTW ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
-3499,VPBROADCASTW,"VPBROADCASTW zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7B /r,reach,4,SDM 일치 2; 거부 2,SDM 일치 2; 거부 2
+3494,VPBROADCASTB,"VPBROADCASTB xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
+3495,VPBROADCASTB,"VPBROADCASTB ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
+3496,VPBROADCASTB,"VPBROADCASTB zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7A /r,reach,2,SDM 일치 2,SDM 일치 2
+3497,VPBROADCASTW,"VPBROADCASTW xmm1 {k1}{z}, reg",EVEX.128.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
+3498,VPBROADCASTW,"VPBROADCASTW ymm1 {k1}{z}, reg",EVEX.256.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
+3499,VPBROADCASTW,"VPBROADCASTW zmm1 {k1}{z}, reg",EVEX.512.66.0F38.W0 7B /r,reach,2,SDM 일치 2,SDM 일치 2
 3500,VPBROADCASTD,"VPBROADCASTD xmm1 {k1}{z}, r32",EVEX.128.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2
 3501,VPBROADCASTD,"VPBROADCASTD ymm1 {k1}{z}, r32",EVEX.256.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2
 3502,VPBROADCASTD,"VPBROADCASTD zmm1 {k1}{z}, r32",EVEX.512.66.0F38.W0 7C /r,reach,2,SDM 일치 2,SDM 일치 2
@@ -3982,12 +3982,12 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 3980,VPTESTNMQ,"VPTESTNMQ k2 {k1}, zmm2, zmm3/m512/m64bcst",EVEX.512.F3.0F38.W1 27 /r,reach,8,SDM 일치 8,SDM 일치 8
 3981,VRANGEPD,"VRANGEPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3982,VRANGEPD,"VRANGEPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3983,VRANGEPD,"VRANGEPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+3983,VRANGEPD,"VRANGEPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 50 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 3984,VRANGEPS,"VRANGEPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 3985,VRANGEPS,"VRANGEPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3986,VRANGEPS,"VRANGEPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 50 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-3987,VRANGESD,"VRANGESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 51 /r,reach,7,SDM 일치 7,SDM 일치 7
-3988,VRANGESS,"VRANGESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 51 /r,reach,7,SDM 일치 7,SDM 일치 7
+3986,VRANGEPS,"VRANGEPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 50 /r ib,reach,11,SDM 일치 11,SDM 일치 11
+3987,VRANGESD,"VRANGESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 51 /r,reach,9,SDM 일치 9,SDM 일치 9
+3988,VRANGESS,"VRANGESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 51 /r,reach,9,SDM 일치 9,SDM 일치 9
 3989,VRCP14PD,"VRCP14PD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F38.W1 4C /r,reach,8,SDM 일치 8,SDM 일치 8
 3990,VRCP14PD,"VRCP14PD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F38.W1 4C /r,reach,8,SDM 일치 8,SDM 일치 8
 3991,VRCP14PD,"VRCP14PD zmm1 {k1}{z}, zmm2/m512/m64bcst",EVEX.512.66.0F38.W1 4C /r,reach,8,SDM 일치 8,SDM 일치 8
@@ -4002,28 +4002,28 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4000,VRCPSH,"VRCPSH xmm1{k1}{z}, xmm2, xmm3/m16",EVEX.LLIG.66.MAP6.W0 4D /r,reach,6,SDM 일치 6,SDM 일치 6
 4001,VREDUCEPD,"VREDUCEPD xmm1 {k1}{z}, xmm2/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 4002,VREDUCEPD,"VREDUCEPD ymm1 {k1}{z}, ymm2/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4003,VREDUCEPD,"VREDUCEPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+4003,VREDUCEPD,"VREDUCEPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 56 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 4004,VREDUCEPH,"VREDUCEPH xmm1{k1}{z}, xmm2/m128/m16bcst, imm8",EVEX.128.NP.0F3A.W0 56 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
 4005,VREDUCEPH,"VREDUCEPH ymm1{k1}{z}, ymm2/m256/m16bcst, imm8",EVEX.256.NP.0F3A.W0 56 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
-4006,VREDUCEPH,"VREDUCEPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 56 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+4006,VREDUCEPH,"VREDUCEPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 56 /r /ib,reach,11,SDM 일치 11,SDM 일치 11
 4007,VREDUCEPS,"VREDUCEPS xmm1 {k1}{z}, xmm2/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 4008,VREDUCEPS,"VREDUCEPS ymm1 {k1}{z}, ymm2/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4009,VREDUCEPS,"VREDUCEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 56 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4010,VREDUCESD,"VREDUCESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8/r",EVEX.LLIG.66.0F3A.W1 57,reach,7,SDM 일치 7,SDM 일치 7
-4011,VREDUCESH,"VREDUCESH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 57 /r /ib,reach,7,SDM 일치 7,SDM 일치 7
-4012,VREDUCESS,"VREDUCESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 57 /r /ib,reach,7,SDM 일치 7,SDM 일치 7
+4009,VREDUCEPS,"VREDUCEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 56 /r ib,reach,11,SDM 일치 11,SDM 일치 11
+4010,VREDUCESD,"VREDUCESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8/r",EVEX.LLIG.66.0F3A.W1 57,reach,9,SDM 일치 9,SDM 일치 9
+4011,VREDUCESH,"VREDUCESH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 57 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+4012,VREDUCESS,"VREDUCESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 57 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
 4013,VRNDSCALEPD,"VRNDSCALEPD xmm1 {k1}{z}, xmm2/m128/m64bcst, imm8",EVEX.128.66.0F3A.W1 09 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 4014,VRNDSCALEPD,"VRNDSCALEPD ymm1 {k1}{z}, ymm2/m256/m64bcst, imm8",EVEX.256.66.0F3A.W1 09 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4015,VRNDSCALEPD,"VRNDSCALEPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 09 /r ib,reach,9,SDM 일치 9,SDM 일치 9
+4015,VRNDSCALEPD,"VRNDSCALEPD zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}, imm8",EVEX.512.66.0F3A.W1 09 /r ib,reach,11,SDM 일치 11,SDM 일치 11
 4016,VRNDSCALEPH,"VRNDSCALEPH xmm1{k1}{z}, xmm2/m128/m16bcst, imm8",EVEX.128.NP.0F3A.W0 08 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
 4017,VRNDSCALEPH,"VRNDSCALEPH ymm1{k1}{z}, ymm2/m256/m16bcst, imm8",EVEX.256.NP.0F3A.W0 08 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
-4018,VRNDSCALEPH,"VRNDSCALEPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 08 /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+4018,VRNDSCALEPH,"VRNDSCALEPH zmm1{k1}{z}, zmm2/m512/m16bcst {sae}, imm8",EVEX.512.NP.0F3A.W0 08 /r /ib,reach,11,SDM 일치 11,SDM 일치 11
 4019,VRNDSCALEPS,"VRNDSCALEPS xmm1 {k1}{z}, xmm2/m128/m32bcst, imm8",EVEX.128.66.0F3A.W0 08 /r ib,reach,9,SDM 일치 9,SDM 일치 9
 4020,VRNDSCALEPS,"VRNDSCALEPS ymm1 {k1}{z}, ymm2/m256/m32bcst, imm8",EVEX.256.66.0F3A.W0 08 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4021,VRNDSCALEPS,"VRNDSCALEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 08 /r ib,reach,9,SDM 일치 9,SDM 일치 9
-4022,VRNDSCALESD,"VRNDSCALESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 0B /r ib,reach,7,SDM 일치 7,SDM 일치 7
-4023,VRNDSCALESH,"VRNDSCALESH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 0A /r /ib,reach,7,SDM 일치 7,SDM 일치 7
-4024,VRNDSCALESS,"VRNDSCALESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 0A /r ib,reach,7,SDM 일치 7,SDM 일치 7
+4021,VRNDSCALEPS,"VRNDSCALEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8",EVEX.512.66.0F3A.W0 08 /r ib,reach,11,SDM 일치 11,SDM 일치 11
+4022,VRNDSCALESD,"VRNDSCALESD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8",EVEX.LLIG.66.0F3A.W1 0B /r ib,reach,9,SDM 일치 9,SDM 일치 9
+4023,VRNDSCALESH,"VRNDSCALESH xmm1{k1}{z}, xmm2, xmm3/m16 {sae}, imm8",EVEX.LLIG.NP.0F3A.W0 0A /r /ib,reach,9,SDM 일치 9,SDM 일치 9
+4024,VRNDSCALESS,"VRNDSCALESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8",EVEX.LLIG.66.0F3A.W0 0A /r ib,reach,9,SDM 일치 9,SDM 일치 9
 4025,VRSQRT14PD,"VRSQRT14PD xmm1 {k1}{z}, xmm2/m128/m64bcst",EVEX.128.66.0F38.W1 4E /r,reach,8,SDM 일치 8,SDM 일치 8
 4026,VRSQRT14PD,"VRSQRT14PD ymm1 {k1}{z}, ymm2/m256/m64bcst",EVEX.256.66.0F38.W1 4E /r,reach,8,SDM 일치 8,SDM 일치 8
 4027,VRSQRT14PD,"VRSQRT14PD zmm1 {k1}{z}, zmm2/m512/m64bcst",EVEX.512.66.0F38.W1 4E /r,reach,8,SDM 일치 8,SDM 일치 8
@@ -4038,16 +4038,16 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4036,VRSQRTSH,"VRSQRTSH xmm1{k1}{z}, xmm2, xmm3/m16",EVEX.LLIG.66.MAP6.W0 4F /r,reach,6,SDM 일치 6,SDM 일치 6
 4037,VSCALEFPD,"VSCALEFPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst",EVEX.128.66.0F38.W1 2C /r,reach,8,SDM 일치 8,SDM 일치 8
 4038,VSCALEFPD,"VSCALEFPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst",EVEX.256.66.0F38.W1 2C /r,reach,8,SDM 일치 8,SDM 일치 8
-4039,VSCALEFPD,"VSCALEFPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 2C /r,reach,8,SDM 일치 8,SDM 일치 8
+4039,VSCALEFPD,"VSCALEFPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}",EVEX.512.66.0F38.W1 2C /r,reach,16,SDM 일치 16,SDM 일치 16
 4040,VSCALEFPH,"VSCALEFPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.66.MAP6.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
 4041,VSCALEFPH,"VSCALEFPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.66.MAP6.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
-4042,VSCALEFPH,"VSCALEFPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
+4042,VSCALEFPH,"VSCALEFPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.66.MAP6.W0 2C /r,reach,16,SDM 일치 16,SDM 일치 16
 4043,VSCALEFPS,"VSCALEFPS xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst",EVEX.128.66.0F38.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
 4044,VSCALEFPS,"VSCALEFPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst",EVEX.256.66.0F38.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
-4045,VSCALEFPS,"VSCALEFPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 2C /r,reach,8,SDM 일치 8,SDM 일치 8
-4046,VSCALEFSD,"VSCALEFSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 2D /r,reach,6,SDM 일치 6,SDM 일치 6
-4047,VSCALEFSH,"VSCALEFSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 2D /r,reach,6,SDM 일치 6,SDM 일치 6
-4048,VSCALEFSS,"VSCALEFSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 2D /r,reach,6,SDM 일치 6,SDM 일치 6
+4045,VSCALEFPS,"VSCALEFPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}",EVEX.512.66.0F38.W0 2C /r,reach,16,SDM 일치 16,SDM 일치 16
+4046,VSCALEFSD,"VSCALEFSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}",EVEX.LLIG.66.0F38.W1 2D /r,reach,14,SDM 일치 14,SDM 일치 14
+4047,VSCALEFSH,"VSCALEFSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.66.MAP6.W0 2D /r,reach,14,SDM 일치 14,SDM 일치 14
+4048,VSCALEFSS,"VSCALEFSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}",EVEX.LLIG.66.0F38.W0 2D /r,reach,14,SDM 일치 14,SDM 일치 14
 4049,VSCATTERDPS,"VSCATTERDPS vm32x {k1}, xmm1",EVEX.128.66.0F38.W0 A2 /vsib,reach,1,SDM 일치 1,SDM 일치 1
 4050,VSCATTERDPS,"VSCATTERDPS vm32y {k1}, ymm1",EVEX.256.66.0F38.W0 A2 /vsib,reach,1,SDM 일치 1,SDM 일치 1
 4051,VSCATTERDPS,"VSCATTERDPS vm32z {k1}, zmm1",EVEX.512.66.0F38.W0 A2 /vsib,reach,1,SDM 일치 1,SDM 일치 1
@@ -4080,17 +4080,17 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4078,VSM4RNDS4,"VSM4RNDS4 ymm1, ymm2, ymm3/m256",VEX.256.F2.0F38.W0 DA /r,reach,4,SDM 일치 4,SDM 일치 4
 4079,VSQRTPH,"VSQRTPH xmm1{k1}{z}, xmm2/m128/m16bcst",EVEX.128.NP.MAP5.W0 51 /r,reach,8,SDM 일치 8,SDM 일치 8
 4080,VSQRTPH,"VSQRTPH ymm1{k1}{z}, ymm2/m256/m16bcst",EVEX.256.NP.MAP5.W0 51 /r,reach,8,SDM 일치 8,SDM 일치 8
-4081,VSQRTPH,"VSQRTPH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 51 /r,reach,8,SDM 일치 8,SDM 일치 8
-4082,VSQRTSH,"VSQRTSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 51 /r,reach,6,SDM 일치 6,SDM 일치 6
+4081,VSQRTPH,"VSQRTPH zmm1{k1}{z}, zmm2/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 51 /r,reach,16,SDM 일치 16,SDM 일치 16
+4082,VSQRTSH,"VSQRTSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 51 /r,reach,14,SDM 일치 14,SDM 일치 14
 4083,VSUBPH,"VSUBPH xmm1{k1}{z}, xmm2, xmm3/m128/m16bcst",EVEX.128.NP.MAP5.W0 5C /r,reach,8,SDM 일치 8,SDM 일치 8
 4084,VSUBPH,"VSUBPH ymm1{k1}{z}, ymm2, ymm3/m256/m16bcst",EVEX.256.NP.MAP5.W0 5C /r,reach,8,SDM 일치 8,SDM 일치 8
-4085,VSUBPH,"VSUBPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 5C /r,reach,8,SDM 일치 8,SDM 일치 8
-4086,VSUBSH,"VSUBSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 5C /r,reach,6,SDM 일치 6,SDM 일치 6
+4085,VSUBPH,"VSUBPH zmm1{k1}{z}, zmm2, zmm3/m512/m16bcst {er}",EVEX.512.NP.MAP5.W0 5C /r,reach,16,SDM 일치 16,SDM 일치 16
+4086,VSUBSH,"VSUBSH xmm1{k1}{z}, xmm2, xmm3/m16 {er}",EVEX.LLIG.F3.MAP5.W0 5C /r,reach,14,SDM 일치 14,SDM 일치 14
 4087,VTESTPS,"VTESTPS xmm1, xmm2/m128",VEX.128.66.0F38.W0 0E /r,reach,4,SDM 일치 4,SDM 일치 4
 4088,VTESTPS,"VTESTPS ymm1, ymm2/m256",VEX.256.66.0F38.W0 0E /r,reach,4,SDM 일치 4,SDM 일치 4
 4089,VTESTPD,"VTESTPD xmm1, xmm2/m128",VEX.128.66.0F38.W0 0F /r,reach,4,SDM 일치 4,SDM 일치 4
 4090,VTESTPD,"VTESTPD ymm1, ymm2/m256",VEX.256.66.0F38.W0 0F /r,reach,4,SDM 일치 4,SDM 일치 4
-4091,VUCOMISH,"VUCOMISH xmm1, xmm2/m16 {sae}",EVEX.LLIG.NP.MAP5.W0 2E /r,reach,4,SDM 일치 4,SDM 일치 4
+4091,VUCOMISH,"VUCOMISH xmm1, xmm2/m16 {sae}",EVEX.LLIG.NP.MAP5.W0 2E /r,reach,5,SDM 일치 5,SDM 일치 5
 4092,VZEROALL,VZEROALL,VEX.256.0F.WIG 77,reach,1,SDM 일치 1,SDM 일치 1
 4093,VZEROUPPER,VZEROUPPER,VEX.128.0F.WIG 77,reach,1,SDM 일치 1,SDM 일치 1
 4094,WAIT,WAIT,9B,reach,1,SDM 일치 1,SDM 일치 1
@@ -4117,7 +4117,7 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4115,XADD,"XADD r/m16, r16",0F C1 /r,reach,4,SDM 일치 4,SDM 일치 4
 4116,XADD,"XADD r/m32, r32",0F C1 /r,reach,4,SDM 일치 4,SDM 일치 4
 4117,XADD,"XADD r/m64, r64",REX.W + 0F C1 /r,reach,4,SDM 일치 4,SDM 일치 4
-4118,XBEGIN,XBEGIN rel16,C7 F8,reach,1,SDM 일치 1,다른 인코딩 1
+4118,XBEGIN,XBEGIN rel16,C7 F8,reach,1,SDM 일치 1,도달 불가(등록) 1
 4119,XBEGIN,XBEGIN rel32,C7 F8,reach,1,SDM 일치 1,SDM 일치 1
 4120,XCHG,"XCHG AX, r16",90+rw,reach,1,SDM 일치 1,SDM 일치 1
 4121,XCHG,"XCHG r16, AX",90+rw,reach,1,SDM 일치 1,SDM 일치 1
@@ -4190,8 +4190,8 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4188,V4FNMADDPS,"V4FNMADDPS zmm1{k1}{z}, zmm2+3, m128",EVEX.512.F2.0F38.W0 AA /r,reach,4,SDM 일치 4,SDM 일치 4
 4189,V4FMADDSS,"V4FMADDSS xmm1{k1}{z}, xmm2+3, m128",EVEX.LLIG.F2.0F38.W0 9B /r,reach,4,SDM 일치 4,SDM 일치 4
 4190,V4FNMADDSS,"V4FNMADDSS xmm1{k1}{z}, xmm2+3, m128",EVEX.LLIG.F2.0F38.W0 AB /r,reach,4,SDM 일치 4,SDM 일치 4
-4191,VEXP2PD,"VEXP2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 C8 /r,reach,8,SDM 일치 8,SDM 일치 8
-4192,VEXP2PS,"VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 C8 /r,reach,8,SDM 일치 8,SDM 일치 8
+4191,VEXP2PD,"VEXP2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 C8 /r,reach,10,SDM 일치 10,SDM 일치 10
+4192,VEXP2PS,"VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 C8 /r,reach,10,SDM 일치 10,SDM 일치 10
 4193,VGATHERPF0DPS,VGATHERPF0DPS vm32z {k1},EVEX.512.66.0F38.W0 C6 /1 /vsib,reach,1,SDM 일치 1,거부 1
 4194,VGATHERPF0QPS,VGATHERPF0QPS vm64z {k1},EVEX.512.66.0F38.W0 C7 /1 /vsib,reach,1,SDM 일치 1,거부 1
 4195,VGATHERPF0DPD,VGATHERPF0DPD vm32y {k1},EVEX.512.66.0F38.W1 C6 /1 /vsib,reach,1,SDM 일치 1,거부 1
@@ -4202,14 +4202,14 @@ row_id,mnemonic,instruction,opcode,expected,cases,verdicts_as,verdicts_clang
 4200,VGATHERPF1QPD,VGATHERPF1QPD vm64z {k1},EVEX.512.66.0F38.W1 C7 /2 /vsib,reach,1,SDM 일치 1,거부 1
 4201,VP4DPWSSDS,"VP4DPWSSDS zmm1{k1}{z}, zmm2+3, m128",EVEX.512.F2.0F38.W0 53 /r,reach,4,SDM 일치 4,SDM 일치 4
 4202,VP4DPWSSD,"VP4DPWSSD zmm1{k1}{z}, zmm2+3, m128",EVEX.512.F2.0F38.W0 52 /r,reach,4,SDM 일치 4,SDM 일치 4
-4203,VRCP28PD,"VRCP28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 CA /r,reach,8,SDM 일치 8,SDM 일치 8
-4204,VRCP28SD,"VRCP28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}",EVEX.LLIG.66.0F38.W1 CB /r,reach,6,SDM 일치 6,SDM 일치 6
-4205,VRCP28PS,"VRCP28PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 CA /r,reach,8,SDM 일치 8,SDM 일치 8
-4206,VRCP28SS,"VRCP28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",EVEX.LLIG.66.0F38.W0 CB /r,reach,6,SDM 일치 6,SDM 일치 6
-4207,VRSQRT28PD,"VRSQRT28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 CC /r,reach,8,SDM 일치 8,SDM 일치 8
-4208,VRSQRT28SD,"VRSQRT28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}",EVEX.LLIG.66.0F38.W1 CD /r,reach,6,SDM 일치 6,SDM 일치 6
-4209,VRSQRT28PS,"VRSQRT28PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 CC /r,reach,8,SDM 일치 8,SDM 일치 8
-4210,VRSQRT28SS,"VRSQRT28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",EVEX.LLIG.66.0F38.W0 CD /r,reach,6,SDM 일치 6,SDM 일치 6
+4203,VRCP28PD,"VRCP28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 CA /r,reach,10,SDM 일치 10,SDM 일치 10
+4204,VRCP28SD,"VRCP28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}",EVEX.LLIG.66.0F38.W1 CB /r,reach,8,SDM 일치 8,SDM 일치 8
+4205,VRCP28PS,"VRCP28PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 CA /r,reach,10,SDM 일치 10,SDM 일치 10
+4206,VRCP28SS,"VRCP28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",EVEX.LLIG.66.0F38.W0 CB /r,reach,8,SDM 일치 8,SDM 일치 8
+4207,VRSQRT28PD,"VRSQRT28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}",EVEX.512.66.0F38.W1 CC /r,reach,10,SDM 일치 10,SDM 일치 10
+4208,VRSQRT28SD,"VRSQRT28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}",EVEX.LLIG.66.0F38.W1 CD /r,reach,8,SDM 일치 8,SDM 일치 8
+4209,VRSQRT28PS,"VRSQRT28PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}",EVEX.512.66.0F38.W0 CC /r,reach,10,SDM 일치 10,SDM 일치 10
+4210,VRSQRT28SS,"VRSQRT28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}",EVEX.LLIG.66.0F38.W0 CD /r,reach,8,SDM 일치 8,SDM 일치 8
 4211,VSCATTERPF0DPS,VSCATTERPF0DPS vm32z {k1},EVEX.512.66.0F38.W0 C6 /5 /vsib,reach,1,SDM 일치 1,거부 1
 4212,VSCATTERPF0QPS,VSCATTERPF0QPS vm64z {k1},EVEX.512.66.0F38.W0 C7 /5 /vsib,reach,1,SDM 일치 1,거부 1
 4213,VSCATTERPF0DPD,VSCATTERPF0DPD vm32y {k1},EVEX.512.66.0F38.W1 C6 /5 /vsib,reach,1,SDM 일치 1,거부 1

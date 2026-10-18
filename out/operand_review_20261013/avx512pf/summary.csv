@@ -1,0 +1,17 @@
+mnemonic,index,att_rc,intel_rc,intel_sized_rc,intel_features_rc,att_hex,intel_disasm,roundtrip_rc,gnu_rc,gnu_hex,byte_agreement
+vgatherpf0dps,zmm0,0,1,1,1,62f27d49c60c00,"vgatherpf0dps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c60c00,True
+vgatherpf0qps,zmm0,0,1,1,1,62f27d49c70c00,"vgatherpf0qps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c70c00,True
+vgatherpf0dpd,ymm0,0,1,1,1,62f2fd49c60c00,"vgatherpf0dpd	{k1}, qword ptr [rax + ymm0]",1,0,62f2fd49c60c00,True
+vgatherpf0qpd,zmm0,0,1,1,1,62f2fd49c70c00,"vgatherpf0qpd	{k1}, qword ptr [rax + zmm0]",1,0,62f2fd49c70c00,True
+vgatherpf1dps,zmm0,0,1,1,1,62f27d49c61400,"vgatherpf1dps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c61400,True
+vgatherpf1qps,zmm0,0,1,1,1,62f27d49c71400,"vgatherpf1qps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c71400,True
+vgatherpf1dpd,ymm0,0,1,1,1,62f2fd49c61400,"vgatherpf1dpd	{k1}, qword ptr [rax + ymm0]",1,0,62f2fd49c61400,True
+vgatherpf1qpd,zmm0,0,1,1,1,62f2fd49c71400,"vgatherpf1qpd	{k1}, qword ptr [rax + zmm0]",1,0,62f2fd49c71400,True
+vscatterpf0dps,zmm0,0,1,1,1,62f27d49c62c00,"vscatterpf0dps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c62c00,True
+vscatterpf0qps,zmm0,0,1,1,1,62f27d49c72c00,"vscatterpf0qps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c72c00,True
+vscatterpf0dpd,ymm0,0,1,1,1,62f2fd49c62c00,"vscatterpf0dpd	{k1}, qword ptr [rax + ymm0]",1,0,62f2fd49c62c00,True
+vscatterpf0qpd,zmm0,0,1,1,1,62f2fd49c72c00,"vscatterpf0qpd	{k1}, qword ptr [rax + zmm0]",1,0,62f2fd49c72c00,True
+vscatterpf1dps,zmm0,0,1,1,1,62f27d49c63400,"vscatterpf1dps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c63400,True
+vscatterpf1qps,zmm0,0,1,1,1,62f27d49c73400,"vscatterpf1qps	{k1}, dword ptr [rax + zmm0]",1,0,62f27d49c73400,True
+vscatterpf1dpd,ymm0,0,1,1,1,62f2fd49c63400,"vscatterpf1dpd	{k1}, qword ptr [rax + ymm0]",1,0,62f2fd49c63400,True
+vscatterpf1qpd,zmm0,0,1,1,1,62f2fd49c73400,"vscatterpf1qpd	{k1}, qword ptr [rax + zmm0]",1,0,62f2fd49c73400,True

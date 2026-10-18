@@ -1,0 +1,11 @@
+$ python3 scripts/asm_linter.py 'call word ptr [rax]'
+[GNU as 거부] call word ptr [rax]
+  후보 SDM 행 1개 - 후보가 모두 64비트 무효(거부돼야 함)
+      226  CALL r/m16                           FF /2                      N.E.   원문 확정
+  GNU as   SDM 일치(거부)         -
+    input.s: Assembler messages:
+    input.s:4: Error: operand type mismatch for `call'
+  clang    다른 행으로 수용          ff18  -> 행 232
+  SDM 대조: SDM과 다른 도구가 있음 (인코딩 필드 대조, 실행 의미 아님)
+집계: rejected=1
+종료 코드 1. 0도 전체 ISA 적합성이나 CPU 실행 안전성을 보증하지 않습니다.

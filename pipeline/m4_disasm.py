@@ -45,6 +45,7 @@ sys.path.insert(0, ROOT)
 from pipeline import disasm_rules as D  # noqa: E402
 from pipeline import toolchain as T  # noqa: E402
 from pipeline import case_rules as R  # noqa: E402
+from pipeline import fp_controls as FP  # noqa: E402
 from pipeline.instruction_check import assemble  # noqa: E402
 
 DISASSEMBLERS = {"objdump": "as", "llvm": "clang"}   # 역어셈블러 -> 다시 조립할 어셈블러
@@ -174,6 +175,9 @@ def decoded_operands(text):
     """역어셈블 오퍼랜드. LLVM은 마스크를 '{k1}, ymmword ptr [...]'처럼 따로 쓰므로 다음 오퍼랜드의 장식으로 붙인다."""
     parts, pending = [], ""
     for part in D.split_operands(text):
+        if part.lower() in FP.CONTROLS:
+            parts.append(part.lower())
+            continue
         if re.fullmatch(r"(\{[^}]*\}\s*)+", part):
             pending += part
         else:
@@ -234,7 +238,11 @@ def reg_positions(isa_row):
 
 def compare_operands(case, decoded_text, folded_imm, reversible, isa_row, reg_width_free=False):
     """오퍼랜드가 같은가. reg_width_free면 SYM039 reg 칸은 범용 레지스터 번호만 본다."""
-    wanted = [D.operand(t) for t in source_operands(case)]
+    source_parts, source_controls, _ = FP.separate(case.get("operands", ""))
+    decoded_parts, decoded_controls, _ = FP.separate(decoded_text)
+    if source_controls != decoded_controls:
+        return False
+    wanted = [D.operand(t) for t in source_parts]
     bits = sdm_memory_bits(isa_row)
     if len(bits) == len(wanted):
         for op, sdm in zip(wanted, bits):        # 원문 폭이 있으면 생성 철자(fword 등) 대신 원문 폭과 비교
@@ -242,7 +250,7 @@ def compare_operands(case, decoded_text, folded_imm, reversible, isa_row, reg_wi
                 op["bits"] = sdm
     if folded_imm:
         wanted = wanted[:-1]
-    got = [D.operand(t) for t in decoded_operands(decoded_text)]
+    got = [D.operand(t) for t in decoded_operands(", ".join(decoded_parts))]
     got, wanted = drop_implicit(got, wanted, isa_row)
     free = reg_positions(isa_row) if reg_width_free and not reversible else set()
 
