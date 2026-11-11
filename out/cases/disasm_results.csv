@@ -4511,10 +4511,10 @@ case_id,row_id,instruction,opcode,source,bytes,bytes_from,verdict_objdump,text_o
 1350-1,1350,"MOVSX r64, r/m16",REX.W + 0F BF /r,"movsx rcx, word ptr [rax]",480fbf08,as,SDM 일치,"movsx  rcx,WORD PTR [rax]",480fbf08,SDM 일치,"movsx	rcx, word ptr [rax]",480fbf08
 1350-2,1350,"MOVSX r64, r/m16",REX.W + 0F BF /r,"movsx rcx, word ptr [rax+rbx*4+0x10]",480fbf4c9810,as,SDM 일치,"movsx  rcx,WORD PTR [rax+rbx*4+0x10]",480fbf4c9810,SDM 일치,"movsx	rcx, word ptr [rax + 4*rbx + 16]",480fbf4c9810
 1350-3,1350,"MOVSX r64, r/m16",REX.W + 0F BF /r,"movsx rcx, word ptr [rip+0x10]",480fbf0d10000000,as,SDM 일치,"movsx  rcx,WORD PTR [rip+0x10]        # 0x18",480fbf0d10000000,SDM 일치,"movsx	rcx, word ptr [rip + 16]",480fbf0d10000000
-1351-0,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, dx",6663ca,as,오퍼랜드 다름,"movsxd cx,edx",거부,오퍼랜드 다름,"movsxd	cx, edx",거부
-1351-1,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rax]",666308,as,오퍼랜드 다름,"movsxd cx,DWORD PTR [rax]",거부,오퍼랜드 다름,"movsxd	cx, dword ptr [rax]",거부
-1351-2,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rax+rbx*4+0x10]",66634c9810,as,오퍼랜드 다름,"movsxd cx,DWORD PTR [rax+rbx*4+0x10]",거부,오퍼랜드 다름,"movsxd	cx, dword ptr [rax + 4*rbx + 16]",거부
-1351-3,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rip+0x10]",66630d10000000,as,오퍼랜드 다름,"movsxd cx,DWORD PTR [rip+0x10]        # 0x17",거부,오퍼랜드 다름,"movsxd	cx, dword ptr [rip + 16]",거부
+1351-0,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, dx",6663ca,as,SDM 일치,"movsxd cx,dx",6663ca,오퍼랜드 다름,"movsxd	cx, edx",거부
+1351-1,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rax]",666308,as,SDM 일치,"movsxd cx,WORD PTR [rax]",666308,오퍼랜드 다름,"movsxd	cx, dword ptr [rax]",거부
+1351-2,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rax+rbx*4+0x10]",66634c9810,as,SDM 일치,"movsxd cx,WORD PTR [rax+rbx*4+0x10]",66634c9810,오퍼랜드 다름,"movsxd	cx, dword ptr [rax + 4*rbx + 16]",거부
+1351-3,1351,"MOVSXD r16, r/m16",63 /r,"movsxd cx, word ptr [rip+0x10]",66630d10000000,as,SDM 일치,"movsxd cx,WORD PTR [rip+0x10]        # 0x17",66630d10000000,오퍼랜드 다름,"movsxd	cx, dword ptr [rip + 16]",거부
 1352-0,1352,"MOVSXD r32, r/m32",63 /r,"movsxd ecx, edx",63ca,as,SDM 일치,"movsxd ecx,edx",63ca,SDM 일치,"movsxd	ecx, edx",거부
 1352-1,1352,"MOVSXD r32, r/m32",63 /r,"movsxd ecx, dword ptr [rax]",6308,as,SDM 일치,"movsxd ecx,DWORD PTR [rax]",6308,SDM 일치,"movsxd	ecx, dword ptr [rax]",거부
 1352-2,1352,"MOVSXD r32, r/m32",63 /r,"movsxd ecx, dword ptr [rax+rbx*4+0x10]",634c9810,as,SDM 일치,"movsxd ecx,DWORD PTR [rax+rbx*4+0x10]",634c9810,SDM 일치,"movsxd	ecx, dword ptr [rax + 4*rbx + 16]",거부

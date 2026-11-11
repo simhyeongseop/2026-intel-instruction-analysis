@@ -20,6 +20,7 @@ import collections
 import csv
 import json
 import os
+import random
 import re
 import sys
 
@@ -29,6 +30,7 @@ sys.path.insert(0, ROOT)
 from pipeline import case_rules as R  # noqa: E402
 from pipeline.operand_size_prefix import required_size  # noqa: E402
 from pipeline import fp_controls as FP  # noqa: E402
+from pipeline import att_syntax as ATT  # noqa: E402
 from pipeline import sdm_review_compare as cmp  # noqa: E402
 
 ISA_DB = os.path.join(ROOT, "data/db/isa_db.csv")
@@ -40,7 +42,8 @@ TRUSTED = ("원문 확정", "예외 등록·실측 확인", "원문 확정(완�
 ASM_HEADER = (".intel_syntax noprefix\n.Ltarget:\n"
               ".set .Ltarget32, .Ltarget + 4096\n.set .Ltarget16, .Ltarget + 4096\n")
 COLUMNS = ["case_id", "row_id", "mnemonic", "instruction", "opcode", "mode_support", "cpuid_flag", "row_status",
-           "spec_trusted", "expected", "alias_rows", "variant", "source", "operands", "shape", "evidence", "notes"]
+           "spec_trusted", "expected", "alias_rows", "variant", "source", "source_att", "operands", "shape", "evidence",
+           "notes"]
 
 
 def read_csv(path):
@@ -124,7 +127,8 @@ def operand_choices(symbol, row, regs):
     relative = re.fullmatch(r"rel(8|16|32)", part)
     if relative:
         label = ".Ltarget" if relative.group(1) == "8" else ".Ltarget" + relative.group(1)
-        return [("rel", label, "SYM023/024")], notes
+        return [("rel", R.EXTERNAL_TARGET, "SYM023/024 + 외부 기호(재배치)"),
+                ("rel", label, "SYM023/024 + 같은 파일 라벨")], notes
     if part in R.FAR_POINTER_IMMEDIATE:
         return [("far_ptr", R.FAR_POINTER_IMMEDIATE[part], "SYM025")], notes
     moffs = re.fullmatch(r"moffs(8|16|32|64)", part)
@@ -221,13 +225,17 @@ def address_forms(row, case_operands):
     return ["base", "sib", "rip"]
 
 
+ALL_ADDRESSES = dict(R.ADDRESS_FORMS, **R.ADDRESS_BOUNDARY, **R.RIP_BOUNDARY, **R.EVEX_DISP_BOUNDARY)
+
+
 def fill_address(text, row, form):
+    """form: 주소 형태 이름(ALL_ADDRESSES) 또는 '['로 시작하는 주소 그대로(랜덤 변형)."""
     name = row["name"]
     if name in R.STRING_NAMES:
         return text
     if name == "XLAT":
         return text.replace("{addr}", "[rbx]")          # XLAT 절: DS:(E/R)BX
-    return text.replace("{addr}", R.ADDRESS_FORMS[form])
+    return text.replace("{addr}", form if form.startswith("[") else ALL_ADDRESSES[form])
 
 
 def string_addresses(row, operands):
@@ -236,8 +244,12 @@ def string_addresses(row, operands):
     return [op.replace("{addr}", next(addresses)) if "{addr}" in op else op for op in operands]
 
 
-def build_row_cases(row, regs):
-    """한 행 -> [(variant, operand 텍스트 목록, 근거 목록, notes)]."""
+def build_row_cases(row, regs, excluded=None, extra=None):
+    """한 행 -> [(variant, operand 텍스트 목록, 근거 목록, notes)].
+
+    excluded: 그 행에서 값 오퍼랜드로 쓰지 않는 레지스터(excluded_registers). extra: {'seed': .., 'random': N}이면
+    대표 변형 뒤에 경계값·랜덤 변형(add_value_variants)을 붙인다. None이면 이전과 같은 케이스만 만든다.
+    """
     per_operand, notes = [], []
     for symbol in row["symbols"]:
         choices, note = operand_choices(symbol, row, regs)
@@ -252,11 +264,12 @@ def build_row_cases(row, regs):
     keep_mask = "GATHER" in row["name"] or "SCATTER" in row["name"]   # SYM072: gather는 aaa != 0
     cases = []
 
-    def add(variant, picks, form="base", with_mask=keep_mask):
+    def add(variant, picks, form="base", with_mask=keep_mask, mask_names=None):
         texts, evidence, shapes = [], [], []
         for index, ((symbol, _), (kind, text, source)) in enumerate(zip(per_operand, picks)):
             if index in masks and with_mask:
                 mask, zeroing = masks[index]
+                mask = (mask_names or {}).get(index, mask)
                 is_memory_dest = "[" in text or "{addr}" in text
                 text += " {%s}" % mask + ("{z}" if zeroing and not is_memory_dest and not keep_mask else "")
             texts.append(text)
@@ -296,7 +309,233 @@ def build_row_cases(row, regs):
             add("mask" if alt == 0 else "mask:alt%d" % alt, picks, address_forms(row, picks)[:1][0]
                 if any("{addr}" in p[1] for p in picks) and address_forms(row, picks) else "base", with_mask=True)
     add_fp_controls(row, per_operand, base, masks, keep_mask, add, cases)
+    if extra is not None:
+        add_value_variants(row, per_operand, masks, keep_mask, set(excluded or ()), add, extra)
     return cases, notes
+
+
+# ---------- 경계값·랜덤 변형 (2026-11-11 교수님 미팅: 문법마다 1개가 아니라 값을 늘려 트리아지) ----------
+
+FIXED_FAMILIES = ("ST(i)", "Sreg", "CR0–CR7", "DR0–DR7")   # 값 범위가 의미를 바꾸는 레지스터는 대표값 유지
+
+
+def register_family_of(name):
+    """고른 레지스터 이름 -> case_rules.REGISTER_LISTS 이름. xmm16~31 등 EVEX 확장도 같은 계열."""
+    vector = re.fullmatch(r"([xyz]mm)(\d+)", name)
+    if vector:
+        return vector.group(1)
+    for family, (_, names) in R.REGISTER_LISTS.items():
+        if name in names:
+            return family
+    return None
+
+
+def register_pool(family, row):
+    """경계·랜덤 변형에서 고를 수 있는 레지스터. EVEX 행의 벡터는 32개(R.EVEX_VECTOR), r8은 ah~bh 제외."""
+    if family is None or family in FIXED_FAMILIES:
+        return []
+    if family in ("xmm", "ymm", "zmm") and row["opcode"].startswith("EVEX"):
+        return ["%s%d" % (family, n) for n in range(R.EVEX_VECTOR[1])]
+    names = list(R.REGISTER_LISTS[family][1])
+    if family == "zmm" and not row["opcode"].startswith("EVEX"):
+        names = names[:16]
+    return [n for n in names if n not in R.HIGH_BYTE[1]]
+
+
+def variable_register(symbol, kind):
+    """값을 바꿔도 되는 레지스터 자리인가. 짝·묶음 레지스터(k1+1, zmm2+3)는 표 규칙이 있어 그대로 둔다."""
+    return kind == "reg" and "+" not in R.clean_symbol(symbol)
+
+
+class Picker:
+    """한 변형 안에서 물리 레지스터가 겹치지 않게 고른다."""
+
+    def __init__(self, excluded):
+        self.used = set(physical(name) for name in excluded)
+
+    def free(self, names):
+        return [n for n in names if physical(n) not in self.used]
+
+    def mark(self, name):
+        self.used.add(physical(name))
+        return name
+
+
+def signed_hex(value):
+    return "-0x%x" % -value if value < 0 else "0x%x" % value
+
+
+def random_immediate(symbol, rng):
+    """SYM030~033 범위의 부호 있는 값. 더 좁은 폭(IMMEDIATE_NARROWER)에 들어가는 값은 다시 뽑는다."""
+    bits, narrow = R.IMMEDIATE_RANGE[symbol], R.IMMEDIATE_NARROWER[symbol]
+    while True:
+        value = rng.randint(-(1 << (bits - 1)), (1 << (bits - 1)) - 1)
+        if not narrow or not -(1 << (narrow - 1)) <= value < (1 << (narrow - 1)):
+            return signed_hex(value)
+
+
+GPR64 = ["rax", "rcx", "rdx", "rbx", "rsp", "rbp", "rsi", "rdi"] + ["r%d" % n for n in range(8, 16)]
+
+
+def random_displacement(rng):
+    width = rng.choice([0, 8, 32])
+    if not width:
+        return 0
+    return rng.randint(-(1 << (width - 1)), (1 << (width - 1)) - 1)
+
+
+def address_text(base=None, index=None, scale=1, disp=0):
+    parts = ([base] if base else []) + (["%s*%d" % (index, scale)] if index else [])
+    text = "+".join(parts)
+    if disp or not parts:
+        text += ("-0x%x" % -disp if disp < 0 else ("+" if parts else "") + "0x%x" % disp)
+    return "[" + text + "]"
+
+
+def random_address(forms, needs_index, rng, picker):
+    """랜덤 주소. forms: address_forms() 결과(rip만, base·sib, 셋 다). 주소 레지스터는 값 레지스터와 겹치지 않게 표시."""
+    if forms == ["rip"] or ("rip" in forms and not needs_index and rng.random() < 0.15):
+        disp = rng.randint(-(1 << 31), (1 << 31) - 1)
+        return "[rip%s]" % ("-0x%x" % -disp if disp < 0 else "+0x%x" % disp)
+    base = picker.mark(rng.choice(picker.free(GPR64)))
+    index = None
+    if needs_index or rng.random() < 0.5:
+        index = picker.mark(rng.choice([r for r in picker.free(GPR64) if r != "rsp"]))
+        if not needs_index and rng.random() < 0.2:
+            base = None                                   # 기준 없는 SIB(색인만, disp32)
+    disp = random_displacement(rng)
+    if base is None and not disp:
+        disp = rng.randint(1, 0x7fffffff)
+    return address_text(base, index, rng.choice([1, 2, 4, 8]) if index else 1, disp)
+
+
+def vsib_text(template_or_none, index, rng=None, picker=None):
+    """VSIB 주소. 템플릿(VSIB_BOUNDARY) 또는 랜덤 기준·배율·변위."""
+    if template_or_none:
+        return template_or_none.replace("{v}", index)
+    base = picker.mark(rng.choice(picker.free(GPR64)))
+    return address_text(base, index, rng.choice([1, 2, 4, 8]), random_displacement(rng))
+
+
+def needs_sib(row):
+    return any("sibmem" in s for s in row["symbols"]) or any(R.clean_symbol(s) == "mib" for s in row["symbols"])
+
+
+def boundary_addresses(row, forms):
+    """주소 경계 이름 목록(case_rules.ADDRESS_BOUNDARY 등). 원문이 주소 형태를 정한 행은 그 안에서만."""
+    if not forms:
+        return []
+    if forms == ["rip"]:
+        return list(R.RIP_BOUNDARY)
+    if needs_sib(row):
+        return list(R.SIB_REQUIRED_BOUNDARY)
+    names = list(R.ADDRESS_BOUNDARY)
+    if "rip" in forms:
+        names += list(R.RIP_BOUNDARY)
+    if row["opcode"].startswith("EVEX"):
+        names += list(R.EVEX_DISP_BOUNDARY)
+    return names
+
+
+def add_value_variants(row, per_operand, masks, keep_mask, excluded, add, extra):
+    """경계값 변형(hi, h8, imm:값, addr:이름)과 시드 랜덤 변형(randN)을 붙인다. 오퍼랜드 형식은 대표 변형과 같다."""
+    symbols = [s for s, _ in per_operand]
+    base = [c[0] for _, c in per_operand]
+    mask_with = keep_mask or bool(masks)
+    # hi: 각 레지스터 자리에 목록 끝(번호가 가장 큰) 레지스터, 쓰기 마스크 k7(REX.R/B·EVEX.R'/V' 경계)
+    picker, picks, changed = Picker(excluded), [], False
+    for symbol, (kind, text, source) in zip(symbols, base):
+        if variable_register(symbol, kind):
+            pool = picker.free(register_pool(register_family_of(text), row))
+            if pool:
+                text, changed = picker.mark(pool[-1]), True
+        picks.append((kind, text, source))
+    picks = [(k, vsib_text("[rax+{v}]", picker.mark(picker.free(register_pool(re.search(r"([xyz]mm)\d+", t).group(1),
+                                                                                 row))[-1])), s)
+             if k == "vsib" else (k, t, s) for k, t, s in picks]
+    changed = changed or any(k == "vsib" for k, _, _ in picks)
+    if changed:
+        add("hi", picks, first_form(row, picks), with_mask=mask_with,
+            mask_names={i: picker.mark(picker.free(R.WRITEMASKS[1])[-1]) for i in masks})
+    # h8: ah~bh(SYM026). REX와 같이 쓸 수 없으므로 r64·REX.W가 없는 행만
+    families = [register_family_of(t) for k, t, _ in base if k == "reg"]
+    if "r8" in families and "r64" not in families and "REX" not in row["opcode"]:
+        picker, picks = Picker(excluded), []
+        for symbol, (kind, text, source) in zip(symbols, base):
+            if variable_register(symbol, kind) and register_family_of(text) == "r8":
+                free = picker.free(R.HIGH_BYTE[1])
+                text = picker.mark(free[0]) if free else text
+            elif kind == "reg":
+                picker.mark(text)
+            picks.append((kind, text, source))
+        if picks != base:
+            add("h8", picks, first_form(row, picks))
+    # imm:값 -- 모든 즉시값 자리에 그 기호의 경계값 k번째
+    imm_symbols = [R.clean_symbol(s) for s, (k, _, _) in zip(symbols, base) if k == "imm"]
+    if imm_symbols:
+        count = max(len(R.IMMEDIATE_BOUNDARY[s]) for s in imm_symbols)
+        for k in range(count):
+            picks = [(kind, R.IMMEDIATE_BOUNDARY[R.clean_symbol(s)][k % len(R.IMMEDIATE_BOUNDARY[R.clean_symbol(s)])]
+                      if kind == "imm" else text, source) for s, (kind, text, source) in zip(symbols, base)]
+            add("imm:" + "/".join(t for kind, t, _ in picks if kind == "imm"), picks, first_form(row, picks))
+    # addr:이름 -- 메모리 자리가 있는 첫 대안(일반 메모리 우선)에 주소 경계
+    memory_alt = first_memory_alt(per_operand)
+    if memory_alt is not None:
+        picks = [c[memory_alt] if memory_alt < len(c) else c[0] for _, c in per_operand]
+        vsib_at = [i for i, (k, _, _) in enumerate(picks) if k == "vsib"]
+        if vsib_at:
+            for name, template in R.VSIB_BOUNDARY.items():
+                index = re.search(r"[xyz]mm\d+", picks[vsib_at[0]][1]).group(0)
+                trial = list(picks)
+                trial[vsib_at[0]] = ("vsib", vsib_text(template, index), picks[vsib_at[0]][2])
+                add("addr:" + name, trial, "base", with_mask=keep_mask)
+        else:
+            for name in boundary_addresses(row, address_forms(row, picks)):
+                add("addr:" + name, picks, name)
+    # randN -- 시드 랜덤(행 번호·순번으로 재현). 대안·레지스터·즉시값·주소·마스크를 함께 뽑는다
+    width = max(len(c) for _, c in per_operand)
+    for number in range(extra.get("random", 0)):
+        rng = random.Random("%s:%s:%d" % (extra.get("seed", 0), row["row_id"], number))
+        alt = rng.randrange(width)
+        picks = [c[alt] if alt < len(c) else c[0] for _, c in per_operand]
+        picker = Picker(excluded)
+        for symbol, (kind, text, _) in zip(symbols, picks):   # 고정 레지스터·문자열 주소 레지스터는 먼저 표시
+            if not variable_register(symbol, kind):
+                for name in re.findall(r"[a-z]+\d*[a-z]?", text):
+                    if name in R.GPR_NUMBER:
+                        picker.mark(name)
+        forms = address_forms(row, picks) if any("{addr}" in t for _, t, _ in picks) else []
+        address = random_address(forms, needs_sib(row), rng, picker) if forms else "base"
+        chosen = []
+        for symbol, (kind, text, source) in zip(symbols, picks):
+            if variable_register(symbol, kind):
+                pool = picker.free(register_pool(register_family_of(text), row))
+                text = picker.mark(rng.choice(pool)) if pool else text
+            elif kind == "imm":
+                text = random_immediate(R.clean_symbol(symbol), rng)
+            elif kind == "vsib":
+                family = re.search(r"([xyz]mm)\d+", text).group(1)
+                text = vsib_text(None, picker.mark(rng.choice(picker.free(register_pool(family, row)))), rng, picker)
+            chosen.append((kind, text, source))
+        with_mask = keep_mask or (bool(masks) and rng.random() < 0.5)
+        names = {i: picker.mark(rng.choice(picker.free(R.WRITEMASKS[1]))) for i in masks}
+        add("rand%d" % number, chosen, address, with_mask=with_mask, mask_names=names)
+
+
+def first_memory_alt(per_operand):
+    """메모리 자리가 있는 첫 대안 번호(일반 메모리·VSIB 우선, 없으면 브로드캐스트). 없으면 None."""
+    width = max(len(c) for _, c in per_operand)
+    for wanted in (("mem", "vsib", "string_mem", "moffs"), ("bcst",)):
+        for alt in range(width):
+            picks = [c[alt] if alt < len(c) else c[0] for _, c in per_operand]
+            if any(k in wanted and ("{addr}" in t or k == "vsib") for k, t, _ in picks):
+                return alt
+    return None
+
+
+def first_form(row, picks):
+    forms = address_forms(row, picks) if any("{addr}" in t for _, t, _ in picks) else []
+    return forms[0] if forms else "base"
 
 
 def add_fp_controls(row, per_operand, base, masks, keep_mask, add, cases):
@@ -381,31 +620,29 @@ def apply_row_spelling(row):
     if spelling and not row["symbols"] and required_size(row["isa"]) == 16:
         row["asm_prefix"], row["asm_mnemonic"] = spelling[0], spelling[1]
         notes.append("16비트 행 철자: " + spelling[2])
-    if row["name"] == "XBEGIN" and symbol == "rel16":
-        row["asm_prefix"] = "data16"
-        notes.append("XBEGIN rel16: 64비트 모드에서 유효(표), data16으로 16비트 꼬리를 고름")
-    if any(re.fullmatch(r"moffs\d+", R.clean_symbol(s)) for s in row["symbols"]):
-        row["asm_mnemonic"] = "movabs"
-        has_rax = any(R.clean_symbol(s) == "RAX" for s in row["symbols"])
-        row["asm_prefix"] = "rex64" if "REX.W" in row["opcode"] and not has_rax else ""
-        notes.append("moffs: 64비트 절대 주소는 movabs 철자(GNU), REX.W 행은 rex64")
+    # XBEGIN rel16의 data16, moffs의 movabs·rex64 철자는 2026-11-11에 뺐다(매뉴얼 문법만, case_rules.ROW_SPELLINGS 주석).
+    # 64비트 절대 주소 'mov al, byte ptr [0x123456789abcdef0]'는 두 도구 모두 A0 moffs로 조립한다(2026-11-11 관측).
     return rule[2] if rule else "", notes
 
 
-def generate(rows):
+def generate(rows, extra=None):
+    """extra: {'seed': 정수, 'random': 행마다 랜덤 변형 수}. None이면 경계·랜덤 변형 없이 대표 변형만."""
     by_mnemonic = collections.defaultdict(list)
     for row in rows:
         by_mnemonic[row["name"]].append(row["symbols"])
     cases = []
     for row in rows:
         fixed_operand, notes = apply_row_spelling(row)
-        regs = RowRegisters(excluded_registers(row["name"], by_mnemonic[row["name"]]))
+        excluded = excluded_registers(row["name"], by_mnemonic[row["name"]])
+        regs = RowRegisters(excluded)
         if fixed_operand:
             built = [("base", [fixed_operand], ["%s=mem(SYM046)" % R.clean_symbol(row["symbols"][0])], [fixed_operand])]
             more = []
         else:
-            built, more = build_row_cases(row, regs)
+            built, more = build_row_cases(row, regs, excluded, extra)
         valid = row["isa"]["mode_support"] == "Valid"
+        seen = set()     # 같은 행에서 같은 소스가 된 변형은 처음 것만
+        built = [b for b in built if not (source_line(row, b[1]) in seen or seen.add(source_line(row, b[1])))]
         for number, (variant, operands, evidence, shapes) in enumerate(built):
             cases.append({
                 "case_id": "%d-%d" % (row["row_id"], number), "row_id": row["row_id"],
@@ -421,12 +658,21 @@ def generate(rows):
             })
     mark_aliases(cases)
     mark_far_pointer_aliases(cases)
+    ambiguous = ATT.ambiguous_keys(c["source"] for c in cases)
+    for case in cases:   # 원본 Intel 소스를 AT&T로 직접 바꾼 소스(pipeline/att_syntax.py). 못 바꾸면 비우고 이유를 notes에
+        try:
+            case["source_att"] = ATT.convert(case["source"], ambiguous)
+        except ATT.Unsupported as error:
+            case["source_att"] = ""
+            case["notes"] = "; ".join(filter(None, [case["notes"], "AT&T 변환 안 함: " + str(error)]))
     return cases
 
 
 def alias_key(case):
-    """같은 문법인지 비교하는 열쇠. 먼 라벨(.Ltarget16/.Ltarget32)은 같은 라벨 문법으로 본다."""
-    return re.sub(r"\.Ltarget(16|32)\b", ".LtargetFAR", case["shape"]).lower()
+    """같은 문법인지 비교하는 열쇠. 먼 라벨(.Ltarget16/.Ltarget32)은 같은 라벨 문법으로 본다.
+    숫자는 값으로 비교한다(경계값 '0x1'과 1비트 시프트 행의 표 값 '1'은 같은 소스, 2026-11-11)."""
+    key = re.sub(r"\.Ltarget(16|32)\b", ".LtargetFAR", case["shape"]).lower()
+    return re.sub(r"(?<![\w.])(-?)(0x[0-9a-f]+|\d+)\b", lambda m: str(int(m.group(1) + m.group(2), 0)), key)
 
 
 def mark_aliases(cases):
@@ -485,8 +731,16 @@ def write_outputs(cases, out_dir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out", default=OUT_DIR)
+    parser.add_argument("--values", action="store_true",
+                        help="경계값·시드 랜덤 변형을 붙인다(2026-11-11 설계). 없으면 대표 변형만")
+    parser.add_argument("--seed", type=int, default=20261111)
+    parser.add_argument("--random", type=int, default=3, help="--values일 때 행마다 랜덤 변형 수")
     args = parser.parse_args()
-    summary = write_outputs(generate(load_rows()), args.out)
+    extra = {"seed": args.seed, "random": args.random} if args.values else None
+    summary = write_outputs(generate(load_rows(), extra), args.out)
+    summary["values"] = extra
+    with open(os.path.join(args.out, "generate_summary.json"), "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, ensure_ascii=False, indent=1)
     print(json.dumps(summary, ensure_ascii=False))
 
 

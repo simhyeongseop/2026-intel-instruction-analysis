@@ -171,6 +171,12 @@ class LiveToolTests(unittest.TestCase):
         codes = [f['code'] for f in row['findings']]
         self.assertEqual('far_pointer_display' in codes, 'FWORD PTR' in display)
 
+    def test_objdump_uses_intel64_like_as(self):
+        # SDM 66 63 /r = MOVSXD r16, r/m16. 기본(AMD64) 해석이면 'movsxd cx,edx'로 나온다.
+        row = assemble(HEADER + 'movsxd cx, dx\n')
+        self.assertEqual(row['bytes'], '6663ca')
+        self.assertEqual(row['instructions'][0]['text'].split(), ['movsxd', 'cx,dx'])
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

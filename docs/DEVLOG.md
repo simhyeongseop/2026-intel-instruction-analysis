@@ -1389,3 +1389,76 @@ clang 관측은 `verify_clang_2026-09-21.json`을 쓴다.
 - TOOL_GUIDE의 남아 있던 ER/SAE 미지원 설명을 현재 구현과 맞췄다. 코드·DB·실험 결과는 변경하지 않았고 조립·CPU 실험이나 회귀 테스트를 재실행하지 않았다. 기존 156개 통과 기록은 별도 날짜의 검증으로 명시했다.
 - 문서 검증: README 로컬 링크 25개 존재 확인, Mermaid 블록 2개 확인, ADC 예제의 입력·행·바이트·두 도구 판정을 원본 CSV와 대조, 기존 CLI 캡처 시각 확인, `git diff --check` 통과. Mermaid의 브라우저 렌더링은 별도로 실행하지 않았다.
 - 게시 요청: 사용자가 문서 변경의 push와 main 머지를 승인했다. 작업 브랜치 `sdm-review-093`를 PR #1이 머지된 `origin/main`으로 fast-forward한 뒤, 문서 4개만 새 PR에 포함한다. 로컬 링크 25개와 `git diff --check`를 다시 확인했다. 문서 변경이므로 코드 회귀는 반복 실행하지 않았다.
+
+## 2026-10-20 AVX512PF 이슈 등록 준비
+- 사용자가 LLVM 이슈 등록을 위임했다. 기존 초안에 PR #122051의 구체적 수정 제안 댓글 링크와 Godbolt 버전을 반영했다.
+- 공개 GitHub 이슈에서 vgatherpf0dps를 검색했고 동일 Intel 문법 추적 이슈는 결과에 없었다. 최신 main 빌드 재현 검사는 하지 않았다.
+- 등록은 GitHub CLI 인증 만료 및 브라우저 미로그인으로 중단됐다. 사용자 로그인 후 계속하며 아직 이슈는 생성하지 않았다.
+
+
+## 2026-10-20 AVX512PF 이슈 제출 완료
+- 로그인 후 재개 요청을 받아 앱 브라우저에서 LLVM #233852를 등록했다: https://github.com/llvm/llvm-project/issues/233852 . 계정 simhyeongseop, 생성 후 Open과 본문 확인.
+- 공개 본문은 재현 명령·바이트·진단·범위·원문 위치·기존 PR 댓글·Godbolt 링크를 포함한다. 로컬 전용 상대 링크는 제외했다. 최신 main이나 패치 빌드 검증을 수행했다고 주장하지 않았다.
+- 소스 변경·CPU 실행·커밋 없음. 화면 증거 docs/issues/llvm-avx512pf-233852.png.
+
+
+## 2026-10-20 AVX512PF 해결 코드 및 실제 LLVM 빌드
+- 목적: 이슈 #233852의 Intel mask-before-memory 정의를 고치고 실제 빌드로 검증. 최신 main 커밋 74a120bff99f527087d231e14844b384a7dc1131에 같은 결함 정의가 있음을 확인했다.
+- 결과물: patches/llvm-avx512pf-intel-mask/llvm-avx512pf-intel-mask.patch . 공통 정의의 Intel 분기만 메모리 뒤 마스크로 바꾸며 AT&T 분기 유지. 회귀 파일 avx512pf-64-intel.s(기존 AT&T 32개 바이트 기반), avx512pf-intel-errors.s(의미 있는 오류 6개).
+- 검증: 격리 WSL 소스/도구 및 X86 LLVM 빌드(Release -O1, assertions ON). 기존 23.1.3에서 Intel 32개 거부·AT&T32 성공; 최종 수정 빌드에서 Intel32/AT&T32/Intel 재조립32의 기대 인코딩 모두 일치. 오브젝트 역어셈블 포함 lit8/8 성공, 건너뜀 없음. 패치 reverse apply check 및 git diff --check 통과.
+- 발견: 바깥 문법 분기를 없앤 단순 문자열 두 형태(기존 PR 댓글의 제안 포함)는 현재 TableGen에서 실제 마스크 중괄호를 잃어 실패했다. FlattenAsmStringVariants가 가장 바깥 중괄호를 문법 선택으로 해석하므로 최종 패치는 분기 유지. 실패 기록은 validation_first_attempt.json, validation_comment_suggestion.json에 보존. llvm-objdump 16진수 출력과 테스트 기대의 차이는 --no-print-imm-hex로 해결하고 그 실패도 보존.
+- 실험 범위/근거: out/avx512pf_fix_20261020/manifest.json, validation_final.json, lit_results.json, baseline.json 및 빌드/검증 스크립트. 기존 전체 파이프라인 결과를 덮어쓰지 않았다. 전체 LLVM suite·CPU 실행은 하지 않았다.
+- 사용자 추가 질문의 봇 댓글 확인: #233852의6292995073은 X86 구독자 멘션과 본문 복사인 자동 알림. Andarwinux가 backend:X86, rejects-valid, Bug를 지정했다. 답장·외부 수정·PR 제출·커밋 없음.
+
+## 2026-10-20 LLVM upstream PR #233869
+- 사용자가 PR 제출을 승인했다. GitHub 브라우저 로그인으로 simhyeongseop/llvm-project fork 생성, 검증된 세 파일만 WSL 격리 LLVM 저장소의 codex/fix-avx512pf-intel-mask에서 커밋했다. b836e813e18e475bb9472762b994a97675654103, 164추가/1삭제.
+- GitHub CLI 인증은 만료됐지만 기존 Windows Git Credential Manager의 인증으로 fork 브랜치를 게시했다. WSL 저장소 경로는 해당 명령에만 safe.directory를 지정했고 전역 설정은 바꾸지 않았다.
+- GitHub 비교 화면에서 1커밋·3파일·정확한 소스 한 줄과 정상/오류 테스트를 검토하고 https://github.com/llvm/llvm-project/pull/233869 를 Open PR로 생성했다. Fixes #233852, 기존 #122051 논의, main 기준 lit8/8 결과, Assisted-by: Codex 표기 포함. 확인된 상태는 자동 검사 대기, 리뷰 없음이며 병합하지 않았다.
+- PR 첨부 도구로 이 작업에 연결. 화면 docs/issues/llvm-avx512pf-pr-233869.png, 패치 안내 README에 PR·커밋·브랜치 기록. 기존 검사 이후 코드 변경은 없으므로 전체 재시험은 하지 않았다.
+
+## 2026-10-21 LLVM PR 상태·CI 실패 분석
+- 사용자 중간 확인 요청으로 #233869의 실제 화면과 Linux/Windows job 로그를 읽었다. 브랜치는 main 후속 변경으로 뒤처졌으나 충돌 없음. KanRobert/phoebewang 리뷰 요청 대기. 표시된 checks는 성공10·실패2·대기1, workflow에는 Latest #2도 표시돼 특정 실패 job 관측과 구분.
+- 양쪽 실제 실패는 기존 MC/Disassembler/X86/apx/evex-format.txt93행 하나이며 수정된 올바른 마스크 위치와 예전 기대값의 불일치다. 원인은 초기 패치에서 기존 테스트 기대값을 누락한 것. Linux의 premerge-advisor timeout은 후속 해설 실패이므로 본 원인으로 오인하지 않았다.
+- 별도 snapshot out/avx512pf_ci_followup_20261021/에서 해당 기대값 갱신 및 같은 버그로 꺼진 APX Intel 조립 예제를 복구했다. 기존 기대바이트 유지. 전체 LLVM test 경로의 prefetch 참조를 검색해 남은 옛 leading-mask 기대값0 확인, 관련 lit10/10 통과. CPU·전체suite 미실행. 후속수정은 로컬이며 커밋·push·댓글 게시 안함.
+- github-actions 신규기여 봇 댓글6293732114의 정책 확인 요청과 llvm.org/docs/AIToolPolicy.html을 확인했다. 작성자 본인이 읽고 검토했다는 사실을 대신 진술하지 않는다. 상세 보고서 docs/issues/llvm_pr_233869_status_20261021.md에 원문 링크·후속diff·검증범위 기록.
+
+## 2026-10-21 PR #233869 테스트 누락 보완 게시
+- 사용자가 수정본 업로드를 요청하여 검증된 APX 테스트2파일을 기존 브랜치에 추가했다. 커밋95243a87ae24d35a27a4cf2c46824bbd999bb645, 4추가/5삭제, Assisted-by: Codex 표기. force push나 main 업데이트 없음.
+- 브라우저에서 기존 PR에2커밋과 후속커밋이 보이는 것 확인. 본문에 APX 기대값/비활성예제 복구 및 lit10/10 결과 추가. PR 첨부도구로 기존작업 연결. 새로운 CI는 관리자 승인 대기(3 workflows awaiting approval)다. 정책을 사용자 대신 읽었다는 답글은 쓰지 않았다.
+- 새 코드 변경 없이 이전별도 snapshot의 검증된 diff 그대로 게시했으므로 재시험 안함. 화면 docs/issues/llvm-avx512pf-pr-233869-updated-20261021.png.
+
+## 2026-10-22 LLVM PR 검토 의견 대응
+- 사용자 승인으로 phoebewang의 리뷰 세 항목에 대응. 커밋 8befa263cfba37949adca405471af0b1f327d56c를 기존 PR #233869에 push했다.
+- avx512pf-64-intel.s: llvm-objdump RUN 제거, 출력 재조립 시험 목적 주석 추가. 핵심 TD 정의는 유지.
+- 제안된 간소화 문자열을 실제 llvm-mc로 다시 빌드한 결과 Intel/AT&T 대표 입력 모두 invalid operand로 실패. FlattenAsmStringVariants가 마스크 중괄호를 문법 선택 그룹으로 처리하는 소스 근거와 재현 입력을 해당 리뷰 답글에 게시했다.
+- 최종 복원 빌드에서 관련 lit 10/10 통과. 증거는 out/avx512pf_review_20261022/ (suggested_results.json, 빌드 로그, lit_results.json, revision.patch). CPU 실행 및 전체 LLVM 시험은 하지 않았다.
+- 세 리뷰 스레드에 각각 답글 게시 확인. PR 본문에서 제거된 object disassembly 검사 설명 정리. 리뷰 스레드를 임의 해결 처리하지 않았다. 새 커밋 CI는 대기/진행 단계이며 이전 커밋의 성공과 구분한다.
+- 정책 읽기 확인 답글은 여전히 게시하지 않았다. 다음은 검토자의 응답 및 새 CI 결과 확인.
+
+## 2026-11-03 5단계 Intel·AT&T 왕복 대조 추가(snapshot)
+- 이유: 연구실 미팅 지시(화이트보드 흐름). 설계는 사용자와 합의 후 구현(같은 계열 왕복, 계열별 자기 바이트·수용 전부, 바이트 다름·명령 같음 별도 그룹, 별도 snapshot).
+- 추가: `pipeline/m5_roundtrip.py`, `tests/test_m5_roundtrip.py`, `docs/PIPELINE.md` 5단계 절. run.py·기존 out/cases는 바꾸지 않았다.
+- 검증: 판정 함수 단위 시험과 손으로 정한 반례(MOV 89/8B 방향 비트, rel 제외, 남은 바이트). objdump가 풀지 못한 바이트를 `.byte`로 내 '바이트 같음'이 되는 문제를 반례 시험이 잡아 고쳤다. WSL 회귀 164개 통과(기존 156 + 8).
+- 실행: `out/roundtrip_20261103/manifest.json`(GNU 2.47, LLVM 23.1.3). 검토 대상 목록은 HANDOFF 같은 날짜 절. 판정은 관측이며 버그 확정·보고는 하지 않았다. CPU 실행 없음.
+- 같은 날 검토: GNU NoRex64 설계(LAR·LSL·MOV Sreg) 후보 제외, MOVSXD는 objdump AMD64 기본 설정 차이, LSS r64 FWORD 출력과 LLVM 먼 간접 분기 Intel 출력 왕복 불일치는 후보 유지. 근거·재현은 HANDOFF 같은 날짜 절. 이슈 제출·코드 변경 없음.
+- 같은 날 사용자 결정: 4·5단계 objdump를 `-M intel64`로(as `-mintel64`와 같은 Intel SDM 해석). 4단계 재실행 변화는 MOVSXD 4케이스뿐, 5단계는 새 snapshot `out/roundtrip_20261103_intel64/`에서 같은 4케이스만 변화. `instruction_check`의 objdump는 그대로. 회귀 166개 통과.
+
+## 2026-11-04 instruction_check Intel64, LLVM PR #233869 머지 확인
+- 변경: `pipeline/instruction_check.py` objdump `-M <syntax>,intel64`(4·5단계와 같은 Intel64 해석, 사용자 지시). 3단계 판정은 objdump 텍스트를 쓰지 않아 결과 불변. 회귀 1개 추가(MOVSXD r16), 전체 통과.
+- PR #233869 머지(2026-10-27, 7b9c6d7) 확인: 머지 커밋 소스로 llvm-mc를 새 폴더에 빌드해 AVX512PF 16케이스 수용·바이트·Intel 출력 재조립 16/16 일치, 대조군 23.1.3은 16/16 거부, 관련 lit 5/5 통과. 근거 `out/avx512pf_main_merge_20261104/`.
+- 사용자 결정: LLVM 먼 간접 CALL·JMP 왕복 불일치, GNU LSS·LFS·LGS r64 FWORD 출력은 오류로 본다. 이슈 제출은 하지 않았다.
+
+## 2026-11-04 12회 발표 원고
+- `docs/presentation/SLIDES_12.md`(12장, 지난 SLIDES.md와 같은 디자인 지시)와 캡처 `captures/7_far_call.*`, `captures/8_lss_fword.*` 추가. 캡처는 LLVM 23.1.3·Binutils 2.47 실제 실행 출력.
+- 표 수치는 `out/roundtrip_20261103_intel64/roundtrip_summary.json`과 대조해 일치 확인. 오류 2건(LLVM 먼 CALL·JMP, GNU LSS FWORD), 설계 8건(NoRex64), 설정 4건(MOVSXD), 미조사 5건으로 구분.
+
+## 2026-11-05 원본 Intel 소스와 최종 Intel 출력 직접 대조
+- 교수님 화이트보드의 `as0` 대 `as2`가 기존 5단계에는 직접 비교로 없었다. 기존 결과 CSV의 최초 Intel 출력과, 바이트가 달라진 경우 저장된 재역어셈블 Intel 출력을 사용해 별도 `scripts/compare_source_roundtrip.py`로 대조했다. 도구는 재실행하지 않았고 `out/roundtrip_source_compare_20261105/`에 CSV·manifest를 기록했다.
+- 원본 Intel 소스와 최종 Intel 출력에서 대소문자 및 쉼표·괄호·주소 연산자 주변 공백만 무시한다. AT&T/Intel 각각의 왕복 경로에 `source_match_*`, `final_intel_*` 열을 둔다. GNU AT&T/Intel 문자열 같음 11,916/11,916, 다름 8,891/8,882, 미대조 104/113. LLVM은 같음 7,224/7,225, 다름 13,517/13,516, 미대조 104/104.
+- `adc al, 0x12` → `adc al, 18`처럼 바이트가 같아도 숫자 표기가 달라 문자열 다름이다. 따라서 이것은 표기 비교이며 ISA·CPU 의미 불일치 판정이 아니다. 기존 `byte_match`·`insn_match`·`verdict`와 함께 해석한다. 재조립 거부·분기 미대조 등은 직접 비교하지 않는다.
+
+## 2026-11-11 실험 설계 수정(교수님 미팅): 외부 라벨, AT&T 직접 변환, 접두어 제거, 경계값·랜덤
+- 이유: 미팅 지적 4가지(상대 주소 비교, 역어셈블·재조립 원인 가르기, 매뉴얼에 없는 접두어 주입이 연구 일관성을 해침, 문법당 1케이스). 사용자 결정: 강제 접두어 모두 제거, 경계값+시드 랜덤, 2~5단계 새 라운드 재실행.
+- 변경: `pipeline/m2_generate.py`(--values/--seed/--random, ext_target, data16·rex64·movabs 철자 삭제, 숫자 값 별칭 비교, source_att), `pipeline/case_rules.py`(경계값 표, REX·EVEX 레지스터 범위), 새 `pipeline/att_syntax.py`, `pipeline/m3_check.py`(강제 접두어 재시도 삭제, AT&T 대조 syntax_*, reloc_*), `pipeline/encoding_audit.py`(외부 기호 재배치 대조), `pipeline/instruction_check.py`(재배치 목록), `pipeline/m4_disasm.py`, `pipeline/m5_roundtrip.py`(target_rewrite, localize_*), 새 `scripts/run_round.py`.
+- 검증: 새 `tests/test_att_syntax.py`, `tests/test_round2_design.py`(손계산 기대값, 고의 고장 2건 검출 확인), 전체 회귀 통과. 2,889케이스 표본 실행으로 변환 규칙 오류(ins/outs 크기 글자, x/y/z 글자, {1toN} 개수 읽기, x87 반전, d→l 이름)를 고쳤다. 남은 AT&T 차이는 HANDOFF 같은 날짜 절.
+- 실행: 전체(106,601케이스) 3단계 도중 두 번 중단(1차 메모리 부족 자동 중단, 2차 사용자 지시로 중단 — GPU 서버로 옮겨 실행 예정). 부분 결과 `out/round2_20261111/`은 커밋하지 않았다.

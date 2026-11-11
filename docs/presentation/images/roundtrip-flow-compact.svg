@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+  <title id="title">Intel 소스 왕복 검사 흐름</title>
+  <desc id="desc">as0에서 b0, as1, b1, as2로 이어지는 흐름과 세 가지 비교를 표시한다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="compareArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .box { fill:#f8fafc; stroke:#334155; stroke-width:2.5; rx:12; }
+      .main { font:700 25px "Noto Sans KR", "Malgun Gothic", sans-serif; fill:#0f172a; text-anchor:middle; }
+      .sub { font:500 17px "Noto Sans KR", "Malgun Gothic", sans-serif; fill:#475569; text-anchor:middle; }
+      .step { fill:none; stroke:#334155; stroke-width:3; marker-end:url(#arrow); }
+      .stepText { font:600 16px "Noto Sans KR", "Malgun Gothic", sans-serif; fill:#334155; text-anchor:middle; }
+      .compare { fill:none; stroke:#2563eb; stroke-width:2.5; stroke-dasharray:7 6; marker-start:url(#compareArrow); marker-end:url(#compareArrow); }
+      .compareText { font:700 18px "Noto Sans KR", "Malgun Gothic", sans-serif; fill:#1d4ed8; text-anchor:middle; paint-order:stroke; stroke:white; stroke-width:7; stroke-linejoin:round; }
+    </style>
+  </defs>
+
+  <!-- Main flow -->
+  <rect class="box" x="30" y="130" width="150" height="76"/>
+  <text class="main" x="105" y="162">as0</text>
+  <text class="sub" x="105" y="188">Intel 원본</text>
+
+  <rect class="box" x="275" y="130" width="130" height="76"/>
+  <text class="main" x="340" y="176">b0</text>
+
+  <rect class="box" x="500" y="130" width="150" height="76"/>
+  <text class="main" x="575" y="162">as1</text>
+  <text class="sub" x="575" y="188">AT&amp;T</text>
+
+  <rect class="box" x="745" y="130" width="130" height="76"/>
+  <text class="main" x="810" y="176">b1</text>
+
+  <rect class="box" x="970" y="130" width="160" height="76"/>
+  <text class="main" x="1050" y="162">as2</text>
+  <text class="sub" x="1050" y="188">AT&amp;T · Intel</text>
+
+  <path class="step" d="M180 168 H275"/>
+  <text class="stepText" x="227" y="151">조립</text>
+  <path class="step" d="M405 168 H500"/>
+  <text class="stepText" x="452" y="151">역어셈블</text>
+  <path class="step" d="M650 168 H745"/>
+  <text class="stepText" x="697" y="151">재조립</text>
+  <path class="step" d="M875 168 H970"/>
+  <text class="stepText" x="922" y="151">다시 풀기</text>
+
+  <!-- Three comparisons -->
+  <path class="compare" d="M340 130 C340 55 810 55 810 130"/>
+  <text class="compareText" x="575" y="55">① b0 ↔ b1 바이트 비교</text>
+
+  <path class="compare" d="M575 206 C575 267 1050 267 1050 206"/>
+  <text class="compareText" x="812" y="274">③ as1 ↔ as2 명령 비교</text>
+
+  <path class="compare" d="M105 206 C105 350 1050 350 1050 206"/>
+  <text class="compareText" x="575" y="354">② as0 ↔ as2 Intel 소스 비교</text>
+</svg>

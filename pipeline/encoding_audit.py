@@ -38,6 +38,16 @@ def modrm_end(data, pos, address32=False):
     return pos if pos <= len(data) else None
 
 
+EXTERNAL_TARGET = 'ext_target'   # case_rules.EXTERNAL_TARGET(생성기의 외부 분기 기호)
+
+
+def external_relocations(relocations):
+    """재배치 목록이 모두 생성기의 외부 분기 기호면 그 목록, 아니면 None. 참/거짓만 받은 호출(검사 CLI)은 None."""
+    if isinstance(relocations, list) and relocations and all(e['symbol'] == EXTERNAL_TARGET for e in relocations):
+        return relocations
+    return None
+
+
 NOTATION_CODES = {'ib', 'iw', 'id', 'io', 'cb', 'cw', 'cd', 'cp'}
 
 
@@ -106,7 +116,8 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
     if not hex_bytes:
         result['reason'] = 'no_bytes'
         return result
-    if relocations:
+    external = external_relocations(relocations)
+    if relocations and not external:
         result['reason'] = 'unresolved_relocation'
         return result
     if FP.separate(row.get('operands', ''))[1]:
@@ -275,7 +286,15 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
     if relative and end is not None and tail:
         bits = int(relative.group(1))
         good = good and tail == bits // 8 and (bits != 16 or is_xbegin)
-        if row.get('relative_target_unchecked'):
+        if external:
+            # 외부 기호 분기(2026-11-11): 변위 자리는 재배치 하나, 어셈블러가 0으로 둔다. RELA addend = -(꼬리 폭)
+            # (꼬리가 명령 끝이므로 PC = 재배치 위치 + 꼬리 폭). 8비트는 PC8, 32비트는 PC32·PLT32
+            entry = external[0]
+            kinds = {'R_X86_64_PC8'} if bits == 8 else {'R_X86_64_PC32', 'R_X86_64_PLT32'}
+            good = (good and len(external) == 1 and entry['offset'] == end and entry['addend'] == -tail
+                    and entry['type'] in kinds and not any(data[end:]))
+            result['checked_fields'].append('relative_relocation_external')
+        elif row.get('relative_target_unchecked'):
             result['unverified_fields'].append('relative_displacement_target')   # 검사 CLI: 사용자 라벨
         else:
             displacement = int.from_bytes(data[end:], 'little', signed=True)

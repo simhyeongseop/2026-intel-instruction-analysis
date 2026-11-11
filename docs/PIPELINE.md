@@ -21,6 +21,21 @@ python3 pipeline/run.py --only check --execute        # 판정 + CPU 격리 실�
 
 실행마다 `out/runs/<UTC>.json`에 단계, 코드 해시, 도구 경로·판 번호·해시가 남는다.
 
+## 5단계 Intel·AT&T 왕복 대조(snapshot, 2026-11-03)
+
+`run.py`에 넣지 않은 별도 단계다. 3단계 결과를 입력으로 `out/roundtrip_20261103/`에 결과와 `manifest.json`을 쓴다.
+
+```bash
+python3 pipeline/m5_roundtrip.py [--out out/roundtrip_20261103] [--limit N]
+```
+
+- 계열마다 같은 계열 도구끼리만 왕복한다: GNU(B0 = as 바이트, objdump로 풀고 as로 다시 조립), LLVM(B0 = clang 바이트, llvm-mc로 풀고 clang으로 다시 조립).
+- 대상: 그 어셈블러가 받은 케이스 전부(SDM 불일치 포함, `sdm_verdict` 열).
+- 경로 두 개: B0 → AT&T 텍스트 → 다시 조립(`verdict_att`), B0 → Intel 텍스트 → 다시 조립(`verdict_intel`). 다시 조립한 바이트가 B0와 다르면 다시 풀어 처음 명령과 비교한다.
+- objdump는 as(`-mintel64`)와 같은 Intel64 해석(`-M intel64`)으로 푼다. 최신 결과는 `out/roundtrip_20261103_intel64/`.
+- 판정: `바이트 같음`, `바이트 다름·명령 같음`(방향 비트·{evex} 같은 인코딩 선택), `바이트 다름·명령 다름`(우선 검토), `재조립 거부`(검토). 비교 불가: `분기 대상 미대조`, `재배치 생김`, `역어셈블 실패`(objdump `.byte`·`(bad)` 포함).
+- `byte_match_*`, `insn_match_*`를 따로 남기고, `route`는 두 경로의 바이트가 같은지 적는다. 도구 자기 일관성 관측이며 SDM 적합성은 3·4단계가 본다.
+
 ## 판정 원칙
 
 - 기준은 SDM 원문이다. 도구끼리는 비교하지 않는다(2026-10-11 사용자 결정).
