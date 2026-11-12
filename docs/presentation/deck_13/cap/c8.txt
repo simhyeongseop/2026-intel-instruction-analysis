@@ -1,0 +1,6 @@
+$ as (Intel)   vcvtsi2sd xmm0, xmm1, rcx, {rn-sae}      # 매뉴얼 표: r/m64{er}
+  62 f1 f7 18 2a c1   vcvtsi2sd xmm0,xmm1,rcx{rn-sae}
+$ llvm-mc (Intel)   vcvtsi2sd xmm0, xmm1, rcx, {rn-sae}
+<stdin>:1:1: error: invalid operand for instruction
+$ llvm-mc (Intel)   vcvtsi2sd xmm0, xmm1, {rn-sae}, rcx
+vcvtsi2sd xmm0, xmm1, {rn-sae}, rcx   # encoding: [0x62,0xf1,0xf7,0x18,0x2a,0xc1]

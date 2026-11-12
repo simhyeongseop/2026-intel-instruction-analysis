@@ -129,5 +129,16 @@ class RegWidthTest(unittest.TestCase):
         self.assertFalse(self.compare("rdx, rcx", "rdx, ecx", "r64, r/m64", True))      # reg 칸이 아님
 
 
+class Intel64Test(unittest.TestCase):
+    """objdump는 as(-mintel64)와 같은 Intel64 해석으로 푼다. SDM: 66 63 /r = MOVSXD r16, r/m16."""
+
+    def test_movsxd_r16(self):
+        import shutil
+        from pipeline import toolchain as T
+        if not shutil.which(T.OBJDUMP):
+            self.skipTest("objdump 없음")
+        self.assertEqual([t.split() for t, _ in M.disassemble_objdump("6663ca")], [["movsxd", "cx,dx"]])
+
+
 if __name__ == "__main__":
     unittest.main()

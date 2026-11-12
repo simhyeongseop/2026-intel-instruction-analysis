@@ -4,7 +4,8 @@
 
 대상: 3단계에서 SDM 일치(reach)한 케이스의 바이트(GNU 바이트 우선, 없으면 clang 바이트).
 역어셈블러
-- objdump: GNU objdump(경로·판은 pipeline/toolchain.py) `-D -b binary -m i386:x86-64 -M intel`. 다시 조립은 GNU as
+- objdump: GNU objdump(경로·판은 pipeline/toolchain.py) `-D -b binary -m i386:x86-64 -M intel,intel64`. 다시 조립은 GNU as
+  (as -mintel64와 같은 Intel64 해석, 2026-11-03. 기본값 AMD64면 MOVSXD r16이 r/m32로 나옴)
 - llvm: llvm-mc(pipeline/toolchain.py) `--disassemble --output-asm-variant=1`(llvm-objdump와 같은 MC 역어셈블러). 다시 조립은 clang
 두 역어셈블러를 서로 비교하지 않는다(2026-10-11 결정). 각각을 SDM 행과 비교한다.
 
@@ -76,7 +77,7 @@ def disassemble_objdump(hex_bytes):
         path = os.path.join(folder, "b.bin")
         with open(path, "wb") as handle:
             handle.write(bytes.fromhex(hex_bytes))
-        run = subprocess.run([T.OBJDUMP, "-D", "-w", "-b", "binary", "-m", "i386:x86-64", "-M", "intel",
+        run = subprocess.run([T.OBJDUMP, "-D", "-w", "-b", "binary", "-m", "i386:x86-64", "-M", "intel,intel64",
                               "--insn-width=16", path], capture_output=True, text=True, timeout=20)
     out = []
     for line in run.stdout.splitlines():
@@ -308,7 +309,7 @@ def judge(name, hex_bytes, case, isa_row, by_opcode, reversible=False):
     if main not in names and not folded:
         out["verdict"] = ("니모닉 다름(도구 관례 철자)" if D.TOOL_SPELLINGS.get(main) in names else "니모닉 다름")
         return out
-    if ".Ltarget" in case["source"] or case.get("relative"):   # 검사 CLI: 표 행이 rel 형식
+    if ".Ltarget" in case["source"] or "ext_target" in case["source"] or case.get("relative"):   # 검사 CLI: 표 행이 rel 형식
         out["verdict"] = "SDM 일치(분기 대상 미대조)"
         return out
     if not rest.strip() and source_operands(case) and any(

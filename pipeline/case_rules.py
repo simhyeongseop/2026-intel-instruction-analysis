@@ -43,6 +43,15 @@ REGISTER_LISTS = {
 }
 WRITEMASKS = ('SYM071', ['k%d' % n for n in range(1, 8)])  # {k1}{z}: k1 through k7
 
+# REX로 쓰는 범용 레지스터(SYM026~028 "R8B - R15B", "R8-R15"(word), "R8D - R15D"). 대표값 순서를 바꾸지 않게
+# 목록 끝에 붙인다(앞의 레지스터를 다 쓴 뒤에만 고른다). 경계·랜덤 변형이 이 범위를 쓴다(2026-11-11).
+REGISTER_LISTS['r8'][1].extend('r%db' % n for n in range(8, 16))
+REGISTER_LISTS['r16'][1].extend('r%dw' % n for n in range(8, 16))
+REGISTER_LISTS['r32'][1].extend('r%dd' % n for n in range(8, 16))
+# EVEX 행만: Vol.2 66쪽 "EVEX prefix can encode 32 vector registers (XMM/YMM/ZMM) in 64-bit mode."
+EVEX_VECTOR = ('Vol.2 66 2.7', 32)
+HIGH_BYTE = ('SYM026', ['ah', 'ch', 'dh', 'bh'])   # REX 접두어와 같이 쓸 수 없는 바이트 레지스터
+
 GPR_NUMBER = {}
 for _names in (['al', 'cl', 'dl', 'bl'], ['ax', 'cx', 'dx', 'bx', 'sp', 'bp', 'si', 'di'],
                ['eax', 'ecx', 'edx', 'ebx', 'esp', 'ebp', 'esi', 'edi'],
@@ -95,6 +104,36 @@ IMMEDIATES = {
     'imm8': ('SYM030', '0x12', '0x7f'), 'imm16': ('SYM031', '0x1234', '0x7fff'),
     'imm32': ('SYM032', '0x12345678', '0x7fffffff'), 'imm64': ('SYM033', '0x123456789abcdef0', '0x7fffffffffffffff'),
 }
+# 경계값(2026-11-11 교수님 미팅: 경계값·랜덤으로 케이스 확장). 범위는 SYM030~033의 부호 있는 범위.
+# 0·1·-1과 그 폭의 최소값, 더 좁은 폭(imm8, imm32)에 바로 들어가지 않는 첫 값(0x80, -0x81 / 0x80000000).
+# 값이 같은 소스를 내는 다른 행(1비트 시프트 'D1 /4' 등)은 별칭 비교(alias_key)가 숫자 값으로 묶는다.
+IMMEDIATE_BOUNDARY = {
+    'imm8': ['0x0', '0x1', '-0x1', '-0x80'],
+    'imm16': ['0x0', '-0x1', '0x80', '-0x81', '-0x8000'],
+    'imm32': ['0x0', '-0x1', '0x80', '-0x81', '-0x80000000'],
+    'imm64': ['0x0', '-0x1', '0x80000000', '-0x80000001', '-0x8000000000000000'],
+}
+IMMEDIATE_RANGE = {'imm8': 8, 'imm16': 16, 'imm32': 32, 'imm64': 64}   # 랜덤: 부호 있는 그 폭 범위
+# 랜덤 값은 더 좁은 폭에 들어가지 않게 뽑는다(대표값과 같은 규칙: 작은 폭 형식으로 바뀌지 않게)
+IMMEDIATE_NARROWER = {'imm8': 0, 'imm16': 8, 'imm32': 8, 'imm64': 32}
+
+# 주소 경계(선택 규칙, Vol.2 36쪽 2.1.5 Table 2-2/2-3의 ModR/M·SIB 특수 경우와 변위 폭 경계, 2026-11-11)
+# rsp 기준(SIB 필요), rbp·r13 기준(mod=00이면 disp32/RIP이므로 disp8 0 필요), r12 기준(SIB 필요),
+# disp8 경계(0x7f, -0x80)와 disp32로 넘어가는 첫 값(0x80, -0x81), disp32 최대·최소, scale 1/2/8,
+# REX.B·REX.X 레지스터, 기준 없는 SIB(색인만), 기준·색인 없는 절대 disp32
+ADDRESS_BOUNDARY = {
+    'rsp': '[rsp]', 'rbp': '[rbp]', 'r12': '[r12]', 'r13': '[r13]',
+    'd8max': '[rax+0x7f]', 'd8min': '[rax-0x80]', 'd32lo': '[rax+0x80]', 'd32neg': '[rax-0x81]',
+    'd32max': '[rax+0x7fffffff]', 'd32min': '[rax-0x80000000]',
+    's1': '[rax+rbx*1]', 's2': '[rax+rbx*2]', 's8': '[rax+rbx*8]', 'rex': '[r8+r15*4+0x10]',
+    'noBase': '[rbx*4+0x10]', 'abs': '[0x10]',
+}
+RIP_BOUNDARY = {'ripNeg': '[rip-0x80]', 'ripMax': '[rip+0x7fffffff]', 'ripMin': '[rip-0x80000000]'}
+# EVEX 압축 변위(Vol.2 71쪽 2.7.5 disp8*N): N이 64일 때 disp8로 들어가는 최대 0x1fc0과 넘는 첫 값 0x2000
+EVEX_DISP_BOUNDARY = {'d8nMax': '[rax+0x1fc0]', 'd8nOver': '[rax+0x2000]'}
+# SIB가 꼭 있어야 하는 형식(sibmem, mib)은 색인이 있는 것만
+SIB_REQUIRED_BOUNDARY = ('s1', 's2', 's8', 'rex')
+VSIB_BOUNDARY = {'vs8': '[rax+{v}*8+0x7f]', 'vr13': '[r13+{v}*4-0x80]', 'vnoBase': '[{v}*4+0x10]'}
 
 # ---------- 표기 정리 (원문 오기·추출 잡음) ----------
 SYMBOL_FIXES = {
@@ -155,32 +194,29 @@ DESCRIPTION_CORRECTIONS = {
 
 # 도구 문법으로 그 표 행을 지정하는 철자(기존 생성기에서 옮김; 근거는 각 항목)
 ROW_SPELLINGS = {
-    ('CALL', 'FF /3', 'm16:16'): ('data16', '', 'fword ptr [rax]', 'SDM 239-242: data16이 16비트 오프셋을 고름'),
-    ('JMP', 'FF /5', 'm16:16'): ('data16', '', 'fword ptr [rax]', 'SDM 622-624: data16이 16비트 오프셋을 고름'),
-    ('CALL', 'REX.W FF /3', 'm16:64'): ('rex64', '', 'fword ptr [rax]', 'SDM 239-242: rex64가 64비트 오프셋을 고름'),
-    ('JMP', 'REX.W FF /5', 'm16:64'): ('rex64', '', 'fword ptr [rax]', 'SDM 622-624: rex64가 64비트 오프셋을 고름'),
+    # 2026-11-11 사용자 결정(교수님 미팅): 매뉴얼 문법에 없는 접두어(data16, rex64)를 소스에 넣지 않는다.
+    # 먼 간접 CALL·JMP m16:16/m16:64, PUSH imm16, LEAVE 16비트, XBEGIN rel16, moffs REX.W 행은 SDM 표 문법 그대로
+    # 생성하고, 같은 문법의 다른 행과는 별칭 비교로 묶는다. 이전 철자는 git 18f28ba에 있다.
     ('SYSEXIT', 'REX.W 0F 35', ''): ('', 'sysexitq', '', 'SDM 1408: 64비트 사용자 코드로 복귀'),
     ('SYSRET', 'REX.W 0F 07', ''): ('', 'sysretq', '', 'SDM 1411: 64비트 사용자 코드로 복귀'),
     # 표 Description "Far return". 표 Instruction 칸은 near와 같은 'RET'이므로 GNU/clang의 far 철자 retf를 쓴다
     ('RET', 'CB', ''): ('', 'retf', '', '표 Description "Far return to calling procedure."'),
     ('RET', 'CA iw', 'imm16'): ('', 'retf', '', '표 Description "Far return ... pop imm16 bytes"'),
-    # 64비트 모드 'push imm'은 68 id가 된다. 16비트 피연산자(66)는 GNU 문서의 data16 접두어로 지정
-    # (2026-10-11 관측: GNU 'data16 push' -> 66 68 iw. clang의 data16은 0x66 한 바이트라 66 68 id가 된다.
-    #  clang Intel 문법에는 PUSH imm16 철자가 없다. REPORT '버그 후보 원문 재점검')
-    ('PUSH', '68 iw', 'imm16'): ('data16', '', '', '표 "PUSH imm16"(66 접두어로 16비트 피연산자)'),
 }
 # 오퍼랜드 없는 16비트 행(operand_size_prefix가 16으로 정한 행): SDM 니모닉만으로는 도구가 16비트를 고르지 않는다.
 # 원문: PUSHF·POPF "Others may treat these mnemonics as synonyms"(Vol.2 PUSHF·POPF Description),
-#       LEAVE는 16·32·64비트 행의 문법이 모두 'LEAVE'다.
+#       LEAVE는 16·32·64비트 행의 문법이 모두 'LEAVE'다(접두어 철자를 뺐으므로 별칭으로 묶인다, 2026-11-11).
 # 두 도구가 받는 철자를 쓴다(2026-10-11 관측: pushfw 669c, popfw 669d, data16 leave 66c9).
 # IRET(16비트)은 SDM 니모닉 'iret'을 그대로 둔다. clang은 66 cf, GNU는 cf(SDM: "most assemblers use the IRET
 # mnemonic interchangeably")이며, GNU의 iretw는 clang이 모른다.
 OPERANDLESS_16BIT_SPELLINGS = {
     'PUSHF': ('', 'pushfw', 'Vol.2 PUSHF: 니모닉을 동의어로 다루는 어셈블러가 있음'),
     'POPF': ('', 'popfw', 'Vol.2 POPF: 니모닉을 동의어로 다루는 어셈블러가 있음'),
-    'LEAVE': ('data16', '', 'Vol.2 LEAVE: 16·32·64비트 행 문법이 같음, 66H로 16비트'),
 }
 FAR_POINTER_MEMORY = {'16': 'dword', '32': 'fword', '64': 'tbyte'}  # LSS/LFS/LGS: m16:16/32/64의 전체 크기
+# 상대 분기 대상(2026-11-11 교수님 미팅): 정의하지 않은 외부 기호. 어셈블러는 변위 자리를 0으로 두고 재배치를 남겨
+# 주소와 무관하게 명령을 비교할 수 있다. 이전 규약(같은 파일의 .Ltarget, 4096 앞)은 'alt' 변형으로 남긴다(rel8 행 도달용).
+EXTERNAL_TARGET = 'ext_target'
 FAR_POINTER_IMMEDIATE = {'ptr16:16': '0x10:0x1234', 'ptr16:32': '0x10:0x12345678'}  # SYM025
 
 

@@ -1,0 +1,9 @@
+$ objdump -M intel,intel64   # 48 0f b2 08 (LSS r64, m16:64)
+0:	48 0f b2 08          	lss    rcx,FWORD PTR [rax]
+$ as --64 -mintel64   # Intel 출력 재조립
+l.s: Assembler messages:
+l.s:2: Error: incorrect register `rcx' used with `l' suffix
+$ objdump -M att,intel64   # AT&T 출력
+0:	48 0f b2 08          	lss    (%rax),%rcx
+$ as --64 -mintel64 + objdump   # AT&T 출력 재조립
+0:	48 0f b2 08          	lss    (%rax),%rcx

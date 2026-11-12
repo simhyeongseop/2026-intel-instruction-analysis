@@ -1,6 +1,6 @@
 # 파이프라인과 파일 안내
 
-기준: 2026-10-12. SDM 093판(Vol.1·Vol.2), GNU Binutils 2.47, LLVM 23.1.3.
+기준: 2026-11-11(5단계·라운드 실행 절 갱신, 1~4단계 표는 2026-10-12). SDM 093판(Vol.1·Vol.2), GNU Binutils 2.47, LLVM 23.1.3.
 
 ## 단계
 
@@ -20,6 +20,58 @@ python3 pipeline/run.py --only check --execute        # 판정 + CPU 격리 실�
 ```
 
 실행마다 `out/runs/<UTC>.json`에 단계, 코드 해시, 도구 경로·판 번호·해시가 남는다.
+
+## 5단계 Intel·AT&T 왕복 대조(2026-11-11 기준)
+
+`run.py`에 넣지 않은 별도 단계다. 3단계 결과(`check_results.csv`)를 입력으로 `--out` 폴더에 결과와 `manifest.json`을 쓴다.
+
+```bash
+python3 pipeline/m5_roundtrip.py [--cases 3단계_결과.csv] [--out 폴더] [--workers N] [--limit N]
+python3 pipeline/m5_roundtrip.py --out 폴더 --rescore     # 저장된 as0·as2로 as0–as2만 다시 계산(도구 재실행 없음)
+```
+
+흐름과 이름(발표 표기): as0(원본 소스) → b0(조립 바이트) → as1(역어셈블) → b1(다시 조립) → as2(다시 역어셈블).
+경로(att, intel)마다 세 비교를 따로 적는다.
+
+| 열 | 비교 | 뜻 |
+|---|---|---|
+| `cmp_as0_as2_*` | 처음 소스 대 마지막 역어셈블 문자열 | **표기 비교**다. 대소문자와 구두점 주변 공백만 흡수한다. '다름'이 의미 불일치는 아니다 |
+| `cmp_b0_b1_*` | 처음 바이트 대 다시 조립한 바이트 | 왕복에서 바이트가 바뀌었는가 |
+| `cmp_as1_as2_*` | 첫 역어셈블 대 둘째 역어셈블 | 바이트가 달라도 같은 명령인가 |
+
+- 값은 `같음`/`다름`/`미대조`. `note_as0_as2_*`에 '숫자 표기만 다름'을 따로 적는다. AT&T 경로의 as0는 3단계 AT&T 변환 소스(`source_att`).
+- 요약은 `roundtrip_summary.json`의 `chain`, 발표용 표는 `chain_table.csv`.
+- 이전 판정 열(`verdict_*`, `byte_match_*`, `insn_match_*`, `route`)은 그대로 남는다. 아래 설명은 그 열의 뜻이다.
+- 이전 snapshot: `out/roundtrip_20261103/`, `out/roundtrip_20261103_intel64/`(세 비교 열 없음).
+
+- 계열마다 같은 계열 도구끼리만 왕복한다: GNU(B0 = as 바이트, objdump로 풀고 as로 다시 조립), LLVM(B0 = clang 바이트, llvm-mc로 풀고 clang으로 다시 조립).
+- 대상: 그 어셈블러가 받은 케이스 전부(SDM 불일치 포함, `sdm_verdict` 열).
+- 경로 두 개: B0 → AT&T 텍스트 → 다시 조립(`verdict_att`), B0 → Intel 텍스트 → 다시 조립(`verdict_intel`). 다시 조립한 바이트가 B0와 다르면 다시 풀어 처음 명령과 비교한다.
+- objdump는 as(`-mintel64`)와 같은 Intel64 해석(`-M intel64`)으로 푼다. 최신 결과는 `out/roundtrip_20261103_intel64/`.
+- 판정: `바이트 같음`, `바이트 다름·명령 같음`(방향 비트·{evex} 같은 인코딩 선택), `바이트 다름·명령 다름`(우선 검토), `재조립 거부`(검토). 비교 불가: `분기 대상 미대조`, `재배치 생김`, `역어셈블 실패`(objdump `.byte`·`(bad)` 포함).
+- `byte_match_*`, `insn_match_*`를 따로 남기고, `route`는 두 경로의 바이트가 같은지 적는다. 도구 자기 일관성 관측이며 SDM 적합성은 3·4단계가 본다.
+
+## 라운드 실행과 5단계 분석 보조 스크립트(2026-11-11)
+
+```bash
+python3 scripts/run_round.py --out out/round2_20261111 [--seed N] [--random N] [--workers N]   # 2 → 3 → 4 → 5단계를 한 폴더에
+```
+
+3단계가 조립 결과를 모두 메모리에 두므로 작업자 수는 메모리에 맞춘다. 11월 11일 라운드는 실행기를 5단계 시작 직후 끝내고
+새 5단계를 따로 돌렸다. 그래서 라운드 `manifest.json` 대신 사후 기록 `round_record.json`이 있다.
+
+| 스크립트 | 하는 일 | 도구 재실행 | 결과(`out/round2_20261111/` 아래) |
+|---|---|---|---|
+| `scripts/classify_roundtrip_diffs.py --dir roundtrip_chain` | 세 비교의 '다름'·'미대조'를 원인별 분류, `meaning`(같은 바이트 여부) | 없음 | `roundtrip_chain/diff_cases.csv`, `diff_summary.json`, `manifest_diff.json` |
+| `scripts/check_ltarget_roundtrip.py --dir roundtrip_chain` | 미대조 `.Ltarget` 분기를 라벨로 되돌려 다시 조립해 비교 | 있음 | `roundtrip_chain/ltarget_check.csv`, `ltarget_check_manifest.json` |
+| `scripts/rejudge_check.py --cases 3단계_결과.csv --mnemonics MOV POP ... [--roundtrip 폴더]` | 판정 규칙을 고친 뒤 지정 니모닉만 3단계 재판정, 5단계 `sdm_verdict` 동기화 | 없음(저장 바이트) | `cases/check_results.csv`(원본 `check_results.before_rejudge_20261111.csv`), `cases/rejudge_manifest.json` |
+| `scripts/probe_size_mnemonics.py --out size_mnemonics` | 크기를 니모닉이 정하는 명령(`iret`, `pushf`, `push fs` 등)의 도구·문법별 바이트와 역어셈블 왕복 | 있음 | `size_mnemonics/probe_assemble.csv`, `probe_disasm.csv`, `manifest.json` |
+| `scripts/probe_rounding_position.py --out rounding_position` | ER/SAE 행 288개에서 `{rn-sae}`·`{sae}` 위치를 모두 바꿔 수용·바이트 대조 | 있음 | `rounding_position/positions.csv`, `summary.json`, `manifest.json` |
+
+- CPU 관측(사용자 모드, 손으로 만든 C 프로그램): `roundtrip_chain/cpu_observe/`, `size_mnemonics/cpu_iret/`. 일반 실행 경로에 넣지 않았다.
+- 결과 해석: [분류표](ROUNDTRIP_DIFF_CLASSES_2026-11-11.md), [원인 분석](ROUNDTRIP_ANALYSIS_2026-11-11.md),
+  [크기 니모닉 위험](SIZE_MNEMONIC_RISK_2026-11-11.md), [{rn-sae} 위치](ROUNDING_POSITION_2026-11-11.md).
+- `out/round2_20261111/`은 커밋하지 않는다(서버 산출물).
 
 ## 판정 원칙
 

@@ -29,10 +29,15 @@ SIZED = {
 # 오퍼랜드 없는 행(CBW, MOVSW, PUSHF, LEAVE ...)은 Description 칸에서 가장 먼저 나오는 크기 표현(대개 목적지)으로 읽는다.
 # 예: CWDE "EAX := sign-extend of AX." -> 32, CWD "DX:AX := sign-extend of AX." -> 16.
 DESCRIPTION_SIZE = [
-    (16, r"16-bit operand size|lower 16 bits|\bword\b|\b(AX|SP|BP|DX:AX)\b"),
-    (32, r"32-bit operand size|\bdword\b|\bdoubleword\b|\b(EAX|ESP|EBP|EDX:EAX|EFLAGS)\b"),
-    (64, r"64-bit operand size|\bquadword\b|\b(RAX|RSP|RBP|RDX:RAX|RFLAGS)\b"),
+    (16, r"16-bit operand size|lower 16 bits|\bword\b|\b(AX|SP|BP|DX:AX)\b|stack pointer by 16 bits"),
+    (32, r"32-bit operand size|\bdword\b|\bdoubleword\b|\b(EAX|ESP|EBP|EDX:EAX|EFLAGS)\b|stack pointer by 32 bits"),
+    (64, r"64-bit operand size|\bquadword\b|\b(RAX|RSP|RBP|RDX:RAX|RFLAGS)\b|stack pointer by 64 bits"),
 ]
+# 크기 행이 따로 없는 세그먼트 레지스터 PUSH(2026-11-11): Vol.2 2.2.1.7 "PUSH/POP ... default to 64-bit operand size",
+# PUSH Description "The operand size (16, 32, or 64 bits) determines the amount by which the stack pointer is
+# decremented (2, 4 or 8)". 표 행 'PUSH FS'는 기본 크기(64)이고, 66H는 16비트 PUSH(RSP -2)로 바꾼다
+# (CPU 관측 out/round2_20261111/roundtrip_chain/cpu_observe/). 그래서 66H가 없어야 이 행이다.
+DEFAULT_64_ROWS = {("0F A0", "PUSH FS"), ("0F A8", "PUSH GS")}
 
 _RULES = None
 _REX_W_KEYS = None
@@ -78,6 +83,12 @@ def row_size(row, siblings):
         for a, b in zip(mine, theirs):
             if a in SIZED and b in SIZED and SIZED[a][0] == SIZED[b][0] and SIZED[a][1] != SIZED[b][1]:
                 return SIZED[a][1]
+    # 오퍼랜드가 형제 행과 글자까지 같으면(POP FS 16/32/64비트 세 행) Description의 크기로 가른다(2026-11-11)
+    same = [s for s in siblings if symbols(s) == mine]
+    if same:
+        bits = description_size(row)
+        others = {description_size(s) for s in same}
+        return bits if bits and others - {bits, None} else None
     return None
 
 
@@ -93,6 +104,8 @@ def build_rules(isa):
     for rows in groups.values():
         for row in rows:
             bits = row_size(row, [r for r in rows if r is not row])
+            if not bits and (" ".join(row["opcode"].split()), row["instruction"]) in DEFAULT_64_ROWS:
+                bits = 64
             if bits:
                 rules[row_key(row)] = bits
     return rules

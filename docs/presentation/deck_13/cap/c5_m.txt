@@ -1,0 +1,8 @@
+$ llvm-mc (Intel)   call fword ptr [rax]      # 매뉴얼: FF /3  CALL m16:32 (먼 호출)
+call [rax]   # encoding: [0xff,0x18]
+$ llvm-mc 풀기 (Intel)   ff 18
+  call [rax]
+$ 다시 조립:   call [rax]
+call qword ptr [rax]   # encoding: [0xff,0x10]§R
+$ llvm-mc 풀기 (AT&T)   ff 18
+  lcalll *(%rax)§B

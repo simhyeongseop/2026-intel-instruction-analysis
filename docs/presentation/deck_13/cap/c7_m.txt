@@ -1,0 +1,14 @@
+$ as (Intel)   push fs
+  0f a0   push fs§B
+$ llvm-mc (Intel)   push fs
+push fs   # encoding: [0x66,0x0f,0xa0]§R
+# 고른 정의: PUSHFS16
+$ as (Intel)   iret
+Warning: ambiguous operand size; using default for `iret'§R
+  cf   iret§B
+$ llvm-mc (Intel)   iret
+iret   # encoding: [0x66,0xcf]§R
+# 고른 정의: IRET16
+$ llvm-mc (AT&T)   push %fs
+pushq %fs   # encoding: [0x0f,0xa0]§B
+# 고른 정의: PUSHFS64

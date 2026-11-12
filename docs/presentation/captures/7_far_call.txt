@@ -1,0 +1,8 @@
+$ llvm-mc --disassemble -output-asm-variant=1   # ff 18 (CALL m16:32)
+call	[rax]
+$ llvm-mc --show-encoding -x86-asm-syntax=intel   # Intel 출력 재조립
+call	qword ptr [rax]                 # encoding: [0xff,0x10]
+$ llvm-mc --disassemble   # AT&T 출력
+lcalll	*(%rax)
+$ llvm-mc --show-encoding   # AT&T 출력 재조립
+lcalll	*(%rax)                         # encoding: [0xff,0x18]

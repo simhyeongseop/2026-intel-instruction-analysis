@@ -68,7 +68,7 @@ def m  : AVX5128I<opc, F, (outs), (ins KRC:$mask, memop:$src),
 - The AT&T variant places the mask after the memory operand, in the order shown by the SDM.
 - The Intel variant is `{${mask}}, $src`, with the mask as a separate leading operand. The Intel parser sends a leading `{...}` operand to its rounding/SAE parser, which rejects `{k1}`. A trailing `mem {k1}` is parsed by `HandleAVX512Operand`, but does not match the operand order in this Intel instruction definition.
 
-PR #122051 mentioned this in passing: "these vector scatter and gather prefetch instructions also have an unusual k mask operand position but I have not addressed this with this patch as I am unsure how to change the Intel format in the tablegen file." I could not find an issue that tracks it.
+PR #122051 discussed the mask operand position. A [reply by phoebewang](https://github.com/llvm/llvm-project/pull/122051#issuecomment-2576984459) suggested changing the format to `"\t$src {$mask}"`. This report follows up on that discussion: the problem still reproduces in the tested LLVM 23.1.3 binary. A focused GitHub issue search for `vgatherpf0dps` on 2026-10-20 did not find a dedicated issue tracking this Intel-syntax problem; this does not prove that no duplicate exists.
 
 The `llvmorg-23.1.3` test tree contains `llvm/test/MC/X86/avx512pf-64-att.s`, but no sibling `avx512pf-64-intel.s`. This filename check does not establish the absence of all Intel coverage in other test files.
 
@@ -80,6 +80,13 @@ Change the Intel variant to `$src {${mask}}`, as in the AT&T variant and the SDM
 
 - LLVM 23.1.3 (official Linux x86-64 release binary). The same behavior was observed with LLVM 18.1.3.
 - x86_64 Linux
+
+### Compiler Explorer
+
+- Intel syntax rejected (Clang 23.1.0): https://godbolt.org/z/of1hfozfa
+- AT&T syntax accepted (Clang 23.1.0): https://godbolt.org/z/Goo8f9jvd
+
+The Compiler Explorer version differs from the local llvm-mc 23.1.3 reproduction. The latest LLVM main build has not been tested.
 
 ### Local verification evidence (2026-10-12)
 

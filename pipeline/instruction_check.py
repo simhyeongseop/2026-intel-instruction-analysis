@@ -110,6 +110,26 @@ def decode_lines(text):
     return result
 
 
+def relocation_entries(readelf_text):
+    """readelf -rW 줄 -> [{'offset', 'type', 'symbol', 'addend'}]. 예:
+    '000000000002  000100000004 R_X86_64_PLT32  0000000000000000 ext_target - 4'."""
+    out = []
+    for line in readelf_text.splitlines():
+        match = re.match(r'^\s*([0-9a-f]+)\s+[0-9a-f]+\s+(R_X86_64_\w+)\s+[0-9a-f]+\s+(\S+)\s*([+-])\s*([0-9a-f]+)\s*$',
+                         line)
+        if match:
+            addend = int(match.group(5), 16) * (-1 if match.group(4) == '-' else 1)
+            out.append({'offset': int(match.group(1), 16), 'type': match.group(2), 'symbol': match.group(3),
+                        'addend': addend})
+    return out
+
+
+def relocation_text(entries):
+    """비교·기록용 한 줄: 'off:TYPE:symbol:addend; ...'(위치 순. readelf는 위치 순으로 내지 않는다)."""
+    return '; '.join('%x:%s:%s:%d' % (e['offset'], e['type'], e['symbol'], e['addend'])
+                     for e in sorted(entries or [], key=lambda e: e['offset']))
+
+
 def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'):
     """단일 .text 전체 바이트를 objcopy로 읽는다. objdump 첫 줄만 잘라 읽지 않는다."""
     with tempfile.TemporaryDirectory(prefix='asmcheck_') as folder:
@@ -123,7 +143,7 @@ def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'
         result = {'status': ('rejected' if observed_status == 'diagnostic_rejection' else observed_status),
                   'observation_status': observed_status,
                   'assembly': run, 'source': source, 'bytes': '', 'instructions': [],
-                  'relocations': None, 'inspection_complete': False,
+                  'relocations': None, 'relocation_list': [], 'inspection_complete': False,
                   'validation_status': 'not_requested', 'display_syntax': display_syntax}
         if observed_status != 'accepted':
             return result
@@ -132,7 +152,7 @@ def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'
                           inspection_failure='object_missing', reason='오브젝트 파일이 생성되지 않음')
             return result
         extract = command([T.OBJCOPY, '-O', 'binary', '--only-section=.text', 'input.o', 'text.bin'], folder, timeout)
-        decode = command([T.OBJDUMP, '-d', '-w', '-M', display_syntax, '--insn-width=16', 'input.o'], folder, timeout)
+        decode = command([T.OBJDUMP, '-d', '-w', '-M', display_syntax + ',intel64', '--insn-width=16', 'input.o'], folder, timeout)
         reloc = command([T.READELF, '-rW', 'input.o'], folder, timeout)
         result['inspection'] = {'objcopy': extract, 'objdump': decode, 'readelf': reloc}
         if extract['returncode'] == 0 and Path(folder, 'text.bin').exists():
@@ -141,6 +161,7 @@ def assemble(source, tool='as', options=None, timeout=10, display_syntax='intel'
             result['instructions'] = decode_lines(decode['stdout'])
         if reloc['returncode'] == 0:
             result['relocations'] = bool(re.search(r'\bR_X86_64_\w+', reloc['stdout']))
+            result['relocation_list'] = relocation_entries(reloc['stdout'])
         contiguous = bool(result['instructions'])
         end = 0
         for instruction in result['instructions']:

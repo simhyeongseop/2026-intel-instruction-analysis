@@ -20,6 +20,35 @@ def gpr_number(text):
     return int(match.group(1)) if match else None
 
 
+def gpr_width(text):
+    """범용 레지스터 이름의 폭(8/16/32/64). 레지스터가 아니면 None."""
+    text = text.strip().lower()
+    if re.fullmatch(r'r(?:[89]|1[0-5])', text) or text in 'rax rcx rdx rbx rsp rbp rsi rdi'.split():
+        return 64
+    if re.fullmatch(r'r(?:[89]|1[0-5])d', text) or text in 'eax ecx edx ebx esp ebp esi edi'.split():
+        return 32
+    if re.fullmatch(r'r(?:[89]|1[0-5])w', text) or text in 'ax cx dx bx sp bp si di'.split():
+        return 16
+    if re.fullmatch(r'r(?:[89]|1[0-5])b', text) or text in 'al cl dl bl spl bpl sil dil ah ch dh bh'.split():
+        return 8
+    return None
+
+
+def sreg_store_width(row):
+    """MOV r, Sreg(8C /r)에서 실제 목적지가 범용 레지스터면 그 폭. 아니면 None(메모리, 표 기호).
+
+    표 행 'MOV r/m16, Sreg'와 'MOV r16/r32/m16, Sreg'는 같은 8C /r이고 기호 r16/r32/m16 때문에 66H 규칙
+    (operand_size_prefix)으로 갈리지 않는다. 레지스터 목적지의 폭은 오퍼랜드 크기 속성이 정한다(Vol.1 Table 3-4).
+    CPU 관측(2026-11-11, cpu_observe/): RCX=-1에서 66 8C C1은 하위 16비트만 바꾸고, 8C C1은 RCX 전체를 0으로 만든다.
+    그래서 'mov cx, es'는 66H가 있어야 하고 'mov ecx, es'는 66H·REX.W가 없어야 한다. 메모리 목적지는 크기와 무관하게
+    16비트를 쓰므로 대상이 아니다.
+    """
+    opcode = ' '.join(re.sub(r'(?<=[0-9A-F])/', ' /', row.get('opcode', '')).split())
+    if row.get('mnemonic', '').upper() != 'MOV' or opcode not in ('8C /r', 'REX.W + 8C /r'):
+        return None
+    return gpr_width(row.get('operands', '').split(',')[0])
+
+
 def modrm_end(data, pos, address32=False):
     """Offset just after ModRM/SIB/displacement (64/32-bit addressing only)."""
     if pos >= len(data):
@@ -36,6 +65,16 @@ def modrm_end(data, pos, address32=False):
         pos += 1
     pos += 4 if mod == 2 or (mod == 0 and base == 5) else 1 if mod == 1 else 0
     return pos if pos <= len(data) else None
+
+
+EXTERNAL_TARGET = 'ext_target'   # case_rules.EXTERNAL_TARGET(생성기의 외부 분기 기호)
+
+
+def external_relocations(relocations):
+    """재배치 목록이 모두 생성기의 외부 분기 기호면 그 목록, 아니면 None. 참/거짓만 받은 호출(검사 CLI)은 None."""
+    if isinstance(relocations, list) and relocations and all(e['symbol'] == EXTERNAL_TARGET for e in relocations):
+        return relocations
+    return None
 
 
 NOTATION_CODES = {'ib', 'iw', 'id', 'io', 'cb', 'cw', 'cd', 'cp'}
@@ -106,7 +145,8 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
     if not hex_bytes:
         result['reason'] = 'no_bytes'
         return result
-    if relocations:
+    external = external_relocations(relocations)
+    if relocations and not external:
         result['reason'] = 'unresolved_relocation'
         return result
     if FP.separate(row.get('operands', ''))[1]:
@@ -238,6 +278,13 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
         # operand_size_prefix.forbids_rex_w: 같은 opcode 칸의 REX.W 행과 갈린다
         good = good and not (rex and rex & 8)
         result['checked_fields'].append('no_REX.W')
+    store_width = None if vector else sreg_store_width(row)
+    if store_width:
+        # MOV r, Sreg: 레지스터 목적지 폭 = 오퍼랜드 크기(sreg_store_width 설명)
+        wide = bool(rex and rex & 8)
+        good = good and {16: 0x66 in prefixes and not wide, 32: 0x66 not in prefixes and not wide,
+                         64: wide}.get(store_width, False)
+        result['checked_fields'].append('sreg_store_register_width')
     moffs = re.search(r'\bmoffs(8|16|32|64)\b', row.get('operand_types', row.get('operands', '')))
     if end is None:
         good = False
@@ -275,7 +322,15 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
     if relative and end is not None and tail:
         bits = int(relative.group(1))
         good = good and tail == bits // 8 and (bits != 16 or is_xbegin)
-        if row.get('relative_target_unchecked'):
+        if external:
+            # 외부 기호 분기(2026-11-11): 변위 자리는 재배치 하나, 어셈블러가 0으로 둔다. RELA addend = -(꼬리 폭)
+            # (꼬리가 명령 끝이므로 PC = 재배치 위치 + 꼬리 폭). 8비트는 PC8, 32비트는 PC32·PLT32
+            entry = external[0]
+            kinds = {'R_X86_64_PC8'} if bits == 8 else {'R_X86_64_PC32', 'R_X86_64_PLT32'}
+            good = (good and len(external) == 1 and entry['offset'] == end and entry['addend'] == -tail
+                    and entry['type'] in kinds and not any(data[end:]))
+            result['checked_fields'].append('relative_relocation_external')
+        elif row.get('relative_target_unchecked'):
             result['unverified_fields'].append('relative_displacement_target')   # 검사 CLI: 사용자 라벨
         else:
             displacement = int.from_bytes(data[end:], 'little', signed=True)

@@ -1,0 +1,10 @@
+$ llvm-mc 풀기 (Intel)   0x66 0x9c
+  pushf
+$ 다시 조립:   pushf
+pushfq   # encoding: [0x9c]§R
+$ llvm-mc 풀기 (Intel)   0x0f 0xa0
+  push fs
+$ 다시 조립:   push fs
+push fs   # encoding: [0x66,0x0f,0xa0]§R
+$ llvm-mc 풀기 (AT&T)   0x66 0x9c
+  pushfw§B
