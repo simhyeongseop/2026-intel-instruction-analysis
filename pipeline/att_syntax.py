@@ -131,6 +131,23 @@ def parse(operand):
     raise Unsupported("오퍼랜드: " + operand)
 
 
+def rounding_after_gpr(ordered):
+    """AT&T 순서에서 반올림 장식({rn-sae} 등) 바로 뒤가 범용 레지스터면 둘을 바꾼다.
+
+    정수 -> 실수 변환(VCVTSI2SD/SS/SH, VCVTUSI2SD/SS/SH xmm1, xmm2, r/m{er})은 Intel 'xmm0, xmm1, rcx, {rn-sae}'를
+    뒤집은 '{rn-sae}, %rcx, ...'를 GNU as·clang 모두 거부하고 '%rcx, {rn-sae}, %xmm1, %xmm0'만 받는다(2026-11-11
+    scripts/probe_rounding_position.py, 10개 행 × 두 도구). 두 역어셈블러의 AT&T 출력도 이 순서다. 다른 형식(벡터 소스,
+    즉값 앞)은 장식이 맨 앞·즉값 뒤인 기존 순서를 두 도구가 받는다. SDM은 장식의 문법 위치를 정하지 않는다(표기 r/m64{er}).
+    """
+    ordered = list(ordered)
+    for index in range(len(ordered) - 1):
+        nxt = ordered[index + 1]
+        if ordered[index]["kind"] == "control" and nxt["kind"] == "reg" and nxt.get("name") in GPR_SIZES:
+            ordered[index], ordered[index + 1] = nxt, ordered[index]
+            break
+    return ordered
+
+
 def decorate(op):
     """마스크는 '{%k1}', 영(z)·브로드캐스트·반올림은 그대로."""
     out = op["text"] + "".join(op.get("bcst", []))
@@ -264,5 +281,6 @@ def convert(source, ambiguous=frozenset()):
         mnemonic = X87_REVERSED[mnemonic]
     immediates = sum(o["kind"] == "imm" for o in ops)
     ordered = ops if (mnemonic in NOT_REVERSED or immediates >= 2) else list(reversed(ops))
+    ordered = rounding_after_gpr(ordered)
     text = ", ".join(decorate(o) for o in ordered)
     return " ".join(prefixes + [mnemonic + letter] + ([text] if text else []))

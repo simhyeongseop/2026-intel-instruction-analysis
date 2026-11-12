@@ -1,0 +1,6 @@
+$ llvm-mc (Intel)   adc al, 0x12
+adc al, 18   # encoding: [0x14,0x12]§B
+$ llvm-mc (Intel)   cmovng cx, dx
+cmovle cx, dx   # encoding: [0x66,0x0f,0x4e,0xca]§B
+$ as + objdump (Intel)   mov eax, [rbp]
+  8b 45 00   mov eax,DWORD PTR [rbp+0x0]§B

@@ -148,6 +148,9 @@ def judge(case, tool, asm, isa, overrides, unreachable=None):
         out["verdict"] = "인코딩 미대조"
         return out
     for other in case["alias_rows"].split():
+        # 64비트 모드에서 N.E.·Invalid인 행은 어떤 바이트로도 도달하지 않는다(valid_rows_reached와 같은 기준, 2026-11-11)
+        if isa[int(other)]["mode_support"] != "Valid":
+            continue
         if encoding(observed["bytes"], check_row(isa[int(other)], case), observed["relocations"],
                     overrides.get(int(other))) == "fields_match":
             out.update(verdict="별칭 행 도달", reached_row=other)

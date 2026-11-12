@@ -62,5 +62,47 @@ class OperandSizePrefixTest(unittest.TestCase):
         self.assertFalse(P.forbids_rex_w(next(r for r in self.isa if r["instruction"] == "PUSH r64")))
 
 
+class SegmentRegisterSizeTest(unittest.TestCase):
+    """2026-11-11 수정. 기대값: POP FS 표 Description(16/32/64비트 증가), PUSH 본문 기본 64비트,
+    MOV r, Sreg 레지스터 목적지 폭(Vol.1 Table 3-4)과 CPU 관측(cpu_observe/: 66 8C C1은 CX만, 8C C1은 RCX 전체)."""
+
+    @classmethod
+    def setUpClass(cls):
+        with open(P.ISA_DB, encoding="utf-8", newline="") as handle:
+            cls.isa = list(csv.DictReader(handle))
+
+    def match(self, instruction, hex_bytes, description="", operands=None):
+        row = next(r for r in self.isa if r["instruction"] == instruction and description in r["description"])
+        return check_encoding(hex_bytes, dict(row, operand_types=row["operands"],
+                                              operands=operands or row["operands"]))["status"] == "fields_match"
+
+    def test_pop_fs_rows_split_by_description(self):
+        self.assertTrue(self.match("POP FS", "660fa1", "by 16 bits"))
+        self.assertFalse(self.match("POP FS", "0fa1", "by 16 bits"))      # 66 없음 = 64비트 pop(RSP +8)
+        self.assertTrue(self.match("POP FS", "0fa1", "by 64 bits"))
+        self.assertFalse(self.match("POP FS", "660fa1", "by 64 bits"))
+        self.assertTrue(self.match("POP GS", "0fa9", "by 64 bits"))
+
+    def test_push_fs_default_64(self):
+        self.assertTrue(self.match("PUSH FS", "0fa0"))
+        self.assertFalse(self.match("PUSH FS", "660fa0"))                 # 66 = 16비트 push(RSP -2)
+        self.assertFalse(self.match("PUSH GS", "660fa8"))
+
+    def test_mov_from_sreg_register_width(self):
+        self.assertTrue(self.match("MOV r/m16, Sreg", "668cc1", operands="cx, es"))
+        self.assertFalse(self.match("MOV r/m16, Sreg", "8cc1", operands="cx, es"))   # 8C C1 = mov ecx, es
+        self.assertFalse(self.match("MOV r16/r32/m16, Sreg", "8cc1", operands="cx, es"))
+        self.assertTrue(self.match("MOV r16/r32/m16, Sreg", "8cc2", operands="edx, es"))
+        self.assertFalse(self.match("MOV r16/r32/m16, Sreg", "668cc2", operands="edx, es"))
+        self.assertFalse(self.match("MOV r/m16, Sreg", "418cc7", operands="r15w, es"))
+        self.assertTrue(self.match("MOV r/m16, Sreg", "66418cc7", operands="r15w, es"))
+        self.assertTrue(self.match("MOV r64/m16, Sreg", "488cc1", operands="rcx, es"))
+        # 메모리 목적지는 크기와 무관(16비트 저장): 규칙 대상이 아니다
+        self.assertTrue(self.match("MOV r/m16, Sreg", "8c00", operands="word ptr [rax], es"))
+        # 반대 방향 MOV Sreg, r/m16(8E)은 66 유무와 무관(CPU 관측 같음): 규칙 대상이 아니다
+        self.assertTrue(self.match("MOV Sreg, r/m16", "8ec1", operands="es, cx"))
+        self.assertTrue(self.match("MOV Sreg, r/m16", "668ec1", operands="es, cx"))
+
+
 if __name__ == "__main__":
     unittest.main()

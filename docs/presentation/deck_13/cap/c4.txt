@@ -1,0 +1,4 @@
+$ as (Intel)   vpcmpb k0, xmm0, xmm1, 0x0      # 매뉴얼: EVEX 0F3A 3F /r ib
+  62 f3 7d 08 3f c1 00   vpcmpeqb k0,xmm0,xmm1
+$ 다시 as:   vpcmpeqb k0,xmm0,xmm1
+  62 f1 7d 08 74 c1   vpcmpeqb k0,xmm0,xmm1

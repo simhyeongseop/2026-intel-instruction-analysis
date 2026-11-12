@@ -1,0 +1,6 @@
+$ as (Intel)   ja .Ltarget        # .Ltarget = 이 명령 자리
+  77 fe   ja 0x0§B
+$ 푼 글자 그대로 다시 as:   ja 0x0        # 0x0 = 주소 0
+  0f 87 00 00 00 00   ja 0x6§R
+$ 숫자를 라벨로 되돌려 다시 as:   ja .Ltarget
+  77 fe   ja 0x0§B

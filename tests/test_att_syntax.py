@@ -36,6 +36,14 @@ class OrderAndOperandTest(unittest.TestCase):
                          "vaddps (%rax){1to16}, %zmm1, %zmm0{%k1}{z}")
         self.assertEqual(convert("vpgatherdd xmm0 {k1}, [r13+xmm1*4-0x80]"), "vpgatherdd -0x80(%r13,%xmm1,4), %xmm0{%k1}")
 
+    def test_rounding_after_gpr_source(self):
+        # 2026-11-11 관측: 두 도구의 AT&T는 GPR 소스 변환에서 장식을 GPR 뒤에만 받고, 두 역어셈블러도 이렇게 쓴다
+        self.assertEqual(convert("vcvtsi2sd xmm0, xmm1, rcx, {rn-sae}"), "vcvtsi2sd %rcx, {rn-sae}, %xmm1, %xmm0")
+        self.assertEqual(convert("vcvtusi2ss xmm0, xmm1, ecx, {rz-sae}"), "vcvtusi2ss %ecx, {rz-sae}, %xmm1, %xmm0")
+        # GPR가 목적지인 변환(vcvtsd2si)과 벡터 소스는 기존대로 장식이 맨 앞
+        self.assertEqual(convert("vcvtsd2si ecx, xmm0, {rn-sae}"), "vcvtsd2si {rn-sae}, %xmm0, %ecx")
+        self.assertEqual(convert("vcvtps2ph ymm0, zmm1, {sae}, 0x12"), "vcvtps2ph $0x12, {sae}, %zmm1, %ymm0")
+
     def test_branches(self):
         self.assertEqual(convert("jmp rcx"), "jmp *%rcx")
         self.assertEqual(convert("call qword ptr [rax]"), "call *(%rax)")

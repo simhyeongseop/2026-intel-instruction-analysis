@@ -1,0 +1,4 @@
+$ as (Intel)   lss rcx, tbyte ptr [rax]      # 매뉴얼: REX.W 0F B2  LSS r64,m16:64
+  48 0f b2 08   lss rcx,FWORD PTR [rax]
+$ objdump 글자를 다시 as로:  lss rcx,FWORD PTR [rax]
+  Error: incorrect register `rcx' used with `l' suffix

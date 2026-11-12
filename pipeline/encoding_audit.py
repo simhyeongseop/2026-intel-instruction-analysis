@@ -20,6 +20,35 @@ def gpr_number(text):
     return int(match.group(1)) if match else None
 
 
+def gpr_width(text):
+    """범용 레지스터 이름의 폭(8/16/32/64). 레지스터가 아니면 None."""
+    text = text.strip().lower()
+    if re.fullmatch(r'r(?:[89]|1[0-5])', text) or text in 'rax rcx rdx rbx rsp rbp rsi rdi'.split():
+        return 64
+    if re.fullmatch(r'r(?:[89]|1[0-5])d', text) or text in 'eax ecx edx ebx esp ebp esi edi'.split():
+        return 32
+    if re.fullmatch(r'r(?:[89]|1[0-5])w', text) or text in 'ax cx dx bx sp bp si di'.split():
+        return 16
+    if re.fullmatch(r'r(?:[89]|1[0-5])b', text) or text in 'al cl dl bl spl bpl sil dil ah ch dh bh'.split():
+        return 8
+    return None
+
+
+def sreg_store_width(row):
+    """MOV r, Sreg(8C /r)에서 실제 목적지가 범용 레지스터면 그 폭. 아니면 None(메모리, 표 기호).
+
+    표 행 'MOV r/m16, Sreg'와 'MOV r16/r32/m16, Sreg'는 같은 8C /r이고 기호 r16/r32/m16 때문에 66H 규칙
+    (operand_size_prefix)으로 갈리지 않는다. 레지스터 목적지의 폭은 오퍼랜드 크기 속성이 정한다(Vol.1 Table 3-4).
+    CPU 관측(2026-11-11, cpu_observe/): RCX=-1에서 66 8C C1은 하위 16비트만 바꾸고, 8C C1은 RCX 전체를 0으로 만든다.
+    그래서 'mov cx, es'는 66H가 있어야 하고 'mov ecx, es'는 66H·REX.W가 없어야 한다. 메모리 목적지는 크기와 무관하게
+    16비트를 쓰므로 대상이 아니다.
+    """
+    opcode = ' '.join(re.sub(r'(?<=[0-9A-F])/', ' /', row.get('opcode', '')).split())
+    if row.get('mnemonic', '').upper() != 'MOV' or opcode not in ('8C /r', 'REX.W + 8C /r'):
+        return None
+    return gpr_width(row.get('operands', '').split(',')[0])
+
+
 def modrm_end(data, pos, address32=False):
     """Offset just after ModRM/SIB/displacement (64/32-bit addressing only)."""
     if pos >= len(data):
@@ -249,6 +278,13 @@ def _check_encoding(hex_bytes, row, relocations=False, operand_size=None, no_rex
         # operand_size_prefix.forbids_rex_w: 같은 opcode 칸의 REX.W 행과 갈린다
         good = good and not (rex and rex & 8)
         result['checked_fields'].append('no_REX.W')
+    store_width = None if vector else sreg_store_width(row)
+    if store_width:
+        # MOV r, Sreg: 레지스터 목적지 폭 = 오퍼랜드 크기(sreg_store_width 설명)
+        wide = bool(rex and rex & 8)
+        good = good and {16: 0x66 in prefixes and not wide, 32: 0x66 not in prefixes and not wide,
+                         64: wide}.get(store_width, False)
+        result['checked_fields'].append('sreg_store_register_width')
     moffs = re.search(r'\bmoffs(8|16|32|64)\b', row.get('operand_types', row.get('operands', '')))
     if end is None:
         good = False
